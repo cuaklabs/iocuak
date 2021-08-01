@@ -135,6 +135,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/unbound-method': 'off',
         '@typescript-eslint/no-magic-numbers': 'off',
+        'jest/valid-title': 'off',
       },
     },
     {
