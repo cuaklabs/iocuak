@@ -11,6 +11,7 @@
     "prebuild": "rimraf dist",
     "prepare": "husky install",
     "test:coverage": "npm test -- --coverage",
+    "test:js:ci": "npm run test:js -- --ci",
     "test:js:coverage": "npm run test:js -- --coverage",
     "test:js": "npm test -- --config=jest.dist.config.json",
     "test": "jest"
