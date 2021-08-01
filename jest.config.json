@@ -1,0 +1,27 @@
+{
+  "projects": [
+    {
+      "displayName": "Unit",
+      "collectCoverageFrom": ["**/*.ts"],
+      "coveragePathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "coverageThreshold": {
+        "global": {
+          "branches": 70,
+          "functions": 70,
+          "lines": 70,
+          "statements": 70
+        }
+      },
+      "moduleFileExtensions": ["ts", "js", "json"],
+      "rootDir": ".",
+      "testEnvironment": "node",
+      "testMatch": ["<rootDir>/src/**/*.spec.ts"],
+      "testPathIgnorePatterns": ["/node_modules", ".int.spec.ts"],
+      "transform": {
+        "^.+\\.ts?$": "ts-jest"
+      }
+    }
+  ]
+}
