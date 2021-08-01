@@ -15,4 +15,7 @@ node_modules/
 
 ### Custom ignores
 
+# TypeScript cache
+*.tsbuildinfo
+
 /tmp
