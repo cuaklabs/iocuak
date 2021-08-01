@@ -10,7 +10,9 @@
     "lint": "eslint --ext ts --ignore-path .gitignore .",
     "prebuild": "rimraf dist",
     "prepare": "husky install",
+    "test:coverage": "npm test -- --coverage",
     "test:js:coverage": "npm run test:js -- --coverage",
+    "test:js": "npm test -- --config=jest.dist.config.json",
     "test": "jest"
   },
   "repository": {
