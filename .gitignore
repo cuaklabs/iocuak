@@ -1,0 +1,14 @@
+# Jest coverage report
+coverage/
+
+# Typescript compiled files
+dist/
+
+# Typescript incremental build info
+tsconfig.incremental.tsbuildinfo
+
+# npm installed packages
+node_modules/
+
+### Visual Studio Code ###
+.vscode
