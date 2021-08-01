@@ -4,6 +4,8 @@
   "description": "Minimal abstract task manager",
   "main": "dist/index.js",
   "scripts": {
+    "build:dev": "tsc --build tsconfig.dev.json",
+    "build": "tsc",
     "test": "test"
   },
   "repository": {
@@ -20,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/cuaklabs/cuaktask/issues"
   },
-  "homepage": "https://github.com/cuaklabs/cuaktask#readme"
+  "homepage": "https://github.com/cuaklabs/cuaktask#readme",
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
 }

@@ -12,3 +12,7 @@ node_modules/
 
 ### Visual Studio Code ###
 .vscode
+
+### Custom ignores
+
+/tmp
