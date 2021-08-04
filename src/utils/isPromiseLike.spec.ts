@@ -1,4 +1,4 @@
-import { isPromise } from './isPromise';
+import { isPromiseLike } from './isPromiseLike';
 
 interface Thenable {
   then: (...args: unknown[]) => unknown;
@@ -60,7 +60,7 @@ function generateFunctionWithThenNonFunctionProperty(): unknown {
   return functionWithThenNonFunctionProperty;
 }
 
-describe(isPromise.name, () => {
+describe(isPromiseLike.name, () => {
   describe.each([
     [generateFunctionWithThenFunction()],
     [generateObjectWithThenFunction()],
@@ -69,7 +69,7 @@ describe(isPromise.name, () => {
       let result: unknown;
 
       beforeAll(() => {
-        result = isPromise(thenable);
+        result = isPromiseLike(thenable);
       });
 
       it('should return true', () => {
@@ -93,7 +93,7 @@ describe(isPromise.name, () => {
       let result: unknown;
 
       beforeAll(() => {
-        result = isPromise(input);
+        result = isPromiseLike(input);
       });
 
       it('should return false', () => {

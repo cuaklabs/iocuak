@@ -1,4 +1,4 @@
-export function isPromise<T>(object: unknown): object is Promise<T> {
+export function isPromiseLike<T>(object: unknown): object is PromiseLike<T> {
   // https://promisesaplus.com/
   const isObjectOrFunction: boolean =
     (typeof object === 'object' && object !== null) ||
