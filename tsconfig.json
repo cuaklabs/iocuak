@@ -1,21 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es2019",
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
     "lib": ["es2019"],
     "module": "CommonJS",
-    "outDir": "./dist",
-    "strict": true,
-    "esModuleInterop": true,
-    "sourceMap": true,
     "moduleResolution": "Node",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
+    "outDir": "./dist",
+    "resolveJsonModule": true,
     "rootDir": "src",
-    "resolveJsonModule": true
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2019"
   },
   "include": ["src"],
-  "exclude": ["node_modules/**", "packages/*/node_modules/**"]
+  "exclude": ["node_modules/**"]
 }
