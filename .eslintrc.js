@@ -39,8 +39,9 @@ module.exports = {
     '@typescript-eslint/naming-convention': [
       'error',
       {
-        selector: ['classProperty', 'variableLike'],
+        selector: ['classProperty'],
         format: ['strictCamelCase', 'UPPER_CASE', 'snake_case'],
+        leadingUnderscore: 'allow',
       },
       {
         selector: 'typeParameter',
@@ -59,6 +60,10 @@ module.exports = {
         selector: ['parameter'],
         format: ['strictCamelCase'],
         leadingUnderscore: 'allow',
+      },
+      {
+        selector: ['variableLike'],
+        format: ['strictCamelCase', 'UPPER_CASE', 'snake_case'],
       },
     ],
     '@typescript-eslint/no-dynamic-delete': 'error',
