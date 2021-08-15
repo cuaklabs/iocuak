@@ -17,8 +17,8 @@
       "moduleFileExtensions": ["ts", "js", "json"],
       "rootDir": ".",
       "testEnvironment": "node",
-      "testMatch": ["<rootDir>/src/**/*.spec.ts"],
-      "testPathIgnorePatterns": ["/node_modules", ".int.spec.ts"],
+      "testMatch": ["<rootDir>/packages/**/*.spec.ts"],
+      "testPathIgnorePatterns": ["/node_modules"],
       "transform": {
         "^.+\\.ts?$": "ts-jest"
       }

@@ -9,13 +9,16 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
-    "outDir": "./dist",
+    "outDir": "./node_modules/@cuaklabs",
+    "paths": {
+      "@cuaklabs/cuaktask": ["./packages/cuaktask"]
+    },
     "resolveJsonModule": true,
-    "rootDir": "src",
+    "rootDir": "packages",
     "sourceMap": true,
     "strict": true,
     "target": "es2019"
   },
-  "include": ["src"],
+  "include": ["packages"],
   "exclude": ["node_modules/**"]
 }
