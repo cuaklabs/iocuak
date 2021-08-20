@@ -1,18 +1,20 @@
 # Releasing a version
 
-1. Increase packages version
+1. Update changelog
+
+2. Increase packages version
 
 ```
 npx lerna version (patch|minor|major) --force-publish
 ```
 
-2. Login in npm 
+3. Login in npm 
 
 ```
 npm login
 ```
 
-3. Publish all the packages
+4. Publish all the packages
 
 ```
 npx lerna publish --force-publish
