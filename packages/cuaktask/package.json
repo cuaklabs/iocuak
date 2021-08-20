@@ -1,0 +1,24 @@
+{
+  "name": "@cuaklabs/cuaktask",
+  "version": "0.0.1",
+  "description": "Minimal abstract task manager",
+  "main": "index.js",
+  "scripts": {
+    "publish:public": "npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/cuaktask.git"
+  },
+  "keywords": [
+    "task",
+    "manager",
+    "typescript"
+  ],
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/cuaktask/issues"
+  },
+  "homepage": "https://github.com/cuaklabs/cuaktask#readme"
+}

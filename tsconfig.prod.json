@@ -3,6 +3,7 @@
   "compilerOptions": {
     "declaration": true,
     "declarationMap": false,
+    "outDir": "packages",
     "sourceMap": false
   },
   "exclude": ["node_modules", "**/*.spec.ts"]

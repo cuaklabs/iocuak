@@ -18,7 +18,7 @@
       "rootDir": ".",
       "testEnvironment": "node",
       "testMatch": ["<rootDir>/dist/**/*.spec.js"],
-      "testPathIgnorePatterns": ["/node_modules", ".int.spec.js"]
+      "testPathIgnorePatterns": ["/node_modules"]
     }
   ]
 }
