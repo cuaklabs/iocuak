@@ -3,9 +3,6 @@
   "version": "0.0.3",
   "description": "Minimal abstract task manager",
   "main": "index.js",
-  "scripts": {
-    "publish:public": "npm publish --access public"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cuaklabs/cuaktask.git"
