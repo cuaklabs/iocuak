@@ -17,5 +17,5 @@ npm login
 4. Publish all the packages
 
 ```
-npx lerna publish --force-publish
+npm run publish:packages
 ```
