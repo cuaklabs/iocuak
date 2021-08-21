@@ -6,7 +6,7 @@
   "scripts": {
     "build:dev": "tsc --build tsconfig.dev.json",
     "build:prod": "tsc --build tsconfig.prod.json",
-    "build:prod:clean": "tsc --build tsconfig.prod.json",
+    "build:prod:clean": "tsc --build tsconfig.prod.json --clean",
     "build:test": "tsc --build tsconfig.test.json",
     "build:test:clean": "tsc --build tsconfig.test.json --clean",
     "build": "tsc",
