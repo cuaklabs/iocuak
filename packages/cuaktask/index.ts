@@ -1,3 +1,4 @@
+import { SetLike } from './common/modules/SetLike';
 import { BaseDependentTask } from './task/models/domain/BaseDependentTask';
 import { BaseTask } from './task/models/domain/BaseTask';
 import { DependentTaskBuilder } from './task/modules/DependentTaskBuilder';
@@ -9,5 +10,6 @@ export {
   BaseTask,
   DependentTaskBuilder,
   DependentTaskRunner,
+  SetLike,
   TaskDependencyEngine,
 };

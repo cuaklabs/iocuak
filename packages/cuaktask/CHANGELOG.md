@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 ### Docs
 -->
+## [UNRELEASED]
+
+### Added
+- Added `SetLike` interface.
+
 
 
 
@@ -29,8 +34,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## v0.0.2 - 2021-08-21
 
 ### Added 
-- Added BaseDependentTask
-- Added BaseTask
+- Added `BaseDependentTask` abstract model.
+- Added `BaseTask` abstract model.
 
 ### Docs
 - Added changelog
