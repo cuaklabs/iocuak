@@ -1,0 +1,25 @@
+{
+  "name": "@cuaklabs/iocuak",
+  "version": "0.0.3",
+  "description": "Minimal inversion of control container inspired by InversifyJS (https://inversify.io/)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/cuaktask.git"
+  },
+  "keywords": [
+    "ioc",
+    "dependency",
+    "injection",
+    "typescript"
+  ],
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/cuaktask/issues"
+  },
+  "homepage": "https://github.com/cuaklabs/cuaktask#readme",
+  "dependencies": {
+    "@cuaklabs/cuaktask": "0.0.3"
+  }
+}
