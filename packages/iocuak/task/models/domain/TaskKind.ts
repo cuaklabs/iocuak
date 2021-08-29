@@ -2,8 +2,8 @@ import { TaskId } from './TaskId';
 import { TaskKindType } from './TaskKindType';
 import { TaskScope } from './TaskScope';
 
-export interface TaskKind {
+export interface TaskKind<TTaskKindType extends TaskKindType = TaskKindType> {
   id: TaskId;
-  type: TaskKindType;
+  type: TTaskKindType;
   scope: TaskScope;
 }
