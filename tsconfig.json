@@ -11,7 +11,8 @@
     "noUncheckedIndexedAccess": true,
     "outDir": "./node_modules/@cuaklabs",
     "paths": {
-      "@cuaklabs/cuaktask": ["./packages/cuaktask"]
+      "@cuaklabs/cuaktask": ["./packages/cuaktask"],
+      "@cuaklabs/iocuak": ["./packages/iocuak"]
     },
     "resolveJsonModule": true,
     "rootDir": "packages",
