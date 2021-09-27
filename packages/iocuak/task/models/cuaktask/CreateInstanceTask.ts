@@ -38,7 +38,7 @@ export class CreateInstanceTask<
 
         break;
       case TaskScope.transient:
-        instance = new this.#instanceConstructor(...args);
+        instance = this.getInstanceInTransientScope(...args);
         break;
     }
 
