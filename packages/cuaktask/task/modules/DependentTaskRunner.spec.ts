@@ -12,7 +12,7 @@ describe(DependentTaskRunner.name, () => {
   describe('.run()', () => {
     describe('having a task with no dependencies', () => {
       let dependentTaskMock: jest.Mocked<
-        DependentTask<string, unknown[], unknown>
+        DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
 
@@ -51,11 +51,11 @@ describe(DependentTaskRunner.name, () => {
 
     describe('having a asyncronous task with asyncronous dependencies', () => {
       let dependencyTaskMock: jest.Mocked<
-        DependentTask<string, unknown[], unknown>
+        DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependencyTaskResultFixture: unknown;
       let dependentTaskMock: jest.Mocked<
-        DependentTask<string, unknown[], unknown>
+        DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
 
@@ -126,11 +126,11 @@ describe(DependentTaskRunner.name, () => {
 
     describe('having a asyncronous task with syncronous dependencies', () => {
       let dependencyTaskMock: jest.Mocked<
-        DependentTask<string, unknown[], unknown>
+        DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependencyTaskResultFixture: unknown;
       let dependentTaskMock: jest.Mocked<
-        DependentTask<string, unknown[], unknown>
+        DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
 
@@ -201,11 +201,11 @@ describe(DependentTaskRunner.name, () => {
 
     describe('having a syncronous task with asyncronous dependencies', () => {
       let dependencyTaskMock: jest.Mocked<
-        DependentTask<string, unknown[], unknown>
+        DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependencyTaskResultFixture: unknown;
       let dependentTaskMock: jest.Mocked<
-        DependentTask<string, unknown[], unknown>
+        DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
 
@@ -276,11 +276,11 @@ describe(DependentTaskRunner.name, () => {
 
     describe('having a syncronous task with syncronous dependencies', () => {
       let dependencyTaskMock: jest.Mocked<
-        DependentTask<string, unknown[], unknown>
+        DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependencyTaskResultFixture: unknown;
       let dependentTaskMock: jest.Mocked<
-        DependentTask<string, unknown[], unknown>
+        DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
 

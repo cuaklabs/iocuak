@@ -1,9 +1,4 @@
-import { TaskId } from './TaskId';
-import { TaskKindType } from './TaskKindType';
-import { TaskScope } from './TaskScope';
+import { CreateInstanceTaskKind } from './CreateInstanceTaskKind';
+import { GetInstanceDependenciesTaskKind } from './GetInstanceDependenciesTaskKind';
 
-export interface TaskKind<TTaskKindType extends TaskKindType = TaskKindType> {
-  id: TaskId;
-  type: TTaskKindType;
-  scope: TaskScope;
-}
+export type TaskKind = CreateInstanceTaskKind | GetInstanceDependenciesTaskKind;

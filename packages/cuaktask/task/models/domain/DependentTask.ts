@@ -1,6 +1,10 @@
 import { Task } from './Task';
 
-export interface DependentTask<TKind, TArgs extends unknown[], TReturn>
-  extends Task<TKind, TArgs, TReturn> {
-  readonly dependencies: DependentTask<TKind, unknown[], unknown>[];
+export interface DependentTask<
+  TKind,
+  TDependencyKind = unknown,
+  TArgs extends unknown[] = unknown[],
+  TReturn = unknown,
+> extends Task<TKind, TArgs, TReturn> {
+  readonly dependencies: DependentTask<TDependencyKind>[];
 }

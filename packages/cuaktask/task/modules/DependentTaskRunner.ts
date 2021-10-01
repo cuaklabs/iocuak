@@ -5,15 +5,15 @@ import { isPromiseLike } from '../../utils/isPromiseLike';
 import { DependentTask } from '../models/domain/DependentTask';
 
 export class DependentTaskRunner {
-  public run<TKind, TArgs extends unknown[], TReturn>(
-    dependenTask: DependentTask<TKind, TArgs, TReturn>,
+  public run<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
+    dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
   ): MayBePromise<TReturn> {
     return this.#innerRun(dependenTask);
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  #innerRun<TKind, TArgs extends unknown[], TReturn>(
-    dependenTask: DependentTask<TKind, TArgs, TReturn>,
+  #innerRun<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
+    dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
   ): MayBePromise<TReturn> {
     const dependenciesRunResults: unknown[] = dependenTask.dependencies.map(
       this.#innerRun.bind(this),
@@ -37,8 +37,13 @@ export class DependentTaskRunner {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  async #innerRunDependenciesAsync<TKind, TArgs extends unknown[], TReturn>(
-    dependenTask: DependentTask<TKind, TArgs, TReturn>,
+  async #innerRunDependenciesAsync<
+    TKind,
+    TDependencyKind,
+    TArgs extends unknown[],
+    TReturn,
+  >(
+    dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
     dependenciesRunResults: unknown[],
   ): FlatPromise<TReturn> {
     const dependenciesRunResultsResolved: unknown[] = await Promise.all(
@@ -54,8 +59,8 @@ export class DependentTaskRunner {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  #innerRunTask<TKind, TArgs extends unknown[], TReturn>(
-    dependenTask: DependentTask<TKind, TArgs, TReturn>,
+  #innerRunTask<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
+    dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
     dependenciesRunResults: NonThenableProperties<TArgs>,
   ): MayBePromise<TReturn> {
     const taskResult: TReturn = dependenTask.perform(...dependenciesRunResults);

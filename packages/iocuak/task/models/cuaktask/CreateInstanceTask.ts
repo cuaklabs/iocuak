@@ -1,16 +1,21 @@
 import { BaseDependentTask } from '@cuaklabs/cuaktask';
 
 import { DependentTask } from '../../../../cuaktask/task/models/domain/DependentTask';
+import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { Newable } from '../domain/Newable';
 import { TaskId } from '../domain/TaskId';
 import { TaskKind } from '../domain/TaskKind';
-import { TaskKindType } from '../domain/TaskKindType';
 import { TaskScope } from '../domain/TaskScope';
 
 export class CreateInstanceTask<
   TInstance,
   TArgs extends unknown[] = unknown[],
-> extends BaseDependentTask<TaskKind, TArgs, TInstance> {
+> extends BaseDependentTask<
+  CreateInstanceTaskKind,
+  TaskKind,
+  TArgs,
+  TInstance
+> {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #instanceConstructor: Newable<TInstance, TArgs>;
 
@@ -20,8 +25,8 @@ export class CreateInstanceTask<
   constructor(
     instanceConstructor: Newable<TInstance, TArgs>,
     taskIdToInstanceMap: Map<TaskId, unknown>,
-    kind: TaskKind<TaskKindType.createInstance>,
-    dependencies: DependentTask<TaskKind, TArgs, TInstance>[] = [],
+    kind: CreateInstanceTaskKind,
+    dependencies: DependentTask<TaskKind, TaskKind, TArgs, TInstance>[] = [],
   ) {
     super(kind, dependencies);
 

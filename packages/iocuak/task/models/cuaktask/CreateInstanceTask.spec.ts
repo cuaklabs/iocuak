@@ -1,5 +1,5 @@
+import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { TaskId } from '../domain/TaskId';
-import { TaskKind } from '../domain/TaskKind';
 import { TaskKindType } from '../domain/TaskKindType';
 import { TaskScope } from '../domain/TaskScope';
 import { CreateInstanceTask } from './CreateInstanceTask';
@@ -9,7 +9,7 @@ class InstanceTest {}
 describe(CreateInstanceTask.name, () => {
   describe('.perform()', () => {
     describe('having a task kind with singletonScope', () => {
-      let taskKindFixture: TaskKind<TaskKindType.createInstance>;
+      let taskKindFixture: CreateInstanceTaskKind;
 
       beforeAll(() => {
         taskKindFixture = {
@@ -73,7 +73,7 @@ describe(CreateInstanceTask.name, () => {
     });
 
     describe('having a task kind with transientScope', () => {
-      let taskKindFixture: TaskKind<TaskKindType.createInstance>;
+      let taskKindFixture: CreateInstanceTaskKind;
 
       beforeAll(() => {
         taskKindFixture = {

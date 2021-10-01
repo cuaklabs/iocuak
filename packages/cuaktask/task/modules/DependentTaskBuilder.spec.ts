@@ -8,32 +8,33 @@ import { TaskDependencyEngine } from './TaskDependencyEngine';
 
 class DependentTaskBuilderMock extends DependentTaskBuilder<
   string,
+  unknown,
   unknown[],
   unknown
 > {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #buildWithNoDependenciesMock: jest.Mock<
-    Task<string, unknown[], unknown>,
-    [string]
+    Task<unknown, unknown[], unknown>,
+    [unknown]
   >;
   constructor(
     buildWithNoDependenciesMock: jest.Mock<
-      Task<string, unknown[], unknown>,
-      [string]
+      Task<unknown, unknown[], unknown>,
+      [unknown]
     >,
     taskDependenciesKindSetBuilder: Builder<[], SetLike<string>>,
-    taskDependencyEngine: TaskDependencyEngine<string>,
+    taskDependencyEngine: TaskDependencyEngine,
   ) {
     super(taskDependenciesKindSetBuilder, taskDependencyEngine);
 
     this.#buildWithNoDependenciesMock = buildWithNoDependenciesMock;
   }
 
-  protected buildWithNoDependencies<TArgs extends unknown[], TReturn>(
-    taskKind: string,
-  ): Task<string, TArgs, TReturn> {
+  protected buildWithNoDependencies<TKind, TArgs extends unknown[], TReturn>(
+    taskKind: TKind,
+  ): Task<TKind, TArgs, TReturn> {
     return this.#buildWithNoDependenciesMock(taskKind) as Task<
-      string,
+      TKind,
       TArgs,
       TReturn
     >;
@@ -42,18 +43,18 @@ class DependentTaskBuilderMock extends DependentTaskBuilder<
 
 describe(DependentTaskBuilder.name, () => {
   let buildWithNoDependenciesMock: jest.Mock<
-    Task<string, unknown[], unknown>,
-    [string]
+    Task<unknown, unknown[], unknown>,
+    [unknown]
   >;
   let taskDependenciesKindSetBuilder: jest.Mocked<Builder<[], SetLike<string>>>;
-  let taskDependencyEngine: jest.Mocked<TaskDependencyEngine<string>>;
+  let taskDependencyEngine: jest.Mocked<TaskDependencyEngine>;
 
   let dependentTaskBuilder: DependentTaskBuilderMock;
 
   beforeAll(() => {
     buildWithNoDependenciesMock = jest.fn<
-      Task<string, unknown[], unknown>,
-      [string]
+      Task<unknown, unknown[], unknown>,
+      [unknown]
     >();
     taskDependenciesKindSetBuilder = {
       build: jest.fn().mockImplementation(() => new Set()),
@@ -114,7 +115,7 @@ describe(DependentTaskBuilder.name, () => {
       });
 
       it('should return a dependent task', () => {
-        const expected: DependentTask<string, unknown[], unknown> = {
+        const expected: DependentTask<string, unknown, unknown[], unknown> = {
           dependencies: [],
           ...taskFixture,
         };
@@ -190,7 +191,7 @@ describe(DependentTaskBuilder.name, () => {
     });
 
     it('should return a dependent task', () => {
-      const expected: DependentTask<string, unknown[], unknown> = {
+      const expected: DependentTask<string, unknown, unknown[], unknown> = {
         dependencies: [
           {
             dependencies: [],

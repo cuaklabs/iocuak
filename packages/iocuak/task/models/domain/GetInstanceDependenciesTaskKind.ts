@@ -1,8 +1,8 @@
-import { TaskKind } from './TaskKind';
+import { BaseTaskKind } from './BaseTaskKind';
 import { TaskKindType } from './TaskKindType';
 
 export interface GetInstanceDependenciesTaskKind
-  extends TaskKind<TaskKindType.getInstanceDependencies> {
+  extends BaseTaskKind<TaskKindType.getInstanceDependencies> {
   constructorArguments: number;
   properties: string[];
 }

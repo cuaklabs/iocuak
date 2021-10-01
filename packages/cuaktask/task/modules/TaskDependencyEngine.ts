@@ -1,3 +1,3 @@
-export interface TaskDependencyEngine<TKind> {
-  getDependencies(taskKind: TKind): TKind[];
+export interface TaskDependencyEngine {
+  getDependencies<TKind, TDependencyKind>(taskKind: TKind): TDependencyKind[];
 }

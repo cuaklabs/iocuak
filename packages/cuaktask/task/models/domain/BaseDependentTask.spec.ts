@@ -4,15 +4,16 @@ import { DependentTask } from './DependentTask';
 
 class BaseDependentTaskMock<
   TKind,
+  TDependencyKind,
   TArgs extends unknown[],
   TReturn,
-> extends BaseDependentTask<TKind, TArgs, TReturn> {
+> extends BaseDependentTask<TKind, TDependencyKind, TArgs, TReturn> {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #innerPerformMock: jest.Mock<TReturn, NonThenableProperties<TArgs>>;
 
   constructor(
     kind: TKind,
-    dependencies: DependentTask<TKind, unknown[], unknown>[] = [],
+    dependencies: DependentTask<TDependencyKind>[] = [],
     innerPerformMock: jest.Mock<TReturn, NonThenableProperties<TArgs>>,
   ) {
     super(kind, dependencies);
@@ -28,9 +29,9 @@ class BaseDependentTaskMock<
 describe(BaseDependentTask.name, () => {
   let kindFixture: string;
   let innerPerformMock: jest.Mock<unknown, NonThenableProperties<[]>>;
-  let dependenciesFixture: DependentTask<string, unknown[], unknown>[];
+  let dependenciesFixture: DependentTask<string, string, unknown[], unknown>[];
 
-  let baseDependentTask: BaseDependentTaskMock<string, [], unknown>;
+  let baseDependentTask: BaseDependentTaskMock<string, string, [], unknown>;
 
   beforeAll(() => {
     kindFixture = 'kind';
