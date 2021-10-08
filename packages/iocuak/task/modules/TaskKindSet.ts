@@ -11,10 +11,7 @@ export class TaskKindSet implements SetLike<TaskKind> {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #innerTaskKindMap: Map<
     TaskId,
-    Map<
-      TaskKindType,
-      Map<TaskScope, CreateInstanceTaskKind> | GetInstanceDependenciesTaskKind
-    >
+    Map<TaskKindType, Map<TaskScope, TaskKind>>
   >;
 
   constructor() {
@@ -71,33 +68,13 @@ export class TaskKindSet implements SetLike<TaskKind> {
     action: (key: unknown, map: Map<unknown, TaskKind> | undefined) => TReturn,
     buildLeafNodes: boolean,
   ): TReturn {
-    switch (elem.type) {
-      case TaskKindType.createInstance:
-        return this.#traverseCreateInstanceTaskKindMap(
-          elem,
-          action,
-          buildLeafNodes,
-        );
-      case TaskKindType.getInstanceDependencies:
-        return this.#traverseGetInstanceDependenciesTaskKindMap(
-          elem,
-          action,
-          buildLeafNodes,
-        );
-    }
-  }
-
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  #traverseCreateInstanceTaskKindMap<TReturn>(
-    elem: CreateInstanceTaskKind,
-    action: (key: unknown, map: Map<unknown, TaskKind> | undefined) => TReturn,
-    buildLeafNodes: boolean,
-  ): TReturn {
     let taskKindTypeToTaskScopeToTaskKindMapMap:
       | Map<
           TaskKindType,
-          | Map<TaskScope, CreateInstanceTaskKind>
-          | GetInstanceDependenciesTaskKind
+          Map<
+            TaskScope,
+            CreateInstanceTaskKind | GetInstanceDependenciesTaskKind
+          >
         >
       | undefined = this.#innerTaskKindMap.get(elem.id);
 
@@ -133,40 +110,5 @@ export class TaskKindSet implements SetLike<TaskKind> {
     }
 
     return action(elem.scope, taskScopeToTaskKindMap);
-  }
-
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  #traverseGetInstanceDependenciesTaskKindMap<TReturn>(
-    elem: GetInstanceDependenciesTaskKind,
-    action: (key: unknown, map: Map<unknown, TaskKind> | undefined) => TReturn,
-    buildLeafNodes: boolean,
-  ): TReturn {
-    let taskKindTypeToGetInstanceDependenciesTaskKindMap:
-      | Map<
-          TaskKindType,
-          | Map<TaskScope, CreateInstanceTaskKind>
-          | GetInstanceDependenciesTaskKind
-        >
-      | undefined = this.#innerTaskKindMap.get(elem.id);
-
-    if (
-      buildLeafNodes &&
-      taskKindTypeToGetInstanceDependenciesTaskKindMap === undefined
-    ) {
-      taskKindTypeToGetInstanceDependenciesTaskKindMap = new Map();
-
-      this.#innerTaskKindMap.set(
-        elem.id,
-        taskKindTypeToGetInstanceDependenciesTaskKindMap,
-      );
-    }
-
-    return action(
-      elem.type,
-      taskKindTypeToGetInstanceDependenciesTaskKindMap as Map<
-        unknown,
-        TaskKind
-      >,
-    );
   }
 }

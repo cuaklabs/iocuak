@@ -50,9 +50,12 @@ describe(TaskKindSet.name, () => {
 
       beforeAll(() => {
         taskKindFixture = {
-          constructorArguments: 0,
           id: 'sample-task-id',
-          properties: [],
+          metadata: {
+            constructorArguments: [],
+            properties: {},
+          },
+          scope: TaskScope.transient,
           type: TaskKindType.getInstanceDependencies,
         };
       });
@@ -153,9 +156,12 @@ describe(TaskKindSet.name, () => {
 
       beforeAll(() => {
         taskKindFixture = {
-          constructorArguments: 0,
           id: 'sample-task-id',
-          properties: [],
+          metadata: {
+            constructorArguments: [],
+            properties: {},
+          },
+          scope: TaskScope.transient,
           type: TaskKindType.getInstanceDependencies,
         };
       });
@@ -244,9 +250,12 @@ describe(TaskKindSet.name, () => {
 
       beforeAll(() => {
         taskKindFixture = {
-          constructorArguments: 0,
           id: 'sample-task-id',
-          properties: [],
+          metadata: {
+            constructorArguments: [],
+            properties: {},
+          },
+          scope: TaskScope.transient,
           type: TaskKindType.getInstanceDependencies,
         };
       });
