@@ -5,7 +5,6 @@ import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { Newable } from '../domain/Newable';
 import { TaskId } from '../domain/TaskId';
 import { TaskKind } from '../domain/TaskKind';
-import { TaskScope } from '../domain/TaskScope';
 
 export class CreateInstanceTask<
   TInstance,
@@ -35,22 +34,6 @@ export class CreateInstanceTask<
   }
 
   protected innerPerform(...args: TArgs): TInstance {
-    let instance: TInstance;
-
-    switch (this.kind.scope) {
-      case TaskScope.singleton:
-        instance = this.getInstanceInSingletonScope(...args);
-
-        break;
-      case TaskScope.transient:
-        instance = this.getInstanceInTransientScope(...args);
-        break;
-    }
-
-    return instance;
-  }
-
-  private getInstanceInSingletonScope(...args: TArgs): TInstance {
     const instanceFromMap: unknown = this.#taskIdToInstanceMap.get(
       this.kind.id,
     );
@@ -58,7 +41,7 @@ export class CreateInstanceTask<
     let instance: TInstance;
 
     if (instanceFromMap === undefined) {
-      instance = this.getInstanceInTransientScope(...args);
+      instance = new this.#instanceConstructor(...args);
 
       this.#taskIdToInstanceMap.set(this.kind.id, instance);
     } else {
@@ -66,9 +49,5 @@ export class CreateInstanceTask<
     }
 
     return instance;
-  }
-
-  private getInstanceInTransientScope(...args: TArgs): TInstance {
-    return new this.#instanceConstructor(...args);
   }
 }

@@ -1,7 +1,6 @@
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
-import { TaskScope } from '../models/domain/TaskScope';
 import { TaskKindSet } from './TaskKindSet';
 
 describe(TaskKindSet.name, () => {
@@ -12,7 +11,6 @@ describe(TaskKindSet.name, () => {
       beforeAll(() => {
         taskKindFixture = {
           id: 'sample-task-id',
-          scope: 'fake-task-scope' as TaskScope,
           type: TaskKindType.createInstance,
         };
       });
@@ -55,7 +53,6 @@ describe(TaskKindSet.name, () => {
             constructorArguments: [],
             properties: {},
           },
-          scope: TaskScope.transient,
           type: TaskKindType.getInstanceDependencies,
         };
       });
@@ -113,7 +110,6 @@ describe(TaskKindSet.name, () => {
       beforeAll(() => {
         taskKindFixture = {
           id: 'sample-task-id',
-          scope: 'fake-task-scope' as TaskScope,
           type: TaskKindType.createInstance,
         };
       });
@@ -161,7 +157,6 @@ describe(TaskKindSet.name, () => {
             constructorArguments: [],
             properties: {},
           },
-          scope: TaskScope.transient,
           type: TaskKindType.getInstanceDependencies,
         };
       });
@@ -207,7 +202,6 @@ describe(TaskKindSet.name, () => {
       beforeAll(() => {
         taskKindFixture = {
           id: 'sample-task-id',
-          scope: 'fake-task-scope' as TaskScope,
           type: TaskKindType.createInstance,
         };
       });
@@ -255,7 +249,6 @@ describe(TaskKindSet.name, () => {
             constructorArguments: [],
             properties: {},
           },
-          scope: TaskScope.transient,
           type: TaskKindType.getInstanceDependencies,
         };
       });

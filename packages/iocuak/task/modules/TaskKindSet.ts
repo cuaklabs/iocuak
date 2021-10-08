@@ -1,18 +1,12 @@
 import { SetLike } from '@cuaklabs/cuaktask';
 
-import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
-import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskId } from '../models/domain/TaskId';
 import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
-import { TaskScope } from '../models/domain/TaskScope';
 
 export class TaskKindSet implements SetLike<TaskKind> {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  readonly #innerTaskKindMap: Map<
-    TaskId,
-    Map<TaskKindType, Map<TaskScope, TaskKind>>
-  >;
+  readonly #innerTaskKindMap: Map<TaskId, Map<TaskKindType, TaskKind>>;
 
   constructor() {
     this.#innerTaskKindMap = new Map();
@@ -68,47 +62,15 @@ export class TaskKindSet implements SetLike<TaskKind> {
     action: (key: unknown, map: Map<unknown, TaskKind> | undefined) => TReturn,
     buildLeafNodes: boolean,
   ): TReturn {
-    let taskKindTypeToTaskScopeToTaskKindMapMap:
-      | Map<
-          TaskKindType,
-          Map<
-            TaskScope,
-            CreateInstanceTaskKind | GetInstanceDependenciesTaskKind
-          >
-        >
-      | undefined = this.#innerTaskKindMap.get(elem.id);
+    let taskKindTypeToTaskKindMap: Map<TaskKindType, TaskKind> | undefined =
+      this.#innerTaskKindMap.get(elem.id);
 
-    if (
-      buildLeafNodes &&
-      taskKindTypeToTaskScopeToTaskKindMapMap === undefined
-    ) {
-      taskKindTypeToTaskScopeToTaskKindMapMap = new Map();
+    if (buildLeafNodes && taskKindTypeToTaskKindMap === undefined) {
+      taskKindTypeToTaskKindMap = new Map();
 
-      this.#innerTaskKindMap.set(
-        elem.id,
-        taskKindTypeToTaskScopeToTaskKindMapMap,
-      );
+      this.#innerTaskKindMap.set(elem.id, taskKindTypeToTaskKindMap);
     }
 
-    let taskScopeToTaskKindMap:
-      | Map<TaskScope, CreateInstanceTaskKind>
-      | undefined;
-
-    if (taskKindTypeToTaskScopeToTaskKindMapMap !== undefined) {
-      taskScopeToTaskKindMap = taskKindTypeToTaskScopeToTaskKindMapMap.get(
-        elem.type,
-      ) as Map<TaskScope, CreateInstanceTaskKind> | undefined;
-
-      if (buildLeafNodes && taskScopeToTaskKindMap === undefined) {
-        taskScopeToTaskKindMap = new Map();
-
-        taskKindTypeToTaskScopeToTaskKindMapMap.set(
-          elem.type,
-          taskScopeToTaskKindMap,
-        );
-      }
-    }
-
-    return action(elem.scope, taskScopeToTaskKindMap);
+    return action(elem.id, taskKindTypeToTaskKindMap);
   }
 }

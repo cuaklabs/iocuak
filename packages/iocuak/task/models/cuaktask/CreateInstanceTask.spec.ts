@@ -1,7 +1,6 @@
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { TaskId } from '../domain/TaskId';
 import { TaskKindType } from '../domain/TaskKindType';
-import { TaskScope } from '../domain/TaskScope';
 import { CreateInstanceTask } from './CreateInstanceTask';
 
 class InstanceTest {}
@@ -14,7 +13,6 @@ describe(CreateInstanceTask.name, () => {
       beforeAll(() => {
         taskKindFixture = {
           id: 'sample-task-kind-id',
-          scope: TaskScope.singleton,
           type: TaskKindType.createInstance,
         };
       });
@@ -78,7 +76,6 @@ describe(CreateInstanceTask.name, () => {
       beforeAll(() => {
         taskKindFixture = {
           id: 'sample-task-kind-id',
-          scope: TaskScope.transient,
           type: TaskKindType.createInstance,
         };
       });
