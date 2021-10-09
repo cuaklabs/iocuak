@@ -7,7 +7,7 @@ import { Newable } from '../domain/Newable';
 import { TaskKind } from '../domain/TaskKind';
 
 export class CreateInstanceTask<
-  TInstance,
+  TInstance = unknown,
   TArgs extends unknown[] = unknown[],
 > extends BaseDependentTask<
   CreateInstanceTaskKind,

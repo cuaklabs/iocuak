@@ -33,7 +33,7 @@ describe(CreateInstanceTask.name, () => {
             singleton: {
               get: jest.fn().mockReturnValueOnce(undefined),
             },
-          };
+          } as Partial<ContainerInternalService> as ContainerInternalService;
 
           createInstanceTask = new CreateInstanceTask(
             instanceConstructorCallMock,
@@ -85,7 +85,7 @@ describe(CreateInstanceTask.name, () => {
             singleton: {
               get: jest.fn().mockReturnValueOnce(instanceTestFixture),
             },
-          };
+          } as Partial<ContainerInternalService> as ContainerInternalService;
 
           createInstanceTask = new CreateInstanceTask(
             instanceConstructorCallMock,
