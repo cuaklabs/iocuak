@@ -1,6 +1,6 @@
-import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
-import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
-import { TaskKindType } from '../models/domain/TaskKindType';
+import { ClassMetadataFixtures } from '../../../metadata/fixtures/domain/ClassMetadataFixtures';
+import { GetInstanceDependenciesTaskKind } from '../../models/domain/GetInstanceDependenciesTaskKind';
+import { TaskKindType } from '../../models/domain/TaskKindType';
 
 export class GetInstanceDependenciesTaskKindFixtures {
   public static get any(): GetInstanceDependenciesTaskKind {

@@ -1,5 +1,5 @@
-import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
-import { TaskKindType } from '../models/domain/TaskKindType';
+import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
+import { TaskKindType } from '../../models/domain/TaskKindType';
 
 export class CreateInstanceTaskKindFixtures {
   public static get any(): CreateInstanceTaskKind {

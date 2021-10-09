@@ -1,7 +1,7 @@
 import { ClassMetadataProvider } from '../../metadata/adapters/ClassMetadataProvider';
 import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
-import { CreateInstanceTaskKindFixtures } from '../fixtures/CreateInstanceTaskKindFixtures';
-import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/GetInstanceDependenciesTaskKindFixtures';
+import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
+import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskId } from '../models/domain/TaskId';
