@@ -1,9 +1,12 @@
 import { ContainerInternalService } from '../../../container/services/ContainerInternalService';
+import { ServiceDependenciesFixtures } from '../../fixtures/domain/ServiceDependenciesFixtures';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { TaskKindType } from '../domain/TaskKindType';
 import { CreateInstanceTask } from './CreateInstanceTask';
 
-class InstanceTest {}
+class InstanceTest {
+  constructor(public readonly foo?: string) {}
+}
 
 describe(CreateInstanceTask.name, () => {
   describe('.perform()', () => {
@@ -18,16 +21,16 @@ describe(CreateInstanceTask.name, () => {
       });
 
       describe('when called and containerInternalService.singleton.get() returns no instance', () => {
-        let instanceConstructorCallMock: jest.Mock<InstanceTest, []>;
+        let instanceConstructorCallMock: jest.Mock<InstanceTest, [] | [string]>;
         let containerInternalServiceMock: ContainerInternalService;
-        let createInstanceTask: CreateInstanceTask<InstanceTest, []>;
+        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
 
         let result: unknown;
 
         beforeAll(() => {
           instanceConstructorCallMock = jest
             .fn<InstanceTest, []>()
-            .mockImplementation(() => new InstanceTest());
+            .mockImplementation((foo?: string) => new InstanceTest(foo));
 
           containerInternalServiceMock = {
             singleton: {
@@ -41,7 +44,9 @@ describe(CreateInstanceTask.name, () => {
             taskKindFixture,
           );
 
-          result = createInstanceTask.perform();
+          result = createInstanceTask.perform(
+            ServiceDependenciesFixtures.withConstructorArgumentsAndProperties,
+          );
         });
 
         afterAll(() => {
@@ -59,20 +64,31 @@ describe(CreateInstanceTask.name, () => {
 
         it('should call instanceConstructorCall()', () => {
           expect(instanceConstructorCallMock).toHaveBeenCalledTimes(1);
-          expect(instanceConstructorCallMock).toHaveBeenCalledWith();
+          expect(instanceConstructorCallMock).toHaveBeenCalledWith(
+            ...ServiceDependenciesFixtures.withConstructorArgumentsAndProperties
+              .constructorArguments,
+          );
         });
 
-        it('should return an instance of InstanceTest', () => {
+        it('should return an instance of InstanceTest with properties set', () => {
           expect(result).toBeInstanceOf(InstanceTest);
+
+          Object.entries(
+            ServiceDependenciesFixtures.withConstructorArgumentsAndProperties
+              .properties,
+          ).map(([key, value]: [string, unknown]): void => {
+            expect(result).toHaveProperty(key);
+            expect((result as Record<string, unknown>)[key]).toBe(value);
+          });
         });
       });
 
       describe('when called and containerInternalService.singleton.get() returns an instance', () => {
         let instanceTestFixture: InstanceTest;
 
-        let instanceConstructorCallMock: jest.Mock<InstanceTest, []>;
+        let instanceConstructorCallMock: jest.Mock<InstanceTest, [] | [string]>;
         let containerInternalServiceMock: ContainerInternalService;
-        let createInstanceTask: CreateInstanceTask<InstanceTest, []>;
+        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
 
         let result: unknown;
 
@@ -93,7 +109,9 @@ describe(CreateInstanceTask.name, () => {
             taskKindFixture,
           );
 
-          result = createInstanceTask.perform();
+          result = createInstanceTask.perform(
+            ServiceDependenciesFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
+          );
         });
 
         afterAll(() => {

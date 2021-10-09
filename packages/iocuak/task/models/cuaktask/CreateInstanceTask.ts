@@ -4,6 +4,7 @@ import { DependentTask } from '../../../../cuaktask/task/models/domain/Dependent
 import { ContainerInternalService } from '../../../container/services/ContainerInternalService';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { Newable } from '../domain/Newable';
+import { ServiceDependencies } from '../domain/ServiceDependencies';
 import { TaskKind } from '../domain/TaskKind';
 
 export class CreateInstanceTask<
@@ -12,7 +13,7 @@ export class CreateInstanceTask<
 > extends BaseDependentTask<
   CreateInstanceTaskKind,
   TaskKind,
-  TArgs,
+  [ServiceDependencies<TArgs>],
   TInstance
 > {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
@@ -33,14 +34,23 @@ export class CreateInstanceTask<
     this.#containerInternalService = containerInternalService;
   }
 
-  protected innerPerform(...args: TArgs): TInstance {
+  protected innerPerform(
+    serviceDependencies: ServiceDependencies<TArgs>,
+  ): TInstance {
     const instanceFromSingletonScope: unknown =
       this.#containerInternalService.singleton.get(this.kind.id);
 
     let instance: TInstance;
 
     if (instanceFromSingletonScope === undefined) {
-      instance = new this.#instanceConstructor(...args);
+      instance = new this.#instanceConstructor(
+        ...serviceDependencies.constructorArguments,
+      );
+
+      for (const propertyName in serviceDependencies.properties) {
+        (instance as Record<string, unknown>)[propertyName] =
+          serviceDependencies.properties[propertyName];
+      }
     } else {
       instance = instanceFromSingletonScope as TInstance;
     }
