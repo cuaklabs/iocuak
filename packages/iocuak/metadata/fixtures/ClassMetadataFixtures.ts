@@ -1,4 +1,4 @@
-import { ClassMetadata } from '../models/ClassMetadata';
+import { ClassMetadata } from '../models/domain/ClassMetadata';
 
 export class ClassMetadataFixtures {
   public static get any(): ClassMetadata {

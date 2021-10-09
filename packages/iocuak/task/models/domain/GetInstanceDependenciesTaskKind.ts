@@ -1,4 +1,4 @@
-import { ClassMetadata } from '../../../metadata/models/ClassMetadata';
+import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
 import { BaseTaskKind } from './BaseTaskKind';
 import { TaskKindType } from './TaskKindType';
 

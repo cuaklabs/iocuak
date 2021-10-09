@@ -1,4 +1,4 @@
-import { TaskId } from '../../task/models/domain/TaskId';
+import { TaskId } from '../../../task/models/domain/TaskId';
 
 export interface ClassMetadata {
   constructorArguments: TaskId[];

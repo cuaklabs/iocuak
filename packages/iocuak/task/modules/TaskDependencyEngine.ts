@@ -1,7 +1,7 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { ClassMetadataProvider } from '../../metadata/adapters/ClassMetadataProvider';
-import { ClassMetadata } from '../../metadata/models/ClassMetadata';
+import { ClassMetadata } from '../../metadata/models/domain/ClassMetadata';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
