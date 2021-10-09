@@ -1,3 +1,4 @@
+import { CreateInstanceTaskKindFixtures } from '../fixtures/CreateInstanceTaskKindFixtures';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
@@ -9,10 +10,7 @@ describe(TaskKindSet.name, () => {
       let taskKindFixture: CreateInstanceTaskKind;
 
       beforeAll(() => {
-        taskKindFixture = {
-          id: 'sample-task-id',
-          type: TaskKindType.createInstance,
-        };
+        taskKindFixture = CreateInstanceTaskKindFixtures.any;
       });
 
       describe('when called', () => {
@@ -108,10 +106,7 @@ describe(TaskKindSet.name, () => {
       let taskKindFixture: CreateInstanceTaskKind;
 
       beforeAll(() => {
-        taskKindFixture = {
-          id: 'sample-task-id',
-          type: TaskKindType.createInstance,
-        };
+        taskKindFixture = CreateInstanceTaskKindFixtures.any;
       });
 
       describe('when called and the task kind is in the set', () => {
@@ -200,10 +195,7 @@ describe(TaskKindSet.name, () => {
       let taskKindFixture: CreateInstanceTaskKind;
 
       beforeAll(() => {
-        taskKindFixture = {
-          id: 'sample-task-id',
-          type: TaskKindType.createInstance,
-        };
+        taskKindFixture = CreateInstanceTaskKindFixtures.any;
       });
 
       describe('when called and the task kind is in the set', () => {
