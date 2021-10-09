@@ -1,5 +1,5 @@
 import { ClassMetadataProvider } from '../../metadata/adapters/ClassMetadataProvider';
-import { ClassMetadataFixtures } from '../../metadata/fixtures/ClassMetadataFixtures';
+import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
