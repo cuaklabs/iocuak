@@ -13,6 +13,16 @@ export class GetInstanceDependenciesTaskKindFixtures {
     return fixture;
   }
 
+  public static get withMetadataWithConstructorArgumentsAndProperties(): GetInstanceDependenciesTaskKind {
+    const fixture: GetInstanceDependenciesTaskKind = {
+      id: 'get-instance-dependencies-task-sample-id',
+      metadata: ClassMetadataFixtures.withConstructorArgumentsAndProperties,
+      type: TaskKindType.getInstanceDependencies,
+    };
+
+    return fixture;
+  }
+
   public static get withMetadataWithConstructorArgumentsEmptyAndPropertiesEmpty(): GetInstanceDependenciesTaskKind {
     const fixture: GetInstanceDependenciesTaskKind = {
       id: 'get-instance-dependencies-task-sample-id',

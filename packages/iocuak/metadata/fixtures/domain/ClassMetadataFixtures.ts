@@ -10,6 +10,17 @@ export class ClassMetadataFixtures {
     return fixture;
   }
 
+  public static get withConstructorArgumentsAndProperties(): ClassMetadata {
+    const fixture: ClassMetadata = {
+      constructorArguments: ['sample-constructor-dependency-id'],
+      properties: {
+        sampleProperty: 'sample-property-dependency-id',
+      },
+    };
+
+    return fixture;
+  }
+
   public static get withConstructorArgumentsAndPropertiesEmpty(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: ['sample-constructor-dependency-id'],

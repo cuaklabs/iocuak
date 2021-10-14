@@ -1,0 +1,72 @@
+import { GetInstanceDependenciesTaskKindFixtures } from '../../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
+import { ServiceDependencies } from '../domain/ServiceDependencies';
+import { GetInstanceDependenciesTask } from './GetInstanceDependenciesTask';
+
+describe(GetInstanceDependenciesTask.name, () => {
+  let getInstanceDependenciesTask: GetInstanceDependenciesTask;
+
+  beforeAll(() => {
+    getInstanceDependenciesTask = new GetInstanceDependenciesTask(
+      GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsAndProperties,
+    );
+  });
+
+  describe('.perform()', () => {
+    describe('when called, and dependencies do not match metadata', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        try {
+          getInstanceDependenciesTask.perform();
+        } catch (error: unknown) {
+          result = error;
+        }
+      });
+
+      it('should throw an Error', () => {
+        expect(result).toBeInstanceOf(Error);
+        expect(result).toStrictEqual(
+          expect.objectContaining<Partial<Error>>({
+            message: expect.stringContaining(
+              'Invalid dependencies for service',
+            ) as string,
+          }),
+        );
+      });
+    });
+
+    describe('when called, and dependencies match metadata', () => {
+      let constructorArgumentFixure: unknown;
+      let propertyArgumentFixture: unknown;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        constructorArgumentFixure = 'constructor argument';
+        propertyArgumentFixture = 'property';
+
+        result = getInstanceDependenciesTask.perform(
+          constructorArgumentFixure,
+          propertyArgumentFixture,
+        );
+      });
+
+      it('should return ServiceDependencies', () => {
+        const [expectedPropertyKey]: [string] = Object.keys(
+          GetInstanceDependenciesTaskKindFixtures
+            .withMetadataWithConstructorArgumentsAndProperties.metadata
+            .properties,
+        ) as [string];
+
+        const expected: ServiceDependencies<unknown[]> = {
+          constructorArguments: [constructorArgumentFixure],
+          properties: {
+            [expectedPropertyKey]: propertyArgumentFixture,
+          },
+        };
+
+        expect(result).toStrictEqual(expected);
+      });
+    });
+  });
+});
