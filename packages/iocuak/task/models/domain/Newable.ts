@@ -1,3 +1,4 @@
-export type Newable<TInstance, TArgs extends unknown[]> = new (
-  ...args: TArgs
-) => TInstance;
+export type Newable<
+  TInstance = unknown,
+  TArgs extends unknown[] = unknown[],
+> = new (...args: TArgs) => TInstance;
