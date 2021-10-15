@@ -10,12 +10,12 @@ export abstract class BaseTask<TKind, TArgs extends unknown[], TReturn>
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #innerStatus: TaskStatus;
 
-  public get status(): TaskStatus {
-    return this.#innerStatus;
-  }
-
   constructor(public readonly kind: TKind) {
     this.#innerStatus = TaskStatus.NotStarted;
+  }
+
+  public get status(): TaskStatus {
+    return this.#innerStatus;
   }
 
   public perform(

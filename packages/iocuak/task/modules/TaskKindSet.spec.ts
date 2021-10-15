@@ -35,7 +35,7 @@ describe(TaskKindSet.name, () => {
           });
 
           it('should find the task kind', () => {
-            expect(taskKindSearchResult).toStrictEqual(true);
+            expect(taskKindSearchResult).toBe(true);
           });
         });
       });
@@ -77,7 +77,7 @@ describe(TaskKindSet.name, () => {
           });
 
           it('should find the task kind', () => {
-            expect(taskKindSearchResult).toStrictEqual(true);
+            expect(taskKindSearchResult).toBe(true);
           });
         });
       });
