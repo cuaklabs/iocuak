@@ -15,10 +15,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 ### Docs
 -->
+
+
+
+
 ## [UNRELEASED]
 
 ### Added
 - Added `SetLike` interface.
+
+### Changed
+- Breaking: Updated `BaseDependentTask` with a `TDependencyKind` generic type.
+- Breaking: Updated `TaskDependencyEngine.getDependencies` with a `TDependencyKind` generic type.
+- Breaking: Updated: `DependentTaskBuilder` with a `TDependencyKind` generic type.
 
 
 
