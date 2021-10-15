@@ -1,6 +1,6 @@
-import { TaskId } from '../../../task/models/domain/TaskId';
+import { ServiceId } from '../../../task/models/domain/ServiceId';
 
 export interface ClassMetadata {
-  constructorArguments: TaskId[];
-  properties: Record<string, TaskId>;
+  constructorArguments: ServiceId[];
+  properties: Record<string, ServiceId>;
 }

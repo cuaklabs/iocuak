@@ -9,7 +9,7 @@ import { DependentTask } from '../../../cuaktask/task/models/domain/DependentTas
 import { Binding } from '../../binding/models/domain/Binding';
 import { ContainerInternalService } from '../../container/services/ContainerInternalService';
 import { isTaskKind } from '../../utils/isTaskKind';
-import { stringifyTaskId } from '../../utils/stringifyTaskId';
+import { stringifyServiceId } from '../../utils/stringifyServiceId';
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
@@ -59,7 +59,7 @@ export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
 
     if (binding === undefined) {
       throw new Error(
-        `No bindings found for type ${stringifyTaskId(taskKind.id)}`,
+        `No bindings found for type ${stringifyServiceId(taskKind.id)}`,
       );
     } else {
       return new CreateInstanceTask(

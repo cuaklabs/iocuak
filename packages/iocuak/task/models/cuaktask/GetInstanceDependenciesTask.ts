@@ -1,7 +1,7 @@
 import { BaseDependentTask } from '@cuaklabs/cuaktask';
 
 import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
-import { stringifyTaskId } from '../../../utils/stringifyTaskId';
+import { stringifyServiceId } from '../../../utils/stringifyServiceId';
 import { GetInstanceDependenciesTaskKind } from '../domain/GetInstanceDependenciesTaskKind';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
 import { TaskKind } from '../domain/TaskKind';
@@ -32,7 +32,7 @@ export class GetInstanceDependenciesTask<
       return serviceDependencies;
     } else {
       throw new Error(
-        `Invalid dependencies for service ${stringifyTaskId(this.kind.id)}`,
+        `Invalid dependencies for service ${stringifyServiceId(this.kind.id)}`,
       );
     }
   }

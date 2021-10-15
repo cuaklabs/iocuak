@@ -4,7 +4,7 @@ import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanc
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
-import { TaskId } from '../models/domain/TaskId';
+import { ServiceId } from '../models/domain/ServiceId';
 import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
@@ -114,7 +114,7 @@ describe(TaskDependencyEngine.name, () => {
             {
               id: ClassMetadataFixtures
                 .withConstructorArgumentsAndPropertiesEmpty
-                .constructorArguments[0] as TaskId,
+                .constructorArguments[0] as ServiceId,
               type: TaskKindType.createInstance,
             },
           ];
@@ -151,7 +151,7 @@ describe(TaskDependencyEngine.name, () => {
               id: Object.values(
                 ClassMetadataFixtures.withConstructorArgumentsEmptyAndProperties
                   .properties,
-              )[0] as TaskId,
+              )[0] as ServiceId,
               type: TaskKindType.createInstance,
             },
           ];

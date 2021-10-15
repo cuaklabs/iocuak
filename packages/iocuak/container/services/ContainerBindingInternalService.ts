@@ -1,6 +1,6 @@
 import { Binding } from '../../binding/models/domain/Binding';
-import { TaskId } from '../../task/models/domain/TaskId';
+import { ServiceId } from '../../task/models/domain/ServiceId';
 
 export interface ContainerBindingInternalService {
-  get(taskId: TaskId): Binding | undefined;
+  get(serviceId: ServiceId): Binding | undefined;
 }

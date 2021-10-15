@@ -1,5 +1,5 @@
-import { TaskId } from '../../task/models/domain/TaskId';
+import { ServiceId } from '../../task/models/domain/ServiceId';
 
 export interface ContainerSingletonInternalService {
-  get<TInstance>(taskId: TaskId): TInstance | undefined;
+  get<TInstance>(serviceId: ServiceId): TInstance | undefined;
 }

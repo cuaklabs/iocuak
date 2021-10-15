@@ -1,6 +1,6 @@
-import { TaskId } from '../../task/models/domain/TaskId';
+import { ServiceId } from '../../task/models/domain/ServiceId';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 
 export interface ClassMetadataProvider {
-  getMetadata(type: TaskId): ClassMetadata;
+  getMetadata(type: ServiceId): ClassMetadata;
 }

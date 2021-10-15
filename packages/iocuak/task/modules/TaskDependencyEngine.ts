@@ -5,7 +5,7 @@ import { ClassMetadata } from '../../metadata/models/domain/ClassMetadata';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
-import { TaskId } from '../models/domain/TaskId';
+import { ServiceId } from '../models/domain/ServiceId';
 import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
 
@@ -65,7 +65,7 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
 
     const constructorArgumentsCreateInstanceTaskKinds: CreateInstanceTaskKind[] =
       metadata.constructorArguments.map(
-        (constructorArgument: TaskId): CreateInstanceTaskKind => ({
+        (constructorArgument: ServiceId): CreateInstanceTaskKind => ({
           id: constructorArgument,
           type: TaskKindType.createInstance,
         }),
@@ -73,8 +73,8 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
 
     const propertyCreateInstanceTaskKinds: CreateInstanceTaskKind[] =
       Object.values(metadata.properties).map(
-        (taskId: TaskId): CreateInstanceTaskKind => ({
-          id: taskId,
+        (serviceId: ServiceId): CreateInstanceTaskKind => ({
+          id: serviceId,
           type: TaskKindType.createInstance,
         }),
       );
