@@ -1,1 +1,3 @@
-export type TaskId = string | symbol | ((...args: unknown[]) => unknown);
+import { Newable } from './Newable';
+
+export type TaskId = string | symbol | Newable;
