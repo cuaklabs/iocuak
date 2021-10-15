@@ -1,7 +1,6 @@
 import { Builder } from '../../common/modules/Builder';
 import { SetLike } from '../../common/modules/SetLike';
 import { DependentTask } from '../models/domain/DependentTask';
-import { Task } from '../models/domain/Task';
 import { TaskStatus } from '../models/domain/TaskStatus';
 import { DependentTaskBuilder } from './DependentTaskBuilder';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
@@ -14,12 +13,12 @@ class DependentTaskBuilderMock extends DependentTaskBuilder<
 > {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #buildWithNoDependenciesMock: jest.Mock<
-    Task<unknown, unknown[], unknown>,
+    DependentTask<unknown, unknown, unknown[], unknown>,
     [unknown]
   >;
   constructor(
     buildWithNoDependenciesMock: jest.Mock<
-      Task<unknown, unknown[], unknown>,
+      DependentTask<unknown, unknown, unknown[], unknown>,
       [unknown]
     >,
     taskDependenciesKindSetBuilder: Builder<[], SetLike<string>>,
@@ -32,9 +31,10 @@ class DependentTaskBuilderMock extends DependentTaskBuilder<
 
   protected buildWithNoDependencies<TKind, TArgs extends unknown[], TReturn>(
     taskKind: TKind,
-  ): Task<TKind, TArgs, TReturn> {
-    return this.#buildWithNoDependenciesMock(taskKind) as Task<
+  ): DependentTask<TKind, unknown, TArgs, TReturn> {
+    return this.#buildWithNoDependenciesMock(taskKind) as DependentTask<
       TKind,
+      unknown,
       TArgs,
       TReturn
     >;
@@ -43,7 +43,7 @@ class DependentTaskBuilderMock extends DependentTaskBuilder<
 
 describe(DependentTaskBuilder.name, () => {
   let buildWithNoDependenciesMock: jest.Mock<
-    Task<unknown, unknown[], unknown>,
+    DependentTask<unknown, unknown, unknown[], unknown>,
     [unknown]
   >;
   let taskDependenciesKindSetBuilder: jest.Mocked<Builder<[], SetLike<string>>>;
@@ -53,7 +53,7 @@ describe(DependentTaskBuilder.name, () => {
 
   beforeAll(() => {
     buildWithNoDependenciesMock = jest.fn<
-      Task<unknown, unknown[], unknown>,
+      DependentTask<unknown, unknown, unknown[], unknown>,
       [unknown]
     >();
     taskDependenciesKindSetBuilder = {
@@ -73,13 +73,14 @@ describe(DependentTaskBuilder.name, () => {
   describe('.build()', () => {
     describe('when called, with no dependencies', () => {
       let taskKindFixture: string;
-      let taskFixture: Task<string, unknown[], unknown>;
+      let taskFixture: DependentTask<string, unknown, unknown[], unknown>;
 
       let result: unknown;
 
       beforeAll(() => {
         taskKindFixture = 'some-kind';
         taskFixture = {
+          dependencies: [],
           kind: taskKindFixture,
           perform: jest.fn(),
           status: TaskStatus.NotStarted,
@@ -116,7 +117,6 @@ describe(DependentTaskBuilder.name, () => {
 
       it('should return a dependent task', () => {
         const expected: DependentTask<string, unknown, unknown[], unknown> = {
-          dependencies: [],
           ...taskFixture,
         };
 
@@ -127,21 +127,28 @@ describe(DependentTaskBuilder.name, () => {
 
   describe('when called, with no circular dependencies', () => {
     let dependentTaskKindFixture: string;
-    let dependentTaskFixture: Task<string, unknown[], unknown>;
+    let dependentTaskFixture: DependentTask<
+      string,
+      unknown,
+      unknown[],
+      unknown
+    >;
     let taskKindFixture: string;
-    let taskFixture: Task<string, unknown[], unknown>;
+    let taskFixture: DependentTask<string, unknown, unknown[], unknown>;
 
     let result: unknown;
 
     beforeAll(() => {
       dependentTaskKindFixture = 'dependent-kind';
       dependentTaskFixture = {
+        dependencies: [],
         kind: dependentTaskKindFixture,
         perform: jest.fn(),
         status: TaskStatus.NotStarted,
       };
       taskKindFixture = 'some-kind';
       taskFixture = {
+        dependencies: [],
         kind: taskKindFixture,
         perform: jest.fn(),
         status: TaskStatus.NotStarted,
@@ -192,13 +199,8 @@ describe(DependentTaskBuilder.name, () => {
 
     it('should return a dependent task', () => {
       const expected: DependentTask<string, unknown, unknown[], unknown> = {
-        dependencies: [
-          {
-            dependencies: [],
-            ...dependentTaskFixture,
-          },
-        ],
         ...taskFixture,
+        dependencies: [dependentTaskFixture],
       };
 
       expect(result).toStrictEqual(expected);
@@ -208,7 +210,7 @@ describe(DependentTaskBuilder.name, () => {
   describe('when called, with circular dependencies', () => {
     let dependentTaskKindFixture: string;
     let taskKindFixture: string;
-    let taskFixture: Task<string, unknown[], unknown>;
+    let taskFixture: DependentTask<string, unknown, unknown[], unknown>;
 
     let result: unknown;
 
@@ -217,6 +219,7 @@ describe(DependentTaskBuilder.name, () => {
 
       taskKindFixture = dependentTaskKindFixture;
       taskFixture = {
+        dependencies: [],
         kind: taskKindFixture,
         perform: jest.fn(),
         status: TaskStatus.NotStarted,

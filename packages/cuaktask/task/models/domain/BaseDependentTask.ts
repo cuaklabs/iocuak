@@ -24,6 +24,6 @@ export abstract class BaseDependentTask<
   }
 
   public get dependencies(): DependentTask<TDependencyKind>[] {
-    return [...this._innerDependencies];
+    return this._innerDependencies;
   }
 }

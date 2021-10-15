@@ -1,7 +1,6 @@
 import { Builder } from '../../common/modules/Builder';
 import { SetLike } from '../../common/modules/SetLike';
 import { DependentTask } from '../models/domain/DependentTask';
-import { Task } from '../models/domain/Task';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
 
 export abstract class DependentTaskBuilder<
@@ -49,7 +48,7 @@ export abstract class DependentTaskBuilder<
       throw new Error('Circular dependency found!');
     }
 
-    const task: Task<TKind, TArgs, TReturn> =
+    const task: DependentTask<TKind, unknown, TArgs, TReturn> =
       this.buildWithNoDependencies(taskKind);
 
     taskDependenciesKindSet.add(taskKind);
@@ -68,18 +67,14 @@ export abstract class DependentTaskBuilder<
 
     taskDependenciesKindSet.delete(taskKind);
 
-    const dependentTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn> =
-      {
-        dependencies: taskDependencies,
-        ...task,
-      };
+    task.dependencies.push(...taskDependencies);
 
-    return dependentTask;
+    return task;
   }
 
   protected abstract buildWithNoDependencies<
     TKind,
     TArgs extends unknown[],
     TReturn,
-  >(taskKind: TKind): Task<TKind, TArgs, TReturn>;
+  >(taskKind: TKind): DependentTask<TKind, unknown, TArgs, TReturn>;
 }
