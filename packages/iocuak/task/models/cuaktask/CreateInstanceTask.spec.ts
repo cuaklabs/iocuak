@@ -1,4 +1,4 @@
-import { ContainerInternalService } from '../../../container/services/ContainerInternalService';
+import { ContainerService } from '../../../container/services/domain/ContainerService';
 import { ServiceDependenciesFixtures } from '../../fixtures/domain/ServiceDependenciesFixtures';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { TaskKindType } from '../domain/TaskKindType';
@@ -22,7 +22,7 @@ describe(CreateInstanceTask.name, () => {
 
       describe('when called and containerInternalService.singleton.get() returns no instance', () => {
         let instanceConstructorCallMock: jest.Mock<InstanceTest, [] | [string]>;
-        let containerInternalServiceMock: ContainerInternalService;
+        let containerInternalServiceMock: ContainerService;
         let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
 
         let result: unknown;
@@ -36,7 +36,7 @@ describe(CreateInstanceTask.name, () => {
             singleton: {
               get: jest.fn().mockReturnValueOnce(undefined),
             },
-          } as Partial<ContainerInternalService> as ContainerInternalService;
+          } as Partial<ContainerService> as ContainerService;
 
           createInstanceTask = new CreateInstanceTask(
             instanceConstructorCallMock,
@@ -87,7 +87,7 @@ describe(CreateInstanceTask.name, () => {
         let instanceTestFixture: InstanceTest;
 
         let instanceConstructorCallMock: jest.Mock<InstanceTest, [] | [string]>;
-        let containerInternalServiceMock: ContainerInternalService;
+        let containerInternalServiceMock: ContainerService;
         let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
 
         let result: unknown;
@@ -101,7 +101,7 @@ describe(CreateInstanceTask.name, () => {
             singleton: {
               get: jest.fn().mockReturnValueOnce(instanceTestFixture),
             },
-          } as Partial<ContainerInternalService> as ContainerInternalService;
+          } as Partial<ContainerService> as ContainerService;
 
           createInstanceTask = new CreateInstanceTask(
             instanceConstructorCallMock,

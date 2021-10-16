@@ -4,7 +4,7 @@ jest.mock('../../utils/isTaskKind');
 
 import { Builder } from '../../../cuaktask/common/modules/Builder';
 import { Binding } from '../../binding/models/domain/Binding';
-import { ContainerInternalService } from '../../container/services/ContainerInternalService';
+import { ContainerService } from '../../container/services/domain/ContainerService';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
@@ -19,7 +19,7 @@ describe(TaskBuilder.name, () => {
     Builder<[], SetLike<TaskKind>>
   >;
   let taskDependencyEngine: jest.Mocked<TaskDependencyEngine>;
-  let containerInternalService: ContainerInternalService;
+  let containerInternalService: ContainerService;
 
   let taskBuilder: TaskBuilder;
 
@@ -34,7 +34,7 @@ describe(TaskBuilder.name, () => {
       binding: {
         get: jest.fn(),
       },
-    } as Partial<ContainerInternalService> as ContainerInternalService;
+    } as Partial<ContainerService> as ContainerService;
 
     taskBuilder = new TaskBuilder(
       taskDependenciesKindSetBuilder,

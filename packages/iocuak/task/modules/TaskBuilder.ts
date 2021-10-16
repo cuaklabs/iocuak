@@ -7,7 +7,7 @@ import {
 import { Builder } from '../../../cuaktask/common/modules/Builder';
 import { DependentTask } from '../../../cuaktask/task/models/domain/DependentTask';
 import { Binding } from '../../binding/models/domain/Binding';
-import { ContainerInternalService } from '../../container/services/ContainerInternalService';
+import { ContainerService } from '../../container/services/domain/ContainerService';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { stringifyServiceId } from '../../utils/stringifyServiceId';
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
@@ -19,12 +19,12 @@ import { TaskKindType } from '../models/domain/TaskKindType';
 
 export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  readonly #containerInternalService: ContainerInternalService;
+  readonly #containerInternalService: ContainerService;
 
   constructor(
     taskDependenciesKindSetBuilder: Builder<[], SetLike<TaskKind>>,
     taskDependencyEngine: TaskDependencyEngine,
-    containerInternalService: ContainerInternalService,
+    containerInternalService: ContainerService,
   ) {
     super(taskDependenciesKindSetBuilder, taskDependencyEngine);
 

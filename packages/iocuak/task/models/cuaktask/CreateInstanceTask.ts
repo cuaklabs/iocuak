@@ -1,7 +1,7 @@
 import { BaseDependentTask } from '@cuaklabs/cuaktask';
 
 import { DependentTask } from '../../../../cuaktask/task/models/domain/DependentTask';
-import { ContainerInternalService } from '../../../container/services/ContainerInternalService';
+import { ContainerService } from '../../../container/services/domain/ContainerService';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { Newable } from '../domain/Newable';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
@@ -20,11 +20,11 @@ export class CreateInstanceTask<
   #instanceConstructor: Newable<TInstance, TArgs>;
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  #containerInternalService: ContainerInternalService;
+  #containerInternalService: ContainerService;
 
   constructor(
     instanceConstructor: Newable<TInstance, TArgs>,
-    containerInternalService: ContainerInternalService,
+    containerInternalService: ContainerService,
     kind: CreateInstanceTaskKind,
     dependencies: DependentTask<TaskKind, TaskKind, TArgs, TInstance>[] = [],
   ) {
