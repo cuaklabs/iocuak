@@ -19,6 +19,19 @@
       "roots": ["<rootDir>/dist", "<rootDir>/packages"],
       "testEnvironment": "node",
       "testMatch": ["<rootDir>/dist/**/*.spec.js"],
+      "testPathIgnorePatterns": ["/node_modules", ".int.spec.js"]
+    },
+    {
+      "displayName": "Integration",
+      "collectCoverageFrom": ["**/*.js"],
+      "coveragePathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "moduleFileExtensions": ["ts", "js", "json"],
+      "rootDir": ".",
+      "roots": ["<rootDir>/dist", "<rootDir>/packages"],
+      "testEnvironment": "node",
+      "testMatch": ["<rootDir>/dist/**/*.int.spec.js"],
       "testPathIgnorePatterns": ["/node_modules"]
     }
   ]

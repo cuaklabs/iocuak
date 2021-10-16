@@ -4,7 +4,8 @@
       "displayName": "Unit",
       "collectCoverageFrom": ["**/*.ts"],
       "coveragePathIgnorePatterns": [
-        "/node_modules/"
+        "/node_modules/",
+        "/fixtures/"
       ],
       "coverageThreshold": {
         "global": {
@@ -19,6 +20,22 @@
       "roots": ["<rootDir>/packages"],
       "testEnvironment": "node",
       "testMatch": ["<rootDir>/packages/**/*.spec.ts"],
+      "testPathIgnorePatterns": ["/node_modules", ".int.spec.ts"],
+      "transform": {
+        "^.+\\.ts?$": "ts-jest"
+      }
+    },
+    {
+      "displayName": "Integration",
+      "collectCoverageFrom": ["**/*.ts"],
+      "coveragePathIgnorePatterns": [
+        "/node_modules/",
+        "/fixtures/"
+      ],
+      "moduleFileExtensions": ["ts", "js", "json"],
+      "rootDir": ".",
+      "testEnvironment": "node",
+      "testMatch": ["<rootDir>/packages/**/*.int.spec.ts"],
       "testPathIgnorePatterns": ["/node_modules"],
       "transform": {
         "^.+\\.ts?$": "ts-jest"
