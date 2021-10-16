@@ -19,6 +19,7 @@
     "prepublish:packages": "npm run build:prod && npm t",
     "publish:packages": "lerna publish from-package",
     "test:coverage": "npm test -- --coverage",
+    "test:master": "jest --changedSince=origin/master",
     "test:js:ci": "npm run test:js -- --ci",
     "test:js:coverage": "npm run test:js -- --coverage",
     "test:js": "npm test -- --config=jest.js.config.json",
