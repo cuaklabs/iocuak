@@ -40,8 +40,12 @@ function injectParameter(serviceId: ServiceId): ParameterDecorator {
       target,
       MetadataKey.inject,
       getDefaultInjectDecoratorMetadata(),
-      (injectDecoratorMetadata: InjectDecoratorMetadata) => {
+      (
+        injectDecoratorMetadata: InjectDecoratorMetadata,
+      ): InjectDecoratorMetadata => {
         injectDecoratorMetadata.parameters[parameterIndex] = serviceId;
+
+        return injectDecoratorMetadata;
       },
     );
   };
@@ -54,8 +58,12 @@ function injectProperty(serviceId: ServiceId): PropertyDecorator {
       target.constructor,
       MetadataKey.inject,
       getDefaultInjectDecoratorMetadata(),
-      (injectDecoratorMetadata: InjectDecoratorMetadata) => {
+      (
+        injectDecoratorMetadata: InjectDecoratorMetadata,
+      ): InjectDecoratorMetadata => {
         injectDecoratorMetadata.properties.set(propertyKey, serviceId);
+
+        return injectDecoratorMetadata;
       },
     );
   };

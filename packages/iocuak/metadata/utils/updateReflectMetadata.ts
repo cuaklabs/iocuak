@@ -5,12 +5,12 @@ export function updateReflectMetadata<TMetadata>(
   target: Object,
   metadataKey: unknown,
   defaultValue: TMetadata,
-  callback: (metadata: TMetadata) => void,
+  callback: (metadata: TMetadata) => TMetadata,
 ): void {
   const metadata: TMetadata =
     getReflectMetadata(target, metadataKey) ?? defaultValue;
 
-  callback(metadata);
+  const updatedMetadata: TMetadata = callback(metadata);
 
-  Reflect.defineMetadata(metadataKey, metadata, target);
+  Reflect.defineMetadata(metadataKey, updatedMetadata, target);
 }

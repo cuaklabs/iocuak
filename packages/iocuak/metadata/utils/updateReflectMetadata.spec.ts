@@ -18,7 +18,9 @@ describe(updateReflectMetadata.name, () => {
       targetFixture = class {};
       metadataKeyFixture = 'sample-key';
       defaultValueFixture = 'default-value';
-      callbackMock = jest.fn<void, [unknown]>();
+      callbackMock = jest
+        .fn<void, [unknown]>()
+        .mockImplementationOnce((value: unknown) => value);
 
       (getReflectMetadata as jest.Mock).mockReturnValueOnce(undefined);
 
@@ -70,7 +72,9 @@ describe(updateReflectMetadata.name, () => {
       metadataFixture = 'metadata';
       metadataKeyFixture = 'sample-key';
       defaultValueFixture = 'default-value';
-      callbackMock = jest.fn<void, [unknown]>();
+      callbackMock = jest
+        .fn<void, [unknown]>()
+        .mockImplementationOnce((value: unknown) => value);
 
       (getReflectMetadata as jest.Mock).mockReturnValueOnce(metadataFixture);
 
