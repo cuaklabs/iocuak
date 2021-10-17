@@ -20,9 +20,9 @@ describe(CreateInstanceTask.name, () => {
         };
       });
 
-      describe('when called and containerInternalService.singleton.get() returns no instance', () => {
+      describe('when called and containerService.singleton.get() returns no instance', () => {
         let instanceConstructorCallMock: jest.Mock<InstanceTest, [] | [string]>;
-        let containerInternalServiceMock: ContainerService;
+        let containerServiceMock: ContainerService;
         let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
 
         let result: unknown;
@@ -32,7 +32,7 @@ describe(CreateInstanceTask.name, () => {
             .fn<InstanceTest, []>()
             .mockImplementation((foo?: string) => new InstanceTest(foo));
 
-          containerInternalServiceMock = {
+          containerServiceMock = {
             singleton: {
               get: jest.fn().mockReturnValueOnce(undefined),
             },
@@ -40,7 +40,7 @@ describe(CreateInstanceTask.name, () => {
 
           createInstanceTask = new CreateInstanceTask(
             instanceConstructorCallMock,
-            containerInternalServiceMock,
+            containerServiceMock,
             taskKindFixture,
           );
 
@@ -53,13 +53,11 @@ describe(CreateInstanceTask.name, () => {
           jest.clearAllMocks();
         });
 
-        it('should call containerInternalService.singleton.get()', () => {
-          expect(
-            containerInternalServiceMock.singleton.get,
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            containerInternalServiceMock.singleton.get,
-          ).toHaveBeenCalledWith(taskKindFixture.id);
+        it('should call containerService.singleton.get()', () => {
+          expect(containerServiceMock.singleton.get).toHaveBeenCalledTimes(1);
+          expect(containerServiceMock.singleton.get).toHaveBeenCalledWith(
+            taskKindFixture.id,
+          );
         });
 
         it('should call instanceConstructorCall()', () => {
@@ -83,11 +81,11 @@ describe(CreateInstanceTask.name, () => {
         });
       });
 
-      describe('when called and containerInternalService.singleton.get() returns an instance', () => {
+      describe('when called and containerService.singleton.get() returns an instance', () => {
         let instanceTestFixture: InstanceTest;
 
         let instanceConstructorCallMock: jest.Mock<InstanceTest, [] | [string]>;
-        let containerInternalServiceMock: ContainerService;
+        let containerServiceMock: ContainerService;
         let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
 
         let result: unknown;
@@ -97,7 +95,7 @@ describe(CreateInstanceTask.name, () => {
 
           instanceConstructorCallMock = jest.fn<InstanceTest, []>();
 
-          containerInternalServiceMock = {
+          containerServiceMock = {
             singleton: {
               get: jest.fn().mockReturnValueOnce(instanceTestFixture),
             },
@@ -105,7 +103,7 @@ describe(CreateInstanceTask.name, () => {
 
           createInstanceTask = new CreateInstanceTask(
             instanceConstructorCallMock,
-            containerInternalServiceMock,
+            containerServiceMock,
             taskKindFixture,
           );
 
@@ -118,13 +116,11 @@ describe(CreateInstanceTask.name, () => {
           jest.clearAllMocks();
         });
 
-        it('should call containerInternalService.singleton.get()', () => {
-          expect(
-            containerInternalServiceMock.singleton.get,
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            containerInternalServiceMock.singleton.get,
-          ).toHaveBeenCalledWith(taskKindFixture.id);
+        it('should call containerService.singleton.get()', () => {
+          expect(containerServiceMock.singleton.get).toHaveBeenCalledTimes(1);
+          expect(containerServiceMock.singleton.get).toHaveBeenCalledWith(
+            taskKindFixture.id,
+          );
         });
 
         it('should not call instanceConstructorCall()', () => {

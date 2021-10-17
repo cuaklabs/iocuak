@@ -19,7 +19,7 @@ describe(TaskBuilder.name, () => {
     Builder<[], SetLike<TaskKind>>
   >;
   let taskDependencyEngine: jest.Mocked<TaskDependencyEngine>;
-  let containerInternalService: ContainerService;
+  let containerService: ContainerService;
 
   let taskBuilder: TaskBuilder;
 
@@ -30,7 +30,7 @@ describe(TaskBuilder.name, () => {
     taskDependencyEngine = {
       getDependencies: jest.fn(),
     };
-    containerInternalService = {
+    containerService = {
       binding: {
         get: jest.fn(),
       },
@@ -39,7 +39,7 @@ describe(TaskBuilder.name, () => {
     taskBuilder = new TaskBuilder(
       taskDependenciesKindSetBuilder,
       taskDependencyEngine,
-      containerInternalService,
+      containerService,
     );
   });
 
@@ -58,7 +58,7 @@ describe(TaskBuilder.name, () => {
         (isTaskKind as unknown as jest.Mock).mockReturnValueOnce(true);
 
         (
-          containerInternalService.binding.get as jest.Mock<Binding | undefined>
+          containerService.binding.get as jest.Mock<Binding | undefined>
         ).mockReturnValueOnce(bindingFixture);
 
         taskDependencyEngine.getDependencies.mockReturnValueOnce([]);

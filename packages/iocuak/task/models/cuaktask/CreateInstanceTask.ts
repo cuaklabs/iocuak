@@ -20,25 +20,25 @@ export class CreateInstanceTask<
   #instanceConstructor: Newable<TInstance, TArgs>;
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  #containerInternalService: ContainerService;
+  #containerService: ContainerService;
 
   constructor(
     instanceConstructor: Newable<TInstance, TArgs>,
-    containerInternalService: ContainerService,
+    containerService: ContainerService,
     kind: CreateInstanceTaskKind,
     dependencies: DependentTask<TaskKind, TaskKind, TArgs, TInstance>[] = [],
   ) {
     super(kind, dependencies);
 
     this.#instanceConstructor = instanceConstructor;
-    this.#containerInternalService = containerInternalService;
+    this.#containerService = containerService;
   }
 
   protected innerPerform(
     serviceDependencies: ServiceDependencies<TArgs>,
   ): TInstance {
     const instanceFromSingletonScope: unknown =
-      this.#containerInternalService.singleton.get(this.kind.id);
+      this.#containerService.singleton.get(this.kind.id);
 
     let instance: TInstance;
 

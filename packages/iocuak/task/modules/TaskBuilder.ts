@@ -19,16 +19,16 @@ import { TaskKindType } from '../models/domain/TaskKindType';
 
 export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  readonly #containerInternalService: ContainerService;
+  readonly #containerService: ContainerService;
 
   constructor(
     taskDependenciesKindSetBuilder: Builder<[], SetLike<TaskKind>>,
     taskDependencyEngine: TaskDependencyEngine,
-    containerInternalService: ContainerService,
+    containerService: ContainerService,
   ) {
     super(taskDependenciesKindSetBuilder, taskDependencyEngine);
 
-    this.#containerInternalService = containerInternalService;
+    this.#containerService = containerService;
   }
 
   protected buildWithNoDependencies<TKind, TArgs extends unknown[], TReturn>(
@@ -54,8 +54,9 @@ export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
   #buildCreateInstanceTaskWithNoDependencies(
     taskKind: CreateInstanceTaskKind,
   ): CreateInstanceTask {
-    const binding: Binding | undefined =
-      this.#containerInternalService.binding.get(taskKind.id);
+    const binding: Binding | undefined = this.#containerService.binding.get(
+      taskKind.id,
+    );
 
     if (binding === undefined) {
       throw new Error(
@@ -64,7 +65,7 @@ export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
     } else {
       return new CreateInstanceTask(
         binding.type,
-        this.#containerInternalService,
+        this.#containerService,
         taskKind,
       );
     }
