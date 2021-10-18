@@ -3,7 +3,6 @@ import { SetLike, TaskDependencyEngine } from '@cuaklabs/cuaktask';
 jest.mock('../../utils/isTaskKind');
 
 import { Builder } from '../../../cuaktask/common/modules/Builder';
-import { Binding } from '../../binding/models/domain/Binding';
 import { ContainerService } from '../../container/services/domain/ContainerService';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
@@ -11,7 +10,6 @@ import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetI
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
 import { TaskKind } from '../models/domain/TaskKind';
-import { TaskScope } from '../models/domain/TaskScope';
 import { TaskBuilder } from './TaskBuilder';
 
 describe(TaskBuilder.name, () => {
@@ -45,21 +43,10 @@ describe(TaskBuilder.name, () => {
 
   describe('.build()', () => {
     describe('when called, with a taskKind of type TaskKindType.createInstance', () => {
-      let bindingFixture: Binding;
       let result: unknown;
 
       beforeAll(() => {
-        bindingFixture = {
-          id: CreateInstanceTaskKindFixtures.any.id,
-          scope: TaskScope.transient,
-          type: class {},
-        };
-
         (isTaskKind as unknown as jest.Mock).mockReturnValueOnce(true);
-
-        (
-          containerService.binding.get as jest.Mock<Binding | undefined>
-        ).mockReturnValueOnce(bindingFixture);
 
         taskDependencyEngine.getDependencies.mockReturnValueOnce([]);
 

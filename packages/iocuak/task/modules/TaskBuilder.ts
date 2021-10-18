@@ -6,10 +6,8 @@ import {
 
 import { Builder } from '../../../cuaktask/common/modules/Builder';
 import { DependentTask } from '../../../cuaktask/task/models/domain/DependentTask';
-import { Binding } from '../../binding/models/domain/Binding';
 import { ContainerService } from '../../container/services/domain/ContainerService';
 import { isTaskKind } from '../../utils/isTaskKind';
-import { stringifyServiceId } from '../../utils/stringifyServiceId';
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
@@ -54,21 +52,7 @@ export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
   #buildCreateInstanceTaskWithNoDependencies(
     taskKind: CreateInstanceTaskKind,
   ): CreateInstanceTask {
-    const binding: Binding | undefined = this.#containerService.binding.get(
-      taskKind.id,
-    );
-
-    if (binding === undefined) {
-      throw new Error(
-        `No bindings found for type ${stringifyServiceId(taskKind.id)}`,
-      );
-    } else {
-      return new CreateInstanceTask(
-        binding.type,
-        this.#containerService,
-        taskKind,
-      );
-    }
+    return new CreateInstanceTask(this.#containerService, taskKind);
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/member-ordering
