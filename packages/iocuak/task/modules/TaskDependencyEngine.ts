@@ -1,8 +1,10 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
-import { ClassMetadataProvider } from '../../metadata/adapters/ClassMetadataProvider';
+import { Binding } from '../../binding/models/domain/Binding';
+import { ContainerService } from '../../container/services/domain/ContainerService';
 import { ClassMetadata } from '../../metadata/models/domain/ClassMetadata';
 import { isTaskKind } from '../../utils/isTaskKind';
+import { stringifyServiceId } from '../../utils/stringifyServiceId';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { ServiceId } from '../models/domain/ServiceId';
@@ -11,10 +13,10 @@ import { TaskKindType } from '../models/domain/TaskKindType';
 
 export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  readonly #classMetadataProvider: ClassMetadataProvider;
+  readonly #containerService: ContainerService;
 
-  constructor(classMetadataProvider: ClassMetadataProvider) {
-    this.#classMetadataProvider = classMetadataProvider;
+  constructor(containerService: ContainerService) {
+    this.#containerService = containerService;
   }
 
   public getDependencies<TKind, TDependencyKind>(
@@ -25,12 +27,12 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
 
       switch (taskKind.type) {
         case TaskKindType.createInstance:
-          dependencies = this.getCreateInstanceTaskKindDependencies(
+          dependencies = this.#getCreateInstanceTaskKindDependencies(
             taskKind,
           ) as unknown[] as TDependencyKind[];
           break;
         case TaskKindType.getInstanceDependencies:
-          dependencies = this.getGetInstanceDependenciesTaskKindDependencies(
+          dependencies = this.#getGetInstanceDependenciesTaskKindDependencies(
             taskKind,
           ) as unknown[] as TDependencyKind[];
           break;
@@ -42,12 +44,30 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
     }
   }
 
-  private getCreateInstanceTaskKindDependencies(
+  #getClassMetadata(serviceId: ServiceId): ClassMetadata {
+    const binding: Binding | undefined =
+      this.#containerService.binding.get(serviceId);
+
+    if (binding === undefined) {
+      throw new Error(
+        `No bindings found for type ${stringifyServiceId(serviceId)}`,
+      );
+    } else {
+      const metadata: ClassMetadata | undefined =
+        this.#containerService.metadata.get(binding.type);
+
+      if (metadata === undefined) {
+        throw new Error(`No metadata found for type ${binding.type.name}`);
+      } else {
+        return metadata;
+      }
+    }
+  }
+
+  #getCreateInstanceTaskKindDependencies(
     taskKind: CreateInstanceTaskKind,
   ): TaskKind[] {
-    const metadata: ClassMetadata = this.#classMetadataProvider.getMetadata(
-      taskKind.id,
-    );
+    const metadata: ClassMetadata = this.#getClassMetadata(taskKind.id);
 
     const getInstanceDependenciesTaskKind: GetInstanceDependenciesTaskKind = {
       id: taskKind.id,
@@ -58,7 +78,7 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
     return [getInstanceDependenciesTaskKind];
   }
 
-  private getGetInstanceDependenciesTaskKindDependencies(
+  #getGetInstanceDependenciesTaskKindDependencies(
     taskKind: GetInstanceDependenciesTaskKind,
   ): TaskKind[] {
     const metadata: ClassMetadata = taskKind.metadata;
