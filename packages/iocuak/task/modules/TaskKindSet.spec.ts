@@ -49,7 +49,7 @@ describe(TaskKindSet.name, () => {
           id: 'sample-task-id',
           metadata: {
             constructorArguments: [],
-            properties: {},
+            properties: new Map(),
           },
           type: TaskKindType.getInstanceDependencies,
         };
@@ -150,7 +150,7 @@ describe(TaskKindSet.name, () => {
           id: 'sample-task-id',
           metadata: {
             constructorArguments: [],
-            properties: {},
+            properties: new Map(),
           },
           type: TaskKindType.getInstanceDependencies,
         };
@@ -239,7 +239,7 @@ describe(TaskKindSet.name, () => {
           id: 'sample-task-id',
           metadata: {
             constructorArguments: [],
-            properties: {},
+            properties: new Map(),
           },
           type: TaskKindType.getInstanceDependencies,
         };

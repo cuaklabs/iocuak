@@ -91,13 +91,14 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
         }),
       );
 
-    const propertyCreateInstanceTaskKinds: CreateInstanceTaskKind[] =
-      Object.values(metadata.properties).map(
-        (serviceId: ServiceId): CreateInstanceTaskKind => ({
-          id: serviceId,
-          type: TaskKindType.createInstance,
-        }),
-      );
+    const propertyCreateInstanceTaskKinds: CreateInstanceTaskKind[] = [
+      ...metadata.properties.values(),
+    ].map(
+      (serviceId: ServiceId): CreateInstanceTaskKind => ({
+        id: serviceId,
+        type: TaskKindType.createInstance,
+      }),
+    );
 
     const createInstanceTaskKinds: CreateInstanceTaskKind[] = [
       ...constructorArgumentsCreateInstanceTaskKinds,

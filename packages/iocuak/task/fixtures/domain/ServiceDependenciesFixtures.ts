@@ -6,7 +6,7 @@ export class ServiceDependenciesFixtures {
   > {
     const fixture: ServiceDependencies<[]> = {
       constructorArguments: [],
-      properties: {},
+      properties: new Map(),
     };
 
     return fixture;
@@ -17,9 +17,7 @@ export class ServiceDependenciesFixtures {
   > {
     const fixture: ServiceDependencies<[string]> = {
       constructorArguments: ['sample-string-argument'],
-      properties: {
-        fooProperty: 'foo-value',
-      },
+      properties: new Map([['fooProperty', 'foo-value']]),
     };
 
     return fixture;

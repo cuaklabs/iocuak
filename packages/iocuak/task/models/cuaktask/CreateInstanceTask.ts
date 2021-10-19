@@ -72,9 +72,12 @@ export class CreateInstanceTask<
       ...serviceDependencies.constructorArguments,
     );
 
-    for (const propertyName in serviceDependencies.properties) {
-      (instance as Record<string, unknown>)[propertyName] =
-        serviceDependencies.properties[propertyName];
+    for (const [
+      propertyName,
+      propertyValue,
+    ] of serviceDependencies.properties) {
+      (instance as Record<string | symbol, unknown>)[propertyName] =
+        propertyValue;
     }
 
     return instance;

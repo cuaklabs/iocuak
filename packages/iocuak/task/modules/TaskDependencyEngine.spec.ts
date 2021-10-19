@@ -245,10 +245,9 @@ describe(TaskDependencyEngine.name, () => {
         it('should return a TDependencyKind[]', () => {
           const expected: TaskKind[] = [
             {
-              id: Object.values(
-                ClassMetadataFixtures.withConstructorArgumentsEmptyAndProperties
-                  .properties,
-              )[0] as ServiceId,
+              id: ClassMetadataFixtures.withConstructorArgumentsEmptyAndProperties.properties
+                .values()
+                .next().value as ServiceId,
               type: TaskKindType.createInstance,
             },
           ];

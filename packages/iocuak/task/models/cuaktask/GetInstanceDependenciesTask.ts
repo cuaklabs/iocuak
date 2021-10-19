@@ -21,7 +21,7 @@ export class GetInstanceDependenciesTask<
       const constructorArguments: TArgs =
         this.#getConstructorArguments(dependencies);
 
-      const properties: Record<string, unknown> =
+      const properties: Map<string | symbol, unknown> =
         this.#getProperties(dependencies);
 
       const serviceDependencies: ServiceDependencies<TArgs> = {
@@ -42,7 +42,7 @@ export class GetInstanceDependenciesTask<
     const metadata: ClassMetadata = this.kind.metadata;
     const constructorArgumentsCount: number =
       metadata.constructorArguments.length;
-    const propertiesCount: number = Object.keys(metadata.properties).length;
+    const propertiesCount: number = metadata.properties.size;
 
     return dependencies.length === constructorArgumentsCount + propertiesCount;
   }
@@ -62,18 +62,20 @@ export class GetInstanceDependenciesTask<
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/member-ordering
-  #getProperties(dependencies: unknown[]): Record<string, unknown> {
+  #getProperties(dependencies: unknown[]): Map<string | symbol, unknown> {
     const metadata: ClassMetadata = this.kind.metadata;
     const constructorArgumentsCount: number =
       metadata.constructorArguments.length;
 
-    const properties: Record<string, unknown> = {};
+    const properties: Map<string | symbol, unknown> = new Map();
 
     let propertiesKeyCounter: number = 0;
 
-    for (const propertyName in metadata.properties) {
-      properties[propertyName] =
-        dependencies[constructorArgumentsCount + propertiesKeyCounter];
+    for (const propertyName of metadata.properties.keys()) {
+      properties.set(
+        propertyName,
+        dependencies[constructorArgumentsCount + propertiesKeyCounter],
+      );
 
       ++propertiesKeyCounter;
     }

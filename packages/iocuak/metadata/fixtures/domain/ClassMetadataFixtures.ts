@@ -4,7 +4,7 @@ export class ClassMetadataFixtures {
   public static get any(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: [],
-      properties: {},
+      properties: new Map(),
     };
 
     return fixture;
@@ -13,9 +13,9 @@ export class ClassMetadataFixtures {
   public static get withConstructorArgumentsAndProperties(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: ['sample-constructor-dependency-id'],
-      properties: {
-        sampleProperty: 'sample-property-dependency-id',
-      },
+      properties: new Map([
+        ['sampleProperty', 'sample-property-dependency-id'],
+      ]),
     };
 
     return fixture;
@@ -24,7 +24,7 @@ export class ClassMetadataFixtures {
   public static get withConstructorArgumentsAndPropertiesEmpty(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: ['sample-constructor-dependency-id'],
-      properties: {},
+      properties: new Map(),
     };
 
     return fixture;
@@ -33,9 +33,9 @@ export class ClassMetadataFixtures {
   public static get withConstructorArgumentsEmptyAndProperties(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: [],
-      properties: {
-        sampleProperty: 'sample-property-dependency-id',
-      },
+      properties: new Map([
+        ['sampleProperty', 'sample-property-dependency-id'],
+      ]),
     };
 
     return fixture;
@@ -44,7 +44,7 @@ export class ClassMetadataFixtures {
   public static get withConstructorArgumentsEmptyAndPropertiesEmpty(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: [],
-      properties: {},
+      properties: new Map(),
     };
 
     return fixture;

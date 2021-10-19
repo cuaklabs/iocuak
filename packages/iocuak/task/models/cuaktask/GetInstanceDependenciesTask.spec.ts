@@ -52,17 +52,13 @@ describe(GetInstanceDependenciesTask.name, () => {
       });
 
       it('should return ServiceDependencies', () => {
-        const [expectedPropertyKey]: [string] = Object.keys(
-          GetInstanceDependenciesTaskKindFixtures
-            .withMetadataWithConstructorArgumentsAndProperties.metadata
-            .properties,
-        ) as [string];
+        const [expectedPropertyKey]: [string] = [
+          ...GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsAndProperties.metadata.properties.keys(),
+        ] as [string];
 
         const expected: ServiceDependencies<unknown[]> = {
           constructorArguments: [constructorArgumentFixure],
-          properties: {
-            [expectedPropertyKey]: propertyArgumentFixture,
-          },
+          properties: new Map([[expectedPropertyKey, propertyArgumentFixture]]),
         };
 
         expect(result).toStrictEqual(expected);
