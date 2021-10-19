@@ -1,3 +1,4 @@
+import { ServiceId } from '../../../task/models/domain/ServiceId';
 import { ContainerSingletonServiceImplementation } from './ContainerSingletonServiceImplementation';
 
 describe(ContainerSingletonServiceImplementation.name, () => {
@@ -40,6 +41,40 @@ describe(ContainerSingletonServiceImplementation.name, () => {
 
       it('should return the entry value', () => {
         expect(result).toBe(valueFixture);
+      });
+    });
+  });
+
+  describe('.set()', () => {
+    describe('when called', () => {
+      let serviceIdFixture: ServiceId;
+      let instanceFixture: unknown;
+      let containerSingletonServiceImplementation: ContainerSingletonServiceImplementation;
+
+      beforeAll(() => {
+        containerSingletonServiceImplementation =
+          new ContainerSingletonServiceImplementation();
+
+        serviceIdFixture = 'sample-service-id';
+        instanceFixture = 'sample-instance';
+
+        containerSingletonServiceImplementation.set(
+          serviceIdFixture,
+          instanceFixture,
+        );
+      });
+
+      describe('when .get() is called with the same service id', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result =
+            containerSingletonServiceImplementation.get(serviceIdFixture);
+        });
+
+        it('should return an instance', () => {
+          expect(result).toBe(instanceFixture);
+        });
       });
     });
   });
