@@ -3,6 +3,7 @@ import { SetLike, TaskDependencyEngine } from '@cuaklabs/cuaktask';
 jest.mock('../../utils/isTaskKind');
 
 import { Builder } from '../../../cuaktask/common/modules/Builder';
+import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerService } from '../../container/services/domain/ContainerService';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
@@ -31,7 +32,7 @@ describe(TaskBuilder.name, () => {
     containerService = {
       binding: {
         get: jest.fn(),
-      },
+      } as Partial<ContainerBindingService>,
     } as Partial<ContainerService> as ContainerService;
 
     taskBuilder = new TaskBuilder(

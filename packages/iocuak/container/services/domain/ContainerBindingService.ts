@@ -5,4 +5,9 @@ export interface ContainerBindingService {
   get<TInstance, TArgs extends unknown[]>(
     serviceId: ServiceId,
   ): Binding<TInstance, TArgs> | undefined;
+
+  set<TInstance, TArgs extends unknown[]>(
+    serviceId: ServiceId,
+    binding: Binding<TInstance, TArgs>,
+  ): void;
 }
