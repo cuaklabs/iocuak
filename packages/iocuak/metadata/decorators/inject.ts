@@ -1,5 +1,5 @@
 import { ServiceId } from '../../task/models/domain/ServiceId';
-import { InjectDecoratorMetadata } from '../models/domain/InjectDecoratorMetadata';
+import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { updateReflectMetadata } from '../utils/updateReflectMetadata';
 
@@ -22,9 +22,9 @@ export function inject(
   return decorator;
 }
 
-function getDefaultInjectDecoratorMetadata(): InjectDecoratorMetadata {
+function getDefaultClassMetadata(): ClassMetadata {
   return {
-    parameters: [],
+    constructorArguments: [],
     properties: new Map(),
   };
 }
@@ -39,13 +39,11 @@ function injectParameter(serviceId: ServiceId): ParameterDecorator {
     updateReflectMetadata(
       target,
       MetadataKey.inject,
-      getDefaultInjectDecoratorMetadata(),
-      (
-        injectDecoratorMetadata: InjectDecoratorMetadata,
-      ): InjectDecoratorMetadata => {
-        injectDecoratorMetadata.parameters[parameterIndex] = serviceId;
+      getDefaultClassMetadata(),
+      (classMetadata: ClassMetadata): ClassMetadata => {
+        classMetadata.constructorArguments[parameterIndex] = serviceId;
 
-        return injectDecoratorMetadata;
+        return classMetadata;
       },
     );
   };
@@ -57,13 +55,11 @@ function injectProperty(serviceId: ServiceId): PropertyDecorator {
     updateReflectMetadata(
       target.constructor,
       MetadataKey.inject,
-      getDefaultInjectDecoratorMetadata(),
-      (
-        injectDecoratorMetadata: InjectDecoratorMetadata,
-      ): InjectDecoratorMetadata => {
-        injectDecoratorMetadata.properties.set(propertyKey, serviceId);
+      getDefaultClassMetadata(),
+      (classMetadata: ClassMetadata): ClassMetadata => {
+        classMetadata.properties.set(propertyKey, serviceId);
 
-        return injectDecoratorMetadata;
+        return classMetadata;
       },
     );
   };

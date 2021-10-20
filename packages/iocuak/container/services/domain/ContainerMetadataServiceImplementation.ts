@@ -1,5 +1,4 @@
 import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
-import { InjectDecoratorMetadata } from '../../../metadata/models/domain/InjectDecoratorMetadata';
 import { MetadataKey } from '../../../metadata/models/domain/MetadataKey';
 import { getReflectMetadata } from '../../../metadata/utils/getReflectMetadata';
 import { Newable } from '../../../task/models/domain/Newable';
@@ -11,18 +10,20 @@ export class ContainerMetadataServiceImplementation
   public get<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): ClassMetadata | undefined {
-    const injectDecoratorMetadata: InjectDecoratorMetadata | undefined =
-      getReflectMetadata(type, MetadataKey.inject);
+    const classMetadata: ClassMetadata | undefined = getReflectMetadata(
+      type,
+      MetadataKey.inject,
+    );
 
-    if (injectDecoratorMetadata === undefined) {
+    if (classMetadata === undefined) {
       return undefined;
     } else {
-      const classMetadata: ClassMetadata = {
-        constructorArguments: [...injectDecoratorMetadata.parameters],
-        properties: new Map(injectDecoratorMetadata.properties),
+      const classMetadataClone: ClassMetadata = {
+        constructorArguments: [...classMetadata.constructorArguments],
+        properties: new Map(classMetadata.properties),
       };
 
-      return classMetadata;
+      return classMetadataClone;
     }
   }
 }

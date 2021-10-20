@@ -1,7 +1,8 @@
 import 'reflect-metadata';
+
 import { Newable } from '../../task/models/domain/Newable';
 import { ServiceId } from '../../task/models/domain/ServiceId';
-import { InjectDecoratorMetadata } from '../models/domain/InjectDecoratorMetadata';
+import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { inject } from './inject';
 
@@ -29,8 +30,8 @@ describe(inject.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      expect(reflectMetadata).toStrictEqual<InjectDecoratorMetadata>({
-        parameters: [],
+      expect(reflectMetadata).toStrictEqual<ClassMetadata>({
+        constructorArguments: [],
         properties: new Map([['foo', serviceIdFixture]]),
       });
     });
@@ -58,8 +59,8 @@ describe(inject.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      expect(reflectMetadata).toStrictEqual<InjectDecoratorMetadata>({
-        parameters: [serviceIdFixture],
+      expect(reflectMetadata).toStrictEqual<ClassMetadata>({
+        constructorArguments: [serviceIdFixture],
         properties: new Map(),
       });
     });

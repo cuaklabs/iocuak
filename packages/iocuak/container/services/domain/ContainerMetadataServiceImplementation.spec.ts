@@ -1,7 +1,7 @@
 jest.mock('../../../metadata/utils/getReflectMetadata');
 
 import { ClassMetadataFixtures } from '../../../metadata/fixtures/domain/ClassMetadataFixtures';
-import { InjectDecoratorMetadata } from '../../../metadata/models/domain/InjectDecoratorMetadata';
+import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
 import { MetadataKey } from '../../../metadata/models/domain/MetadataKey';
 import { getReflectMetadata } from '../../../metadata/utils/getReflectMetadata';
 import { Newable } from '../../../task/models/domain/Newable';
@@ -25,7 +25,7 @@ describe(ContainerMetadataServiceImplementation.name, () => {
         typeFixture = class {};
 
         (
-          getReflectMetadata as jest.Mock<InjectDecoratorMetadata | undefined>
+          getReflectMetadata as jest.Mock<ClassMetadata | undefined>
         ).mockReturnValueOnce(undefined);
 
         result = containerMetadataServiceImplementation.get(typeFixture);
@@ -48,26 +48,20 @@ describe(ContainerMetadataServiceImplementation.name, () => {
       });
     });
 
-    describe('when called, and getReflectMetadata returns InjectDecoratorMetadata', () => {
+    describe('when called, and getReflectMetadata returns ClassMetadata', () => {
       let typeFixture: Newable;
-      let injectDecoratorMetadataFixture: InjectDecoratorMetadata;
+      let classMetadataFixture: ClassMetadata;
 
       let result: unknown;
 
       beforeAll(() => {
         typeFixture = class {};
-        injectDecoratorMetadataFixture = {
-          parameters:
-            ClassMetadataFixtures.withConstructorArgumentsAndProperties
-              .constructorArguments,
-          properties:
-            ClassMetadataFixtures.withConstructorArgumentsAndProperties
-              .properties,
-        };
+        classMetadataFixture =
+          ClassMetadataFixtures.withConstructorArgumentsAndProperties;
 
-        (
-          getReflectMetadata as jest.Mock<InjectDecoratorMetadata>
-        ).mockReturnValueOnce(injectDecoratorMetadataFixture);
+        (getReflectMetadata as jest.Mock<ClassMetadata>).mockReturnValueOnce(
+          classMetadataFixture,
+        );
 
         result = containerMetadataServiceImplementation.get(typeFixture);
       });
