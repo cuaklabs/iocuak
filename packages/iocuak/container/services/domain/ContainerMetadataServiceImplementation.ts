@@ -8,7 +8,9 @@ import { ContainerMetadataService } from './ContainerMetadataService';
 export class ContainerMetadataServiceImplementation
   implements ContainerMetadataService
 {
-  public get(type: Newable<unknown, unknown[]>): ClassMetadata | undefined {
+  public get<TInstance, TArgs extends unknown[]>(
+    type: Newable<TInstance, TArgs>,
+  ): ClassMetadata | undefined {
     const injectDecoratorMetadata: InjectDecoratorMetadata | undefined =
       getReflectMetadata(type, MetadataKey.inject);
 

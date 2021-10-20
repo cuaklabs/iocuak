@@ -2,5 +2,7 @@ import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
 import { Newable } from '../../../task/models/domain/Newable';
 
 export interface ContainerMetadataService {
-  get(type: Newable): ClassMetadata | undefined;
+  get<TInstance, TArgs extends unknown[]>(
+    type: Newable<TInstance, TArgs>,
+  ): ClassMetadata | undefined;
 }
