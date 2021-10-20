@@ -15,7 +15,31 @@ describe(ContainerMetadataServiceImplementation.name, () => {
       new ContainerMetadataServiceImplementation();
   });
 
-  describe('.get()', () => {
+  describe('.getBindingMetadata', () => {
+    describe('when called', () => {
+      let typeFixture: Newable;
+
+      beforeAll(() => {
+        typeFixture = class {};
+
+        containerMetadataServiceImplementation.getBindingMetadata(typeFixture);
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should call getReflectMetadata()', () => {
+        expect(getReflectMetadata).toHaveBeenCalledTimes(1);
+        expect(getReflectMetadata).toHaveBeenCalledWith(
+          typeFixture,
+          MetadataKey.injectable,
+        );
+      });
+    });
+  });
+
+  describe('.getClassMetadata()', () => {
     describe('when called, and getReflectMetadata returns undefined', () => {
       let typeFixture: Newable;
 

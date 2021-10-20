@@ -1,5 +1,6 @@
 import { Binding } from '../../binding/models/domain/Binding';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
+import { ContainerMetadataService } from '../../container/services/domain/ContainerMetadataService';
 import { ContainerService } from '../../container/services/domain/ContainerService';
 import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
 import { ClassMetadata } from '../../metadata/models/domain/ClassMetadata';
@@ -25,7 +26,7 @@ describe(TaskDependencyEngine.name, () => {
       } as Partial<ContainerBindingService>,
       metadata: {
         getClassMetadata: jest.fn(),
-      },
+      } as Partial<ContainerMetadataService>,
     } as Partial<ContainerService> as ContainerService;
 
     taskDependencyEngine = new TaskDependencyEngine(containerService);
