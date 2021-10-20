@@ -90,4 +90,70 @@ describe(ContainerBindingServiceImplementation.name, () => {
       });
     });
   });
+
+  describe('.remove()', () => {
+    describe('when called, and serviceIdToInstanceMap has no entries', () => {
+      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let serviceIdFixture: ServiceId;
+
+      beforeAll(() => {
+        containerBindingServiceImplementation =
+          new ContainerBindingServiceImplementation();
+
+        serviceIdFixture = 'sample-service-id';
+
+        containerBindingServiceImplementation.remove(serviceIdFixture);
+      });
+
+      describe('when .get() is called with the same service id', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result = containerBindingServiceImplementation.get(serviceIdFixture);
+        });
+
+        it('should return undefined', () => {
+          expect(result).toBeUndefined();
+        });
+      });
+    });
+
+    describe('when called, and serviceIdToInstanceMap has an entry with the same service id', () => {
+      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let serviceIdFixture: ServiceId;
+      let bindingFixture: Binding;
+
+      beforeAll(() => {
+        containerBindingServiceImplementation =
+          new ContainerBindingServiceImplementation();
+
+        serviceIdFixture = 'sample-service-id';
+
+        bindingFixture = {
+          id: serviceIdFixture,
+          scope: TaskScope.transient,
+          type: class {},
+        };
+
+        containerBindingServiceImplementation.set(
+          serviceIdFixture,
+          bindingFixture,
+        );
+
+        containerBindingServiceImplementation.remove(serviceIdFixture);
+      });
+
+      describe('when .get() is called with the same service id', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result = containerBindingServiceImplementation.get(serviceIdFixture);
+        });
+
+        it('should return undefined', () => {
+          expect(result).toBeUndefined();
+        });
+      });
+    });
+  });
 });

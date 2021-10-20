@@ -20,6 +20,10 @@ export class ContainerBindingServiceImplementation
       | undefined;
   }
 
+  public remove(serviceId: ServiceId): void {
+    this.#serviceIdToBindingMap.delete(serviceId);
+  }
+
   public set<TInstance, TArgs extends unknown[]>(
     serviceId: ServiceId,
     binding: Binding<TInstance, TArgs>,
