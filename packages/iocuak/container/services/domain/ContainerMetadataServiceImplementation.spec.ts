@@ -28,7 +28,8 @@ describe(ContainerMetadataServiceImplementation.name, () => {
           getReflectMetadata as jest.Mock<ClassMetadata | undefined>
         ).mockReturnValueOnce(undefined);
 
-        result = containerMetadataServiceImplementation.get(typeFixture);
+        result =
+          containerMetadataServiceImplementation.getClassMetadata(typeFixture);
       });
 
       afterAll(() => {
@@ -63,7 +64,8 @@ describe(ContainerMetadataServiceImplementation.name, () => {
           classMetadataFixture,
         );
 
-        result = containerMetadataServiceImplementation.get(typeFixture);
+        result =
+          containerMetadataServiceImplementation.getClassMetadata(typeFixture);
       });
 
       afterAll(() => {

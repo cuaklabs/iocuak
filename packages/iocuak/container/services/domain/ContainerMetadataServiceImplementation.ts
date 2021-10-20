@@ -7,7 +7,7 @@ import { ContainerMetadataService } from './ContainerMetadataService';
 export class ContainerMetadataServiceImplementation
   implements ContainerMetadataService
 {
-  public get<TInstance, TArgs extends unknown[]>(
+  public getClassMetadata<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): ClassMetadata | undefined {
     const classMetadata: ClassMetadata | undefined = getReflectMetadata(

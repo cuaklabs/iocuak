@@ -54,7 +54,7 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
       );
     } else {
       const metadata: ClassMetadata | undefined =
-        this.#containerService.metadata.get(binding.type);
+        this.#containerService.metadata.getClassMetadata(binding.type);
 
       if (metadata === undefined) {
         throw new Error(`No metadata found for type ${binding.type.name}`);

@@ -24,7 +24,7 @@ describe(TaskDependencyEngine.name, () => {
         get: jest.fn(),
       } as Partial<ContainerBindingService>,
       metadata: {
-        get: jest.fn(),
+        getClassMetadata: jest.fn(),
       },
     } as Partial<ContainerService> as ContainerService;
 
@@ -86,7 +86,7 @@ describe(TaskDependencyEngine.name, () => {
           ).mockReturnValueOnce(bindingFixture);
 
           (
-            containerService.metadata.get as jest.Mock<
+            containerService.metadata.getClassMetadata as jest.Mock<
               ClassMetadata | undefined
             >
           ).mockReturnValueOnce(undefined);
@@ -130,7 +130,7 @@ describe(TaskDependencyEngine.name, () => {
           ).mockReturnValueOnce(bindingFixture);
 
           (
-            containerService.metadata.get as jest.Mock<
+            containerService.metadata.getClassMetadata as jest.Mock<
               ClassMetadata | undefined
             >
           ).mockReturnValueOnce(ClassMetadataFixtures.any);
