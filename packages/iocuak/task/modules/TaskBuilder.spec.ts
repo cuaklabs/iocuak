@@ -4,7 +4,7 @@ jest.mock('../../utils/isTaskKind');
 
 import { Builder } from '../../../cuaktask/common/modules/Builder';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
-import { ContainerService } from '../../container/services/domain/ContainerService';
+import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
@@ -18,7 +18,8 @@ describe(TaskBuilder.name, () => {
     Builder<[], SetLike<TaskKind>>
   >;
   let taskDependencyEngine: jest.Mocked<TaskDependencyEngine>;
-  let containerService: ContainerService;
+  let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+  let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
 
   let taskBuilder: TaskBuilder;
 
@@ -29,16 +30,18 @@ describe(TaskBuilder.name, () => {
     taskDependencyEngine = {
       getDependencies: jest.fn(),
     };
-    containerService = {
-      binding: {
-        get: jest.fn(),
-      } as Partial<ContainerBindingService>,
-    } as Partial<ContainerService> as ContainerService;
+    containerBindingServiceMock = {} as Partial<
+      jest.Mocked<ContainerBindingService>
+    > as jest.Mocked<ContainerBindingService>;
+    containerSingletonServiceMock = {} as Partial<
+      jest.Mocked<ContainerSingletonService>
+    > as jest.Mocked<ContainerSingletonService>;
 
     taskBuilder = new TaskBuilder(
       taskDependenciesKindSetBuilder,
       taskDependencyEngine,
-      containerService,
+      containerBindingServiceMock,
+      containerSingletonServiceMock,
     );
   });
 

@@ -1,6 +1,5 @@
 import { Binding } from '../../../binding/models/domain/Binding';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
-import { ContainerService } from '../../../container/services/domain/ContainerService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
 import { ServiceDependenciesFixtures } from '../../fixtures/domain/ServiceDependenciesFixtures';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
@@ -25,21 +24,27 @@ describe(CreateInstanceTask.name, () => {
       });
 
       describe('when called and containerService.binding.get() returns no binding', () => {
-        let containerServiceMock: ContainerService;
+        let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+        let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
         let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
 
         let result: unknown;
 
         beforeAll(() => {
-          containerServiceMock = {
-            binding: {
-              get: jest.fn().mockReturnValueOnce(undefined),
-            } as Partial<ContainerBindingService>,
-          } as Partial<ContainerService> as ContainerService;
+          containerBindingServiceMock = {
+            get: jest.fn().mockReturnValueOnce(undefined),
+          } as Partial<
+            jest.Mocked<ContainerBindingService>
+          > as jest.Mocked<ContainerBindingService>;
+
+          containerSingletonServiceMock = {} as Partial<
+            jest.Mocked<ContainerSingletonService>
+          > as jest.Mocked<ContainerSingletonService>;
 
           createInstanceTask = new CreateInstanceTask(
-            containerServiceMock,
             taskKindFixture,
+            containerBindingServiceMock,
+            containerSingletonServiceMock,
           );
 
           try {
@@ -55,9 +60,9 @@ describe(CreateInstanceTask.name, () => {
           jest.clearAllMocks();
         });
 
-        it('should call containerService.binding.get()', () => {
-          expect(containerServiceMock.binding.get).toHaveBeenCalledTimes(1);
-          expect(containerServiceMock.binding.get).toHaveBeenCalledWith(
+        it('should call containerBindingService.get()', () => {
+          expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
+          expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
             taskKindFixture.id,
           );
         });
@@ -76,7 +81,8 @@ describe(CreateInstanceTask.name, () => {
 
       describe('when called and containerService.binding.get() returns a binding with transient scope', () => {
         let bindingFixture: Binding<InstanceTest, [] | [string]>;
-        let containerServiceMock: ContainerService;
+        let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+        let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
         let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
 
         let result: unknown;
@@ -95,15 +101,20 @@ describe(CreateInstanceTask.name, () => {
             type: instanceConstructorCallMock,
           };
 
-          containerServiceMock = {
-            binding: {
-              get: jest.fn().mockReturnValueOnce(bindingFixture),
-            } as Partial<ContainerBindingService>,
-          } as Partial<ContainerService> as ContainerService;
+          containerBindingServiceMock = {
+            get: jest.fn().mockReturnValueOnce(bindingFixture),
+          } as Partial<
+            jest.Mocked<ContainerBindingService>
+          > as jest.Mocked<ContainerBindingService>;
+
+          containerSingletonServiceMock = {} as Partial<
+            jest.Mocked<ContainerSingletonService>
+          > as jest.Mocked<ContainerSingletonService>;
 
           createInstanceTask = new CreateInstanceTask(
-            containerServiceMock,
             taskKindFixture,
+            containerBindingServiceMock,
+            containerSingletonServiceMock,
           );
 
           result = createInstanceTask.perform(
@@ -115,9 +126,9 @@ describe(CreateInstanceTask.name, () => {
           jest.clearAllMocks();
         });
 
-        it('should call containerService.binding.get()', () => {
-          expect(containerServiceMock.binding.get).toHaveBeenCalledTimes(1);
-          expect(containerServiceMock.binding.get).toHaveBeenCalledWith(
+        it('should call containerBindingService.binding.get()', () => {
+          expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
+          expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
             taskKindFixture.id,
           );
         });
@@ -145,7 +156,8 @@ describe(CreateInstanceTask.name, () => {
 
       describe('when called and containerService.binding.get() returns a binding with singleton scope and containerService.singleton.get() returns no instance', () => {
         let bindingFixture: Binding<InstanceTest, [] | [string]>;
-        let containerServiceMock: ContainerService;
+        let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+        let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
         let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
 
         let result: unknown;
@@ -164,19 +176,23 @@ describe(CreateInstanceTask.name, () => {
             type: instanceConstructorCallMock,
           };
 
-          containerServiceMock = {
-            binding: {
-              get: jest.fn().mockReturnValueOnce(bindingFixture),
-            } as Partial<ContainerBindingService>,
-            singleton: {
-              get: jest.fn().mockReturnValueOnce(undefined),
-              set: jest.fn(),
-            } as Partial<ContainerSingletonService>,
-          } as Partial<ContainerService> as ContainerService;
+          containerBindingServiceMock = {
+            get: jest.fn().mockReturnValueOnce(bindingFixture),
+          } as Partial<
+            jest.Mocked<ContainerBindingService>
+          > as jest.Mocked<ContainerBindingService>;
+
+          containerSingletonServiceMock = {
+            get: jest.fn().mockReturnValueOnce(undefined),
+            set: jest.fn(),
+          } as Partial<
+            jest.Mocked<ContainerSingletonService>
+          > as jest.Mocked<ContainerSingletonService>;
 
           createInstanceTask = new CreateInstanceTask(
-            containerServiceMock,
             taskKindFixture,
+            containerBindingServiceMock,
+            containerSingletonServiceMock,
           );
 
           result = createInstanceTask.perform(
@@ -188,16 +204,16 @@ describe(CreateInstanceTask.name, () => {
           jest.clearAllMocks();
         });
 
-        it('should call containerService.binding.get()', () => {
-          expect(containerServiceMock.binding.get).toHaveBeenCalledTimes(1);
-          expect(containerServiceMock.binding.get).toHaveBeenCalledWith(
+        it('should call containerBindingService.get()', () => {
+          expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
+          expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
             taskKindFixture.id,
           );
         });
 
-        it('should call containerService.singleton.get()', () => {
-          expect(containerServiceMock.singleton.get).toHaveBeenCalledTimes(1);
-          expect(containerServiceMock.singleton.get).toHaveBeenCalledWith(
+        it('should call containerSingletonService.get()', () => {
+          expect(containerSingletonServiceMock.get).toHaveBeenCalledTimes(1);
+          expect(containerSingletonServiceMock.get).toHaveBeenCalledWith(
             taskKindFixture.id,
           );
         });
@@ -210,9 +226,9 @@ describe(CreateInstanceTask.name, () => {
           );
         });
 
-        it('should call containerService.singleton.set()', () => {
-          expect(containerServiceMock.singleton.set).toHaveBeenCalledTimes(1);
-          expect(containerServiceMock.singleton.set).toHaveBeenCalledWith(
+        it('should call containerSingletonService.set()', () => {
+          expect(containerSingletonServiceMock.set).toHaveBeenCalledTimes(1);
+          expect(containerSingletonServiceMock.set).toHaveBeenCalledWith(
             taskKindFixture.id,
             expect.any(InstanceTest),
           );
@@ -220,7 +236,7 @@ describe(CreateInstanceTask.name, () => {
             ServiceDependenciesFixtures.withConstructorArgumentsAndProperties
               .properties,
           ).map(([key, value]: [string, unknown]): void => {
-            expect(containerServiceMock.singleton.set).toHaveBeenCalledWith(
+            expect(containerSingletonServiceMock.set).toHaveBeenCalledWith(
               taskKindFixture.id,
               expect.objectContaining({ [key]: value }),
             );
@@ -243,7 +259,8 @@ describe(CreateInstanceTask.name, () => {
       describe('when called and containerService.binding.get() returns a binding with singleton scope and containerService.singleton.get() returns an instance', () => {
         let bindingFixture: Binding<InstanceTest, [] | [string]>;
         let instanceTestFixture: InstanceTest;
-        let containerServiceMock: ContainerService;
+        let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+        let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
         let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
 
         let result: unknown;
@@ -262,18 +279,22 @@ describe(CreateInstanceTask.name, () => {
 
           instanceTestFixture = new InstanceTest();
 
-          containerServiceMock = {
-            binding: {
-              get: jest.fn().mockReturnValueOnce(bindingFixture),
-            } as Partial<ContainerBindingService>,
-            singleton: {
-              get: jest.fn().mockReturnValueOnce(instanceTestFixture),
-            } as Partial<ContainerSingletonService>,
-          } as Partial<ContainerService> as ContainerService;
+          containerBindingServiceMock = {
+            get: jest.fn().mockReturnValueOnce(bindingFixture),
+          } as Partial<
+            jest.Mocked<ContainerBindingService>
+          > as jest.Mocked<ContainerBindingService>;
+
+          containerSingletonServiceMock = {
+            get: jest.fn().mockReturnValueOnce(instanceTestFixture),
+          } as Partial<
+            jest.Mocked<ContainerSingletonService>
+          > as jest.Mocked<ContainerSingletonService>;
 
           createInstanceTask = new CreateInstanceTask(
-            containerServiceMock,
             taskKindFixture,
+            containerBindingServiceMock,
+            containerSingletonServiceMock,
           );
 
           result = createInstanceTask.perform(
@@ -285,16 +306,16 @@ describe(CreateInstanceTask.name, () => {
           jest.clearAllMocks();
         });
 
-        it('should call containerService.binding.get()', () => {
-          expect(containerServiceMock.binding.get).toHaveBeenCalledTimes(1);
-          expect(containerServiceMock.binding.get).toHaveBeenCalledWith(
+        it('should call containerBindingService.get()', () => {
+          expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
+          expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
             taskKindFixture.id,
           );
         });
 
-        it('should call containerService.singleton.get()', () => {
-          expect(containerServiceMock.singleton.get).toHaveBeenCalledTimes(1);
-          expect(containerServiceMock.singleton.get).toHaveBeenCalledWith(
+        it('should call containerSingletonService.singleton.get()', () => {
+          expect(containerSingletonServiceMock.get).toHaveBeenCalledTimes(1);
+          expect(containerSingletonServiceMock.get).toHaveBeenCalledWith(
             taskKindFixture.id,
           );
         });

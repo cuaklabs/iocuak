@@ -2,7 +2,8 @@ import { BaseDependentTask } from '@cuaklabs/cuaktask';
 
 import { DependentTask } from '../../../../cuaktask/task/models/domain/DependentTask';
 import { Binding } from '../../../binding/models/domain/Binding';
-import { ContainerService } from '../../../container/services/domain/ContainerService';
+import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
 import { stringifyServiceId } from '../../../utils/stringifyServiceId';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
@@ -19,23 +20,28 @@ export class CreateInstanceTask<
   TInstance
 > {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  #containerService: ContainerService;
+  #containerBindingService: ContainerBindingService;
+
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  #containerSingletonService: ContainerSingletonService;
 
   constructor(
-    containerService: ContainerService,
     kind: CreateInstanceTaskKind,
+    containerBindingService: ContainerBindingService,
+    containerSingletonService: ContainerSingletonService,
     dependencies: DependentTask<TaskKind, TaskKind, TArgs, TInstance>[] = [],
   ) {
     super(kind, dependencies);
 
-    this.#containerService = containerService;
+    this.#containerBindingService = containerBindingService;
+    this.#containerSingletonService = containerSingletonService;
   }
 
   protected innerPerform(
     serviceDependencies: ServiceDependencies<TArgs>,
   ): TInstance {
     const binding: Binding<TInstance, TArgs> | undefined =
-      this.#containerService.binding.get(this.kind.id);
+      this.#containerBindingService.get(this.kind.id);
 
     if (binding === undefined) {
       throw new Error(
@@ -89,7 +95,7 @@ export class CreateInstanceTask<
     binding: Binding<TInstance, TArgs>,
   ): TInstance {
     const instanceFromSingletonScope: unknown =
-      this.#containerService.singleton.get(this.kind.id);
+      this.#containerSingletonService.get(this.kind.id);
 
     let instance: TInstance;
 
@@ -99,7 +105,7 @@ export class CreateInstanceTask<
         binding,
       );
 
-      this.#containerService.singleton.set(this.kind.id, instance);
+      this.#containerSingletonService.set(this.kind.id, instance);
     } else {
       instance = instanceFromSingletonScope as TInstance;
     }

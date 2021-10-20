@@ -6,7 +6,8 @@ import {
 
 import { Builder } from '../../../cuaktask/common/modules/Builder';
 import { DependentTask } from '../../../cuaktask/task/models/domain/DependentTask';
-import { ContainerService } from '../../container/services/domain/ContainerService';
+import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
+import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
@@ -17,16 +18,21 @@ import { TaskKindType } from '../models/domain/TaskKindType';
 
 export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  readonly #containerService: ContainerService;
+  #containerBindingService: ContainerBindingService;
+
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  #containerSingletonService: ContainerSingletonService;
 
   constructor(
     taskDependenciesKindSetBuilder: Builder<[], SetLike<TaskKind>>,
     taskDependencyEngine: TaskDependencyEngine,
-    containerService: ContainerService,
+    containerBindingService: ContainerBindingService,
+    containerSingletonService: ContainerSingletonService,
   ) {
     super(taskDependenciesKindSetBuilder, taskDependencyEngine);
 
-    this.#containerService = containerService;
+    this.#containerBindingService = containerBindingService;
+    this.#containerSingletonService = containerSingletonService;
   }
 
   protected buildWithNoDependencies<TKind, TArgs extends unknown[], TReturn>(
@@ -52,7 +58,11 @@ export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
   #buildCreateInstanceTaskWithNoDependencies(
     taskKind: CreateInstanceTaskKind,
   ): CreateInstanceTask {
-    return new CreateInstanceTask(this.#containerService, taskKind);
+    return new CreateInstanceTask(
+      taskKind,
+      this.#containerBindingService,
+      this.#containerSingletonService,
+    );
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/member-ordering
