@@ -1,3 +1,4 @@
 import { Newable } from './Newable';
 
-export type ServiceId = string | symbol | Newable;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ServiceId = string | symbol | Newable<unknown, any[]>;
