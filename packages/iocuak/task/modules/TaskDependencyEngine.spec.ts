@@ -1,9 +1,7 @@
 import { Binding } from '../../binding/models/domain/Binding';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerMetadataService } from '../../container/services/domain/ContainerMetadataService';
-import { ContainerService } from '../../container/services/domain/ContainerService';
 import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
-import { ClassMetadata } from '../../metadata/models/domain/ClassMetadata';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
@@ -15,21 +13,28 @@ import { TaskScope } from '../models/domain/TaskScope';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
 
 describe(TaskDependencyEngine.name, () => {
-  let containerService: ContainerService;
+  let containerBindingService: jest.Mocked<ContainerBindingService>;
+  let containerMetadataService: jest.Mocked<ContainerMetadataService>;
 
   let taskDependencyEngine: TaskDependencyEngine;
 
   beforeAll(() => {
-    containerService = {
-      binding: {
-        get: jest.fn(),
-      } as Partial<ContainerBindingService>,
-      metadata: {
-        getClassMetadata: jest.fn(),
-      } as Partial<ContainerMetadataService>,
-    } as Partial<ContainerService> as ContainerService;
+    containerBindingService = {
+      get: jest.fn(),
+    } as Partial<
+      jest.Mocked<ContainerBindingService>
+    > as jest.Mocked<ContainerBindingService>;
 
-    taskDependencyEngine = new TaskDependencyEngine(containerService);
+    containerMetadataService = {
+      getClassMetadata: jest.fn(),
+    } as Partial<
+      jest.Mocked<ContainerMetadataService>
+    > as jest.Mocked<ContainerMetadataService>;
+
+    taskDependencyEngine = new TaskDependencyEngine(
+      containerBindingService,
+      containerMetadataService,
+    );
   });
 
   describe('.getDependencies()', () => {
@@ -44,9 +49,7 @@ describe(TaskDependencyEngine.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          (
-            containerService.binding.get as jest.Mock<Binding | undefined>
-          ).mockReturnValueOnce(undefined);
+          containerBindingService.get.mockReturnValueOnce(undefined);
 
           try {
             taskDependencyEngine.getDependencies(createInstanceTaskKindFixture);
@@ -82,15 +85,11 @@ describe(TaskDependencyEngine.name, () => {
             type: class {},
           };
 
-          (
-            containerService.binding.get as jest.Mock<Binding>
-          ).mockReturnValueOnce(bindingFixture);
+          containerBindingService.get.mockReturnValueOnce(bindingFixture);
 
-          (
-            containerService.metadata.getClassMetadata as jest.Mock<
-              ClassMetadata | undefined
-            >
-          ).mockReturnValueOnce(undefined);
+          containerMetadataService.getClassMetadata.mockReturnValueOnce(
+            undefined,
+          );
 
           try {
             taskDependencyEngine.getDependencies(createInstanceTaskKindFixture);
@@ -126,15 +125,11 @@ describe(TaskDependencyEngine.name, () => {
             type: class {},
           };
 
-          (
-            containerService.binding.get as jest.Mock<Binding>
-          ).mockReturnValueOnce(bindingFixture);
+          containerBindingService.get.mockReturnValueOnce(bindingFixture);
 
-          (
-            containerService.metadata.getClassMetadata as jest.Mock<
-              ClassMetadata | undefined
-            >
-          ).mockReturnValueOnce(ClassMetadataFixtures.any);
+          containerMetadataService.getClassMetadata.mockReturnValueOnce(
+            ClassMetadataFixtures.any,
+          );
 
           result = taskDependencyEngine.getDependencies(
             createInstanceTaskKindFixture,

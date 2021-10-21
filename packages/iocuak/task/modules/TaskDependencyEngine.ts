@@ -1,7 +1,8 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { Binding } from '../../binding/models/domain/Binding';
-import { ContainerService } from '../../container/services/domain/ContainerService';
+import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
+import { ContainerMetadataService } from '../../container/services/domain/ContainerMetadataService';
 import { ClassMetadata } from '../../metadata/models/domain/ClassMetadata';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { stringifyServiceId } from '../../utils/stringifyServiceId';
@@ -13,10 +14,17 @@ import { TaskKindType } from '../models/domain/TaskKindType';
 
 export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  readonly #containerService: ContainerService;
+  readonly #containerBindingService: ContainerBindingService;
 
-  constructor(containerService: ContainerService) {
-    this.#containerService = containerService;
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  readonly #containerMetadataService: ContainerMetadataService;
+
+  constructor(
+    containerBindingService: ContainerBindingService,
+    containerMetadataService: ContainerMetadataService,
+  ) {
+    this.#containerBindingService = containerBindingService;
+    this.#containerMetadataService = containerMetadataService;
   }
 
   public getDependencies<TKind, TDependencyKind>(
@@ -46,7 +54,7 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
 
   #getClassMetadata(serviceId: ServiceId): ClassMetadata {
     const binding: Binding | undefined =
-      this.#containerService.binding.get(serviceId);
+      this.#containerBindingService.get(serviceId);
 
     if (binding === undefined) {
       throw new Error(
@@ -54,7 +62,7 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
       );
     } else {
       const metadata: ClassMetadata | undefined =
-        this.#containerService.metadata.getClassMetadata(binding.type);
+        this.#containerMetadataService.getClassMetadata(binding.type);
 
       if (metadata === undefined) {
         throw new Error(`No metadata found for type ${binding.type.name}`);
