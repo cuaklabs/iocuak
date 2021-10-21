@@ -1,6 +1,5 @@
-import { BaseDependentTask } from '@cuaklabs/cuaktask';
+import { BaseDependentTask, DependentTask } from '@cuaklabs/cuaktask';
 
-import { DependentTask } from '../../../../cuaktask/task/models/domain/DependentTask';
 import { Binding } from '../../../binding/models/domain/Binding';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';

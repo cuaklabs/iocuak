@@ -1,11 +1,11 @@
 import {
+  Builder,
+  DependentTask,
   DependentTaskBuilder,
   SetLike,
   TaskDependencyEngine,
 } from '@cuaklabs/cuaktask';
 
-import { Builder } from '../../../cuaktask/common/modules/Builder';
-import { DependentTask } from '../../../cuaktask/task/models/domain/DependentTask';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
 import { isTaskKind } from '../../utils/isTaskKind';

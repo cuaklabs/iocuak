@@ -1,8 +1,7 @@
-import { SetLike, TaskDependencyEngine } from '@cuaklabs/cuaktask';
+import { Builder, SetLike, TaskDependencyEngine } from '@cuaklabs/cuaktask';
 
 jest.mock('../../utils/isTaskKind');
 
-import { Builder } from '../../../cuaktask/common/modules/Builder';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
 import { isTaskKind } from '../../utils/isTaskKind';
