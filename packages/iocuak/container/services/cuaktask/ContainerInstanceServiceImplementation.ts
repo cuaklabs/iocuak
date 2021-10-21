@@ -9,7 +9,7 @@ import { CreateInstanceTaskKind } from '../../../task/models/domain/CreateInstan
 import { ServiceId } from '../../../task/models/domain/ServiceId';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
 import { TaskKindType } from '../../../task/models/domain/TaskKindType';
-import { ContainerInstanceService } from './ContainerInstanceService';
+import { ContainerInstanceService } from '../domain/ContainerInstanceService';
 
 export class ContainerInstanceServiceImplementation
   implements ContainerInstanceService
