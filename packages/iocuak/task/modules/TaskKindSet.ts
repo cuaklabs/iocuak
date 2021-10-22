@@ -71,6 +71,6 @@ export class TaskKindSet implements SetLike<TaskKind> {
       this.#innerTaskKindMap.set(elem.id, taskKindTypeToTaskKindMap);
     }
 
-    return action(elem.id, taskKindTypeToTaskKindMap);
+    return action(elem.type, taskKindTypeToTaskKindMap);
   }
 }
