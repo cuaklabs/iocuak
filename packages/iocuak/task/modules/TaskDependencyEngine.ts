@@ -61,14 +61,10 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
         `No bindings found for type ${stringifyServiceId(serviceId)}`,
       );
     } else {
-      const metadata: ClassMetadata | undefined =
+      const metadata: ClassMetadata =
         this.#containerMetadataService.getClassMetadata(binding.type);
 
-      if (metadata === undefined) {
-        throw new Error(`No metadata found for type ${binding.type.name}`);
-      } else {
-        return metadata;
-      }
+      return metadata;
     }
   }
 

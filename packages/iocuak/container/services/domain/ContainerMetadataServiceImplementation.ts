@@ -1,4 +1,5 @@
 import { Binding } from '../../../binding/models/domain/Binding';
+import { getDefaultClassMetadata } from '../../../metadata/decorators/getDefaultClassMetadata';
 import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
 import { MetadataKey } from '../../../metadata/models/domain/MetadataKey';
 import { getReflectMetadata } from '../../../metadata/utils/getReflectMetadata';
@@ -21,21 +22,23 @@ export class ContainerMetadataServiceImplementation
 
   public getClassMetadata<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
-  ): ClassMetadata | undefined {
+  ): ClassMetadata {
     const classMetadata: ClassMetadata | undefined = getReflectMetadata(
       type,
       MetadataKey.inject,
     );
 
+    let classMetadataClone: ClassMetadata;
+
     if (classMetadata === undefined) {
-      return undefined;
+      classMetadataClone = getDefaultClassMetadata();
     } else {
-      const classMetadataClone: ClassMetadata = {
+      classMetadataClone = {
         constructorArguments: [...classMetadata.constructorArguments],
         properties: new Map(classMetadata.properties),
       };
-
-      return classMetadataClone;
     }
+
+    return classMetadataClone;
   }
 }

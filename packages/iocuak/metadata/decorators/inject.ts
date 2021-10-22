@@ -2,6 +2,7 @@ import { ServiceId } from '../../task/models/domain/ServiceId';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { updateReflectMetadata } from '../utils/updateReflectMetadata';
+import { getDefaultClassMetadata } from './getDefaultClassMetadata';
 
 export function inject(
   serviceId: ServiceId,
@@ -20,13 +21,6 @@ export function inject(
   };
 
   return decorator;
-}
-
-function getDefaultClassMetadata(): ClassMetadata {
-  return {
-    constructorArguments: [],
-    properties: new Map(),
-  };
 }
 
 function injectParameter(serviceId: ServiceId): ParameterDecorator {

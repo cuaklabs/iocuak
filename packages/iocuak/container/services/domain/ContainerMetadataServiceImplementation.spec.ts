@@ -1,5 +1,7 @@
+jest.mock('../../../metadata/decorators/getDefaultClassMetadata');
 jest.mock('../../../metadata/utils/getReflectMetadata');
 
+import { getDefaultClassMetadata } from '../../../metadata/decorators/getDefaultClassMetadata';
 import { ClassMetadataFixtures } from '../../../metadata/fixtures/domain/ClassMetadataFixtures';
 import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
 import { MetadataKey } from '../../../metadata/models/domain/MetadataKey';
@@ -42,15 +44,24 @@ describe(ContainerMetadataServiceImplementation.name, () => {
   describe('.getClassMetadata()', () => {
     describe('when called, and getReflectMetadata returns undefined', () => {
       let typeFixture: Newable;
+      let classMetadataFixture: ClassMetadata;
 
       let result: unknown;
 
       beforeAll(() => {
         typeFixture = class {};
+        classMetadataFixture = {
+          constructorArguments: [],
+          properties: new Map(),
+        };
 
         (
           getReflectMetadata as jest.Mock<ClassMetadata | undefined>
         ).mockReturnValueOnce(undefined);
+
+        (
+          getDefaultClassMetadata as jest.Mock<ClassMetadata | undefined>
+        ).mockReturnValueOnce(classMetadataFixture);
 
         result =
           containerMetadataServiceImplementation.getClassMetadata(typeFixture);
@@ -68,8 +79,12 @@ describe(ContainerMetadataServiceImplementation.name, () => {
         );
       });
 
-      it('should return undefined', () => {
-        expect(result).toBeUndefined();
+      it('should call getDefaultClassMetadata', () => {
+        expect(getDefaultClassMetadata).toHaveBeenCalledTimes(1);
+      });
+
+      it('should return ClassMetadata', () => {
+        expect(result).toBe(classMetadataFixture);
       });
     });
 

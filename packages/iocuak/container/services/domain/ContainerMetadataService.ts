@@ -9,5 +9,5 @@ export interface ContainerMetadataService {
 
   getClassMetadata<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
-  ): ClassMetadata | undefined;
+  ): ClassMetadata;
 }
