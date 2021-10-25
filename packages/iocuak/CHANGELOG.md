@@ -15,4 +15,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 ### Docs
 -->
+
+
+
+
 ## [UNRELEASED]
+
+### Added
+- Added `Binding`.
+- Added `ContainerApi`.
+- Added `ContainerModuleApi`.
+- Added `inject`.
+- Added `injectable`.
+- Added `injectFrom`.
+- Added `injectFromBase`.
+- Added `Newable`.
+- Added `ServiceId`.
+
+
+
