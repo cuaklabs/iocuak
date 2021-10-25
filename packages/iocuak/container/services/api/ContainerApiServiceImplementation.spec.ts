@@ -2,6 +2,7 @@ import { Binding } from '../../../binding/models/domain/Binding';
 import { Newable } from '../../../task/models/domain/Newable';
 import { ServiceId } from '../../../task/models/domain/ServiceId';
 import { TaskScope } from '../../../task/models/domain/TaskScope';
+import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
 import { ContainerBindingService } from '../domain/ContainerBindingService';
 import { ContainerInstanceService } from '../domain/ContainerInstanceService';
 import { ContainerMetadataService } from '../domain/ContainerMetadataService';
@@ -138,6 +139,28 @@ describe(ContainerApiServiceImplementation.name, () => {
 
       it('should return an instance', () => {
         expect(result).toBe(instanceFixture);
+      });
+    });
+  });
+
+  describe('.load()', () => {
+    describe('when called', () => {
+      let containerModuleApiMock: jest.Mocked<ContainerModuleApi>;
+
+      beforeAll(() => {
+        containerModuleApiMock = {
+          load: jest.fn(),
+        };
+
+        containerApiServiceImplementation.load(containerModuleApiMock);
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should call containerModuleApi.load()', () => {
+        expect(containerModuleApiMock.load).toHaveBeenCalledTimes(1);
       });
     });
   });
