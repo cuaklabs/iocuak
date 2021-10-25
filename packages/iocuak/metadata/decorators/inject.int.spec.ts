@@ -39,7 +39,7 @@ describe(inject.name, () => {
 
   describe('when called, as parameter decorator', () => {
     let serviceIdFixture: ServiceId;
-    let targetFixture: Newable<unknown, [string | undefined]>;
+    let targetFixture: Newable;
 
     let reflectMetadata: unknown;
 
