@@ -21,5 +21,9 @@
   "homepage": "https://github.com/cuaklabs/cuaktask#readme",
   "dependencies": {
     "@cuaklabs/cuaktask": "^0.0.4"
+  },
+  "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
+  "publishConfig": {
+    "access": "public"
   }
 }
