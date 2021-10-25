@@ -1,7 +1,7 @@
-import { ServiceId } from '@cuaklabs/iocuak';
 import 'reflect-metadata';
 
 import { Newable } from '../../task/models/domain/Newable';
+import { ServiceId } from '../../task/models/domain/ServiceId';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { getReflectMetadata } from '../utils/getReflectMetadata';
