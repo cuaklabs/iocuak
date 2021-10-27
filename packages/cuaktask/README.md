@@ -6,4 +6,4 @@ Simple agnostic zero-dependencies abstract task manager.
 
 ## Documentation
 
-Coming soon...
+Feel free to visit the [documentation pages](./docs/index)
