@@ -5,6 +5,12 @@ import { isPromiseLike } from '../../utils/isPromiseLike';
 import { DependentTask } from '../models/domain/DependentTask';
 
 export class DependentTaskRunner {
+  /**
+   * Performs a task execution.
+   * @param dependenTask dependent task to run.
+   * @returns Result of the task execution. It may be encapsulated into a Promise if a
+   * dependent task execution is asyncronous.
+   */
   public run<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
     dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
   ): MayBePromise<TReturn> {

@@ -27,6 +27,11 @@ export abstract class DependentTaskBuilder<
     this.#taskDependencyEngine = taskDependencyEngine;
   }
 
+  /**
+   * Builds a task.
+   * @param taskKind Task kind of the task to build
+   * @returns Task built.
+   */
   public build(
     taskKind: TKind,
   ): DependentTask<TKind, TDependencyKind, TArgs, TReturn> {
@@ -39,7 +44,18 @@ export abstract class DependentTaskBuilder<
     return dependentTask;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  /**
+   * Builds a task with no dependencies.
+   * @param taskKind Task kind of the task to build
+   * @returns Task built.
+   */
+  protected abstract buildWithNoDependencies<
+    TKind,
+    TArgs extends unknown[],
+    TReturn,
+  >(taskKind: TKind): DependentTask<TKind, unknown, TArgs, TReturn>;
+
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/member-ordering
   #innerbuild<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
     taskKind: TKind,
     taskDependenciesKindSet: SetLike<TKind | TDependencyKind>,
@@ -71,10 +87,4 @@ export abstract class DependentTaskBuilder<
 
     return task;
   }
-
-  protected abstract buildWithNoDependencies<
-    TKind,
-    TArgs extends unknown[],
-    TReturn,
-  >(taskKind: TKind): DependentTask<TKind, unknown, TArgs, TReturn>;
 }
