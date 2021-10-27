@@ -74,8 +74,6 @@ describe(injectFromBase.name, () => {
     it('should call injectFrom()', () => {
       expect(injectFrom).toHaveBeenCalledTimes(1);
       expect(injectFrom).toHaveBeenCalledWith<[ClassMetadataExtensionApi]>({
-        extendConstructorArguments: undefined,
-        extendProperties: undefined,
         type: baseTypeFixture,
       });
     });

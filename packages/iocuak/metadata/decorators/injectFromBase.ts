@@ -17,11 +17,22 @@ export function injectFromBase(
 
     if (baseType !== undefined) {
       const baseTypeMetadataExtensionApi: ClassMetadataExtensionApi = {
-        extendConstructorArguments:
-          baseClassMetadataExtensionApi?.extendConstructorArguments,
-        extendProperties: baseClassMetadataExtensionApi?.extendProperties,
         type: baseType,
       };
+
+      if (baseClassMetadataExtensionApi !== undefined) {
+        if (
+          baseClassMetadataExtensionApi.extendConstructorArguments !== undefined
+        ) {
+          baseTypeMetadataExtensionApi.extendConstructorArguments =
+            baseClassMetadataExtensionApi.extendConstructorArguments;
+        }
+
+        if (baseClassMetadataExtensionApi.extendProperties !== undefined) {
+          baseTypeMetadataExtensionApi.extendProperties =
+            baseClassMetadataExtensionApi.extendProperties;
+        }
+      }
 
       const injectFromDecorator: ClassDecorator = injectFrom(
         baseTypeMetadataExtensionApi,
