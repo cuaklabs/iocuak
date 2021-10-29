@@ -13,7 +13,6 @@
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
     "outDir": "./node_modules/@cuaklabs",
     "paths": {
       "@cuaklabs/cuaktask": ["./packages/cuaktask"],
