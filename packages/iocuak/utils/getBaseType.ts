@@ -1,8 +1,5 @@
+import { Prototype } from '../common/models/domain/Prototype';
 import { Newable } from '../task/models/domain/Newable';
-
-interface Prototype {
-  constructor: Newable;
-}
 
 export function getBaseType<TInstance, TArgs extends unknown[]>(
   type: Newable<TInstance, TArgs>,
