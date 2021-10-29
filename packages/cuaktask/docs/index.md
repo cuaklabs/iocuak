@@ -9,3 +9,5 @@ Welcome to cuaktask's docs. This pages explains how to use the library to create
 3. [About tasks](./contents/3-about-tasks).
 4. [About task dependency engines](./contents/4-about-task-dependency-engines).
 5. [About task builders](./contents/5-about-task-builders).
+
+In addition, API docs are available [here](./api/index).
