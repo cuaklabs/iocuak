@@ -37,7 +37,7 @@ describe(inject.name, () => {
     });
   });
 
-  describe('when called, as parameter decorator', () => {
+  describe('when called, as a constructor parameter decorator', () => {
     let serviceIdFixture: ServiceId;
     let targetFixture: Newable;
 
@@ -63,6 +63,38 @@ describe(inject.name, () => {
         constructorArguments: [serviceIdFixture],
         properties: new Map(),
       });
+    });
+  });
+
+  describe('when called, as a method parameter decorator', () => {
+    let result: unknown;
+
+    beforeAll(() => {
+      const serviceIdFixture: ServiceId = 'service-id';
+
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        class TypeFixture {
+          constructor(public foo: string | undefined) {}
+
+          public someMethod(@inject(serviceIdFixture) foo: unknown): unknown {
+            return foo;
+          }
+        }
+      } catch (error: unknown) {
+        result = error;
+      }
+    });
+
+    it('should throw an error', () => {
+      expect(result).toBeInstanceOf(Error);
+      expect(result).toStrictEqual(
+        expect.objectContaining<Partial<Error>>({
+          message:
+            expect.stringContaining(`Found an @inject decorator in a non constructor parameter.
+Found @inject decorator at method`) as string,
+        }),
+      );
     });
   });
 });

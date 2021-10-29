@@ -1,3 +1,4 @@
+import { Prototype } from '../../common/models/domain/Prototype';
 import { ServiceId } from '../../task/models/domain/ServiceId';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { MetadataKey } from '../models/domain/MetadataKey';
@@ -10,7 +11,7 @@ export function inject(
   const decorator: ParameterDecorator & PropertyDecorator = (
     // eslint-disable-next-line @typescript-eslint/ban-types
     target: Object,
-    propertyKey: string | symbol,
+    propertyKey: string | symbol, // It may be undefined!!
     parameterIndex?: number,
   ): void => {
     if (parameterIndex === undefined) {
@@ -27,19 +28,23 @@ function injectParameter(serviceId: ServiceId): ParameterDecorator {
   return (
     // eslint-disable-next-line @typescript-eslint/ban-types
     target: Object,
-    _propertyKey: string | symbol,
+    propertyKey: string | symbol | undefined,
     parameterIndex: number,
   ): void => {
-    updateReflectMetadata(
-      target,
-      MetadataKey.inject,
-      getDefaultClassMetadata(),
-      (classMetadata: ClassMetadata): ClassMetadata => {
-        classMetadata.constructorArguments[parameterIndex] = serviceId;
+    if (isConstructorParameter(target, propertyKey)) {
+      updateReflectMetadata(
+        target,
+        MetadataKey.inject,
+        getDefaultClassMetadata(),
+        (classMetadata: ClassMetadata): ClassMetadata => {
+          classMetadata.constructorArguments[parameterIndex] = serviceId;
 
-        return classMetadata;
-      },
-    );
+          return classMetadata;
+        },
+      );
+    } else {
+      handleNonConstructorParameter(target, propertyKey);
+    }
   };
 }
 
@@ -57,4 +62,44 @@ function injectProperty(serviceId: ServiceId): PropertyDecorator {
       },
     );
   };
+}
+
+function isConstructorParameter(
+  target: unknown,
+  propertyKey: string | symbol | undefined,
+): boolean {
+  return typeof target === 'function' && propertyKey === undefined;
+}
+
+function isMethodParameter(
+  target: unknown,
+  propertyKey: string | symbol | undefined,
+): boolean {
+  return isPrototype(target) && propertyKey !== '';
+}
+
+function isPrototype(value: unknown): value is Prototype {
+  return (
+    typeof value === 'object' &&
+    typeof (value as Prototype).constructor === 'function'
+  );
+}
+
+function handleNonConstructorParameter(
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  target: Object,
+  propertyKey: string | symbol | undefined,
+): never {
+  if (isMethodParameter(target, propertyKey)) {
+    throw new Error(
+      `Found an @inject decorator in a non constructor parameter.
+Found @inject decorator at method ${propertyKey?.toString() ?? ''} at class ${
+        target.constructor.name
+      }`,
+    );
+  } else {
+    throw new Error(
+      'Found an @inject decorator in a non constructor parameter',
+    );
+  }
 }
