@@ -7,6 +7,7 @@ import { injectFrom } from './metadata/decorators/injectFrom';
 import { injectFromBase } from './metadata/decorators/injectFromBase';
 import { Newable } from './task/models/domain/Newable';
 import { ServiceId } from './task/models/domain/ServiceId';
+import { TaskScope } from './task/models/domain/TaskScope';
 
 export {
   Binding,
@@ -18,4 +19,5 @@ export {
   injectFromBase,
   Newable,
   ServiceId,
+  TaskScope,
 };
