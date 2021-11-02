@@ -14,6 +14,8 @@ import { ContainerBindingServiceImplementation } from '../../services/domain/Con
 import { ContainerInstanceService } from '../../services/domain/ContainerInstanceService';
 import { ContainerMetadataService } from '../../services/domain/ContainerMetadataService';
 import { ContainerMetadataServiceImplementation } from '../../services/domain/ContainerMetadataServiceImplementation';
+import { ContainerRequestService } from '../../services/domain/ContainerRequestService';
+import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
 import { ContainerService } from '../../services/domain/ContainerService';
 import { ContainerSingletonService } from '../../services/domain/ContainerSingletonService';
 import { ContainerSingletonServiceImplementation } from '../../services/domain/ContainerSingletonServiceImplementation';
@@ -63,6 +65,8 @@ export class ContainerApi implements ContainerApiService {
       new ContainerBindingServiceImplementation();
     const containerMetadataService: ContainerMetadataService =
       new ContainerMetadataServiceImplementation();
+    const containerRequestService: ContainerRequestService =
+      new ContainerRequestServiceImplementation();
     const containerSingletonService: ContainerSingletonService =
       new ContainerSingletonServiceImplementation();
 
@@ -77,6 +81,7 @@ export class ContainerApi implements ContainerApiService {
       binding: containerBindingService,
       instance: containerInstanceService,
       metadata: containerMetadataService,
+      request: containerRequestService,
       singleton: containerSingletonService,
     };
     return containerService;
