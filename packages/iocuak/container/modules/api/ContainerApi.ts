@@ -74,6 +74,7 @@ export class ContainerApi implements ContainerApiService {
       this.#initializeContainerInstanceService(
         containerBindingService,
         containerMetadataService,
+        containerRequestService,
         containerSingletonService,
       );
 
@@ -90,6 +91,7 @@ export class ContainerApi implements ContainerApiService {
   #initializeContainerInstanceService(
     containerBindingService: ContainerBindingService,
     containerMetadataService: ContainerMetadataService,
+    containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
   ): ContainerInstanceService {
     const dependentTaskRunner: cuaktask.DependentTaskRunner =
@@ -106,6 +108,7 @@ export class ContainerApi implements ContainerApiService {
 
     const containerInstanceService: ContainerInstanceService =
       new ContainerInstanceServiceImplementation(
+        containerRequestService,
         dependentTaskRunner,
         taskBuilder,
       );

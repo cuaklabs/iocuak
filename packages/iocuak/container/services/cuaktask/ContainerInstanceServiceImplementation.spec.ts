@@ -8,9 +8,11 @@ import {
 import { ServiceId } from '../../../task/models/domain/ServiceId';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
 import { TaskKindType } from '../../../task/models/domain/TaskKindType';
+import { ContainerRequestService } from '../domain/ContainerRequestService';
 import { ContainerInstanceServiceImplementation } from './ContainerInstanceServiceImplementation';
 
 describe(ContainerInstanceServiceImplementation.name, () => {
+  let containerRequestService: jest.Mocked<ContainerRequestService>;
   let dependentTaskRunner: jest.Mocked<DependentTaskRunner>;
   let taskBuilder: jest.Mocked<
     Builder<[TaskKind], DependentTask<TaskKind, TaskKind>>
@@ -19,6 +21,10 @@ describe(ContainerInstanceServiceImplementation.name, () => {
   let containerInstanceServiceImplementation: ContainerInstanceServiceImplementation;
 
   beforeAll(() => {
+    containerRequestService = {} as Partial<
+      jest.Mocked<ContainerRequestService>
+    > as jest.Mocked<ContainerRequestService>;
+
     dependentTaskRunner = {
       run: jest.fn(),
     } as Partial<
@@ -31,6 +37,7 @@ describe(ContainerInstanceServiceImplementation.name, () => {
 
     containerInstanceServiceImplementation =
       new ContainerInstanceServiceImplementation(
+        containerRequestService,
         dependentTaskRunner,
         taskBuilder,
       );

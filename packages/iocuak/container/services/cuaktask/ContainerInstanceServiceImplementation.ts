@@ -10,10 +10,14 @@ import { ServiceId } from '../../../task/models/domain/ServiceId';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
 import { TaskKindType } from '../../../task/models/domain/TaskKindType';
 import { ContainerInstanceService } from '../domain/ContainerInstanceService';
+import { ContainerRequestService } from '../domain/ContainerRequestService';
 
 export class ContainerInstanceServiceImplementation
   implements ContainerInstanceService
 {
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  readonly #containerRequestService: ContainerRequestService;
+
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #dependentTaskRunner: DependentTaskRunner;
 
@@ -21,9 +25,11 @@ export class ContainerInstanceServiceImplementation
   readonly #taskBuilder: Builder<[TaskKind], DependentTask<TaskKind, TaskKind>>;
 
   constructor(
+    containerRequestService: ContainerRequestService,
     dependentTaskRunner: DependentTaskRunner,
     taskBuilder: Builder<[TaskKind], DependentTask<TaskKind, TaskKind>>,
   ) {
+    this.#containerRequestService = containerRequestService;
     this.#dependentTaskRunner = dependentTaskRunner;
     this.#taskBuilder = taskBuilder;
   }
