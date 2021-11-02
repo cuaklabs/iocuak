@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/cuaklabs/cuaktask/issues"
   },
-  "homepage": "https://github.com/cuaklabs/cuaktask#readme",
+  "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/iocuak#readme",
   "dependencies": {
     "@cuaklabs/cuaktask": "^0.0.6"
   },
