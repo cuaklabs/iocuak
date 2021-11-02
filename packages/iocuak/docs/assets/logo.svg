@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="64"
+   height="64"
+   viewBox="0 0 64 64"
+   version="1.1"
+   id="svg64">
+  <metadata
+     id="metadata70">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <polygon
+     points="0,0 64,0 64,64 0 64"
+     style="fill:#3e3ef4"
+     id="background" />
+  <path
+     d="m 15.329565,24.696995 a 22.144801,24.57571 0 0 1 0.446436,-2.754922 H 8.5645931 a 2.2035186,2.4454062 0 0 0 -2.1947169,2.224616 c -0.030859,0.369459 -0.6858995,9.137448 4.2854028,15.179181 a 15.469975,17.168167 0 0 0 10.516319,5.324112 22.842279,25.349753 0 0 1 -5.842033,-19.972987 z"
+     id="duck-beak"
+     style="fill:#ffffff;stroke-width:1.54791415" />
+  <path
+     d="m 35.861929,7.3950993 a 18.358982,20.374309 0 0 0 -10.076054,35.5114857 3.5272255,3.9144209 0 0 1 1.145782,2.950797 v 9.513284 a 2.2041652,2.4461237 0 0 0 2.204047,2.445992 h 17.632381 a 2.2041505,2.4461075 0 0 0 2.204047,-2.445992 V 45.859011 A 3.4940473,3.8776005 0 0 1 50.092097,42.930507 18.360613,20.376119 0 0 0 35.861929,7.3951154 Z"
+     id="duck-head"
+     style="fill:#ffffff;stroke-width:1.54791415" />
+  <ellipse
+     ry="3.6271186"
+     rx="3.6271183"
+     id="duck-eye"
+     style="fill:#3e3ef4;stroke-width:0.36271185"
+     cy="17.898304"
+     cx="28.338984" />
+</svg>
