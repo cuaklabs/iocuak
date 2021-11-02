@@ -3,6 +3,7 @@ import { Builder, SetLike, TaskDependencyEngine } from '@cuaklabs/cuaktask';
 jest.mock('../../utils/isTaskKind');
 
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
+import { ContainerRequestService } from '../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
@@ -20,6 +21,7 @@ describe(TaskBuilder.name, () => {
   >;
   let taskDependencyEngine: jest.Mocked<TaskDependencyEngine>;
   let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+  let containerRequestService: jest.Mocked<ContainerRequestService>;
   let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
 
   let taskBuilder: TaskBuilder;
@@ -34,6 +36,9 @@ describe(TaskBuilder.name, () => {
     containerBindingServiceMock = {} as Partial<
       jest.Mocked<ContainerBindingService>
     > as jest.Mocked<ContainerBindingService>;
+    containerRequestService = {} as Partial<
+      jest.Mocked<ContainerRequestService>
+    > as jest.Mocked<ContainerRequestService>;
     containerSingletonServiceMock = {} as Partial<
       jest.Mocked<ContainerSingletonService>
     > as jest.Mocked<ContainerSingletonService>;
@@ -42,6 +47,7 @@ describe(TaskBuilder.name, () => {
       taskDependenciesKindSetBuilder,
       taskDependencyEngine,
       containerBindingServiceMock,
+      containerRequestService,
       containerSingletonServiceMock,
     );
   });

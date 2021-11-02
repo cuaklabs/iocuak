@@ -2,6 +2,7 @@ import { BaseDependentTask, DependentTask } from '@cuaklabs/cuaktask';
 
 import { Binding } from '../../../binding/models/domain/Binding';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
 import { stringifyServiceId } from '../../../utils/stringifyServiceId';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
@@ -19,20 +20,25 @@ export class CreateInstanceTask<
   TInstance
 > {
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  #containerBindingService: ContainerBindingService;
+  readonly #containerBindingService: ContainerBindingService;
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  #containerSingletonService: ContainerSingletonService;
+  readonly #containerRequestService: ContainerRequestService;
+
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  readonly #containerSingletonService: ContainerSingletonService;
 
   constructor(
     kind: CreateInstanceTaskKind,
     containerBindingService: ContainerBindingService,
+    containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
     dependencies: DependentTask<TaskKind, TaskKind, TArgs, TInstance>[] = [],
   ) {
     super(kind, dependencies);
 
     this.#containerBindingService = containerBindingService;
+    this.#containerRequestService = containerRequestService;
     this.#containerSingletonService = containerSingletonService;
   }
 

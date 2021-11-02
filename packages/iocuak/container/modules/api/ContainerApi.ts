@@ -103,6 +103,7 @@ export class ContainerApi implements ContainerApiService {
     > = this.initializeTaskRunner(
       containerBindingService,
       containerMetadataService,
+      containerRequestService,
       containerSingletonService,
     );
 
@@ -118,6 +119,7 @@ export class ContainerApi implements ContainerApiService {
   private initializeTaskRunner(
     containerBindingService: ContainerBindingService,
     containerMetadataService: ContainerMetadataService,
+    containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
   ) {
     const taskDependenciesKindSetBuilder: cuaktask.Builder<
@@ -140,6 +142,7 @@ export class ContainerApi implements ContainerApiService {
       taskDependenciesKindSetBuilder,
       taskDependencyEngine,
       containerBindingService,
+      containerRequestService,
       containerSingletonService,
     );
 
