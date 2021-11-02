@@ -105,6 +105,7 @@ describe(TaskDependencyEngine.name, () => {
             {
               id: createInstanceTaskKindFixture.id,
               metadata: ClassMetadataFixtures.any,
+              requestId: createInstanceTaskKindFixture.requestId,
               type: TaskKindType.getInstanceDependencies,
             },
           ];
@@ -168,6 +169,7 @@ describe(TaskDependencyEngine.name, () => {
               id: ClassMetadataFixtures
                 .withConstructorArgumentsAndPropertiesEmpty
                 .constructorArguments[0] as ServiceId,
+              requestId: getInstanceDependenciesTaskKindFixture.requestId,
               type: TaskKindType.createInstance,
             },
           ];
@@ -204,6 +206,7 @@ describe(TaskDependencyEngine.name, () => {
               id: ClassMetadataFixtures.withConstructorArgumentsEmptyAndProperties.properties
                 .values()
                 .next().value as ServiceId,
+              requestId: getInstanceDependenciesTaskKindFixture.requestId,
               type: TaskKindType.createInstance,
             },
           ];

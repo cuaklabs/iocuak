@@ -35,14 +35,19 @@ export class ContainerInstanceServiceImplementation
   }
 
   public create<TInstance>(serviceId: ServiceId): TInstance {
+    const requestId: symbol = this.#containerRequestService.start();
+
     const taskKind: CreateInstanceTaskKind = {
       id: serviceId,
+      requestId: requestId,
       type: TaskKindType.createInstance,
     };
 
     const createInstanceTask: CreateInstanceTask = this.#taskBuilder.build(
       taskKind,
     ) as CreateInstanceTask;
+
+    this.#containerRequestService.end(requestId);
 
     const instance: TInstance = this.#dependentTaskRunner.run(
       createInstanceTask,

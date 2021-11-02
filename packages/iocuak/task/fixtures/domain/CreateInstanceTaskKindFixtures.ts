@@ -5,6 +5,7 @@ export class CreateInstanceTaskKindFixtures {
   public static get any(): CreateInstanceTaskKind {
     const fixture: CreateInstanceTaskKind = {
       id: 'sample-id',
+      requestId: Symbol(),
       type: TaskKindType.createInstance,
     };
 

@@ -1,7 +1,7 @@
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
+import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
-import { TaskKindType } from '../models/domain/TaskKindType';
 import { TaskKindSet } from './TaskKindSet';
 
 describe(TaskKindSet.name, () => {
@@ -45,14 +45,7 @@ describe(TaskKindSet.name, () => {
       let taskKindFixture: GetInstanceDependenciesTaskKind;
 
       beforeAll(() => {
-        taskKindFixture = {
-          id: 'sample-task-id',
-          metadata: {
-            constructorArguments: [],
-            properties: new Map(),
-          },
-          type: TaskKindType.getInstanceDependencies,
-        };
+        taskKindFixture = GetInstanceDependenciesTaskKindFixtures.any;
       });
 
       describe('when called', () => {
@@ -146,14 +139,7 @@ describe(TaskKindSet.name, () => {
       let taskKindFixture: GetInstanceDependenciesTaskKind;
 
       beforeAll(() => {
-        taskKindFixture = {
-          id: 'sample-task-id',
-          metadata: {
-            constructorArguments: [],
-            properties: new Map(),
-          },
-          type: TaskKindType.getInstanceDependencies,
-        };
+        taskKindFixture = GetInstanceDependenciesTaskKindFixtures.any;
       });
 
       describe('when called and the task kind is in the set', () => {
@@ -235,14 +221,7 @@ describe(TaskKindSet.name, () => {
       let taskKindFixture: GetInstanceDependenciesTaskKind;
 
       beforeAll(() => {
-        taskKindFixture = {
-          id: 'sample-task-id',
-          metadata: {
-            constructorArguments: [],
-            properties: new Map(),
-          },
-          type: TaskKindType.getInstanceDependencies,
-        };
+        taskKindFixture = GetInstanceDependenciesTaskKindFixtures.any;
       });
 
       describe('when called and the task kind is in the set', () => {

@@ -7,6 +7,7 @@ export class GetInstanceDependenciesTaskKindFixtures {
     const fixture: GetInstanceDependenciesTaskKind = {
       id: 'get-instance-dependencies-task-sample-id',
       metadata: ClassMetadataFixtures.any,
+      requestId: Symbol(),
       type: TaskKindType.getInstanceDependencies,
     };
 
@@ -15,9 +16,8 @@ export class GetInstanceDependenciesTaskKindFixtures {
 
   public static get withMetadataWithConstructorArgumentsAndProperties(): GetInstanceDependenciesTaskKind {
     const fixture: GetInstanceDependenciesTaskKind = {
-      id: 'get-instance-dependencies-task-sample-id',
+      ...GetInstanceDependenciesTaskKindFixtures.any,
       metadata: ClassMetadataFixtures.withConstructorArgumentsAndProperties,
-      type: TaskKindType.getInstanceDependencies,
     };
 
     return fixture;
@@ -25,10 +25,9 @@ export class GetInstanceDependenciesTaskKindFixtures {
 
   public static get withMetadataWithConstructorArgumentsEmptyAndPropertiesEmpty(): GetInstanceDependenciesTaskKind {
     const fixture: GetInstanceDependenciesTaskKind = {
-      id: 'get-instance-dependencies-task-sample-id',
+      ...GetInstanceDependenciesTaskKindFixtures.any,
       metadata:
         ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
-      type: TaskKindType.getInstanceDependencies,
     };
 
     return fixture;
@@ -36,10 +35,9 @@ export class GetInstanceDependenciesTaskKindFixtures {
 
   public static get withMetadataWithConstructorArgumentsEmptyAndProperties(): GetInstanceDependenciesTaskKind {
     const fixture: GetInstanceDependenciesTaskKind = {
-      id: 'get-instance-dependencies-task-sample-id',
+      ...GetInstanceDependenciesTaskKindFixtures.any,
       metadata:
         ClassMetadataFixtures.withConstructorArgumentsEmptyAndProperties,
-      type: TaskKindType.getInstanceDependencies,
     };
 
     return fixture;
@@ -47,10 +45,9 @@ export class GetInstanceDependenciesTaskKindFixtures {
 
   public static get withMetadataWithConstructorArgumentsAndPropertiesEmpty(): GetInstanceDependenciesTaskKind {
     const fixture: GetInstanceDependenciesTaskKind = {
-      id: 'get-instance-dependencies-task-sample-id',
+      ...GetInstanceDependenciesTaskKindFixtures.any,
       metadata:
         ClassMetadataFixtures.withConstructorArgumentsAndPropertiesEmpty,
-      type: TaskKindType.getInstanceDependencies,
     };
 
     return fixture;

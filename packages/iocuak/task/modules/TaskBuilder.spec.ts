@@ -9,6 +9,8 @@ import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanc
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
+import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
+import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../models/domain/TaskKind';
 import { TaskBuilder } from './TaskBuilder';
 
@@ -46,14 +48,17 @@ describe(TaskBuilder.name, () => {
 
   describe('.build()', () => {
     describe('when called, with a taskKind of type TaskKindType.createInstance', () => {
+      let createInstanceTaskKindFixture: CreateInstanceTaskKind;
       let result: unknown;
 
       beforeAll(() => {
+        createInstanceTaskKindFixture = CreateInstanceTaskKindFixtures.any;
+
         (isTaskKind as unknown as jest.Mock).mockReturnValueOnce(true);
 
         taskDependencyEngine.getDependencies.mockReturnValueOnce([]);
 
-        result = taskBuilder.build(CreateInstanceTaskKindFixtures.any);
+        result = taskBuilder.build(createInstanceTaskKindFixture);
       });
 
       afterAll(() => {
@@ -62,9 +67,7 @@ describe(TaskBuilder.name, () => {
 
       it('should call .isTaskKind()', () => {
         expect(isTaskKind).toHaveBeenCalledTimes(1);
-        expect(isTaskKind).toHaveBeenCalledWith(
-          CreateInstanceTaskKindFixtures.any,
-        );
+        expect(isTaskKind).toHaveBeenCalledWith(createInstanceTaskKindFixture);
       });
 
       it('should return a CreateInstanceTask instance', () => {
@@ -72,21 +75,25 @@ describe(TaskBuilder.name, () => {
         expect(result).toStrictEqual(
           expect.objectContaining<Partial<CreateInstanceTask>>({
             dependencies: [],
-            kind: CreateInstanceTaskKindFixtures.any,
+            kind: createInstanceTaskKindFixture,
           }),
         );
       });
     });
 
     describe('when called, with a taskKind of type TaskKindType.getInstanceDependencies', () => {
+      let getInstanceDependenciesTaskKindFixture: GetInstanceDependenciesTaskKind;
       let result: unknown;
 
       beforeAll(() => {
+        getInstanceDependenciesTaskKindFixture =
+          GetInstanceDependenciesTaskKindFixtures.any;
+
         (isTaskKind as unknown as jest.Mock).mockReturnValueOnce(true);
 
         taskDependencyEngine.getDependencies.mockReturnValueOnce([]);
 
-        result = taskBuilder.build(GetInstanceDependenciesTaskKindFixtures.any);
+        result = taskBuilder.build(getInstanceDependenciesTaskKindFixture);
       });
 
       afterAll(() => {
@@ -96,7 +103,7 @@ describe(TaskBuilder.name, () => {
       it('should call .isTaskKind()', () => {
         expect(isTaskKind).toHaveBeenCalledTimes(1);
         expect(isTaskKind).toHaveBeenCalledWith(
-          GetInstanceDependenciesTaskKindFixtures.any,
+          getInstanceDependenciesTaskKindFixture,
         );
       });
 
@@ -105,7 +112,7 @@ describe(TaskBuilder.name, () => {
         expect(result).toStrictEqual(
           expect.objectContaining<Partial<GetInstanceDependenciesTask>>({
             dependencies: [],
-            kind: GetInstanceDependenciesTaskKindFixtures.any,
+            kind: getInstanceDependenciesTaskKindFixture,
           }),
         );
       });

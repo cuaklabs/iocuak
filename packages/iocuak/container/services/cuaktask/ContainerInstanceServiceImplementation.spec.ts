@@ -5,9 +5,9 @@ import {
   TaskStatus,
 } from '@cuaklabs/cuaktask';
 
+import { CreateInstanceTaskKindFixtures } from '../../../task/fixtures/domain/CreateInstanceTaskKindFixtures';
 import { ServiceId } from '../../../task/models/domain/ServiceId';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
-import { TaskKindType } from '../../../task/models/domain/TaskKindType';
 import { ContainerRequestService } from '../domain/ContainerRequestService';
 import { ContainerInstanceServiceImplementation } from './ContainerInstanceServiceImplementation';
 
@@ -21,7 +21,10 @@ describe(ContainerInstanceServiceImplementation.name, () => {
   let containerInstanceServiceImplementation: ContainerInstanceServiceImplementation;
 
   beforeAll(() => {
-    containerRequestService = {} as Partial<
+    containerRequestService = {
+      end: jest.fn(),
+      start: jest.fn(),
+    } as Partial<
       jest.Mocked<ContainerRequestService>
     > as jest.Mocked<ContainerRequestService>;
 
@@ -44,6 +47,7 @@ describe(ContainerInstanceServiceImplementation.name, () => {
   });
 
   describe('when called', () => {
+    let requestIdFixture: symbol;
     let serviceIdFixture: ServiceId;
     let taskKindFixture: TaskKind;
     let dependentTaskFixture: DependentTask<TaskKind, TaskKind>;
@@ -52,11 +56,10 @@ describe(ContainerInstanceServiceImplementation.name, () => {
     let result: unknown;
 
     beforeAll(() => {
-      serviceIdFixture = 'sample-service-id';
-      taskKindFixture = {
-        id: serviceIdFixture,
-        type: TaskKindType.createInstance,
-      };
+      taskKindFixture = CreateInstanceTaskKindFixtures.any;
+      requestIdFixture = taskKindFixture.requestId;
+      serviceIdFixture = taskKindFixture.id;
+
       dependentTaskFixture = {
         dependencies: [],
         kind: taskKindFixture,
@@ -66,6 +69,7 @@ describe(ContainerInstanceServiceImplementation.name, () => {
 
       instanceFixture = { foo: 'bar' };
 
+      containerRequestService.start.mockReturnValueOnce(requestIdFixture);
       taskBuilder.build.mockReturnValueOnce(dependentTaskFixture);
       dependentTaskRunner.run.mockReturnValueOnce(instanceFixture);
 
@@ -76,9 +80,21 @@ describe(ContainerInstanceServiceImplementation.name, () => {
       jest.clearAllMocks();
     });
 
+    it('should call containerRequestService.start()', () => {
+      expect(containerRequestService.start).toHaveBeenCalledTimes(1);
+      expect(containerRequestService.start).toHaveBeenCalledWith();
+    });
+
     it('should call taskBuilder.build()', () => {
       expect(taskBuilder.build).toHaveBeenCalledTimes(1);
       expect(taskBuilder.build).toHaveBeenCalledWith(taskKindFixture);
+    });
+
+    it('should call containerRequestService.end()', () => {
+      expect(containerRequestService.end).toHaveBeenCalledTimes(1);
+      expect(containerRequestService.end).toHaveBeenCalledWith(
+        requestIdFixture,
+      );
     });
 
     it('should call dependentTaskRunner.run()', () => {

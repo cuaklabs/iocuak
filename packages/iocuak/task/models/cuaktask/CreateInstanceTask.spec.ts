@@ -1,9 +1,9 @@
 import { Binding } from '../../../binding/models/domain/Binding';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
+import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { ServiceDependenciesFixtures } from '../../fixtures/domain/ServiceDependenciesFixtures';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
-import { TaskKindType } from '../domain/TaskKindType';
 import { TaskScope } from '../domain/TaskScope';
 import { CreateInstanceTask } from './CreateInstanceTask';
 
@@ -17,10 +17,7 @@ describe(CreateInstanceTask.name, () => {
       let taskKindFixture: CreateInstanceTaskKind;
 
       beforeAll(() => {
-        taskKindFixture = {
-          id: 'sample-task-kind-id',
-          type: TaskKindType.createInstance,
-        };
+        taskKindFixture = CreateInstanceTaskKindFixtures.any;
       });
 
       describe('when called and containerService.binding.get() returns no binding', () => {

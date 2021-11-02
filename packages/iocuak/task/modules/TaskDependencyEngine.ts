@@ -76,6 +76,7 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
     const getInstanceDependenciesTaskKind: GetInstanceDependenciesTaskKind = {
       id: taskKind.id,
       metadata: metadata,
+      requestId: taskKind.requestId,
       type: TaskKindType.getInstanceDependencies,
     };
 
@@ -91,6 +92,7 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
       metadata.constructorArguments.map(
         (constructorArgument: ServiceId): CreateInstanceTaskKind => ({
           id: constructorArgument,
+          requestId: taskKind.requestId,
           type: TaskKindType.createInstance,
         }),
       );
@@ -100,6 +102,7 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
     ].map(
       (serviceId: ServiceId): CreateInstanceTaskKind => ({
         id: serviceId,
+        requestId: taskKind.requestId,
         type: TaskKindType.createInstance,
       }),
     );
