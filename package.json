@@ -1,8 +1,7 @@
 {
-  "name": "@cuaklabs/cuaktask",
-  "version": "0.0.1",
+  "name": "root",
+  "private": true,
   "description": "Minimal abstract task manager",
-  "main": "index.js",
   "scripts": {
     "build:dev": "tsc --build tsconfig.dev.json",
     "build:prod": "tsc --build tsconfig.prod.json",
