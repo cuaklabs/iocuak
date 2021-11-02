@@ -56,6 +56,12 @@ export class CreateInstanceTask<
       let instance: TInstance;
 
       switch (binding.scope) {
+        case TaskScope.request:
+          instance = this.#createInstanceInRequestScope(
+            serviceDependencies,
+            binding,
+          );
+          break;
         case TaskScope.singleton:
           instance = this.#createInstanceInSingletonScope(
             serviceDependencies,
@@ -89,6 +95,36 @@ export class CreateInstanceTask<
     ] of serviceDependencies.properties) {
       (instance as Record<string | symbol, unknown>)[propertyName] =
         propertyValue;
+    }
+
+    return instance;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  #createInstanceInRequestScope(
+    serviceDependencies: ServiceDependencies<TArgs>,
+    binding: Binding<TInstance, TArgs>,
+  ): TInstance {
+    const instanceFromRequestScope: unknown = this.#containerRequestService.get(
+      this.kind.requestId,
+      this.kind.id,
+    );
+
+    let instance: TInstance;
+
+    if (instanceFromRequestScope === undefined) {
+      instance = this.#createInstanceInTransientScope(
+        serviceDependencies,
+        binding,
+      );
+
+      this.#containerRequestService.set(
+        this.kind.requestId,
+        this.kind.id,
+        instance,
+      );
+    } else {
+      instance = instanceFromRequestScope as TInstance;
     }
 
     return instance;

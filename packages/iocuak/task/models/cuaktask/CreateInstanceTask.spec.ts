@@ -350,6 +350,197 @@ describe(CreateInstanceTask.name, () => {
           expect(result).toBe(instanceTestFixture);
         });
       });
+
+      describe('when called and containerService.binding.get() returns a binding with request scope and containerService.request.get() returns no instance', () => {
+        let bindingFixture: Binding<InstanceTest, [] | [string]>;
+        let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+        let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
+        let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
+        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+
+        let result: unknown;
+
+        beforeAll(() => {
+          const instanceConstructorCallMock: jest.Mock<
+            InstanceTest,
+            [] | [string]
+          > = jest
+            .fn<InstanceTest, []>()
+            .mockImplementation((foo?: string) => new InstanceTest(foo));
+
+          bindingFixture = {
+            id: taskKindFixture.id,
+            scope: TaskScope.request,
+            type: instanceConstructorCallMock,
+          };
+
+          containerBindingServiceMock = {
+            get: jest.fn().mockReturnValueOnce(bindingFixture),
+          } as Partial<
+            jest.Mocked<ContainerBindingService>
+          > as jest.Mocked<ContainerBindingService>;
+
+          containerRequestServiceMock = {
+            get: jest.fn().mockReturnValueOnce(undefined),
+            set: jest.fn(),
+          } as Partial<
+            jest.Mocked<ContainerRequestService>
+          > as jest.Mocked<ContainerRequestService>;
+
+          containerSingletonServiceMock = {} as Partial<
+            jest.Mocked<ContainerSingletonService>
+          > as jest.Mocked<ContainerSingletonService>;
+
+          createInstanceTask = new CreateInstanceTask(
+            taskKindFixture,
+            containerBindingServiceMock,
+            containerRequestServiceMock,
+            containerSingletonServiceMock,
+          );
+
+          result = createInstanceTask.perform(
+            ServiceDependenciesFixtures.withConstructorArgumentsAndProperties,
+          );
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call containerBindingService.get()', () => {
+          expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
+          expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
+            taskKindFixture.id,
+          );
+        });
+
+        it('should call containerRequestServiceMock.get()', () => {
+          expect(containerRequestServiceMock.get).toHaveBeenCalledTimes(1);
+          expect(containerRequestServiceMock.get).toHaveBeenCalledWith(
+            taskKindFixture.requestId,
+            taskKindFixture.id,
+          );
+        });
+
+        it('should call bindingFixture.type()', () => {
+          expect(bindingFixture.type).toHaveBeenCalledTimes(1);
+          expect(bindingFixture.type).toHaveBeenCalledWith(
+            ...ServiceDependenciesFixtures.withConstructorArgumentsAndProperties
+              .constructorArguments,
+          );
+        });
+
+        it('should call containerRequestServiceMock.set()', () => {
+          expect(containerRequestServiceMock.set).toHaveBeenCalledTimes(1);
+          expect(containerRequestServiceMock.set).toHaveBeenCalledWith(
+            taskKindFixture.requestId,
+            taskKindFixture.id,
+            expect.any(InstanceTest),
+          );
+          Object.entries(
+            ServiceDependenciesFixtures.withConstructorArgumentsAndProperties
+              .properties,
+          ).map(([key, value]: [string, unknown]): void => {
+            expect(containerSingletonServiceMock.set).toHaveBeenCalledWith(
+              taskKindFixture.requestId,
+              taskKindFixture.id,
+              expect.objectContaining({ [key]: value }),
+            );
+          });
+        });
+
+        it('should return an instance of InstanceTest with properties set', () => {
+          expect(result).toBeInstanceOf(InstanceTest);
+
+          Object.entries(
+            ServiceDependenciesFixtures.withConstructorArgumentsAndProperties
+              .properties,
+          ).map(([key, value]: [string, unknown]): void => {
+            expect(result).toHaveProperty(key);
+            expect((result as Record<string, unknown>)[key]).toBe(value);
+          });
+        });
+      });
+
+      describe('when called and containerService.binding.get() returns a binding with request scope and containerService.request.get() returns an instance', () => {
+        let bindingFixture: Binding<InstanceTest, [] | [string]>;
+        let instanceTestFixture: InstanceTest;
+        let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+        let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
+        let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
+        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+
+        let result: unknown;
+
+        beforeAll(() => {
+          const instanceConstructorCallMock: jest.Mock<
+            InstanceTest,
+            [] | [string]
+          > = jest.fn<InstanceTest, []>();
+
+          bindingFixture = {
+            id: 'sample-id',
+            scope: TaskScope.request,
+            type: instanceConstructorCallMock,
+          };
+
+          instanceTestFixture = new InstanceTest();
+
+          containerBindingServiceMock = {
+            get: jest.fn().mockReturnValueOnce(bindingFixture),
+          } as Partial<
+            jest.Mocked<ContainerBindingService>
+          > as jest.Mocked<ContainerBindingService>;
+
+          containerRequestServiceMock = {
+            get: jest.fn().mockReturnValueOnce(instanceTestFixture),
+          } as Partial<
+            jest.Mocked<ContainerRequestService>
+          > as jest.Mocked<ContainerRequestService>;
+
+          containerSingletonServiceMock = {} as Partial<
+            jest.Mocked<ContainerSingletonService>
+          > as jest.Mocked<ContainerSingletonService>;
+
+          createInstanceTask = new CreateInstanceTask(
+            taskKindFixture,
+            containerBindingServiceMock,
+            containerRequestServiceMock,
+            containerSingletonServiceMock,
+          );
+
+          result = createInstanceTask.perform(
+            ServiceDependenciesFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
+          );
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call containerBindingService.get()', () => {
+          expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
+          expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
+            taskKindFixture.id,
+          );
+        });
+
+        it('should call containerRequestServiceMock.get()', () => {
+          expect(containerRequestServiceMock.get).toHaveBeenCalledTimes(1);
+          expect(containerRequestServiceMock.get).toHaveBeenCalledWith(
+            taskKindFixture.requestId,
+            taskKindFixture.id,
+          );
+        });
+
+        it('should not call bindingFixture.type()', () => {
+          expect(bindingFixture.type).not.toHaveBeenCalled();
+        });
+
+        it('should return an instance of InstanceTest', () => {
+          expect(result).toBe(instanceTestFixture);
+        });
+      });
     });
   });
 });
