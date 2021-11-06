@@ -1,4 +1,4 @@
-import { ServiceId } from '../../../task/models/domain/ServiceId';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerSingletonServiceImplementation } from './ContainerSingletonServiceImplementation';
 
 describe(ContainerSingletonServiceImplementation.name, () => {

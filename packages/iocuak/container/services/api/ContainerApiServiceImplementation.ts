@@ -1,6 +1,6 @@
 import { Binding } from '../../../binding/models/domain/Binding';
-import { Newable } from '../../../task/models/domain/Newable';
-import { ServiceId } from '../../../task/models/domain/ServiceId';
+import { Newable } from '../../../common/models/domain/Newable';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
 import { ContainerService } from '../domain/ContainerService';
 import { ContainerApiService } from './ContainerApiService';

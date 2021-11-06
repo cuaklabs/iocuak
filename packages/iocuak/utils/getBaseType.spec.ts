@@ -1,4 +1,4 @@
-import { Newable } from '../task/models/domain/Newable';
+import { Newable } from '../common/models/domain/Newable';
 import { getBaseType } from './getBaseType';
 
 describe(getBaseType.name, () => {

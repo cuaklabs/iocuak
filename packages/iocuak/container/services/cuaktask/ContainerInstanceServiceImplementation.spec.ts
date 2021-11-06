@@ -5,8 +5,8 @@ import {
   TaskStatus,
 } from '@cuaklabs/cuaktask';
 
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { CreateInstanceTaskKindFixtures } from '../../../task/fixtures/domain/CreateInstanceTaskKindFixtures';
-import { ServiceId } from '../../../task/models/domain/ServiceId';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
 import { ContainerRequestService } from '../domain/ContainerRequestService';
 import { ContainerInstanceServiceImplementation } from './ContainerInstanceServiceImplementation';

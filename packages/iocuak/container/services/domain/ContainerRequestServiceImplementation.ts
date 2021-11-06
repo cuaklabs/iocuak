@@ -1,4 +1,4 @@
-import { ServiceId } from '../../../task/models/domain/ServiceId';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerRequestService } from './ContainerRequestService';
 
 export class ContainerRequestServiceImplementation

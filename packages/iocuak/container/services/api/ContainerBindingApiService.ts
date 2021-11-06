@@ -1,5 +1,5 @@
-import { Newable } from '../../../task/models/domain/Newable';
-import { ServiceId } from '../../../task/models/domain/ServiceId';
+import { Newable } from '../../../common/models/domain/Newable';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 
 export interface ContainerBindingApiService {
   bind<TInstance, TArgs extends unknown[]>(

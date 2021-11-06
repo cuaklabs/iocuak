@@ -1,7 +1,7 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
-import { Newable } from '../../../task/models/domain/Newable';
-import { ServiceId } from '../../../task/models/domain/ServiceId';
+import { Newable } from '../../../common/models/domain/Newable';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
 import { TaskBuilder } from '../../../task/modules/TaskBuilder';
 import { TaskDependencyEngine } from '../../../task/modules/TaskDependencyEngine';

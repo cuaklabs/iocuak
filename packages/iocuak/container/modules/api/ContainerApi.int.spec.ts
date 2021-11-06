@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 
+import { Newable } from '../../../common/models/domain/Newable';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { inject } from '../../../metadata/decorators/inject';
 import { injectable } from '../../../metadata/decorators/injectable';
-import { Newable } from '../../../task/models/domain/Newable';
-import { ServiceId } from '../../../task/models/domain/ServiceId';
 import { ContainerApi } from './ContainerApi';
 
 describe(ContainerApi.name, () => {

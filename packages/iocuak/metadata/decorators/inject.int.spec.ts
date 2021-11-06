@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
-import { Newable } from '../../task/models/domain/Newable';
-import { ServiceId } from '../../task/models/domain/ServiceId';
+import { Newable } from '../../common/models/domain/Newable';
+import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { inject } from './inject';

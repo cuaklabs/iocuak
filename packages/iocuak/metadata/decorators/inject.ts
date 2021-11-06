@@ -1,5 +1,5 @@
 import { Prototype } from '../../common/models/domain/Prototype';
-import { ServiceId } from '../../task/models/domain/ServiceId';
+import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { updateReflectMetadata } from '../utils/updateReflectMetadata';

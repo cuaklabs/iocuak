@@ -1,6 +1,6 @@
 import { SetLike } from '@cuaklabs/cuaktask';
 
-import { ServiceId } from '../models/domain/ServiceId';
+import { ServiceId } from '../../common/models/domain/ServiceId';
 import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
 

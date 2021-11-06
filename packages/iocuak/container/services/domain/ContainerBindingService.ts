@@ -1,5 +1,5 @@
 import { Binding } from '../../../binding/models/domain/Binding';
-import { ServiceId } from '../../../task/models/domain/ServiceId';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 
 export interface ContainerBindingService {
   get<TInstance, TArgs extends unknown[]>(

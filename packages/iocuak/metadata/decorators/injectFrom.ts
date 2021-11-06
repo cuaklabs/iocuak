@@ -1,5 +1,5 @@
 import { ClassMetadataExtensionApi } from '../../binding/models/api/ClassMetadataExtensionApi';
-import { ServiceId } from '../../task/models/domain/ServiceId';
+import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { getReflectMetadata } from '../utils/getReflectMetadata';

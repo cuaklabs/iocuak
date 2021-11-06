@@ -1,12 +1,12 @@
 jest.mock('../../../metadata/decorators/getDefaultClassMetadata');
 jest.mock('../../../metadata/utils/getReflectMetadata');
 
+import { Newable } from '../../../common/models/domain/Newable';
 import { getDefaultClassMetadata } from '../../../metadata/decorators/getDefaultClassMetadata';
 import { ClassMetadataFixtures } from '../../../metadata/fixtures/domain/ClassMetadataFixtures';
 import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
 import { MetadataKey } from '../../../metadata/models/domain/MetadataKey';
 import { getReflectMetadata } from '../../../metadata/utils/getReflectMetadata';
-import { Newable } from '../../../task/models/domain/Newable';
 import { ContainerMetadataServiceImplementation } from './ContainerMetadataServiceImplementation';
 
 describe(ContainerMetadataServiceImplementation.name, () => {

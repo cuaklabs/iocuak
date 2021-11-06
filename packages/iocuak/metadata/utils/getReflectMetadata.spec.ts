@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { Newable } from '../../task/models/domain/Newable';
+import { Newable } from '../../common/models/domain/Newable';
 import { getReflectMetadata } from './getReflectMetadata';
 
 describe(getReflectMetadata.name, () => {

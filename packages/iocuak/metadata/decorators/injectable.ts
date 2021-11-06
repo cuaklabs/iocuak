@@ -1,7 +1,7 @@
 import { BindingApi } from '../../binding/models/api/BindingApi';
 import { Binding } from '../../binding/models/domain/Binding';
-import { Newable } from '../../task/models/domain/Newable';
-import { ServiceId } from '../../task/models/domain/ServiceId';
+import { Newable } from '../../common/models/domain/Newable';
+import { ServiceId } from '../../common/models/domain/ServiceId';
 import { TaskScope } from '../../task/models/domain/TaskScope';
 import { MetadataKey } from '../models/domain/MetadataKey';
 

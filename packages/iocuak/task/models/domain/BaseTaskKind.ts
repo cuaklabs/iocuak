@@ -1,4 +1,4 @@
-import { ServiceId } from './ServiceId';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { TaskKindType } from './TaskKindType';
 
 export interface BaseTaskKind<

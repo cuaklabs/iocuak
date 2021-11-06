@@ -2,7 +2,7 @@ jest.mock('../../utils/getBaseType');
 jest.mock('./injectFrom');
 
 import { ClassMetadataExtensionApi } from '../../binding/models/api/ClassMetadataExtensionApi';
-import { Newable } from '../../task/models/domain/Newable';
+import { Newable } from '../../common/models/domain/Newable';
 import { getBaseType } from '../../utils/getBaseType';
 import { injectFrom } from './injectFrom';
 import { injectFromBase } from './injectFromBase';

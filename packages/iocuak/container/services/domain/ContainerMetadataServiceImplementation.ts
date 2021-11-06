@@ -1,9 +1,9 @@
 import { Binding } from '../../../binding/models/domain/Binding';
+import { Newable } from '../../../common/models/domain/Newable';
 import { getDefaultClassMetadata } from '../../../metadata/decorators/getDefaultClassMetadata';
 import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
 import { MetadataKey } from '../../../metadata/models/domain/MetadataKey';
 import { getReflectMetadata } from '../../../metadata/utils/getReflectMetadata';
-import { Newable } from '../../../task/models/domain/Newable';
 import { ContainerMetadataService } from './ContainerMetadataService';
 
 export class ContainerMetadataServiceImplementation
