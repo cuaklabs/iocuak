@@ -1,6 +1,8 @@
 import { BaseDependentTask, DependentTask } from '@cuaklabs/cuaktask';
 
 import { Binding } from '../../../binding/models/domain/Binding';
+import { BindingType } from '../../../binding/models/domain/BindingType';
+import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
@@ -55,25 +57,15 @@ export class CreateInstanceTask<
     } else {
       let instance: TInstance;
 
-      switch (binding.scope) {
-        case TaskScope.request:
-          instance = this.#createInstanceInRequestScope(
+      switch (binding.bindingType) {
+        case BindingType.type:
+          instance = this.#createInstanceFromTypeBinding(
             serviceDependencies,
             binding,
           );
           break;
-        case TaskScope.singleton:
-          instance = this.#createInstanceInSingletonScope(
-            serviceDependencies,
-            binding,
-          );
-          break;
-        case TaskScope.transient:
-          instance = this.#createInstanceInTransientScope(
-            serviceDependencies,
-            binding,
-          );
-          break;
+        case BindingType.value:
+          throw new Error('Unexpected value binding');
       }
 
       return instance;
@@ -81,9 +73,40 @@ export class CreateInstanceTask<
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
+  #createInstanceFromTypeBinding(
+    serviceDependencies: ServiceDependencies<TArgs>,
+    binding: TypeBinding<TInstance, TArgs>,
+  ): TInstance {
+    let instance: TInstance;
+
+    switch (binding.scope) {
+      case TaskScope.request:
+        instance = this.#createInstanceInRequestScope(
+          serviceDependencies,
+          binding,
+        );
+        break;
+      case TaskScope.singleton:
+        instance = this.#createInstanceInSingletonScope(
+          serviceDependencies,
+          binding,
+        );
+        break;
+      case TaskScope.transient:
+        instance = this.#createInstanceInTransientScope(
+          serviceDependencies,
+          binding,
+        );
+        break;
+    }
+
+    return instance;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   #createInstanceInTransientScope(
     serviceDependencies: ServiceDependencies<TArgs>,
-    binding: Binding<TInstance, TArgs>,
+    binding: TypeBinding<TInstance, TArgs>,
   ): TInstance {
     const instance: TInstance = new binding.type(
       ...serviceDependencies.constructorArguments,
@@ -103,7 +126,7 @@ export class CreateInstanceTask<
   // eslint-disable-next-line @typescript-eslint/member-ordering
   #createInstanceInRequestScope(
     serviceDependencies: ServiceDependencies<TArgs>,
-    binding: Binding<TInstance, TArgs>,
+    binding: TypeBinding<TInstance, TArgs>,
   ): TInstance {
     const instanceFromRequestScope: unknown = this.#containerRequestService.get(
       this.kind.requestId,
@@ -133,7 +156,7 @@ export class CreateInstanceTask<
   // eslint-disable-next-line @typescript-eslint/member-ordering
   #createInstanceInSingletonScope(
     serviceDependencies: ServiceDependencies<TArgs>,
-    binding: Binding<TInstance, TArgs>,
+    binding: TypeBinding<TInstance, TArgs>,
   ): TInstance {
     const instanceFromSingletonScope: unknown =
       this.#containerSingletonService.get(this.kind.id);

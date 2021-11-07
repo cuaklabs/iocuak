@@ -1,11 +1,11 @@
-import { Binding } from '../../../binding/models/domain/Binding';
+import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
 
 export interface ContainerMetadataService {
   getBindingMetadata<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
-  ): Binding<TInstance, TArgs> | undefined;
+  ): TypeBinding<TInstance, TArgs> | undefined;
 
   getClassMetadata<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,

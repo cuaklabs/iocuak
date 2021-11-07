@@ -1,4 +1,4 @@
-import { Binding } from '../../../binding/models/domain/Binding';
+import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
@@ -16,7 +16,7 @@ export class ContainerApiServiceImplementation implements ContainerApiService {
   public bind<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): void {
-    const bindingFromType: Binding<TInstance, TArgs> | undefined =
+    const bindingFromType: TypeBinding<TInstance, TArgs> | undefined =
       this.#containerService.metadata.getBindingMetadata(type);
 
     if (bindingFromType === undefined) {

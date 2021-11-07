@@ -1,4 +1,4 @@
-import { Binding } from '../../../binding/models/domain/Binding';
+import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { Newable } from '../../../common/models/domain/Newable';
 import { getDefaultClassMetadata } from '../../../metadata/decorators/getDefaultClassMetadata';
 import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
@@ -11,11 +11,9 @@ export class ContainerMetadataServiceImplementation
 {
   public getBindingMetadata<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
-  ): Binding<TInstance, TArgs> | undefined {
-    const binding: Binding<TInstance, TArgs> | undefined = getReflectMetadata(
-      type,
-      MetadataKey.injectable,
-    );
+  ): TypeBinding<TInstance, TArgs> | undefined {
+    const binding: TypeBinding<TInstance, TArgs> | undefined =
+      getReflectMetadata(type, MetadataKey.injectable);
 
     return binding;
   }

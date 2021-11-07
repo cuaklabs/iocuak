@@ -1,5 +1,6 @@
 import { BindingApi } from '../../binding/models/api/BindingApi';
-import { Binding } from '../../binding/models/domain/Binding';
+import { BindingType } from '../../binding/models/domain/BindingType';
+import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { TaskScope } from '../../task/models/domain/TaskScope';
@@ -15,7 +16,8 @@ export function injectable(bindingApi?: BindingApi): ClassDecorator {
 
     const bindingScope: TaskScope = bindingApi?.scope ?? TaskScope.transient;
 
-    const binding: Binding = {
+    const binding: TypeBinding = {
+      bindingType: BindingType.type,
       id: bindingId,
       scope: bindingScope,
       type: target as unknown as Newable,

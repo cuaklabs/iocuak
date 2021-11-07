@@ -1,4 +1,5 @@
-import { Binding } from '../../../binding/models/domain/Binding';
+import { BindingType } from '../../../binding/models/domain/BindingType';
+import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { TaskScope } from '../../../task/models/domain/TaskScope';
@@ -44,7 +45,7 @@ describe(ContainerApiServiceImplementation.name, () => {
 
         (
           containerServiceMock.metadata.getBindingMetadata as jest.Mock<
-            Binding | undefined
+            TypeBinding | undefined
           >
         ).mockReturnValueOnce(undefined);
 
@@ -71,14 +72,15 @@ describe(ContainerApiServiceImplementation.name, () => {
       });
     });
 
-    describe('when called, and containerService.metadata.getBindingMetadata returns a binding', () => {
+    describe('when called, and containerService.metadata.getBindingMetadata returns a type binding', () => {
       let typeFixture: Newable;
-      let bindingFixture: Binding;
+      let bindingFixture: TypeBinding;
 
       beforeAll(() => {
         typeFixture = class {};
 
         bindingFixture = {
+          bindingType: BindingType.type,
           id: 'sample-service-id',
           scope: TaskScope.transient,
           type: typeFixture,
@@ -86,7 +88,7 @@ describe(ContainerApiServiceImplementation.name, () => {
 
         (
           containerServiceMock.metadata.getBindingMetadata as jest.Mock<
-            Binding | undefined
+            TypeBinding | undefined
           >
         ).mockReturnValueOnce(bindingFixture);
 

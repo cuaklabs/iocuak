@@ -1,4 +1,5 @@
 import { Binding } from '../../../binding/models/domain/Binding';
+import { BindingType } from '../../../binding/models/domain/BindingType';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { TaskScope } from '../../../task/models/domain/TaskScope';
 import { ContainerBindingServiceImplementation } from './ContainerBindingServiceImplementation';
@@ -35,6 +36,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
         const serviceIdFixture: ServiceId = 'service-id';
 
         bindingFixture = {
+          bindingType: BindingType.type,
           id: serviceIdFixture,
           scope: TaskScope.transient,
           type: class {},
@@ -66,6 +68,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
 
         serviceIdFixture = 'sample-service-id';
         bindingFixture = {
+          bindingType: BindingType.type,
           id: serviceIdFixture,
           scope: TaskScope.transient,
           type: class {},
@@ -130,6 +133,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
         serviceIdFixture = 'sample-service-id';
 
         bindingFixture = {
+          bindingType: BindingType.type,
           id: serviceIdFixture,
           scope: TaskScope.transient,
           type: class {},

@@ -1,4 +1,5 @@
 import { Binding } from '../../binding/models/domain/Binding';
+import { BindingType } from '../../binding/models/domain/BindingType';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerMetadataService } from '../../container/services/domain/ContainerMetadataService';
@@ -74,12 +75,13 @@ describe(TaskDependencyEngine.name, () => {
         });
       });
 
-      describe('when called, and containerService.binding.get() returns a binding and containerService.metadata.get() returns metadata', () => {
+      describe('when called, and containerService.binding.get() returns a type binding and containerService.metadata.get() returns metadata', () => {
         let bindingFixture: Binding;
         let result: unknown;
 
         beforeAll(() => {
           bindingFixture = {
+            bindingType: BindingType.type,
             id: createInstanceTaskKindFixture.id,
             scope: TaskScope.transient,
             type: class {},

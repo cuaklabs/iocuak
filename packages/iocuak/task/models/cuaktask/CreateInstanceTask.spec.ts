@@ -1,4 +1,5 @@
 import { Binding } from '../../../binding/models/domain/Binding';
+import { BindingType } from '../../../binding/models/domain/BindingType';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
@@ -83,7 +84,7 @@ describe(CreateInstanceTask.name, () => {
         });
       });
 
-      describe('when called and containerService.binding.get() returns a binding with transient scope', () => {
+      describe('when called and containerService.binding.get() returns a type binding with transient scope', () => {
         let bindingFixture: Binding<InstanceTest, [] | [string]>;
         let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
         let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
@@ -101,6 +102,7 @@ describe(CreateInstanceTask.name, () => {
             .mockImplementation((foo?: string) => new InstanceTest(foo));
 
           bindingFixture = {
+            bindingType: BindingType.type,
             id: 'sample-id',
             scope: TaskScope.transient,
             type: instanceConstructorCallMock,
@@ -164,7 +166,7 @@ describe(CreateInstanceTask.name, () => {
         });
       });
 
-      describe('when called and containerService.binding.get() returns a binding with singleton scope and containerService.singleton.get() returns no instance', () => {
+      describe('when called and containerService.binding.get() returns a type binding with singleton scope and containerService.singleton.get() returns no instance', () => {
         let bindingFixture: Binding<InstanceTest, [] | [string]>;
         let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
         let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
@@ -182,6 +184,7 @@ describe(CreateInstanceTask.name, () => {
             .mockImplementation((foo?: string) => new InstanceTest(foo));
 
           bindingFixture = {
+            bindingType: BindingType.type,
             id: taskKindFixture.id,
             scope: TaskScope.singleton,
             type: instanceConstructorCallMock,
@@ -272,7 +275,7 @@ describe(CreateInstanceTask.name, () => {
         });
       });
 
-      describe('when called and containerService.binding.get() returns a binding with singleton scope and containerService.singleton.get() returns an instance', () => {
+      describe('when called and containerService.binding.get() returns a type binding with singleton scope and containerService.singleton.get() returns an instance', () => {
         let bindingFixture: Binding<InstanceTest, [] | [string]>;
         let instanceTestFixture: InstanceTest;
         let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
@@ -289,6 +292,7 @@ describe(CreateInstanceTask.name, () => {
           > = jest.fn<InstanceTest, []>();
 
           bindingFixture = {
+            bindingType: BindingType.type,
             id: 'sample-id',
             scope: TaskScope.singleton,
             type: instanceConstructorCallMock,
@@ -351,7 +355,7 @@ describe(CreateInstanceTask.name, () => {
         });
       });
 
-      describe('when called and containerService.binding.get() returns a binding with request scope and containerService.request.get() returns no instance', () => {
+      describe('when called and containerService.binding.get() returns a type binding with request scope and containerService.request.get() returns no instance', () => {
         let bindingFixture: Binding<InstanceTest, [] | [string]>;
         let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
         let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
@@ -369,6 +373,7 @@ describe(CreateInstanceTask.name, () => {
             .mockImplementation((foo?: string) => new InstanceTest(foo));
 
           bindingFixture = {
+            bindingType: BindingType.type,
             id: taskKindFixture.id,
             scope: TaskScope.request,
             type: instanceConstructorCallMock,
@@ -462,7 +467,7 @@ describe(CreateInstanceTask.name, () => {
         });
       });
 
-      describe('when called and containerService.binding.get() returns a binding with request scope and containerService.request.get() returns an instance', () => {
+      describe('when called and containerService.binding.get() returns a type binding with request scope and containerService.request.get() returns an instance', () => {
         let bindingFixture: Binding<InstanceTest, [] | [string]>;
         let instanceTestFixture: InstanceTest;
         let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
@@ -479,6 +484,7 @@ describe(CreateInstanceTask.name, () => {
           > = jest.fn<InstanceTest, []>();
 
           bindingFixture = {
+            bindingType: BindingType.type,
             id: 'sample-id',
             scope: TaskScope.request,
             type: instanceConstructorCallMock,

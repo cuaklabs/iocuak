@@ -1,7 +1,8 @@
 import 'reflect-metadata';
 
 import { BindingApiFixtures } from '../../binding/fixtures/api/BindingApiFixtures';
-import { Binding } from '../../binding/models/domain/Binding';
+import { BindingType } from '../../binding/models/domain/BindingType';
+import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { TaskScope } from '../../task/models/domain/TaskScope';
@@ -26,7 +27,8 @@ describe(injectable.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      expect(reflectMetadata).toStrictEqual<Binding>({
+      expect(reflectMetadata).toStrictEqual<TypeBinding>({
+        bindingType: BindingType.type,
         id: targetFixture,
         scope: TaskScope.transient,
         type: targetFixture,
@@ -51,7 +53,8 @@ describe(injectable.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      expect(reflectMetadata).toStrictEqual<Binding>({
+      expect(reflectMetadata).toStrictEqual<TypeBinding>({
+        bindingType: BindingType.type,
         id: targetFixture,
         scope: TaskScope.transient,
         type: targetFixture,
@@ -76,7 +79,8 @@ describe(injectable.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      expect(reflectMetadata).toStrictEqual<Binding>({
+      expect(reflectMetadata).toStrictEqual<TypeBinding>({
+        bindingType: BindingType.type,
         id: BindingApiFixtures.withId.id as ServiceId,
         scope: TaskScope.transient,
         type: targetFixture,
@@ -101,7 +105,8 @@ describe(injectable.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      expect(reflectMetadata).toStrictEqual<Binding>({
+      expect(reflectMetadata).toStrictEqual<TypeBinding>({
+        bindingType: BindingType.type,
         id: targetFixture,
         scope: BindingApiFixtures.withScope.scope as TaskScope,
         type: targetFixture,

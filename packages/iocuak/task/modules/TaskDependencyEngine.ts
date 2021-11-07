@@ -1,6 +1,8 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { Binding } from '../../binding/models/domain/Binding';
+import { BindingType } from '../../binding/models/domain/BindingType';
+import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerMetadataService } from '../../container/services/domain/ContainerMetadataService';
@@ -52,7 +54,7 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
     }
   }
 
-  #getClassMetadata(serviceId: ServiceId): ClassMetadata {
+  #getBinding(serviceId: ServiceId): Binding {
     const binding: Binding | undefined =
       this.#containerBindingService.get(serviceId);
 
@@ -61,17 +63,33 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
         `No bindings found for type ${stringifyServiceId(serviceId)}`,
       );
     } else {
-      const metadata: ClassMetadata =
-        this.#containerMetadataService.getClassMetadata(binding.type);
-
-      return metadata;
+      return binding;
     }
   }
 
   #getCreateInstanceTaskKindDependencies(
     taskKind: CreateInstanceTaskKind,
   ): TaskKind[] {
-    const metadata: ClassMetadata = this.#getClassMetadata(taskKind.id);
+    const serviceId: ServiceId = taskKind.id;
+    const binding: Binding = this.#getBinding(serviceId);
+
+    switch (binding.bindingType) {
+      case BindingType.type:
+        return this.#getCreateInstanceTaskKindDependenciesFromType(
+          taskKind,
+          binding,
+        );
+      case BindingType.value:
+        throw new Error('Unexpected value binding');
+    }
+  }
+
+  #getCreateInstanceTaskKindDependenciesFromType(
+    taskKind: CreateInstanceTaskKind,
+    binding: TypeBinding,
+  ): TaskKind[] {
+    const metadata: ClassMetadata =
+      this.#containerMetadataService.getClassMetadata(binding.type);
 
     const getInstanceDependenciesTaskKind: GetInstanceDependenciesTaskKind = {
       id: taskKind.id,
