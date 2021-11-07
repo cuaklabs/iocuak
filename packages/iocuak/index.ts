@@ -1,4 +1,4 @@
-import { Binding } from './binding/models/domain/Binding';
+import { BindingApi } from './binding/models/api/BindingApi';
 import { Newable } from './common/models/domain/Newable';
 import { ServiceId } from './common/models/domain/ServiceId';
 import { ContainerApi } from './container/modules/api/ContainerApi';
@@ -10,7 +10,7 @@ import { injectFromBase } from './metadata/decorators/injectFromBase';
 import { TaskScope } from './task/models/domain/TaskScope';
 
 export {
-  Binding,
+  BindingApi,
   ContainerApi,
   ContainerModuleApi,
   inject,
