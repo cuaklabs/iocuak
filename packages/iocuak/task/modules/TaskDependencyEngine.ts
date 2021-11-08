@@ -73,15 +73,22 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
     const serviceId: ServiceId = taskKind.id;
     const binding: Binding = this.#getBinding(serviceId);
 
+    let taskKindDependencies: TaskKind[];
+
     switch (binding.bindingType) {
       case BindingType.type:
-        return this.#getCreateInstanceTaskKindDependenciesFromType(
-          taskKind,
-          binding,
-        );
+        taskKindDependencies =
+          this.#getCreateInstanceTaskKindDependenciesFromType(
+            taskKind,
+            binding,
+          );
+        break;
       case BindingType.value:
-        throw new Error('Unexpected value binding');
+        taskKindDependencies = [];
+        break;
     }
+
+    return taskKindDependencies;
   }
 
   #getCreateInstanceTaskKindDependenciesFromType(

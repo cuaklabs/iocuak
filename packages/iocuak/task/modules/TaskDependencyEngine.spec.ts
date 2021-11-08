@@ -129,24 +129,17 @@ describe(TaskDependencyEngine.name, () => {
 
           containerBindingService.get.mockReturnValueOnce(bindingFixture);
 
-          try {
-            taskDependencyEngine.getDependencies(createInstanceTaskKindFixture);
-          } catch (error: unknown) {
-            result = error;
-          }
+          result = taskDependencyEngine.getDependencies(
+            createInstanceTaskKindFixture,
+          );
         });
 
         afterAll(() => {
           jest.clearAllMocks();
         });
 
-        it('should throw an Error', () => {
-          expect(result).toBeInstanceOf(Error);
-          expect(result).toStrictEqual(
-            expect.objectContaining<Partial<Error>>({
-              message: 'Unexpected value binding',
-            }),
-          );
+        it('should return no dependencies', () => {
+          expect(result).toStrictEqual([]);
         });
       });
     });
