@@ -3,6 +3,7 @@ import { BaseDependentTask, DependentTask } from '@cuaklabs/cuaktask';
 import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingType } from '../../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
@@ -47,29 +48,22 @@ export class CreateInstanceTask<
   protected innerPerform(
     serviceDependencies: ServiceDependencies<TArgs>,
   ): TInstance {
-    const binding: Binding<TInstance, TArgs> | undefined =
-      this.#containerBindingService.get(this.kind.id);
+    const binding: Binding<TInstance, TArgs> = this.#getBinding(this.kind.id);
 
-    if (binding === undefined) {
-      throw new Error(
-        `No bindings found for type ${stringifyServiceId(this.kind.id)}`,
-      );
-    } else {
-      let instance: TInstance;
+    let instance: TInstance;
 
-      switch (binding.bindingType) {
-        case BindingType.type:
-          instance = this.#createInstanceFromTypeBinding(
-            serviceDependencies,
-            binding,
-          );
-          break;
-        case BindingType.value:
-          throw new Error('Unexpected value binding');
-      }
-
-      return instance;
+    switch (binding.bindingType) {
+      case BindingType.type:
+        instance = this.#createInstanceFromTypeBinding(
+          serviceDependencies,
+          binding,
+        );
+        break;
+      case BindingType.value:
+        throw new Error('Unexpected value binding');
     }
+
+    return instance;
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -175,5 +169,19 @@ export class CreateInstanceTask<
     }
 
     return instance;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  #getBinding(serviceId: ServiceId): Binding<TInstance, TArgs> {
+    const binding: Binding<TInstance, TArgs> | undefined =
+      this.#containerBindingService.get(serviceId);
+
+    if (binding === undefined) {
+      throw new Error(
+        `No bindings found for type ${stringifyServiceId(serviceId)}`,
+      );
+    } else {
+      return binding;
+    }
   }
 }
