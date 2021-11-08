@@ -60,7 +60,7 @@ export class CreateInstanceTask<
         );
         break;
       case BindingType.value:
-        throw new Error('Unexpected value binding');
+        instance = binding.value;
     }
 
     return instance;

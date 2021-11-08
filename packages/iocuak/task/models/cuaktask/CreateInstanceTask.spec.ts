@@ -587,26 +587,17 @@ describe(CreateInstanceTask.name, () => {
             containerSingletonServiceMock,
           );
 
-          try {
-            createInstanceTask.perform(
-              ServiceDependenciesFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
-            );
-          } catch (error: unknown) {
-            result = error;
-          }
+          result = createInstanceTask.perform(
+            ServiceDependenciesFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
+          );
         });
 
         afterAll(() => {
           jest.clearAllMocks();
         });
 
-        it('should throw an Error', () => {
-          expect(result).toBeInstanceOf(Error);
-          expect(result).toStrictEqual(
-            expect.objectContaining<Partial<Error>>({
-              message: 'Unexpected value binding',
-            }),
-          );
+        it('should return an instance', () => {
+          expect(result).toBe(bindingFixture.value);
         });
       });
     });
