@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
-## [UNRELEASED]
+## v0.0.7 - 2021-11-09
 
 ### Changed
 - `Binding` model is no longer exposed
