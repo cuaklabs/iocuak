@@ -25,7 +25,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `Binding` model is no longer exposed
 - `BindingApi` model is now exposed.
 - `TaskScope` enum is now exposed.
-- Update `TaskScope` with `request` scope.
+- Updated `ContainerBindingApiService` with `bindToValue`.
+- Updated `TaskScope` with `request` scope.
 - Updated `inject` to throw an error if it's not used in a constructor parameter.
 
 

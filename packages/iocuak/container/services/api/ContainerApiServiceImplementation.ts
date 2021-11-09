@@ -1,4 +1,6 @@
+import { BindingType } from '../../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
+import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
@@ -26,6 +28,16 @@ export class ContainerApiServiceImplementation implements ContainerApiService {
     } else {
       this.#containerService.binding.set(bindingFromType.id, bindingFromType);
     }
+  }
+
+  public bindToValue<TInstance>(serviceId: ServiceId, value: TInstance): void {
+    const valueBinding: ValueBinding<TInstance> = {
+      bindingType: BindingType.value,
+      id: serviceId,
+      value: value,
+    };
+
+    this.#containerService.binding.set(valueBinding.id, valueBinding);
   }
 
   public get<TInstance>(serviceId: ServiceId): TInstance {

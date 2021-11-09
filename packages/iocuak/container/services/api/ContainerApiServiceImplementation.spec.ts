@@ -1,5 +1,6 @@
 import { BindingType } from '../../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
+import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { TaskScope } from '../../../task/models/domain/TaskScope';
@@ -104,6 +105,43 @@ describe(ContainerApiServiceImplementation.name, () => {
         expect(containerServiceMock.binding.set).toHaveBeenCalledWith(
           bindingFixture.id,
           bindingFixture,
+        );
+      });
+    });
+  });
+
+  describe('.bindToValue()', () => {
+    describe('when called', () => {
+      let serviceIdFixture: ServiceId;
+      let instanceFixture: unknown;
+
+      beforeAll(() => {
+        serviceIdFixture = 'service-id';
+        instanceFixture = {
+          foo: 'bar',
+        };
+
+        containerApiServiceImplementation.bindToValue(
+          serviceIdFixture,
+          instanceFixture,
+        );
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should call containerService.binding.set()', () => {
+        const expectedValueBinding: ValueBinding = {
+          bindingType: BindingType.value,
+          id: serviceIdFixture,
+          value: instanceFixture,
+        };
+
+        expect(containerServiceMock.binding.set).toHaveBeenCalledTimes(1);
+        expect(containerServiceMock.binding.set).toHaveBeenCalledWith(
+          serviceIdFixture,
+          expectedValueBinding,
         );
       });
     });

@@ -38,6 +38,10 @@ export class ContainerApi implements ContainerApiService {
     this.#containerApiService.bind(type);
   }
 
+  public bindToValue<TInstance>(serviceId: ServiceId, value: TInstance): void {
+    this.#containerApiService.bindToValue(serviceId, value);
+  }
+
   public get<TInstance>(serviceId: ServiceId): TInstance {
     return this.#containerApiService.get(serviceId);
   }

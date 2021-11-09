@@ -222,4 +222,36 @@ describe(ContainerApi.name, () => {
       });
     });
   });
+
+  describe('.bindToValue()', () => {
+    describe('when called', () => {
+      let serviceIdFixture: ServiceId;
+      let valueFixture: unknown;
+
+      let containerApi: ContainerApi;
+
+      beforeAll(() => {
+        serviceIdFixture = 'service-id';
+        valueFixture = {
+          foo: 'bar',
+        };
+
+        containerApi = new ContainerApi();
+
+        containerApi.bindToValue(serviceIdFixture, valueFixture);
+      });
+
+      describe('when called .get()', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result = containerApi.get(serviceIdFixture);
+        });
+
+        it('should return the value binded', () => {
+          expect(result).toBe(valueFixture);
+        });
+      });
+    });
+  });
 });
