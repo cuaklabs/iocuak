@@ -2,11 +2,12 @@ import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingType } from '../../../binding/models/domain/BindingType';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { TaskScope } from '../../../task/models/domain/TaskScope';
+import { ContainerBindingService } from './ContainerBindingService';
 import { ContainerBindingServiceImplementation } from './ContainerBindingServiceImplementation';
 
 describe(ContainerBindingServiceImplementation.name, () => {
   describe('.get()', () => {
-    describe('when called, and serviceIdToInstanceMap has no entries', () => {
+    describe('when called, and serviceIdToInstanceMap has no entries and parent is undefined', () => {
       let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
 
       let result: unknown;
@@ -20,6 +21,64 @@ describe(ContainerBindingServiceImplementation.name, () => {
 
       it('should return undefined', () => {
         expect(result).toBeUndefined();
+      });
+    });
+
+    describe('when called, and serviceIdToInstanceMap has no entries and parent has no entries', () => {
+      let parent: jest.Mocked<ContainerBindingService>;
+      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        parent = {
+          get: jest.fn().mockReturnValueOnce(undefined),
+        } as Partial<
+          jest.Mocked<ContainerBindingService>
+        > as jest.Mocked<ContainerBindingService>;
+
+        containerBindingServiceImplementation =
+          new ContainerBindingServiceImplementation(parent);
+
+        result = containerBindingServiceImplementation.get('service-id');
+      });
+
+      it('should return undefined', () => {
+        expect(result).toBeUndefined();
+      });
+    });
+
+    describe('when called, and serviceIdToInstanceMap has no entries and parent has an entry with the same service id', () => {
+      let parent: jest.Mocked<ContainerBindingService>;
+      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let bindingFixture: Binding;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        const serviceIdFixture: ServiceId = 'service-id';
+
+        bindingFixture = {
+          bindingType: BindingType.type,
+          id: serviceIdFixture,
+          scope: TaskScope.transient,
+          type: class {},
+        };
+
+        parent = {
+          get: jest.fn().mockReturnValueOnce(bindingFixture),
+        } as Partial<
+          jest.Mocked<ContainerBindingService>
+        > as jest.Mocked<ContainerBindingService>;
+
+        containerBindingServiceImplementation =
+          new ContainerBindingServiceImplementation(parent);
+
+        result = containerBindingServiceImplementation.get(serviceIdFixture);
+      });
+
+      it('should return the entry value', () => {
+        expect(result).toBe(bindingFixture);
       });
     });
 

@@ -5,19 +5,26 @@ import { ContainerBindingService } from './ContainerBindingService';
 export class ContainerBindingServiceImplementation
   implements ContainerBindingService
 {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  readonly #parent: ContainerBindingService | undefined;
   readonly #serviceIdToBindingMap: Map<ServiceId, Binding>;
 
-  constructor() {
+  constructor(parent?: ContainerBindingService) {
+    this.#parent = parent;
     this.#serviceIdToBindingMap = new Map();
   }
 
   public get<TInstance, TArgs extends unknown[]>(
     serviceId: ServiceId,
   ): Binding<TInstance, TArgs> | undefined {
-    return this.#serviceIdToBindingMap.get(serviceId) as
-      | Binding<TInstance, TArgs>
-      | undefined;
+    const bindingFromMap: Binding<TInstance, TArgs> | undefined =
+      this.#serviceIdToBindingMap.get(serviceId) as
+        | Binding<TInstance, TArgs>
+        | undefined;
+
+    const binding: Binding<TInstance, TArgs> | undefined =
+      bindingFromMap ?? this.#parent?.get<TInstance, TArgs>(serviceId);
+
+    return binding;
   }
 
   public remove(serviceId: ServiceId): void {
