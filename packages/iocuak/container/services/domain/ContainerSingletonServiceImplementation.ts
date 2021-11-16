@@ -4,7 +4,6 @@ import { ContainerSingletonService } from './ContainerSingletonService';
 export class ContainerSingletonServiceImplementation
   implements ContainerSingletonService
 {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #serviceIdToInstanceMap: Map<ServiceId, unknown>;
 
   constructor() {

@@ -4,7 +4,6 @@ import { ContainerRequestService } from './ContainerRequestService';
 export class ContainerRequestServiceImplementation
   implements ContainerRequestService
 {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #requestIdToServiceIdToServiceMapMap: Map<
     symbol,
     Map<ServiceId, unknown>

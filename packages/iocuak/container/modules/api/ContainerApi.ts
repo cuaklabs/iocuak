@@ -22,7 +22,6 @@ import { ContainerSingletonServiceImplementation } from '../../services/domain/C
 import { ContainerModuleApi } from './ContainerModuleApi';
 
 export class ContainerApi implements ContainerApiService {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #containerApiService: ContainerApiService;
 
   constructor() {

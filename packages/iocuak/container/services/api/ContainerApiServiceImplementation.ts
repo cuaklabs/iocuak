@@ -8,7 +8,6 @@ import { ContainerService } from '../domain/ContainerService';
 import { ContainerApiService } from './ContainerApiService';
 
 export class ContainerApiServiceImplementation implements ContainerApiService {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #containerService: ContainerService;
 
   constructor(containerService: ContainerService) {

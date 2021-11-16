@@ -15,10 +15,7 @@ import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
 
 export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #containerBindingService: ContainerBindingService;
-
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #containerMetadataService: ContainerMetadataService;
 
   constructor(
