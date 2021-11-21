@@ -7,7 +7,6 @@ import { TaskStatus } from './TaskStatus';
 export abstract class BaseTask<TKind, TArgs extends unknown[], TReturn>
   implements Task<TKind, TArgs, PromiseIfThenable<TReturn>>
 {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #innerStatus: TaskStatus;
 
   constructor(public readonly kind: TKind) {

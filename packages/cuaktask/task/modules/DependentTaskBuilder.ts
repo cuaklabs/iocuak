@@ -11,12 +11,11 @@ export abstract class DependentTaskBuilder<
 > implements
     Builder<[TKind], DependentTask<TKind, TDependencyKind, TArgs, TReturn>>
 {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #taskDependenciesKindSetBuilder: Builder<
     [],
     SetLike<TKind | TDependencyKind>
   >;
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+
   readonly #taskDependencyEngine: TaskDependencyEngine;
 
   constructor(
@@ -55,7 +54,7 @@ export abstract class DependentTaskBuilder<
     TReturn,
   >(taskKind: TKind): DependentTask<TKind, unknown, TArgs, TReturn>;
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/member-ordering
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   #innerbuild<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
     taskKind: TKind,
     taskDependenciesKindSet: SetLike<TKind | TDependencyKind>,

@@ -11,7 +11,6 @@ class DependentTaskBuilderMock extends DependentTaskBuilder<
   unknown[],
   unknown
 > {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #buildWithNoDependenciesMock: jest.Mock<
     DependentTask<unknown, unknown, unknown[], unknown>,
     [unknown]

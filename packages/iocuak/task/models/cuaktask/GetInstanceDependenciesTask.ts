@@ -37,7 +37,7 @@ export class GetInstanceDependenciesTask<
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/member-ordering
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   #areValidDependencies(dependencies: unknown[]): boolean {
     const metadata: ClassMetadata = this.kind.metadata;
     const constructorArgumentsCount: number =
@@ -47,7 +47,7 @@ export class GetInstanceDependenciesTask<
     return dependencies.length === constructorArgumentsCount + propertiesCount;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/member-ordering
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   #getConstructorArguments(dependencies: unknown[]): TArgs {
     const metadata: ClassMetadata = this.kind.metadata;
     const constructorArgumentsCount: number =
@@ -61,7 +61,7 @@ export class GetInstanceDependenciesTask<
     return constructorArguments;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/member-ordering
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   #getProperties(dependencies: unknown[]): Map<string | symbol, unknown> {
     const metadata: ClassMetadata = this.kind.metadata;
     const constructorArgumentsCount: number =

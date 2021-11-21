@@ -5,7 +5,6 @@ import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
 
 export class TaskKindSet implements SetLike<TaskKind> {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #innerTaskKindMap: Map<ServiceId, Map<TaskKindType, TaskKind>>;
 
   constructor() {
@@ -56,7 +55,6 @@ export class TaskKindSet implements SetLike<TaskKind> {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #traverseTaskKindMap<TReturn>(
     elem: TaskKind,
     action: (key: unknown, map: Map<unknown, TaskKind> | undefined) => TReturn,

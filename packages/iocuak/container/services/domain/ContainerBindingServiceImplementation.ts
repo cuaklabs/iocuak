@@ -5,7 +5,6 @@ import { ContainerBindingService } from './ContainerBindingService';
 export class ContainerBindingServiceImplementation
   implements ContainerBindingService
 {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #serviceIdToBindingMap: Map<ServiceId, Binding>;
 
   constructor() {

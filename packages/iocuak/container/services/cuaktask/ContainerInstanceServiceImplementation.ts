@@ -15,13 +15,10 @@ import { ContainerRequestService } from '../domain/ContainerRequestService';
 export class ContainerInstanceServiceImplementation
   implements ContainerInstanceService
 {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #containerRequestService: ContainerRequestService;
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #dependentTaskRunner: DependentTaskRunner;
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   readonly #taskBuilder: Builder<[TaskKind], DependentTask<TaskKind, TaskKind>>;
 
   constructor(

@@ -17,7 +17,6 @@ export class DependentTaskRunner {
     return this.#innerRun(dependenTask);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #innerRun<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
     dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
   ): MayBePromise<TReturn> {
@@ -42,7 +41,6 @@ export class DependentTaskRunner {
     return result;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   async #innerRunDependenciesAsync<
     TKind,
     TDependencyKind,
@@ -64,7 +62,6 @@ export class DependentTaskRunner {
     return result as FlatPromise<TReturn>;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #innerRunTask<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
     dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
     dependenciesRunResults: NonThenableProperties<TArgs>,

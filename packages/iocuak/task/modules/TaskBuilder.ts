@@ -18,13 +18,8 @@ import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
 
 export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #containerBindingService: ContainerBindingService;
-
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #containerRequestService: ContainerRequestService;
-
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #containerSingletonService: ContainerSingletonService;
 
   constructor(
@@ -60,7 +55,7 @@ export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/member-ordering
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   #buildCreateInstanceTaskWithNoDependencies(
     taskKind: CreateInstanceTaskKind,
   ): CreateInstanceTask {
@@ -72,7 +67,7 @@ export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/member-ordering
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   #buildGetInstanceDependenciesTaskWithNoDependencies(
     taskKind: GetInstanceDependenciesTaskKind,
   ): GetInstanceDependenciesTask {

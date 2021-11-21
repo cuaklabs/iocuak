@@ -6,7 +6,6 @@ class BaseTaskMock<TKind, TArgs extends unknown[], TReturn> extends BaseTask<
   TArgs,
   TReturn
 > {
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   #innerPerformMock: jest.Mock<TReturn, NonThenableProperties<TArgs>>;
 
   constructor(
