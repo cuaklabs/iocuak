@@ -25,6 +25,7 @@
     "test:js:ci": "npm run test:js -- --ci",
     "test:js:coverage": "npm run test:js -- --coverage",
     "test:js": "npm test -- --config=jest.js.config.json",
+    "test:previous": "jest --changedSince=HEAD~1",
     "test:unit": "jest --selectProjects Unit",
     "test:unit:js": "npm run test:js -- --selectProjects Unit",
     "test": "jest"
