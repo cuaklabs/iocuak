@@ -11,7 +11,7 @@ import { ContainerApi } from '@cuaklabs/iocuak';
 
 class Dummy {}
 
-const containerApi: ContainerApi = new ContainerApi();
+const containerApi: ContainerApi = ContainerApi.build();
 containerApi.bind(Dummy);
 
 ```
@@ -38,8 +38,12 @@ import { ContainerApi, injectable } from '@cuaklabs/iocuak';
 @injectable()
 class Dummy {}
 
-const containerApi: ContainerApi = new ContainerApi();
+const containerApi: ContainerApi = ContainerApi.build();
 containerApi.bind(Dummy);
 
 const dummyInstance: Dummy = containerApi.get(Dummy);
 ```
+
+## Child containers
+
+Sometimes you want a container similar than a certain one. `ContainerApi` provides a `createChild` method which creates a container whose binding servide falls back to its parent. This way it's possible to extend containers.

@@ -19,6 +19,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [UNRELEASED]
+
+### Changed
+- Updated `ContainerApi` with `build` and `createChild` methods.
+- [BC]: Updated `ContainerApi` constructor to be private.
+
+
+
+
 ## v0.0.7 - 2021-11-09
 
 ### Changed
