@@ -22,13 +22,23 @@ import { ContainerSingletonServiceImplementation } from '../../services/domain/C
 import { ContainerModuleApi } from './ContainerModuleApi';
 
 export class ContainerApi implements ContainerApiService {
+  readonly #containerService: ContainerService;
   readonly #containerApiService: ContainerApiService;
 
-  constructor() {
+  private constructor(containerService?: ContainerService) {
+    const instanceContainerService: ContainerService =
+      containerService ?? this.#initializeContainerService();
     const containerApiService: ContainerApiService =
-      this.#initializeContainerApiService();
+      this.#initializeContainerApiService(instanceContainerService);
 
+    this.#containerService = instanceContainerService;
     this.#containerApiService = containerApiService;
+  }
+
+  public static build(): ContainerApi {
+    const containerApi: ContainerApi = new ContainerApi();
+
+    return containerApi;
   }
 
   public bind<TInstance, TArgs extends unknown[]>(
@@ -39,6 +49,16 @@ export class ContainerApi implements ContainerApiService {
 
   public bindToValue<TInstance>(serviceId: ServiceId, value: TInstance): void {
     this.#containerApiService.bindToValue(serviceId, value);
+  }
+
+  public createChild(): ContainerApi {
+    const childContainerService: ContainerService =
+      this.#initializeContainerService(this.#containerService.binding);
+    const childContainerApi: ContainerApi = new ContainerApi(
+      childContainerService,
+    );
+
+    return childContainerApi;
   }
 
   public get<TInstance>(serviceId: ServiceId): TInstance {
@@ -53,19 +73,20 @@ export class ContainerApi implements ContainerApiService {
     this.#containerApiService.unbind(serviceId);
   }
 
-  #initializeContainerApiService(): ContainerApiService {
-    const containerService: ContainerService =
-      this.#initializeContainerService();
-
+  #initializeContainerApiService(
+    containerService: ContainerService,
+  ): ContainerApiService {
     const containerApiService: ContainerApiService =
       new ContainerApiServiceImplementation(containerService);
 
     return containerApiService;
   }
 
-  #initializeContainerService(): ContainerService {
+  #initializeContainerService(
+    parentContainerBindingService?: ContainerBindingService,
+  ): ContainerService {
     const containerBindingService: ContainerBindingService =
-      new ContainerBindingServiceImplementation();
+      new ContainerBindingServiceImplementation(parentContainerBindingService);
     const containerMetadataService: ContainerMetadataService =
       new ContainerMetadataServiceImplementation();
     const containerRequestService: ContainerRequestService =

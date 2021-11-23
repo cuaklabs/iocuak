@@ -21,7 +21,7 @@ describe(ContainerApi.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          containerApi = new ContainerApi();
+          containerApi = ContainerApi.build();
 
           try {
             containerApi.bind(typeFixture);
@@ -54,7 +54,7 @@ describe(ContainerApi.name, () => {
         let containerApi: ContainerApi;
 
         beforeAll(() => {
-          containerApi = new ContainerApi();
+          containerApi = ContainerApi.build();
 
           containerApi.bind(typeFixture);
         });
@@ -98,7 +98,7 @@ describe(ContainerApi.name, () => {
         let containerApi: ContainerApi;
 
         beforeAll(() => {
-          containerApi = new ContainerApi();
+          containerApi = ContainerApi.build();
 
           containerApi.bind(typeFixture);
         });
@@ -173,7 +173,7 @@ describe(ContainerApi.name, () => {
         let containerApi: ContainerApi;
 
         beforeAll(() => {
-          containerApi = new ContainerApi();
+          containerApi = ContainerApi.build();
 
           containerApi.bind(typeFixture);
         });
@@ -236,7 +236,7 @@ describe(ContainerApi.name, () => {
           foo: 'bar',
         };
 
-        containerApi = new ContainerApi();
+        containerApi = ContainerApi.build();
 
         containerApi.bindToValue(serviceIdFixture, valueFixture);
       });
@@ -250,6 +250,44 @@ describe(ContainerApi.name, () => {
 
         it('should return the value binded', () => {
           expect(result).toBe(valueFixture);
+        });
+      });
+    });
+  });
+
+  describe('.createChild()', () => {
+    describe('when called .bind()', () => {
+      let containerApi: ContainerApi;
+      let typeFixture: Newable;
+
+      beforeAll(() => {
+        @injectable({})
+        class TypeFixture {}
+
+        typeFixture = TypeFixture;
+
+        containerApi = ContainerApi.build();
+
+        containerApi.bind(typeFixture);
+      });
+
+      describe('when called', () => {
+        let childContainerApi: ContainerApi;
+
+        beforeAll(() => {
+          childContainerApi = containerApi.createChild();
+        });
+
+        describe('when called child.get() and parent has the binding', () => {
+          let result: unknown;
+
+          beforeAll(() => {
+            result = childContainerApi.get(typeFixture);
+          });
+
+          it('should return an instance', () => {
+            expect(result).toBeInstanceOf(typeFixture);
+          });
         });
       });
     });
