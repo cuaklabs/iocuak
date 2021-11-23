@@ -9,15 +9,12 @@ import { DependentTaskBuilder } from './task/modules/DependentTaskBuilder';
 import { DependentTaskRunner } from './task/modules/DependentTaskRunner';
 import { TaskDependencyEngine } from './task/modules/TaskDependencyEngine';
 
+export type { Builder, DependentTask, SetLike, Task, TaskDependencyEngine };
+
 export {
   BaseDependentTask,
   BaseTask,
-  Builder,
-  DependentTask,
   DependentTaskBuilder,
   DependentTaskRunner,
-  SetLike,
-  Task,
   TaskStatus,
-  TaskDependencyEngine,
 };
