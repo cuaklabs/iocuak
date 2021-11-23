@@ -9,15 +9,13 @@ import { injectFrom } from './metadata/decorators/injectFrom';
 import { injectFromBase } from './metadata/decorators/injectFromBase';
 import { TaskScope } from './task/models/domain/TaskScope';
 
+export type { BindingApi, ContainerModuleApi, Newable, ServiceId };
+
 export {
-  BindingApi,
   ContainerApi,
-  ContainerModuleApi,
   inject,
   injectable,
   injectFrom,
   injectFromBase,
-  Newable,
-  ServiceId,
   TaskScope,
 };
