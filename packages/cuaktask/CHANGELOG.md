@@ -19,6 +19,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [UNRELEASED]
+
+### Changed
+- **[BC]** Updated `Builder` with better generic types
+
+
+
+
 ## v0.0.7 - 2021-11-09
 - Parity with v0.0.6
 
