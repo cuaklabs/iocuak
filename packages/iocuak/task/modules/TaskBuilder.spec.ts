@@ -16,9 +16,7 @@ import { TaskKind } from '../models/domain/TaskKind';
 import { TaskBuilder } from './TaskBuilder';
 
 describe(TaskBuilder.name, () => {
-  let taskDependenciesKindSetBuilder: jest.Mocked<
-    Builder<[], SetLike<TaskKind>>
-  >;
+  let taskDependenciesKindSetBuilder: jest.Mocked<Builder<SetLike<TaskKind>>>;
   let taskDependencyEngine: jest.Mocked<TaskDependencyEngine>;
   let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
   let containerRequestService: jest.Mocked<ContainerRequestService>;

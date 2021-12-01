@@ -9,16 +9,15 @@ export abstract class DependentTaskBuilder<
   TArgs extends unknown[] = unknown[],
   TReturn = unknown,
 > implements
-    Builder<[TKind], DependentTask<TKind, TDependencyKind, TArgs, TReturn>>
+    Builder<DependentTask<TKind, TDependencyKind, TArgs, TReturn>, [TKind]>
 {
   readonly #taskDependenciesKindSetBuilder: Builder<
-    [],
     SetLike<TKind | TDependencyKind>
   >;
   readonly #taskDependencyEngine: TaskDependencyEngine;
 
   constructor(
-    taskDependenciesKindSetBuilder: Builder<[], SetLike<TKind>>,
+    taskDependenciesKindSetBuilder: Builder<SetLike<TKind>>,
     taskDependencyEngine: TaskDependencyEngine,
   ) {
     this.#taskDependenciesKindSetBuilder = taskDependenciesKindSetBuilder;

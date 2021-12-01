@@ -23,7 +23,7 @@ export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
   #containerSingletonService: ContainerSingletonService;
 
   constructor(
-    taskDependenciesKindSetBuilder: Builder<[], SetLike<TaskKind>>,
+    taskDependenciesKindSetBuilder: Builder<SetLike<TaskKind>>,
     taskDependencyEngine: TaskDependencyEngine,
     containerBindingService: ContainerBindingService,
     containerRequestService: ContainerRequestService,

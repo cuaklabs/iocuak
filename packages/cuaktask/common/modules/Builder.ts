@@ -1,3 +1,3 @@
-export interface Builder<TArgs extends unknown[], TModel> {
+export interface Builder<TModel = unknown, TArgs extends unknown[] = []> {
   build(...args: TArgs): TModel;
 }

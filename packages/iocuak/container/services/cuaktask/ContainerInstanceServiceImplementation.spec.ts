@@ -15,7 +15,7 @@ describe(ContainerInstanceServiceImplementation.name, () => {
   let containerRequestService: jest.Mocked<ContainerRequestService>;
   let dependentTaskRunner: jest.Mocked<DependentTaskRunner>;
   let taskBuilder: jest.Mocked<
-    Builder<[TaskKind], DependentTask<TaskKind, TaskKind>>
+    Builder<DependentTask<TaskKind, TaskKind>, [TaskKind]>
   >;
 
   let containerInstanceServiceImplementation: ContainerInstanceServiceImplementation;

@@ -17,12 +17,12 @@ export class ContainerInstanceServiceImplementation
 {
   readonly #containerRequestService: ContainerRequestService;
   readonly #dependentTaskRunner: DependentTaskRunner;
-  readonly #taskBuilder: Builder<[TaskKind], DependentTask<TaskKind, TaskKind>>;
+  readonly #taskBuilder: Builder<DependentTask<TaskKind, TaskKind>, [TaskKind]>;
 
   constructor(
     containerRequestService: ContainerRequestService,
     dependentTaskRunner: DependentTaskRunner,
-    taskBuilder: Builder<[TaskKind], DependentTask<TaskKind, TaskKind>>,
+    taskBuilder: Builder<DependentTask<TaskKind, TaskKind>, [TaskKind]>,
   ) {
     this.#containerRequestService = containerRequestService;
     this.#dependentTaskRunner = dependentTaskRunner;

@@ -20,7 +20,7 @@ class DependentTaskBuilderMock extends DependentTaskBuilder<
       DependentTask<unknown, unknown, unknown[], unknown>,
       [unknown]
     >,
-    taskDependenciesKindSetBuilder: Builder<[], SetLike<string>>,
+    taskDependenciesKindSetBuilder: Builder<SetLike<string>>,
     taskDependencyEngine: TaskDependencyEngine,
   ) {
     super(taskDependenciesKindSetBuilder, taskDependencyEngine);
@@ -45,7 +45,7 @@ describe(DependentTaskBuilder.name, () => {
     DependentTask<unknown, unknown, unknown[], unknown>,
     [unknown]
   >;
-  let taskDependenciesKindSetBuilder: jest.Mocked<Builder<[], SetLike<string>>>;
+  let taskDependenciesKindSetBuilder: jest.Mocked<Builder<SetLike<string>>>;
   let taskDependencyEngine: jest.Mocked<TaskDependencyEngine>;
 
   let dependentTaskBuilder: DependentTaskBuilderMock;
