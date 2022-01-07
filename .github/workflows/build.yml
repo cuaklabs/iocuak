@@ -56,6 +56,11 @@ jobs:
     name: Test with coverage
     needs: build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package:
+          - cuaktask
+          - iocuak
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
@@ -93,12 +98,12 @@ jobs:
         if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
 
       - name: Launch Tests and generate coverage report
-        run: npm run test:js:ci:coverage
+        run: npm run test:package:${{ matrix.package }}:js:ci:coverage
 
       - name: Upload coverage to Codecov (base branch)
         uses: codecov/codecov-action@v2
         with:
-          flags: cuaktask,iocuak
+          flags: ${{ matrix.package }}
           override_branch: ${{ github.base_ref }}
           token: ${{ secrets.CODECOV_TOKEN }}
         if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true }}
@@ -106,6 +111,6 @@ jobs:
       - name: Upload coverage to Codecov (branch)
         uses: codecov/codecov-action@v2
         with:
-          flags: cuaktask,iocuak
+          flags: ${{ matrix.package }}
           token: ${{ secrets.CODECOV_TOKEN }}
         if: ${{ !(github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true) }}
