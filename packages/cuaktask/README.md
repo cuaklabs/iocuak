@@ -1,4 +1,5 @@
 [![Build status](https://github.com/cuaklabs/cuaktask/workflows/ci/badge.svg)](https://github.com/cuaklabs/cuaktask/workflows/build/badge.svg)
+[![Test coverage](https://codecov.io/gh/cuaklabs/cuaktask/branch/master/graph/badge.svg?flag=cuaktask)](https://codecov.io/gh/cuaklabs/cuaktask/branch/master/graph/badge.svg?flag=cuaktask)
 
 # Cuaktask
 
