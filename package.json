@@ -3,6 +3,8 @@
   "private": true,
   "description": "Minimal abstract task manager",
   "scripts": {
+    "build:ci": "tsc --build tsconfig.ci.json",
+    "build:ci:test": "tsc --build tsconfig.ci.test.json",
     "build:dev": "tsc --build tsconfig.dev.json",
     "build:prod": "tsc --build tsconfig.prod.json",
     "build:prod:clean": "tsc --build tsconfig.prod.json --clean",

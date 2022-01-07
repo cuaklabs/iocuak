@@ -29,13 +29,13 @@ jobs:
         run: npm ci
 
       - name: Install cuaklabs dependencies
-        run: npm run build
+        run: npm run build:ci
 
       - name: Lint source files
         run: npm run lint
 
       - name: Compile source files
-        run: npm run build:test
+        run: npm run build:ci:test
 
       - name: Get current git commit hash
         id: get-git-commit-hash
@@ -85,11 +85,11 @@ jobs:
             ts-build-${{ steps.get-git-commit-hash.outputs.gitCommitHash }}
 
       - name: Build on cache miss (cuaklabs dependency files)
-        run: npm run build
+        run: npm run build:ci
         if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
 
       - name: Build on cache miss (test files)
-        run: npm run build:test
+        run: npm run build:ci:test
         if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
 
       - name: Launch Tests and generate coverage report
