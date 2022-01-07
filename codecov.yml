@@ -1,0 +1,18 @@
+coverage:
+  status:
+    project:
+      default: off
+      cuakask:
+        flags: 
+          - cuaktask
+      iocuak:
+        flags: 
+          - iocuak
+
+flags:
+  cuaktask:
+    paths:
+      - packages/cuaktask/
+  iocuak:
+    paths:
+      - packages/iocuak/
