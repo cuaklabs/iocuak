@@ -2,9 +2,11 @@ coverage:
   status:
     project:
       default: off
-      nestjs-firebase-admin:
+      cuakask:
         flags: 
           - cuaktask
+      iocuak:
+        flags: 
           - iocuak
 
 flags:
