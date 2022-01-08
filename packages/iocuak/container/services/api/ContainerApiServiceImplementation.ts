@@ -8,24 +8,24 @@ import { ContainerService } from '../domain/ContainerService';
 import { ContainerApiService } from './ContainerApiService';
 
 export class ContainerApiServiceImplementation implements ContainerApiService {
-  readonly #containerService: ContainerService;
+  protected readonly _containerService: ContainerService;
 
   constructor(containerService: ContainerService) {
-    this.#containerService = containerService;
+    this._containerService = containerService;
   }
 
   public bind<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): void {
     const bindingFromType: TypeBinding<TInstance, TArgs> | undefined =
-      this.#containerService.metadata.getBindingMetadata(type);
+      this._containerService.metadata.getBindingMetadata(type);
 
     if (bindingFromType === undefined) {
       throw new Error(
         `No bindings found for type ${type.name}. An @injectable() decorator may be missing`,
       );
     } else {
-      this.#containerService.binding.set(bindingFromType.id, bindingFromType);
+      this._containerService.binding.set(bindingFromType.id, bindingFromType);
     }
   }
 
@@ -36,12 +36,12 @@ export class ContainerApiServiceImplementation implements ContainerApiService {
       value: value,
     };
 
-    this.#containerService.binding.set(valueBinding.id, valueBinding);
+    this._containerService.binding.set(valueBinding.id, valueBinding);
   }
 
   public get<TInstance>(serviceId: ServiceId): TInstance {
     const instance: TInstance =
-      this.#containerService.instance.create(serviceId);
+      this._containerService.instance.create(serviceId);
 
     return instance;
   }
@@ -51,6 +51,6 @@ export class ContainerApiServiceImplementation implements ContainerApiService {
   }
 
   public unbind(serviceId: ServiceId): void {
-    this.#containerService.binding.remove(serviceId);
+    this._containerService.binding.remove(serviceId);
   }
 }
