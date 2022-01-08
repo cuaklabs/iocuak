@@ -8,4 +8,4 @@ Simple IoC container inspired on [InversifyJS](https://github.com/inversify/Inve
 
 ## Documentation
 
-Feel free to visit the [documentation pages](./docs/index)
+Feel free to visit the [documentation pages](https://cuaklabs.github.io/iocuak-docs)
