@@ -67,7 +67,7 @@ jobs:
     strategy:
       matrix:
         package:
-          - cuaklabs
+          - cuaktask
           - iocuak
     steps:
       - name: Git checkout
