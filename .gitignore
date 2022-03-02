@@ -5,10 +5,7 @@ node_modules/
 coverage/
 
 # Typescript compiled files
-dist/
-
-packages/**/*.d.ts
-packages/**/*.js
+packages/*/lib/**
 
 # TypeScript cache
 *.tsbuildinfo
@@ -17,3 +14,8 @@ packages/**/*.js
 
 ### Visual Studio Code ###
 .vscode
+
+### npm lock files (consider https://github.com/yarnpkg/yarn/issues/838#issuecomment-253362537 as reference)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock

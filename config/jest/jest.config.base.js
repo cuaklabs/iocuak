@@ -1,5 +1,85 @@
 const tsRoot = '<rootDir>/packages';
-const jsRoot = '<rootDir>/dist';
+const jsRoot = '<rootDir>/packages';
+
+/**
+ * Builds a unit test and an integration test jest projects for a given package
+ * @param {!string} package package name
+ * @returns {!Array<import("@jest/types/build/Config").GlobalConfig>}
+ */
+function buildPackageJsProjects(package) {
+  return [
+    buildUnitPackageJsProject(package),
+    buildIntegrationPackageJsProject(package),
+  ];
+}
+
+/**
+ * Builds a unit test and an integration test jest projects for a given package
+ * @param {!string} package package name
+ * @returns {!Array<import("@jest/types/build/Config").GlobalConfig>}
+ */
+function buildPackageTsProjects(package) {
+  return [
+    buildUnitPackageTsProject(package),
+    buildIntegrationPackageTsProject(package),
+  ];
+}
+
+/**
+ * Builds an integration test jest projects for a given package
+ * @param {!string} package package name
+ * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ */
+function buildIntegrationPackageJsProject(package) {
+  return getJestJsProjectConfig(
+    `${package}-Integration`,
+    ['/node_modules'],
+    package,
+    '.spec.js',
+  );
+}
+
+/**
+ * Builds an integration test jest projects for a given package
+ * @param {!string} package package name
+ * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ */
+function buildIntegrationPackageTsProject(package) {
+  return getJestTsProjectConfig(
+    `${package}-Integration`,
+    ['/node_modules'],
+    package,
+    '.spec.ts',
+  );
+}
+
+/**
+ * Builds a unit test jest projects for a given package
+ * @param {!string} package package name
+ * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ */
+function buildUnitPackageJsProject(package) {
+  return getJestJsProjectConfig(
+    `${package}-Unit`,
+    ['/node_modules', '.int.spec.js'],
+    package,
+    '.spec.js',
+  );
+}
+
+/**
+ * Builds a unit test jest projects for a given package
+ * @param {!string} package package name
+ * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ */
+function buildUnitPackageTsProject(package) {
+  return getJestTsProjectConfig(
+    `${package}-Unit`,
+    ['/node_modules', '.int.spec.ts'],
+    package,
+    '.spec.ts',
+  );
+}
 
 /**
  * @param { !string } projectName Jest project's name
@@ -44,7 +124,7 @@ function getJestProjectConfig(
  * @param { !Array<string> } testPathIgnorePatterns Expressions to match to ignored file paths by jest
  * @param { ?string } package Project package
  * @param { ?string } extension Test extension to match
- * @returns @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
  */
 function getJestJsProjectConfig(
   projectName,
@@ -163,10 +243,20 @@ function getJsTestMatch(submoduleName, testExtension) {
   return getSubmoduleTestMatch(jsRoot, submoduleName, testExtension);
 }
 
+/**
+ * @returns { !Array<string> }
+ */
+function getPackages() {
+  return ['cuaktask', 'iocuak'];
+}
+
 module.exports = {
+  buildPackageJsProjects,
+  buildPackageTsProjects,
   getJestProjectConfig,
   getJestJsProjectConfig,
   getJsTestMatch,
   getTsTestMatch,
   getJestTsProjectConfig,
+  getPackages,
 };
