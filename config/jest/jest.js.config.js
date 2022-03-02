@@ -1,32 +1,10 @@
-const { getJestJsProjectConfig } = require('./jest.config.base');
+const {
+  buildPackageJsProjects,
+  getJestJsProjectConfig,
+  getPackages,
+} = require('./jest.config.base');
 
-const cuaktaskJsUnitProject = getJestJsProjectConfig(
-  'Cuaktask-Unit',
-  ['/node_modules', '.int.spec.js'],
-  'cuaktask',
-  '.spec.js',
-);
-
-const cuaktaskJsIntegrationProject = getJestJsProjectConfig(
-  'Cuaktask-Integration',
-  ['/node_modules'],
-  'cuaktask',
-  '.int.spec.js',
-);
-
-const iocuakJsUnitProject = getJestJsProjectConfig(
-  'Iocuak-Unit',
-  ['/node_modules', '.int.spec.js'],
-  'iocuak',
-  '.spec.js',
-);
-
-const iocuakJsIntegrationProject = getJestJsProjectConfig(
-  'Iocuak-Integration',
-  ['/node_modules'],
-  'iocuak',
-  '.int.spec.js',
-);
+const packageProjects = getPackages().map(buildPackageJsProjects).flat();
 
 const jsUnitProject = getJestJsProjectConfig(
   'Unit',
@@ -43,12 +21,5 @@ const jsIntegrationProject = getJestJsProjectConfig(
 );
 
 module.exports = {
-  projects: [
-    cuaktaskJsIntegrationProject,
-    cuaktaskJsUnitProject,
-    iocuakJsIntegrationProject,
-    iocuakJsUnitProject,
-    jsIntegrationProject,
-    jsUnitProject,
-  ],
+  projects: [jsIntegrationProject, jsUnitProject, ...packageProjects],
 };

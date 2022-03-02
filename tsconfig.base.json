@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "composite": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "exactOptionalPropertyTypes": true,
@@ -17,12 +18,9 @@
       "@cuaklabs/iocuak": ["./packages/iocuak"]
     },
     "resolveJsonModule": true,
-    "rootDir": "packages",
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "target": "ES2021"
-  },
-  "include": ["packages"],
-  "exclude": ["node_modules/**"]
+  }
 }
