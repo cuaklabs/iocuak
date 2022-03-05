@@ -1,0 +1,28 @@
+{
+  "name": "@cuaklabs/porygon",
+  "version": "0.0.7",
+  "description": "The hexagonal architecture framework",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/cuaktask.git"
+  },
+  "keywords": [
+    "hexagonal",
+    "architecture",
+    "typescript"
+  ],
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/cuaktask/issues"
+  },
+  "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/iocuak#readme",
+  "dependencies": {
+    "@cuaklabs/iocuak": "^0.0.7"
+  },
+  "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
+  "publishConfig": {
+    "access": "public"
+  }
+}
