@@ -148,6 +148,18 @@ describe(ReadContainerModuleApi.name, () => {
           0,
         );
       });
+
+      it('should call containerApi.bind()', () => {
+        expect(containerApiMock.bind).toHaveBeenCalledTimes(2);
+        expect(containerApiMock.bind).toHaveBeenNthCalledWith(
+          1,
+          expectClassExtending(ReadOneInteractor),
+        );
+        expect(containerApiMock.bind).toHaveBeenNthCalledWith(
+          2,
+          expectClassExtending(ReadManyInteractor),
+        );
+      });
     });
   });
 });
