@@ -1,5 +1,5 @@
 export type ModuleTypeToSymbolMap<
   TModuleType extends string | number | symbol,
 > = {
-  [TKey in TModuleType]: symbol;
+  readonly [TKey in TModuleType]: symbol;
 };
