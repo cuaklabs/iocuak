@@ -89,6 +89,10 @@ describe(CreationContainerModuleApi.name, () => {
         creationContainerModuleApi.load(containerApiMock);
       });
 
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
       it('should call injectable()', () => {
         expect(injectable).toHaveBeenCalledTimes(1);
         expect(injectableDecoratorMock).toHaveBeenCalledTimes(1);

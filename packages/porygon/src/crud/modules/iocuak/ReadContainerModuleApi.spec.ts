@@ -87,6 +87,10 @@ describe(ReadContainerModuleApi.name, () => {
         readContainerModuleApi.load(containerApiMock);
       });
 
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
       it('should call @injectable() twice', () => {
         expect(injectable).toHaveBeenCalledTimes(2);
         expect(injectableDecoratorMock).toHaveBeenCalledTimes(2);
