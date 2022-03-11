@@ -4,8 +4,8 @@ import { ContainerApi, inject, injectable, TaskScope } from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
-import { ReadManyInteractor } from '../domain/ReadManyInteractor';
-import { ReadOneInteractor } from '../domain/ReadOneInteractor';
+import { ReadManyEntityInteractor } from '../domain/ReadManyEntityInteractor';
+import { ReadOneEntityInteractor } from '../domain/ReadOneEntityInteractor';
 import { ReadContainerModuleApi } from './ReadContainerModuleApi';
 
 interface ModelTest {
@@ -100,7 +100,7 @@ describe(ReadContainerModuleApi.name, () => {
 
         expect(injectableDecoratorMock).toHaveBeenNthCalledWith(
           1,
-          expectClassExtending(ReadOneInteractor),
+          expectClassExtending(ReadOneEntityInteractor),
         );
       });
 
@@ -112,7 +112,7 @@ describe(ReadContainerModuleApi.name, () => {
 
         expect(injectableDecoratorMock).toHaveBeenNthCalledWith(
           2,
-          expectClassExtending(ReadManyInteractor),
+          expectClassExtending(ReadManyEntityInteractor),
         );
       });
 
@@ -129,7 +129,7 @@ describe(ReadContainerModuleApi.name, () => {
 
         expect(injectDecoratorMock).toHaveBeenNthCalledWith(
           1,
-          expectClassExtending(ReadOneInteractor),
+          expectClassExtending(ReadOneEntityInteractor),
           undefined,
           0,
         );
@@ -143,7 +143,7 @@ describe(ReadContainerModuleApi.name, () => {
 
         expect(injectDecoratorMock).toHaveBeenNthCalledWith(
           2,
-          expectClassExtending(ReadManyInteractor),
+          expectClassExtending(ReadManyEntityInteractor),
           undefined,
           0,
         );
@@ -153,11 +153,11 @@ describe(ReadContainerModuleApi.name, () => {
         expect(containerApiMock.bind).toHaveBeenCalledTimes(2);
         expect(containerApiMock.bind).toHaveBeenNthCalledWith(
           1,
-          expectClassExtending(ReadOneInteractor),
+          expectClassExtending(ReadOneEntityInteractor),
         );
         expect(containerApiMock.bind).toHaveBeenNthCalledWith(
           2,
-          expectClassExtending(ReadManyInteractor),
+          expectClassExtending(ReadManyEntityInteractor),
         );
       });
     });

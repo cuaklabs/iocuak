@@ -1,7 +1,7 @@
 import { FindAdapter } from '../../adapter/domain/FindAdapter';
 import { Interactor } from './Interactor';
 
-export class ReadOneInteractor<TModel, TQuery>
+export class ReadOneEntityInteractor<TModel, TQuery>
   implements Interactor<TQuery, TModel | undefined>
 {
   readonly #findAdapter: FindAdapter<TModel, TQuery>;

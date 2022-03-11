@@ -1,5 +1,5 @@
 import { FindAdapter } from '../../adapter/domain/FindAdapter';
-import { ReadOneInteractor } from './ReadOneInteractor';
+import { ReadOneEntityInteractor } from './ReadOneEntityInteractor';
 
 interface ModelTest {
   foo: string;
@@ -9,9 +9,9 @@ interface QueryTest {
   fooValue: string;
 }
 
-describe(ReadOneInteractor.name, () => {
+describe(ReadOneEntityInteractor.name, () => {
   let findAdapterMock: jest.Mocked<FindAdapter<ModelTest, QueryTest>>;
-  let readOneInteractor: ReadOneInteractor<ModelTest, QueryTest>;
+  let readOneInteractor: ReadOneEntityInteractor<ModelTest, QueryTest>;
 
   beforeAll(() => {
     findAdapterMock = {
@@ -20,7 +20,7 @@ describe(ReadOneInteractor.name, () => {
       FindAdapter<ModelTest, QueryTest>
     >;
 
-    readOneInteractor = new ReadOneInteractor(findAdapterMock);
+    readOneInteractor = new ReadOneEntityInteractor(findAdapterMock);
   });
 
   describe('.interact()', () => {
