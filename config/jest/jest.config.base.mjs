@@ -1,82 +1,89 @@
+import fs from 'fs';
+import path from 'path';
+import url from 'url';
+
 const tsRoot = '<rootDir>/packages';
 const jsRoot = '<rootDir>/packages';
 
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 /**
  * Builds a unit test and an integration test jest projects for a given package
- * @param {!string} package package name
+ * @param {!string} packageName package name
  * @returns {!Array<import("@jest/types/build/Config").GlobalConfig>}
  */
-function buildPackageJsProjects(package) {
+function buildPackageJsProjects(packageName) {
   return [
-    buildUnitPackageJsProject(package),
-    buildIntegrationPackageJsProject(package),
+    buildUnitPackageJsProject(packageName),
+    buildIntegrationPackageJsProject(packageName),
   ];
 }
 
 /**
  * Builds a unit test and an integration test jest projects for a given package
- * @param {!string} package package name
+ * @param {!string} packageName package name
  * @returns {!Array<import("@jest/types/build/Config").GlobalConfig>}
  */
-function buildPackageTsProjects(package) {
+function buildPackageTsProjects(packageName) {
   return [
-    buildUnitPackageTsProject(package),
-    buildIntegrationPackageTsProject(package),
+    buildUnitPackageTsProject(packageName),
+    buildIntegrationPackageTsProject(packageName),
   ];
 }
 
 /**
  * Builds an integration test jest projects for a given package
- * @param {!string} package package name
+ * @param {!string} packageName package name
  * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
  */
-function buildIntegrationPackageJsProject(package) {
+function buildIntegrationPackageJsProject(packageName) {
   return getJestJsProjectConfig(
-    `${package}-Integration`,
+    `${packageName}-Integration`,
     ['/node_modules'],
-    package,
+    packageName,
     '.spec.js',
   );
 }
 
 /**
  * Builds an integration test jest projects for a given package
- * @param {!string} package package name
+ * @param {!string} packageName package name
  * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
  */
-function buildIntegrationPackageTsProject(package) {
+function buildIntegrationPackageTsProject(packageName) {
   return getJestTsProjectConfig(
-    `${package}-Integration`,
+    `${packageName}-Integration`,
     ['/node_modules'],
-    package,
+    packageName,
     '.spec.ts',
   );
 }
 
 /**
  * Builds a unit test jest projects for a given package
- * @param {!string} package package name
+ * @param {!string} packageName package name
  * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
  */
-function buildUnitPackageJsProject(package) {
+function buildUnitPackageJsProject(packageName) {
   return getJestJsProjectConfig(
-    `${package}-Unit`,
+    `${packageName}-Unit`,
     ['/node_modules', '.int.spec.js'],
-    package,
+    packageName,
     '.spec.js',
   );
 }
 
 /**
  * Builds a unit test jest projects for a given package
- * @param {!string} package package name
+ * @param {!string} packageName package name
  * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
  */
-function buildUnitPackageTsProject(package) {
+function buildUnitPackageTsProject(packageName) {
   return getJestTsProjectConfig(
-    `${package}-Unit`,
+    `${packageName}-Unit`,
     ['/node_modules', '.int.spec.ts'],
-    package,
+    packageName,
     '.spec.ts',
   );
 }
@@ -122,34 +129,34 @@ function getJestProjectConfig(
 /**
  * @param { !string } projectName Jest project's name
  * @param { !Array<string> } testPathIgnorePatterns Expressions to match to ignored file paths by jest
- * @param { ?string } package Project package
+ * @param { ?string } packageName Project package
  * @param { ?string } extension Test extension to match
  * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
  */
 function getJestJsProjectConfig(
   projectName,
   testPathIgnorePatterns,
-  package,
+  packageName,
   extension,
 ) {
-  const testMatch = [getJsTestMatch(package, extension)];
-  const collectCoverageFrom = [`${getJestJsProjectRoot(package)}/**/*.js`];
+  const testMatch = [getJsTestMatch(packageName, extension)];
+  const collectCoverageFrom = [`${getJestJsProjectRoot(packageName)}/**/*.js`];
 
   return getJestProjectConfig(
     projectName,
     collectCoverageFrom,
-    [getJestJsProjectRoot(package)],
+    [getJestJsProjectRoot(packageName)],
     testMatch,
     testPathIgnorePatterns,
   );
 }
 
 /**
- * @param { ?string } package Project package
+ * @param { ?string } packageName Project package
  * @returns { !string }
  */
-function getJestJsProjectRoot(package) {
-  return getJestProjectRoot(jsRoot, package);
+function getJestJsProjectRoot(packageName) {
+  return getJestProjectRoot(jsRoot, packageName);
 }
 
 /**
@@ -247,10 +254,13 @@ function getJsTestMatch(submoduleName, testExtension) {
  * @returns { !Array<string> }
  */
 function getPackages() {
-  return ['cuaktask', 'iocuak'];
+  const packagesDirectory = path.resolve(__dirname, '..', '..', 'packages');
+  const packageDirectoryNames = fs.readdirSync(packagesDirectory);
+
+  return packageDirectoryNames;
 }
 
-module.exports = {
+export {
   buildPackageJsProjects,
   buildPackageTsProjects,
   getJestProjectConfig,

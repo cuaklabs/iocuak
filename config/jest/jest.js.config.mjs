@@ -1,8 +1,8 @@
-const {
+import {
   buildPackageJsProjects,
   getJestJsProjectConfig,
   getPackages,
-} = require('./jest.config.base');
+} from './jest.config.base.mjs';
 
 const packageProjects = getPackages().map(buildPackageJsProjects).flat();
 
@@ -20,6 +20,6 @@ const jsIntegrationProject = getJestJsProjectConfig(
   '.int.spec.js',
 );
 
-module.exports = {
+export default {
   projects: [jsIntegrationProject, jsUnitProject, ...packageProjects],
 };
