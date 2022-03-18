@@ -1,8 +1,8 @@
 import { FindAdapter } from '../../adapter/domain/FindAdapter';
-import { Interactor } from './Interactor';
+import { InteractorAsync } from './InteractorAsync';
 
 export class ReadManyEntityInteractor<TModel, TQuery>
-  implements Interactor<TQuery, TModel[]>
+  implements InteractorAsync<TQuery, TModel[]>
 {
   readonly #findAdapter: FindAdapter<TModel, TQuery>;
 

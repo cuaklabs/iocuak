@@ -12,14 +12,14 @@ import { CreateAdapter } from '../../adapter/domain/CreateAdapter';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
 import { CreateEntityInteractor } from '../domain/CreateEntityInteractor';
-import { Interactor } from '../domain/Interactor';
+import { InteractorAsync } from '../domain/InteractorAsync';
 
 export class CreationContainerModuleApi<TModel, TQuery>
   implements ContainerModuleApi
 {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #createEntityInteractorType: Newable<
-    Interactor<TQuery, TModel>,
+    InteractorAsync<TQuery, TModel>,
     [CreateAdapter<TModel, TQuery>]
   >;
 

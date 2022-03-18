@@ -11,13 +11,13 @@ import {
 import { UpdateAdapter } from '../../adapter/domain/UpdateAdapter';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
-import { Interactor } from '../domain/Interactor';
+import { InteractorAsync } from '../domain/InteractorAsync';
 import { UpdateEntityInteractor } from '../domain/UpdateEntityInteractor';
 
 export class UpdateContainerModuleApi<TQuery> implements ContainerModuleApi {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #updateEntityInteractorType: Newable<
-    Interactor<TQuery, void>,
+    InteractorAsync<TQuery, void>,
     [UpdateAdapter<TQuery>]
   >;
 

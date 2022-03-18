@@ -1,8 +1,8 @@
 import { DeleteAdapter } from '../../adapter/domain/DeleteAdapter';
-import { Interactor } from './Interactor';
+import { InteractorAsync } from './InteractorAsync';
 
 export class DeleteEntityInteractor<TCommand>
-  implements Interactor<TCommand, void>
+  implements InteractorAsync<TCommand, void>
 {
   readonly #deleteAdapter: DeleteAdapter<TCommand>;
 

@@ -1,8 +1,8 @@
 import { CreateAdapter } from '../../adapter/domain/CreateAdapter';
-import { Interactor } from './Interactor';
+import { InteractorAsync } from './InteractorAsync';
 
 export class CreateEntityInteractor<TModel, TQuery>
-  implements Interactor<TQuery, TModel>
+  implements InteractorAsync<TQuery, TModel>
 {
   readonly #insertAdapter: CreateAdapter<TModel, TQuery>;
 

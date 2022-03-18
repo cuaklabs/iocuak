@@ -11,7 +11,7 @@ import {
 import { FindAdapter } from '../../adapter/domain/FindAdapter';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
-import { Interactor } from '../domain/Interactor';
+import { InteractorAsync } from '../domain/InteractorAsync';
 import { ReadManyEntityInteractor } from '../domain/ReadManyEntityInteractor';
 import { ReadOneEntityInteractor } from '../domain/ReadOneEntityInteractor';
 
@@ -20,11 +20,11 @@ export class ReadContainerModuleApi<TModel, TQuery>
 {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #readManyEntityInteractorType: Newable<
-    Interactor<TQuery, TModel[]>,
+    InteractorAsync<TQuery, TModel[]>,
     [FindAdapter<TModel, TQuery>]
   >;
   readonly #readOneEntityInteractorType: Newable<
-    Interactor<TQuery, TModel | undefined>,
+    InteractorAsync<TQuery, TModel | undefined>,
     [FindAdapter<TModel, TQuery>]
   >;
 

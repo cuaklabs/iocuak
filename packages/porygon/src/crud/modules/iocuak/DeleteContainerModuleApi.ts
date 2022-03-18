@@ -12,12 +12,12 @@ import { DeleteAdapter } from '../../adapter/domain/DeleteAdapter';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
 import { DeleteEntityInteractor } from '../domain/DeleteEntityInteractor';
-import { Interactor } from '../domain/Interactor';
+import { InteractorAsync } from '../domain/InteractorAsync';
 
 export class DeleteContainerModuleApi<TQuery> implements ContainerModuleApi {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #deleteEntityInteractorType: Newable<
-    Interactor<TQuery, void>,
+    InteractorAsync<TQuery, void>,
     [DeleteAdapter<TQuery>]
   >;
 

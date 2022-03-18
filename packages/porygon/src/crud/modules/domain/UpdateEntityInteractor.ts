@@ -1,8 +1,8 @@
 import { UpdateAdapter } from '../../adapter/domain/UpdateAdapter';
-import { Interactor } from './Interactor';
+import { InteractorAsync } from './InteractorAsync';
 
 export class UpdateEntityInteractor<TCommand>
-  implements Interactor<TCommand, void>
+  implements InteractorAsync<TCommand, void>
 {
   readonly #updateAdapter: UpdateAdapter<TCommand>;
 
