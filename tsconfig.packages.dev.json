@@ -9,6 +9,9 @@
     },
     {
       "path": "./packages/porygon/tsconfig.dev.json"
+    },
+    {
+      "path": "./packages/porygon-typeorm/tsconfig.dev.json"
     }
   ]
 }
