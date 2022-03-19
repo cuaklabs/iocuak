@@ -1,4 +1,4 @@
-import { FindAdapter } from '../../adapter/domain/FindAdapter';
+import { FindEntityPort } from '../../port/application/FindEntityPort';
 import { ReadManyEntityInteractor } from './ReadManyEntityInteractor';
 
 interface ModelTest {
@@ -10,15 +10,15 @@ interface QueryTest {
 }
 
 describe(ReadManyEntityInteractor.name, () => {
-  let findAdapterMock: jest.Mocked<FindAdapter<ModelTest, QueryTest>>;
+  let findAdapterMock: jest.Mocked<FindEntityPort<ModelTest, QueryTest>>;
   let findInteractor: ReadManyEntityInteractor<ModelTest, QueryTest>;
 
   beforeAll(() => {
     findAdapterMock = {
       find: jest.fn(),
-    } as Partial<jest.Mocked<FindAdapter<ModelTest, QueryTest>>> as jest.Mocked<
-      FindAdapter<ModelTest, QueryTest>
-    >;
+    } as Partial<
+      jest.Mocked<FindEntityPort<ModelTest, QueryTest>>
+    > as jest.Mocked<FindEntityPort<ModelTest, QueryTest>>;
 
     findInteractor = new ReadManyEntityInteractor(findAdapterMock);
   });

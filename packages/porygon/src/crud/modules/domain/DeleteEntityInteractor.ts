@@ -1,12 +1,12 @@
-import { DeleteAdapter } from '../../adapter/domain/DeleteAdapter';
+import { DeleteEntityPort } from '../../port/application/DeleteEntityPort';
 import { InteractorAsync } from './InteractorAsync';
 
 export class DeleteEntityInteractor<TCommand>
   implements InteractorAsync<TCommand, void>
 {
-  readonly #deleteAdapter: DeleteAdapter<TCommand>;
+  readonly #deleteAdapter: DeleteEntityPort<TCommand>;
 
-  constructor(deleteAdapter: DeleteAdapter<TCommand>) {
+  constructor(deleteAdapter: DeleteEntityPort<TCommand>) {
     this.#deleteAdapter = deleteAdapter;
   }
 

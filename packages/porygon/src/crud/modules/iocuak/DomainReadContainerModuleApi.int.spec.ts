@@ -2,12 +2,12 @@ import 'reflect-metadata';
 
 import { ContainerApi, injectable } from '@cuaklabs/iocuak';
 
-import { FindAdapter } from '../../adapter/domain/FindAdapter';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
+import { FindEntityPort } from '../../port/application/FindEntityPort';
 import { ReadManyEntityInteractor } from '../domain/ReadManyEntityInteractor';
 import { ReadOneEntityInteractor } from '../domain/ReadOneEntityInteractor';
-import { ReadContainerModuleApi } from './ReadContainerModuleApi';
+import { DomainReadContainerModuleApi } from './DomainReadContainerModuleApi';
 
 interface ModelTest {
   foo: string;
@@ -17,9 +17,12 @@ interface QueryTest {
   bar: string;
 }
 
-describe(ReadContainerModuleApi.name, () => {
+describe(DomainReadContainerModuleApi.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
-  let readContainerModuleApi: ReadContainerModuleApi<ModelTest, QueryTest>;
+  let domainReadContainerModuleApi: DomainReadContainerModuleApi<
+    ModelTest,
+    QueryTest
+  >;
 
   beforeAll(() => {
     crudModuleTypeToSymbolMap = Object.freeze({
@@ -34,7 +37,7 @@ describe(ReadContainerModuleApi.name, () => {
       [CrudModuleType.updateEntityInteractor]: Symbol(),
     });
 
-    readContainerModuleApi = new ReadContainerModuleApi(
+    domainReadContainerModuleApi = new DomainReadContainerModuleApi(
       crudModuleTypeToSymbolMap,
     );
   });
@@ -49,7 +52,7 @@ describe(ReadContainerModuleApi.name, () => {
 
       describe('when called', () => {
         beforeAll(() => {
-          readContainerModuleApi.load(containerApi);
+          domainReadContainerModuleApi.load(containerApi);
         });
 
         describe('when containerApi.get is called with read many entity interactor symbol', () => {
@@ -108,7 +111,7 @@ describe(ReadContainerModuleApi.name, () => {
       @injectable({
         id: CrudModuleType.readEntityAdapter,
       })
-      class FindAdapterMock implements FindAdapter<ModelTest, QueryTest> {
+      class FindAdapterMock implements FindEntityPort<ModelTest, QueryTest> {
         public readonly findMock: jest.Mock<Promise<ModelTest[]>, [QueryTest]>;
         public readonly findOneMock: jest.Mock<Promise<ModelTest>, [QueryTest]>;
 
@@ -136,7 +139,7 @@ describe(ReadContainerModuleApi.name, () => {
 
       describe('when called', () => {
         beforeAll(() => {
-          readContainerModuleApi.load(containerApi);
+          domainReadContainerModuleApi.load(containerApi);
         });
 
         describe('when containerApi.get is called with read many entity interactor symbol', () => {

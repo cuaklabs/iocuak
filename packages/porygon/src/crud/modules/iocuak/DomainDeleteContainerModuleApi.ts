@@ -8,17 +8,19 @@ import {
   TaskScope,
 } from '@cuaklabs/iocuak';
 
-import { DeleteAdapter } from '../../adapter/domain/DeleteAdapter';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
+import { DeleteEntityPort } from '../../port/application/DeleteEntityPort';
 import { DeleteEntityInteractor } from '../domain/DeleteEntityInteractor';
 import { InteractorAsync } from '../domain/InteractorAsync';
 
-export class DeleteContainerModuleApi<TQuery> implements ContainerModuleApi {
+export class DomainDeleteContainerModuleApi<TQuery>
+  implements ContainerModuleApi
+{
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #deleteEntityInteractorType: Newable<
     InteractorAsync<TQuery, void>,
-    [DeleteAdapter<TQuery>]
+    [DeleteEntityPort<TQuery>]
   >;
 
   constructor(

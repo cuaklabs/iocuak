@@ -2,11 +2,11 @@ import 'reflect-metadata';
 
 import { ContainerApi, injectable } from '@cuaklabs/iocuak';
 
-import { CreateAdapter } from '../../adapter/domain/CreateAdapter';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
+import { CreateEntityPort } from '../../port/application/CreateEntityPort';
 import { CreateEntityInteractor } from '../domain/CreateEntityInteractor';
-import { CreationContainerModuleApi } from './CreationContainerModuleApi';
+import { DomainCreateContainerModuleApi } from './DomainCreateContainerModuleApi';
 
 interface ModelTest {
   foo: string;
@@ -16,9 +16,9 @@ interface QueryTest {
   bar: string;
 }
 
-describe(CreationContainerModuleApi.name, () => {
+describe(DomainCreateContainerModuleApi.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
-  let creationContainerModuleApi: CreationContainerModuleApi<
+  let domainCreationContainerModuleApi: DomainCreateContainerModuleApi<
     ModelTest,
     QueryTest
   >;
@@ -36,13 +36,13 @@ describe(CreationContainerModuleApi.name, () => {
       [CrudModuleType.updateEntityInteractor]: Symbol(),
     });
 
-    creationContainerModuleApi = new CreationContainerModuleApi(
+    domainCreationContainerModuleApi = new DomainCreateContainerModuleApi(
       crudModuleTypeToSymbolMap,
     );
   });
 
   describe('.load()', () => {
-    describe('having a containerApi with no creation adapter bound', () => {
+    describe('having a containerApi with no create adapter bound', () => {
       let containerApi: ContainerApi;
 
       beforeAll(() => {
@@ -51,7 +51,7 @@ describe(CreationContainerModuleApi.name, () => {
 
       describe('when called', () => {
         beforeAll(() => {
-          creationContainerModuleApi.load(containerApi);
+          domainCreationContainerModuleApi.load(containerApi);
         });
 
         describe('when containerApi.get is called with create entity interactor symbol', () => {
@@ -85,7 +85,9 @@ describe(CreationContainerModuleApi.name, () => {
       @injectable({
         id: CrudModuleType.createEntityAdapter,
       })
-      class CreateAdapterMock implements CreateAdapter<ModelTest, QueryTest> {
+      class CreateAdapterMock
+        implements CreateEntityPort<ModelTest, QueryTest>
+      {
         public readonly insertOneMock: jest.Mock<
           Promise<ModelTest>,
           [QueryTest]
@@ -110,7 +112,7 @@ describe(CreationContainerModuleApi.name, () => {
 
       describe('when called', () => {
         beforeAll(() => {
-          creationContainerModuleApi.load(containerApi);
+          domainCreationContainerModuleApi.load(containerApi);
         });
 
         describe('when containerApi.get is called with create entity interactor symbol', () => {

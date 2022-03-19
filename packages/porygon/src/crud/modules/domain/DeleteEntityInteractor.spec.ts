@@ -1,4 +1,4 @@
-import { DeleteAdapter } from '../../adapter/domain/DeleteAdapter';
+import { DeleteEntityPort } from '../../port/application/DeleteEntityPort';
 import { DeleteEntityInteractor } from './DeleteEntityInteractor';
 
 interface CommandTest {
@@ -6,14 +6,14 @@ interface CommandTest {
 }
 
 describe(DeleteEntityInteractor.name, () => {
-  let deleteAdapterMock: jest.Mocked<DeleteAdapter<CommandTest>>;
+  let deleteAdapterMock: jest.Mocked<DeleteEntityPort<CommandTest>>;
   let deleteEntityInteractor: DeleteEntityInteractor<CommandTest>;
 
   beforeAll(() => {
     deleteAdapterMock = {
       delete: jest.fn(),
-    } as Partial<jest.Mocked<DeleteAdapter<CommandTest>>> as jest.Mocked<
-      DeleteAdapter<CommandTest>
+    } as Partial<jest.Mocked<DeleteEntityPort<CommandTest>>> as jest.Mocked<
+      DeleteEntityPort<CommandTest>
     >;
     deleteEntityInteractor = new DeleteEntityInteractor(deleteAdapterMock);
   });

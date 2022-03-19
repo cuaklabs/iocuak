@@ -5,7 +5,7 @@ import { ContainerApi, inject, injectable, TaskScope } from '@cuaklabs/iocuak';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
 import { DeleteEntityInteractor } from '../domain/DeleteEntityInteractor';
-import { DeleteContainerModuleApi } from './DeleteContainerModuleApi';
+import { DomainDeleteContainerModuleApi } from './DomainDeleteContainerModuleApi';
 
 interface QueryTest {
   bar: string;
@@ -21,9 +21,9 @@ function expectClassExtending(superclass: Function): Function {
   }) as Function;
 }
 
-describe(DeleteContainerModuleApi.name, () => {
+describe(DomainDeleteContainerModuleApi.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
-  let deleteContainerModuleApi: DeleteContainerModuleApi<QueryTest>;
+  let domainDeleteContainerModuleApi: DomainDeleteContainerModuleApi<QueryTest>;
 
   beforeAll(() => {
     crudModuleTypeToSymbolMap = Object.freeze({
@@ -38,7 +38,7 @@ describe(DeleteContainerModuleApi.name, () => {
       [CrudModuleType.updateEntityInteractor]: Symbol(),
     });
 
-    deleteContainerModuleApi = new DeleteContainerModuleApi(
+    domainDeleteContainerModuleApi = new DomainDeleteContainerModuleApi(
       crudModuleTypeToSymbolMap,
     );
   });
@@ -79,7 +79,7 @@ describe(DeleteContainerModuleApi.name, () => {
           injectableDecoratorMock,
         );
 
-        deleteContainerModuleApi.load(containerApiMock);
+        domainDeleteContainerModuleApi.load(containerApiMock);
       });
 
       afterAll(() => {

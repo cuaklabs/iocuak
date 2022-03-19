@@ -8,17 +8,19 @@ import {
   TaskScope,
 } from '@cuaklabs/iocuak';
 
-import { UpdateAdapter } from '../../adapter/domain/UpdateAdapter';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
+import { UpdateEntityPort } from '../../port/application/UpdateEntityPort';
 import { InteractorAsync } from '../domain/InteractorAsync';
 import { UpdateEntityInteractor } from '../domain/UpdateEntityInteractor';
 
-export class UpdateContainerModuleApi<TQuery> implements ContainerModuleApi {
+export class DomainUpdateContainerModuleApi<TQuery>
+  implements ContainerModuleApi
+{
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #updateEntityInteractorType: Newable<
     InteractorAsync<TQuery, void>,
-    [UpdateAdapter<TQuery>]
+    [UpdateEntityPort<TQuery>]
   >;
 
   constructor(

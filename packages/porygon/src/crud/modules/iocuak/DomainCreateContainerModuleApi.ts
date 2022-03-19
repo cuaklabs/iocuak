@@ -8,19 +8,19 @@ import {
   TaskScope,
 } from '@cuaklabs/iocuak';
 
-import { CreateAdapter } from '../../adapter/domain/CreateAdapter';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
+import { CreateEntityPort } from '../../port/application/CreateEntityPort';
 import { CreateEntityInteractor } from '../domain/CreateEntityInteractor';
 import { InteractorAsync } from '../domain/InteractorAsync';
 
-export class CreationContainerModuleApi<TModel, TQuery>
+export class DomainCreateContainerModuleApi<TModel, TQuery>
   implements ContainerModuleApi
 {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #createEntityInteractorType: Newable<
     InteractorAsync<TQuery, TModel>,
-    [CreateAdapter<TModel, TQuery>]
+    [CreateEntityPort<TModel, TQuery>]
   >;
 
   constructor(

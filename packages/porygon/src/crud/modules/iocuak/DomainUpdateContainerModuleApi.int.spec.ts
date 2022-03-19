@@ -2,19 +2,19 @@ import 'reflect-metadata';
 
 import { ContainerApi, injectable } from '@cuaklabs/iocuak';
 
-import { DeleteAdapter } from '../../adapter/domain/DeleteAdapter';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
-import { DeleteEntityInteractor } from '../domain/DeleteEntityInteractor';
-import { DeleteContainerModuleApi } from './DeleteContainerModuleApi';
+import { UpdateEntityPort } from '../../port/application/UpdateEntityPort';
+import { UpdateEntityInteractor } from '../domain/UpdateEntityInteractor';
+import { DomainUpdateContainerModuleApi } from './DomainUpdateContainerModuleApi';
 
 interface QueryTest {
   bar: string;
 }
 
-describe(DeleteContainerModuleApi.name, () => {
+describe(DomainUpdateContainerModuleApi.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
-  let deleteContainerModuleApi: DeleteContainerModuleApi<QueryTest>;
+  let domainUpdateContainerModuleApi: DomainUpdateContainerModuleApi<QueryTest>;
 
   beforeAll(() => {
     crudModuleTypeToSymbolMap = Object.freeze({
@@ -29,13 +29,13 @@ describe(DeleteContainerModuleApi.name, () => {
       [CrudModuleType.updateEntityInteractor]: Symbol(),
     });
 
-    deleteContainerModuleApi = new DeleteContainerModuleApi(
+    domainUpdateContainerModuleApi = new DomainUpdateContainerModuleApi(
       crudModuleTypeToSymbolMap,
     );
   });
 
   describe('.load()', () => {
-    describe('having a containerApi with no delete adapter bound', () => {
+    describe('having a containerApi with no update adapter bound', () => {
       let containerApi: ContainerApi;
 
       beforeAll(() => {
@@ -44,16 +44,16 @@ describe(DeleteContainerModuleApi.name, () => {
 
       describe('when called', () => {
         beforeAll(() => {
-          deleteContainerModuleApi.load(containerApi);
+          domainUpdateContainerModuleApi.load(containerApi);
         });
 
-        describe('when containerApi.get is called with delete entity interactor symbol', () => {
+        describe('when containerApi.get is called with update entity interactor symbol', () => {
           let result: unknown;
 
           beforeAll(() => {
             try {
               containerApi.get(
-                crudModuleTypeToSymbolMap.deleteEntityInteractor,
+                crudModuleTypeToSymbolMap.updateEntityInteractor,
               );
             } catch (error: unknown) {
               result = error;
@@ -65,7 +65,7 @@ describe(DeleteContainerModuleApi.name, () => {
             expect(result).toStrictEqual(
               expect.objectContaining<Partial<Error>>({
                 message: expect.stringContaining(
-                  'No bindings found for type deleteEntityAdapter',
+                  'No bindings found for type updateEntityAdapter',
                 ) as string,
               }),
             );
@@ -74,19 +74,19 @@ describe(DeleteContainerModuleApi.name, () => {
       });
     });
 
-    describe('having a containerApi with delete adapter bound', () => {
+    describe('having a containerApi with update adapter bound', () => {
       @injectable({
-        id: CrudModuleType.deleteEntityAdapter,
+        id: CrudModuleType.updateEntityAdapter,
       })
-      class DeleteAdapterMock implements DeleteAdapter<QueryTest> {
-        public readonly deleteMock: jest.Mock<Promise<void>, [QueryTest]>;
+      class UpdateAdapterMock implements UpdateEntityPort<QueryTest> {
+        public readonly updateMock: jest.Mock<Promise<void>, [QueryTest]>;
 
         constructor() {
-          this.deleteMock = jest.fn<Promise<void>, [QueryTest]>();
+          this.updateMock = jest.fn<Promise<void>, [QueryTest]>();
         }
 
-        public async delete(query: QueryTest): Promise<void> {
-          return this.deleteMock(query);
+        public async update(query: QueryTest): Promise<void> {
+          return this.updateMock(query);
         }
       }
 
@@ -95,25 +95,25 @@ describe(DeleteContainerModuleApi.name, () => {
       beforeAll(() => {
         containerApi = ContainerApi.build();
 
-        containerApi.bind(DeleteAdapterMock);
+        containerApi.bind(UpdateAdapterMock);
       });
 
       describe('when called', () => {
         beforeAll(() => {
-          deleteContainerModuleApi.load(containerApi);
+          domainUpdateContainerModuleApi.load(containerApi);
         });
 
-        describe('when containerApi.get is called with delete entity interactor symbol', () => {
+        describe('when containerApi.get is called with update entity interactor symbol', () => {
           let result: unknown;
 
           beforeAll(() => {
             result = containerApi.get(
-              crudModuleTypeToSymbolMap.deleteEntityInteractor,
+              crudModuleTypeToSymbolMap.updateEntityInteractor,
             );
           });
 
-          it('should return a DeleteEntityInteractor', () => {
-            expect(result).toBeInstanceOf(DeleteEntityInteractor);
+          it('should return a UpdateEntityInteractor', () => {
+            expect(result).toBeInstanceOf(UpdateEntityInteractor);
           });
         });
       });

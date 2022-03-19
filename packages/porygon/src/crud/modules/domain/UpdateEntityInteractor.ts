@@ -1,12 +1,12 @@
-import { UpdateAdapter } from '../../adapter/domain/UpdateAdapter';
+import { UpdateEntityPort } from '../../port/application/UpdateEntityPort';
 import { InteractorAsync } from './InteractorAsync';
 
 export class UpdateEntityInteractor<TCommand>
   implements InteractorAsync<TCommand, void>
 {
-  readonly #updateAdapter: UpdateAdapter<TCommand>;
+  readonly #updateAdapter: UpdateEntityPort<TCommand>;
 
-  constructor(updateAdapter: UpdateAdapter<TCommand>) {
+  constructor(updateAdapter: UpdateEntityPort<TCommand>) {
     this.#updateAdapter = updateAdapter;
   }
 

@@ -1,12 +1,12 @@
-import { FindAdapter } from '../../adapter/domain/FindAdapter';
+import { FindEntityPort } from '../../port/application/FindEntityPort';
 import { InteractorAsync } from './InteractorAsync';
 
 export class ReadOneEntityInteractor<TModel, TQuery>
   implements InteractorAsync<TQuery, TModel | undefined>
 {
-  readonly #findAdapter: FindAdapter<TModel, TQuery>;
+  readonly #findAdapter: FindEntityPort<TModel, TQuery>;
 
-  constructor(findAdapter: FindAdapter<TModel, TQuery>) {
+  constructor(findAdapter: FindEntityPort<TModel, TQuery>) {
     this.#findAdapter = findAdapter;
   }
 

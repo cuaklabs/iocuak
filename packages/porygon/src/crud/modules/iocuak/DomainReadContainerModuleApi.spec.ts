@@ -6,7 +6,7 @@ import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
 import { ReadManyEntityInteractor } from '../domain/ReadManyEntityInteractor';
 import { ReadOneEntityInteractor } from '../domain/ReadOneEntityInteractor';
-import { ReadContainerModuleApi } from './ReadContainerModuleApi';
+import { DomainReadContainerModuleApi } from './DomainReadContainerModuleApi';
 
 interface ModelTest {
   foo: string;
@@ -26,9 +26,12 @@ function expectClassExtending(superclass: Function): Function {
   }) as Function;
 }
 
-describe(ReadContainerModuleApi.name, () => {
+describe(DomainReadContainerModuleApi.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
-  let readContainerModuleApi: ReadContainerModuleApi<ModelTest, QueryTest>;
+  let domainReadContainerModuleApi: DomainReadContainerModuleApi<
+    ModelTest,
+    QueryTest
+  >;
 
   beforeAll(() => {
     crudModuleTypeToSymbolMap = Object.freeze({
@@ -43,7 +46,7 @@ describe(ReadContainerModuleApi.name, () => {
       [CrudModuleType.updateEntityInteractor]: Symbol(),
     });
 
-    readContainerModuleApi = new ReadContainerModuleApi(
+    domainReadContainerModuleApi = new DomainReadContainerModuleApi(
       crudModuleTypeToSymbolMap,
     );
   });
@@ -84,7 +87,7 @@ describe(ReadContainerModuleApi.name, () => {
           .mockReturnValueOnce(injectableDecoratorMock)
           .mockReturnValueOnce(injectableDecoratorMock);
 
-        readContainerModuleApi.load(containerApiMock);
+        domainReadContainerModuleApi.load(containerApiMock);
       });
 
       afterAll(() => {

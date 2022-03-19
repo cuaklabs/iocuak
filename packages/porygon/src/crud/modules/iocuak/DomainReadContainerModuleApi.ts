@@ -8,24 +8,24 @@ import {
   TaskScope,
 } from '@cuaklabs/iocuak';
 
-import { FindAdapter } from '../../adapter/domain/FindAdapter';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
+import { FindEntityPort } from '../../port/application/FindEntityPort';
 import { InteractorAsync } from '../domain/InteractorAsync';
 import { ReadManyEntityInteractor } from '../domain/ReadManyEntityInteractor';
 import { ReadOneEntityInteractor } from '../domain/ReadOneEntityInteractor';
 
-export class ReadContainerModuleApi<TModel, TQuery>
+export class DomainReadContainerModuleApi<TModel, TQuery>
   implements ContainerModuleApi
 {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #readManyEntityInteractorType: Newable<
     InteractorAsync<TQuery, TModel[]>,
-    [FindAdapter<TModel, TQuery>]
+    [FindEntityPort<TModel, TQuery>]
   >;
   readonly #readOneEntityInteractorType: Newable<
     InteractorAsync<TQuery, TModel | undefined>,
-    [FindAdapter<TModel, TQuery>]
+    [FindEntityPort<TModel, TQuery>]
   >;
 
   constructor(

@@ -1,4 +1,4 @@
-import { UpdateAdapter } from '../../adapter/domain/UpdateAdapter';
+import { UpdateEntityPort } from '../../port/application/UpdateEntityPort';
 import { UpdateEntityInteractor } from './UpdateEntityInteractor';
 
 interface CommandTest {
@@ -6,14 +6,14 @@ interface CommandTest {
 }
 
 describe(UpdateEntityInteractor.name, () => {
-  let updateAdapterMock: jest.Mocked<UpdateAdapter<CommandTest>>;
+  let updateAdapterMock: jest.Mocked<UpdateEntityPort<CommandTest>>;
   let updateInteractor: UpdateEntityInteractor<CommandTest>;
 
   beforeAll(() => {
     updateAdapterMock = {
       update: jest.fn(),
-    } as Partial<jest.Mocked<UpdateAdapter<CommandTest>>> as jest.Mocked<
-      UpdateAdapter<CommandTest>
+    } as Partial<jest.Mocked<UpdateEntityPort<CommandTest>>> as jest.Mocked<
+      UpdateEntityPort<CommandTest>
     >;
 
     updateInteractor = new UpdateEntityInteractor(updateAdapterMock);
