@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/porygon-typeorm#readme",
   "dependencies": {
-    "@cuaklabs/porygon": "^0.0.7"
+    "@cuaklabs/iocuak": "^0.0.7",
+    "@cuaklabs/porygon": "^0.0.7",
+    "typeorm": "^0.3.0"
   },
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
   "publishConfig": {
