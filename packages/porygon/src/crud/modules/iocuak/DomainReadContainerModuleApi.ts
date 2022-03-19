@@ -8,10 +8,10 @@ import {
   TaskScope,
 } from '@cuaklabs/iocuak';
 
+import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
 import { FindEntityPort } from '../../port/application/FindEntityPort';
-import { InteractorAsync } from '../domain/InteractorAsync';
 import { ReadManyEntityInteractor } from '../domain/ReadManyEntityInteractor';
 import { ReadOneEntityInteractor } from '../domain/ReadOneEntityInteractor';
 

@@ -1,5 +1,5 @@
+import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
 import { FindEntityPort } from '../../port/application/FindEntityPort';
-import { InteractorAsync } from './InteractorAsync';
 
 export class ReadOneEntityInteractor<TModel, TQuery>
   implements InteractorAsync<TQuery, TModel | undefined>

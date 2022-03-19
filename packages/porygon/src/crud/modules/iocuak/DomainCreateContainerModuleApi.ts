@@ -8,11 +8,11 @@ import {
   TaskScope,
 } from '@cuaklabs/iocuak';
 
+import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
 import { CreateEntityPort } from '../../port/application/CreateEntityPort';
 import { CreateEntityInteractor } from '../domain/CreateEntityInteractor';
-import { InteractorAsync } from '../domain/InteractorAsync';
 
 export class DomainCreateContainerModuleApi<TModel, TQuery>
   implements ContainerModuleApi

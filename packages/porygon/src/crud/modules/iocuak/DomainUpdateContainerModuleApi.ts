@@ -8,10 +8,10 @@ import {
   TaskScope,
 } from '@cuaklabs/iocuak';
 
+import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
 import { UpdateEntityPort } from '../../port/application/UpdateEntityPort';
-import { InteractorAsync } from '../domain/InteractorAsync';
 import { UpdateEntityInteractor } from '../domain/UpdateEntityInteractor';
 
 export class DomainUpdateContainerModuleApi<TQuery>
