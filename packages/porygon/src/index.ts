@@ -1,3 +1,5 @@
+import { Converter } from './common/modules/domain/Converter';
+import { ConverterAsync } from './common/modules/domain/ConverterAsync';
 import { Interactor } from './common/modules/domain/Interactor';
 import { InteractorAsync } from './common/modules/domain/InteractorAsync';
 import { CrudModuleType } from './crud/models/domain/CrudModuleType';
@@ -9,6 +11,8 @@ import { FindEntityPort } from './crud/port/application/FindEntityPort';
 import { UpdateEntityPort } from './crud/port/application/UpdateEntityPort';
 
 export type {
+  Converter,
+  ConverterAsync,
   CreateEntityPort,
   DeleteEntityPort,
   FindEntityPort,
