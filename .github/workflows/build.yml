@@ -69,6 +69,7 @@ jobs:
         package:
           - cuaktask
           - iocuak
+          - porygon
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
@@ -113,7 +114,7 @@ jobs:
         run: pnpm run packages:link
 
       - name: Launch Tests and generate coverage report
-        run: pnpm run test:package:${{ matrix.package }}:js:ci:coverage
+        run: pnpm run test:package:js:ci:coverage -- --selectProjects ${{ matrix.package }}-Integration ${{ matrix.package }}-Unit
 
       - name: Upload coverage to Codecov (base branch)
         uses: codecov/codecov-action@v2
