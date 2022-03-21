@@ -46,7 +46,10 @@ export class DomainDeleteContainerModuleApi<TQuery>
       scope: TaskScope.singleton,
     })(this.#deleteEntityInteractorType);
 
-    inject(CrudModuleType.deleteEntityAdapter)(
+    const deleteEntityAdapterServiceId: ServiceId =
+      this.#crudModuleTypeToSymbolMap[CrudModuleType.deleteEntityAdapter];
+
+    inject(deleteEntityAdapterServiceId)(
       this.#deleteEntityInteractorType,
       undefined as unknown as string | symbol,
       0,

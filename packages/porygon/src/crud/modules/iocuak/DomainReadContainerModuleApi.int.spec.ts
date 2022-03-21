@@ -73,7 +73,7 @@ describe(DomainReadContainerModuleApi.name, () => {
             expect(result).toStrictEqual(
               expect.objectContaining<Partial<Error>>({
                 message: expect.stringContaining(
-                  'No bindings found for type readEntityAdapter',
+                  'No bindings found for type Symbol()',
                 ) as string,
               }),
             );
@@ -98,7 +98,7 @@ describe(DomainReadContainerModuleApi.name, () => {
             expect(result).toStrictEqual(
               expect.objectContaining<Partial<Error>>({
                 message: expect.stringContaining(
-                  'No bindings found for type readEntityAdapter',
+                  'No bindings found for type Symbol()',
                 ) as string,
               }),
             );
@@ -108,9 +108,6 @@ describe(DomainReadContainerModuleApi.name, () => {
     });
 
     describe('having a containerApi with read adapter bound', () => {
-      @injectable({
-        id: CrudModuleType.readEntityAdapter,
-      })
       class FindAdapterMock implements FindEntityPort<ModelTest, QueryTest> {
         public readonly findMock: jest.Mock<Promise<ModelTest[]>, [QueryTest]>;
         public readonly findOneMock: jest.Mock<Promise<ModelTest>, [QueryTest]>;
@@ -132,6 +129,10 @@ describe(DomainReadContainerModuleApi.name, () => {
       let containerApi: ContainerApi;
 
       beforeAll(() => {
+        injectable({
+          id: crudModuleTypeToSymbolMap[CrudModuleType.readEntityAdapter],
+        })(FindAdapterMock);
+
         containerApi = ContainerApi.build();
 
         containerApi.bind(FindAdapterMock);

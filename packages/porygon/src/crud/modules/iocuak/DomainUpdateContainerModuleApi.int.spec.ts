@@ -65,7 +65,7 @@ describe(DomainUpdateContainerModuleApi.name, () => {
             expect(result).toStrictEqual(
               expect.objectContaining<Partial<Error>>({
                 message: expect.stringContaining(
-                  'No bindings found for type updateEntityAdapter',
+                  'No bindings found for type Symbol()',
                 ) as string,
               }),
             );
@@ -75,9 +75,6 @@ describe(DomainUpdateContainerModuleApi.name, () => {
     });
 
     describe('having a containerApi with update adapter bound', () => {
-      @injectable({
-        id: CrudModuleType.updateEntityAdapter,
-      })
       class UpdateAdapterMock implements UpdateEntityPort<QueryTest> {
         public readonly updateMock: jest.Mock<Promise<void>, [QueryTest]>;
 
@@ -93,6 +90,10 @@ describe(DomainUpdateContainerModuleApi.name, () => {
       let containerApi: ContainerApi;
 
       beforeAll(() => {
+        injectable({
+          id: crudModuleTypeToSymbolMap[CrudModuleType.updateEntityAdapter],
+        })(UpdateAdapterMock);
+
         containerApi = ContainerApi.build();
 
         containerApi.bind(UpdateAdapterMock);

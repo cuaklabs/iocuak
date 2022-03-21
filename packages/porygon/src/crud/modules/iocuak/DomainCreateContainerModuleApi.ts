@@ -42,12 +42,15 @@ export class DomainCreateContainerModuleApi<TModel, TQuery>
     const createEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.createEntityInteractor];
 
+    const createEntityAdapterServiceId: ServiceId =
+      this.#crudModuleTypeToSymbolMap[CrudModuleType.createEntityAdapter];
+
     injectable({
       id: createEntityInteractorServiceId,
       scope: TaskScope.singleton,
     })(this.#createEntityInteractorType);
 
-    inject(CrudModuleType.createEntityAdapter)(
+    inject(createEntityAdapterServiceId)(
       this.#createEntityInteractorType,
       undefined as unknown as string | symbol,
       0,

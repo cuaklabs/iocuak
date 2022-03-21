@@ -56,7 +56,10 @@ export class DomainReadContainerModuleApi<TModel, TQuery>
       scope: TaskScope.singleton,
     })(this.#readOneEntityInteractorType);
 
-    inject(CrudModuleType.readEntityAdapter)(
+    const readEntityAdapterServiceId: ServiceId =
+      this.#crudModuleTypeToSymbolMap[CrudModuleType.readEntityAdapter];
+
+    inject(readEntityAdapterServiceId)(
       this.#readOneEntityInteractorType,
       undefined as unknown as string | symbol,
       0,
@@ -74,7 +77,10 @@ export class DomainReadContainerModuleApi<TModel, TQuery>
       scope: TaskScope.singleton,
     })(this.#readManyEntityInteractorType);
 
-    inject(CrudModuleType.readEntityAdapter)(
+    const readEntityAdapterServiceId: ServiceId =
+      this.#crudModuleTypeToSymbolMap[CrudModuleType.readEntityAdapter];
+
+    inject(readEntityAdapterServiceId)(
       this.#readManyEntityInteractorType,
       undefined as unknown as string | symbol,
       0,

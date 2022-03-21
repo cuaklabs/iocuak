@@ -104,7 +104,9 @@ describe(DomainDeleteContainerModuleApi.name, () => {
         expect(inject).toHaveBeenCalledTimes(1);
         expect(injectDecoratorMock).toHaveBeenCalledTimes(1);
 
-        expect(inject).toHaveBeenCalledWith(CrudModuleType.deleteEntityAdapter);
+        expect(inject).toHaveBeenCalledWith(
+          crudModuleTypeToSymbolMap[CrudModuleType.deleteEntityAdapter],
+        );
 
         expect(injectDecoratorMock).toHaveBeenCalledWith(
           expectClassExtending(DeleteEntityInteractor),

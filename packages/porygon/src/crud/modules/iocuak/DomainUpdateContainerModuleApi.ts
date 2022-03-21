@@ -46,7 +46,10 @@ export class DomainUpdateContainerModuleApi<TQuery>
       scope: TaskScope.singleton,
     })(this.#updateEntityInteractorType);
 
-    inject(CrudModuleType.updateEntityAdapter)(
+    const updateEntityAdapterServiceId: ServiceId =
+      this.#crudModuleTypeToSymbolMap[CrudModuleType.updateEntityAdapter];
+
+    inject(updateEntityAdapterServiceId)(
       this.#updateEntityInteractorType,
       undefined as unknown as string | symbol,
       0,

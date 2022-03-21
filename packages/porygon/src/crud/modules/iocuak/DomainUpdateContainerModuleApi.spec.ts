@@ -104,7 +104,9 @@ describe(DomainUpdateContainerModuleApi.name, () => {
         expect(inject).toHaveBeenCalledTimes(1);
         expect(injectDecoratorMock).toHaveBeenCalledTimes(1);
 
-        expect(inject).toHaveBeenCalledWith(CrudModuleType.updateEntityAdapter);
+        expect(inject).toHaveBeenCalledWith(
+          crudModuleTypeToSymbolMap[CrudModuleType.updateEntityAdapter],
+        );
 
         expect(injectDecoratorMock).toHaveBeenCalledWith(
           expectClassExtending(UpdateEntityInteractor),

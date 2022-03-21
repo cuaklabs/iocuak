@@ -65,7 +65,7 @@ describe(DomainDeleteContainerModuleApi.name, () => {
             expect(result).toStrictEqual(
               expect.objectContaining<Partial<Error>>({
                 message: expect.stringContaining(
-                  'No bindings found for type deleteEntityAdapter',
+                  'No bindings found for type Symbol()',
                 ) as string,
               }),
             );
@@ -75,9 +75,6 @@ describe(DomainDeleteContainerModuleApi.name, () => {
     });
 
     describe('having a containerApi with delete adapter bound', () => {
-      @injectable({
-        id: CrudModuleType.deleteEntityAdapter,
-      })
       class DeleteAdapterMock implements DeleteEntityPort<QueryTest> {
         public readonly deleteMock: jest.Mock<Promise<void>, [QueryTest]>;
 
@@ -93,6 +90,10 @@ describe(DomainDeleteContainerModuleApi.name, () => {
       let containerApi: ContainerApi;
 
       beforeAll(() => {
+        injectable({
+          id: crudModuleTypeToSymbolMap[CrudModuleType.deleteEntityAdapter],
+        })(DeleteAdapterMock);
+
         containerApi = ContainerApi.build();
 
         containerApi.bind(DeleteAdapterMock);
