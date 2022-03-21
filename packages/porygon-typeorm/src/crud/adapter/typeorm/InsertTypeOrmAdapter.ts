@@ -12,7 +12,7 @@ export class InsertTypeOrmAdapter<TModel, TModelDb, TQuery>
 {
   readonly #repository: Repository<TModelDb>;
   readonly #modelDbToModelConverter: ConverterAsync<TModelDb, TModel>;
-  readonly #queryToTypeOrmQueryConverter: ConverterAsync<
+  readonly #queryToSetTypeOrmQueryConverter: ConverterAsync<
     TQuery,
     QueryDeepPartialEntity<TModelDb> | QueryDeepPartialEntity<TModelDb>[]
   >;
@@ -20,20 +20,20 @@ export class InsertTypeOrmAdapter<TModel, TModelDb, TQuery>
   constructor(
     repository: Repository<TModelDb>,
     modelDbToModelConverter: ConverterAsync<TModelDb, TModel>,
-    queryToTypeOrmQueryConverter: ConverterAsync<
+    queryToSetTypeOrmQueryConverter: ConverterAsync<
       TQuery,
       QueryDeepPartialEntity<TModelDb> | QueryDeepPartialEntity<TModelDb>[]
     >,
   ) {
     this.#repository = repository;
     this.#modelDbToModelConverter = modelDbToModelConverter;
-    this.#queryToTypeOrmQueryConverter = queryToTypeOrmQueryConverter;
+    this.#queryToSetTypeOrmQueryConverter = queryToSetTypeOrmQueryConverter;
   }
 
   public async insertOne(query: TQuery): Promise<TModel> {
     const insertQueryTypeOrm:
       | QueryDeepPartialEntity<TModelDb>
-      | QueryDeepPartialEntity<TModelDb>[] = await this.#queryToTypeOrmQueryConverter.convert(
+      | QueryDeepPartialEntity<TModelDb>[] = await this.#queryToSetTypeOrmQueryConverter.convert(
       query,
     );
 
