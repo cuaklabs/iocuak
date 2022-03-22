@@ -53,7 +53,9 @@ describe(DomainDeleteContainerModuleApi.name, () => {
           beforeAll(() => {
             try {
               containerApi.get(
-                crudModuleTypeToSymbolMap.deleteEntityInteractor,
+                crudModuleTypeToSymbolMap[
+                  CrudModuleType.deleteEntityInteractor
+                ],
               );
             } catch (error: unknown) {
               result = error;
@@ -109,7 +111,7 @@ describe(DomainDeleteContainerModuleApi.name, () => {
 
           beforeAll(() => {
             result = containerApi.get(
-              crudModuleTypeToSymbolMap.deleteEntityInteractor,
+              crudModuleTypeToSymbolMap[CrudModuleType.deleteEntityInteractor],
             );
           });
 

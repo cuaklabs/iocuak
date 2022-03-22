@@ -61,7 +61,9 @@ describe(DomainReadContainerModuleApi.name, () => {
           beforeAll(() => {
             try {
               containerApi.get(
-                crudModuleTypeToSymbolMap.readManyEntityInteractor,
+                crudModuleTypeToSymbolMap[
+                  CrudModuleType.readManyEntityInteractor
+                ],
               );
             } catch (error: unknown) {
               result = error;
@@ -86,7 +88,9 @@ describe(DomainReadContainerModuleApi.name, () => {
           beforeAll(() => {
             try {
               containerApi.get(
-                crudModuleTypeToSymbolMap.readOneEntityInteractor,
+                crudModuleTypeToSymbolMap[
+                  CrudModuleType.readOneEntityInteractor
+                ],
               );
             } catch (error: unknown) {
               result = error;
@@ -148,7 +152,9 @@ describe(DomainReadContainerModuleApi.name, () => {
 
           beforeAll(() => {
             result = containerApi.get(
-              crudModuleTypeToSymbolMap.readManyEntityInteractor,
+              crudModuleTypeToSymbolMap[
+                CrudModuleType.readManyEntityInteractor
+              ],
             );
           });
 
@@ -162,7 +168,7 @@ describe(DomainReadContainerModuleApi.name, () => {
 
           beforeAll(() => {
             result = containerApi.get(
-              crudModuleTypeToSymbolMap.readOneEntityInteractor,
+              crudModuleTypeToSymbolMap[CrudModuleType.readOneEntityInteractor],
             );
           });
 

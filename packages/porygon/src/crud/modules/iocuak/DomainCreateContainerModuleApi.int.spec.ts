@@ -60,7 +60,9 @@ describe(DomainCreateContainerModuleApi.name, () => {
           beforeAll(() => {
             try {
               containerApi.get(
-                crudModuleTypeToSymbolMap.createEntityInteractor,
+                crudModuleTypeToSymbolMap[
+                  CrudModuleType.createEntityInteractor
+                ],
               );
             } catch (error: unknown) {
               result = error;
@@ -121,7 +123,7 @@ describe(DomainCreateContainerModuleApi.name, () => {
 
           beforeAll(() => {
             result = containerApi.get(
-              crudModuleTypeToSymbolMap.createEntityInteractor,
+              crudModuleTypeToSymbolMap[CrudModuleType.createEntityInteractor],
             );
           });
 

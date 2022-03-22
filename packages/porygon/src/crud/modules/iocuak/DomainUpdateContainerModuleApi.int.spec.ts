@@ -53,7 +53,9 @@ describe(DomainUpdateContainerModuleApi.name, () => {
           beforeAll(() => {
             try {
               containerApi.get(
-                crudModuleTypeToSymbolMap.updateEntityInteractor,
+                crudModuleTypeToSymbolMap[
+                  CrudModuleType.updateEntityInteractor
+                ],
               );
             } catch (error: unknown) {
               result = error;
@@ -109,7 +111,7 @@ describe(DomainUpdateContainerModuleApi.name, () => {
 
           beforeAll(() => {
             result = containerApi.get(
-              crudModuleTypeToSymbolMap.updateEntityInteractor,
+              crudModuleTypeToSymbolMap[CrudModuleType.updateEntityInteractor],
             );
           });
 
