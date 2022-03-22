@@ -1,6 +1,7 @@
 import { ConverterAsync } from '@cuaklabs/porygon';
 import {
   FindManyOptions,
+  FindOptionsWhere,
   QueryBuilder,
   Repository,
   UpdateQueryBuilder,
@@ -8,6 +9,9 @@ import {
 } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
+jest.mock('../../../common/utils/typeorm/findManyOptionsToFindOptionsWhere');
+
+import { findManyOptionsToFindOptionsWhere } from '../../../common/utils/typeorm/findManyOptionsToFindOptionsWhere';
 import { QueryToFindQueryTypeOrmConverter } from '../../converter/typeorm/QueryToFindQueryTypeOrmConverter';
 import { UpdateTypeOrmAdapter } from './UpdateTypeOrmAdapter';
 
@@ -66,6 +70,7 @@ describe(UpdateTypeOrmAdapter.name, () => {
     describe('when called and updateQueryToFindQueryTypeOrmConverter returns FindManyOptions<TModelDb>', () => {
       let queryFixture: QueryTest;
       let findQueryTypeOrmFixture: FindManyOptions<ModelTest>;
+      let findOptionsWhereFixture: FindOptionsWhere<ModelTest>;
       let setQueryTypeOrmFixture: QueryDeepPartialEntity<ModelTest>;
 
       beforeAll(async () => {
@@ -73,10 +78,12 @@ describe(UpdateTypeOrmAdapter.name, () => {
           bar: 'sample',
         };
 
+        findOptionsWhereFixture = {
+          foo: 'sample-string',
+        };
+
         findQueryTypeOrmFixture = {
-          where: {
-            foo: 'sample-string',
-          },
+          where: findOptionsWhereFixture,
         };
 
         setQueryTypeOrmFixture = {
@@ -91,6 +98,12 @@ describe(UpdateTypeOrmAdapter.name, () => {
         updateQueryToSetQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
           setQueryTypeOrmFixture,
         );
+
+        (
+          findManyOptionsToFindOptionsWhere as jest.Mock<
+            FindOptionsWhere<ModelTest>
+          >
+        ).mockReturnValueOnce(findOptionsWhereFixture);
 
         await updateTypeOrmAdapter.update(queryFixture);
       });
@@ -108,6 +121,13 @@ describe(UpdateTypeOrmAdapter.name, () => {
         ).toHaveBeenCalledWith(queryFixture, queryBuilderMock);
       });
 
+      it('should call findManyOptionsToFindOptionsWhere()', () => {
+        expect(findManyOptionsToFindOptionsWhere).toHaveBeenCalledTimes(1);
+        expect(findManyOptionsToFindOptionsWhere).toHaveBeenCalledWith(
+          findQueryTypeOrmFixture,
+        );
+      });
+
       it('shoud call updateQueryToSetQueryTypeOrmConverter.convert()', () => {
         expect(
           updateQueryToSetQueryTypeOrmConverterMock.convert,
@@ -120,7 +140,7 @@ describe(UpdateTypeOrmAdapter.name, () => {
       it('shoud call repository.update()', () => {
         expect(repositoryMock.update).toHaveBeenCalledTimes(1);
         expect(repositoryMock.update).toHaveBeenCalledWith(
-          findQueryTypeOrmFixture.where,
+          findOptionsWhereFixture,
           setQueryTypeOrmFixture,
         );
       });

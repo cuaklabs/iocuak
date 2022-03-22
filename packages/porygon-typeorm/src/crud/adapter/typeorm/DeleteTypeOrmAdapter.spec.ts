@@ -1,10 +1,14 @@
 import {
   FindManyOptions,
+  FindOptionsWhere,
   QueryBuilder,
   Repository,
   WhereExpressionBuilder,
 } from 'typeorm';
 
+jest.mock('../../../common/utils/typeorm/findManyOptionsToFindOptionsWhere');
+
+import { findManyOptionsToFindOptionsWhere } from '../../../common/utils/typeorm/findManyOptionsToFindOptionsWhere';
 import { QueryToFindQueryTypeOrmConverter } from '../../converter/typeorm/QueryToFindQueryTypeOrmConverter';
 import { DeleteTypeOrmAdapter } from './DeleteTypeOrmAdapter';
 
@@ -58,19 +62,30 @@ describe(DeleteTypeOrmAdapter.name, () => {
     describe('when called and queryToQueryTypeOrmConverter returns FindManyOptions<ModelTest>', () => {
       let queryFixture: QueryTest;
       let queryTypeOrmFixture: FindManyOptions<ModelTest>;
+      let findOptionsWhereFixture: FindOptionsWhere<ModelTest>;
 
       beforeAll(async () => {
         queryFixture = {
           fooValue: 'foo-value',
         };
 
-        queryTypeOrmFixture = {};
+        findOptionsWhereFixture = {};
+
+        queryTypeOrmFixture = {
+          where: findOptionsWhereFixture,
+        };
 
         (
           queryToQueryTypeOrmConverterMock.convert as jest.Mock<
             Promise<FindManyOptions<ModelTest>>
           >
         ).mockResolvedValueOnce(queryTypeOrmFixture);
+
+        (
+          findManyOptionsToFindOptionsWhere as jest.Mock<
+            FindOptionsWhere<ModelTest>
+          >
+        ).mockReturnValueOnce(findOptionsWhereFixture);
 
         await deleteTypeOrmAdapter.delete(queryFixture);
       });
@@ -99,9 +114,18 @@ describe(DeleteTypeOrmAdapter.name, () => {
         );
       });
 
+      it('should call findManyOptionsToFindOptionsWhere()', () => {
+        expect(findManyOptionsToFindOptionsWhere).toHaveBeenCalledTimes(1);
+        expect(findManyOptionsToFindOptionsWhere).toHaveBeenCalledWith(
+          queryTypeOrmFixture,
+        );
+      });
+
       it('should call repositoryMock.delete()', () => {
         expect(repositoryMock.delete).toHaveBeenCalledTimes(1);
-        expect(repositoryMock.delete).toHaveBeenCalledWith(queryTypeOrmFixture);
+        expect(repositoryMock.delete).toHaveBeenCalledWith(
+          findOptionsWhereFixture,
+        );
       });
     });
 
