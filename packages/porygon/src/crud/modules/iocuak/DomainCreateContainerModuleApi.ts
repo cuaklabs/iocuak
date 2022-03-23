@@ -8,11 +8,11 @@ import {
   TaskScope,
 } from '@cuaklabs/iocuak';
 
+import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
 import { CreateEntityPort } from '../../port/application/CreateEntityPort';
 import { CreateEntityInteractor } from '../domain/CreateEntityInteractor';
-import { InteractorAsync } from '../domain/InteractorAsync';
 
 export class DomainCreateContainerModuleApi<TModel, TQuery>
   implements ContainerModuleApi
@@ -42,12 +42,15 @@ export class DomainCreateContainerModuleApi<TModel, TQuery>
     const createEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.createEntityInteractor];
 
+    const createEntityAdapterServiceId: ServiceId =
+      this.#crudModuleTypeToSymbolMap[CrudModuleType.createEntityAdapter];
+
     injectable({
       id: createEntityInteractorServiceId,
       scope: TaskScope.singleton,
     })(this.#createEntityInteractorType);
 
-    inject(CrudModuleType.createEntityAdapter)(
+    inject(createEntityAdapterServiceId)(
       this.#createEntityInteractorType,
       undefined as unknown as string | symbol,
       0,

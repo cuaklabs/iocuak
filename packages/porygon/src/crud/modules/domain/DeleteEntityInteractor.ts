@@ -1,5 +1,5 @@
+import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
 import { DeleteEntityPort } from '../../port/application/DeleteEntityPort';
-import { InteractorAsync } from './InteractorAsync';
 
 export class DeleteEntityInteractor<TCommand>
   implements InteractorAsync<TCommand, void>

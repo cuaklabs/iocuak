@@ -70,6 +70,7 @@ jobs:
           - cuaktask
           - iocuak
           - porygon
+          - porygon-typeorm
     steps:
       - name: Git checkout
         uses: actions/checkout@v2

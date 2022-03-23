@@ -1,0 +1,34 @@
+{
+  "name": "@cuaklabs/porygon-typeorm",
+  "version": "0.0.7",
+  "description": "TypeORM adapters for porygon",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/cuaktask.git"
+  },
+  "keywords": [
+    "hexagonal",
+    "architecture",
+    "typescript",
+    "typeorm"
+  ],
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/cuaktask/issues"
+  },
+  "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/porygon-typeorm#readme",
+  "dependencies": {
+    "@cuaklabs/iocuak": "^0.0.7",
+    "@cuaklabs/porygon": "^0.0.7",
+    "typeorm": "^0.3.0"
+  },
+  "devDependencies": {
+    "sqlite3": "^5.0.2"
+  },
+  "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
+  "publishConfig": {
+    "access": "public"
+  }
+}

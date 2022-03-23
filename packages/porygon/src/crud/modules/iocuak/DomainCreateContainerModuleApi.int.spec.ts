@@ -60,7 +60,9 @@ describe(DomainCreateContainerModuleApi.name, () => {
           beforeAll(() => {
             try {
               containerApi.get(
-                crudModuleTypeToSymbolMap.createEntityInteractor,
+                crudModuleTypeToSymbolMap[
+                  CrudModuleType.createEntityInteractor
+                ],
               );
             } catch (error: unknown) {
               result = error;
@@ -72,7 +74,7 @@ describe(DomainCreateContainerModuleApi.name, () => {
             expect(result).toStrictEqual(
               expect.objectContaining<Partial<Error>>({
                 message: expect.stringContaining(
-                  'No bindings found for type createEntityAdapter',
+                  'No bindings found for type Symbol()',
                 ) as string,
               }),
             );
@@ -82,9 +84,6 @@ describe(DomainCreateContainerModuleApi.name, () => {
     });
 
     describe('having a containerApi with creation adapter bound', () => {
-      @injectable({
-        id: CrudModuleType.createEntityAdapter,
-      })
       class CreateAdapterMock
         implements CreateEntityPort<ModelTest, QueryTest>
       {
@@ -105,6 +104,10 @@ describe(DomainCreateContainerModuleApi.name, () => {
       let containerApi: ContainerApi;
 
       beforeAll(() => {
+        injectable({
+          id: crudModuleTypeToSymbolMap[CrudModuleType.createEntityAdapter],
+        })(CreateAdapterMock);
+
         containerApi = ContainerApi.build();
 
         containerApi.bind(CreateAdapterMock);
@@ -120,7 +123,7 @@ describe(DomainCreateContainerModuleApi.name, () => {
 
           beforeAll(() => {
             result = containerApi.get(
-              crudModuleTypeToSymbolMap.createEntityInteractor,
+              crudModuleTypeToSymbolMap[CrudModuleType.createEntityInteractor],
             );
           });
 

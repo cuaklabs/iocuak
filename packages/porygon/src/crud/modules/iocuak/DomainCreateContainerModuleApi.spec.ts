@@ -111,7 +111,9 @@ describe(DomainCreateContainerModuleApi.name, () => {
         expect(inject).toHaveBeenCalledTimes(1);
         expect(injectDecoratorMock).toHaveBeenCalledTimes(1);
 
-        expect(inject).toHaveBeenCalledWith(CrudModuleType.createEntityAdapter);
+        expect(inject).toHaveBeenCalledWith(
+          crudModuleTypeToSymbolMap[CrudModuleType.createEntityAdapter],
+        );
 
         expect(injectDecoratorMock).toHaveBeenCalledWith(
           expectClassExtending(CreateEntityInteractor),

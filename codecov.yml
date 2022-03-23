@@ -11,6 +11,9 @@ coverage:
       porygon:
         flags:
           - porygon
+      porygon-typeorm:
+        flags:
+          - porygon-typeorm
 
 flags:
   cuaktask:
@@ -22,3 +25,6 @@ flags:
   porygon:
     paths:
       - packages/porygon/
+  porygon-typeorm:
+    paths:
+      - packages/porygon-typeorm/

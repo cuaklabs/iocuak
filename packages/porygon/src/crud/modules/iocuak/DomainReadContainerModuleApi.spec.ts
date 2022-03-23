@@ -123,15 +123,15 @@ describe(DomainReadContainerModuleApi.name, () => {
         );
       });
 
-      it('should call @inject() twice', () => {
+      it('should call inject() twice', () => {
         expect(inject).toHaveBeenCalledTimes(2);
         expect(injectDecoratorMock).toHaveBeenCalledTimes(2);
       });
 
-      it('should call @inject() on ReadOneInteractor in the first call', () => {
+      it('should call inject() on ReadOneInteractor in the first call', () => {
         expect(inject).toHaveBeenNthCalledWith(
           1,
-          CrudModuleType.readEntityAdapter,
+          crudModuleTypeToSymbolMap[CrudModuleType.readEntityAdapter],
         );
 
         expect(injectDecoratorMock).toHaveBeenNthCalledWith(
@@ -142,10 +142,10 @@ describe(DomainReadContainerModuleApi.name, () => {
         );
       });
 
-      it('should call @inject() on ReadManyInteractor in the second call', () => {
+      it('should call inject() on ReadManyInteractor in the second call', () => {
         expect(inject).toHaveBeenNthCalledWith(
           2,
-          CrudModuleType.readEntityAdapter,
+          crudModuleTypeToSymbolMap[CrudModuleType.readEntityAdapter],
         );
 
         expect(injectDecoratorMock).toHaveBeenNthCalledWith(

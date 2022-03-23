@@ -1,5 +1,5 @@
+import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
 import { UpdateEntityPort } from '../../port/application/UpdateEntityPort';
-import { InteractorAsync } from './InteractorAsync';
 
 export class UpdateEntityInteractor<TCommand>
   implements InteractorAsync<TCommand, void>
