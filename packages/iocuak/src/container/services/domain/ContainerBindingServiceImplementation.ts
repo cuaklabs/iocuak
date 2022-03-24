@@ -27,6 +27,19 @@ export class ContainerBindingServiceImplementation
     return binding;
   }
 
+  public getAll(): Map<ServiceId, Binding> {
+    const serviceIdToBindingMap: Map<ServiceId, Binding> =
+      this.#parent === undefined
+        ? new Map<ServiceId, Binding>()
+        : this.#parent.getAll();
+
+    for (const [serviceId, binding] of this.#serviceIdToBindingMap) {
+      serviceIdToBindingMap.set(serviceId, binding);
+    }
+
+    return serviceIdToBindingMap;
+  }
+
   public remove(serviceId: ServiceId): void {
     this.#serviceIdToBindingMap.delete(serviceId);
   }
