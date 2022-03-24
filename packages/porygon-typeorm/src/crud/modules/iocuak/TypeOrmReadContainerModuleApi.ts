@@ -5,7 +5,7 @@ import {
   injectable,
   Newable,
   ServiceId,
-  TaskScope,
+  TaskScopeApi,
 } from '@cuaklabs/iocuak';
 import {
   CrudModuleType,
@@ -66,7 +66,7 @@ export class TypeOrmReadContainerModuleApi<TModel, TModelDb, TQuery>
 
     injectable({
       id: readEntityAdapterServiceId,
-      scope: TaskScope.singleton,
+      scope: TaskScopeApi.singleton,
     })(this.#readTypeOrmAdapterType);
   }
 

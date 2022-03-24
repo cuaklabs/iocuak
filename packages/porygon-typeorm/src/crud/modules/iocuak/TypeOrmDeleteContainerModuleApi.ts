@@ -5,7 +5,7 @@ import {
   injectable,
   Newable,
   ServiceId,
-  TaskScope,
+  TaskScopeApi,
 } from '@cuaklabs/iocuak';
 import {
   CrudModuleType,
@@ -59,7 +59,7 @@ export class TypeOrmDeleteContainerModuleApi<TModelDb, TQuery>
 
     injectable({
       id: deleteEntityAdapterServiceId,
-      scope: TaskScope.singleton,
+      scope: TaskScopeApi.singleton,
     })(this.#deleteTypeOrmAdapterType);
   }
 

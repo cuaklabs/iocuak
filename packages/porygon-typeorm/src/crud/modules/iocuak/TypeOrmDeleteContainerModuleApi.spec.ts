@@ -1,6 +1,11 @@
 jest.mock('@cuaklabs/iocuak');
 
-import { ContainerApi, inject, injectable, TaskScope } from '@cuaklabs/iocuak';
+import {
+  ContainerApi,
+  inject,
+  injectable,
+  TaskScopeApi,
+} from '@cuaklabs/iocuak';
 import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
 
 import { DeleteTypeOrmAdapter } from '../../adapter/typeorm/DeleteTypeOrmAdapter';
@@ -110,7 +115,7 @@ describe(TypeOrmDeleteContainerModuleApi.name, () => {
 
         expect(injectable).toHaveBeenCalledWith({
           id: crudModuleTypeToSymbolMap.deleteEntityAdapter,
-          scope: TaskScope.singleton,
+          scope: TaskScopeApi.singleton,
         });
 
         expect(injectableDecoratorMock).toHaveBeenCalledWith(
