@@ -6,10 +6,11 @@ export interface ContainerBindingService {
     serviceId: ServiceId,
   ): Binding<TInstance, TArgs> | undefined;
 
+  getAll(): Map<ServiceId, Binding>;
+
   remove(serviceId: ServiceId): void;
 
   set<TInstance, TArgs extends unknown[]>(
-    serviceId: ServiceId,
     binding: Binding<TInstance, TArgs>,
   ): void;
 }

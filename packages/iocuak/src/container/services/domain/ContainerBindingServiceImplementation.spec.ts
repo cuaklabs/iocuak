@@ -92,21 +92,16 @@ describe(ContainerBindingServiceImplementation.name, () => {
         containerBindingServiceImplementation =
           new ContainerBindingServiceImplementation();
 
-        const serviceIdFixture: ServiceId = 'service-id';
-
         bindingFixture = {
           bindingType: BindingType.type,
-          id: serviceIdFixture,
+          id: 'service-id',
           scope: TaskScope.transient,
           type: class {},
         };
 
-        containerBindingServiceImplementation.set(
-          serviceIdFixture,
-          bindingFixture,
-        );
+        containerBindingServiceImplementation.set(bindingFixture);
 
-        result = containerBindingServiceImplementation.get(serviceIdFixture);
+        result = containerBindingServiceImplementation.get(bindingFixture.id);
       });
 
       it('should return the entry value', () => {
@@ -115,9 +110,142 @@ describe(ContainerBindingServiceImplementation.name, () => {
     });
   });
 
+  describe('.getAll()', () => {
+    describe('when called, and serviceIdToInstanceMap has an entry and parent is undefined', () => {
+      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let bindingFixture: Binding;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        containerBindingServiceImplementation =
+          new ContainerBindingServiceImplementation();
+
+        bindingFixture = {
+          bindingType: BindingType.type,
+          id: 'service-id',
+          scope: TaskScope.transient,
+          type: class {},
+        };
+
+        containerBindingServiceImplementation.set(bindingFixture);
+
+        result = containerBindingServiceImplementation.getAll();
+      });
+
+      it('should return a service to binding map', () => {
+        expect(result).toStrictEqual(
+          new Map<ServiceId, Binding>([[bindingFixture.id, bindingFixture]]),
+        );
+      });
+    });
+
+    describe('when called, and serviceIdToInstanceMap has an entry and parent has an entry with different id', () => {
+      let parentMock: jest.Mocked<ContainerBindingService>;
+      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let parentBindingFixture: Binding;
+      let bindingFixture: Binding;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        parentBindingFixture = {
+          bindingType: BindingType.type,
+          id: 'parent-service-id',
+          scope: TaskScope.transient,
+          type: class {},
+        };
+
+        parentMock = {
+          getAll: jest
+            .fn()
+            .mockReturnValueOnce(
+              new Map<ServiceId, Binding>([
+                [parentBindingFixture.id, parentBindingFixture],
+              ]),
+            ),
+        } as Partial<
+          jest.Mocked<ContainerBindingService>
+        > as jest.Mocked<ContainerBindingService>;
+
+        containerBindingServiceImplementation =
+          new ContainerBindingServiceImplementation(parentMock);
+
+        bindingFixture = {
+          bindingType: BindingType.type,
+          id: 'service-id',
+          scope: TaskScope.transient,
+          type: class {},
+        };
+
+        containerBindingServiceImplementation.set(bindingFixture);
+
+        result = containerBindingServiceImplementation.getAll();
+      });
+
+      it('should return a service to binding map', () => {
+        expect(result).toStrictEqual(
+          new Map<ServiceId, Binding>([
+            [bindingFixture.id, bindingFixture],
+            [parentBindingFixture.id, parentBindingFixture],
+          ]),
+        );
+      });
+    });
+
+    describe('when called, and serviceIdToInstanceMap has an entry and parent has an entry with same id', () => {
+      let parentMock: jest.Mocked<ContainerBindingService>;
+      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let parentBindingFixture: Binding;
+      let bindingFixture: Binding;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        parentBindingFixture = {
+          bindingType: BindingType.type,
+          id: 'service-id',
+          scope: TaskScope.singleton,
+          type: class {},
+        };
+
+        parentMock = {
+          getAll: jest
+            .fn()
+            .mockReturnValueOnce(
+              new Map<ServiceId, Binding>([
+                [parentBindingFixture.id, parentBindingFixture],
+              ]),
+            ),
+        } as Partial<
+          jest.Mocked<ContainerBindingService>
+        > as jest.Mocked<ContainerBindingService>;
+
+        containerBindingServiceImplementation =
+          new ContainerBindingServiceImplementation(parentMock);
+
+        bindingFixture = {
+          bindingType: BindingType.type,
+          id: 'service-id',
+          scope: TaskScope.transient,
+          type: class {},
+        };
+
+        containerBindingServiceImplementation.set(bindingFixture);
+
+        result = containerBindingServiceImplementation.getAll();
+      });
+
+      it('should return a service to binding map', () => {
+        expect(result).toStrictEqual(
+          new Map<ServiceId, Binding>([[bindingFixture.id, bindingFixture]]),
+        );
+      });
+    });
+  });
+
   describe('.set()', () => {
     describe('when called', () => {
-      let serviceIdFixture: ServiceId;
       let bindingFixture: Binding;
       let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
 
@@ -125,25 +253,21 @@ describe(ContainerBindingServiceImplementation.name, () => {
         containerBindingServiceImplementation =
           new ContainerBindingServiceImplementation();
 
-        serviceIdFixture = 'sample-service-id';
         bindingFixture = {
           bindingType: BindingType.type,
-          id: serviceIdFixture,
+          id: 'sample-service-id',
           scope: TaskScope.transient,
           type: class {},
         };
 
-        containerBindingServiceImplementation.set(
-          serviceIdFixture,
-          bindingFixture,
-        );
+        containerBindingServiceImplementation.set(bindingFixture);
       });
 
       describe('when .get() is called with the same service id', () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = containerBindingServiceImplementation.get(serviceIdFixture);
+          result = containerBindingServiceImplementation.get(bindingFixture.id);
         });
 
         it('should return an instance', () => {
@@ -182,35 +306,29 @@ describe(ContainerBindingServiceImplementation.name, () => {
 
     describe('when called, and serviceIdToInstanceMap has an entry with the same service id', () => {
       let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
-      let serviceIdFixture: ServiceId;
       let bindingFixture: Binding;
 
       beforeAll(() => {
         containerBindingServiceImplementation =
           new ContainerBindingServiceImplementation();
 
-        serviceIdFixture = 'sample-service-id';
-
         bindingFixture = {
           bindingType: BindingType.type,
-          id: serviceIdFixture,
+          id: 'sample-service-id',
           scope: TaskScope.transient,
           type: class {},
         };
 
-        containerBindingServiceImplementation.set(
-          serviceIdFixture,
-          bindingFixture,
-        );
+        containerBindingServiceImplementation.set(bindingFixture);
 
-        containerBindingServiceImplementation.remove(serviceIdFixture);
+        containerBindingServiceImplementation.remove(bindingFixture.id);
       });
 
       describe('when .get() is called with the same service id', () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = containerBindingServiceImplementation.get(serviceIdFixture);
+          result = containerBindingServiceImplementation.get(bindingFixture.id);
         });
 
         it('should return undefined', () => {
