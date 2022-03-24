@@ -8,7 +8,7 @@ import { injectable } from './metadata/decorators/injectable';
 import { injectFrom } from './metadata/decorators/injectFrom';
 import { injectFromBase } from './metadata/decorators/injectFromBase';
 import { InjectableOptionsApi } from './metadata/models/api/InjectableOptionsApi';
-import { TaskScope } from './task/models/domain/TaskScope';
+import { TaskScopeApi } from './task/models/api/TaskScopeApi';
 
 export type {
   InjectableOptionsApi,
@@ -24,5 +24,5 @@ export {
   injectable,
   injectFrom,
   injectFromBase,
-  TaskScope,
+  TaskScopeApi,
 };

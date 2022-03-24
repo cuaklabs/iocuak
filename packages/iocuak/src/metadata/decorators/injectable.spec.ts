@@ -4,6 +4,8 @@ import { BindingType } from '../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
+import { TaskScopeApi } from '../../task/models/api/TaskScopeApi';
+import { taskScopeApiToTaskScopeMap } from '../../task/models/api/taskScopeApiToTaskScopeMap';
 import { TaskScope } from '../../task/models/domain/TaskScope';
 import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
 import { MetadataKey } from '../models/domain/MetadataKey';
@@ -105,10 +107,15 @@ describe(injectable.name, () => {
     });
 
     it('should set reflect metadata', () => {
+      const expectedScope: TaskScope =
+        taskScopeApiToTaskScopeMap[
+          InjectableOptionsApiFixtures.withScope.scope as TaskScopeApi
+        ];
+
       expect(reflectMetadata).toStrictEqual<TypeBinding>({
         bindingType: BindingType.type,
         id: targetFixture,
-        scope: InjectableOptionsApiFixtures.withScope.scope as TaskScope,
+        scope: expectedScope,
         type: targetFixture,
       });
     });
