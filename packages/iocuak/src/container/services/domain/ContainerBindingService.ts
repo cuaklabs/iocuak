@@ -11,7 +11,6 @@ export interface ContainerBindingService {
   remove(serviceId: ServiceId): void;
 
   set<TInstance, TArgs extends unknown[]>(
-    serviceId: ServiceId,
     binding: Binding<TInstance, TArgs>,
   ): void;
 }

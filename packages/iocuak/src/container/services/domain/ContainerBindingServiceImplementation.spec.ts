@@ -92,21 +92,16 @@ describe(ContainerBindingServiceImplementation.name, () => {
         containerBindingServiceImplementation =
           new ContainerBindingServiceImplementation();
 
-        const serviceIdFixture: ServiceId = 'service-id';
-
         bindingFixture = {
           bindingType: BindingType.type,
-          id: serviceIdFixture,
+          id: 'service-id',
           scope: TaskScope.transient,
           type: class {},
         };
 
-        containerBindingServiceImplementation.set(
-          serviceIdFixture,
-          bindingFixture,
-        );
+        containerBindingServiceImplementation.set(bindingFixture);
 
-        result = containerBindingServiceImplementation.get(serviceIdFixture);
+        result = containerBindingServiceImplementation.get(bindingFixture.id);
       });
 
       it('should return the entry value', () => {
@@ -133,10 +128,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
           type: class {},
         };
 
-        containerBindingServiceImplementation.set(
-          bindingFixture.id,
-          bindingFixture,
-        );
+        containerBindingServiceImplementation.set(bindingFixture);
 
         result = containerBindingServiceImplementation.getAll();
       });
@@ -186,10 +178,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
           type: class {},
         };
 
-        containerBindingServiceImplementation.set(
-          bindingFixture.id,
-          bindingFixture,
-        );
+        containerBindingServiceImplementation.set(bindingFixture);
 
         result = containerBindingServiceImplementation.getAll();
       });
@@ -242,10 +231,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
           type: class {},
         };
 
-        containerBindingServiceImplementation.set(
-          bindingFixture.id,
-          bindingFixture,
-        );
+        containerBindingServiceImplementation.set(bindingFixture);
 
         result = containerBindingServiceImplementation.getAll();
       });
@@ -260,7 +246,6 @@ describe(ContainerBindingServiceImplementation.name, () => {
 
   describe('.set()', () => {
     describe('when called', () => {
-      let serviceIdFixture: ServiceId;
       let bindingFixture: Binding;
       let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
 
@@ -268,25 +253,21 @@ describe(ContainerBindingServiceImplementation.name, () => {
         containerBindingServiceImplementation =
           new ContainerBindingServiceImplementation();
 
-        serviceIdFixture = 'sample-service-id';
         bindingFixture = {
           bindingType: BindingType.type,
-          id: serviceIdFixture,
+          id: 'sample-service-id',
           scope: TaskScope.transient,
           type: class {},
         };
 
-        containerBindingServiceImplementation.set(
-          serviceIdFixture,
-          bindingFixture,
-        );
+        containerBindingServiceImplementation.set(bindingFixture);
       });
 
       describe('when .get() is called with the same service id', () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = containerBindingServiceImplementation.get(serviceIdFixture);
+          result = containerBindingServiceImplementation.get(bindingFixture.id);
         });
 
         it('should return an instance', () => {
@@ -325,35 +306,29 @@ describe(ContainerBindingServiceImplementation.name, () => {
 
     describe('when called, and serviceIdToInstanceMap has an entry with the same service id', () => {
       let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
-      let serviceIdFixture: ServiceId;
       let bindingFixture: Binding;
 
       beforeAll(() => {
         containerBindingServiceImplementation =
           new ContainerBindingServiceImplementation();
 
-        serviceIdFixture = 'sample-service-id';
-
         bindingFixture = {
           bindingType: BindingType.type,
-          id: serviceIdFixture,
+          id: 'sample-service-id',
           scope: TaskScope.transient,
           type: class {},
         };
 
-        containerBindingServiceImplementation.set(
-          serviceIdFixture,
-          bindingFixture,
-        );
+        containerBindingServiceImplementation.set(bindingFixture);
 
-        containerBindingServiceImplementation.remove(serviceIdFixture);
+        containerBindingServiceImplementation.remove(bindingFixture.id);
       });
 
       describe('when .get() is called with the same service id', () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = containerBindingServiceImplementation.get(serviceIdFixture);
+          result = containerBindingServiceImplementation.get(bindingFixture.id);
         });
 
         it('should return undefined', () => {

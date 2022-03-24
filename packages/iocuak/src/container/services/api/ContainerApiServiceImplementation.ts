@@ -25,7 +25,7 @@ export class ContainerApiServiceImplementation implements ContainerApiService {
         `No bindings found for type ${type.name}. An @injectable() decorator may be missing`,
       );
     } else {
-      this._containerService.binding.set(bindingFromType.id, bindingFromType);
+      this._containerService.binding.set(bindingFromType);
     }
   }
 
@@ -36,7 +36,7 @@ export class ContainerApiServiceImplementation implements ContainerApiService {
       value: value,
     };
 
-    this._containerService.binding.set(valueBinding.id, valueBinding);
+    this._containerService.binding.set(valueBinding);
   }
 
   public get<TInstance>(serviceId: ServiceId): TInstance {

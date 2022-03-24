@@ -103,7 +103,6 @@ describe(ContainerApiServiceImplementation.name, () => {
       it('should call containerService.binding.set()', () => {
         expect(containerServiceMock.binding.set).toHaveBeenCalledTimes(1);
         expect(containerServiceMock.binding.set).toHaveBeenCalledWith(
-          bindingFixture.id,
           bindingFixture,
         );
       });
@@ -140,7 +139,6 @@ describe(ContainerApiServiceImplementation.name, () => {
 
         expect(containerServiceMock.binding.set).toHaveBeenCalledTimes(1);
         expect(containerServiceMock.binding.set).toHaveBeenCalledWith(
-          serviceIdFixture,
           expectedValueBinding,
         );
       });

@@ -45,9 +45,8 @@ export class ContainerBindingServiceImplementation
   }
 
   public set<TInstance, TArgs extends unknown[]>(
-    serviceId: ServiceId,
     binding: Binding<TInstance, TArgs>,
   ): void {
-    this.#serviceIdToBindingMap.set(serviceId, binding as Binding);
+    this.#serviceIdToBindingMap.set(binding.id, binding as Binding);
   }
 }
