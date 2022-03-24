@@ -1,4 +1,3 @@
-import { BindingApi } from './binding/models/api/BindingApi';
 import { Newable } from './common/models/domain/Newable';
 import { ServiceId } from './common/models/domain/ServiceId';
 import { ContainerApi } from './container/modules/api/ContainerApi';
@@ -8,10 +7,11 @@ import { inject } from './metadata/decorators/inject';
 import { injectable } from './metadata/decorators/injectable';
 import { injectFrom } from './metadata/decorators/injectFrom';
 import { injectFromBase } from './metadata/decorators/injectFromBase';
+import { InjectableOptionsApi } from './metadata/models/api/InjectableOptionsApi';
 import { TaskScope } from './task/models/domain/TaskScope';
 
 export type {
-  BindingApi,
+  InjectableOptionsApi,
   ContainerApiService,
   ContainerModuleApi,
   Newable,
