@@ -23,9 +23,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Updated `ContainerApi` with `build` and `createChild` methods.
-- [BC]: Updated `ContainerApi` constructor to be private.
 - `ContainerApiService` interface is now exposed.
-
+- [BC]: Updated `ContainerApi` constructor to be private.
+- [BC]: Renamed `BindingApi` to `InjectableOptionsApi`.
+- [BC]: Renamed `TaskScope` to `TaskScopeApi`.
 
 
 

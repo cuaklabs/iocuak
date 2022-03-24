@@ -1,6 +1,11 @@
 jest.mock('@cuaklabs/iocuak');
 
-import { ContainerApi, inject, injectable, TaskScope } from '@cuaklabs/iocuak';
+import {
+  ContainerApi,
+  inject,
+  injectable,
+  TaskScopeApi,
+} from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
@@ -92,7 +97,7 @@ describe(DomainDeleteContainerModuleApi.name, () => {
 
         expect(injectable).toHaveBeenCalledWith({
           id: crudModuleTypeToSymbolMap.deleteEntityInteractor,
-          scope: TaskScope.singleton,
+          scope: TaskScopeApi.singleton,
         });
 
         expect(injectableDecoratorMock).toHaveBeenCalledWith(

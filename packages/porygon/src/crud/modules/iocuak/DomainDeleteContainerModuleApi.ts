@@ -5,7 +5,7 @@ import {
   injectable,
   Newable,
   ServiceId,
-  TaskScope,
+  TaskScopeApi,
 } from '@cuaklabs/iocuak';
 
 import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
@@ -43,7 +43,7 @@ export class DomainDeleteContainerModuleApi<TQuery>
 
     injectable({
       id: deleteEntityInteractorServiceId,
-      scope: TaskScope.singleton,
+      scope: TaskScopeApi.singleton,
     })(this.#deleteEntityInteractorType);
 
     const deleteEntityAdapterServiceId: ServiceId =

@@ -1,7 +1,7 @@
-import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { TaskScope } from '../../../task/models/domain/TaskScope';
+import { TypeBindingApi } from './TypeBindingApi';
+import { ValueBindingApi } from './ValueBindingApi';
 
-export interface BindingApi {
-  id?: ServiceId;
-  scope?: TaskScope;
-}
+export type BindingApi<
+  TInstance = unknown,
+  TArgs extends unknown[] = unknown[],
+> = TypeBindingApi<TInstance, TArgs> | ValueBindingApi<TInstance>;

@@ -1,16 +1,18 @@
 import 'reflect-metadata';
 
-import { BindingApiFixtures } from '../../binding/fixtures/api/BindingApiFixtures';
 import { BindingType } from '../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
+import { TaskScopeApi } from '../../task/models/api/TaskScopeApi';
+import { taskScopeApiToTaskScopeMap } from '../../task/models/api/taskScopeApiToTaskScopeMap';
 import { TaskScope } from '../../task/models/domain/TaskScope';
+import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { injectable } from './injectable';
 
 describe(injectable.name, () => {
-  describe('when called, with no bindingApi', () => {
+  describe('when called, with no InjectableOptionsApi', () => {
     let targetFixture: Newable;
     let reflectMetadata: unknown;
 
@@ -36,12 +38,12 @@ describe(injectable.name, () => {
     });
   });
 
-  describe('when called, with empty bindingApi', () => {
+  describe('when called, with empty InjectableOptionsApi', () => {
     let targetFixture: Newable;
     let reflectMetadata: unknown;
 
     beforeAll(() => {
-      @injectable(BindingApiFixtures.empty)
+      @injectable(InjectableOptionsApiFixtures.empty)
       class TargetFixture {}
 
       targetFixture = TargetFixture;
@@ -62,12 +64,12 @@ describe(injectable.name, () => {
     });
   });
 
-  describe('when called, with bindingApi with id', () => {
+  describe('when called, with InjectableOptionsApi with id', () => {
     let targetFixture: Newable;
     let reflectMetadata: unknown;
 
     beforeAll(() => {
-      @injectable(BindingApiFixtures.withId)
+      @injectable(InjectableOptionsApiFixtures.withId)
       class TargetFixture {}
 
       targetFixture = TargetFixture;
@@ -81,19 +83,19 @@ describe(injectable.name, () => {
     it('should set reflect metadata', () => {
       expect(reflectMetadata).toStrictEqual<TypeBinding>({
         bindingType: BindingType.type,
-        id: BindingApiFixtures.withId.id as ServiceId,
+        id: InjectableOptionsApiFixtures.withId.id as ServiceId,
         scope: TaskScope.transient,
         type: targetFixture,
       });
     });
   });
 
-  describe('when called, with bindingApi with scope', () => {
+  describe('when called, with InjectableOptionsApi with scope', () => {
     let targetFixture: Newable;
     let reflectMetadata: unknown;
 
     beforeAll(() => {
-      @injectable(BindingApiFixtures.withScope)
+      @injectable(InjectableOptionsApiFixtures.withScope)
       class TargetFixture {}
 
       targetFixture = TargetFixture;
@@ -105,10 +107,15 @@ describe(injectable.name, () => {
     });
 
     it('should set reflect metadata', () => {
+      const expectedScope: TaskScope =
+        taskScopeApiToTaskScopeMap[
+          InjectableOptionsApiFixtures.withScope.scope as TaskScopeApi
+        ];
+
       expect(reflectMetadata).toStrictEqual<TypeBinding>({
         bindingType: BindingType.type,
         id: targetFixture,
-        scope: BindingApiFixtures.withScope.scope as TaskScope,
+        scope: expectedScope,
         type: targetFixture,
       });
     });
