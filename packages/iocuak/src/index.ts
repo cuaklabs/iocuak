@@ -1,3 +1,6 @@
+import { BindingApi } from './binding/models/api/BindingApi';
+import { TypeBindingApi } from './binding/models/api/TypeBindingApi';
+import { ValueBindingApi } from './binding/models/api/ValueBindingApi';
 import { Newable } from './common/models/domain/Newable';
 import { ServiceId } from './common/models/domain/ServiceId';
 import { ContainerApi } from './container/modules/api/ContainerApi';
@@ -11,11 +14,14 @@ import { InjectableOptionsApi } from './metadata/models/api/InjectableOptionsApi
 import { TaskScopeApi } from './task/models/api/TaskScopeApi';
 
 export type {
-  InjectableOptionsApi,
+  BindingApi,
   ContainerApiService,
   ContainerModuleApi,
+  InjectableOptionsApi,
   Newable,
+  TypeBindingApi,
   ServiceId,
+  ValueBindingApi,
 };
 
 export {
