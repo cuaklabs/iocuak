@@ -1,11 +1,11 @@
-import { BindingType } from '../../binding/models/domain/BindingType';
-import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { taskScopeApiToTaskScopeMap } from '../../task/models/api/taskScopeApiToTaskScopeMap';
 import { TaskScope } from '../../task/models/domain/TaskScope';
 import { InjectableOptionsApi } from '../models/api/InjectableOptionsApi';
+import { BindingType } from '../models/domain/BindingType';
 import { MetadataKey } from '../models/domain/MetadataKey';
+import { TypeBinding } from '../models/domain/TypeBinding';
 
 export function injectable(bindingApi?: InjectableOptionsApi): ClassDecorator {
   // eslint-disable-next-line @typescript-eslint/ban-types

@@ -1,8 +1,8 @@
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { Newable } from '../../../common/models/domain/Newable';
 import { getDefaultClassMetadata } from '../../../metadata/decorators/getDefaultClassMetadata';
 import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
 import { MetadataKey } from '../../../metadata/models/domain/MetadataKey';
+import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
 import { getReflectMetadata } from '../../../metadata/utils/getReflectMetadata';
 import { ContainerMetadataService } from './ContainerMetadataService';
 

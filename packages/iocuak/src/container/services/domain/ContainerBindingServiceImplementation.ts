@@ -1,5 +1,5 @@
-import { Binding } from '../../../binding/models/domain/Binding';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { Binding } from '../../../metadata/models/domain/Binding';
 import { ContainerBindingService } from './ContainerBindingService';
 
 export class ContainerBindingServiceImplementation

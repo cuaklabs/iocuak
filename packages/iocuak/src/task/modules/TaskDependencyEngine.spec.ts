@@ -1,9 +1,9 @@
-import { Binding } from '../../binding/models/domain/Binding';
-import { BindingType } from '../../binding/models/domain/BindingType';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerMetadataService } from '../../container/services/domain/ContainerMetadataService';
 import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
+import { Binding } from '../../metadata/models/domain/Binding';
+import { BindingType } from '../../metadata/models/domain/BindingType';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';

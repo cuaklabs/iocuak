@@ -1,12 +1,12 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
-import { Binding } from '../../binding/models/domain/Binding';
-import { BindingType } from '../../binding/models/domain/BindingType';
-import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerMetadataService } from '../../container/services/domain/ContainerMetadataService';
+import { Binding } from '../../metadata/models/domain/Binding';
+import { BindingType } from '../../metadata/models/domain/BindingType';
 import { ClassMetadata } from '../../metadata/models/domain/ClassMetadata';
+import { TypeBinding } from '../../metadata/models/domain/TypeBinding';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { stringifyServiceId } from '../../utils/stringifyServiceId';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';

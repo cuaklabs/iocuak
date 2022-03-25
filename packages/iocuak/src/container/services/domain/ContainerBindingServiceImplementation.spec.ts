@@ -1,6 +1,6 @@
-import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingType } from '../../../binding/models/domain/BindingType';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { Binding } from '../../../metadata/models/domain/Binding';
+import { BindingType } from '../../../metadata/models/domain/BindingType';
 import { TaskScope } from '../../../task/models/domain/TaskScope';
 import { ContainerBindingService } from './ContainerBindingService';
 import { ContainerBindingServiceImplementation } from './ContainerBindingServiceImplementation';

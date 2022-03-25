@@ -1,18 +1,18 @@
-jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
-jest.mock('../../../metadata/utils/api/convertClassMetadataToClassMetadataApi');
+jest.mock('../utils/api/convertBindingToBindingApi');
+jest.mock('../utils/api/convertClassMetadataToClassMetadataApi');
 
-import { BindingApi } from '../../../binding/models/api/BindingApi';
-import { BindingApiType } from '../../../binding/models/api/BindingApiType';
-import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingType } from '../../../binding/models/domain/BindingType';
-import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
-import { Newable } from '../../../common/models/domain/Newable';
-import { ClassMetadataApi } from '../../../metadata/models/api/ClassMetadataApi';
-import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
-import { convertClassMetadataToClassMetadataApi } from '../../../metadata/utils/api/convertClassMetadataToClassMetadataApi';
-import { TaskScopeApi } from '../../../task/models/api/TaskScopeApi';
-import { TaskScope } from '../../../task/models/domain/TaskScope';
-import { ContainerMetadataService } from '../domain/ContainerMetadataService';
+import { Newable } from '../../common/models/domain/Newable';
+import { ContainerMetadataService } from '../../container/services/domain/ContainerMetadataService';
+import { TaskScopeApi } from '../../task/models/api/TaskScopeApi';
+import { TaskScope } from '../../task/models/domain/TaskScope';
+import { BindingApi } from '../models/api/BindingApi';
+import { BindingApiType } from '../models/api/BindingApiType';
+import { ClassMetadataApi } from '../models/api/ClassMetadataApi';
+import { Binding } from '../models/domain/Binding';
+import { BindingType } from '../models/domain/BindingType';
+import { ClassMetadata } from '../models/domain/ClassMetadata';
+import { convertBindingToBindingApi } from '../utils/api/convertBindingToBindingApi';
+import { convertClassMetadataToClassMetadataApi } from '../utils/api/convertClassMetadataToClassMetadataApi';
 import { MetadataApiServiceImplementation } from './MetadataApiServiceImplementation';
 
 describe(MetadataApiServiceImplementation.name, () => {

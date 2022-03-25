@@ -1,9 +1,9 @@
-import { BindingType } from '../../../binding/models/domain/BindingType';
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
-import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
+import { BindingType } from '../../../metadata/models/domain/BindingType';
+import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
+import { ValueBinding } from '../../../metadata/models/domain/ValueBinding';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { ServiceDependenciesFixtures } from '../../fixtures/domain/ServiceDependenciesFixtures';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';

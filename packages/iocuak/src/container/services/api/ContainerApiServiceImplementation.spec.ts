@@ -1,14 +1,14 @@
-jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
+jest.mock('../../../metadata/utils/api/convertBindingToBindingApi');
 
-import { BindingApi } from '../../../binding/models/api/BindingApi';
-import { BindingApiType } from '../../../binding/models/api/BindingApiType';
-import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingType } from '../../../binding/models/domain/BindingType';
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
-import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
-import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { BindingApi } from '../../../metadata/models/api/BindingApi';
+import { BindingApiType } from '../../../metadata/models/api/BindingApiType';
+import { Binding } from '../../../metadata/models/domain/Binding';
+import { BindingType } from '../../../metadata/models/domain/BindingType';
+import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
+import { ValueBinding } from '../../../metadata/models/domain/ValueBinding';
+import { convertBindingToBindingApi } from '../../../metadata/utils/api/convertBindingToBindingApi';
 import { TaskScope } from '../../../task/models/domain/TaskScope';
 import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
 import { ContainerBindingService } from '../domain/ContainerBindingService';
