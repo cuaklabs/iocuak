@@ -22,7 +22,7 @@
   "dependencies": {
     "@cuaklabs/iocuak": "^0.0.7",
     "@cuaklabs/porygon": "^0.0.7",
-    "typeorm": "^0.3.0"
+    "typeorm": "^0.3.3"
   },
   "devDependencies": {
     "sqlite3": "^5.0.2"
