@@ -3,7 +3,7 @@ import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingType } from '../../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
-import { convertBindingToBindingApi } from '../../../binding/utils/convertBindingToBindingApi';
+import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';

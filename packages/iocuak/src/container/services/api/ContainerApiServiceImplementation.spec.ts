@@ -1,4 +1,4 @@
-jest.mock('../../../binding/utils/convertBindingToBindingApi');
+jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { BindingApiType } from '../../../binding/models/api/BindingApiType';
@@ -6,7 +6,7 @@ import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingType } from '../../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
-import { convertBindingToBindingApi } from '../../../binding/utils/convertBindingToBindingApi';
+import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { TaskScope } from '../../../task/models/domain/TaskScope';

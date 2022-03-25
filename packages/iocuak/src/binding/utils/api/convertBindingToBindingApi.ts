@@ -1,8 +1,8 @@
-import { taskScopeToTaskScopeApiMap } from '../../task/models/api/taskScopeToTaskScopeApiMap';
-import { BindingApi } from '../models/api/BindingApi';
-import { BindingApiType } from '../models/api/BindingApiType';
-import { Binding } from '../models/domain/Binding';
-import { BindingType } from '../models/domain/BindingType';
+import { taskScopeToTaskScopeApiMap } from '../../../task/models/api/taskScopeToTaskScopeApiMap';
+import { BindingApi } from '../../models/api/BindingApi';
+import { BindingApiType } from '../../models/api/BindingApiType';
+import { Binding } from '../../models/domain/Binding';
+import { BindingType } from '../../models/domain/BindingType';
 
 export function convertBindingToBindingApi<TInstance, TArgs extends unknown[]>(
   binding: Binding<TInstance, TArgs>,

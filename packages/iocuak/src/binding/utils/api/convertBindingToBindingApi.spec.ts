@@ -1,10 +1,10 @@
-import { TaskScopeApi } from '../../task/models/api/TaskScopeApi';
-import { TaskScope } from '../../task/models/domain/TaskScope';
-import { BindingApi } from '../models/api/BindingApi';
-import { BindingApiType } from '../models/api/BindingApiType';
-import { BindingType } from '../models/domain/BindingType';
-import { TypeBinding } from '../models/domain/TypeBinding';
-import { ValueBinding } from '../models/domain/ValueBinding';
+import { TaskScopeApi } from '../../../task/models/api/TaskScopeApi';
+import { TaskScope } from '../../../task/models/domain/TaskScope';
+import { BindingApi } from '../../models/api/BindingApi';
+import { BindingApiType } from '../../models/api/BindingApiType';
+import { BindingType } from '../../models/domain/BindingType';
+import { TypeBinding } from '../../models/domain/TypeBinding';
+import { ValueBinding } from '../../models/domain/ValueBinding';
 import { convertBindingToBindingApi } from './convertBindingToBindingApi';
 
 describe(convertBindingToBindingApi.name, () => {
