@@ -1,6 +1,9 @@
+import { BindingApi } from '../../../binding/models/api/BindingApi';
+import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingType } from '../../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
+import { convertBindingToBindingApi } from '../../../binding/utils/convertBindingToBindingApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
@@ -44,6 +47,17 @@ export class ContainerApiServiceImplementation implements ContainerApiService {
       this._containerService.instance.create(serviceId);
 
     return instance;
+  }
+
+  public getAllBindinds(): BindingApi[] {
+    const serviceIdToBindingMap: Map<ServiceId, Binding> =
+      this._containerService.binding.getAll();
+
+    const bindings: Binding[] = [...serviceIdToBindingMap.values()];
+
+    return bindings.map((binding: Binding) =>
+      convertBindingToBindingApi(binding),
+    );
   }
 
   public load(containerModuleApi: ContainerModuleApi): void {
