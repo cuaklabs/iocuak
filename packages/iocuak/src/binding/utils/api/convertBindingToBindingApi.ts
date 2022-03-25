@@ -1,9 +1,22 @@
 import { taskScopeToTaskScopeApiMap } from '../../../task/models/api/taskScopeToTaskScopeApiMap';
 import { BindingApi } from '../../models/api/BindingApi';
 import { BindingApiType } from '../../models/api/BindingApiType';
+import { TypeBindingApi } from '../../models/api/TypeBindingApi';
+import { ValueBindingApi } from '../../models/api/ValueBindingApi';
 import { Binding } from '../../models/domain/Binding';
 import { BindingType } from '../../models/domain/BindingType';
+import { TypeBinding } from '../../models/domain/TypeBinding';
+import { ValueBinding } from '../../models/domain/ValueBinding';
 
+export function convertBindingToBindingApi<TInstance, TArgs extends unknown[]>(
+  binding: TypeBinding<TInstance, TArgs>,
+): TypeBindingApi<TInstance, TArgs>;
+export function convertBindingToBindingApi<TInstance>(
+  binding: ValueBinding<TInstance>,
+): ValueBindingApi<TInstance>;
+export function convertBindingToBindingApi<TInstance, TArgs extends unknown[]>(
+  binding: Binding<TInstance, TArgs>,
+): BindingApi<TInstance, TArgs>;
 export function convertBindingToBindingApi<TInstance, TArgs extends unknown[]>(
   binding: Binding<TInstance, TArgs>,
 ): BindingApi<TInstance, TArgs> {
