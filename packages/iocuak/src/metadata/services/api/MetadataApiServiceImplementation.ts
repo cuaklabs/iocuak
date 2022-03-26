@@ -1,25 +1,25 @@
 import { Newable } from '../../../common/models/domain/Newable';
-import { ContainerMetadataService } from '../../../container/services/domain/ContainerMetadataService';
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { TypeBindingApi } from '../../models/api/TypeBindingApi';
 import { ClassMetadata } from '../../models/domain/ClassMetadata';
 import { TypeBinding } from '../../models/domain/TypeBinding';
 import { convertBindingToBindingApi } from '../../utils/api/convertBindingToBindingApi';
 import { convertClassMetadataToClassMetadataApi } from '../../utils/api/convertClassMetadataToClassMetadataApi';
+import { MetadataService } from '../domain/MetadataService';
 import { MetadataApiService } from './MetadataApiService';
 
 export class MetadataApiServiceImplementation implements MetadataApiService {
-  readonly #containerMetadataService: ContainerMetadataService;
+  readonly #metadataService: MetadataService;
 
-  constructor(containerMetadataService: ContainerMetadataService) {
-    this.#containerMetadataService = containerMetadataService;
+  constructor(metadataService: MetadataService) {
+    this.#metadataService = metadataService;
   }
 
   public getBindingMetadata<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): TypeBindingApi<TInstance, TArgs> | undefined {
     const typeBinding: TypeBinding<TInstance, TArgs> | undefined =
-      this.#containerMetadataService.getBindingMetadata(type);
+      this.#metadataService.getBindingMetadata(type);
 
     return typeBinding === undefined
       ? undefined
@@ -30,7 +30,7 @@ export class MetadataApiServiceImplementation implements MetadataApiService {
     type: Newable<TInstance, TArgs>,
   ): ClassMetadataApi {
     const classMetadata: ClassMetadata =
-      this.#containerMetadataService.getClassMetadata(type);
+      this.#metadataService.getClassMetadata(type);
 
     return convertClassMetadataToClassMetadataApi(classMetadata);
   }

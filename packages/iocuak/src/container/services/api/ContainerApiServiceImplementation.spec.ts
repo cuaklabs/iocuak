@@ -8,12 +8,12 @@ import { Binding } from '../../../metadata/models/domain/Binding';
 import { BindingType } from '../../../metadata/models/domain/BindingType';
 import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
 import { ValueBinding } from '../../../metadata/models/domain/ValueBinding';
+import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { convertBindingToBindingApi } from '../../../metadata/utils/api/convertBindingToBindingApi';
 import { TaskScope } from '../../../task/models/domain/TaskScope';
 import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
 import { ContainerBindingService } from '../domain/ContainerBindingService';
 import { ContainerInstanceService } from '../domain/ContainerInstanceService';
-import { ContainerMetadataService } from '../domain/ContainerMetadataService';
 import { ContainerService } from '../domain/ContainerService';
 import { ContainerApiServiceImplementation } from './ContainerApiServiceImplementation';
 
@@ -33,7 +33,7 @@ describe(ContainerApiServiceImplementation.name, () => {
       } as Partial<ContainerInstanceService>,
       metadata: {
         getBindingMetadata: jest.fn(),
-      } as Partial<ContainerMetadataService>,
+      } as Partial<MetadataService>,
     } as Partial<
       jest.Mocked<ContainerService>
     > as jest.Mocked<ContainerService>;

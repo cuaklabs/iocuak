@@ -1,8 +1,8 @@
 import { Newable } from '../../../common/models/domain/Newable';
-import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
-import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
+import { ClassMetadata } from '../../models/domain/ClassMetadata';
+import { TypeBinding } from '../../models/domain/TypeBinding';
 
-export interface ContainerMetadataService {
+export interface MetadataService {
   getBindingMetadata<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): TypeBinding<TInstance, TArgs> | undefined;

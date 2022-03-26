@@ -1,9 +1,9 @@
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
-import { ContainerMetadataService } from '../../container/services/domain/ContainerMetadataService';
 import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
 import { Binding } from '../../metadata/models/domain/Binding';
 import { BindingType } from '../../metadata/models/domain/BindingType';
+import { MetadataService } from '../../metadata/services/domain/MetadataService';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
@@ -15,7 +15,7 @@ import { TaskDependencyEngine } from './TaskDependencyEngine';
 
 describe(TaskDependencyEngine.name, () => {
   let containerBindingService: jest.Mocked<ContainerBindingService>;
-  let containerMetadataService: jest.Mocked<ContainerMetadataService>;
+  let metadataService: jest.Mocked<MetadataService>;
 
   let taskDependencyEngine: TaskDependencyEngine;
 
@@ -26,15 +26,13 @@ describe(TaskDependencyEngine.name, () => {
       jest.Mocked<ContainerBindingService>
     > as jest.Mocked<ContainerBindingService>;
 
-    containerMetadataService = {
+    metadataService = {
       getClassMetadata: jest.fn(),
-    } as Partial<
-      jest.Mocked<ContainerMetadataService>
-    > as jest.Mocked<ContainerMetadataService>;
+    } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
 
     taskDependencyEngine = new TaskDependencyEngine(
       containerBindingService,
-      containerMetadataService,
+      metadataService,
     );
   });
 
@@ -89,7 +87,7 @@ describe(TaskDependencyEngine.name, () => {
 
           containerBindingService.get.mockReturnValueOnce(bindingFixture);
 
-          containerMetadataService.getClassMetadata.mockReturnValueOnce(
+          metadataService.getClassMetadata.mockReturnValueOnce(
             ClassMetadataFixtures.any,
           );
 
