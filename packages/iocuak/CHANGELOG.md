@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Added `BindingApi`
+- Added `ClassMetadataApi`
+- Added `MetadataProviderApi`.
+- Added `MetadataServiceApi`
 - Added `TypeBindingApi`
 - Added `ValueBindingApi`
 
