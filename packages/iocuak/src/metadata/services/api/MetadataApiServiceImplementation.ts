@@ -1,11 +1,11 @@
-import { Newable } from '../../common/models/domain/Newable';
-import { ContainerMetadataService } from '../../container/services/domain/ContainerMetadataService';
-import { ClassMetadataApi } from '../models/api/ClassMetadataApi';
-import { TypeBindingApi } from '../models/api/TypeBindingApi';
-import { ClassMetadata } from '../models/domain/ClassMetadata';
-import { TypeBinding } from '../models/domain/TypeBinding';
-import { convertBindingToBindingApi } from '../utils/api/convertBindingToBindingApi';
-import { convertClassMetadataToClassMetadataApi } from '../utils/api/convertClassMetadataToClassMetadataApi';
+import { Newable } from '../../../common/models/domain/Newable';
+import { ContainerMetadataService } from '../../../container/services/domain/ContainerMetadataService';
+import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
+import { TypeBindingApi } from '../../models/api/TypeBindingApi';
+import { ClassMetadata } from '../../models/domain/ClassMetadata';
+import { TypeBinding } from '../../models/domain/TypeBinding';
+import { convertBindingToBindingApi } from '../../utils/api/convertBindingToBindingApi';
+import { convertClassMetadataToClassMetadataApi } from '../../utils/api/convertClassMetadataToClassMetadataApi';
 import { MetadataApiService } from './MetadataApiService';
 
 export class MetadataApiServiceImplementation implements MetadataApiService {
