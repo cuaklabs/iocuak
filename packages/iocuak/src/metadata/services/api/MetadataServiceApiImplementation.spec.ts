@@ -13,11 +13,11 @@ import { ClassMetadata } from '../../models/domain/ClassMetadata';
 import { convertBindingToBindingApi } from '../../utils/api/convertBindingToBindingApi';
 import { convertClassMetadataToClassMetadataApi } from '../../utils/api/convertClassMetadataToClassMetadataApi';
 import { MetadataService } from '../domain/MetadataService';
-import { MetadataApiServiceImplementation } from './MetadataApiServiceImplementation';
+import { MetadataServiceApiImplementation } from './MetadataServiceApiImplementation';
 
-describe(MetadataApiServiceImplementation.name, () => {
+describe(MetadataServiceApiImplementation.name, () => {
   let metadataServiceMock: jest.Mocked<MetadataService>;
-  let metadataApiServiceImplementation: MetadataApiServiceImplementation;
+  let metadataApiServiceImplementation: MetadataServiceApiImplementation;
 
   beforeAll(() => {
     metadataServiceMock = {
@@ -25,7 +25,7 @@ describe(MetadataApiServiceImplementation.name, () => {
       getClassMetadata: jest.fn(),
     };
 
-    metadataApiServiceImplementation = new MetadataApiServiceImplementation(
+    metadataApiServiceImplementation = new MetadataServiceApiImplementation(
       metadataServiceMock,
     );
   });

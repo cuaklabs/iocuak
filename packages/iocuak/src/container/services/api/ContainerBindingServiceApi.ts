@@ -2,7 +2,7 @@ import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { BindingApi } from '../../../metadata/models/api/BindingApi';
 
-export interface ContainerBindingApiService {
+export interface ContainerBindingServiceApi {
   bind<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): void;

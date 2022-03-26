@@ -1,5 +1,5 @@
 import {
-  ContainerApiService,
+  ContainerServiceApi,
   ContainerModuleApi,
   inject,
   injectable,
@@ -33,11 +33,11 @@ export class DomainUpdateContainerModuleApi<TQuery>
     )<TQuery> {};
   }
 
-  public load(container: ContainerApiService): void {
+  public load(container: ContainerServiceApi): void {
     this.#loadUpdateEntityInteractor(container);
   }
 
-  #loadUpdateEntityInteractor(container: ContainerApiService): void {
+  #loadUpdateEntityInteractor(container: ContainerServiceApi): void {
     const updateEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.updateEntityInteractor];
 

@@ -1,5 +1,5 @@
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 
-export interface ContainerInstanceApiService {
+export interface ContainerInstanceServiceApi {
   get<TInstance>(serviceId: ServiceId): TInstance;
 }

@@ -6,9 +6,9 @@ import { TypeBinding } from '../../models/domain/TypeBinding';
 import { convertBindingToBindingApi } from '../../utils/api/convertBindingToBindingApi';
 import { convertClassMetadataToClassMetadataApi } from '../../utils/api/convertClassMetadataToClassMetadataApi';
 import { MetadataService } from '../domain/MetadataService';
-import { MetadataApiService } from './MetadataApiService';
+import { MetadataServiceApi } from './MetadataServiceApi';
 
-export class MetadataApiServiceImplementation implements MetadataApiService {
+export class MetadataServiceApiImplementation implements MetadataServiceApi {
   readonly #metadataService: MetadataService;
 
   constructor(metadataService: MetadataService) {

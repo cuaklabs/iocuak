@@ -1,4 +1,4 @@
-import { ContainerApiService, ContainerModuleApi } from '@cuaklabs/iocuak';
+import { ContainerServiceApi, ContainerModuleApi } from '@cuaklabs/iocuak';
 import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
 import { Repository } from 'typeorm';
 
@@ -60,7 +60,7 @@ export class TypeOrmCrudContainerModuleApi<TModel, TModelDb, TQuery>
     );
   }
 
-  public load(container: ContainerApiService): void {
+  public load(container: ContainerServiceApi): void {
     container.bindToValue(
       this.#crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
       this.#repository,

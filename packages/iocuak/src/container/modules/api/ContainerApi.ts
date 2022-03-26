@@ -6,7 +6,7 @@ import { TaskKind } from '../../../task/models/domain/TaskKind';
 import { TaskBuilder } from '../../../task/modules/TaskBuilder';
 import { TaskDependencyEngine } from '../../../task/modules/TaskDependencyEngine';
 import { TaskKindSet } from '../../../task/modules/TaskKindSet';
-import { ContainerApiServiceImplementation } from '../../services/api/ContainerApiServiceImplementation';
+import { ContainerServiceApiImplementation } from '../../services/api/ContainerServiceApiImplementation';
 import { ContainerInstanceServiceImplementation } from '../../services/cuaktask/ContainerInstanceServiceImplementation';
 import { ContainerBindingService } from '../../services/domain/ContainerBindingService';
 import { ContainerBindingServiceImplementation } from '../../services/domain/ContainerBindingServiceImplementation';
@@ -17,7 +17,7 @@ import { ContainerService } from '../../services/domain/ContainerService';
 import { ContainerSingletonService } from '../../services/domain/ContainerSingletonService';
 import { ContainerSingletonServiceImplementation } from '../../services/domain/ContainerSingletonServiceImplementation';
 
-export class ContainerApi extends ContainerApiServiceImplementation {
+export class ContainerApi extends ContainerServiceApiImplementation {
   private constructor(containerService?: ContainerService) {
     super(containerService ?? ContainerApi.#initializeContainerService());
   }

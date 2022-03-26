@@ -1,5 +1,5 @@
 import {
-  ContainerApiService,
+  ContainerServiceApi,
   ContainerModuleApi,
   inject,
   injectable,
@@ -34,11 +34,11 @@ export class DomainCreateContainerModuleApi<TModel, TQuery>
     > {};
   }
 
-  public load(container: ContainerApiService): void {
+  public load(container: ContainerServiceApi): void {
     this.#loadCreateEntityInteractor(container);
   }
 
-  #loadCreateEntityInteractor(container: ContainerApiService): void {
+  #loadCreateEntityInteractor(container: ContainerServiceApi): void {
     const createEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.createEntityInteractor];
 
