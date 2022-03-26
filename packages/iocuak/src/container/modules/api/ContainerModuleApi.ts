@@ -1,5 +1,5 @@
-import { ContainerApiService } from '../../services/api/ContainerApiService';
+import { ContainerServiceApi } from '../../services/api/ContainerServiceApi';
 
 export interface ContainerModuleApi {
-  load(container: ContainerApiService): void;
+  load(container: ContainerServiceApi): void;
 }

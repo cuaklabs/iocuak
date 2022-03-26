@@ -1,7 +1,7 @@
-import { BaseClassMetadataExtensionApi } from '../../binding/models/api/BaseClassMetadataExtensionApi';
-import { ClassMetadataExtensionApi } from '../../binding/models/api/ClassMetadataExtensionApi';
 import { Newable } from '../../common/models/domain/Newable';
 import { getBaseType } from '../../utils/getBaseType';
+import { BaseClassMetadataExtensionApi } from '../models/api/BaseClassMetadataExtensionApi';
+import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionApi';
 import { injectFrom } from './injectFrom';
 
 export function injectFromBase(

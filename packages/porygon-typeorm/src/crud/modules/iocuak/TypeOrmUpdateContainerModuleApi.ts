@@ -1,5 +1,5 @@
 import {
-  ContainerApiService,
+  ContainerServiceApi,
   ContainerModuleApi,
   inject,
   injectable,
@@ -47,11 +47,11 @@ export class TypeOrmUpdateContainerModuleApi<TModelDb, TQuery>
     > {};
   }
 
-  public load(container: ContainerApiService): void {
+  public load(container: ContainerServiceApi): void {
     this.#loadUpdateTypeOrmAdapter(container);
   }
 
-  #loadUpdateTypeOrmAdapter(container: ContainerApiService): void {
+  #loadUpdateTypeOrmAdapter(container: ContainerServiceApi): void {
     this.#decorateUpdateTypeOrmAdapterInjectable();
     this.#decorateUpdateTypeOrmAdapterRepository();
     this.#decorateUpdateTypeOrmAdapterUpdateQueryToFindQueryTypeOrmConverter();

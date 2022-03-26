@@ -1,16 +1,16 @@
-import { BindingApi } from '../../../binding/models/api/BindingApi';
-import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingType } from '../../../binding/models/domain/BindingType';
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
-import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
-import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { BindingApi } from '../../../metadata/models/api/BindingApi';
+import { Binding } from '../../../metadata/models/domain/Binding';
+import { BindingType } from '../../../metadata/models/domain/BindingType';
+import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
+import { ValueBinding } from '../../../metadata/models/domain/ValueBinding';
+import { convertBindingToBindingApi } from '../../../metadata/utils/api/convertBindingToBindingApi';
 import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
 import { ContainerService } from '../domain/ContainerService';
-import { ContainerApiService } from './ContainerApiService';
+import { ContainerServiceApi } from './ContainerServiceApi';
 
-export class ContainerApiServiceImplementation implements ContainerApiService {
+export class ContainerServiceApiImplementation implements ContainerServiceApi {
   protected readonly _containerService: ContainerService;
 
   constructor(containerService: ContainerService) {

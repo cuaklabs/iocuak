@@ -1,4 +1,4 @@
-import { ContainerApiService, ContainerModuleApi } from '@cuaklabs/iocuak';
+import { ContainerServiceApi, ContainerModuleApi } from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
@@ -38,7 +38,7 @@ export class DomainCrudContainerModuleApi<TModel, TQuery>
     );
   }
 
-  public load(container: ContainerApiService): void {
+  public load(container: ContainerServiceApi): void {
     this.#domainCreationContainerModuleApi.load(container);
     this.#domainDeleteContainerModuleApi.load(container);
     this.#domainReadContainerModuleApi.load(container);

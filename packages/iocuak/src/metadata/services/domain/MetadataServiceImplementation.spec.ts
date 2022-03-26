@@ -2,19 +2,18 @@ jest.mock('../../../metadata/decorators/getDefaultClassMetadata');
 jest.mock('../../../metadata/utils/getReflectMetadata');
 
 import { Newable } from '../../../common/models/domain/Newable';
-import { getDefaultClassMetadata } from '../../../metadata/decorators/getDefaultClassMetadata';
-import { ClassMetadataFixtures } from '../../../metadata/fixtures/domain/ClassMetadataFixtures';
-import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
-import { MetadataKey } from '../../../metadata/models/domain/MetadataKey';
-import { getReflectMetadata } from '../../../metadata/utils/getReflectMetadata';
-import { ContainerMetadataServiceImplementation } from './ContainerMetadataServiceImplementation';
+import { getDefaultClassMetadata } from '../../decorators/getDefaultClassMetadata';
+import { ClassMetadataFixtures } from '../../fixtures/domain/ClassMetadataFixtures';
+import { ClassMetadata } from '../../models/domain/ClassMetadata';
+import { MetadataKey } from '../../models/domain/MetadataKey';
+import { getReflectMetadata } from '../../utils/getReflectMetadata';
+import { MetadataServiceImplementation } from './MetadataServiceImplementation';
 
-describe(ContainerMetadataServiceImplementation.name, () => {
-  let containerMetadataServiceImplementation: ContainerMetadataServiceImplementation;
+describe(MetadataServiceImplementation.name, () => {
+  let metadataServiceImplementation: MetadataServiceImplementation;
 
   beforeAll(() => {
-    containerMetadataServiceImplementation =
-      new ContainerMetadataServiceImplementation();
+    metadataServiceImplementation = new MetadataServiceImplementation();
   });
 
   describe('.getBindingMetadata', () => {
@@ -24,7 +23,7 @@ describe(ContainerMetadataServiceImplementation.name, () => {
       beforeAll(() => {
         typeFixture = class {};
 
-        containerMetadataServiceImplementation.getBindingMetadata(typeFixture);
+        metadataServiceImplementation.getBindingMetadata(typeFixture);
       });
 
       afterAll(() => {
@@ -63,8 +62,7 @@ describe(ContainerMetadataServiceImplementation.name, () => {
           getDefaultClassMetadata as jest.Mock<ClassMetadata | undefined>
         ).mockReturnValueOnce(classMetadataFixture);
 
-        result =
-          containerMetadataServiceImplementation.getClassMetadata(typeFixture);
+        result = metadataServiceImplementation.getClassMetadata(typeFixture);
       });
 
       afterAll(() => {
@@ -103,8 +101,7 @@ describe(ContainerMetadataServiceImplementation.name, () => {
           classMetadataFixture,
         );
 
-        result =
-          containerMetadataServiceImplementation.getClassMetadata(typeFixture);
+        result = metadataServiceImplementation.getClassMetadata(typeFixture);
       });
 
       afterAll(() => {

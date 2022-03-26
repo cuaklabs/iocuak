@@ -1,5 +1,5 @@
 import {
-  ContainerApiService,
+  ContainerServiceApi,
   ContainerModuleApi,
   inject,
   injectable,
@@ -42,12 +42,12 @@ export class DomainReadContainerModuleApi<TModel, TQuery>
     > {};
   }
 
-  public load(container: ContainerApiService): void {
+  public load(container: ContainerServiceApi): void {
     this.#loadReadOneEntityInteractor(container);
     this.#loadReadManyEntityInteractor(container);
   }
 
-  #loadReadOneEntityInteractor(container: ContainerApiService): void {
+  #loadReadOneEntityInteractor(container: ContainerServiceApi): void {
     const readOneEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.readOneEntityInteractor];
 
@@ -68,7 +68,7 @@ export class DomainReadContainerModuleApi<TModel, TQuery>
     container.bind(this.#readOneEntityInteractorType);
   }
 
-  #loadReadManyEntityInteractor(container: ContainerApiService): void {
+  #loadReadManyEntityInteractor(container: ContainerServiceApi): void {
     const readManyEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.readManyEntityInteractor];
 

@@ -1,12 +1,12 @@
 import { BaseDependentTask, DependentTask } from '@cuaklabs/cuaktask';
 
-import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingType } from '../../../binding/models/domain/BindingType';
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
+import { Binding } from '../../../metadata/models/domain/Binding';
+import { BindingType } from '../../../metadata/models/domain/BindingType';
+import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
 import { stringifyServiceId } from '../../../utils/stringifyServiceId';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { ServiceDependencies } from '../domain/ServiceDependencies';

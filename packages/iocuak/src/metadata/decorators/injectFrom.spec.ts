@@ -1,9 +1,9 @@
 jest.mock('../utils/getReflectMetadata');
 jest.mock('../utils/updateReflectMetadata');
 
-import { ClassMetadataExtensionApi } from '../../binding/models/api/ClassMetadataExtensionApi';
 import { Newable } from '../../common/models/domain/Newable';
 import { ClassMetadataFixtures } from '../fixtures/domain/ClassMetadataFixtures';
+import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionApi';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { getReflectMetadata } from '../utils/getReflectMetadata';

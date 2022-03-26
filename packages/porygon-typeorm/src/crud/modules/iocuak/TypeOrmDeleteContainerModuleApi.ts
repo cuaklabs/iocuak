@@ -1,5 +1,5 @@
 import {
-  ContainerApiService,
+  ContainerServiceApi,
   ContainerModuleApi,
   inject,
   injectable,
@@ -41,11 +41,11 @@ export class TypeOrmDeleteContainerModuleApi<TModelDb, TQuery>
     > {};
   }
 
-  public load(container: ContainerApiService): void {
+  public load(container: ContainerServiceApi): void {
     this.#loadDeleteTypeOrmAdapter(container);
   }
 
-  #loadDeleteTypeOrmAdapter(container: ContainerApiService): void {
+  #loadDeleteTypeOrmAdapter(container: ContainerServiceApi): void {
     this.#decorateDeleteTypeOrmAdapterInjectable();
     this.#decorateDeleteTypeOrmAdapterRepository();
     this.#decorateDeleteTypeOrmAdapterFindQueryToFindQueryTypeOrmConverter();

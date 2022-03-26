@@ -1,14 +1,14 @@
 import 'reflect-metadata';
 
-import { BindingType } from '../../binding/models/domain/BindingType';
-import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { TaskScopeApi } from '../../task/models/api/TaskScopeApi';
 import { taskScopeApiToTaskScopeMap } from '../../task/models/api/taskScopeApiToTaskScopeMap';
 import { TaskScope } from '../../task/models/domain/TaskScope';
 import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
+import { BindingType } from '../models/domain/BindingType';
 import { MetadataKey } from '../models/domain/MetadataKey';
+import { TypeBinding } from '../models/domain/TypeBinding';
 import { injectable } from './injectable';
 
 describe(injectable.name, () => {

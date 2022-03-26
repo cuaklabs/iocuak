@@ -1,12 +1,12 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
-import { Binding } from '../../binding/models/domain/Binding';
-import { BindingType } from '../../binding/models/domain/BindingType';
-import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
-import { ContainerMetadataService } from '../../container/services/domain/ContainerMetadataService';
+import { Binding } from '../../metadata/models/domain/Binding';
+import { BindingType } from '../../metadata/models/domain/BindingType';
 import { ClassMetadata } from '../../metadata/models/domain/ClassMetadata';
+import { TypeBinding } from '../../metadata/models/domain/TypeBinding';
+import { MetadataService } from '../../metadata/services/domain/MetadataService';
 import { isTaskKind } from '../../utils/isTaskKind';
 import { stringifyServiceId } from '../../utils/stringifyServiceId';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
@@ -16,14 +16,14 @@ import { TaskKindType } from '../models/domain/TaskKindType';
 
 export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
   readonly #containerBindingService: ContainerBindingService;
-  readonly #containerMetadataService: ContainerMetadataService;
+  readonly #metadataService: MetadataService;
 
   constructor(
     containerBindingService: ContainerBindingService,
-    containerMetadataService: ContainerMetadataService,
+    metadataService: MetadataService,
   ) {
     this.#containerBindingService = containerBindingService;
-    this.#containerMetadataService = containerMetadataService;
+    this.#metadataService = metadataService;
   }
 
   public getDependencies<TKind, TDependencyKind>(
@@ -92,8 +92,9 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
     taskKind: CreateInstanceTaskKind,
     binding: TypeBinding,
   ): TaskKind[] {
-    const metadata: ClassMetadata =
-      this.#containerMetadataService.getClassMetadata(binding.type);
+    const metadata: ClassMetadata = this.#metadataService.getClassMetadata(
+      binding.type,
+    );
 
     const getInstanceDependenciesTaskKind: GetInstanceDependenciesTaskKind = {
       id: taskKind.id,

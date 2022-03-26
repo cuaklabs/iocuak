@@ -1,5 +1,5 @@
 import {
-  ContainerApiService,
+  ContainerServiceApi,
   ContainerModuleApi,
   inject,
   injectable,
@@ -33,11 +33,11 @@ export class DomainDeleteContainerModuleApi<TQuery>
     )<TQuery> {};
   }
 
-  public load(container: ContainerApiService): void {
+  public load(container: ContainerServiceApi): void {
     this.#loadDeleteEntityInteractor(container);
   }
 
-  #loadDeleteEntityInteractor(container: ContainerApiService): void {
+  #loadDeleteEntityInteractor(container: ContainerServiceApi): void {
     const deleteEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.deleteEntityInteractor];
 
