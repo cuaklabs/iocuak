@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc --build tsconfig.packages.json",
     "build:dev": "tsc --build tsconfig.packages.dev.json",
-    "build:clean": "tsc --build tsconfig.packages.json --clean",
+    "build:clean": "node ./scripts/removeTypescriptCompiledFiles.mjs",
     "commit": "commit",
     "format": "prettier --write ./packages",
     "lint": "eslint --ext ts --ignore-path .gitignore .",
@@ -61,6 +61,7 @@
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.1",
     "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
     "sqlite3": "^5.0.2",
     "ts-jest": "^27.1.3",
     "ts-node": "^10.7.0",
