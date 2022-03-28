@@ -1,11 +1,11 @@
 import {
-  ContainerServiceApi,
-  ContainerModuleApi,
+  ContainerService,
+  ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScopeApi,
+  TaskScope,
 } from '@cuaklabs/iocuak';
 import {
   ConverterAsync,
@@ -19,8 +19,8 @@ import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity
 import { InsertTypeOrmAdapter } from '../../adapter/typeorm/InsertTypeOrmAdapter';
 import { CrudTypeOrmModuleType } from '../../models/domain/CrudTypeOrmModuleType';
 
-export class TypeOrmCreateContainerModuleApi<TModel, TModelDb, TQuery>
-  implements ContainerModuleApi
+export class TypeOrmCreateContainerModule<TModel, TModelDb, TQuery>
+  implements ContainerModule
 {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
@@ -50,11 +50,11 @@ export class TypeOrmCreateContainerModuleApi<TModel, TModelDb, TQuery>
     > {};
   }
 
-  public load(container: ContainerServiceApi): void {
+  public load(container: ContainerService): void {
     this.#loadInsertTypeOrmAdapter(container);
   }
 
-  #loadInsertTypeOrmAdapter(container: ContainerServiceApi): void {
+  #loadInsertTypeOrmAdapter(container: ContainerService): void {
     this.#decorateInsertTypeOrmAdapterInjectable();
     this.#decorateInsertTypeOrmAdapterRepository();
     this.#decorateInsertTypeOrmAdapterModelDbToModelConverter();
@@ -69,7 +69,7 @@ export class TypeOrmCreateContainerModuleApi<TModel, TModelDb, TQuery>
 
     injectable({
       id: createEntityAdapterServiceId,
-      scope: TaskScopeApi.singleton,
+      scope: TaskScope.singleton,
     })(this.#insertTypeOrmAdapterType);
   }
 

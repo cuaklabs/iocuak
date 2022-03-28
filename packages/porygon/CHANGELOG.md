@@ -30,4 +30,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `UpdateEntityPort` model.
 - Added `ModuleTypeToSymbolMap` model.
 - Added `CrudModuleType` enum.
-- Added `DomainCrudContainerModuleApi` module.
+- Added `DomainCrudContainerModule` module.

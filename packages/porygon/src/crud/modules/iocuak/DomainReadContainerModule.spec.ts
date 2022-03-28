@@ -1,16 +1,12 @@
 jest.mock('@cuaklabs/iocuak');
 
-import {
-  ContainerApi,
-  inject,
-  injectable,
-  TaskScopeApi,
-} from '@cuaklabs/iocuak';
-import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
+import { Container, inject, injectable, TaskScope } from '@cuaklabs/iocuak';
 
-import { DeleteTypeOrmAdapter } from '../../adapter/typeorm/DeleteTypeOrmAdapter';
-import { CrudTypeOrmModuleType } from '../../models/domain/CrudTypeOrmModuleType';
-import { TypeOrmDeleteContainerModuleApi } from './TypeOrmDeleteContainerModuleApi';
+import { CrudModuleType } from '../../models/domain/CrudModuleType';
+import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
+import { ReadManyEntityInteractor } from '../domain/ReadManyEntityInteractor';
+import { ReadOneEntityInteractor } from '../domain/ReadOneEntityInteractor';
+import { DomainReadContainerModule } from './DomainReadContainerModule';
 
 interface ModelTest {
   foo: string;
@@ -30,10 +26,9 @@ function expectClassExtending(superclass: Function): Function {
   }) as Function;
 }
 
-describe(TypeOrmDeleteContainerModuleApi.name, () => {
+describe(DomainReadContainerModule.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
-  let crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
-  let typeOrmDeleteContainerModuleApi: TypeOrmDeleteContainerModuleApi<
+  let domainReadContainerModule: DomainReadContainerModule<
     ModelTest,
     QueryTest
   >;
@@ -51,28 +46,18 @@ describe(TypeOrmDeleteContainerModuleApi.name, () => {
       [CrudModuleType.updateEntityInteractor]: Symbol(),
     });
 
-    crudTypeOrmModuleTypeToSymbolMap = Object.freeze({
-      [CrudTypeOrmModuleType.findQueryToFindQueryTypeOrmConverter]: Symbol(),
-      [CrudTypeOrmModuleType.insertQueryToSetTypeOrmQueryConverter]: Symbol(),
-      [CrudTypeOrmModuleType.modelDbToModelConverter]: Symbol(),
-      [CrudTypeOrmModuleType.repository]: Symbol(),
-      [CrudTypeOrmModuleType.updateQueryToFindQueryTypeOrmConverter]: Symbol(),
-      [CrudTypeOrmModuleType.updateQueryToSetQueryTypeOrmConverter]: Symbol(),
-    });
-
-    typeOrmDeleteContainerModuleApi = new TypeOrmDeleteContainerModuleApi(
+    domainReadContainerModule = new DomainReadContainerModule(
       crudModuleTypeToSymbolMap,
-      crudTypeOrmModuleTypeToSymbolMap,
     );
   });
 
   describe('.load()', () => {
-    let containerApiMock: jest.Mocked<ContainerApi>;
+    let containerApiMock: jest.Mocked<Container>;
 
     beforeAll(() => {
       containerApiMock = {
         bind: jest.fn(),
-      } as Partial<jest.Mocked<ContainerApi>> as jest.Mocked<ContainerApi>;
+      } as Partial<jest.Mocked<Container>> as jest.Mocked<Container>;
     });
 
     describe('when called', () => {
@@ -98,70 +83,88 @@ describe(TypeOrmDeleteContainerModuleApi.name, () => {
         // eslint-disable-next-line @typescript-eslint/ban-types
         injectableDecoratorMock = jest.fn<void, [Function]>();
 
-        (injectable as jest.Mock<ClassDecorator>).mockReturnValueOnce(
-          injectableDecoratorMock,
-        );
+        (injectable as jest.Mock<ClassDecorator>)
+          .mockReturnValueOnce(injectableDecoratorMock)
+          .mockReturnValueOnce(injectableDecoratorMock);
 
-        typeOrmDeleteContainerModuleApi.load(containerApiMock);
+        domainReadContainerModule.load(containerApiMock);
       });
 
       afterAll(() => {
         jest.clearAllMocks();
       });
 
-      it('should call injectable()', () => {
-        expect(injectable).toHaveBeenCalledTimes(1);
-        expect(injectableDecoratorMock).toHaveBeenCalledTimes(1);
+      it('should call @injectable() twice', () => {
+        expect(injectable).toHaveBeenCalledTimes(2);
+        expect(injectableDecoratorMock).toHaveBeenCalledTimes(2);
+      });
 
-        expect(injectable).toHaveBeenCalledWith({
-          id: crudModuleTypeToSymbolMap.deleteEntityAdapter,
-          scope: TaskScopeApi.singleton,
+      it('should call @injectable() on ReadOneInteractor in the first call', () => {
+        expect(injectable).toHaveBeenNthCalledWith(1, {
+          id: crudModuleTypeToSymbolMap.readOneEntityInteractor,
+          scope: TaskScope.singleton,
         });
 
-        expect(injectableDecoratorMock).toHaveBeenCalledWith(
-          expectClassExtending(DeleteTypeOrmAdapter),
+        expect(injectableDecoratorMock).toHaveBeenNthCalledWith(
+          1,
+          expectClassExtending(ReadOneEntityInteractor),
         );
       });
 
-      it('should call inject()', () => {
+      it('should call @injectable() on ReadManyInteractor in the second call', () => {
+        expect(injectable).toHaveBeenNthCalledWith(2, {
+          id: crudModuleTypeToSymbolMap.readManyEntityInteractor,
+          scope: TaskScope.singleton,
+        });
+
+        expect(injectableDecoratorMock).toHaveBeenNthCalledWith(
+          2,
+          expectClassExtending(ReadManyEntityInteractor),
+        );
+      });
+
+      it('should call inject() twice', () => {
         expect(inject).toHaveBeenCalledTimes(2);
         expect(injectDecoratorMock).toHaveBeenCalledTimes(2);
       });
 
-      it('should call inject() on DeleteTypeOrmAdapter in the first call', () => {
+      it('should call inject() on ReadOneInteractor in the first call', () => {
         expect(inject).toHaveBeenNthCalledWith(
           1,
-          crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
+          crudModuleTypeToSymbolMap[CrudModuleType.readEntityAdapter],
         );
 
         expect(injectDecoratorMock).toHaveBeenNthCalledWith(
           1,
-          expectClassExtending(DeleteTypeOrmAdapter),
+          expectClassExtending(ReadOneEntityInteractor),
           undefined,
           0,
         );
       });
 
-      it('should call inject() on DeleteTypeOrmAdapter in the second call', () => {
+      it('should call inject() on ReadManyInteractor in the second call', () => {
         expect(inject).toHaveBeenNthCalledWith(
           2,
-          crudTypeOrmModuleTypeToSymbolMap[
-            CrudTypeOrmModuleType.findQueryToFindQueryTypeOrmConverter
-          ],
+          crudModuleTypeToSymbolMap[CrudModuleType.readEntityAdapter],
         );
 
         expect(injectDecoratorMock).toHaveBeenNthCalledWith(
           2,
-          expectClassExtending(DeleteTypeOrmAdapter),
+          expectClassExtending(ReadManyEntityInteractor),
           undefined,
-          1,
+          0,
         );
       });
 
       it('should call containerApi.bind()', () => {
-        expect(containerApiMock.bind).toHaveBeenCalledTimes(1);
-        expect(containerApiMock.bind).toHaveBeenCalledWith(
-          expectClassExtending(DeleteTypeOrmAdapter),
+        expect(containerApiMock.bind).toHaveBeenCalledTimes(2);
+        expect(containerApiMock.bind).toHaveBeenNthCalledWith(
+          1,
+          expectClassExtending(ReadOneEntityInteractor),
+        );
+        expect(containerApiMock.bind).toHaveBeenNthCalledWith(
+          2,
+          expectClassExtending(ReadManyEntityInteractor),
         );
       });
     });

@@ -1,11 +1,11 @@
 import {
-  ContainerServiceApi,
-  ContainerModuleApi,
+  ContainerService,
+  ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScopeApi,
+  TaskScope,
 } from '@cuaklabs/iocuak';
 
 import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
@@ -14,8 +14,8 @@ import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap
 import { CreateEntityPort } from '../../port/application/CreateEntityPort';
 import { CreateEntityInteractor } from '../domain/CreateEntityInteractor';
 
-export class DomainCreateContainerModuleApi<TModel, TQuery>
-  implements ContainerModuleApi
+export class DomainCreateContainerModule<TModel, TQuery>
+  implements ContainerModule
 {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #createEntityInteractorType: Newable<
@@ -34,11 +34,11 @@ export class DomainCreateContainerModuleApi<TModel, TQuery>
     > {};
   }
 
-  public load(container: ContainerServiceApi): void {
+  public load(container: ContainerService): void {
     this.#loadCreateEntityInteractor(container);
   }
 
-  #loadCreateEntityInteractor(container: ContainerServiceApi): void {
+  #loadCreateEntityInteractor(container: ContainerService): void {
     const createEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.createEntityInteractor];
 
@@ -47,7 +47,7 @@ export class DomainCreateContainerModuleApi<TModel, TQuery>
 
     injectable({
       id: createEntityInteractorServiceId,
-      scope: TaskScopeApi.singleton,
+      scope: TaskScope.singleton,
     })(this.#createEntityInteractorType);
 
     inject(createEntityAdapterServiceId)(

@@ -1,16 +1,11 @@
 jest.mock('@cuaklabs/iocuak');
 
-import {
-  ContainerApi,
-  inject,
-  injectable,
-  TaskScopeApi,
-} from '@cuaklabs/iocuak';
+import { Container, inject, injectable, TaskScope } from '@cuaklabs/iocuak';
 import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
 
 import { FindTypeOrmAdapter } from '../../adapter/typeorm/FindTypeOrmAdapter';
 import { CrudTypeOrmModuleType } from '../../models/domain/CrudTypeOrmModuleType';
-import { TypeOrmReadContainerModuleApi } from './TypeOrmReadContainerModuleApi';
+import { TypeOrmReadContainerModule } from './TypeOrmReadContainerModule';
 
 interface ModelTest {
   foo: string;
@@ -30,10 +25,10 @@ function expectClassExtending(superclass: Function): Function {
   }) as Function;
 }
 
-describe(TypeOrmReadContainerModuleApi.name, () => {
+describe(TypeOrmReadContainerModule.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   let crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
-  let typeOrmReadContainerModuleApi: TypeOrmReadContainerModuleApi<
+  let typeOrmReadContainerModule: TypeOrmReadContainerModule<
     ModelTest,
     ModelTest,
     QueryTest
@@ -61,19 +56,19 @@ describe(TypeOrmReadContainerModuleApi.name, () => {
       [CrudTypeOrmModuleType.updateQueryToSetQueryTypeOrmConverter]: Symbol(),
     });
 
-    typeOrmReadContainerModuleApi = new TypeOrmReadContainerModuleApi(
+    typeOrmReadContainerModule = new TypeOrmReadContainerModule(
       crudModuleTypeToSymbolMap,
       crudTypeOrmModuleTypeToSymbolMap,
     );
   });
 
   describe('.load()', () => {
-    let containerApiMock: jest.Mocked<ContainerApi>;
+    let containerApiMock: jest.Mocked<Container>;
 
     beforeAll(() => {
       containerApiMock = {
         bind: jest.fn(),
-      } as Partial<jest.Mocked<ContainerApi>> as jest.Mocked<ContainerApi>;
+      } as Partial<jest.Mocked<Container>> as jest.Mocked<Container>;
     });
 
     describe('when called', () => {
@@ -104,7 +99,7 @@ describe(TypeOrmReadContainerModuleApi.name, () => {
           injectableDecoratorMock,
         );
 
-        typeOrmReadContainerModuleApi.load(containerApiMock);
+        typeOrmReadContainerModule.load(containerApiMock);
       });
 
       afterAll(() => {
@@ -117,7 +112,7 @@ describe(TypeOrmReadContainerModuleApi.name, () => {
 
         expect(injectable).toHaveBeenCalledWith({
           id: crudModuleTypeToSymbolMap.readEntityAdapter,
-          scope: TaskScopeApi.singleton,
+          scope: TaskScope.singleton,
         });
 
         expect(injectableDecoratorMock).toHaveBeenCalledWith(

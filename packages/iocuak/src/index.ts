@@ -17,24 +17,24 @@ import { MetadataServiceApi } from './metadata/services/api/MetadataServiceApi';
 import { TaskScopeApi } from './task/models/api/TaskScopeApi';
 
 export type {
-  BindingApi,
-  ClassMetadataApi,
-  ContainerServiceApi,
-  ContainerModuleApi,
-  InjectableOptionsApi,
-  MetadataServiceApi,
+  BindingApi as Binding,
+  ClassMetadataApi as ClassMetadata,
+  ContainerServiceApi as ContainerService,
+  ContainerModuleApi as ContainerModule,
+  InjectableOptionsApi as InjectableOptions,
+  MetadataServiceApi as MetadataService,
   Newable,
-  TypeBindingApi,
+  TypeBindingApi as TypeBinding,
   ServiceId,
-  ValueBindingApi,
+  ValueBindingApi as ValueBinding,
 };
 
 export {
-  ContainerApi,
+  ContainerApi as Container,
   inject,
   injectable,
   injectFrom,
   injectFromBase,
-  MetadataProviderApi,
-  TaskScopeApi,
+  MetadataProviderApi as MetadataProvider,
+  TaskScopeApi as TaskScope,
 };

@@ -1,11 +1,11 @@
 import {
-  ContainerServiceApi,
-  ContainerModuleApi,
+  ContainerService,
+  ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScopeApi,
+  TaskScope,
 } from '@cuaklabs/iocuak';
 
 import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
@@ -15,8 +15,8 @@ import { FindEntityPort } from '../../port/application/FindEntityPort';
 import { ReadManyEntityInteractor } from '../domain/ReadManyEntityInteractor';
 import { ReadOneEntityInteractor } from '../domain/ReadOneEntityInteractor';
 
-export class DomainReadContainerModuleApi<TModel, TQuery>
-  implements ContainerModuleApi
+export class DomainReadContainerModule<TModel, TQuery>
+  implements ContainerModule
 {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #readManyEntityInteractorType: Newable<
@@ -42,18 +42,18 @@ export class DomainReadContainerModuleApi<TModel, TQuery>
     > {};
   }
 
-  public load(container: ContainerServiceApi): void {
+  public load(container: ContainerService): void {
     this.#loadReadOneEntityInteractor(container);
     this.#loadReadManyEntityInteractor(container);
   }
 
-  #loadReadOneEntityInteractor(container: ContainerServiceApi): void {
+  #loadReadOneEntityInteractor(container: ContainerService): void {
     const readOneEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.readOneEntityInteractor];
 
     injectable({
       id: readOneEntityInteractorServiceId,
-      scope: TaskScopeApi.singleton,
+      scope: TaskScope.singleton,
     })(this.#readOneEntityInteractorType);
 
     const readEntityAdapterServiceId: ServiceId =
@@ -68,13 +68,13 @@ export class DomainReadContainerModuleApi<TModel, TQuery>
     container.bind(this.#readOneEntityInteractorType);
   }
 
-  #loadReadManyEntityInteractor(container: ContainerServiceApi): void {
+  #loadReadManyEntityInteractor(container: ContainerService): void {
     const readManyEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.readManyEntityInteractor];
 
     injectable({
       id: readManyEntityInteractorServiceId,
-      scope: TaskScopeApi.singleton,
+      scope: TaskScope.singleton,
     })(this.#readManyEntityInteractorType);
 
     const readEntityAdapterServiceId: ServiceId =

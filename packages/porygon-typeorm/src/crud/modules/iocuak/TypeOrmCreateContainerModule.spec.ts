@@ -1,16 +1,11 @@
 jest.mock('@cuaklabs/iocuak');
 
-import {
-  ContainerApi,
-  inject,
-  injectable,
-  TaskScopeApi,
-} from '@cuaklabs/iocuak';
+import { Container, inject, injectable, TaskScope } from '@cuaklabs/iocuak';
 import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
 
 import { InsertTypeOrmAdapter } from '../../adapter/typeorm/InsertTypeOrmAdapter';
 import { CrudTypeOrmModuleType } from '../../models/domain/CrudTypeOrmModuleType';
-import { TypeOrmCreateContainerModuleApi } from './TypeOrmCreateContainerModuleApi';
+import { TypeOrmCreateContainerModule } from './TypeOrmCreateContainerModule';
 
 interface ModelTest {
   foo: string;
@@ -30,10 +25,10 @@ function expectClassExtending(superclass: Function): Function {
   }) as Function;
 }
 
-describe(TypeOrmCreateContainerModuleApi.name, () => {
+describe(TypeOrmCreateContainerModule.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   let crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
-  let typeOrmCreateContainerModuleApi: TypeOrmCreateContainerModuleApi<
+  let typeOrmCreateContainerModule: TypeOrmCreateContainerModule<
     ModelTest,
     ModelTest,
     QueryTest
@@ -61,19 +56,19 @@ describe(TypeOrmCreateContainerModuleApi.name, () => {
       [CrudTypeOrmModuleType.updateQueryToSetQueryTypeOrmConverter]: Symbol(),
     });
 
-    typeOrmCreateContainerModuleApi = new TypeOrmCreateContainerModuleApi(
+    typeOrmCreateContainerModule = new TypeOrmCreateContainerModule(
       crudModuleTypeToSymbolMap,
       crudTypeOrmModuleTypeToSymbolMap,
     );
   });
 
   describe('.load()', () => {
-    let containerApiMock: jest.Mocked<ContainerApi>;
+    let containerApiMock: jest.Mocked<Container>;
 
     beforeAll(() => {
       containerApiMock = {
         bind: jest.fn(),
-      } as Partial<jest.Mocked<ContainerApi>> as jest.Mocked<ContainerApi>;
+      } as Partial<jest.Mocked<Container>> as jest.Mocked<Container>;
     });
 
     describe('when called', () => {
@@ -104,7 +99,7 @@ describe(TypeOrmCreateContainerModuleApi.name, () => {
           injectableDecoratorMock,
         );
 
-        typeOrmCreateContainerModuleApi.load(containerApiMock);
+        typeOrmCreateContainerModule.load(containerApiMock);
       });
 
       afterAll(() => {
@@ -117,7 +112,7 @@ describe(TypeOrmCreateContainerModuleApi.name, () => {
 
         expect(injectable).toHaveBeenCalledWith({
           id: crudModuleTypeToSymbolMap.createEntityAdapter,
-          scope: TaskScopeApi.singleton,
+          scope: TaskScope.singleton,
         });
 
         expect(injectableDecoratorMock).toHaveBeenCalledWith(

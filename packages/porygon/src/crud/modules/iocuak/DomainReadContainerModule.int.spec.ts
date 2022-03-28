@@ -1,13 +1,13 @@
 import 'reflect-metadata';
 
-import { ContainerApi, injectable } from '@cuaklabs/iocuak';
+import { Container, injectable } from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
 import { FindEntityPort } from '../../port/application/FindEntityPort';
 import { ReadManyEntityInteractor } from '../domain/ReadManyEntityInteractor';
 import { ReadOneEntityInteractor } from '../domain/ReadOneEntityInteractor';
-import { DomainReadContainerModuleApi } from './DomainReadContainerModuleApi';
+import { DomainReadContainerModule } from './DomainReadContainerModule';
 
 interface ModelTest {
   foo: string;
@@ -17,9 +17,9 @@ interface QueryTest {
   bar: string;
 }
 
-describe(DomainReadContainerModuleApi.name, () => {
+describe(DomainReadContainerModule.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
-  let domainReadContainerModuleApi: DomainReadContainerModuleApi<
+  let domainReadContainerModule: DomainReadContainerModule<
     ModelTest,
     QueryTest
   >;
@@ -37,22 +37,22 @@ describe(DomainReadContainerModuleApi.name, () => {
       [CrudModuleType.updateEntityInteractor]: Symbol(),
     });
 
-    domainReadContainerModuleApi = new DomainReadContainerModuleApi(
+    domainReadContainerModule = new DomainReadContainerModule(
       crudModuleTypeToSymbolMap,
     );
   });
 
   describe('.load()', () => {
     describe('having a containerApi with no read adapter bound', () => {
-      let containerApi: ContainerApi;
+      let containerApi: Container;
 
       beforeAll(() => {
-        containerApi = ContainerApi.build();
+        containerApi = Container.build();
       });
 
       describe('when called', () => {
         beforeAll(() => {
-          domainReadContainerModuleApi.load(containerApi);
+          domainReadContainerModule.load(containerApi);
         });
 
         describe('when containerApi.get is called with read many entity interactor symbol', () => {
@@ -130,21 +130,21 @@ describe(DomainReadContainerModuleApi.name, () => {
         }
       }
 
-      let containerApi: ContainerApi;
+      let containerApi: Container;
 
       beforeAll(() => {
         injectable({
           id: crudModuleTypeToSymbolMap[CrudModuleType.readEntityAdapter],
         })(FindAdapterMock);
 
-        containerApi = ContainerApi.build();
+        containerApi = Container.build();
 
         containerApi.bind(FindAdapterMock);
       });
 
       describe('when called', () => {
         beforeAll(() => {
-          domainReadContainerModuleApi.load(containerApi);
+          domainReadContainerModule.load(containerApi);
         });
 
         describe('when containerApi.get is called with read many entity interactor symbol', () => {

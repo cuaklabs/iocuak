@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 
-import { ContainerApi, injectable, Newable } from '@cuaklabs/iocuak';
+import { Container, injectable, Newable } from '@cuaklabs/iocuak';
 import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
 
-import { FindTypeOrmAdapter } from '../../adapter/typeorm/FindTypeOrmAdapter';
+import { UpdateTypeOrmAdapter } from '../../adapter/typeorm/UpdateTypeOrmAdapter';
 import { CrudTypeOrmModuleType } from '../../models/domain/CrudTypeOrmModuleType';
-import { TypeOrmReadContainerModuleApi } from './TypeOrmReadContainerModuleApi';
+import { TypeOrmUpdateContainerModule } from './TypeOrmUpdateContainerModule';
 
 interface ModelTest {
   foo: string;
@@ -15,11 +15,10 @@ interface QueryTest {
   bar: string;
 }
 
-describe(TypeOrmReadContainerModuleApi.name, () => {
+describe(TypeOrmUpdateContainerModule.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   let crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
-  let typeOrmReadContainerModuleApi: TypeOrmReadContainerModuleApi<
-    ModelTest,
+  let typeOrmUpdateContainerModule: TypeOrmUpdateContainerModule<
     ModelTest,
     QueryTest
   >;
@@ -46,7 +45,7 @@ describe(TypeOrmReadContainerModuleApi.name, () => {
       [CrudTypeOrmModuleType.updateQueryToSetQueryTypeOrmConverter]: Symbol(),
     });
 
-    typeOrmReadContainerModuleApi = new TypeOrmReadContainerModuleApi(
+    typeOrmUpdateContainerModule = new TypeOrmUpdateContainerModule(
       crudModuleTypeToSymbolMap,
       crudTypeOrmModuleTypeToSymbolMap,
     );
@@ -54,24 +53,24 @@ describe(TypeOrmReadContainerModuleApi.name, () => {
 
   describe('.load', () => {
     describe('having a containerApi with no dependencies bound', () => {
-      let containerApi: ContainerApi;
+      let containerApi: Container;
 
       beforeAll(() => {
-        containerApi = ContainerApi.build();
+        containerApi = Container.build();
       });
 
       describe('when called', () => {
         beforeAll(() => {
-          typeOrmReadContainerModuleApi.load(containerApi);
+          typeOrmUpdateContainerModule.load(containerApi);
         });
 
-        describe('when containerApi.get is called with read entity adapter symbol', () => {
+        describe('when containerApi.get is called with update entity adapter symbol', () => {
           let result: unknown;
 
           beforeAll(() => {
             try {
               containerApi.get(
-                crudModuleTypeToSymbolMap[CrudModuleType.readEntityAdapter],
+                crudModuleTypeToSymbolMap[CrudModuleType.updateEntityAdapter],
               );
             } catch (error: unknown) {
               result = error;
@@ -93,49 +92,49 @@ describe(TypeOrmReadContainerModuleApi.name, () => {
     });
 
     describe('having a containerApi with dependencies bound', () => {
-      let containerApi: ContainerApi;
+      let containerApi: Container;
 
       beforeAll(() => {
-        const modelDbToModelConverterType: Newable = class {};
+        const updateQueryToFindQueryTypeOrmConverterType: Newable = class {};
         injectable({
           id: crudTypeOrmModuleTypeToSymbolMap[
-            CrudTypeOrmModuleType.modelDbToModelConverter
+            CrudTypeOrmModuleType.updateQueryToFindQueryTypeOrmConverter
           ],
-        })(modelDbToModelConverterType);
+        })(updateQueryToFindQueryTypeOrmConverterType);
 
-        const findQueryToFindQueryTypeOrmConverterType: Newable = class {};
+        const updateQueryToSetQueryTypeOrmQueryConverterType: Newable = class {};
         injectable({
           id: crudTypeOrmModuleTypeToSymbolMap[
-            CrudTypeOrmModuleType.findQueryToFindQueryTypeOrmConverter
+            CrudTypeOrmModuleType.updateQueryToSetQueryTypeOrmConverter
           ],
-        })(findQueryToFindQueryTypeOrmConverterType);
+        })(updateQueryToSetQueryTypeOrmQueryConverterType);
 
-        containerApi = ContainerApi.build();
+        containerApi = Container.build();
 
         containerApi.bindToValue(
           crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
           {},
         );
-        containerApi.bind(modelDbToModelConverterType);
-        containerApi.bind(findQueryToFindQueryTypeOrmConverterType);
+        containerApi.bind(updateQueryToFindQueryTypeOrmConverterType);
+        containerApi.bind(updateQueryToSetQueryTypeOrmQueryConverterType);
       });
 
       describe('when called', () => {
         beforeAll(() => {
-          typeOrmReadContainerModuleApi.load(containerApi);
+          typeOrmUpdateContainerModule.load(containerApi);
         });
 
-        describe('when containerApi.get is called with read entity adapter symbol', () => {
+        describe('when containerApi.get is called with update entity adapter symbol', () => {
           let result: unknown;
 
           beforeAll(() => {
             result = containerApi.get(
-              crudModuleTypeToSymbolMap[CrudModuleType.readEntityAdapter],
+              crudModuleTypeToSymbolMap[CrudModuleType.updateEntityAdapter],
             );
           });
 
-          it('should return a FindTypeOrmAdapter', () => {
-            expect(result).toBeInstanceOf(FindTypeOrmAdapter);
+          it('should return a UpdateTypeOrmAdapter', () => {
+            expect(result).toBeInstanceOf(UpdateTypeOrmAdapter);
           });
         });
       });

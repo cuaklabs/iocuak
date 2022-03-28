@@ -1,11 +1,11 @@
 import {
-  ContainerServiceApi,
-  ContainerModuleApi,
+  ContainerService,
+  ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScopeApi,
+  TaskScope,
 } from '@cuaklabs/iocuak';
 
 import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
@@ -14,9 +14,7 @@ import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap
 import { UpdateEntityPort } from '../../port/application/UpdateEntityPort';
 import { UpdateEntityInteractor } from '../domain/UpdateEntityInteractor';
 
-export class DomainUpdateContainerModuleApi<TQuery>
-  implements ContainerModuleApi
-{
+export class DomainUpdateContainerModule<TQuery> implements ContainerModule {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #updateEntityInteractorType: Newable<
     InteractorAsync<TQuery, void>,
@@ -33,17 +31,17 @@ export class DomainUpdateContainerModuleApi<TQuery>
     )<TQuery> {};
   }
 
-  public load(container: ContainerServiceApi): void {
+  public load(container: ContainerService): void {
     this.#loadUpdateEntityInteractor(container);
   }
 
-  #loadUpdateEntityInteractor(container: ContainerServiceApi): void {
+  #loadUpdateEntityInteractor(container: ContainerService): void {
     const updateEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.updateEntityInteractor];
 
     injectable({
       id: updateEntityInteractorServiceId,
-      scope: TaskScopeApi.singleton,
+      scope: TaskScope.singleton,
     })(this.#updateEntityInteractorType);
 
     const updateEntityAdapterServiceId: ServiceId =

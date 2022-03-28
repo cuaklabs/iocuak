@@ -1,20 +1,27 @@
 import 'reflect-metadata';
 
-import { ContainerApi, injectable } from '@cuaklabs/iocuak';
+import { Container, injectable } from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
-import { UpdateEntityPort } from '../../port/application/UpdateEntityPort';
-import { UpdateEntityInteractor } from '../domain/UpdateEntityInteractor';
-import { DomainUpdateContainerModuleApi } from './DomainUpdateContainerModuleApi';
+import { CreateEntityPort } from '../../port/application/CreateEntityPort';
+import { CreateEntityInteractor } from '../domain/CreateEntityInteractor';
+import { DomainCreateContainerModule } from './DomainCreateContainerModule';
+
+interface ModelTest {
+  foo: string;
+}
 
 interface QueryTest {
   bar: string;
 }
 
-describe(DomainUpdateContainerModuleApi.name, () => {
+describe(DomainCreateContainerModule.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
-  let domainUpdateContainerModuleApi: DomainUpdateContainerModuleApi<QueryTest>;
+  let domainCreationContainerModule: DomainCreateContainerModule<
+    ModelTest,
+    QueryTest
+  >;
 
   beforeAll(() => {
     crudModuleTypeToSymbolMap = Object.freeze({
@@ -29,32 +36,32 @@ describe(DomainUpdateContainerModuleApi.name, () => {
       [CrudModuleType.updateEntityInteractor]: Symbol(),
     });
 
-    domainUpdateContainerModuleApi = new DomainUpdateContainerModuleApi(
+    domainCreationContainerModule = new DomainCreateContainerModule(
       crudModuleTypeToSymbolMap,
     );
   });
 
   describe('.load()', () => {
-    describe('having a containerApi with no update adapter bound', () => {
-      let containerApi: ContainerApi;
+    describe('having a containerApi with no create adapter bound', () => {
+      let containerApi: Container;
 
       beforeAll(() => {
-        containerApi = ContainerApi.build();
+        containerApi = Container.build();
       });
 
       describe('when called', () => {
         beforeAll(() => {
-          domainUpdateContainerModuleApi.load(containerApi);
+          domainCreationContainerModule.load(containerApi);
         });
 
-        describe('when containerApi.get is called with update entity interactor symbol', () => {
+        describe('when containerApi.get is called with create entity interactor symbol', () => {
           let result: unknown;
 
           beforeAll(() => {
             try {
               containerApi.get(
                 crudModuleTypeToSymbolMap[
-                  CrudModuleType.updateEntityInteractor
+                  CrudModuleType.createEntityInteractor
                 ],
               );
             } catch (error: unknown) {
@@ -76,47 +83,52 @@ describe(DomainUpdateContainerModuleApi.name, () => {
       });
     });
 
-    describe('having a containerApi with update adapter bound', () => {
-      class UpdateAdapterMock implements UpdateEntityPort<QueryTest> {
-        public readonly updateMock: jest.Mock<Promise<void>, [QueryTest]>;
+    describe('having a containerApi with creation adapter bound', () => {
+      class CreateAdapterMock
+        implements CreateEntityPort<ModelTest, QueryTest>
+      {
+        public readonly insertOneMock: jest.Mock<
+          Promise<ModelTest>,
+          [QueryTest]
+        >;
 
         constructor() {
-          this.updateMock = jest.fn<Promise<void>, [QueryTest]>();
+          this.insertOneMock = jest.fn<Promise<ModelTest>, [QueryTest]>();
         }
 
-        public async update(query: QueryTest): Promise<void> {
-          return this.updateMock(query);
+        public async insertOne(query: QueryTest): Promise<ModelTest> {
+          return this.insertOneMock(query);
         }
       }
 
-      let containerApi: ContainerApi;
+      let containerApi: Container;
 
       beforeAll(() => {
         injectable({
-          id: crudModuleTypeToSymbolMap[CrudModuleType.updateEntityAdapter],
-        })(UpdateAdapterMock);
+          id: crudModuleTypeToSymbolMap[CrudModuleType.createEntityAdapter],
+        })(CreateAdapterMock);
 
-        containerApi = ContainerApi.build();
+        containerApi = Container.build();
 
-        containerApi.bind(UpdateAdapterMock);
+        containerApi.bind(CreateAdapterMock);
       });
 
       describe('when called', () => {
         beforeAll(() => {
-          domainUpdateContainerModuleApi.load(containerApi);
+          domainCreationContainerModule.load(containerApi);
         });
 
-        describe('when containerApi.get is called with update entity interactor symbol', () => {
+        describe('when containerApi.get is called with create entity interactor symbol', () => {
           let result: unknown;
 
           beforeAll(() => {
             result = containerApi.get(
-              crudModuleTypeToSymbolMap[CrudModuleType.updateEntityInteractor],
+              crudModuleTypeToSymbolMap[CrudModuleType.createEntityInteractor],
             );
           });
 
-          it('should return a UpdateEntityInteractor', () => {
-            expect(result).toBeInstanceOf(UpdateEntityInteractor);
+          it('should return a CreateEntityInteractor', () => {
+            expect(result).toBeInstanceOf(CreateEntityInteractor);
           });
         });
       });

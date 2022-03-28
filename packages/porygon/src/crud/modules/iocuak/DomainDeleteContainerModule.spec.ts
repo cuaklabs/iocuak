@@ -1,16 +1,11 @@
 jest.mock('@cuaklabs/iocuak');
 
-import {
-  ContainerApi,
-  inject,
-  injectable,
-  TaskScopeApi,
-} from '@cuaklabs/iocuak';
+import { Container, inject, injectable, TaskScope } from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
 import { DeleteEntityInteractor } from '../domain/DeleteEntityInteractor';
-import { DomainDeleteContainerModuleApi } from './DomainDeleteContainerModuleApi';
+import { DomainDeleteContainerModule } from './DomainDeleteContainerModule';
 
 interface QueryTest {
   bar: string;
@@ -26,9 +21,9 @@ function expectClassExtending(superclass: Function): Function {
   }) as Function;
 }
 
-describe(DomainDeleteContainerModuleApi.name, () => {
+describe(DomainDeleteContainerModule.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
-  let domainDeleteContainerModuleApi: DomainDeleteContainerModuleApi<QueryTest>;
+  let domainDeleteContainerModule: DomainDeleteContainerModule<QueryTest>;
 
   beforeAll(() => {
     crudModuleTypeToSymbolMap = Object.freeze({
@@ -43,18 +38,18 @@ describe(DomainDeleteContainerModuleApi.name, () => {
       [CrudModuleType.updateEntityInteractor]: Symbol(),
     });
 
-    domainDeleteContainerModuleApi = new DomainDeleteContainerModuleApi(
+    domainDeleteContainerModule = new DomainDeleteContainerModule(
       crudModuleTypeToSymbolMap,
     );
   });
 
   describe('.load()', () => {
-    let containerApiMock: jest.Mocked<ContainerApi>;
+    let containerApiMock: jest.Mocked<Container>;
 
     beforeAll(() => {
       containerApiMock = {
         bind: jest.fn(),
-      } as Partial<jest.Mocked<ContainerApi>> as jest.Mocked<ContainerApi>;
+      } as Partial<jest.Mocked<Container>> as jest.Mocked<Container>;
     });
 
     describe('when called', () => {
@@ -84,7 +79,7 @@ describe(DomainDeleteContainerModuleApi.name, () => {
           injectableDecoratorMock,
         );
 
-        domainDeleteContainerModuleApi.load(containerApiMock);
+        domainDeleteContainerModule.load(containerApiMock);
       });
 
       afterAll(() => {
@@ -97,7 +92,7 @@ describe(DomainDeleteContainerModuleApi.name, () => {
 
         expect(injectable).toHaveBeenCalledWith({
           id: crudModuleTypeToSymbolMap.deleteEntityInteractor,
-          scope: TaskScopeApi.singleton,
+          scope: TaskScope.singleton,
         });
 
         expect(injectableDecoratorMock).toHaveBeenCalledWith(

@@ -1,11 +1,11 @@
 import {
-  ContainerServiceApi,
-  ContainerModuleApi,
+  ContainerService,
+  ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScopeApi,
+  TaskScope,
 } from '@cuaklabs/iocuak';
 import {
   CrudModuleType,
@@ -20,8 +20,8 @@ import { UpdateTypeOrmAdapter } from '../../adapter/typeorm/UpdateTypeOrmAdapter
 import { QueryToFindQueryTypeOrmConverter } from '../../converter/typeorm/QueryToFindQueryTypeOrmConverter';
 import { CrudTypeOrmModuleType } from '../../models/domain/CrudTypeOrmModuleType';
 
-export class TypeOrmUpdateContainerModuleApi<TModelDb, TQuery>
-  implements ContainerModuleApi
+export class TypeOrmUpdateContainerModule<TModelDb, TQuery>
+  implements ContainerModule
 {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
@@ -47,11 +47,11 @@ export class TypeOrmUpdateContainerModuleApi<TModelDb, TQuery>
     > {};
   }
 
-  public load(container: ContainerServiceApi): void {
+  public load(container: ContainerService): void {
     this.#loadUpdateTypeOrmAdapter(container);
   }
 
-  #loadUpdateTypeOrmAdapter(container: ContainerServiceApi): void {
+  #loadUpdateTypeOrmAdapter(container: ContainerService): void {
     this.#decorateUpdateTypeOrmAdapterInjectable();
     this.#decorateUpdateTypeOrmAdapterRepository();
     this.#decorateUpdateTypeOrmAdapterUpdateQueryToFindQueryTypeOrmConverter();
@@ -66,7 +66,7 @@ export class TypeOrmUpdateContainerModuleApi<TModelDb, TQuery>
 
     injectable({
       id: updateEntityAdapterServiceId,
-      scope: TaskScopeApi.singleton,
+      scope: TaskScope.singleton,
     })(this.#updateTypeOrmAdapterType);
   }
 

@@ -1,11 +1,11 @@
 import {
-  ContainerServiceApi,
-  ContainerModuleApi,
+  ContainerService,
+  ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScopeApi,
+  TaskScope,
 } from '@cuaklabs/iocuak';
 import {
   CrudModuleType,
@@ -18,8 +18,8 @@ import { DeleteTypeOrmAdapter } from '../../adapter/typeorm/DeleteTypeOrmAdapter
 import { QueryToFindQueryTypeOrmConverter } from '../../converter/typeorm/QueryToFindQueryTypeOrmConverter';
 import { CrudTypeOrmModuleType } from '../../models/domain/CrudTypeOrmModuleType';
 
-export class TypeOrmDeleteContainerModuleApi<TModelDb, TQuery>
-  implements ContainerModuleApi
+export class TypeOrmDeleteContainerModule<TModelDb, TQuery>
+  implements ContainerModule
 {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
@@ -41,11 +41,11 @@ export class TypeOrmDeleteContainerModuleApi<TModelDb, TQuery>
     > {};
   }
 
-  public load(container: ContainerServiceApi): void {
+  public load(container: ContainerService): void {
     this.#loadDeleteTypeOrmAdapter(container);
   }
 
-  #loadDeleteTypeOrmAdapter(container: ContainerServiceApi): void {
+  #loadDeleteTypeOrmAdapter(container: ContainerService): void {
     this.#decorateDeleteTypeOrmAdapterInjectable();
     this.#decorateDeleteTypeOrmAdapterRepository();
     this.#decorateDeleteTypeOrmAdapterFindQueryToFindQueryTypeOrmConverter();
@@ -59,7 +59,7 @@ export class TypeOrmDeleteContainerModuleApi<TModelDb, TQuery>
 
     injectable({
       id: deleteEntityAdapterServiceId,
-      scope: TaskScopeApi.singleton,
+      scope: TaskScope.singleton,
     })(this.#deleteTypeOrmAdapterType);
   }
 

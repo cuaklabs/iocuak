@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 
-import { ContainerApi, injectable, Newable } from '@cuaklabs/iocuak';
+import { Container, injectable, Newable } from '@cuaklabs/iocuak';
 import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
 
 import { DeleteTypeOrmAdapter } from '../../adapter/typeorm/DeleteTypeOrmAdapter';
 import { CrudTypeOrmModuleType } from '../../models/domain/CrudTypeOrmModuleType';
-import { TypeOrmDeleteContainerModuleApi } from './TypeOrmDeleteContainerModuleApi';
+import { TypeOrmDeleteContainerModule } from './TypeOrmDeleteContainerModule';
 
 interface ModelTest {
   foo: string;
@@ -15,10 +15,10 @@ interface QueryTest {
   bar: string;
 }
 
-describe(TypeOrmDeleteContainerModuleApi.name, () => {
+describe(TypeOrmDeleteContainerModule.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   let crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
-  let typeOrmDeleteContainerModuleApi: TypeOrmDeleteContainerModuleApi<
+  let typeOrmDeleteContainerModule: TypeOrmDeleteContainerModule<
     ModelTest,
     QueryTest
   >;
@@ -45,7 +45,7 @@ describe(TypeOrmDeleteContainerModuleApi.name, () => {
       [CrudTypeOrmModuleType.updateQueryToSetQueryTypeOrmConverter]: Symbol(),
     });
 
-    typeOrmDeleteContainerModuleApi = new TypeOrmDeleteContainerModuleApi(
+    typeOrmDeleteContainerModule = new TypeOrmDeleteContainerModule(
       crudModuleTypeToSymbolMap,
       crudTypeOrmModuleTypeToSymbolMap,
     );
@@ -53,15 +53,15 @@ describe(TypeOrmDeleteContainerModuleApi.name, () => {
 
   describe('.load', () => {
     describe('having a containerApi with no dependencies bound', () => {
-      let containerApi: ContainerApi;
+      let containerApi: Container;
 
       beforeAll(() => {
-        containerApi = ContainerApi.build();
+        containerApi = Container.build();
       });
 
       describe('when called', () => {
         beforeAll(() => {
-          typeOrmDeleteContainerModuleApi.load(containerApi);
+          typeOrmDeleteContainerModule.load(containerApi);
         });
 
         describe('when containerApi.get is called with delete entity adapter symbol', () => {
@@ -92,7 +92,7 @@ describe(TypeOrmDeleteContainerModuleApi.name, () => {
     });
 
     describe('having a containerApi with dependencies bound', () => {
-      let containerApi: ContainerApi;
+      let containerApi: Container;
 
       beforeAll(() => {
         const findQueryToFindQueryTypeOrmConverterType: Newable = class {};
@@ -102,7 +102,7 @@ describe(TypeOrmDeleteContainerModuleApi.name, () => {
           ],
         })(findQueryToFindQueryTypeOrmConverterType);
 
-        containerApi = ContainerApi.build();
+        containerApi = Container.build();
 
         containerApi.bindToValue(
           crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
@@ -113,7 +113,7 @@ describe(TypeOrmDeleteContainerModuleApi.name, () => {
 
       describe('when called', () => {
         beforeAll(() => {
-          typeOrmDeleteContainerModuleApi.load(containerApi);
+          typeOrmDeleteContainerModule.load(containerApi);
         });
 
         describe('when containerApi.get is called with delete entity adapter symbol', () => {

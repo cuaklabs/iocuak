@@ -1,20 +1,11 @@
 jest.mock('@cuaklabs/iocuak');
 
-import {
-  ContainerApi,
-  inject,
-  injectable,
-  TaskScopeApi,
-} from '@cuaklabs/iocuak';
+import { Container, inject, injectable, TaskScope } from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
-import { CreateEntityInteractor } from '../domain/CreateEntityInteractor';
-import { DomainCreateContainerModuleApi } from './DomainCreateContainerModuleApi';
-
-interface ModelTest {
-  foo: string;
-}
+import { UpdateEntityInteractor } from '../domain/UpdateEntityInteractor';
+import { DomainUpdateContainerModule } from './DomainUpdateContainerModule';
 
 interface QueryTest {
   bar: string;
@@ -30,12 +21,9 @@ function expectClassExtending(superclass: Function): Function {
   }) as Function;
 }
 
-describe(DomainCreateContainerModuleApi.name, () => {
+describe(DomainUpdateContainerModule.name, () => {
   let crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
-  let domainCreationContainerModuleApi: DomainCreateContainerModuleApi<
-    ModelTest,
-    QueryTest
-  >;
+  let domainUpdateContainerModule: DomainUpdateContainerModule<QueryTest>;
 
   beforeAll(() => {
     crudModuleTypeToSymbolMap = Object.freeze({
@@ -50,18 +38,18 @@ describe(DomainCreateContainerModuleApi.name, () => {
       [CrudModuleType.updateEntityInteractor]: Symbol(),
     });
 
-    domainCreationContainerModuleApi = new DomainCreateContainerModuleApi(
+    domainUpdateContainerModule = new DomainUpdateContainerModule(
       crudModuleTypeToSymbolMap,
     );
   });
 
   describe('.load()', () => {
-    let containerApiMock: jest.Mocked<ContainerApi>;
+    let containerApiMock: jest.Mocked<Container>;
 
     beforeAll(() => {
       containerApiMock = {
         bind: jest.fn(),
-      } as Partial<jest.Mocked<ContainerApi>> as jest.Mocked<ContainerApi>;
+      } as Partial<jest.Mocked<Container>> as jest.Mocked<Container>;
     });
 
     describe('when called', () => {
@@ -91,7 +79,7 @@ describe(DomainCreateContainerModuleApi.name, () => {
           injectableDecoratorMock,
         );
 
-        domainCreationContainerModuleApi.load(containerApiMock);
+        domainUpdateContainerModule.load(containerApiMock);
       });
 
       afterAll(() => {
@@ -103,12 +91,12 @@ describe(DomainCreateContainerModuleApi.name, () => {
         expect(injectableDecoratorMock).toHaveBeenCalledTimes(1);
 
         expect(injectable).toHaveBeenCalledWith({
-          id: crudModuleTypeToSymbolMap.createEntityInteractor,
-          scope: TaskScopeApi.singleton,
+          id: crudModuleTypeToSymbolMap.updateEntityInteractor,
+          scope: TaskScope.singleton,
         });
 
         expect(injectableDecoratorMock).toHaveBeenCalledWith(
-          expectClassExtending(CreateEntityInteractor),
+          expectClassExtending(UpdateEntityInteractor),
         );
       });
 
@@ -117,11 +105,11 @@ describe(DomainCreateContainerModuleApi.name, () => {
         expect(injectDecoratorMock).toHaveBeenCalledTimes(1);
 
         expect(inject).toHaveBeenCalledWith(
-          crudModuleTypeToSymbolMap[CrudModuleType.createEntityAdapter],
+          crudModuleTypeToSymbolMap[CrudModuleType.updateEntityAdapter],
         );
 
         expect(injectDecoratorMock).toHaveBeenCalledWith(
-          expectClassExtending(CreateEntityInteractor),
+          expectClassExtending(UpdateEntityInteractor),
           undefined,
           0,
         );
@@ -130,7 +118,7 @@ describe(DomainCreateContainerModuleApi.name, () => {
       it('should call containerApi.bind()', () => {
         expect(containerApiMock.bind).toHaveBeenCalledTimes(1);
         expect(containerApiMock.bind).toHaveBeenCalledWith(
-          expectClassExtending(CreateEntityInteractor),
+          expectClassExtending(UpdateEntityInteractor),
         );
       });
     });

@@ -1,11 +1,11 @@
 import {
-  ContainerServiceApi,
-  ContainerModuleApi,
+  ContainerService,
+  ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScopeApi,
+  TaskScope,
 } from '@cuaklabs/iocuak';
 import {
   CrudModuleType,
@@ -19,8 +19,8 @@ import { FindTypeOrmAdapter } from '../../adapter/typeorm/FindTypeOrmAdapter';
 import { QueryToFindQueryTypeOrmConverter } from '../../converter/typeorm/QueryToFindQueryTypeOrmConverter';
 import { CrudTypeOrmModuleType } from '../../models/domain/CrudTypeOrmModuleType';
 
-export class TypeOrmReadContainerModuleApi<TModel, TModelDb, TQuery>
-  implements ContainerModuleApi
+export class TypeOrmReadContainerModule<TModel, TModelDb, TQuery>
+  implements ContainerModule
 {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
@@ -47,11 +47,11 @@ export class TypeOrmReadContainerModuleApi<TModel, TModelDb, TQuery>
     > {};
   }
 
-  public load(container: ContainerServiceApi): void {
+  public load(container: ContainerService): void {
     this.#loadFindTypeOrmAdapter(container);
   }
 
-  #loadFindTypeOrmAdapter(container: ContainerServiceApi): void {
+  #loadFindTypeOrmAdapter(container: ContainerService): void {
     this.#decorateFindTypeOrmAdapterInjectable();
     this.#decorateFindTypeOrmAdapterRepository();
     this.#decorateModelDbToModelConverter();
@@ -66,7 +66,7 @@ export class TypeOrmReadContainerModuleApi<TModel, TModelDb, TQuery>
 
     injectable({
       id: readEntityAdapterServiceId,
-      scope: TaskScopeApi.singleton,
+      scope: TaskScope.singleton,
     })(this.#readTypeOrmAdapterType);
   }
 

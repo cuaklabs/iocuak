@@ -1,11 +1,11 @@
 import {
-  ContainerServiceApi,
-  ContainerModuleApi,
+  ContainerService,
+  ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScopeApi,
+  TaskScope,
 } from '@cuaklabs/iocuak';
 
 import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
@@ -14,9 +14,7 @@ import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap
 import { DeleteEntityPort } from '../../port/application/DeleteEntityPort';
 import { DeleteEntityInteractor } from '../domain/DeleteEntityInteractor';
 
-export class DomainDeleteContainerModuleApi<TQuery>
-  implements ContainerModuleApi
-{
+export class DomainDeleteContainerModule<TQuery> implements ContainerModule {
   readonly #crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>;
   readonly #deleteEntityInteractorType: Newable<
     InteractorAsync<TQuery, void>,
@@ -33,17 +31,17 @@ export class DomainDeleteContainerModuleApi<TQuery>
     )<TQuery> {};
   }
 
-  public load(container: ContainerServiceApi): void {
+  public load(container: ContainerService): void {
     this.#loadDeleteEntityInteractor(container);
   }
 
-  #loadDeleteEntityInteractor(container: ContainerServiceApi): void {
+  #loadDeleteEntityInteractor(container: ContainerService): void {
     const deleteEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.deleteEntityInteractor];
 
     injectable({
       id: deleteEntityInteractorServiceId,
-      scope: TaskScopeApi.singleton,
+      scope: TaskScope.singleton,
     })(this.#deleteEntityInteractorType);
 
     const deleteEntityAdapterServiceId: ServiceId =
