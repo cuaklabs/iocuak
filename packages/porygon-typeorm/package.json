@@ -1,6 +1,6 @@
 {
   "name": "@cuaklabs/porygon-typeorm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TypeORM adapters for porygon",
   "main": "lib/index.js",
   "repository": {
@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/porygon-typeorm#readme",
   "dependencies": {
-    "@cuaklabs/iocuak": "^0.1.0",
-    "@cuaklabs/porygon": "^0.1.0",
+    "@cuaklabs/iocuak": "^0.1.1",
+    "@cuaklabs/porygon": "^0.1.1",
     "typeorm": "^0.3.3"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@cuaklabs/iocuak",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Minimal inversion of control container inspired by InversifyJS (https://inversify.io/)",
   "main": "lib/index.js",
   "repository": {
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/iocuak#readme",
   "dependencies": {
-    "@cuaklabs/cuaktask": "^0.1.0"
+    "@cuaklabs/cuaktask": "^0.1.1"
   },
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
   "publishConfig": {
