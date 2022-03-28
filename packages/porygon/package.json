@@ -1,6 +1,6 @@
 {
   "name": "@cuaklabs/porygon",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "The hexagonal architecture framework",
   "main": "lib/index.js",
   "repository": {
@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/porygon#readme",
   "dependencies": {
-    "@cuaklabs/iocuak": "^0.0.7"
+    "@cuaklabs/iocuak": "^0.1.0"
   },
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
   "publishConfig": {

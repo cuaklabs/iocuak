@@ -1,6 +1,6 @@
 {
   "name": "@cuaklabs/cuaktask",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "Minimal abstract task manager",
   "main": "lib/index.js",
   "repository": {
