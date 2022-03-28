@@ -1,4 +1,4 @@
-import { TaskScopeApi } from '../../../task/models/api/TaskScopeApi';
+import { BindingScopeApi } from '../../models/api/BindingScopeApi';
 import { InjectableOptionsApi } from '../../models/api/InjectableOptionsApi';
 
 export class InjectableOptionsApiFixtures {
@@ -18,7 +18,7 @@ export class InjectableOptionsApiFixtures {
 
   public static get withScope(): InjectableOptionsApi {
     const fixture: InjectableOptionsApi = {
-      scope: TaskScopeApi.singleton,
+      scope: BindingScopeApi.singleton,
     };
 
     return fixture;

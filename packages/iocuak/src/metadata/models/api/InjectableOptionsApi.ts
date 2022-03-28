@@ -1,7 +1,7 @@
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { TaskScopeApi } from '../../../task/models/api/TaskScopeApi';
+import { BindingScopeApi } from './BindingScopeApi';
 
 export interface InjectableOptionsApi {
   id?: ServiceId;
-  scope?: TaskScopeApi;
+  scope?: BindingScopeApi;
 }

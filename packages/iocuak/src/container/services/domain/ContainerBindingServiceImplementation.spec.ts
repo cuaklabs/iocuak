@@ -1,7 +1,7 @@
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Binding } from '../../../metadata/models/domain/Binding';
+import { BindingScope } from '../../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../../metadata/models/domain/BindingType';
-import { TaskScope } from '../../../task/models/domain/TaskScope';
 import { ContainerBindingService } from './ContainerBindingService';
 import { ContainerBindingServiceImplementation } from './ContainerBindingServiceImplementation';
 
@@ -61,7 +61,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
         bindingFixture = {
           bindingType: BindingType.type,
           id: serviceIdFixture,
-          scope: TaskScope.transient,
+          scope: BindingScope.transient,
           type: class {},
         };
 
@@ -95,7 +95,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
         bindingFixture = {
           bindingType: BindingType.type,
           id: 'service-id',
-          scope: TaskScope.transient,
+          scope: BindingScope.transient,
           type: class {},
         };
 
@@ -124,7 +124,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
         bindingFixture = {
           bindingType: BindingType.type,
           id: 'service-id',
-          scope: TaskScope.transient,
+          scope: BindingScope.transient,
           type: class {},
         };
 
@@ -152,7 +152,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
         parentBindingFixture = {
           bindingType: BindingType.type,
           id: 'parent-service-id',
-          scope: TaskScope.transient,
+          scope: BindingScope.transient,
           type: class {},
         };
 
@@ -174,7 +174,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
         bindingFixture = {
           bindingType: BindingType.type,
           id: 'service-id',
-          scope: TaskScope.transient,
+          scope: BindingScope.transient,
           type: class {},
         };
 
@@ -205,7 +205,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
         parentBindingFixture = {
           bindingType: BindingType.type,
           id: 'service-id',
-          scope: TaskScope.singleton,
+          scope: BindingScope.singleton,
           type: class {},
         };
 
@@ -227,7 +227,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
         bindingFixture = {
           bindingType: BindingType.type,
           id: 'service-id',
-          scope: TaskScope.transient,
+          scope: BindingScope.transient,
           type: class {},
         };
 
@@ -256,7 +256,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
         bindingFixture = {
           bindingType: BindingType.type,
           id: 'sample-service-id',
-          scope: TaskScope.transient,
+          scope: BindingScope.transient,
           type: class {},
         };
 
@@ -315,7 +315,7 @@ describe(ContainerBindingServiceImplementation.name, () => {
         bindingFixture = {
           bindingType: BindingType.type,
           id: 'sample-service-id',
-          scope: TaskScope.transient,
+          scope: BindingScope.transient,
           type: class {},
         };
 

@@ -5,12 +5,12 @@ import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { BindingApi } from '../../../metadata/models/api/BindingApi';
 import { BindingApiType } from '../../../metadata/models/api/BindingApiType';
 import { Binding } from '../../../metadata/models/domain/Binding';
+import { BindingScope } from '../../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../../metadata/models/domain/BindingType';
 import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
 import { ValueBinding } from '../../../metadata/models/domain/ValueBinding';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { convertBindingToBindingApi } from '../../../metadata/utils/api/convertBindingToBindingApi';
-import { TaskScope } from '../../../task/models/domain/TaskScope';
 import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
 import { ContainerBindingService } from '../domain/ContainerBindingService';
 import { ContainerInstanceService } from '../domain/ContainerInstanceService';
@@ -90,7 +90,7 @@ describe(ContainerServiceApiImplementation.name, () => {
         bindingFixture = {
           bindingType: BindingType.type,
           id: 'sample-service-id',
-          scope: TaskScope.transient,
+          scope: BindingScope.transient,
           type: typeFixture,
         };
 

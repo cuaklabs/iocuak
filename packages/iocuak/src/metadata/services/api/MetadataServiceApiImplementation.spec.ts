@@ -2,12 +2,12 @@ jest.mock('../../utils/api/convertBindingToBindingApi');
 jest.mock('../../utils/api/convertClassMetadataToClassMetadataApi');
 
 import { Newable } from '../../../common/models/domain/Newable';
-import { TaskScopeApi } from '../../../task/models/api/TaskScopeApi';
-import { TaskScope } from '../../../task/models/domain/TaskScope';
 import { BindingApi } from '../../models/api/BindingApi';
 import { BindingApiType } from '../../models/api/BindingApiType';
+import { BindingScopeApi } from '../../models/api/BindingScopeApi';
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { Binding } from '../../models/domain/Binding';
+import { BindingScope } from '../../models/domain/BindingScope';
 import { BindingType } from '../../models/domain/BindingType';
 import { ClassMetadata } from '../../models/domain/ClassMetadata';
 import { convertBindingToBindingApi } from '../../utils/api/convertBindingToBindingApi';
@@ -72,14 +72,14 @@ describe(MetadataServiceApiImplementation.name, () => {
         bindingFixture = {
           bindingType: BindingType.type,
           id: 'service-id',
-          scope: TaskScope.singleton,
+          scope: BindingScope.singleton,
           type: class {},
         };
 
         bindingApiFixture = {
           bindingType: BindingApiType.type,
           id: bindingFixture.id,
-          scope: TaskScopeApi.singleton,
+          scope: BindingScopeApi.singleton,
           type: bindingFixture.type,
         };
 

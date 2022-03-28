@@ -5,13 +5,13 @@ import { ContainerBindingService } from '../../../container/services/domain/Cont
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
 import { Binding } from '../../../metadata/models/domain/Binding';
+import { BindingScope } from '../../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../../metadata/models/domain/BindingType';
 import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
 import { stringifyServiceId } from '../../../utils/stringifyServiceId';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
 import { TaskKind } from '../domain/TaskKind';
-import { TaskScope } from '../domain/TaskScope';
 
 export class CreateInstanceTask<
   TInstance = unknown,
@@ -69,19 +69,19 @@ export class CreateInstanceTask<
     let instance: TInstance;
 
     switch (binding.scope) {
-      case TaskScope.request:
+      case BindingScope.request:
         instance = this.#createInstanceInRequestScope(
           serviceDependencies,
           binding,
         );
         break;
-      case TaskScope.singleton:
+      case BindingScope.singleton:
         instance = this.#createInstanceInSingletonScope(
           serviceDependencies,
           binding,
         );
         break;
-      case TaskScope.transient:
+      case BindingScope.transient:
         instance = this.#createInstanceInTransientScope(
           serviceDependencies,
           binding,
