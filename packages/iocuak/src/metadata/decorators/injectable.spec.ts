@@ -2,10 +2,10 @@ import 'reflect-metadata';
 
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { TaskScopeApi } from '../../task/models/api/TaskScopeApi';
-import { taskScopeApiToTaskScopeMap } from '../../task/models/api/taskScopeApiToTaskScopeMap';
-import { TaskScope } from '../../task/models/domain/TaskScope';
 import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
+import { BindingScopeApi } from '../models/api/BindingScopeApi';
+import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
+import { BindingScope } from '../models/domain/BindingScope';
 import { BindingType } from '../models/domain/BindingType';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { TypeBinding } from '../models/domain/TypeBinding';
@@ -32,7 +32,7 @@ describe(injectable.name, () => {
       expect(reflectMetadata).toStrictEqual<TypeBinding>({
         bindingType: BindingType.type,
         id: targetFixture,
-        scope: TaskScope.transient,
+        scope: BindingScope.transient,
         type: targetFixture,
       });
     });
@@ -58,7 +58,7 @@ describe(injectable.name, () => {
       expect(reflectMetadata).toStrictEqual<TypeBinding>({
         bindingType: BindingType.type,
         id: targetFixture,
-        scope: TaskScope.transient,
+        scope: BindingScope.transient,
         type: targetFixture,
       });
     });
@@ -84,7 +84,7 @@ describe(injectable.name, () => {
       expect(reflectMetadata).toStrictEqual<TypeBinding>({
         bindingType: BindingType.type,
         id: InjectableOptionsApiFixtures.withId.id as ServiceId,
-        scope: TaskScope.transient,
+        scope: BindingScope.transient,
         type: targetFixture,
       });
     });
@@ -107,9 +107,9 @@ describe(injectable.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      const expectedScope: TaskScope =
-        taskScopeApiToTaskScopeMap[
-          InjectableOptionsApiFixtures.withScope.scope as TaskScopeApi
+      const expectedScope: BindingScope =
+        bindingScopeApiToBindingScopeMap[
+          InjectableOptionsApiFixtures.withScope.scope as BindingScopeApi
         ];
 
       expect(reflectMetadata).toStrictEqual<TypeBinding>({

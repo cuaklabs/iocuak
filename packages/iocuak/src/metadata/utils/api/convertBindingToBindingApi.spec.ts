@@ -1,7 +1,7 @@
-import { TaskScopeApi } from '../../../task/models/api/TaskScopeApi';
-import { TaskScope } from '../../../task/models/domain/TaskScope';
 import { BindingApi } from '../../models/api/BindingApi';
 import { BindingApiType } from '../../models/api/BindingApiType';
+import { BindingScopeApi } from '../../models/api/BindingScopeApi';
+import { BindingScope } from '../../models/domain/BindingScope';
 import { BindingType } from '../../models/domain/BindingType';
 import { TypeBinding } from '../../models/domain/TypeBinding';
 import { ValueBinding } from '../../models/domain/ValueBinding';
@@ -15,7 +15,7 @@ describe(convertBindingToBindingApi.name, () => {
       bindingFixture = {
         bindingType: BindingType.type,
         id: 'service-id',
-        scope: TaskScope.transient,
+        scope: BindingScope.transient,
         type: class {},
       };
     });
@@ -31,7 +31,7 @@ describe(convertBindingToBindingApi.name, () => {
         const expected: BindingApi = {
           bindingType: BindingApiType.type,
           id: bindingFixture.id,
-          scope: TaskScopeApi.transient,
+          scope: BindingScopeApi.transient,
           type: bindingFixture.type,
         };
 

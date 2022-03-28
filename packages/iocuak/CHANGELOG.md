@@ -22,19 +22,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [UNRELEASED]
 
 ### Added
-- Added `BindingApi`
-- Added `ClassMetadataApi`
-- Added `MetadataProviderApi`.
-- Added `MetadataServiceApi`
-- Added `TypeBindingApi`
-- Added `ValueBindingApi`
+- Added `Binding`
+- Added `ClassMetadata`
+- Added `MetadataProvider`.
+- Added `MetadataService`
+- Added `TypeBinding`
+- Added `ValueBinding`
 
 ### Changed
 - Updated `ContainerApi` with `build` and `createChild` methods.
 - `ContainerServiceApi` interface is now exposed.
 - [BC]: Updated `ContainerApi` constructor to be private.
-- [BC]: Renamed `BindingApi` to `InjectableOptionsApi`.
-- [BC]: Renamed `TaskScope` to `TaskScopeApi`.
+- [BC]: Renamed `BindingApi` to `InjectableOptions`.
+- [BC]: Renamed `TaskScope` to `BindingScope`.
+- [BC]: Renamed `ContainerApi` to `Container`.
 
 
 

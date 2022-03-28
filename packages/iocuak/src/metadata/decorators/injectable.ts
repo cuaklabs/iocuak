@@ -1,8 +1,8 @@
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { taskScopeApiToTaskScopeMap } from '../../task/models/api/taskScopeApiToTaskScopeMap';
-import { TaskScope } from '../../task/models/domain/TaskScope';
+import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { InjectableOptionsApi } from '../models/api/InjectableOptionsApi';
+import { BindingScope } from '../models/domain/BindingScope';
 import { BindingType } from '../models/domain/BindingType';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { TypeBinding } from '../models/domain/TypeBinding';
@@ -15,10 +15,10 @@ export function injectable(bindingApi?: InjectableOptionsApi): ClassDecorator {
     const bindingId: ServiceId =
       bindingApi?.id ?? (target as unknown as Newable);
 
-    const bindingScope: TaskScope =
+    const bindingScope: BindingScope =
       bindingApi?.scope === undefined
-        ? TaskScope.transient
-        : taskScopeApiToTaskScopeMap[bindingApi.scope];
+        ? BindingScope.transient
+        : bindingScopeApiToBindingScopeMap[bindingApi.scope];
 
     const binding: TypeBinding = {
       bindingType: BindingType.type,

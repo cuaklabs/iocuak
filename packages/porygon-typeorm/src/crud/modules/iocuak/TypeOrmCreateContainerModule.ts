@@ -1,11 +1,11 @@
 import {
+  BindingScope,
   ContainerService,
   ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScope,
 } from '@cuaklabs/iocuak';
 import {
   ConverterAsync,
@@ -69,7 +69,7 @@ export class TypeOrmCreateContainerModule<TModel, TModelDb, TQuery>
 
     injectable({
       id: createEntityAdapterServiceId,
-      scope: TaskScope.singleton,
+      scope: BindingScope.singleton,
     })(this.#insertTypeOrmAdapterType);
   }
 

@@ -1,13 +1,13 @@
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
+import { BindingScope } from '../../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../../metadata/models/domain/BindingType';
 import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
 import { ValueBinding } from '../../../metadata/models/domain/ValueBinding';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { ServiceDependenciesFixtures } from '../../fixtures/domain/ServiceDependenciesFixtures';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
-import { TaskScope } from '../domain/TaskScope';
 import { CreateInstanceTask } from './CreateInstanceTask';
 
 class InstanceTest {
@@ -105,7 +105,7 @@ describe(CreateInstanceTask.name, () => {
           bindingFixture = {
             bindingType: BindingType.type,
             id: 'sample-id',
-            scope: TaskScope.transient,
+            scope: BindingScope.transient,
             type: instanceConstructorCallMock,
           };
 
@@ -187,7 +187,7 @@ describe(CreateInstanceTask.name, () => {
           bindingFixture = {
             bindingType: BindingType.type,
             id: taskKindFixture.id,
-            scope: TaskScope.singleton,
+            scope: BindingScope.singleton,
             type: instanceConstructorCallMock,
           };
 
@@ -295,7 +295,7 @@ describe(CreateInstanceTask.name, () => {
           bindingFixture = {
             bindingType: BindingType.type,
             id: 'sample-id',
-            scope: TaskScope.singleton,
+            scope: BindingScope.singleton,
             type: instanceConstructorCallMock,
           };
 
@@ -376,7 +376,7 @@ describe(CreateInstanceTask.name, () => {
           bindingFixture = {
             bindingType: BindingType.type,
             id: taskKindFixture.id,
-            scope: TaskScope.request,
+            scope: BindingScope.request,
             type: instanceConstructorCallMock,
           };
 
@@ -487,7 +487,7 @@ describe(CreateInstanceTask.name, () => {
           bindingFixture = {
             bindingType: BindingType.type,
             id: 'sample-id',
-            scope: TaskScope.request,
+            scope: BindingScope.request,
             type: instanceConstructorCallMock,
           };
 

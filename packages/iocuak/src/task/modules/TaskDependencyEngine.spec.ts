@@ -2,6 +2,7 @@ import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
 import { Binding } from '../../metadata/models/domain/Binding';
+import { BindingScope } from '../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../metadata/models/domain/BindingType';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
@@ -10,7 +11,6 @@ import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind'
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
-import { TaskScope } from '../models/domain/TaskScope';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
 
 describe(TaskDependencyEngine.name, () => {
@@ -81,7 +81,7 @@ describe(TaskDependencyEngine.name, () => {
           bindingFixture = {
             bindingType: BindingType.type,
             id: createInstanceTaskKindFixture.id,
-            scope: TaskScope.transient,
+            scope: BindingScope.transient,
             type: class {},
           };
 

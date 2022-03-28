@@ -1,11 +1,11 @@
 import {
+  BindingScope,
   ContainerService,
   ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScope,
 } from '@cuaklabs/iocuak';
 
 import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
@@ -41,7 +41,7 @@ export class DomainUpdateContainerModule<TQuery> implements ContainerModule {
 
     injectable({
       id: updateEntityInteractorServiceId,
-      scope: TaskScope.singleton,
+      scope: BindingScope.singleton,
     })(this.#updateEntityInteractorType);
 
     const updateEntityAdapterServiceId: ServiceId =

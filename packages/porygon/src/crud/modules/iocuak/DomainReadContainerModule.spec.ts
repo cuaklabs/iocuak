@@ -1,6 +1,6 @@
 jest.mock('@cuaklabs/iocuak');
 
-import { Container, inject, injectable, TaskScope } from '@cuaklabs/iocuak';
+import { Container, inject, injectable, BindingScope } from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
@@ -102,7 +102,7 @@ describe(DomainReadContainerModule.name, () => {
       it('should call @injectable() on ReadOneInteractor in the first call', () => {
         expect(injectable).toHaveBeenNthCalledWith(1, {
           id: crudModuleTypeToSymbolMap.readOneEntityInteractor,
-          scope: TaskScope.singleton,
+          scope: BindingScope.singleton,
         });
 
         expect(injectableDecoratorMock).toHaveBeenNthCalledWith(
@@ -114,7 +114,7 @@ describe(DomainReadContainerModule.name, () => {
       it('should call @injectable() on ReadManyInteractor in the second call', () => {
         expect(injectable).toHaveBeenNthCalledWith(2, {
           id: crudModuleTypeToSymbolMap.readManyEntityInteractor,
-          scope: TaskScope.singleton,
+          scope: BindingScope.singleton,
         });
 
         expect(injectableDecoratorMock).toHaveBeenNthCalledWith(

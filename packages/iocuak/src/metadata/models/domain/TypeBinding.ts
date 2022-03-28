@@ -1,6 +1,6 @@
 import { Newable } from '../../../common/models/domain/Newable';
-import { TaskScope } from '../../../task/models/domain/TaskScope';
 import { BaseBinding } from './BaseBinding';
+import { BindingScope } from './BindingScope';
 import { BindingType } from './BindingType';
 
 export interface TypeBinding<
@@ -8,6 +8,6 @@ export interface TypeBinding<
   TArgs extends unknown[] = unknown[],
 > extends BaseBinding {
   bindingType: BindingType.type;
-  scope: TaskScope;
+  scope: BindingScope;
   type: Newable<TInstance, TArgs>;
 }

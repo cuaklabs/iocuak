@@ -1,6 +1,6 @@
-import { taskScopeToTaskScopeApiMap } from '../../../task/models/api/taskScopeToTaskScopeApiMap';
 import { BindingApi } from '../../models/api/BindingApi';
 import { BindingApiType } from '../../models/api/BindingApiType';
+import { bindingScopeToBindingScopeApiMap } from '../../models/api/bindingScopeToBindingScopeApiMap';
 import { TypeBindingApi } from '../../models/api/TypeBindingApi';
 import { ValueBindingApi } from '../../models/api/ValueBindingApi';
 import { Binding } from '../../models/domain/Binding';
@@ -27,7 +27,7 @@ export function convertBindingToBindingApi<TInstance, TArgs extends unknown[]>(
       bindingApi = {
         bindingType: BindingApiType.type,
         id: binding.id,
-        scope: taskScopeToTaskScopeApiMap[binding.scope],
+        scope: bindingScopeToBindingScopeApiMap[binding.scope],
         type: binding.type,
       };
       break;

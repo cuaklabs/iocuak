@@ -1,11 +1,11 @@
 import {
+  BindingScope,
   ContainerService,
   ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScope,
 } from '@cuaklabs/iocuak';
 import {
   CrudModuleType,
@@ -59,7 +59,7 @@ export class TypeOrmDeleteContainerModule<TModelDb, TQuery>
 
     injectable({
       id: deleteEntityAdapterServiceId,
-      scope: TaskScope.singleton,
+      scope: BindingScope.singleton,
     })(this.#deleteTypeOrmAdapterType);
   }
 

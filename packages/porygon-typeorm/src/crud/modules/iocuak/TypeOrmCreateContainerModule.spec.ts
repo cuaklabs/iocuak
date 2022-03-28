@@ -1,6 +1,6 @@
 jest.mock('@cuaklabs/iocuak');
 
-import { Container, inject, injectable, TaskScope } from '@cuaklabs/iocuak';
+import { Container, inject, injectable, BindingScope } from '@cuaklabs/iocuak';
 import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
 
 import { InsertTypeOrmAdapter } from '../../adapter/typeorm/InsertTypeOrmAdapter';
@@ -112,7 +112,7 @@ describe(TypeOrmCreateContainerModule.name, () => {
 
         expect(injectable).toHaveBeenCalledWith({
           id: crudModuleTypeToSymbolMap.createEntityAdapter,
-          scope: TaskScope.singleton,
+          scope: BindingScope.singleton,
         });
 
         expect(injectableDecoratorMock).toHaveBeenCalledWith(

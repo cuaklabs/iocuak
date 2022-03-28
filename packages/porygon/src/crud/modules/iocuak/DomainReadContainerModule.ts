@@ -1,11 +1,11 @@
 import {
+  BindingScope,
   ContainerService,
   ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
-  TaskScope,
 } from '@cuaklabs/iocuak';
 
 import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
@@ -53,7 +53,7 @@ export class DomainReadContainerModule<TModel, TQuery>
 
     injectable({
       id: readOneEntityInteractorServiceId,
-      scope: TaskScope.singleton,
+      scope: BindingScope.singleton,
     })(this.#readOneEntityInteractorType);
 
     const readEntityAdapterServiceId: ServiceId =
@@ -74,7 +74,7 @@ export class DomainReadContainerModule<TModel, TQuery>
 
     injectable({
       id: readManyEntityInteractorServiceId,
-      scope: TaskScope.singleton,
+      scope: BindingScope.singleton,
     })(this.#readManyEntityInteractorType);
 
     const readEntityAdapterServiceId: ServiceId =
