@@ -13,7 +13,7 @@
     "packages:link": "node ./scripts/cretateSymlinks.mjs",
     "prebuild": "pnpm run build:clean",
     "prepare": "husky install",
-    "prepublish:packages": "pnpm run build:prod && pnpm run test",
+    "prepublish:packages": "pnpm run build && pnpm run test",
     "publish:packages": "lerna publish from-package",
     "test:coverage": "pnpm run test -- --coverage",
     "test:integration": "jest --config=config/jest/jest.config.mjs --selectProjects Integration",
