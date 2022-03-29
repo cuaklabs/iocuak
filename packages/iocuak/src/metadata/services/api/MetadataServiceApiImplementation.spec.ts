@@ -3,8 +3,8 @@ jest.mock('../../utils/api/convertClassMetadataToClassMetadataApi');
 
 import { Newable } from '../../../common/models/domain/Newable';
 import { BindingApi } from '../../models/api/BindingApi';
-import { BindingApiType } from '../../models/api/BindingApiType';
 import { BindingScopeApi } from '../../models/api/BindingScopeApi';
+import { BindingTypeApi } from '../../models/api/BindingTypeApi';
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { Binding } from '../../models/domain/Binding';
 import { BindingScope } from '../../models/domain/BindingScope';
@@ -77,7 +77,7 @@ describe(MetadataServiceApiImplementation.name, () => {
         };
 
         bindingApiFixture = {
-          bindingType: BindingApiType.type,
+          bindingType: BindingTypeApi.type,
           id: bindingFixture.id,
           scope: BindingScopeApi.singleton,
           type: bindingFixture.type,

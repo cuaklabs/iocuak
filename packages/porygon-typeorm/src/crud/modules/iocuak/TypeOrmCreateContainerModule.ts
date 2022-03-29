@@ -1,11 +1,11 @@
 import {
   BindingScope,
-  ContainerService,
   ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
+  ContainerModuleBindingService,
 } from '@cuaklabs/iocuak';
 import {
   ConverterAsync,
@@ -50,17 +50,21 @@ export class TypeOrmCreateContainerModule<TModel, TModelDb, TQuery>
     > {};
   }
 
-  public load(container: ContainerService): void {
-    this.#loadInsertTypeOrmAdapter(container);
+  public load(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
+    this.#loadInsertTypeOrmAdapter(containerModuleBindingService);
   }
 
-  #loadInsertTypeOrmAdapter(container: ContainerService): void {
+  #loadInsertTypeOrmAdapter(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
     this.#decorateInsertTypeOrmAdapterInjectable();
     this.#decorateInsertTypeOrmAdapterRepository();
     this.#decorateInsertTypeOrmAdapterModelDbToModelConverter();
     this.#decorateInsertTypeOrmAdapterInsertQueryToSetTypeOrmQueryConverter();
 
-    container.bind(this.#insertTypeOrmAdapterType);
+    containerModuleBindingService.bind(this.#insertTypeOrmAdapterType);
   }
 
   #decorateInsertTypeOrmAdapterInjectable(): void {

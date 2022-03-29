@@ -1,11 +1,11 @@
 import {
   BindingScope,
-  ContainerService,
   ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
+  ContainerModuleBindingService,
 } from '@cuaklabs/iocuak';
 
 import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
@@ -42,12 +42,16 @@ export class DomainReadContainerModule<TModel, TQuery>
     > {};
   }
 
-  public load(container: ContainerService): void {
-    this.#loadReadOneEntityInteractor(container);
-    this.#loadReadManyEntityInteractor(container);
+  public load(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
+    this.#loadReadOneEntityInteractor(containerModuleBindingService);
+    this.#loadReadManyEntityInteractor(containerModuleBindingService);
   }
 
-  #loadReadOneEntityInteractor(container: ContainerService): void {
+  #loadReadOneEntityInteractor(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
     const readOneEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.readOneEntityInteractor];
 
@@ -65,10 +69,12 @@ export class DomainReadContainerModule<TModel, TQuery>
       0,
     );
 
-    container.bind(this.#readOneEntityInteractorType);
+    containerModuleBindingService.bind(this.#readOneEntityInteractorType);
   }
 
-  #loadReadManyEntityInteractor(container: ContainerService): void {
+  #loadReadManyEntityInteractor(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
     const readManyEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.readManyEntityInteractor];
 
@@ -86,6 +92,6 @@ export class DomainReadContainerModule<TModel, TQuery>
       0,
     );
 
-    container.bind(this.#readManyEntityInteractorType);
+    containerModuleBindingService.bind(this.#readManyEntityInteractorType);
   }
 }

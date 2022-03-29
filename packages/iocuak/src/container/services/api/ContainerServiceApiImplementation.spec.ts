@@ -3,7 +3,7 @@ jest.mock('../../../metadata/utils/api/convertBindingToBindingApi');
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { BindingApi } from '../../../metadata/models/api/BindingApi';
-import { BindingApiType } from '../../../metadata/models/api/BindingApiType';
+import { BindingTypeApi } from '../../../metadata/models/api/BindingTypeApi';
 import { Binding } from '../../../metadata/models/domain/Binding';
 import { BindingScope } from '../../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../../metadata/models/domain/BindingType';
@@ -202,7 +202,7 @@ describe(ContainerServiceApiImplementation.name, () => {
         };
 
         bindingApiFixture = {
-          bindingType: BindingApiType.value,
+          bindingType: BindingTypeApi.value,
           id: bindingFixture.id,
           value: bindingFixture.value,
         };

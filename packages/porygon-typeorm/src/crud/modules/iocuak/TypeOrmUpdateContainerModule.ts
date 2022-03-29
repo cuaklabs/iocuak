@@ -1,7 +1,7 @@
 import {
   BindingScope,
-  ContainerService,
   ContainerModule,
+  ContainerModuleBindingService,
   inject,
   injectable,
   Newable,
@@ -47,17 +47,21 @@ export class TypeOrmUpdateContainerModule<TModelDb, TQuery>
     > {};
   }
 
-  public load(container: ContainerService): void {
-    this.#loadUpdateTypeOrmAdapter(container);
+  public load(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
+    this.#loadUpdateTypeOrmAdapter(containerModuleBindingService);
   }
 
-  #loadUpdateTypeOrmAdapter(container: ContainerService): void {
+  #loadUpdateTypeOrmAdapter(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
     this.#decorateUpdateTypeOrmAdapterInjectable();
     this.#decorateUpdateTypeOrmAdapterRepository();
     this.#decorateUpdateTypeOrmAdapterUpdateQueryToFindQueryTypeOrmConverter();
     this.#decorateUpdateTypeOrmAdapterUpdateQueryToSetQueryTypeOrmConverter();
 
-    container.bind(this.#updateTypeOrmAdapterType);
+    containerModuleBindingService.bind(this.#updateTypeOrmAdapterType);
   }
 
   #decorateUpdateTypeOrmAdapterInjectable(): void {

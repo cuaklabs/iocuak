@@ -1,11 +1,11 @@
 import {
   BindingScope,
-  ContainerService,
   ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
+  ContainerModuleBindingService,
 } from '@cuaklabs/iocuak';
 import {
   CrudModuleType,
@@ -47,17 +47,21 @@ export class TypeOrmReadContainerModule<TModel, TModelDb, TQuery>
     > {};
   }
 
-  public load(container: ContainerService): void {
-    this.#loadFindTypeOrmAdapter(container);
+  public load(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
+    this.#loadFindTypeOrmAdapter(containerModuleBindingService);
   }
 
-  #loadFindTypeOrmAdapter(container: ContainerService): void {
+  #loadFindTypeOrmAdapter(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
     this.#decorateFindTypeOrmAdapterInjectable();
     this.#decorateFindTypeOrmAdapterRepository();
     this.#decorateModelDbToModelConverter();
     this.#decorateFindQueryToFindQueryTypeOrmConverter();
 
-    container.bind(this.#readTypeOrmAdapterType);
+    containerModuleBindingService.bind(this.#readTypeOrmAdapterType);
   }
 
   #decorateFindTypeOrmAdapterInjectable(): void {

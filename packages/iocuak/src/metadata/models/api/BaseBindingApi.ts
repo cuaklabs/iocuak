@@ -1,7 +1,7 @@
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { BindingApiType } from './BindingApiType';
+import { BindingTypeApi } from './BindingTypeApi';
 
 export interface BaseBindingApi {
   id: ServiceId;
-  bindingType: BindingApiType;
+  bindingType: BindingTypeApi;
 }

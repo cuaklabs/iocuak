@@ -1,4 +1,7 @@
-import { ContainerService, ContainerModule } from '@cuaklabs/iocuak';
+import {
+  ContainerModule,
+  ContainerModuleBindingService,
+} from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
@@ -7,19 +10,11 @@ import { DomainDeleteContainerModule } from './DomainDeleteContainerModule';
 import { DomainReadContainerModule } from './DomainReadContainerModule';
 import { DomainUpdateContainerModule } from './DomainUpdateContainerModule';
 
-export class DomainCrudContainerModule<TModel, TQuery>
-  implements ContainerModule
-{
-  readonly #domainCreationContainerModule: DomainCreateContainerModule<
-    TModel,
-    TQuery
-  >;
-  readonly #domainDeleteContainerModule: DomainDeleteContainerModule<TQuery>;
-  readonly #domainReadContainerModule: DomainReadContainerModule<
-    TModel,
-    TQuery
-  >;
-  readonly #domainUpdateContainerModule: DomainUpdateContainerModule<TQuery>;
+export class DomainCrudContainerModule implements ContainerModule {
+  readonly #domainCreationContainerModule: ContainerModule;
+  readonly #domainDeleteContainerModule: ContainerModule;
+  readonly #domainReadContainerModule: ContainerModule;
+  readonly #domainUpdateContainerModule: ContainerModule;
 
   constructor(
     crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>,
@@ -38,10 +33,12 @@ export class DomainCrudContainerModule<TModel, TQuery>
     );
   }
 
-  public load(container: ContainerService): void {
-    this.#domainCreationContainerModule.load(container);
-    this.#domainDeleteContainerModule.load(container);
-    this.#domainReadContainerModule.load(container);
-    this.#domainUpdateContainerModule.load(container);
+  public load(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
+    this.#domainCreationContainerModule.load(containerModuleBindingService);
+    this.#domainDeleteContainerModule.load(containerModuleBindingService);
+    this.#domainReadContainerModule.load(containerModuleBindingService);
+    this.#domainUpdateContainerModule.load(containerModuleBindingService);
   }
 }

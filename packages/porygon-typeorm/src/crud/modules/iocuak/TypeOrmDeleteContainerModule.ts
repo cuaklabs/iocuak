@@ -1,11 +1,11 @@
 import {
   BindingScope,
-  ContainerService,
   ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
+  ContainerModuleBindingService,
 } from '@cuaklabs/iocuak';
 import {
   CrudModuleType,
@@ -41,16 +41,20 @@ export class TypeOrmDeleteContainerModule<TModelDb, TQuery>
     > {};
   }
 
-  public load(container: ContainerService): void {
-    this.#loadDeleteTypeOrmAdapter(container);
+  public load(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
+    this.#loadDeleteTypeOrmAdapter(containerModuleBindingService);
   }
 
-  #loadDeleteTypeOrmAdapter(container: ContainerService): void {
+  #loadDeleteTypeOrmAdapter(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
     this.#decorateDeleteTypeOrmAdapterInjectable();
     this.#decorateDeleteTypeOrmAdapterRepository();
     this.#decorateDeleteTypeOrmAdapterFindQueryToFindQueryTypeOrmConverter();
 
-    container.bind(this.#deleteTypeOrmAdapterType);
+    containerModuleBindingService.bind(this.#deleteTypeOrmAdapterType);
   }
 
   #decorateDeleteTypeOrmAdapterInjectable(): void {

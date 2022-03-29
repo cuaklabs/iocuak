@@ -1,6 +1,11 @@
 jest.mock('@cuaklabs/iocuak');
 
-import { Container, inject, injectable, BindingScope } from '@cuaklabs/iocuak';
+import {
+  inject,
+  injectable,
+  BindingScope,
+  ContainerModuleBindingService,
+} from '@cuaklabs/iocuak';
 import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
 
 import { UpdateTypeOrmAdapter } from '../../adapter/typeorm/UpdateTypeOrmAdapter';
@@ -62,12 +67,14 @@ describe(TypeOrmUpdateContainerModule.name, () => {
   });
 
   describe('.load()', () => {
-    let containerApiMock: jest.Mocked<Container>;
+    let containerModuleBindingServiceMock: jest.Mocked<ContainerModuleBindingService>;
 
     beforeAll(() => {
-      containerApiMock = {
+      containerModuleBindingServiceMock = {
         bind: jest.fn(),
-      } as Partial<jest.Mocked<Container>> as jest.Mocked<Container>;
+      } as Partial<
+        jest.Mocked<ContainerModuleBindingService>
+      > as jest.Mocked<ContainerModuleBindingService>;
     });
 
     describe('when called', () => {
@@ -98,7 +105,7 @@ describe(TypeOrmUpdateContainerModule.name, () => {
           injectableDecoratorMock,
         );
 
-        typeOrmUpdateContainerModule.load(containerApiMock);
+        typeOrmUpdateContainerModule.load(containerModuleBindingServiceMock);
       });
 
       afterAll(() => {
@@ -171,8 +178,8 @@ describe(TypeOrmUpdateContainerModule.name, () => {
       });
 
       it('should call containerApi.bind()', () => {
-        expect(containerApiMock.bind).toHaveBeenCalledTimes(1);
-        expect(containerApiMock.bind).toHaveBeenCalledWith(
+        expect(containerModuleBindingServiceMock.bind).toHaveBeenCalledTimes(1);
+        expect(containerModuleBindingServiceMock.bind).toHaveBeenCalledWith(
           expectClassExtending(UpdateTypeOrmAdapter),
         );
       });
