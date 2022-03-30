@@ -1,13 +1,13 @@
 import { Newable } from '../../../common/models/domain/Newable';
 import { BaseBindingApi } from './BaseBindingApi';
-import { BindingApiType } from './BindingApiType';
 import { BindingScopeApi } from './BindingScopeApi';
+import { BindingTypeApi } from './BindingTypeApi';
 
 export interface TypeBindingApi<
   TInstance = unknown,
   TArgs extends unknown[] = unknown[],
 > extends BaseBindingApi {
-  bindingType: BindingApiType.type;
+  bindingType: BindingTypeApi.type;
   scope: BindingScopeApi;
   type: Newable<TInstance, TArgs>;
 }

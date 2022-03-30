@@ -1,11 +1,11 @@
 import {
   BindingScope,
-  ContainerService,
   ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
+  ContainerModuleBindingService,
 } from '@cuaklabs/iocuak';
 
 import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
@@ -31,11 +31,15 @@ export class DomainUpdateContainerModule<TQuery> implements ContainerModule {
     )<TQuery> {};
   }
 
-  public load(container: ContainerService): void {
-    this.#loadUpdateEntityInteractor(container);
+  public load(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
+    this.#loadUpdateEntityInteractor(containerModuleBindingService);
   }
 
-  #loadUpdateEntityInteractor(container: ContainerService): void {
+  #loadUpdateEntityInteractor(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
     const updateEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.updateEntityInteractor];
 
@@ -53,6 +57,6 @@ export class DomainUpdateContainerModule<TQuery> implements ContainerModule {
       0,
     );
 
-    container.bind(this.#updateEntityInteractorType);
+    containerModuleBindingService.bind(this.#updateEntityInteractorType);
   }
 }

@@ -1,5 +1,7 @@
-import { ContainerServiceApi } from '../../services/api/ContainerServiceApi';
+import { ContainerModuleBindingServiceApi } from '../../services/api/ContainerModuleBindingServiceApi';
 
 export interface ContainerModuleApi {
-  load(container: ContainerServiceApi): void;
+  load(
+    containerModuleBindingServiceApi: ContainerModuleBindingServiceApi,
+  ): void;
 }

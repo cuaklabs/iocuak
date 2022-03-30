@@ -1,4 +1,7 @@
-import { ContainerService, ContainerModule } from '@cuaklabs/iocuak';
+import {
+  ContainerModule,
+  ContainerModuleBindingService,
+} from '@cuaklabs/iocuak';
 import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
 import { Repository } from 'typeorm';
 
@@ -8,30 +11,14 @@ import { TypeOrmDeleteContainerModule } from './TypeOrmDeleteContainerModule';
 import { TypeOrmReadContainerModule } from './TypeOrmReadContainerModule';
 import { TypeOrmUpdateContainerModule } from './TypeOrmUpdateContainerModule';
 
-export class TypeOrmCrudContainerModule<TModel, TModelDb, TQuery>
-  implements ContainerModule
-{
+export class TypeOrmCrudContainerModule<TModelDb> implements ContainerModule {
   readonly #crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
   readonly #repository: Repository<TModelDb>;
 
-  readonly #typeOrmCreationContainerModule: TypeOrmCreateContainerModule<
-    TModel,
-    TModelDb,
-    TQuery
-  >;
-  readonly #typeOrmDeleteContainerModule: TypeOrmDeleteContainerModule<
-    TModelDb,
-    TQuery
-  >;
-  readonly #typeOrmReadContainerModule: TypeOrmReadContainerModule<
-    TModel,
-    TModelDb,
-    TQuery
-  >;
-  readonly #typeOrmUpdateContainerModule: TypeOrmUpdateContainerModule<
-    TModelDb,
-    TQuery
-  >;
+  readonly #typeOrmCreationContainerModule: ContainerModule;
+  readonly #typeOrmDeleteContainerModule: ContainerModule;
+  readonly #typeOrmReadContainerModule: ContainerModule;
+  readonly #typeOrmUpdateContainerModule: ContainerModule;
 
   constructor(
     crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>,
@@ -59,15 +46,17 @@ export class TypeOrmCrudContainerModule<TModel, TModelDb, TQuery>
     );
   }
 
-  public load(container: ContainerService): void {
-    container.bindToValue(
+  public load(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
+    containerModuleBindingService.bindToValue(
       this.#crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
       this.#repository,
     );
 
-    this.#typeOrmCreationContainerModule.load(container);
-    this.#typeOrmDeleteContainerModule.load(container);
-    this.#typeOrmReadContainerModule.load(container);
-    this.#typeOrmUpdateContainerModule.load(container);
+    this.#typeOrmCreationContainerModule.load(containerModuleBindingService);
+    this.#typeOrmDeleteContainerModule.load(containerModuleBindingService);
+    this.#typeOrmReadContainerModule.load(containerModuleBindingService);
+    this.#typeOrmUpdateContainerModule.load(containerModuleBindingService);
   }
 }

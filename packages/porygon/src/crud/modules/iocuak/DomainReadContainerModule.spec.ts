@@ -1,6 +1,11 @@
 jest.mock('@cuaklabs/iocuak');
 
-import { Container, inject, injectable, BindingScope } from '@cuaklabs/iocuak';
+import {
+  inject,
+  injectable,
+  BindingScope,
+  ContainerModuleBindingService,
+} from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
@@ -52,12 +57,14 @@ describe(DomainReadContainerModule.name, () => {
   });
 
   describe('.load()', () => {
-    let containerApiMock: jest.Mocked<Container>;
+    let containerModuleBindingServiceMock: jest.Mocked<ContainerModuleBindingService>;
 
     beforeAll(() => {
-      containerApiMock = {
+      containerModuleBindingServiceMock = {
         bind: jest.fn(),
-      } as Partial<jest.Mocked<Container>> as jest.Mocked<Container>;
+      } as Partial<
+        jest.Mocked<ContainerModuleBindingService>
+      > as jest.Mocked<ContainerModuleBindingService>;
     });
 
     describe('when called', () => {
@@ -87,7 +94,7 @@ describe(DomainReadContainerModule.name, () => {
           .mockReturnValueOnce(injectableDecoratorMock)
           .mockReturnValueOnce(injectableDecoratorMock);
 
-        domainReadContainerModule.load(containerApiMock);
+        domainReadContainerModule.load(containerModuleBindingServiceMock);
       });
 
       afterAll(() => {
@@ -157,12 +164,12 @@ describe(DomainReadContainerModule.name, () => {
       });
 
       it('should call containerApi.bind()', () => {
-        expect(containerApiMock.bind).toHaveBeenCalledTimes(2);
-        expect(containerApiMock.bind).toHaveBeenNthCalledWith(
+        expect(containerModuleBindingServiceMock.bind).toHaveBeenCalledTimes(2);
+        expect(containerModuleBindingServiceMock.bind).toHaveBeenNthCalledWith(
           1,
           expectClassExtending(ReadOneEntityInteractor),
         );
-        expect(containerApiMock.bind).toHaveBeenNthCalledWith(
+        expect(containerModuleBindingServiceMock.bind).toHaveBeenNthCalledWith(
           2,
           expectClassExtending(ReadManyEntityInteractor),
         );

@@ -18,6 +18,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [UNRELEASED]
+
+### Added
+- Added `BindingType`.
+- Added `ContainerModuleBindingServiceApi`
+
+### Changed
+- Updated `ContainerModule` to receive a `ContainerModuleBindingServiceApi`
+
+
+
 
 ## 0.1.0
 

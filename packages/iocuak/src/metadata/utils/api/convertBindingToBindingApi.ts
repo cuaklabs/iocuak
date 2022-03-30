@@ -1,6 +1,6 @@
 import { BindingApi } from '../../models/api/BindingApi';
-import { BindingApiType } from '../../models/api/BindingApiType';
 import { bindingScopeToBindingScopeApiMap } from '../../models/api/bindingScopeToBindingScopeApiMap';
+import { BindingTypeApi } from '../../models/api/BindingTypeApi';
 import { TypeBindingApi } from '../../models/api/TypeBindingApi';
 import { ValueBindingApi } from '../../models/api/ValueBindingApi';
 import { Binding } from '../../models/domain/Binding';
@@ -25,7 +25,7 @@ export function convertBindingToBindingApi<TInstance, TArgs extends unknown[]>(
   switch (binding.bindingType) {
     case BindingType.type:
       bindingApi = {
-        bindingType: BindingApiType.type,
+        bindingType: BindingTypeApi.type,
         id: binding.id,
         scope: bindingScopeToBindingScopeApiMap[binding.scope],
         type: binding.type,
@@ -33,7 +33,7 @@ export function convertBindingToBindingApi<TInstance, TArgs extends unknown[]>(
       break;
     case BindingType.value:
       bindingApi = {
-        bindingType: BindingApiType.value,
+        bindingType: BindingTypeApi.value,
         id: binding.id,
         value: binding.value,
       };
