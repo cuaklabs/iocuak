@@ -2,5 +2,5 @@ import { ContainerBindingServiceApi } from './ContainerBindingServiceApi';
 
 export type ContainerModuleBindingServiceApi = Pick<
   ContainerBindingServiceApi,
-  'bind' | 'bindToValue' | 'unbind'
+  'bind' | 'bindToValue'
 >;
