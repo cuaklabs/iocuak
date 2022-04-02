@@ -15,7 +15,9 @@
     "noUncheckedIndexedAccess": true,
     "paths": {
       "@cuaklabs/cuaktask": ["./packages/cuaktask"],
-      "@cuaklabs/iocuak": ["./packages/iocuak"]
+      "@cuaklabs/iocuak": ["./packages/iocuak"],
+      "@cuaklabs/porygon": ["./packages/porygon"],
+      "@cuaklabs/porygon-typeorm": ["./packages/porygon-typeorm"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
