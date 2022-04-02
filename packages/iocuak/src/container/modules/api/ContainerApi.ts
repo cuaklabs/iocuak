@@ -92,21 +92,21 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
   ) {
+    const taskDependencyEngine: cuaktask.TaskDependencyEngine =
+      new TaskDependencyEngine(containerBindingService, metadataService);
+
     const taskDependenciesKindSetBuilder: cuaktask.Builder<
       cuaktask.SetLike<TaskKind>
     > = {
       build: () => new TaskKindSet(),
     };
 
-    const taskDependencyEngine: cuaktask.TaskDependencyEngine =
-      new TaskDependencyEngine(containerBindingService, metadataService);
-
     const taskBuilder: cuaktask.Builder<
       cuaktask.DependentTask<TaskKind, TaskKind>,
       [TaskKind]
     > = new TaskBuilder(
-      taskDependenciesKindSetBuilder,
       taskDependencyEngine,
+      taskDependenciesKindSetBuilder,
       containerBindingService,
       containerRequestService,
       containerSingletonService,
