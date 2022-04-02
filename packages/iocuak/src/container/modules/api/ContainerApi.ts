@@ -70,7 +70,7 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     const taskBuilder: cuaktask.Builder<
       cuaktask.DependentTask<TaskKind, TaskKind>,
       [TaskKind]
-    > = this.#initializeTaskRunner(
+    > = this.#initializeTaskBuilder(
       containerBindingService,
       metadataService,
       containerRequestService,
@@ -86,7 +86,7 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     return containerInstanceService;
   }
 
-  static #initializeTaskRunner(
+  static #initializeTaskBuilder(
     containerBindingService: ContainerBindingService,
     metadataService: MetadataService,
     containerRequestService: ContainerRequestService,
