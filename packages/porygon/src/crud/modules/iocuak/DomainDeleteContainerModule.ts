@@ -1,11 +1,11 @@
 import {
   BindingScope,
-  ContainerService,
   ContainerModule,
   inject,
   injectable,
   Newable,
   ServiceId,
+  ContainerModuleBindingService,
 } from '@cuaklabs/iocuak';
 
 import { InteractorAsync } from '../../../common/modules/domain/InteractorAsync';
@@ -31,11 +31,15 @@ export class DomainDeleteContainerModule<TQuery> implements ContainerModule {
     )<TQuery> {};
   }
 
-  public load(container: ContainerService): void {
-    this.#loadDeleteEntityInteractor(container);
+  public load(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
+    this.#loadDeleteEntityInteractor(containerModuleBindingService);
   }
 
-  #loadDeleteEntityInteractor(container: ContainerService): void {
+  #loadDeleteEntityInteractor(
+    containerModuleBindingService: ContainerModuleBindingService,
+  ): void {
     const deleteEntityInteractorServiceId: ServiceId =
       this.#crudModuleTypeToSymbolMap[CrudModuleType.deleteEntityInteractor];
 
@@ -53,6 +57,6 @@ export class DomainDeleteContainerModule<TQuery> implements ContainerModule {
       0,
     );
 
-    container.bind(this.#deleteEntityInteractorType);
+    containerModuleBindingService.bind(this.#deleteEntityInteractorType);
   }
 }

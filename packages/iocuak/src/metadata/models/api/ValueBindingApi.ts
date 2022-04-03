@@ -1,7 +1,7 @@
 import { BaseBindingApi } from './BaseBindingApi';
-import { BindingApiType } from './BindingApiType';
+import { BindingTypeApi } from './BindingTypeApi';
 
 export interface ValueBindingApi<TInstance = unknown> extends BaseBindingApi {
-  bindingType: BindingApiType.value;
+  bindingType: BindingTypeApi.value;
   value: TInstance;
 }

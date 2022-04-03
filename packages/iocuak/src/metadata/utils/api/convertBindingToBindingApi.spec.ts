@@ -1,6 +1,6 @@
 import { BindingApi } from '../../models/api/BindingApi';
-import { BindingApiType } from '../../models/api/BindingApiType';
 import { BindingScopeApi } from '../../models/api/BindingScopeApi';
+import { BindingTypeApi } from '../../models/api/BindingTypeApi';
 import { BindingScope } from '../../models/domain/BindingScope';
 import { BindingType } from '../../models/domain/BindingType';
 import { TypeBinding } from '../../models/domain/TypeBinding';
@@ -29,7 +29,7 @@ describe(convertBindingToBindingApi.name, () => {
 
       it('should return a bindingApi', () => {
         const expected: BindingApi = {
-          bindingType: BindingApiType.type,
+          bindingType: BindingTypeApi.type,
           id: bindingFixture.id,
           scope: BindingScopeApi.transient,
           type: bindingFixture.type,
@@ -62,7 +62,7 @@ describe(convertBindingToBindingApi.name, () => {
 
       it('should return a bindingApi', () => {
         const expected: BindingApi = {
-          bindingType: BindingApiType.value,
+          bindingType: BindingTypeApi.value,
           id: bindingFixture.id,
           value: bindingFixture.value,
         };
