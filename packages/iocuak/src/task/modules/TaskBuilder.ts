@@ -1,7 +1,7 @@
 import {
   Builder,
   DependentTask,
-  DependentTaskBuilder,
+  SafeDependentTaskBuilder,
   SetLike,
   TaskDependencyEngine,
 } from '@cuaklabs/cuaktask';
@@ -17,19 +17,19 @@ import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDep
 import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
 
-export class TaskBuilder extends DependentTaskBuilder<TaskKind, TaskKind> {
+export class TaskBuilder extends SafeDependentTaskBuilder<TaskKind> {
   #containerBindingService: ContainerBindingService;
   #containerRequestService: ContainerRequestService;
   #containerSingletonService: ContainerSingletonService;
 
   constructor(
-    taskDependenciesKindSetBuilder: Builder<SetLike<TaskKind>>,
     taskDependencyEngine: TaskDependencyEngine,
+    taskDependenciesKindSetBuilder: Builder<SetLike<TaskKind>>,
     containerBindingService: ContainerBindingService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
   ) {
-    super(taskDependenciesKindSetBuilder, taskDependencyEngine);
+    super(taskDependencyEngine, taskDependenciesKindSetBuilder);
 
     this.#containerBindingService = containerBindingService;
     this.#containerRequestService = containerRequestService;

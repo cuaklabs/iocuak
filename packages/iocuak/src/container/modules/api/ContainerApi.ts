@@ -70,7 +70,7 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     const taskBuilder: cuaktask.Builder<
       cuaktask.DependentTask<TaskKind, TaskKind>,
       [TaskKind]
-    > = this.#initializeTaskRunner(
+    > = this.#initializeTaskBuilder(
       containerBindingService,
       metadataService,
       containerRequestService,
@@ -86,27 +86,27 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     return containerInstanceService;
   }
 
-  static #initializeTaskRunner(
+  static #initializeTaskBuilder(
     containerBindingService: ContainerBindingService,
     metadataService: MetadataService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
   ) {
+    const taskDependencyEngine: cuaktask.TaskDependencyEngine =
+      new TaskDependencyEngine(containerBindingService, metadataService);
+
     const taskDependenciesKindSetBuilder: cuaktask.Builder<
       cuaktask.SetLike<TaskKind>
     > = {
       build: () => new TaskKindSet(),
     };
 
-    const taskDependencyEngine: cuaktask.TaskDependencyEngine =
-      new TaskDependencyEngine(containerBindingService, metadataService);
-
     const taskBuilder: cuaktask.Builder<
       cuaktask.DependentTask<TaskKind, TaskKind>,
       [TaskKind]
     > = new TaskBuilder(
-      taskDependenciesKindSetBuilder,
       taskDependencyEngine,
+      taskDependenciesKindSetBuilder,
       containerBindingService,
       containerRequestService,
       containerSingletonService,

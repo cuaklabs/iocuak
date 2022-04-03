@@ -35,7 +35,8 @@ jobs:
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 6.31.0
-          run_install: true
+          run_install:
+            recursive: true
 
       - name: Compile source files
         run: pnpm run build
@@ -131,6 +132,17 @@ jobs:
           flags: ${{ matrix.package }}
           token: ${{ secrets.CODECOV_TOKEN }}
         if: ${{ !(github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true) }}
+
+      - name: Start SSH session on failure
+        if: ${{ failure() && contains(github.event.head_commit.message, '[ci-open-ssh]') }}
+        uses: luchihoratiu/debug-via-ssh@main
+        with:
+          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+          SSH_PASS: ${{ secrets.SSH_PASS }}
+
+      - name: Don't kill instace on failure
+        if: ${{ failure() && contains(github.event.head_commit.message, '[ci-open-ssh]') }}
+        run: sleep 1h
 
   test-coverage:
     name: Test with coverage

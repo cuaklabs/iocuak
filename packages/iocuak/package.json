@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/iocuak#readme",
   "dependencies": {
-    "@cuaklabs/cuaktask": "^0.1.1"
+    "@cuaklabs/cuaktask": "workspace:../cuaktask"
   },
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
   "publishConfig": {

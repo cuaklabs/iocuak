@@ -1,13 +1,14 @@
-jest.mock('./DependentTaskBuildOperation');
+jest.mock('./SafeDependentTaskBuildOperation');
 
 import { Builder } from '../../common/modules/Builder';
+import { SetLike } from '../../common/modules/SetLike';
 import { DependentTask } from '../models/domain/DependentTask';
 import { TaskStatus } from '../models/domain/TaskStatus';
-import { DependentTaskBuilder } from './DependentTaskBuilder';
-import { DependentTaskBuildOperation } from './DependentTaskBuildOperation';
+import { SafeDependentTaskBuilder } from './SafeDependentTaskBuilder';
+import { SafeDependentTaskBuildOperation } from './SafeDependentTaskBuildOperation';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
 
-class DependentTaskBuilderMock extends DependentTaskBuilder<
+class SafeDependentTaskBuilderMock extends SafeDependentTaskBuilder<
   unknown,
   unknown[],
   unknown
@@ -22,8 +23,9 @@ class DependentTaskBuilderMock extends DependentTaskBuilder<
       [unknown]
     >,
     taskDependencyEngine: TaskDependencyEngine,
+    taskDependenciesKindSetBuilder: Builder<SetLike<unknown>, []>,
   ) {
-    super(taskDependencyEngine);
+    super(taskDependencyEngine, taskDependenciesKindSetBuilder);
 
     this.#buildWithNoDependenciesMock = buildWithNoDependenciesMock;
   }
@@ -40,14 +42,17 @@ class DependentTaskBuilderMock extends DependentTaskBuilder<
   }
 }
 
-describe(DependentTaskBuilder.name, () => {
+describe(SafeDependentTaskBuilder.name, () => {
   let buildWithNoDependenciesMock: jest.Mock<
     DependentTask<unknown, unknown, unknown[], unknown>,
     [unknown]
   >;
   let taskDependencyEngineMock: jest.Mocked<TaskDependencyEngine>;
+  let taskDependenciesKindSetBuilderMock: jest.Mocked<
+    Builder<SetLike<unknown>, []>
+  >;
 
-  let dependentTaskBuilder: DependentTaskBuilderMock;
+  let safeDependentTaskBuilder: SafeDependentTaskBuilderMock;
 
   beforeAll(() => {
     buildWithNoDependenciesMock = jest.fn<
@@ -57,16 +62,21 @@ describe(DependentTaskBuilder.name, () => {
     taskDependencyEngineMock = {
       getDependencies: jest.fn(),
     };
+    taskDependenciesKindSetBuilderMock = {
+      build: jest.fn(),
+    };
 
-    dependentTaskBuilder = new DependentTaskBuilderMock(
+    safeDependentTaskBuilder = new SafeDependentTaskBuilderMock(
       buildWithNoDependenciesMock,
       taskDependencyEngineMock,
+      taskDependenciesKindSetBuilderMock,
     );
   });
 
   describe('.build()', () => {
     describe('when called', () => {
-      let dependentTaskBuildOperationMock: jest.Mocked<DependentTaskBuildOperation>;
+      let safeDependentTaskBuildOperationMock: jest.Mocked<SafeDependentTaskBuildOperation>;
+      let taskDependenciesKindSetMock: SetLike<unknown>;
       let taskKindFixture: string;
       let taskFixture: DependentTask<string, unknown, unknown[], unknown>;
 
@@ -81,24 +91,35 @@ describe(DependentTaskBuilder.name, () => {
           status: TaskStatus.NotStarted,
         };
 
-        dependentTaskBuildOperationMock = {
+        taskDependenciesKindSetMock = {
+          add: jest.fn(),
+          clear: jest.fn(),
+          delete: jest.fn(),
+          has: jest.fn(),
+        };
+
+        taskDependenciesKindSetBuilderMock.build.mockReturnValueOnce(
+          taskDependenciesKindSetMock,
+        );
+
+        safeDependentTaskBuildOperationMock = {
           run: jest.fn().mockReturnValueOnce(taskFixture),
         } as Partial<
-          jest.Mocked<DependentTaskBuildOperation>
-        > as jest.Mocked<DependentTaskBuildOperation>;
+          jest.Mocked<SafeDependentTaskBuildOperation>
+        > as jest.Mocked<SafeDependentTaskBuildOperation>;
 
         (
-          DependentTaskBuildOperation as jest.Mock<DependentTaskBuildOperation>
-        ).mockReturnValueOnce(dependentTaskBuildOperationMock);
+          SafeDependentTaskBuildOperation as jest.Mock<SafeDependentTaskBuildOperation>
+        ).mockReturnValueOnce(safeDependentTaskBuildOperationMock);
 
-        result = dependentTaskBuilder.build(taskKindFixture);
+        result = safeDependentTaskBuilder.build(taskKindFixture);
       });
 
       afterAll(() => {
         jest.clearAllMocks();
       });
 
-      it('should call DependentTaskBuildOperation()', () => {
+      it('should call SafeDependentTaskBuildOperation()', () => {
         const expectedTaskWithNoDependenciesBuilder: Builder<
           DependentTask<unknown>,
           [unknown]
@@ -108,10 +129,11 @@ describe(DependentTaskBuilder.name, () => {
           ) => DependentTask<unknown>,
         };
 
-        expect(DependentTaskBuildOperation).toHaveBeenCalledTimes(1);
-        expect(DependentTaskBuildOperation).toHaveBeenCalledWith(
+        expect(SafeDependentTaskBuildOperation).toHaveBeenCalledTimes(1);
+        expect(SafeDependentTaskBuildOperation).toHaveBeenCalledWith(
           expectedTaskWithNoDependenciesBuilder,
           taskDependencyEngineMock,
+          taskDependenciesKindSetMock,
         );
       });
 

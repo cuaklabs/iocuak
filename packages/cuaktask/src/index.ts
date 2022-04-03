@@ -7,6 +7,7 @@ import { Task } from './task/models/domain/Task';
 import { TaskStatus } from './task/models/domain/TaskStatus';
 import { DependentTaskBuilder } from './task/modules/DependentTaskBuilder';
 import { DependentTaskRunner } from './task/modules/DependentTaskRunner';
+import { SafeDependentTaskBuilder } from './task/modules/SafeDependentTaskBuilder';
 import { TaskDependencyEngine } from './task/modules/TaskDependencyEngine';
 
 export type { Builder, DependentTask, SetLike, Task, TaskDependencyEngine };
@@ -16,5 +17,6 @@ export {
   BaseTask,
   DependentTaskBuilder,
   DependentTaskRunner,
+  SafeDependentTaskBuilder,
   TaskStatus,
 };

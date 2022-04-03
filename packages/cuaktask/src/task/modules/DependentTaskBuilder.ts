@@ -1,27 +1,25 @@
 import { Builder } from '../../common/modules/Builder';
-import { SetLike } from '../../common/modules/SetLike';
 import { DependentTask } from '../models/domain/DependentTask';
+import { DependentTaskBuildOperation } from './DependentTaskBuildOperation';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
 
 export abstract class DependentTaskBuilder<
   TKind = unknown,
-  TDependencyKind = unknown,
   TArgs extends unknown[] = unknown[],
   TReturn = unknown,
-> implements
-    Builder<DependentTask<TKind, TDependencyKind, TArgs, TReturn>, [TKind]>
+> implements Builder<DependentTask<TKind, TKind, TArgs, TReturn>, [TKind]>
 {
-  readonly #taskDependenciesKindSetBuilder: Builder<
-    SetLike<TKind | TDependencyKind>
+  protected readonly taskWithNoDependenciesBuilder: Builder<
+    DependentTask<TKind, unknown, TArgs, TReturn>,
+    [TKind]
   >;
-  readonly #taskDependencyEngine: TaskDependencyEngine;
+  protected readonly taskDependencyEngine: TaskDependencyEngine;
 
-  constructor(
-    taskDependenciesKindSetBuilder: Builder<SetLike<TKind>>,
-    taskDependencyEngine: TaskDependencyEngine,
-  ) {
-    this.#taskDependenciesKindSetBuilder = taskDependenciesKindSetBuilder;
-    this.#taskDependencyEngine = taskDependencyEngine;
+  constructor(taskDependencyEngine: TaskDependencyEngine) {
+    this.taskWithNoDependenciesBuilder = {
+      build: this.buildWithNoDependencies.bind(this),
+    };
+    this.taskDependencyEngine = taskDependencyEngine;
   }
 
   /**
@@ -29,16 +27,34 @@ export abstract class DependentTaskBuilder<
    * @param taskKind Task kind of the task to build
    * @returns Task built.
    */
-  public build(
-    taskKind: TKind,
-  ): DependentTask<TKind, TDependencyKind, TArgs, TReturn> {
-    const taskDependenciesKindSet: SetLike<TKind | TDependencyKind> =
-      this.#taskDependenciesKindSetBuilder.build();
+  public build(taskKind: TKind): DependentTask<TKind, TKind, TArgs, TReturn> {
+    const dependentTaskBuildOperation: DependentTaskBuildOperation<
+      TKind,
+      TArgs,
+      TReturn
+    > = this.buildDependentTaskBuildOperation();
 
-    const dependentTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn> =
-      this.#innerbuild(taskKind, taskDependenciesKindSet);
+    const dependentTask: DependentTask<TKind, TKind, TArgs, TReturn> =
+      dependentTaskBuildOperation.run(taskKind);
 
     return dependentTask;
+  }
+
+  protected buildDependentTaskBuildOperation(): DependentTaskBuildOperation<
+    TKind,
+    TArgs,
+    TReturn
+  > {
+    const dependentTaskBuildOperation: DependentTaskBuildOperation<
+      TKind,
+      TArgs,
+      TReturn
+    > = new DependentTaskBuildOperation(
+      this.taskWithNoDependenciesBuilder,
+      this.taskDependencyEngine,
+    );
+
+    return dependentTaskBuildOperation;
   }
 
   /**
@@ -51,37 +67,4 @@ export abstract class DependentTaskBuilder<
     TArgs extends unknown[],
     TReturn,
   >(taskKind: TKind): DependentTask<TKind, unknown, TArgs, TReturn>;
-
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  #innerbuild<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
-    taskKind: TKind,
-    taskDependenciesKindSet: SetLike<TKind | TDependencyKind>,
-  ): DependentTask<TKind, TDependencyKind, TArgs, TReturn> {
-    if (taskDependenciesKindSet.has(taskKind)) {
-      throw new Error('Circular dependency found!');
-    }
-
-    const task: DependentTask<TKind, unknown, TArgs, TReturn> =
-      this.buildWithNoDependencies(taskKind);
-
-    taskDependenciesKindSet.add(taskKind);
-
-    const taskDependenciesKind: TDependencyKind[] =
-      this.#taskDependencyEngine.getDependencies(task.kind);
-
-    const taskDependencies: DependentTask<
-      TDependencyKind,
-      unknown,
-      unknown[],
-      unknown
-    >[] = taskDependenciesKind.map((taskDependencyKind: TDependencyKind) =>
-      this.#innerbuild(taskDependencyKind, taskDependenciesKindSet),
-    );
-
-    taskDependenciesKindSet.delete(taskKind);
-
-    task.dependencies.push(...taskDependencies);
-
-    return task;
-  }
 }

@@ -16,8 +16,8 @@ import { TaskKind } from '../models/domain/TaskKind';
 import { TaskBuilder } from './TaskBuilder';
 
 describe(TaskBuilder.name, () => {
-  let taskDependenciesKindSetBuilder: jest.Mocked<Builder<SetLike<TaskKind>>>;
   let taskDependencyEngine: jest.Mocked<TaskDependencyEngine>;
+  let taskDependenciesKindSetBuilder: jest.Mocked<Builder<SetLike<TaskKind>>>;
   let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
   let containerRequestService: jest.Mocked<ContainerRequestService>;
   let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
@@ -25,11 +25,11 @@ describe(TaskBuilder.name, () => {
   let taskBuilder: TaskBuilder;
 
   beforeAll(() => {
-    taskDependenciesKindSetBuilder = {
-      build: jest.fn().mockImplementation(() => new Set()),
-    };
     taskDependencyEngine = {
       getDependencies: jest.fn(),
+    };
+    taskDependenciesKindSetBuilder = {
+      build: jest.fn().mockImplementation(() => new Set()),
     };
     containerBindingServiceMock = {} as Partial<
       jest.Mocked<ContainerBindingService>
@@ -42,8 +42,8 @@ describe(TaskBuilder.name, () => {
     > as jest.Mocked<ContainerSingletonService>;
 
     taskBuilder = new TaskBuilder(
-      taskDependenciesKindSetBuilder,
       taskDependencyEngine,
+      taskDependenciesKindSetBuilder,
       containerBindingServiceMock,
       containerRequestService,
       containerSingletonServiceMock,

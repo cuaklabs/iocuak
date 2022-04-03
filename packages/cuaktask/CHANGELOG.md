@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [UNRELEASED]
+
+### Added
+- Added `SafeDependentTaskBuilder`
+
+### Changed
+- **[BC]** Updated `TaskDependencyBuilder` to no longer receive a set builder. Use `SafeDependentTaskBuilder` as replacement for the old `TaskDependencyBuilder`
+
+
+
+
 ## 0.1.1 - 2022-03-08
 
 ### Fixed
