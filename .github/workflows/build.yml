@@ -41,9 +41,6 @@ jobs:
       - name: Compile source files
         run: pnpm run build
 
-      - name: Link packages
-        run: pnpm run packages:link
-
       - name: Lint source files
         run: pnpm run lint
 
@@ -92,7 +89,8 @@ jobs:
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 6.31.0
-          run_install: true
+          run_install:
+            recursive: true
 
       - name: Get current git commit hash
         id: get-git-commit-hash
@@ -111,9 +109,6 @@ jobs:
       - name: Build on cache miss
         run: pnpm run build
         if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
-
-      - name: Link packages
-        run: pnpm run packages:link
 
       - name: Launch Tests and generate coverage report
         run: pnpm run test:package:js:ci:coverage -- --selectProjects ${{ matrix.package }}-Integration ${{ matrix.package }}-Unit
