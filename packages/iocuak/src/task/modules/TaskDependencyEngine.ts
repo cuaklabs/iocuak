@@ -109,32 +109,31 @@ export class TaskDependencyEngine implements cuaktask.TaskDependencyEngine {
   #getGetInstanceDependenciesTaskKindDependencies(
     taskKind: GetInstanceDependenciesTaskKind,
   ): TaskKind[] {
-    const metadata: ClassMetadata = taskKind.metadata;
+    const serviceIds: ServiceId[] =
+      this.#getInstanceDependenciesTaskKindDependenciesServiceIds(taskKind);
 
-    const constructorArgumentsCreateInstanceTaskKinds: CreateInstanceTaskKind[] =
-      metadata.constructorArguments.map(
-        (constructorArgument: ServiceId): CreateInstanceTaskKind => ({
-          id: constructorArgument,
-          requestId: taskKind.requestId,
-          type: TaskKindType.createInstance,
-        }),
-      );
-
-    const propertyCreateInstanceTaskKinds: CreateInstanceTaskKind[] = [
-      ...metadata.properties.values(),
-    ].map(
-      (serviceId: ServiceId): CreateInstanceTaskKind => ({
+    const createInstanceTaskKinds: CreateInstanceTaskKind[] = serviceIds.map(
+      (serviceId: ServiceId) => ({
         id: serviceId,
         requestId: taskKind.requestId,
         type: TaskKindType.createInstance,
       }),
     );
 
-    const createInstanceTaskKinds: CreateInstanceTaskKind[] = [
-      ...constructorArgumentsCreateInstanceTaskKinds,
-      ...propertyCreateInstanceTaskKinds,
+    return createInstanceTaskKinds;
+  }
+
+  #getInstanceDependenciesTaskKindDependenciesServiceIds(
+    taskKind: GetInstanceDependenciesTaskKind,
+  ): ServiceId[] {
+    const metadata: ClassMetadata = taskKind.metadata;
+
+    // GetInstanceDependenciesTask.innerPerfomr relies on this order
+    const servicesId: ServiceId[] = [
+      ...metadata.constructorArguments,
+      ...metadata.properties.values(),
     ];
 
-    return createInstanceTaskKinds;
+    return servicesId;
   }
 }
