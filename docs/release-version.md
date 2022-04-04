@@ -4,17 +4,21 @@
 
 2. Increase packages version
 
+Then, for each package, navigate to the package folder and run:
+
 ```
-pnpx lerna version (patch|minor|major) --force-publish
+pnpm version (patch|minor|major)
 ```
 
-3. Login in npm 
+3. Create a tag and push it
+
+4. Login in npm 
 
 ```
 npm login
 ```
 
-4. Publish all the packages
+5. Publish all the packages
 
 **Warning**: the use of `pnpm workspaces` forces us to publish packages through `pnpm publish`
 
