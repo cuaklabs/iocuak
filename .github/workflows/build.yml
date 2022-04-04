@@ -32,7 +32,7 @@ jobs:
           restore-keys: |
             pnpm-modules
 
-      - uses: pnpm/action-setup@v2.1.0
+      - uses: pnpm/action-setup@v2.2.1
         with:
           version: 6.31.0
           run_install:
@@ -86,7 +86,7 @@ jobs:
           restore-keys: |
             pnpm-modules
 
-      - uses: pnpm/action-setup@v2.1.0
+      - uses: pnpm/action-setup@v2.2.1
         with:
           version: 6.31.0
           run_install:
