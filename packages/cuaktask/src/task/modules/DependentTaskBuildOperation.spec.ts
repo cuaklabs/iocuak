@@ -1,11 +1,10 @@
 import { Builder } from '../../common/modules/Builder';
+import { DependentTaskMocks } from '../mocks/models/domain/DependentTaskMocks';
 import { DependentTask } from '../models/domain/DependentTask';
-import { TaskStatus } from '../models/domain/TaskStatus';
-import { DependentTaskBuilder } from './DependentTaskBuilder';
 import { DependentTaskBuildOperation } from './DependentTaskBuildOperation';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
 
-describe(DependentTaskBuilder.name, () => {
+describe(DependentTaskBuildOperation.name, () => {
   let taskWithNoDependenciesBuilderMock: jest.Mocked<
     Builder<DependentTask<unknown>, [unknown]>
   >;
@@ -28,32 +27,20 @@ describe(DependentTaskBuilder.name, () => {
   });
 
   describe('.run()', () => {
-    describe('when called, with no dependencies', () => {
-      let taskKindFixture: string;
-      let taskFixture: DependentTask<string, unknown, unknown[], unknown>;
+    describe('when called, taskDependencyEngine.getDependencies returns and empty array', () => {
+      let taskFixture: DependentTask<unknown, unknown, unknown[], unknown>;
 
       let result: unknown;
 
       beforeAll(() => {
-        taskKindFixture = 'some-kind';
-        taskFixture = {
-          dependencies: [],
-          kind: taskKindFixture,
-          perform: jest.fn(),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
-        };
+        taskFixture = DependentTaskMocks.any;
 
         taskWithNoDependenciesBuilderMock.build.mockReturnValueOnce(
           taskFixture,
         );
         taskDependencyEngine.getDependencies.mockReturnValueOnce([]);
 
-        result = dependentTaskBuildOperation.run(taskKindFixture);
+        result = dependentTaskBuildOperation.run(taskFixture.kind);
       });
 
       afterAll(() => {
@@ -65,74 +52,49 @@ describe(DependentTaskBuilder.name, () => {
           1,
         );
         expect(taskWithNoDependenciesBuilderMock.build).toHaveBeenCalledWith(
-          taskKindFixture,
+          taskFixture.kind,
         );
       });
 
       it('should call taskDependencyEngine.getDependencies()', () => {
         expect(taskDependencyEngine.getDependencies).toHaveBeenCalledTimes(1);
         expect(taskDependencyEngine.getDependencies).toHaveBeenCalledWith(
-          taskKindFixture,
+          taskFixture.kind,
         );
       });
 
       it('should return a dependent task', () => {
-        const expected: DependentTask<string, unknown, unknown[], unknown> = {
-          ...taskFixture,
-        };
-
-        expect(result).toStrictEqual(expected);
+        expect(result).toStrictEqual(taskFixture);
       });
     });
   });
 
-  describe('when called, with dependencies', () => {
-    let dependentTaskKindFixture: string;
+  describe('when called, and taskDependencyEngine.getDependencies return dependencies', () => {
     let dependentTaskFixture: DependentTask<
-      string,
+      unknown,
       unknown,
       unknown[],
       unknown
     >;
-    let taskKindFixture: string;
-    let taskFixture: DependentTask<string, unknown, unknown[], unknown>;
+    let taskFixture: DependentTask<unknown, unknown, unknown[], unknown>;
 
     let result: unknown;
 
     beforeAll(() => {
-      dependentTaskKindFixture = 'dependent-kind';
       dependentTaskFixture = {
-        dependencies: [],
-        kind: dependentTaskKindFixture,
-        perform: jest.fn(),
-        result: {
-          get: () => {
-            throw new Error();
-          },
-        },
-        status: TaskStatus.NotStarted,
+        ...DependentTaskMocks.any,
+        kind: 'dependent-kind',
       };
-      taskKindFixture = 'some-kind';
-      taskFixture = {
-        dependencies: [],
-        kind: taskKindFixture,
-        perform: jest.fn(),
-        result: {
-          get: () => {
-            throw new Error();
-          },
-        },
-        status: TaskStatus.NotStarted,
-      };
+      taskFixture = DependentTaskMocks.any;
 
       taskWithNoDependenciesBuilderMock.build
         .mockReturnValueOnce(taskFixture)
         .mockReturnValueOnce(dependentTaskFixture);
       taskDependencyEngine.getDependencies
-        .mockReturnValueOnce([dependentTaskKindFixture])
+        .mockReturnValueOnce([dependentTaskFixture.kind])
         .mockReturnValueOnce([]);
 
-      result = dependentTaskBuildOperation.run(taskKindFixture);
+      result = dependentTaskBuildOperation.run(taskFixture.kind);
     });
 
     afterAll(() => {
@@ -143,11 +105,11 @@ describe(DependentTaskBuilder.name, () => {
       expect(taskWithNoDependenciesBuilderMock.build).toHaveBeenCalledTimes(2);
       expect(taskWithNoDependenciesBuilderMock.build).toHaveBeenNthCalledWith(
         1,
-        taskKindFixture,
+        taskFixture.kind,
       );
       expect(taskWithNoDependenciesBuilderMock.build).toHaveBeenNthCalledWith(
         2,
-        dependentTaskKindFixture,
+        dependentTaskFixture.kind,
       );
     });
 
@@ -155,16 +117,16 @@ describe(DependentTaskBuilder.name, () => {
       expect(taskDependencyEngine.getDependencies).toHaveBeenCalledTimes(2);
       expect(taskDependencyEngine.getDependencies).toHaveBeenNthCalledWith(
         1,
-        taskKindFixture,
+        taskFixture.kind,
       );
       expect(taskDependencyEngine.getDependencies).toHaveBeenNthCalledWith(
         2,
-        dependentTaskKindFixture,
+        dependentTaskFixture.kind,
       );
     });
 
     it('should return a dependent task', () => {
-      const expected: DependentTask<string, unknown, unknown[], unknown> = {
+      const expected: DependentTask<unknown, unknown, unknown[], unknown> = {
         ...taskFixture,
         dependencies: [dependentTaskFixture],
       };

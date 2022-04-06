@@ -20,6 +20,22 @@ export class DependentTaskRunner {
     return this.#innerRun(dependenTask);
   }
 
+  #castToExpandedDependentTask<
+    TKind,
+    TDependencyKind,
+    TArgs extends unknown[],
+    TReturn,
+  >(
+    dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
+  ): ExpandedDependentTask<TKind, TDependencyKind, TArgs, TReturn> {
+    return dependenTask as ExpandedDependentTask<
+      TKind,
+      TDependencyKind,
+      TArgs,
+      TReturn
+    >;
+  }
+
   #innerRun<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
     dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
   ): MayBePromise<TReturn> {
@@ -32,22 +48,12 @@ export class DependentTaskRunner {
 
       if (dependenciesRunResults.some(isPromiseLike)) {
         result = this.#innerRunDependenciesAsync(
-          dependenTask as ExpandedDependentTask<
-            TKind,
-            TDependencyKind,
-            TArgs,
-            TReturn
-          >,
+          this.#castToExpandedDependentTask(dependenTask),
           dependenciesRunResults,
         ) as MayBePromise<TReturn>;
       } else {
         result = this.#innerRunTask(
-          dependenTask as ExpandedDependentTask<
-            TKind,
-            TDependencyKind,
-            TArgs,
-            TReturn
-          >,
+          this.#castToExpandedDependentTask(dependenTask),
           dependenciesRunResults as NonThenableProperties<TArgs>,
         );
       }

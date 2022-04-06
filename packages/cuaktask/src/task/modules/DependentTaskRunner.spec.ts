@@ -1,5 +1,5 @@
+import { DependentTaskMocks } from '../mocks/models/domain/DependentTaskMocks';
 import { DependentTask } from '../models/domain/DependentTask';
-import { TaskStatus } from '../models/domain/TaskStatus';
 import { DependentTaskRunner } from './DependentTaskRunner';
 
 describe(DependentTaskRunner.name, () => {
@@ -10,9 +10,9 @@ describe(DependentTaskRunner.name, () => {
   });
 
   describe('.run()', () => {
-    describe('having a task with no dependencies', () => {
+    describe('having a task with status different than NotStarted', () => {
       let dependentTaskMock: jest.Mocked<
-        DependentTask<string, unknown, unknown[], unknown>
+        DependentTask<unknown, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
 
@@ -20,16 +20,45 @@ describe(DependentTaskRunner.name, () => {
         dependentTaskResultFixture = 'sample-result';
 
         dependentTaskMock = {
-          dependencies: [],
-          kind: 'sample-task-kind',
-          perform: jest.fn().mockReturnValue(dependentTaskResultFixture),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
+          ...DependentTaskMocks.withStatusEnded,
+          result: dependentTaskResultFixture,
         };
+      });
+
+      describe('when called', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result = dependentTaskRunner.run(dependentTaskMock);
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should not call dependentTaskMock.perform()', () => {
+          expect(dependentTaskMock.perform).not.toHaveBeenCalled();
+        });
+
+        it('should return the task result', () => {
+          expect(result).toBe(dependentTaskResultFixture);
+        });
+      });
+    });
+
+    describe('having a task with status NotStarted and no dependencies', () => {
+      let dependentTaskMock: jest.Mocked<
+        DependentTask<unknown, unknown, unknown[], unknown>
+      >;
+      let dependentTaskResultFixture: unknown;
+
+      beforeAll(() => {
+        dependentTaskResultFixture = 'sample-result';
+
+        dependentTaskMock =
+          DependentTaskMocks.withDependenciesEmptyAndStatusNotStarted;
+
+        dependentTaskMock.perform.mockReturnValue(dependentTaskResultFixture);
       });
 
       describe('when called', () => {
@@ -54,13 +83,13 @@ describe(DependentTaskRunner.name, () => {
       });
     });
 
-    describe('having an asyncronous task with asyncronous dependencies', () => {
+    describe('having an asyncronous task with with status NotStarted and asyncronous dependencies', () => {
       let dependencyTaskMock: jest.Mocked<
-        DependentTask<string, unknown, unknown[], unknown>
+        DependentTask<unknown, unknown, unknown[], unknown>
       >;
       let dependencyTaskResultFixture: unknown;
       let dependentTaskMock: jest.Mocked<
-        DependentTask<string, unknown, unknown[], unknown>
+        DependentTask<unknown, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
 
@@ -69,27 +98,21 @@ describe(DependentTaskRunner.name, () => {
         dependentTaskResultFixture = 'sample-result';
 
         dependencyTaskMock = {
-          dependencies: [],
+          ...DependentTaskMocks.withDependenciesEmptyAndStatusNotStarted,
           kind: 'sample-dependency-task-kind',
-          perform: jest.fn().mockResolvedValue(dependencyTaskResultFixture),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
         };
+        (
+          dependencyTaskMock.perform as jest.Mock<Promise<unknown>>
+        ).mockResolvedValue(dependencyTaskResultFixture);
+
         dependentTaskMock = {
+          ...DependentTaskMocks.withDependenciesEmptyAndStatusNotStarted,
           dependencies: [dependencyTaskMock],
           kind: 'sample-task-kind',
-          perform: jest.fn().mockResolvedValue(dependentTaskResultFixture),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
         };
+        (
+          dependentTaskMock.perform as jest.Mock<Promise<unknown>>
+        ).mockResolvedValue(dependentTaskResultFixture);
       });
 
       describe('when called', () => {
@@ -139,7 +162,7 @@ describe(DependentTaskRunner.name, () => {
       });
     });
 
-    describe('having an asyncronous task with syncronous dependencies', () => {
+    describe('having an asyncronous task with status NotStarted and syncronous dependencies', () => {
       let dependencyTaskMock: jest.Mocked<
         DependentTask<string, unknown, unknown[], unknown>
       >;
@@ -154,27 +177,19 @@ describe(DependentTaskRunner.name, () => {
         dependentTaskResultFixture = 'sample-result';
 
         dependencyTaskMock = {
-          dependencies: [],
+          ...DependentTaskMocks.withDependenciesEmptyAndStatusNotStarted,
           kind: 'sample-dependency-task-kind',
-          perform: jest.fn().mockReturnValue(dependencyTaskResultFixture),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
         };
+        dependencyTaskMock.perform.mockReturnValue(dependencyTaskResultFixture);
+
         dependentTaskMock = {
+          ...DependentTaskMocks.withDependenciesEmptyAndStatusNotStarted,
           dependencies: [dependencyTaskMock],
           kind: 'sample-task-kind',
-          perform: jest.fn().mockResolvedValue(dependentTaskResultFixture),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
         };
+        (
+          dependentTaskMock.perform as jest.Mock<Promise<unknown>>
+        ).mockResolvedValue(dependentTaskResultFixture);
       });
 
       describe('when called', () => {
@@ -224,7 +239,7 @@ describe(DependentTaskRunner.name, () => {
       });
     });
 
-    describe('having a syncronous task with asyncronous dependencies', () => {
+    describe('having a syncronous task with status NotStarted and asyncronous dependencies', () => {
       let dependencyTaskMock: jest.Mocked<
         DependentTask<string, unknown, unknown[], unknown>
       >;
@@ -239,27 +254,19 @@ describe(DependentTaskRunner.name, () => {
         dependentTaskResultFixture = 'sample-result';
 
         dependencyTaskMock = {
-          dependencies: [],
+          ...DependentTaskMocks.withDependenciesEmptyAndStatusNotStarted,
           kind: 'sample-dependency-task-kind',
-          perform: jest.fn().mockResolvedValue(dependencyTaskResultFixture),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
         };
+        (
+          dependencyTaskMock.perform as jest.Mock<Promise<unknown>>
+        ).mockResolvedValue(dependencyTaskResultFixture);
+
         dependentTaskMock = {
+          ...DependentTaskMocks.withDependenciesEmptyAndStatusNotStarted,
           dependencies: [dependencyTaskMock],
           kind: 'sample-task-kind',
-          perform: jest.fn().mockReturnValue(dependentTaskResultFixture),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
         };
+        dependentTaskMock.perform.mockReturnValue(dependentTaskResultFixture);
       });
 
       describe('when called', () => {
@@ -309,7 +316,7 @@ describe(DependentTaskRunner.name, () => {
       });
     });
 
-    describe('having a syncronous task with syncronous dependencies', () => {
+    describe('having a syncronous task with status NotStarted and syncronous dependencies', () => {
       let dependencyTaskMock: jest.Mocked<
         DependentTask<string, unknown, unknown[], unknown>
       >;
@@ -324,27 +331,17 @@ describe(DependentTaskRunner.name, () => {
         dependentTaskResultFixture = 'sample-result';
 
         dependencyTaskMock = {
-          dependencies: [],
+          ...DependentTaskMocks.withDependenciesEmptyAndStatusNotStarted,
           kind: 'sample-dependency-task-kind',
-          perform: jest.fn().mockReturnValue(dependencyTaskResultFixture),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
         };
+        dependencyTaskMock.perform.mockReturnValue(dependencyTaskResultFixture);
+
         dependentTaskMock = {
+          ...DependentTaskMocks.withDependenciesEmptyAndStatusNotStarted,
           dependencies: [dependencyTaskMock],
           kind: 'sample-task-kind',
-          perform: jest.fn().mockReturnValue(dependentTaskResultFixture),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
         };
+        dependentTaskMock.perform.mockReturnValue(dependentTaskResultFixture);
       });
 
       describe('when called', () => {

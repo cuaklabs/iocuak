@@ -1,8 +1,8 @@
 jest.mock('./DependentTaskBuildOperation');
 
 import { Builder } from '../../common/modules/Builder';
+import { DependentTaskMocks } from '../mocks/models/domain/DependentTaskMocks';
 import { DependentTask } from '../models/domain/DependentTask';
-import { TaskStatus } from '../models/domain/TaskStatus';
 import { DependentTaskBuilder } from './DependentTaskBuilder';
 import { DependentTaskBuildOperation } from './DependentTaskBuildOperation';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
@@ -67,24 +67,12 @@ describe(DependentTaskBuilder.name, () => {
   describe('.build()', () => {
     describe('when called', () => {
       let dependentTaskBuildOperationMock: jest.Mocked<DependentTaskBuildOperation>;
-      let taskKindFixture: string;
-      let taskFixture: DependentTask<string, unknown, unknown[], unknown>;
+      let taskFixture: DependentTask<unknown, unknown, unknown[], unknown>;
 
       let result: unknown;
 
       beforeAll(() => {
-        taskKindFixture = 'some-kind';
-        taskFixture = {
-          dependencies: [],
-          kind: taskKindFixture,
-          perform: jest.fn(),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
-        };
+        taskFixture = DependentTaskMocks.any;
 
         dependentTaskBuildOperationMock = {
           run: jest.fn().mockReturnValueOnce(taskFixture),
@@ -96,7 +84,7 @@ describe(DependentTaskBuilder.name, () => {
           DependentTaskBuildOperation as jest.Mock<DependentTaskBuildOperation>
         ).mockReturnValueOnce(dependentTaskBuildOperationMock);
 
-        result = dependentTaskBuilder.build(taskKindFixture);
+        result = dependentTaskBuilder.build(taskFixture.kind);
       });
 
       afterAll(() => {

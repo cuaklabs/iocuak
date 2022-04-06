@@ -2,8 +2,8 @@ jest.mock('./SafeDependentTaskBuildOperation');
 
 import { Builder } from '../../common/modules/Builder';
 import { SetLike } from '../../common/modules/SetLike';
+import { DependentTaskMocks } from '../mocks/models/domain/DependentTaskMocks';
 import { DependentTask } from '../models/domain/DependentTask';
-import { TaskStatus } from '../models/domain/TaskStatus';
 import { SafeDependentTaskBuilder } from './SafeDependentTaskBuilder';
 import { SafeDependentTaskBuildOperation } from './SafeDependentTaskBuildOperation';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
@@ -77,24 +77,12 @@ describe(SafeDependentTaskBuilder.name, () => {
     describe('when called', () => {
       let safeDependentTaskBuildOperationMock: jest.Mocked<SafeDependentTaskBuildOperation>;
       let taskDependenciesKindSetMock: SetLike<unknown>;
-      let taskKindFixture: string;
-      let taskFixture: DependentTask<string, unknown, unknown[], unknown>;
+      let taskFixture: DependentTask<unknown, unknown, unknown[], unknown>;
 
       let result: unknown;
 
       beforeAll(() => {
-        taskKindFixture = 'some-kind';
-        taskFixture = {
-          dependencies: [],
-          kind: taskKindFixture,
-          perform: jest.fn(),
-          result: {
-            get: () => {
-              throw new Error();
-            },
-          },
-          status: TaskStatus.NotStarted,
-        };
+        taskFixture = DependentTaskMocks.any;
 
         taskDependenciesKindSetMock = {
           add: jest.fn(),
@@ -117,7 +105,7 @@ describe(SafeDependentTaskBuilder.name, () => {
           SafeDependentTaskBuildOperation as jest.Mock<SafeDependentTaskBuildOperation>
         ).mockReturnValueOnce(safeDependentTaskBuildOperationMock);
 
-        result = safeDependentTaskBuilder.build(taskKindFixture);
+        result = safeDependentTaskBuilder.build(taskFixture.kind);
       });
 
       afterAll(() => {
