@@ -38,9 +38,8 @@ export class ContainerInstanceServiceImplementation
       type: TaskKindType.createInstance,
     };
 
-    const createInstanceTask: CreateInstanceTask = this.#taskBuilder.build(
-      taskKind,
-    ) as CreateInstanceTask;
+    const createInstanceTask: CreateInstanceTask<TInstance> =
+      this.#taskBuilder.build(taskKind) as CreateInstanceTask<TInstance>;
 
     this.#containerRequestService.end(requestId);
 
