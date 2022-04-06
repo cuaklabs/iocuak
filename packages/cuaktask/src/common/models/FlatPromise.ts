@@ -1,1 +1,3 @@
-export type FlatPromise<T> = Promise<T extends PromiseLike<infer U> ? U : T>;
+import { PromiseLikeResult } from './PromiseLikeResult';
+
+export type FlatPromise<T> = Promise<PromiseLikeResult<T>>;
