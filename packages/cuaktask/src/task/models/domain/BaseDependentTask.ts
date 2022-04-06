@@ -1,4 +1,3 @@
-import { PromiseIfThenable } from '../../../common/models/PromiseIfThenable';
 import { BaseTask } from './BaseTask';
 import { DependentTask } from './DependentTask';
 
@@ -9,8 +8,7 @@ export abstract class BaseDependentTask<
     TReturn,
   >
   extends BaseTask<TKind, TArgs, TReturn>
-  implements
-    DependentTask<TKind, TDependencyKind, TArgs, PromiseIfThenable<TReturn>>
+  implements DependentTask<TKind, TDependencyKind, TArgs, TReturn>
 {
   protected _innerDependencies: DependentTask<TDependencyKind>[];
 
