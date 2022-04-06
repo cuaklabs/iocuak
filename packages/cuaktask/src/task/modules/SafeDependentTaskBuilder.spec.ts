@@ -88,6 +88,11 @@ describe(SafeDependentTaskBuilder.name, () => {
           dependencies: [],
           kind: taskKindFixture,
           perform: jest.fn(),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
 

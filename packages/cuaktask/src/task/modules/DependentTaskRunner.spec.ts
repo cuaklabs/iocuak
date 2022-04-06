@@ -23,6 +23,11 @@ describe(DependentTaskRunner.name, () => {
           dependencies: [],
           kind: 'sample-task-kind',
           perform: jest.fn().mockReturnValue(dependentTaskResultFixture),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
       });
@@ -49,7 +54,7 @@ describe(DependentTaskRunner.name, () => {
       });
     });
 
-    describe('having a asyncronous task with asyncronous dependencies', () => {
+    describe('having an asyncronous task with asyncronous dependencies', () => {
       let dependencyTaskMock: jest.Mocked<
         DependentTask<string, unknown, unknown[], unknown>
       >;
@@ -67,12 +72,22 @@ describe(DependentTaskRunner.name, () => {
           dependencies: [],
           kind: 'sample-dependency-task-kind',
           perform: jest.fn().mockResolvedValue(dependencyTaskResultFixture),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
         dependentTaskMock = {
           dependencies: [dependencyTaskMock],
           kind: 'sample-task-kind',
           perform: jest.fn().mockResolvedValue(dependentTaskResultFixture),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
       });
@@ -116,15 +131,15 @@ describe(DependentTaskRunner.name, () => {
           );
         });
 
-        it('should return the task result', () => {
-          expect(result).toStrictEqual(
-            Promise.resolve(dependentTaskResultFixture),
+        it('should return the task result', async () => {
+          await expect(result).resolves.toStrictEqual(
+            dependentTaskResultFixture,
           );
         });
       });
     });
 
-    describe('having a asyncronous task with syncronous dependencies', () => {
+    describe('having an asyncronous task with syncronous dependencies', () => {
       let dependencyTaskMock: jest.Mocked<
         DependentTask<string, unknown, unknown[], unknown>
       >;
@@ -142,12 +157,22 @@ describe(DependentTaskRunner.name, () => {
           dependencies: [],
           kind: 'sample-dependency-task-kind',
           perform: jest.fn().mockReturnValue(dependencyTaskResultFixture),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
         dependentTaskMock = {
           dependencies: [dependencyTaskMock],
           kind: 'sample-task-kind',
           perform: jest.fn().mockResolvedValue(dependentTaskResultFixture),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
       });
@@ -191,9 +216,9 @@ describe(DependentTaskRunner.name, () => {
           );
         });
 
-        it('should return the task result', () => {
-          expect(result).toStrictEqual(
-            Promise.resolve(dependentTaskResultFixture),
+        it('should return the task result', async () => {
+          await expect(result).resolves.toStrictEqual(
+            dependentTaskResultFixture,
           );
         });
       });
@@ -217,12 +242,22 @@ describe(DependentTaskRunner.name, () => {
           dependencies: [],
           kind: 'sample-dependency-task-kind',
           perform: jest.fn().mockResolvedValue(dependencyTaskResultFixture),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
         dependentTaskMock = {
           dependencies: [dependencyTaskMock],
           kind: 'sample-task-kind',
           perform: jest.fn().mockReturnValue(dependentTaskResultFixture),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
       });
@@ -266,9 +301,9 @@ describe(DependentTaskRunner.name, () => {
           );
         });
 
-        it('should return the task result', () => {
-          expect(result).toStrictEqual(
-            Promise.resolve(dependentTaskResultFixture),
+        it('should return the task result', async () => {
+          await expect(result).resolves.toStrictEqual(
+            dependentTaskResultFixture,
           );
         });
       });
@@ -292,12 +327,22 @@ describe(DependentTaskRunner.name, () => {
           dependencies: [],
           kind: 'sample-dependency-task-kind',
           perform: jest.fn().mockReturnValue(dependencyTaskResultFixture),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
         dependentTaskMock = {
           dependencies: [dependencyTaskMock],
           kind: 'sample-task-kind',
           perform: jest.fn().mockReturnValue(dependentTaskResultFixture),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
       });

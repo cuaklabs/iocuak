@@ -1,8 +1,11 @@
 import { FlatPromise } from '../../common/models/FlatPromise';
 import { MayBePromise } from '../../common/models/MayBePromise';
 import { NonThenableProperties } from '../../common/models/NonThenableProperties';
+import { PromiseIfThenable } from '../../common/models/PromiseIfThenable';
 import { isPromiseLike } from '../../utils/isPromiseLike';
 import { DependentTask } from '../models/domain/DependentTask';
+import { ExpandedDependentTask } from '../models/domain/ExpandedDependentTask';
+import { TaskStatus } from '../models/domain/TaskStatus';
 
 export class DependentTaskRunner {
   /**
@@ -20,25 +23,39 @@ export class DependentTaskRunner {
   #innerRun<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
     dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
   ): MayBePromise<TReturn> {
-    const dependenciesRunResults: unknown[] = dependenTask.dependencies.map(
-      this.#innerRun.bind(this),
-    );
-
-    let result: MayBePromise<TReturn>;
-
-    if (dependenciesRunResults.some(isPromiseLike)) {
-      result = this.#innerRunDependenciesAsync(
-        dependenTask,
-        dependenciesRunResults,
-      ) as MayBePromise<TReturn>;
-    } else {
-      result = this.#innerRunTask(
-        dependenTask,
-        dependenciesRunResults as NonThenableProperties<TArgs>,
+    if (dependenTask.status === TaskStatus.NotStarted) {
+      const dependenciesRunResults: unknown[] = dependenTask.dependencies.map(
+        this.#innerRun.bind(this),
       );
-    }
 
-    return result;
+      let result: MayBePromise<TReturn>;
+
+      if (dependenciesRunResults.some(isPromiseLike)) {
+        result = this.#innerRunDependenciesAsync(
+          dependenTask as ExpandedDependentTask<
+            TKind,
+            TDependencyKind,
+            TArgs,
+            TReturn
+          >,
+          dependenciesRunResults,
+        ) as MayBePromise<TReturn>;
+      } else {
+        result = this.#innerRunTask(
+          dependenTask as ExpandedDependentTask<
+            TKind,
+            TDependencyKind,
+            TArgs,
+            TReturn
+          >,
+          dependenciesRunResults as NonThenableProperties<TArgs>,
+        );
+      }
+
+      return result;
+    } else {
+      return dependenTask.result as MayBePromise<TReturn>;
+    }
   }
 
   async #innerRunDependenciesAsync<
@@ -47,7 +64,7 @@ export class DependentTaskRunner {
     TArgs extends unknown[],
     TReturn,
   >(
-    dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
+    dependenTask: ExpandedDependentTask<TKind, TDependencyKind, TArgs, TReturn>,
     dependenciesRunResults: unknown[],
   ): FlatPromise<TReturn> {
     const dependenciesRunResultsResolved: unknown[] = await Promise.all(
@@ -63,19 +80,13 @@ export class DependentTaskRunner {
   }
 
   #innerRunTask<TKind, TDependencyKind, TArgs extends unknown[], TReturn>(
-    dependenTask: DependentTask<TKind, TDependencyKind, TArgs, TReturn>,
+    dependenTask: ExpandedDependentTask<TKind, TDependencyKind, TArgs, TReturn>,
     dependenciesRunResults: NonThenableProperties<TArgs>,
   ): MayBePromise<TReturn> {
-    const taskResult: TReturn = dependenTask.perform(...dependenciesRunResults);
+    const taskResult: PromiseIfThenable<TReturn> = dependenTask.perform(
+      ...dependenciesRunResults,
+    );
 
-    let result: MayBePromise<TReturn>;
-
-    if (isPromiseLike(taskResult)) {
-      result = Promise.resolve(taskResult) as MayBePromise<TReturn>;
-    } else {
-      result = taskResult as MayBePromise<TReturn>;
-    }
-
-    return result;
+    return taskResult;
   }
 }

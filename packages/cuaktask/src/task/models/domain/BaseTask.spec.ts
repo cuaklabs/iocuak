@@ -32,6 +32,38 @@ describe(BaseTask.name, () => {
   });
 
   describe('.perform()', () => {
+    describe('when called, and innerPerform returns a syncronous result and .result is called', () => {
+      let baseTask: BaseTaskMock<string, [], unknown>;
+
+      let innerPerformResultFixture: unknown;
+      let result: unknown;
+
+      beforeAll(() => {
+        baseTask = new BaseTaskMock(kindFixture, innerPerformMock);
+
+        innerPerformResultFixture = {
+          foo: 'bar',
+        };
+        innerPerformMock.mockReturnValueOnce(innerPerformResultFixture);
+        baseTask.perform();
+
+        result = baseTask.result;
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should call innerPerformMock', () => {
+        expect(innerPerformMock).toHaveBeenCalledTimes(1);
+        expect(innerPerformMock).toHaveBeenCalledWith();
+      });
+
+      it('should return a syncronous result', () => {
+        expect(result).toBe(innerPerformResultFixture);
+      });
+    });
+
     describe('when called, and innerPerform returns a syncronous result', () => {
       let baseTask: BaseTaskMock<string, [], unknown>;
 
@@ -97,6 +129,96 @@ describe(BaseTask.name, () => {
 
       it('should return an asyncronous result', () => {
         expect(result).toStrictEqual(innerPerformResultFixture);
+      });
+    });
+
+    describe('when called, and innerPerform returns a promise result, and .result is called before promise is resolved', () => {
+      let baseTask: BaseTaskMock<string, [], Promise<unknown>>;
+
+      let innerPerformResultFixture: unknown;
+      let firstCallResult: unknown;
+      let secondCallResult: unknown;
+
+      beforeAll(async () => {
+        baseTask = new BaseTaskMock(
+          kindFixture,
+          innerPerformMock as jest.Mock<Promise<unknown>, []>,
+        );
+
+        innerPerformResultFixture = {
+          foo: 'bar',
+        };
+
+        (
+          innerPerformMock as jest.Mock<Promise<unknown>, []>
+        ).mockResolvedValueOnce(innerPerformResultFixture);
+
+        firstCallResult = baseTask.perform();
+
+        secondCallResult = await baseTask.result;
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should call innerPerformMock', () => {
+        expect(innerPerformMock).toHaveBeenCalledTimes(1);
+        expect(innerPerformMock).toHaveBeenCalledWith();
+      });
+
+      it('should return a result on first call', async () => {
+        await expect(firstCallResult).resolves.toStrictEqual(
+          innerPerformResultFixture,
+        );
+      });
+
+      it('should return a result on the second call', () => {
+        expect(secondCallResult).toStrictEqual(innerPerformResultFixture);
+      });
+    });
+
+    describe('when called, and innerPerform returns a promise result, and .result is called after promise is resolved', () => {
+      let baseTask: BaseTaskMock<string, [], Promise<unknown>>;
+
+      let innerPerformResultFixture: unknown;
+      let firstCallResult: unknown;
+      let secondCallResult: unknown;
+
+      beforeAll(async () => {
+        baseTask = new BaseTaskMock(
+          kindFixture,
+          innerPerformMock as jest.Mock<Promise<unknown>, []>,
+        );
+
+        innerPerformResultFixture = {
+          foo: 'bar',
+        };
+
+        (
+          innerPerformMock as jest.Mock<Promise<unknown>, []>
+        ).mockResolvedValueOnce(innerPerformResultFixture);
+
+        firstCallResult = await baseTask.perform();
+
+        secondCallResult = baseTask.result;
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should call innerPerformMock', () => {
+        expect(innerPerformMock).toHaveBeenCalledTimes(1);
+        expect(innerPerformMock).toHaveBeenCalledWith();
+      });
+
+      it('should return a result on first call', () => {
+        expect(firstCallResult).toStrictEqual(innerPerformResultFixture);
+      });
+
+      it('should return a result on the second call', () => {
+        expect(secondCallResult).toStrictEqual(innerPerformResultFixture);
       });
     });
   });

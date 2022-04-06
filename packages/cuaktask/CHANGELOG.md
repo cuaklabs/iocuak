@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - **[BC]** Updated `TaskDependencyBuilder` to no longer receive a set builder. Use `SafeDependentTaskBuilder` as replacement for the old `TaskDependencyBuilder`
+- **[BC]** Updated `BaseTask` to throw an error if `perform` is called more than once.
+- Updated `BaseTask` with a `result` property.
 
 
 

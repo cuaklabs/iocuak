@@ -55,6 +55,11 @@ describe(DependentTaskBuilder.name, () => {
           dependencies: [],
           kind: dependentTaskKindFixture,
           perform: jest.fn(),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
         taskKindFixture = 'some-kind';
@@ -62,6 +67,11 @@ describe(DependentTaskBuilder.name, () => {
           dependencies: [],
           kind: taskKindFixture,
           perform: jest.fn(),
+          result: {
+            get: () => {
+              throw new Error();
+            },
+          },
           status: TaskStatus.NotStarted,
         };
 
