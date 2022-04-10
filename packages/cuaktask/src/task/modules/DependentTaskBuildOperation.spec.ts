@@ -1,6 +1,8 @@
 import { Builder } from '../../common/modules/Builder';
 import { DependentTaskMocks } from '../mocks/models/domain/DependentTaskMocks';
 import { DependentTask } from '../models/domain/DependentTask';
+import { TaskDependencyKindGraph } from '../models/domain/TaskDependencyKindGraph';
+import { TaskDependencyKindGraphNode } from '../models/domain/TaskDependencyKindGraphNode';
 import { DependentTaskBuildOperation } from './DependentTaskBuildOperation';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
 
@@ -8,7 +10,7 @@ describe(DependentTaskBuildOperation.name, () => {
   let taskWithNoDependenciesBuilderMock: jest.Mocked<
     Builder<DependentTask<unknown>, [unknown]>
   >;
-  let taskDependencyEngine: jest.Mocked<TaskDependencyEngine>;
+  let taskDependencyEngine: jest.Mocked<TaskDependencyEngine<unknown>>;
 
   let dependentTaskBuildOperation: DependentTaskBuildOperation;
 
@@ -27,7 +29,7 @@ describe(DependentTaskBuildOperation.name, () => {
   });
 
   describe('.run()', () => {
-    describe('when called, taskDependencyEngine.getDependencies returns and empty array', () => {
+    describe('when called, taskDependencyEngine.getDependencies returns a graph with only the root dependency', () => {
       let taskFixture: DependentTask<unknown, unknown, unknown[], unknown>;
 
       let result: unknown;
@@ -35,10 +37,24 @@ describe(DependentTaskBuildOperation.name, () => {
       beforeAll(() => {
         taskFixture = DependentTaskMocks.any;
 
+        const taskDependenciesKindGraphRootNodeFixture: TaskDependencyKindGraphNode<unknown> =
+          {
+            dependencies: [],
+            kind: taskFixture.kind,
+          };
+
+        const taskDependenciesKindGraphFixture: TaskDependencyKindGraph<unknown> =
+          {
+            nodes: [taskDependenciesKindGraphRootNodeFixture],
+            rootNode: taskDependenciesKindGraphRootNodeFixture,
+          };
+
         taskWithNoDependenciesBuilderMock.build.mockReturnValueOnce(
           taskFixture,
         );
-        taskDependencyEngine.getDependencies.mockReturnValueOnce([]);
+        taskDependencyEngine.getDependencies.mockReturnValueOnce(
+          taskDependenciesKindGraphFixture,
+        );
 
         result = dependentTaskBuildOperation.run(taskFixture.kind);
       });
@@ -87,12 +103,33 @@ describe(DependentTaskBuildOperation.name, () => {
       };
       taskFixture = DependentTaskMocks.any;
 
+      const taskDependenciesKindGraphDependentNodeFixture: TaskDependencyKindGraphNode<unknown> =
+        {
+          dependencies: [],
+          kind: dependentTaskFixture.kind,
+        };
+
+      const taskDependenciesKindGraphRootNodeFixture: TaskDependencyKindGraphNode<unknown> =
+        {
+          dependencies: [taskDependenciesKindGraphDependentNodeFixture],
+          kind: taskFixture.kind,
+        };
+
+      const taskDependenciesKindGraphFixture: TaskDependencyKindGraph<unknown> =
+        {
+          nodes: [
+            taskDependenciesKindGraphRootNodeFixture,
+            taskDependenciesKindGraphDependentNodeFixture,
+          ],
+          rootNode: taskDependenciesKindGraphRootNodeFixture,
+        };
+
       taskWithNoDependenciesBuilderMock.build
         .mockReturnValueOnce(taskFixture)
         .mockReturnValueOnce(dependentTaskFixture);
-      taskDependencyEngine.getDependencies
-        .mockReturnValueOnce([dependentTaskFixture.kind])
-        .mockReturnValueOnce([]);
+      taskDependencyEngine.getDependencies.mockReturnValueOnce(
+        taskDependenciesKindGraphFixture,
+      );
 
       result = dependentTaskBuildOperation.run(taskFixture.kind);
     });
@@ -114,14 +151,9 @@ describe(DependentTaskBuildOperation.name, () => {
     });
 
     it('should call taskDependencyEngine.getDependencies()', () => {
-      expect(taskDependencyEngine.getDependencies).toHaveBeenCalledTimes(2);
-      expect(taskDependencyEngine.getDependencies).toHaveBeenNthCalledWith(
-        1,
+      expect(taskDependencyEngine.getDependencies).toHaveBeenCalledTimes(1);
+      expect(taskDependencyEngine.getDependencies).toHaveBeenCalledWith(
         taskFixture.kind,
-      );
-      expect(taskDependencyEngine.getDependencies).toHaveBeenNthCalledWith(
-        2,
-        dependentTaskFixture.kind,
       );
     });
 

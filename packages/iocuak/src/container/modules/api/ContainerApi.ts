@@ -1,9 +1,13 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
+import { Builder } from '../../../common/modules/domain/Builder';
+import { SetLike } from '../../../common/modules/domain/SetLike';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
+import { DirectTaskDependencyEngine } from '../../../task/modules/DirectTaskDependencyEngine';
 import { TaskBuilder } from '../../../task/modules/TaskBuilder';
+import { TaskBuilderWithNoDependencies } from '../../../task/modules/TaskBuilderWithNoDependencies';
 import { TaskDependencyEngine } from '../../../task/modules/TaskDependencyEngine';
 import { TaskKindSet } from '../../../task/modules/TaskKindSet';
 import { ContainerServiceApiImplementation } from '../../services/api/ContainerServiceApiImplementation';
@@ -67,7 +71,7 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     const dependentTaskRunner: cuaktask.DependentTaskRunner =
       new cuaktask.DependentTaskRunner();
 
-    const taskBuilder: cuaktask.Builder<
+    const taskBuilder: Builder<
       cuaktask.DependentTask<TaskKind, TaskKind>,
       [TaskKind]
     > = this.#initializeTaskBuilder(
@@ -92,25 +96,30 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
   ) {
-    const taskDependencyEngine: cuaktask.TaskDependencyEngine =
-      new TaskDependencyEngine(containerBindingService, metadataService);
-
-    const taskDependenciesKindSetBuilder: cuaktask.Builder<
-      cuaktask.SetLike<TaskKind>
-    > = {
+    const taskDependenciesKindSetBuilder: Builder<SetLike<TaskKind>> = {
       build: () => new TaskKindSet(),
     };
 
-    const taskBuilder: cuaktask.Builder<
+    const directTaskDependencyEngine: DirectTaskDependencyEngine =
+      new DirectTaskDependencyEngine(containerBindingService, metadataService);
+
+    const taskDependencyEngine: cuaktask.TaskDependencyEngine<TaskKind> =
+      new TaskDependencyEngine(
+        directTaskDependencyEngine,
+        taskDependenciesKindSetBuilder,
+      );
+
+    const taskBuilderWithNoDependencies: TaskBuilderWithNoDependencies =
+      new TaskBuilderWithNoDependencies(
+        containerBindingService,
+        containerRequestService,
+        containerSingletonService,
+      );
+
+    const taskBuilder: Builder<
       cuaktask.DependentTask<TaskKind, TaskKind>,
       [TaskKind]
-    > = new TaskBuilder(
-      taskDependencyEngine,
-      taskDependenciesKindSetBuilder,
-      containerBindingService,
-      containerRequestService,
-      containerSingletonService,
-    );
+    > = new TaskBuilder(taskDependencyEngine, taskBuilderWithNoDependencies);
 
     return taskBuilder;
   }

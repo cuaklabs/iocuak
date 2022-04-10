@@ -11,13 +11,13 @@ import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind'
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
-import { TaskDependencyEngine } from './TaskDependencyEngine';
+import { DirectTaskDependencyEngine } from './DirectTaskDependencyEngine';
 
-describe(TaskDependencyEngine.name, () => {
+describe(DirectTaskDependencyEngine.name, () => {
   let containerBindingService: jest.Mocked<ContainerBindingService>;
   let metadataService: jest.Mocked<MetadataService>;
 
-  let taskDependencyEngine: TaskDependencyEngine;
+  let directTaskDependencyEngine: DirectTaskDependencyEngine;
 
   beforeAll(() => {
     containerBindingService = {
@@ -30,13 +30,13 @@ describe(TaskDependencyEngine.name, () => {
       getClassMetadata: jest.fn(),
     } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
 
-    taskDependencyEngine = new TaskDependencyEngine(
+    directTaskDependencyEngine = new DirectTaskDependencyEngine(
       containerBindingService,
       metadataService,
     );
   });
 
-  describe('.getDependencies()', () => {
+  describe('.getDirectDependencies()', () => {
     describe('having a CreateInstanceTaskKind', () => {
       let createInstanceTaskKindFixture: CreateInstanceTaskKind;
 
@@ -51,7 +51,9 @@ describe(TaskDependencyEngine.name, () => {
           containerBindingService.get.mockReturnValueOnce(undefined);
 
           try {
-            taskDependencyEngine.getDependencies(createInstanceTaskKindFixture);
+            directTaskDependencyEngine.getDirectDependencies(
+              createInstanceTaskKindFixture,
+            );
           } catch (error) {
             result = error;
           }
@@ -91,7 +93,7 @@ describe(TaskDependencyEngine.name, () => {
             ClassMetadataFixtures.any,
           );
 
-          result = taskDependencyEngine.getDependencies(
+          result = directTaskDependencyEngine.getDirectDependencies(
             createInstanceTaskKindFixture,
           );
         });
@@ -127,7 +129,7 @@ describe(TaskDependencyEngine.name, () => {
 
           containerBindingService.get.mockReturnValueOnce(bindingFixture);
 
-          result = taskDependencyEngine.getDependencies(
+          result = directTaskDependencyEngine.getDirectDependencies(
             createInstanceTaskKindFixture,
           );
         });
@@ -154,7 +156,7 @@ describe(TaskDependencyEngine.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = taskDependencyEngine.getDependencies(
+          result = directTaskDependencyEngine.getDirectDependencies(
             getInstanceDependenciesTaskKindFixture,
           );
         });
@@ -181,7 +183,7 @@ describe(TaskDependencyEngine.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = taskDependencyEngine.getDependencies(
+          result = directTaskDependencyEngine.getDirectDependencies(
             getInstanceDependenciesTaskKindFixture,
           );
         });
@@ -218,7 +220,7 @@ describe(TaskDependencyEngine.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = taskDependencyEngine.getDependencies(
+          result = directTaskDependencyEngine.getDirectDependencies(
             getInstanceDependenciesTaskKindFixture,
           );
         });
