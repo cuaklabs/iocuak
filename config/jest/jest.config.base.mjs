@@ -106,7 +106,7 @@ function getJestProjectConfig(
   const projectConfig = {
     displayName: projectName,
     collectCoverageFrom: collectCoverageFrom,
-    coveragePathIgnorePatterns: ['/node_modules/', '/fixtures/'],
+    coveragePathIgnorePatterns: ['/node_modules/', '/fixtures/', '/mocks/'],
     coverageThreshold: {
       global: {
         branches: 70,
