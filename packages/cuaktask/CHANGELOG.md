@@ -22,10 +22,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [UNRELEASED]
 
 ### Added
-- Added `SafeDependentTaskBuilder`
+- Added `TaskDependencyKindGraph`.
+- Added `TaskDependencyKindGraphNode`.
 
 ### Changed
-- **[BC]** Updated `TaskDependencyBuilder` to no longer receive a set builder. Use `SafeDependentTaskBuilder` as replacement for the old `TaskDependencyBuilder`
+- **[BC]** Updated `TaskDependencyEngine` to return a task kind dependency graph.
+- **[BC]** Updated `TaskDependencyBuilder` to no longer receive a set builder.
 - **[BC]** Updated `BaseTask` to throw an error if `perform` is called more than once.
 - Updated `BaseTask` with a `result` property.
 

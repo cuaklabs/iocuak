@@ -13,9 +13,9 @@ export abstract class DependentTaskBuilder<
     DependentTask<TKind, unknown, TArgs, TReturn>,
     [TKind]
   >;
-  protected readonly taskDependencyEngine: TaskDependencyEngine;
+  protected readonly taskDependencyEngine: TaskDependencyEngine<TKind>;
 
-  constructor(taskDependencyEngine: TaskDependencyEngine) {
+  constructor(taskDependencyEngine: TaskDependencyEngine<TKind>) {
     this.taskWithNoDependenciesBuilder = {
       build: this.buildWithNoDependencies.bind(this),
     };

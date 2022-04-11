@@ -1,245 +1,236 @@
-import { ServiceId } from '../../common/models/domain/ServiceId';
-import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
-import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
-import { Binding } from '../../metadata/models/domain/Binding';
-import { BindingScope } from '../../metadata/models/domain/BindingScope';
-import { BindingType } from '../../metadata/models/domain/BindingType';
-import { MetadataService } from '../../metadata/services/domain/MetadataService';
-import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
-import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
-import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
-import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
+import * as cuaktask from '@cuaklabs/cuaktask';
+
+import { Builder } from '../../common/modules/domain/Builder';
+import { SetLike } from '../../common/modules/domain/SetLike';
 import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
+import { DirectTaskDependencyEngine } from './DirectTaskDependencyEngine';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
 
 describe(TaskDependencyEngine.name, () => {
-  let containerBindingService: jest.Mocked<ContainerBindingService>;
-  let metadataService: jest.Mocked<MetadataService>;
+  let directTaskDependencyEngineMock: jest.Mocked<DirectTaskDependencyEngine>;
+  let taskKindSerBuilderMock: jest.Mocked<Builder<SetLike<TaskKind>>>;
 
   let taskDependencyEngine: TaskDependencyEngine;
 
   beforeAll(() => {
-    containerBindingService = {
-      get: jest.fn(),
+    directTaskDependencyEngineMock = {
+      getDirectDependencies: jest.fn(),
     } as Partial<
-      jest.Mocked<ContainerBindingService>
-    > as jest.Mocked<ContainerBindingService>;
-
-    metadataService = {
-      getClassMetadata: jest.fn(),
-    } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
+      jest.Mocked<DirectTaskDependencyEngine>
+    > as jest.Mocked<DirectTaskDependencyEngine>;
+    taskKindSerBuilderMock = {
+      build: jest.fn(),
+    };
 
     taskDependencyEngine = new TaskDependencyEngine(
-      containerBindingService,
-      metadataService,
+      directTaskDependencyEngineMock,
+      taskKindSerBuilderMock,
     );
   });
 
-  describe('.getDependencies()', () => {
-    describe('having a CreateInstanceTaskKind', () => {
-      let createInstanceTaskKindFixture: CreateInstanceTaskKind;
+  describe('.getDependencies', () => {
+    let taskKindFixture: TaskKind;
+
+    beforeAll(() => {
+      taskKindFixture = {
+        id: 'service-id',
+        requestId: Symbol(),
+        type: TaskKindType.createInstance,
+      };
+    });
+
+    describe('when called, and no direct dependencies are found', () => {
+      let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
+      let result: unknown;
 
       beforeAll(() => {
-        createInstanceTaskKindFixture = CreateInstanceTaskKindFixtures.any;
+        taskKindSetMock = {
+          add: jest.fn(),
+          delete: jest.fn(),
+          has: jest.fn().mockReturnValueOnce(false),
+        } as Partial<jest.Mocked<SetLike<TaskKind>>> as jest.Mocked<
+          SetLike<TaskKind>
+        >;
+
+        taskKindSerBuilderMock.build.mockReturnValueOnce(taskKindSetMock);
+
+        directTaskDependencyEngineMock.getDirectDependencies.mockReturnValueOnce(
+          [],
+        );
+
+        result = taskDependencyEngine.getDependencies(taskKindFixture);
       });
 
-      describe('when called, and containerService.binding.get() returns undefined', () => {
-        let result: unknown;
-
-        beforeAll(() => {
-          containerBindingService.get.mockReturnValueOnce(undefined);
-
-          try {
-            taskDependencyEngine.getDependencies(createInstanceTaskKindFixture);
-          } catch (error) {
-            result = error;
-          }
-        });
-
-        afterAll(() => {
-          jest.clearAllMocks();
-        });
-
-        it('should throw an Error', () => {
-          expect(result).toBeInstanceOf(Error);
-          expect(result).toStrictEqual(
-            expect.objectContaining<Partial<Error>>({
-              message: expect.stringContaining(
-                'No bindings found for type',
-              ) as string,
-            }),
-          );
-        });
+      afterAll(() => {
+        jest.clearAllMocks();
       });
 
-      describe('when called, and containerService.binding.get() returns a type binding and containerService.metadata.get() returns metadata', () => {
-        let bindingFixture: Binding;
-        let result: unknown;
+      it('should call taskKindSet.has()', () => {
+        expect(taskKindSetMock.has).toHaveBeenCalledTimes(1);
+        expect(taskKindSetMock.has).toHaveBeenCalledWith(taskKindFixture);
+      });
 
-        beforeAll(() => {
-          bindingFixture = {
-            bindingType: BindingType.type,
-            id: createInstanceTaskKindFixture.id,
-            scope: BindingScope.transient,
-            type: class {},
+      it('should call directTaskDependencyEngine.getDirectDependencies()', () => {
+        expect(
+          directTaskDependencyEngineMock.getDirectDependencies,
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          directTaskDependencyEngineMock.getDirectDependencies,
+        ).toHaveBeenCalledWith(taskKindFixture);
+      });
+
+      it('should return a task kind graph', () => {
+        const expectedKindGraphNode: cuaktask.TaskDependencyKindGraphNode<TaskKind> =
+          {
+            dependencies: [],
+            kind: taskKindFixture,
           };
 
-          containerBindingService.get.mockReturnValueOnce(bindingFixture);
+        const expectedKindGraph: cuaktask.TaskDependencyKindGraph<TaskKind> = {
+          nodes: [expectedKindGraphNode],
+          rootNode: expectedKindGraphNode,
+        };
 
-          metadataService.getClassMetadata.mockReturnValueOnce(
-            ClassMetadataFixtures.any,
-          );
+        expect(result).toStrictEqual(expectedKindGraph);
+      });
+    });
 
-          result = taskDependencyEngine.getDependencies(
-            createInstanceTaskKindFixture,
-          );
-        });
+    describe('when called, and a non circular dependency is found', () => {
+      let dependencyTaskKindFixture: TaskKind;
+      let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
+      let result: unknown;
 
-        afterAll(() => {
-          jest.clearAllMocks();
-        });
+      beforeAll(() => {
+        dependencyTaskKindFixture = {
+          id: 'dependency-service-id',
+          requestId: Symbol(),
+          type: TaskKindType.createInstance,
+        };
 
-        it('should return a TDependencyKind[]', () => {
-          const expected: TaskKind[] = [
-            {
-              id: createInstanceTaskKindFixture.id,
-              metadata: ClassMetadataFixtures.any,
-              requestId: createInstanceTaskKindFixture.requestId,
-              type: TaskKindType.getInstanceDependencies,
-            },
-          ];
+        taskKindSetMock = {
+          add: jest.fn(),
+          delete: jest.fn(),
+          has: jest.fn().mockReturnValueOnce(false).mockReturnValueOnce(false),
+        } as Partial<jest.Mocked<SetLike<TaskKind>>> as jest.Mocked<
+          SetLike<TaskKind>
+        >;
 
-          expect(result).toStrictEqual(expected);
-        });
+        taskKindSerBuilderMock.build.mockReturnValueOnce(taskKindSetMock);
+
+        directTaskDependencyEngineMock.getDirectDependencies
+          .mockReturnValueOnce([dependencyTaskKindFixture])
+          .mockReturnValueOnce([]);
+
+        result = taskDependencyEngine.getDependencies(taskKindFixture);
       });
 
-      describe('when called, and containerService.binding.get() returns a value binding', () => {
-        let bindingFixture: Binding;
-        let result: unknown;
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
 
-        beforeAll(() => {
-          bindingFixture = {
-            bindingType: BindingType.value,
-            id: createInstanceTaskKindFixture.id,
-            value: {},
+      it('should call taskKindSet.has()', () => {
+        expect(taskKindSetMock.has).toHaveBeenCalledTimes(2);
+        expect(taskKindSetMock.has).toHaveBeenNthCalledWith(1, taskKindFixture);
+        expect(taskKindSetMock.has).toHaveBeenNthCalledWith(
+          2,
+          dependencyTaskKindFixture,
+        );
+      });
+
+      it('should call directTaskDependencyEngine.getDirectDependencies()', () => {
+        expect(
+          directTaskDependencyEngineMock.getDirectDependencies,
+        ).toHaveBeenCalledTimes(2);
+        expect(
+          directTaskDependencyEngineMock.getDirectDependencies,
+        ).toHaveBeenNthCalledWith(1, taskKindFixture);
+        expect(
+          directTaskDependencyEngineMock.getDirectDependencies,
+        ).toHaveBeenNthCalledWith(2, dependencyTaskKindFixture);
+      });
+
+      it('should return a task kind graph', () => {
+        const dependencyTaskKindGraphNode: cuaktask.TaskDependencyKindGraphNode<TaskKind> =
+          {
+            dependencies: [],
+            kind: dependencyTaskKindFixture,
+          };
+        const expectedKindGraphNode: cuaktask.TaskDependencyKindGraphNode<TaskKind> =
+          {
+            dependencies: [dependencyTaskKindGraphNode],
+            kind: taskKindFixture,
           };
 
-          containerBindingService.get.mockReturnValueOnce(bindingFixture);
+        const expectedKindGraph: cuaktask.TaskDependencyKindGraph<TaskKind> = {
+          nodes: [expectedKindGraphNode, dependencyTaskKindGraphNode],
+          rootNode: expectedKindGraphNode,
+        };
 
-          result = taskDependencyEngine.getDependencies(
-            createInstanceTaskKindFixture,
-          );
-        });
-
-        afterAll(() => {
-          jest.clearAllMocks();
-        });
-
-        it('should return no dependencies', () => {
-          expect(result).toStrictEqual([]);
-        });
+        expect(result).toStrictEqual(expectedKindGraph);
       });
     });
 
-    describe('having a GetInstanceDependenciesTaskKind with no dependencies', () => {
-      let getInstanceDependenciesTaskKindFixture: GetInstanceDependenciesTaskKind;
+    describe('when called, and a circular dependency is found', () => {
+      let dependencyTaskKindFixture: TaskKind;
+      let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
+      let result: unknown;
 
       beforeAll(() => {
-        getInstanceDependenciesTaskKindFixture =
-          GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsEmptyAndPropertiesEmpty;
+        dependencyTaskKindFixture = taskKindFixture;
+
+        taskKindSetMock = {
+          add: jest.fn(),
+          delete: jest.fn(),
+          has: jest.fn().mockReturnValueOnce(false).mockReturnValueOnce(true),
+        } as Partial<jest.Mocked<SetLike<TaskKind>>> as jest.Mocked<
+          SetLike<TaskKind>
+        >;
+
+        taskKindSerBuilderMock.build.mockReturnValueOnce(taskKindSetMock);
+
+        directTaskDependencyEngineMock.getDirectDependencies.mockReturnValueOnce(
+          [dependencyTaskKindFixture],
+        );
+
+        try {
+          taskDependencyEngine.getDependencies(taskKindFixture);
+        } catch (error: unknown) {
+          result = error;
+        }
       });
 
-      describe('when called', () => {
-        let result: unknown;
-
-        beforeAll(() => {
-          result = taskDependencyEngine.getDependencies(
-            getInstanceDependenciesTaskKindFixture,
-          );
-        });
-
-        afterAll(() => {
-          jest.clearAllMocks();
-        });
-
-        it('should return a TDependencyKind[]', () => {
-          expect(result).toStrictEqual([]);
-        });
-      });
-    });
-
-    describe('having a GetInstanceDependenciesTaskKind with constructor arguments', () => {
-      let getInstanceDependenciesTaskKindFixture: GetInstanceDependenciesTaskKind;
-
-      beforeAll(() => {
-        getInstanceDependenciesTaskKindFixture =
-          GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsAndPropertiesEmpty;
+      afterAll(() => {
+        jest.clearAllMocks();
       });
 
-      describe('when called', () => {
-        let result: unknown;
-
-        beforeAll(() => {
-          result = taskDependencyEngine.getDependencies(
-            getInstanceDependenciesTaskKindFixture,
-          );
-        });
-
-        afterAll(() => {
-          jest.clearAllMocks();
-        });
-
-        it('should return a TDependencyKind[]', () => {
-          const expected: TaskKind[] = [
-            {
-              id: ClassMetadataFixtures
-                .withConstructorArgumentsAndPropertiesEmpty
-                .constructorArguments[0] as ServiceId,
-              requestId: getInstanceDependenciesTaskKindFixture.requestId,
-              type: TaskKindType.createInstance,
-            },
-          ];
-
-          expect(result).toStrictEqual(expected);
-        });
-      });
-    });
-
-    describe('having a GetInstanceDependenciesTaskKind with properties', () => {
-      let getInstanceDependenciesTaskKindFixture: GetInstanceDependenciesTaskKind;
-
-      beforeAll(() => {
-        getInstanceDependenciesTaskKindFixture =
-          GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsEmptyAndProperties;
+      it('should call taskKindSet.has()', () => {
+        expect(taskKindSetMock.has).toHaveBeenCalledTimes(2);
+        expect(taskKindSetMock.has).toHaveBeenNthCalledWith(1, taskKindFixture);
+        expect(taskKindSetMock.has).toHaveBeenNthCalledWith(
+          2,
+          dependencyTaskKindFixture,
+        );
       });
 
-      describe('when called', () => {
-        let result: unknown;
+      it('should call directTaskDependencyEngine.getDirectDependencies()', () => {
+        expect(
+          directTaskDependencyEngineMock.getDirectDependencies,
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          directTaskDependencyEngineMock.getDirectDependencies,
+        ).toHaveBeenCalledWith(taskKindFixture);
+      });
 
-        beforeAll(() => {
-          result = taskDependencyEngine.getDependencies(
-            getInstanceDependenciesTaskKindFixture,
-          );
-        });
-
-        afterAll(() => {
-          jest.clearAllMocks();
-        });
-
-        it('should return a TDependencyKind[]', () => {
-          const expected: TaskKind[] = [
-            {
-              id: ClassMetadataFixtures.withConstructorArgumentsEmptyAndProperties.properties
-                .values()
-                .next().value as ServiceId,
-              requestId: getInstanceDependenciesTaskKindFixture.requestId,
-              type: TaskKindType.createInstance,
-            },
-          ];
-
-          expect(result).toStrictEqual(expected);
-        });
+      it('should throw an error', () => {
+        expect(result).toBeInstanceOf(Error);
+        expect(result).toStrictEqual(
+          expect.objectContaining<Partial<Error>>({
+            message: `Circular dependency found related to ${
+              taskKindFixture.id as string
+            }!`,
+          }),
+        );
       });
     });
   });

@@ -21,7 +21,7 @@ class DependentTaskBuilderMock extends DependentTaskBuilder<
       DependentTask<unknown, unknown, unknown[], unknown>,
       [unknown]
     >,
-    taskDependencyEngine: TaskDependencyEngine,
+    taskDependencyEngine: TaskDependencyEngine<unknown>,
   ) {
     super(taskDependencyEngine);
 
@@ -45,7 +45,7 @@ describe(DependentTaskBuilder.name, () => {
     DependentTask<unknown, unknown, unknown[], unknown>,
     [unknown]
   >;
-  let taskDependencyEngineMock: jest.Mocked<TaskDependencyEngine>;
+  let taskDependencyEngineMock: jest.Mocked<TaskDependencyEngine<unknown>>;
 
   let dependentTaskBuilder: DependentTaskBuilderMock;
 

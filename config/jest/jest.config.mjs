@@ -20,6 +20,9 @@ const tsIntegrationProject = getJestTsProjectConfig(
   '.int.spec.ts',
 );
 
-export default {
+/** @type {!import("@jest/types/build/Config").GlobalConfig} */
+const globalConfig = {
   projects: [tsIntegrationProject, tsUnitProject, ...packageProjects],
 };
+
+export default globalConfig;

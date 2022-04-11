@@ -1,6 +1,19 @@
 import { Builder } from '../../common/modules/Builder';
 import { DependentTask } from '../models/domain/DependentTask';
+import { TaskDependencyKindGraph } from '../models/domain/TaskDependencyKindGraph';
+import { TaskDependencyKindGraphNode } from '../models/domain/TaskDependencyKindGraphNode';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
+
+interface TaskDependencyKindGraphNodeWitOptionalTask<TKind>
+  extends TaskDependencyKindGraphNode<TKind> {
+  dependentTask?: DependentTask<TKind, unknown, unknown[], unknown>;
+}
+
+interface TaskDependencyGraphNodeWithTask<TKind>
+  extends TaskDependencyKindGraphNode<TKind> {
+  dependencies: TaskDependencyGraphNodeWithTask<TKind>[];
+  dependentTask: DependentTask<TKind, unknown, unknown[], unknown>;
+}
 
 export class DependentTaskBuildOperation<
   TKind = unknown,
@@ -11,14 +24,14 @@ export class DependentTaskBuildOperation<
     DependentTask<TKind, unknown, TArgs, TReturn>,
     [TKind]
   >;
-  readonly #taskDependencyEngine: TaskDependencyEngine;
+  readonly #taskDependencyEngine: TaskDependencyEngine<TKind>;
 
   constructor(
     taskWithNoDependenciesBuilder: Builder<
       DependentTask<TKind, unknown, TArgs, TReturn>,
       [TKind]
     >,
-    taskDependencyEngine: TaskDependencyEngine,
+    taskDependencyEngine: TaskDependencyEngine<TKind>,
   ) {
     this.#taskWithNoDependenciesBuilder = taskWithNoDependenciesBuilder;
     this.#taskDependencyEngine = taskDependencyEngine;
@@ -30,35 +43,52 @@ export class DependentTaskBuildOperation<
    * @returns Task built.
    */
   public run(taskKind: TKind): DependentTask<TKind, TKind, TArgs, TReturn> {
-    const dependentTask: DependentTask<TKind, TKind, TArgs, TReturn> =
-      this.build(taskKind);
-
-    return dependentTask;
-  }
-
-  protected build(
-    taskKind: TKind,
-  ): DependentTask<TKind, TKind, TArgs, TReturn> {
-    const task: DependentTask<TKind, unknown, TArgs, TReturn> =
-      this.#taskWithNoDependenciesBuilder.build(taskKind);
-
-    const taskDependencies: DependentTask<TKind>[] = this.buildDependencies(
-      task.kind,
-    );
-
-    task.dependencies.push(...taskDependencies);
-
-    return task;
-  }
-
-  protected buildDependencies(taskKind: TKind): DependentTask<TKind>[] {
-    const taskDependenciesKind: TKind[] =
+    const taskDependenciesKindGraph: TaskDependencyKindGraph<TKind> =
       this.#taskDependencyEngine.getDependencies(taskKind);
 
-    const taskDependencies: DependentTask<TKind>[] = taskDependenciesKind.map(
-      (taskDependencyKind: TKind) => this.build(taskDependencyKind),
+    this.#fillTaskDependenciesKindGraphWithTasks(taskDependenciesKindGraph);
+    this.#fillTaskDependenciesKindGraphWithTaskDependencies(
+      taskDependenciesKindGraph,
     );
 
-    return taskDependencies;
+    return this.#getRootDependentTask(taskDependenciesKindGraph);
+  }
+
+  #getRootDependentTask(
+    taskDependenciesKindGraph: TaskDependencyKindGraph<TKind>,
+  ): DependentTask<TKind, TKind, TArgs, TReturn> {
+    const rootTaskDepencyNode: DependentTask<TKind, TKind, TArgs, TReturn> = (
+      taskDependenciesKindGraph.rootNode as TaskDependencyGraphNodeWithTask<TKind>
+    ).dependentTask as DependentTask<TKind, TKind, TArgs, TReturn>;
+
+    return rootTaskDepencyNode;
+  }
+
+  #fillTaskDependenciesKindGraphWithTasks(
+    taskDependenciesKindGraph: TaskDependencyKindGraph<TKind>,
+  ): void {
+    for (const taskDependenciesKindGraphNode of taskDependenciesKindGraph.nodes as TaskDependencyKindGraphNodeWitOptionalTask<TKind>[]) {
+      taskDependenciesKindGraphNode.dependentTask =
+        this.#taskWithNoDependenciesBuilder.build(
+          taskDependenciesKindGraphNode.kind,
+        );
+    }
+  }
+
+  #fillTaskDependenciesKindGraphWithTaskDependencies(
+    taskDependenciesKindGraph: TaskDependencyKindGraph<TKind>,
+  ): void {
+    for (const taskDependenciesKindGraphNode of taskDependenciesKindGraph.nodes as TaskDependencyGraphNodeWithTask<TKind>[]) {
+      const taskDependencies: DependentTask<TKind>[] =
+        taskDependenciesKindGraphNode.dependencies.map(
+          (
+            taskDependenciesKindGraphNode: TaskDependencyGraphNodeWithTask<TKind>,
+          ) => taskDependenciesKindGraphNode.dependentTask,
+        );
+
+      taskDependenciesKindGraphNode.dependentTask.dependencies.push(
+        ...taskDependencies,
+      );
+    }
   }
 }

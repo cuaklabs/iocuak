@@ -1,4 +1,5 @@
 import { ServiceId } from '../../common/models/domain/ServiceId';
+import { chain } from '../../common/utils/chain';
 import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionApi';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { MetadataKey } from '../models/domain/MetadataKey';
@@ -32,14 +33,6 @@ export function injectFrom(
   };
 
   return decorator;
-}
-
-function* chain<T>(...iterables: Iterable<T>[]): Iterable<T> {
-  for (const iterable of iterables) {
-    for (const element of iterable) {
-      yield element;
-    }
-  }
 }
 
 function composeUpdateReflectMetadataCallback(

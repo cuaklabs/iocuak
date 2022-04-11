@@ -1,10 +1,7 @@
-import {
-  Builder,
-  DependentTask,
-  DependentTaskRunner,
-} from '@cuaklabs/cuaktask';
+import { DependentTask, DependentTaskRunner } from '@cuaklabs/cuaktask';
 
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { Builder } from '../../../common/modules/domain/Builder';
 import { CreateInstanceTask } from '../../../task/models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskKind } from '../../../task/models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../../task/models/domain/TaskKind';

@@ -1,5 +1,3 @@
-import { Builder, SetLike, TaskDependencyEngine } from '@cuaklabs/cuaktask';
-
 jest.mock('../../utils/isTaskKind');
 
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
@@ -12,25 +10,16 @@ import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
-import { TaskKind } from '../models/domain/TaskKind';
-import { TaskBuilder } from './TaskBuilder';
+import { TaskBuilderWithNoDependencies } from './TaskBuilderWithNoDependencies';
 
-describe(TaskBuilder.name, () => {
-  let taskDependencyEngine: jest.Mocked<TaskDependencyEngine>;
-  let taskDependenciesKindSetBuilder: jest.Mocked<Builder<SetLike<TaskKind>>>;
+describe(TaskBuilderWithNoDependencies.name, () => {
   let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
   let containerRequestService: jest.Mocked<ContainerRequestService>;
   let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
 
-  let taskBuilder: TaskBuilder;
+  let taskBuilderWithNoDependencies: TaskBuilderWithNoDependencies;
 
   beforeAll(() => {
-    taskDependencyEngine = {
-      getDependencies: jest.fn(),
-    };
-    taskDependenciesKindSetBuilder = {
-      build: jest.fn().mockImplementation(() => new Set()),
-    };
     containerBindingServiceMock = {} as Partial<
       jest.Mocked<ContainerBindingService>
     > as jest.Mocked<ContainerBindingService>;
@@ -41,16 +30,14 @@ describe(TaskBuilder.name, () => {
       jest.Mocked<ContainerSingletonService>
     > as jest.Mocked<ContainerSingletonService>;
 
-    taskBuilder = new TaskBuilder(
-      taskDependencyEngine,
-      taskDependenciesKindSetBuilder,
+    taskBuilderWithNoDependencies = new TaskBuilderWithNoDependencies(
       containerBindingServiceMock,
       containerRequestService,
       containerSingletonServiceMock,
     );
   });
 
-  describe('.build()', () => {
+  describe('.buildWithNoDependencies()', () => {
     describe('when called, with a taskKind of type TaskKindType.createInstance', () => {
       let createInstanceTaskKindFixture: CreateInstanceTaskKind;
       let result: unknown;
@@ -60,9 +47,9 @@ describe(TaskBuilder.name, () => {
 
         (isTaskKind as unknown as jest.Mock).mockReturnValueOnce(true);
 
-        taskDependencyEngine.getDependencies.mockReturnValueOnce([]);
-
-        result = taskBuilder.build(createInstanceTaskKindFixture);
+        result = taskBuilderWithNoDependencies.buildWithNoDependencies(
+          createInstanceTaskKindFixture,
+        );
       });
 
       afterAll(() => {
@@ -95,9 +82,9 @@ describe(TaskBuilder.name, () => {
 
         (isTaskKind as unknown as jest.Mock).mockReturnValueOnce(true);
 
-        taskDependencyEngine.getDependencies.mockReturnValueOnce([]);
-
-        result = taskBuilder.build(getInstanceDependenciesTaskKindFixture);
+        result = taskBuilderWithNoDependencies.buildWithNoDependencies(
+          getInstanceDependenciesTaskKindFixture,
+        );
       });
 
       afterAll(() => {
