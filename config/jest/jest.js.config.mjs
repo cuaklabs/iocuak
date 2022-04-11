@@ -20,6 +20,13 @@ const jsIntegrationProject = getJestJsProjectConfig(
   '.int.spec.js',
 );
 
-export default {
+/** @type {!import("@jest/types/build/Config").GlobalConfig} */
+const globalConfig = {
+  collectCoverageFrom: [
+    'packages/*/lib/**/*.js',
+    '!packages/*/lib/**/*.spec.js',
+  ],
   projects: [jsIntegrationProject, jsUnitProject, ...packageProjects],
 };
+
+export default globalConfig;

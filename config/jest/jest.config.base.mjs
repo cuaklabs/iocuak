@@ -2,8 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import url from 'url';
 
-const tsRoot = '<rootDir>/packages';
-const jsRoot = '<rootDir>/packages';
+const projectRoot = '<rootDir>/packages';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -89,6 +88,7 @@ function buildUnitPackageTsProject(packageName) {
 }
 
 /**
+ * @param { string } packageName package name
  * @param { !string } projectName Jest project's name
  * @param { !Array<string> } collectCoverageFrom expressions to match to a file covered by IstambulJs
  * @param { !Array<string> } roots Jest roots
@@ -97,16 +97,21 @@ function buildUnitPackageTsProject(packageName) {
  * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
  */
 function getJestProjectConfig(
+  packageName,
   projectName,
-  collectCoverageFrom,
   roots,
   testMatch,
   testPathIgnorePatterns,
 ) {
   const projectConfig = {
     displayName: projectName,
-    collectCoverageFrom: collectCoverageFrom,
-    coveragePathIgnorePatterns: ['/node_modules/', '/fixtures/', '/mocks/'],
+    collectCoverageFrom: [],
+    coveragePathIgnorePatterns: [
+      ...getPackagesUnlessPackageIgnorePatterns(packageName),
+      '/node_modules/',
+      '/fixtures/',
+      '/mocks/',
+    ],
     coverageThreshold: {
       global: {
         branches: 70,
@@ -140,12 +145,11 @@ function getJestJsProjectConfig(
   extension,
 ) {
   const testMatch = [getJsTestMatch(packageName, extension)];
-  const collectCoverageFrom = [`${getJestJsProjectRoot(packageName)}/**/*.js`];
 
   return getJestProjectConfig(
+    packageName,
     projectName,
-    collectCoverageFrom,
-    [getJestJsProjectRoot(packageName)],
+    [getJestPackageProjectRoot(packageName)],
     testMatch,
     testPathIgnorePatterns,
   );
@@ -155,8 +159,8 @@ function getJestJsProjectConfig(
  * @param { ?string } packageName Project package
  * @returns { !string }
  */
-function getJestJsProjectRoot(packageName) {
-  return getJestProjectRoot(jsRoot, packageName);
+function getJestPackageProjectRoot(packageName) {
+  return getJestProjectRoot(projectRoot, packageName);
 }
 
 /**
@@ -170,7 +174,7 @@ function getJestProjectRoot(root, submodule) {
   if (submodule === undefined) {
     projectRoots = root;
   } else {
-    projectRoots = `${root}/${submodule}`;
+    projectRoots = path.join(root, submodule);
   }
 
   return projectRoots;
@@ -186,17 +190,16 @@ function getJestProjectRoot(root, submodule) {
 function getJestTsProjectConfig(
   projectName,
   testPathIgnorePatterns,
-  submodule,
+  packageName,
   extension,
 ) {
-  const testMatch = [getTsTestMatch(submodule, extension)];
-  const collectCoverageFrom = [`${getJestTsProjectRoot(submodule)}/**/*.ts`];
+  const testMatch = [getTsTestMatch(packageName, extension)];
 
   return {
     ...getJestProjectConfig(
+      packageName,
       projectName,
-      collectCoverageFrom,
-      [getJestTsProjectRoot(submodule)],
+      [getJestPackageProjectRoot(packageName)],
       testMatch,
       testPathIgnorePatterns,
     ),
@@ -207,11 +210,21 @@ function getJestTsProjectConfig(
 }
 
 /**
- * @param { ?string } package Project package
- * @returns { !string }
+ * @param {string} packageName Package name
+ * @returns {Array.<string>}
  */
-function getJestTsProjectRoot(submodule) {
-  return getJestProjectRoot(tsRoot, submodule);
+function getPackagesUnlessPackageIgnorePatterns(packageName) {
+  if (packageName === undefined) {
+    return [];
+  } else {
+    const packagesUnlessPackage = getPackages().filter(
+      (packagesPackageName) => packagesPackageName != packageName,
+    );
+
+    return packagesUnlessPackage.map(
+      (packageName) => `<rootDir>/packages/${packageName}/`,
+    );
+  }
 }
 
 /**
@@ -238,7 +251,7 @@ function getSubmoduleTestMatch(root, submoduleName, testExtension) {
  * @returns { !string }
  */
 function getTsTestMatch(submoduleName, testExtension) {
-  return getSubmoduleTestMatch(tsRoot, submoduleName, testExtension);
+  return getSubmoduleTestMatch(projectRoot, submoduleName, testExtension);
 }
 
 /**
@@ -247,7 +260,7 @@ function getTsTestMatch(submoduleName, testExtension) {
  * @returns { !string }
  */
 function getJsTestMatch(submoduleName, testExtension) {
-  return getSubmoduleTestMatch(jsRoot, submoduleName, testExtension);
+  return getSubmoduleTestMatch(projectRoot, submoduleName, testExtension);
 }
 
 /**
@@ -263,7 +276,6 @@ function getPackages() {
 export {
   buildPackageJsProjects,
   buildPackageTsProjects,
-  getJestProjectConfig,
   getJestJsProjectConfig,
   getJsTestMatch,
   getTsTestMatch,
