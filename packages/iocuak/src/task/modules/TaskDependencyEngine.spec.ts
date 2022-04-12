@@ -81,13 +81,18 @@ describe(TaskDependencyEngine.name, () => {
       });
 
       it('should return a task kind graph', () => {
-        const expectedKindGraphNode: cuaktask.TaskDependencyKindGraphNode<TaskKind> =
-          {
-            dependencies: [],
-            kind: taskKindFixture,
-          };
+        const expectedKindGraphNode: cuaktask.TaskDependencyKindGraphNode<
+          TaskKind,
+          TaskKind
+        > = {
+          dependencies: [],
+          kind: taskKindFixture,
+        };
 
-        const expectedKindGraph: cuaktask.TaskDependencyKindGraph<TaskKind> = {
+        const expectedKindGraph: cuaktask.TaskDependencyKindGraph<
+          TaskKind,
+          TaskKind
+        > = {
           nodes: [expectedKindGraphNode],
           rootNode: expectedKindGraphNode,
         };
@@ -151,18 +156,25 @@ describe(TaskDependencyEngine.name, () => {
       });
 
       it('should return a task kind graph', () => {
-        const dependencyTaskKindGraphNode: cuaktask.TaskDependencyKindGraphNode<TaskKind> =
-          {
-            dependencies: [],
-            kind: dependencyTaskKindFixture,
-          };
-        const expectedKindGraphNode: cuaktask.TaskDependencyKindGraphNode<TaskKind> =
-          {
-            dependencies: [dependencyTaskKindGraphNode],
-            kind: taskKindFixture,
-          };
+        const dependencyTaskKindGraphNode: cuaktask.TaskDependencyKindGraphNode<
+          TaskKind,
+          TaskKind
+        > = {
+          dependencies: [],
+          kind: dependencyTaskKindFixture,
+        };
+        const expectedKindGraphNode: cuaktask.TaskDependencyKindGraphNode<
+          TaskKind,
+          TaskKind
+        > = {
+          dependencies: [dependencyTaskKindGraphNode],
+          kind: taskKindFixture,
+        };
 
-        const expectedKindGraph: cuaktask.TaskDependencyKindGraph<TaskKind> = {
+        const expectedKindGraph: cuaktask.TaskDependencyKindGraph<
+          TaskKind,
+          TaskKind
+        > = {
           nodes: [expectedKindGraphNode, dependencyTaskKindGraphNode],
           rootNode: expectedKindGraphNode,
         };

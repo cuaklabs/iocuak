@@ -5,12 +5,12 @@ import { TaskDependencyKindGraphNode } from '../models/domain/TaskDependencyKind
 import { TaskDependencyEngine } from './TaskDependencyEngine';
 
 interface TaskDependencyKindGraphNodeWitOptionalTask<TKind>
-  extends TaskDependencyKindGraphNode<TKind> {
+  extends TaskDependencyKindGraphNode<TKind, TKind> {
   dependentTask?: DependentTask<TKind, unknown, unknown[], unknown>;
 }
 
 interface TaskDependencyGraphNodeWithTask<TKind>
-  extends TaskDependencyKindGraphNode<TKind> {
+  extends TaskDependencyKindGraphNode<TKind, TKind> {
   dependencies: TaskDependencyGraphNodeWithTask<TKind>[];
   dependentTask: DependentTask<TKind, unknown, unknown[], unknown>;
 }
@@ -24,7 +24,7 @@ export class DependentTaskBuildOperation<
     DependentTask<TKind, unknown, TArgs, TReturn>,
     [TKind]
   >;
-  readonly #taskDependencyEngine: TaskDependencyEngine<TKind>;
+  readonly #taskDependencyEngine: TaskDependencyEngine<TKind, TKind>;
 
   constructor(
     taskWithNoDependenciesBuilder: Builder<
@@ -43,7 +43,7 @@ export class DependentTaskBuildOperation<
    * @returns Task built.
    */
   public run(taskKind: TKind): DependentTask<TKind, TKind, TArgs, TReturn> {
-    const taskDependenciesKindGraph: TaskDependencyKindGraph<TKind> =
+    const taskDependenciesKindGraph: TaskDependencyKindGraph<TKind, TKind> =
       this.#taskDependencyEngine.getDependencies(taskKind);
 
     this.#fillTaskDependenciesKindGraphWithTasks(taskDependenciesKindGraph);
@@ -55,7 +55,7 @@ export class DependentTaskBuildOperation<
   }
 
   #getRootDependentTask(
-    taskDependenciesKindGraph: TaskDependencyKindGraph<TKind>,
+    taskDependenciesKindGraph: TaskDependencyKindGraph<TKind, TKind>,
   ): DependentTask<TKind, TKind, TArgs, TReturn> {
     const rootTaskDepencyNode: DependentTask<TKind, TKind, TArgs, TReturn> = (
       taskDependenciesKindGraph.rootNode as TaskDependencyGraphNodeWithTask<TKind>
@@ -65,7 +65,7 @@ export class DependentTaskBuildOperation<
   }
 
   #fillTaskDependenciesKindGraphWithTasks(
-    taskDependenciesKindGraph: TaskDependencyKindGraph<TKind>,
+    taskDependenciesKindGraph: TaskDependencyKindGraph<TKind, TKind>,
   ): void {
     for (const taskDependenciesKindGraphNode of taskDependenciesKindGraph.nodes as TaskDependencyKindGraphNodeWitOptionalTask<TKind>[]) {
       taskDependenciesKindGraphNode.dependentTask =
@@ -76,10 +76,10 @@ export class DependentTaskBuildOperation<
   }
 
   #fillTaskDependenciesKindGraphWithTaskDependencies(
-    taskDependenciesKindGraph: TaskDependencyKindGraph<TKind>,
+    taskDependenciesKindGraph: TaskDependencyKindGraph<TKind, TKind>,
   ): void {
     for (const taskDependenciesKindGraphNode of taskDependenciesKindGraph.nodes as TaskDependencyGraphNodeWithTask<TKind>[]) {
-      const taskDependencies: DependentTask<TKind>[] =
+      const taskDependencies: DependentTask<TKind, TKind>[] =
         taskDependenciesKindGraphNode.dependencies.map(
           (
             taskDependenciesKindGraphNode: TaskDependencyGraphNodeWithTask<TKind>,

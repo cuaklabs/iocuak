@@ -7,8 +7,15 @@ import { stringifyServiceId } from '../../utils/stringifyServiceId';
 import { TaskKind } from '../models/domain/TaskKind';
 import { DirectTaskDependencyEngine } from './DirectTaskDependencyEngine';
 
+type TaskKindGraphNode = cuaktask.TaskDependencyKindGraphNode<
+  TaskKind,
+  TaskKind
+>;
+
+type TaskKindGraph = cuaktask.TaskDependencyKindGraph<TaskKind, TaskKind>;
+
 export class TaskDependencyEngine
-  implements cuaktask.TaskDependencyEngine<TaskKind>
+  implements cuaktask.TaskDependencyEngine<TaskKind, TaskKind>
 {
   readonly #directTaskDependencyEngine: DirectTaskDependencyEngine;
   readonly #taskKindSerBuilder: Builder<SetLike<TaskKind>>;
@@ -21,39 +28,38 @@ export class TaskDependencyEngine
     this.#taskKindSerBuilder = taskKindSerBuilder;
   }
 
-  public getDependencies(
-    taskKind: TaskKind,
-  ): cuaktask.TaskDependencyKindGraph<TaskKind> {
-    const taskDependencyKindGraphRootNode: cuaktask.TaskDependencyKindGraphNode<TaskKind> =
-      {
-        dependencies: [],
-        kind: taskKind,
-      };
+  public getDependencies(taskKind: TaskKind): TaskKindGraph {
+    const taskDependencyKindGraphRootNode: TaskKindGraphNode = {
+      dependencies: [],
+      kind: taskKind,
+    };
 
-    const taskDependencyKindGraphNodes: cuaktask.TaskDependencyKindGraphNode<TaskKind>[] =
+    const taskDependencyKindGraphNodes: TaskKindGraphNode[] =
       this.#expandKindGraphNodes(taskDependencyKindGraphRootNode);
 
-    const taskDependencyKindGraph: cuaktask.TaskDependencyKindGraph<TaskKind> =
-      {
-        nodes: taskDependencyKindGraphNodes,
-        rootNode: taskDependencyKindGraphRootNode,
-      };
+    const taskDependencyKindGraph: TaskKindGraph = {
+      nodes: taskDependencyKindGraphNodes,
+      rootNode: taskDependencyKindGraphRootNode,
+    };
 
     return taskDependencyKindGraph;
   }
 
   #expandKindGraphNodes(
-    taskDependencyKindGraphRootNode: cuaktask.TaskDependencyKindGraphNode<TaskKind>,
-  ): cuaktask.TaskDependencyKindGraphNode<TaskKind>[] {
+    taskDependencyKindGraphRootNode: TaskKindGraphNode,
+  ): TaskKindGraphNode[] {
     const taskKindSet: SetLike<TaskKind> = this.#taskKindSerBuilder.build();
-    const taskDependencyKindGraphNodes: cuaktask.TaskDependencyKindGraphNode<TaskKind>[] =
-      [taskDependencyKindGraphRootNode];
-    const kindGraphNodesStackStack: cuaktask.TaskDependencyKindGraphNode<TaskKind>[][] =
-      [[taskDependencyKindGraphRootNode]];
+    const taskDependencyKindGraphNodes: TaskKindGraphNode[] = [
+      taskDependencyKindGraphRootNode,
+    ];
+    const kindGraphNodesStackStack: TaskKindGraphNode[][] = [
+      [taskDependencyKindGraphRootNode],
+    ];
 
     while (kindGraphNodesStackStack.length > 0) {
-      const topKindGraphNodesStack: cuaktask.TaskDependencyKindGraphNode<TaskKind>[] =
-        unsafeLast(kindGraphNodesStackStack);
+      const topKindGraphNodesStack: TaskKindGraphNode[] = unsafeLast(
+        kindGraphNodesStackStack,
+      );
 
       if (topKindGraphNodesStack.length === 0) {
         this.#expandKindGraphNodesPopStackStack(
@@ -61,7 +67,7 @@ export class TaskDependencyEngine
           taskKindSet,
         );
       } else {
-        const nextStackStackElement: cuaktask.TaskDependencyKindGraphNode<TaskKind>[] =
+        const nextStackStackElement: TaskKindGraphNode[] =
           this.#expandKindGraphNodesBuildNextStackStackElement(
             topKindGraphNodesStack,
             taskKindSet,
@@ -76,11 +82,12 @@ export class TaskDependencyEngine
   }
 
   #expandKindGraphNodesBuildNextStackStackElement(
-    topKindGraphNodesStack: cuaktask.TaskDependencyKindGraphNode<TaskKind>[],
+    topKindGraphNodesStack: TaskKindGraphNode[],
     taskKindSet: SetLike<TaskKind>,
-  ): cuaktask.TaskDependencyKindGraphNode<TaskKind>[] {
-    const topKindGraphNode: cuaktask.TaskDependencyKindGraphNode<TaskKind> =
-      unsafeLast(topKindGraphNodesStack);
+  ): TaskKindGraphNode[] {
+    const topKindGraphNode: TaskKindGraphNode = unsafeLast(
+      topKindGraphNodesStack,
+    );
 
     if (taskKindSet.has(topKindGraphNode.kind)) {
       throw new Error(
@@ -96,7 +103,7 @@ export class TaskDependencyEngine
           topKindGraphNode.kind,
         );
 
-      const taskDependencyKindGraphNodeDependencies: cuaktask.TaskDependencyKindGraphNode<TaskKind>[] =
+      const taskDependencyKindGraphNodeDependencies: TaskKindGraphNode[] =
         taskDependencyKindGraphNodeKindDependencies.map(
           (taskKind: TaskKind) => ({ dependencies: [], kind: taskKind }),
         );
@@ -110,17 +117,18 @@ export class TaskDependencyEngine
   }
 
   #expandKindGraphNodesPopStackStack(
-    kindGraphNodesStackStack: cuaktask.TaskDependencyKindGraphNode<TaskKind>[][],
+    kindGraphNodesStackStack: TaskKindGraphNode[][],
     taskKindSet: SetLike<TaskKind>,
   ): void {
     kindGraphNodesStackStack.pop();
 
     if (kindGraphNodesStackStack.length > 0) {
-      const topKindGraphNodesStack: cuaktask.TaskDependencyKindGraphNode<TaskKind>[] =
-        unsafeLast(kindGraphNodesStackStack);
+      const topKindGraphNodesStack: TaskKindGraphNode[] = unsafeLast(
+        kindGraphNodesStackStack,
+      );
 
-      const topKindGraphNode: cuaktask.TaskDependencyKindGraphNode<TaskKind> =
-        topKindGraphNodesStack.pop() as cuaktask.TaskDependencyKindGraphNode<TaskKind>;
+      const topKindGraphNode: TaskKindGraphNode =
+        topKindGraphNodesStack.pop() as TaskKindGraphNode;
 
       taskKindSet.delete(topKindGraphNode.kind);
     }

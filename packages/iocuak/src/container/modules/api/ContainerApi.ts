@@ -103,11 +103,13 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     const directTaskDependencyEngine: DirectTaskDependencyEngine =
       new DirectTaskDependencyEngine(containerBindingService, metadataService);
 
-    const taskDependencyEngine: cuaktask.TaskDependencyEngine<TaskKind> =
-      new TaskDependencyEngine(
-        directTaskDependencyEngine,
-        taskDependenciesKindSetBuilder,
-      );
+    const taskDependencyEngine: cuaktask.TaskDependencyEngine<
+      TaskKind,
+      TaskKind
+    > = new TaskDependencyEngine(
+      directTaskDependencyEngine,
+      taskDependenciesKindSetBuilder,
+    );
 
     const taskBuilderWithNoDependencies: TaskBuilderWithNoDependencies =
       new TaskBuilderWithNoDependencies(
