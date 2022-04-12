@@ -22,7 +22,7 @@
   "dependencies": {
     "@cuaklabs/iocuak": "workspace:../iocuak",
     "@cuaklabs/porygon": "workspace:../porygon",
-    "typeorm": "^0.3.4"
+    "typeorm": "^0.3.6"
   },
   "devDependencies": {
     "sqlite3": "^5.0.2"
