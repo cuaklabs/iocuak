@@ -1,10 +1,6 @@
 name: build
 on:
   pull_request:
-    paths:
-      - '.github/workflows/build.yml'
-      - 'packages/**/*.ts'
-      - 'package.json'
     types:
       - closed
       - opened
