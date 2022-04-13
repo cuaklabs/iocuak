@@ -1,4 +1,4 @@
-import { TaskKindType } from '../task/models/domain/TaskKindType';
+import { TaskKindType } from '../models/domain/TaskKindType';
 import { isTaskKind } from './isTaskKind';
 
 describe(isTaskKind.name, () => {

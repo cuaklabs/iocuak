@@ -3,12 +3,12 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
-import { isTaskKind } from '../../utils/isTaskKind';
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
+import { isTaskKind } from '../utils/isTaskKind';
 
 export class TaskBuilderWithNoDependencies {
   #containerBindingService: ContainerBindingService;
