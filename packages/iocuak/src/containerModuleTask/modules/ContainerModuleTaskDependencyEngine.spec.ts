@@ -1,11 +1,11 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
+import { ContainerModuleMetadataApiMocks } from '../mocks/models/api/ContainerModuleMetadataApiMocks';
 import { ContainerModuleCreateInstancesTaskKindMocks } from '../mocks/models/domain/ContainerModuleCreateInstancesTaskKindMocks';
 import { ContainerModuleLoadFromMetadataTaskKindMocks } from '../mocks/models/domain/ContainerModuleLoadFromMetadataTaskKindMocks';
-import { ContainerModuleMetadataMocks } from '../mocks/models/domain/ContainerModuleMetadataMocks';
+import { ContainerModuleMetadataApi } from '../models/api/ContainerModuleMetadataApi';
 import { ContainerModuleCreateInstancesTaskKind } from '../models/domain/ContainerModuleCreateInstancesTaskKind';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../models/domain/ContainerModuleLoadFromMetadataTaskKind';
-import { ContainerModuleMetadata } from '../models/domain/ContainerModuleMetadata';
 import { ContainerModuleTaskKind } from '../models/domain/ContainerModuleTaskKind';
 import { ContainerModuleTaskKindType } from '../models/domain/ContainerModuleTaskKindType';
 import { ContainerModuleTaskDependencyEngine } from './ContainerModuleTaskDependencyEngine';
@@ -141,16 +141,16 @@ describe(ContainerModuleTaskDependencyEngine.name, () => {
     });
 
     describe('having a task with imports and no injects', () => {
-      let containerModuleMetadataFixture: ContainerModuleMetadata;
-      let dependencyContainerModuleMetadataFixture: ContainerModuleMetadata;
+      let containerModuleMetadataFixture: ContainerModuleMetadataApi;
+      let dependencyContainerModuleMetadataFixture: ContainerModuleMetadataApi;
       let taskKindFixture: ContainerModuleLoadFromMetadataTaskKind;
 
       beforeAll(() => {
         dependencyContainerModuleMetadataFixture =
-          ContainerModuleMetadataMocks.withImportsEmptyAndInjectsEmpty;
+          ContainerModuleMetadataApiMocks.withImportsEmptyAndInjectsEmpty;
 
         containerModuleMetadataFixture = {
-          ...ContainerModuleMetadataMocks.withImportsEmptyAndInjectsEmpty,
+          ...ContainerModuleMetadataApiMocks.withImportsEmptyAndInjectsEmpty,
           imports: [dependencyContainerModuleMetadataFixture],
         };
 
@@ -203,16 +203,16 @@ describe(ContainerModuleTaskDependencyEngine.name, () => {
     });
 
     describe('having a task with imports and injects', () => {
-      let containerModuleMetadataFixture: ContainerModuleMetadata;
-      let dependencyContainerModuleMetadataFixture: ContainerModuleMetadata;
+      let containerModuleMetadataFixture: ContainerModuleMetadataApi;
+      let dependencyContainerModuleMetadataFixture: ContainerModuleMetadataApi;
       let taskKindFixture: ContainerModuleLoadFromMetadataTaskKind;
 
       beforeAll(() => {
         dependencyContainerModuleMetadataFixture =
-          ContainerModuleMetadataMocks.withImportsEmptyAndInjectsEmpty;
+          ContainerModuleMetadataApiMocks.withImportsEmptyAndInjectsEmpty;
 
         containerModuleMetadataFixture = {
-          ...ContainerModuleMetadataMocks.withImportsEmptyAndInjectsWithOneServiceId,
+          ...ContainerModuleMetadataApiMocks.withImportsEmptyAndInjectsWithOneServiceId,
           imports: [dependencyContainerModuleMetadataFixture],
         };
 

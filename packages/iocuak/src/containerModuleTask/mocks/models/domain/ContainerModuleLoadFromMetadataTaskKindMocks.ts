@@ -1,11 +1,11 @@
 import { ContainerModuleLoadFromMetadataTaskKind } from '../../../models/domain/ContainerModuleLoadFromMetadataTaskKind';
 import { ContainerModuleTaskKindType } from '../../../models/domain/ContainerModuleTaskKindType';
-import { ContainerModuleMetadataMocks } from './ContainerModuleMetadataMocks';
+import { ContainerModuleMetadataApiMocks } from '../api/ContainerModuleMetadataApiMocks';
 
 export class ContainerModuleLoadFromMetadataTaskKindMocks {
   public static get any(): ContainerModuleLoadFromMetadataTaskKind {
     const fixture: ContainerModuleLoadFromMetadataTaskKind = {
-      metadata: ContainerModuleMetadataMocks.any,
+      metadata: ContainerModuleMetadataApiMocks.any,
       type: ContainerModuleTaskKindType.loadFromMetadata,
     };
 
@@ -15,7 +15,7 @@ export class ContainerModuleLoadFromMetadataTaskKindMocks {
   public static get withMetadataWithImportsEmptyAndInjectsEmpty(): ContainerModuleLoadFromMetadataTaskKind {
     const fixture: ContainerModuleLoadFromMetadataTaskKind = {
       ...ContainerModuleLoadFromMetadataTaskKindMocks.any,
-      metadata: ContainerModuleMetadataMocks.withImportsEmptyAndInjectsEmpty,
+      metadata: ContainerModuleMetadataApiMocks.withImportsEmptyAndInjectsEmpty,
     };
 
     return fixture;
@@ -25,7 +25,7 @@ export class ContainerModuleLoadFromMetadataTaskKindMocks {
     const fixture: ContainerModuleLoadFromMetadataTaskKind = {
       ...ContainerModuleLoadFromMetadataTaskKindMocks.any,
       metadata:
-        ContainerModuleMetadataMocks.withImportsEmptyAndInjectsWithOneServiceId,
+        ContainerModuleMetadataApiMocks.withImportsEmptyAndInjectsWithOneServiceId,
     };
 
     return fixture;
