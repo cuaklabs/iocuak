@@ -1,10 +1,10 @@
 import { Newable } from '../../common/models/domain/Newable';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
+import { bind } from '../../container/utils/bind';
 import { BindingScope } from '../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../metadata/models/domain/BindingType';
 import { TypeBinding } from '../../metadata/models/domain/TypeBinding';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
-import { bind } from './bind';
 
 describe(bind.name, () => {
   let typeFixture: Newable;

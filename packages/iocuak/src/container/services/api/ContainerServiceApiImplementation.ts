@@ -1,11 +1,11 @@
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { bind } from '../../../containerModuleTask/utils/bind';
-import { bindToValue } from '../../../containerModuleTask/utils/bindToValue';
 import { BindingApi } from '../../../metadata/models/api/BindingApi';
 import { Binding } from '../../../metadata/models/domain/Binding';
 import { convertBindingToBindingApi } from '../../../metadata/utils/api/convertBindingToBindingApi';
 import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
+import { bind } from '../../utils/bind';
+import { bindToValue } from '../../utils/bindToValue';
 import { ContainerService } from '../domain/ContainerService';
 import { ContainerServiceApi } from './ContainerServiceApi';
 

@@ -1,7 +1,7 @@
 import { Newable } from '../../common/models/domain/Newable';
-import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { TypeBinding } from '../../metadata/models/domain/TypeBinding';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
+import { ContainerBindingService } from '../services/domain/ContainerBindingService';
 
 export function bind<TInstance, TArgs extends unknown[]>(
   type: Newable<TInstance, TArgs>,
