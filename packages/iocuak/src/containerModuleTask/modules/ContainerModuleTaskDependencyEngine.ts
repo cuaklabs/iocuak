@@ -1,8 +1,8 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { ContainerModuleMetadataApi } from '../models/api/ContainerModuleMetadataApi';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../models/domain/ContainerModuleLoadFromMetadataTaskKind';
+import { ContainerModuleMetadata } from '../models/domain/ContainerModuleMetadata';
 import { ContainerModuleTaskKind } from '../models/domain/ContainerModuleTaskKind';
 import { ContainerModuleTaskKindType } from '../models/domain/ContainerModuleTaskKindType';
 
@@ -79,7 +79,7 @@ export class ContainerModuleTaskDependencyEngine
   ): LoadModuleTaskKindGraphNode[] {
     const loadDependencyModuleTaskKindGraphNodes: LoadModuleTaskKindGraphNode[] =
       loadModuleTaskKindGraphNode.kind.metadata.imports.map(
-        (containerModuleMetadata: ContainerModuleMetadataApi) => ({
+        (containerModuleMetadata: ContainerModuleMetadata) => ({
           dependencies: [],
           kind: {
             metadata: containerModuleMetadata,
