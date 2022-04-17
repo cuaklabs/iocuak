@@ -1,5 +1,6 @@
 import { Prototype } from '../../common/models/domain/Prototype';
 import { ServiceId } from '../../common/models/domain/ServiceId';
+import { isPrototype } from '../../common/utils/isPrototype';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { updateReflectMetadata } from '../utils/updateReflectMetadata';
@@ -76,13 +77,6 @@ function isMethodParameter(
   propertyKey: string | symbol | undefined,
 ): boolean {
   return isPrototype(target) && propertyKey !== '';
-}
-
-function isPrototype(value: unknown): value is Prototype {
-  return (
-    typeof value === 'object' &&
-    typeof (value as Prototype).constructor === 'function'
-  );
 }
 
 function handleNonConstructorParameter(
