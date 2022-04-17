@@ -37,17 +37,16 @@ describe(DependentTaskBuildOperation.name, () => {
       beforeAll(() => {
         taskFixture = DependentTaskMocks.any;
 
-        const taskDependenciesKindGraphRootNodeFixture: TaskDependencyKindGraphNode<unknown> =
+        const taskDependenciesKindGraphRootNodeFixture: TaskDependencyKindGraphNode =
           {
             dependencies: [],
             kind: taskFixture.kind,
           };
 
-        const taskDependenciesKindGraphFixture: TaskDependencyKindGraph<unknown> =
-          {
-            nodes: [taskDependenciesKindGraphRootNodeFixture],
-            rootNode: taskDependenciesKindGraphRootNodeFixture,
-          };
+        const taskDependenciesKindGraphFixture: TaskDependencyKindGraph = {
+          nodes: [taskDependenciesKindGraphRootNodeFixture],
+          rootNode: taskDependenciesKindGraphRootNodeFixture,
+        };
 
         taskWithNoDependenciesBuilderMock.build.mockReturnValueOnce(
           taskFixture,
@@ -103,26 +102,25 @@ describe(DependentTaskBuildOperation.name, () => {
       };
       taskFixture = DependentTaskMocks.any;
 
-      const taskDependenciesKindGraphDependentNodeFixture: TaskDependencyKindGraphNode<unknown> =
+      const taskDependenciesKindGraphDependentNodeFixture: TaskDependencyKindGraphNode =
         {
           dependencies: [],
           kind: dependentTaskFixture.kind,
         };
 
-      const taskDependenciesKindGraphRootNodeFixture: TaskDependencyKindGraphNode<unknown> =
+      const taskDependenciesKindGraphRootNodeFixture: TaskDependencyKindGraphNode =
         {
           dependencies: [taskDependenciesKindGraphDependentNodeFixture],
           kind: taskFixture.kind,
         };
 
-      const taskDependenciesKindGraphFixture: TaskDependencyKindGraph<unknown> =
-        {
-          nodes: [
-            taskDependenciesKindGraphRootNodeFixture,
-            taskDependenciesKindGraphDependentNodeFixture,
-          ],
-          rootNode: taskDependenciesKindGraphRootNodeFixture,
-        };
+      const taskDependenciesKindGraphFixture: TaskDependencyKindGraph = {
+        nodes: [
+          taskDependenciesKindGraphRootNodeFixture,
+          taskDependenciesKindGraphDependentNodeFixture,
+        ],
+        rootNode: taskDependenciesKindGraphRootNodeFixture,
+      };
 
       taskWithNoDependenciesBuilderMock.build
         .mockReturnValueOnce(taskFixture)

@@ -1,7 +1,7 @@
-import { TaskKindType } from '../task/models/domain/TaskKindType';
-import { isTaskKind } from './isTaskKind';
+import { ContainerModuleTaskKindType } from '../models/domain/ContainerModuleTaskKindType';
+import { isContainerModuleTaskKind } from './isContainerModuleTaskKind';
 
-describe(isTaskKind.name, () => {
+describe(isContainerModuleTaskKind.name, () => {
   describe('having a value with no type', () => {
     let valueFixture: unknown;
 
@@ -13,7 +13,7 @@ describe(isTaskKind.name, () => {
       let result: unknown;
 
       beforeAll(() => {
-        result = isTaskKind(valueFixture);
+        result = isContainerModuleTaskKind(valueFixture);
       });
 
       it('should return false', () => {
@@ -27,7 +27,7 @@ describe(isTaskKind.name, () => {
 
     beforeAll(() => {
       valueFixture = {
-        type: TaskKindType.createInstance,
+        type: ContainerModuleTaskKindType.createInstances,
       };
     });
 
@@ -35,7 +35,7 @@ describe(isTaskKind.name, () => {
       let result: unknown;
 
       beforeAll(() => {
-        result = isTaskKind(valueFixture);
+        result = isContainerModuleTaskKind(valueFixture);
       });
 
       it('should return true', () => {
@@ -57,7 +57,7 @@ describe(isTaskKind.name, () => {
       let result: unknown;
 
       beforeAll(() => {
-        result = isTaskKind(valueFixture);
+        result = isContainerModuleTaskKind(valueFixture);
       });
 
       it('should return false', () => {

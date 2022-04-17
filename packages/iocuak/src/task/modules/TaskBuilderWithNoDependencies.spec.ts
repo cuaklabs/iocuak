@@ -1,15 +1,15 @@
-jest.mock('../../utils/isTaskKind');
+jest.mock('../utils/isTaskKind');
 
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
-import { isTaskKind } from '../../utils/isTaskKind';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
+import { isTaskKind } from '../utils/isTaskKind';
 import { TaskBuilderWithNoDependencies } from './TaskBuilderWithNoDependencies';
 
 describe(TaskBuilderWithNoDependencies.name, () => {

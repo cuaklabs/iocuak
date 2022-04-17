@@ -1,3 +1,5 @@
+jest.mock('../../utils/bind');
+jest.mock('../../utils/bindToValue');
 jest.mock('../../../metadata/utils/api/convertBindingToBindingApi');
 
 import { Newable } from '../../../common/models/domain/Newable';
@@ -5,13 +7,12 @@ import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { BindingApi } from '../../../metadata/models/api/BindingApi';
 import { BindingTypeApi } from '../../../metadata/models/api/BindingTypeApi';
 import { Binding } from '../../../metadata/models/domain/Binding';
-import { BindingScope } from '../../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../../metadata/models/domain/BindingType';
-import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
-import { ValueBinding } from '../../../metadata/models/domain/ValueBinding';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { convertBindingToBindingApi } from '../../../metadata/utils/api/convertBindingToBindingApi';
 import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
+import { bind } from '../../utils/bind';
+import { bindToValue } from '../../utils/bindToValue';
 import { ContainerBindingService } from '../domain/ContainerBindingService';
 import { ContainerInstanceService } from '../domain/ContainerInstanceService';
 import { ContainerService } from '../domain/ContainerService';
@@ -44,61 +45,11 @@ describe(ContainerServiceApiImplementation.name, () => {
   });
 
   describe('.bind', () => {
-    describe('when called, and containerService.metadata.getBindingMetadata returns undefined', () => {
+    describe('when called', () => {
       let typeFixture: Newable;
-      let result: unknown;
 
       beforeAll(() => {
         typeFixture = class {};
-
-        (
-          containerServiceMock.metadata.getBindingMetadata as jest.Mock<
-            TypeBinding | undefined
-          >
-        ).mockReturnValueOnce(undefined);
-
-        try {
-          containerServiceApiImplementation.bind(typeFixture);
-        } catch (error: unknown) {
-          result = error;
-        }
-      });
-
-      afterAll(() => {
-        jest.clearAllMocks();
-      });
-
-      it('should throw an error', () => {
-        expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message: expect.stringContaining(
-              'No bindings found for type',
-            ) as string,
-          }),
-        );
-      });
-    });
-
-    describe('when called, and containerService.metadata.getBindingMetadata returns a type binding', () => {
-      let typeFixture: Newable;
-      let bindingFixture: TypeBinding;
-
-      beforeAll(() => {
-        typeFixture = class {};
-
-        bindingFixture = {
-          bindingType: BindingType.type,
-          id: 'sample-service-id',
-          scope: BindingScope.transient,
-          type: typeFixture,
-        };
-
-        (
-          containerServiceMock.metadata.getBindingMetadata as jest.Mock<
-            TypeBinding | undefined
-          >
-        ).mockReturnValueOnce(bindingFixture);
 
         containerServiceApiImplementation.bind(typeFixture);
       });
@@ -107,10 +58,12 @@ describe(ContainerServiceApiImplementation.name, () => {
         jest.clearAllMocks();
       });
 
-      it('should call containerService.binding.set()', () => {
-        expect(containerServiceMock.binding.set).toHaveBeenCalledTimes(1);
-        expect(containerServiceMock.binding.set).toHaveBeenCalledWith(
-          bindingFixture,
+      it('should call bind()', () => {
+        expect(bind).toHaveBeenCalledTimes(1);
+        expect(bind).toHaveBeenCalledWith(
+          typeFixture,
+          containerServiceMock.binding,
+          containerServiceMock.metadata,
         );
       });
     });
@@ -137,16 +90,12 @@ describe(ContainerServiceApiImplementation.name, () => {
         jest.clearAllMocks();
       });
 
-      it('should call containerService.binding.set()', () => {
-        const expectedValueBinding: ValueBinding = {
-          bindingType: BindingType.value,
-          id: serviceIdFixture,
-          value: instanceFixture,
-        };
-
-        expect(containerServiceMock.binding.set).toHaveBeenCalledTimes(1);
-        expect(containerServiceMock.binding.set).toHaveBeenCalledWith(
-          expectedValueBinding,
+      it('should call bindToValue()', () => {
+        expect(bindToValue).toHaveBeenCalledTimes(1);
+        expect(bindToValue).toHaveBeenCalledWith(
+          serviceIdFixture,
+          instanceFixture,
+          containerServiceMock.binding,
         );
       });
     });
