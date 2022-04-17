@@ -111,6 +111,7 @@ function getJestProjectConfig(
       '/node_modules/',
       '/fixtures/',
       '/mocks/',
+      '/lib/index.js',
     ],
     coverageThreshold: {
       global: {
