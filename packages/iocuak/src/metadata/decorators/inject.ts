@@ -87,9 +87,9 @@ function handleNonConstructorParameter(
   if (isMethodParameter(target, propertyKey)) {
     throw new Error(
       `Found an @inject decorator in a non constructor parameter.
-Found @inject decorator at method ${propertyKey?.toString() ?? ''} at class ${
-        target.constructor.name
-      }`,
+Found @inject decorator at method "${
+        propertyKey?.toString() ?? ''
+      }" at class "${target.constructor.name}"`,
     );
   } else {
     throw new Error(

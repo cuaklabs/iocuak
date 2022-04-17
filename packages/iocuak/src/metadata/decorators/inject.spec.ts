@@ -39,7 +39,7 @@ describe(inject.name, () => {
     });
   });
 
-  describe('when called, as parameter decorator', () => {
+  describe('when called, as constructor parameter decorator', () => {
     let serviceIdFixture: ServiceId;
     let targetFixture: Newable;
 
@@ -64,6 +64,43 @@ describe(inject.name, () => {
         MetadataKey.inject,
         expect.anything(),
         expect.any(Function),
+      );
+    });
+  });
+
+  describe('when called, as non constructor parameter decorator', () => {
+    let serviceIdFixture: ServiceId;
+
+    let result: unknown;
+
+    beforeAll(() => {
+      try {
+        serviceIdFixture = 'service-id';
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        class TargetFixture {
+          public doSomrhtingWithFoo(
+            @inject(serviceIdFixture) foo: string | undefined,
+          ) {
+            console.log(foo ?? '?');
+          }
+        }
+      } catch (error: unknown) {
+        result = error;
+      }
+    });
+
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should throw an error', () => {
+      expect(result).toBeInstanceOf(Error);
+      expect(result).toStrictEqual(
+        expect.objectContaining<Partial<Error>>({
+          message: `Found an @inject decorator in a non constructor parameter.
+Found @inject decorator at method "doSomrhtingWithFoo" at class "TargetFixture"`,
+        }),
       );
     });
   });
