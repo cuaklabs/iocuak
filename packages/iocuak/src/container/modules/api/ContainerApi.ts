@@ -2,6 +2,10 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { Builder } from '../../../common/modules/domain/Builder';
 import { SetLike } from '../../../common/modules/domain/SetLike';
+import { ContainerModuleTaskKind } from '../../../containerModuleTask/models/domain/ContainerModuleTaskKind';
+import { ContainerModuleTaskBuilder } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilder';
+import { ContainerModuleTaskBuilderWithNoDependencies } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilderWithNoDependencies';
+import { ContainerModuleTaskDependencyEngine } from '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
@@ -15,6 +19,8 @@ import { ContainerInstanceServiceImplementation } from '../../services/cuaktask/
 import { ContainerBindingService } from '../../services/domain/ContainerBindingService';
 import { ContainerBindingServiceImplementation } from '../../services/domain/ContainerBindingServiceImplementation';
 import { ContainerInstanceService } from '../../services/domain/ContainerInstanceService';
+import { ContainerModuleService } from '../../services/domain/ContainerModuleService';
+import { ContainerModuleServiceImplementation } from '../../services/domain/ContainerModuleServiceImplementation';
 import { ContainerRequestService } from '../../services/domain/ContainerRequestService';
 import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
 import { ContainerService } from '../../services/domain/ContainerService';
@@ -43,7 +49,6 @@ export class ContainerApi extends ContainerServiceApiImplementation {
       new ContainerRequestServiceImplementation();
     const containerSingletonService: ContainerSingletonService =
       new ContainerSingletonServiceImplementation();
-
     const containerInstanceService: ContainerInstanceService =
       this.#initializeContainerInstanceService(
         containerBindingService,
@@ -51,11 +56,18 @@ export class ContainerApi extends ContainerServiceApiImplementation {
         containerRequestService,
         containerSingletonService,
       );
+    const containerModuleService: ContainerModuleService =
+      ContainerApi.#initializeContainerModuleService(
+        containerBindingService,
+        containerInstanceService,
+        metadataService,
+      );
 
     const containerService: ContainerService = {
       binding: containerBindingService,
       instance: containerInstanceService,
       metadata: metadataService,
+      module: containerModuleService,
       request: containerRequestService,
       singleton: containerSingletonService,
     };
@@ -90,12 +102,38 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     return containerInstanceService;
   }
 
+  static #initializeContainerModuleService(
+    containerBindingService: ContainerBindingService,
+    containerInstanceService: ContainerInstanceService,
+    metadataService: MetadataService,
+  ): ContainerModuleService {
+    const taskBuilder: Builder<
+      cuaktask.DependentTask<ContainerModuleTaskKind, ContainerModuleTaskKind>,
+      [ContainerModuleTaskKind]
+    > = ContainerApi.#initializeContainerModuleTaskBuilder(
+      containerBindingService,
+      containerInstanceService,
+      metadataService,
+    );
+
+    const dependentTaskRunner: cuaktask.DependentTaskRunner =
+      new cuaktask.DependentTaskRunner();
+
+    const containerModuleService: ContainerModuleService =
+      new ContainerModuleServiceImplementation(
+        taskBuilder,
+        dependentTaskRunner,
+      );
+
+    return containerModuleService;
+  }
+
   static #initializeTaskBuilder(
     containerBindingService: ContainerBindingService,
     metadataService: MetadataService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
-  ) {
+  ): Builder<cuaktask.DependentTask<TaskKind, TaskKind>, [TaskKind]> {
     const taskDependenciesKindSetBuilder: Builder<SetLike<TaskKind>> = {
       build: () => new TaskKindSet(),
     };
@@ -122,6 +160,35 @@ export class ContainerApi extends ContainerServiceApiImplementation {
       cuaktask.DependentTask<TaskKind, TaskKind>,
       [TaskKind]
     > = new TaskBuilder(taskDependencyEngine, taskBuilderWithNoDependencies);
+
+    return taskBuilder;
+  }
+
+  static #initializeContainerModuleTaskBuilder(
+    containerBindingService: ContainerBindingService,
+    containerInstanceService: ContainerInstanceService,
+    metadataService: MetadataService,
+  ): Builder<
+    cuaktask.DependentTask<ContainerModuleTaskKind, ContainerModuleTaskKind>,
+    [ContainerModuleTaskKind]
+  > {
+    const containerModuleTaskDependencyEngine: ContainerModuleTaskDependencyEngine =
+      new ContainerModuleTaskDependencyEngine();
+
+    const taskBuilderWithNoDependencies: ContainerModuleTaskBuilderWithNoDependencies =
+      new ContainerModuleTaskBuilderWithNoDependencies(
+        containerBindingService,
+        containerInstanceService,
+        metadataService,
+      );
+
+    const taskBuilder: Builder<
+      cuaktask.DependentTask<ContainerModuleTaskKind, ContainerModuleTaskKind>,
+      [ContainerModuleTaskKind]
+    > = new ContainerModuleTaskBuilder(
+      containerModuleTaskDependencyEngine,
+      taskBuilderWithNoDependencies,
+    );
 
     return taskBuilder;
   }
