@@ -9,7 +9,7 @@ import { ContainerModuleTaskKind } from '../domain/ContainerModuleTaskKind';
 export class ContainerModuleLoadFromMetadataTask extends cuaktask.BaseDependentTask<
   ContainerModuleLoadFromMetadataTaskKind,
   ContainerModuleTaskKind,
-  [unknown[]],
+  [unknown[] | void],
   ContainerModule | Promise<ContainerModule>
 > {
   readonly #containerBindingService: ContainerBindingService;
@@ -33,10 +33,10 @@ export class ContainerModuleLoadFromMetadataTask extends cuaktask.BaseDependentT
   }
 
   protected innerPerform(
-    instances: unknown[],
+    instances: unknown[] | undefined,
   ): ContainerModule | Promise<ContainerModule> {
     const containerModule: ContainerModule | Promise<ContainerModule> =
-      this.kind.metadata.factory(...instances);
+      this.kind.metadata.factory(...(instances ?? []));
 
     if (cuaktask.isPromiseLike(containerModule)) {
       return this.#createModuleFactoryAndLoadAsync(containerModule);
