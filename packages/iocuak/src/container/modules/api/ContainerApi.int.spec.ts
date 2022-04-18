@@ -2,9 +2,12 @@ import 'reflect-metadata';
 
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ContainerModuleMetadataApi } from '../../../containerModuleTask/models/api/ContainerModuleMetadataApi';
 import { inject } from '../../../metadata/decorators/inject';
 import { injectable } from '../../../metadata/decorators/injectable';
+import { ContainerModuleBindingServiceApi } from '../../services/api/ContainerModuleBindingServiceApi';
 import { ContainerApi } from './ContainerApi';
+import { ContainerModuleApi } from './ContainerModuleApi';
 
 describe(ContainerApi.name, () => {
   describe('.bind()', () => {
@@ -287,6 +290,79 @@ describe(ContainerApi.name, () => {
 
           it('should return an instance', () => {
             expect(result).toBeInstanceOf(typeFixture);
+          });
+        });
+      });
+    });
+  });
+
+  describe('.loadMetadata()', () => {
+    let containerApi: ContainerApi;
+
+    beforeAll(() => {
+      containerApi = ContainerApi.build();
+    });
+
+    describe('having container module metadata with dependencies and injections', () => {
+      let serviceIdFixture: ServiceId;
+      let dependentServiceIdFixture: ServiceId;
+      let valueFixture: unknown;
+
+      let containerModuleMetadataApi: ContainerModuleMetadataApi<
+        ContainerModuleApi,
+        [unknown]
+      >;
+
+      beforeAll(() => {
+        serviceIdFixture = 'service';
+        dependentServiceIdFixture = 'dependent-service';
+        valueFixture = 'bar';
+
+        containerModuleMetadataApi = {
+          factory: (value: unknown) => ({
+            load: (
+              containerModuleBindingService: ContainerModuleBindingServiceApi,
+            ) => {
+              containerModuleBindingService.bindToValue(
+                serviceIdFixture,
+                value,
+              );
+            },
+          }),
+          imports: [
+            {
+              factory: () => ({
+                load: (
+                  containerModuleBindingService: ContainerModuleBindingServiceApi,
+                ) => {
+                  containerModuleBindingService.bindToValue(
+                    dependentServiceIdFixture,
+                    valueFixture,
+                  );
+                },
+              }),
+              imports: [],
+              injects: [],
+            },
+          ],
+          injects: [dependentServiceIdFixture],
+        };
+      });
+
+      describe('when called', () => {
+        beforeAll(async () => {
+          await containerApi.loadMetadata(containerModuleMetadataApi);
+        });
+
+        describe('when called .get() with a bound service id', () => {
+          let result: unknown;
+
+          beforeAll(() => {
+            result = containerApi.get(serviceIdFixture);
+          });
+
+          it('should return the bound service', () => {
+            expect(result).toBe(valueFixture);
           });
         });
       });
