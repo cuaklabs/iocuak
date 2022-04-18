@@ -79,7 +79,7 @@ describe(inject.name, () => {
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         class TargetFixture {
-          public doSomrhtingWithFoo(
+          public doSomethingWithFoo(
             @inject(serviceIdFixture) foo: string | undefined,
           ) {
             console.log(foo ?? '?');
@@ -99,7 +99,7 @@ describe(inject.name, () => {
       expect(result).toStrictEqual(
         expect.objectContaining<Partial<Error>>({
           message: `Found an @inject decorator in a non constructor parameter.
-Found @inject decorator at method "doSomrhtingWithFoo" at class "TargetFixture"`,
+Found @inject decorator at method "doSomethingWithFoo" at class "TargetFixture"`,
         }),
       );
     });
