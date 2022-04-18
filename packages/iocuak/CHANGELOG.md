@@ -22,10 +22,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Added `BindingType`.
-- Added `ContainerModuleBindingServiceApi`
+- Added `ContainerModuleBindingService`.
+- Added `ContainerModuleMetadata`
 
 ### Changed
-- Updated `ContainerModule` to receive a `ContainerModuleBindingServiceApi`
+- Updated `ContainerModuleServiceApi` with `loadMetadata`.
+- Updated `ContainerModule` to receive a `ContainerModuleBindingService`.
 
 
 
