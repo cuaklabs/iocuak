@@ -16,11 +16,11 @@ import { TaskDependencyEngine } from '../../../task/modules/TaskDependencyEngine
 import { TaskKindSet } from '../../../task/modules/TaskKindSet';
 import { ContainerServiceApiImplementation } from '../../services/api/ContainerServiceApiImplementation';
 import { ContainerInstanceServiceImplementation } from '../../services/cuaktask/ContainerInstanceServiceImplementation';
+import { ContainerModuleServiceImplementation } from '../../services/cuaktask/ContainerModuleServiceImplementation';
 import { ContainerBindingService } from '../../services/domain/ContainerBindingService';
 import { ContainerBindingServiceImplementation } from '../../services/domain/ContainerBindingServiceImplementation';
 import { ContainerInstanceService } from '../../services/domain/ContainerInstanceService';
 import { ContainerModuleService } from '../../services/domain/ContainerModuleService';
-import { ContainerModuleServiceImplementation } from '../../services/domain/ContainerModuleServiceImplementation';
 import { ContainerRequestService } from '../../services/domain/ContainerRequestService';
 import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
 import { ContainerService } from '../../services/domain/ContainerService';

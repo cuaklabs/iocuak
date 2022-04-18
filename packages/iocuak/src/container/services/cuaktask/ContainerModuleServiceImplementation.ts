@@ -7,7 +7,7 @@ import { ContainerModuleMetadata } from '../../../containerModuleTask/models/dom
 import { ContainerModuleTaskKind } from '../../../containerModuleTask/models/domain/ContainerModuleTaskKind';
 import { ContainerModuleTaskKindType } from '../../../containerModuleTask/models/domain/ContainerModuleTaskKindType';
 import { ContainerModule } from '../../modules/domain/ContainerModule';
-import { ContainerModuleService } from './ContainerModuleService';
+import { ContainerModuleService } from '../domain/ContainerModuleService';
 
 export class ContainerModuleServiceImplementation
   implements ContainerModuleService
