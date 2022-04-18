@@ -13,7 +13,6 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
     let metadataServiceFixture: MetadataService;
 
     let containerModuleMock: jest.Mocked<ContainerModule>;
-    let instanceFixture: unknown;
 
     beforeAll(() => {
       taskKindMock = ContainerModuleLoadFromMetadataTaskKindMocks.any;
@@ -28,99 +27,195 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
       containerModuleMock = {
         load: jest.fn(),
       };
-
-      instanceFixture = Symbol();
     });
 
-    describe('when called, and taskKind metadata factory returns a syncronous result', () => {
-      let containerModuleLoadFromMetadataTask: ContainerModuleLoadFromMetadataTask;
+    describe('having undefined as task input', () => {
+      describe('when called, and taskKind metadata factory returns a syncronous result', () => {
+        let containerModuleLoadFromMetadataTask: ContainerModuleLoadFromMetadataTask;
 
-      let result: unknown;
+        let result: unknown;
+
+        beforeAll(() => {
+          (
+            taskKindMock.metadata.factory as jest.Mock<ContainerModule>
+          ).mockReturnValueOnce(containerModuleMock);
+
+          containerModuleLoadFromMetadataTask =
+            new ContainerModuleLoadFromMetadataTask(
+              taskKindMock,
+              [],
+              containerBindingServiceFixture,
+              metadataServiceFixture,
+            );
+
+          result = containerModuleLoadFromMetadataTask.perform();
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call taskKind.metadata.factory', () => {
+          expect(taskKindMock.metadata.factory).toHaveBeenCalledTimes(1);
+          expect(taskKindMock.metadata.factory).toHaveBeenCalledWith();
+        });
+
+        it('should call containerModule.load()', () => {
+          expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
+          expect(containerModuleMock.load).toHaveBeenCalledWith(
+            containerBindingServiceFixture,
+            metadataServiceFixture,
+          );
+        });
+
+        it('should return a ContainerModule', () => {
+          expect(result).toBe(containerModuleMock);
+        });
+      });
+
+      describe('when called, and taskKind metadata factory returns an asyncronous result', () => {
+        let containerModuleLoadFromMetadataTask: ContainerModuleLoadFromMetadataTask;
+
+        let result: unknown;
+
+        beforeAll(async () => {
+          (
+            taskKindMock.metadata.factory as jest.Mock<Promise<ContainerModule>>
+          ).mockResolvedValueOnce(containerModuleMock);
+
+          containerModuleLoadFromMetadataTask =
+            new ContainerModuleLoadFromMetadataTask(
+              taskKindMock,
+              [],
+              containerBindingServiceFixture,
+              metadataServiceFixture,
+            );
+
+          result = await containerModuleLoadFromMetadataTask.perform();
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call taskKind.metadata.factory', () => {
+          expect(taskKindMock.metadata.factory).toHaveBeenCalledTimes(1);
+          expect(taskKindMock.metadata.factory).toHaveBeenCalledWith();
+        });
+
+        it('should call containerModule.load()', () => {
+          expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
+          expect(containerModuleMock.load).toHaveBeenCalledWith(
+            containerBindingServiceFixture,
+            metadataServiceFixture,
+          );
+        });
+
+        it('should return a ContainerModule', () => {
+          expect(result).toBe(containerModuleMock);
+        });
+      });
+    });
+
+    describe('having an array of service ids as task input', () => {
+      let instanceFixture: unknown;
 
       beforeAll(() => {
-        (
-          taskKindMock.metadata.factory as jest.Mock<ContainerModule>
-        ).mockReturnValueOnce(containerModuleMock);
+        instanceFixture = Symbol();
+      });
 
-        containerModuleLoadFromMetadataTask =
-          new ContainerModuleLoadFromMetadataTask(
-            taskKindMock,
-            [],
+      describe('when called, and taskKind metadata factory returns a syncronous result', () => {
+        let containerModuleLoadFromMetadataTask: ContainerModuleLoadFromMetadataTask;
+
+        let result: unknown;
+
+        beforeAll(() => {
+          (
+            taskKindMock.metadata.factory as jest.Mock<ContainerModule>
+          ).mockReturnValueOnce(containerModuleMock);
+
+          containerModuleLoadFromMetadataTask =
+            new ContainerModuleLoadFromMetadataTask(
+              taskKindMock,
+              [],
+              containerBindingServiceFixture,
+              metadataServiceFixture,
+            );
+
+          result = containerModuleLoadFromMetadataTask.perform([
+            instanceFixture,
+          ]);
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call taskKind.metadata.factory', () => {
+          expect(taskKindMock.metadata.factory).toHaveBeenCalledTimes(1);
+          expect(taskKindMock.metadata.factory).toHaveBeenCalledWith(
+            instanceFixture,
+          );
+        });
+
+        it('should call containerModule.load()', () => {
+          expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
+          expect(containerModuleMock.load).toHaveBeenCalledWith(
             containerBindingServiceFixture,
             metadataServiceFixture,
           );
+        });
 
-        result = containerModuleLoadFromMetadataTask.perform([instanceFixture]);
+        it('should return a ContainerModule', () => {
+          expect(result).toBe(containerModuleMock);
+        });
       });
 
-      afterAll(() => {
-        jest.clearAllMocks();
-      });
+      describe('when called, and taskKind metadata factory returns an asyncronous result', () => {
+        let containerModuleLoadFromMetadataTask: ContainerModuleLoadFromMetadataTask;
 
-      it('should call taskKind.metadata.factory', () => {
-        expect(taskKindMock.metadata.factory).toHaveBeenCalledTimes(1);
-        expect(taskKindMock.metadata.factory).toHaveBeenCalledWith(
-          instanceFixture,
-        );
-      });
+        let result: unknown;
 
-      it('should call containerModule.load()', () => {
-        expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
-        expect(containerModuleMock.load).toHaveBeenCalledWith(
-          containerBindingServiceFixture,
-          metadataServiceFixture,
-        );
-      });
+        beforeAll(async () => {
+          (
+            taskKindMock.metadata.factory as jest.Mock<Promise<ContainerModule>>
+          ).mockResolvedValueOnce(containerModuleMock);
 
-      it('should return a ContainerModule', () => {
-        expect(result).toBe(containerModuleMock);
-      });
-    });
+          containerModuleLoadFromMetadataTask =
+            new ContainerModuleLoadFromMetadataTask(
+              taskKindMock,
+              [],
+              containerBindingServiceFixture,
+              metadataServiceFixture,
+            );
 
-    describe('when called, and taskKind metadata factory returns an asyncronous result', () => {
-      let containerModuleLoadFromMetadataTask: ContainerModuleLoadFromMetadataTask;
+          result = await containerModuleLoadFromMetadataTask.perform([
+            instanceFixture,
+          ]);
+        });
 
-      let result: unknown;
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
 
-      beforeAll(async () => {
-        (
-          taskKindMock.metadata.factory as jest.Mock<Promise<ContainerModule>>
-        ).mockResolvedValueOnce(containerModuleMock);
+        it('should call taskKind.metadata.factory', () => {
+          expect(taskKindMock.metadata.factory).toHaveBeenCalledTimes(1);
+          expect(taskKindMock.metadata.factory).toHaveBeenCalledWith(
+            instanceFixture,
+          );
+        });
 
-        containerModuleLoadFromMetadataTask =
-          new ContainerModuleLoadFromMetadataTask(
-            taskKindMock,
-            [],
+        it('should call containerModule.load()', () => {
+          expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
+          expect(containerModuleMock.load).toHaveBeenCalledWith(
             containerBindingServiceFixture,
             metadataServiceFixture,
           );
+        });
 
-        result = await containerModuleLoadFromMetadataTask.perform([
-          instanceFixture,
-        ]);
-      });
-
-      afterAll(() => {
-        jest.clearAllMocks();
-      });
-
-      it('should call taskKind.metadata.factory', () => {
-        expect(taskKindMock.metadata.factory).toHaveBeenCalledTimes(1);
-        expect(taskKindMock.metadata.factory).toHaveBeenCalledWith(
-          instanceFixture,
-        );
-      });
-
-      it('should call containerModule.load()', () => {
-        expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
-        expect(containerModuleMock.load).toHaveBeenCalledWith(
-          containerBindingServiceFixture,
-          metadataServiceFixture,
-        );
-      });
-
-      it('should return a ContainerModule', () => {
-        expect(result).toBe(containerModuleMock);
+        it('should return a ContainerModule', () => {
+          expect(result).toBe(containerModuleMock);
+        });
       });
     });
   });

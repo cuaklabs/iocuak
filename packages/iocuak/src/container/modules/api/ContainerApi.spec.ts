@@ -2,18 +2,29 @@ jest.mock('@cuaklabs/cuaktask');
 
 import * as cuaktask from '@cuaklabs/cuaktask';
 
+jest.mock('../../../containerModuleTask/modules/ContainerModuleTaskBuilder');
+jest.mock(
+  '../../../containerModuleTask/modules/ContainerModuleTaskBuilderWithNoDependencies',
+);
+jest.mock(
+  '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine',
+);
 jest.mock('../../../metadata/services/domain/MetadataServiceImplementation');
 jest.mock('../../../task/modules/DirectTaskDependencyEngine');
 jest.mock('../../../task/modules/TaskBuilder');
 jest.mock('../../../task/modules/TaskBuilderWithNoDependencies');
 jest.mock('../../../task/modules/TaskDependencyEngine');
 jest.mock('../../services/cuaktask/ContainerInstanceServiceImplementation');
+jest.mock('../../services/cuaktask/ContainerModuleServiceImplementation');
 jest.mock('../../services/domain/ContainerBindingServiceImplementation');
 jest.mock('../../services/domain/ContainerRequestServiceImplementation');
 jest.mock('../../services/domain/ContainerSingletonServiceImplementation');
 
 import { Newable } from '../../../common/models/domain/Newable';
 import { SetLike } from '../../../common/modules/domain/SetLike';
+import { ContainerModuleTaskBuilder } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilder';
+import { ContainerModuleTaskBuilderWithNoDependencies } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilderWithNoDependencies';
+import { ContainerModuleTaskDependencyEngine } from '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine';
 import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
 import { DirectTaskDependencyEngine } from '../../../task/modules/DirectTaskDependencyEngine';
@@ -21,6 +32,7 @@ import { TaskBuilder } from '../../../task/modules/TaskBuilder';
 import { TaskBuilderWithNoDependencies } from '../../../task/modules/TaskBuilderWithNoDependencies';
 import { TaskDependencyEngine } from '../../../task/modules/TaskDependencyEngine';
 import { ContainerInstanceServiceImplementation } from '../../services/cuaktask/ContainerInstanceServiceImplementation';
+import { ContainerModuleServiceImplementation } from '../../services/cuaktask/ContainerModuleServiceImplementation';
 import { ContainerBindingServiceImplementation } from '../../services/domain/ContainerBindingServiceImplementation';
 import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
 import { ContainerSingletonServiceImplementation } from '../../services/domain/ContainerSingletonServiceImplementation';
@@ -28,91 +40,125 @@ import { ContainerApi } from './ContainerApi';
 
 let currentLabel: number = 0;
 
-function buildEmptyMock<T>(): jest.Mocked<T> {
+function buildEmptyFixture<T>(): T {
   return {
     _label: currentLabel++,
-  } as unknown as jest.Mocked<T>;
+  } as unknown as T;
 }
 
-function bindMockToConstructor<T>(
+function bindFixtureToConstructor<T>(
   constructor: Newable<T>,
-  mock: jest.Mocked<T>,
+  fixture: T,
 ): void {
-  (constructor as jest.Mock<T>).mockReturnValue(mock);
+  (constructor as jest.Mock<T>).mockReturnValue(fixture);
 }
 
 describe(ContainerApi.name, () => {
   describe('.build', () => {
     describe('when called', () => {
-      let containerBindingServiceImplementationMock: jest.Mocked<ContainerBindingServiceImplementation>;
-      let metadataServiceImplementationMock: jest.Mocked<MetadataServiceImplementation>;
-      let containerRequestServiceImplementationMock: jest.Mocked<ContainerRequestServiceImplementation>;
-      let containerSingletonServiceImplementationMock: jest.Mocked<ContainerSingletonServiceImplementation>;
+      let containerBindingServiceImplementationFixture: ContainerBindingServiceImplementation;
+      let metadataServiceImplementationFixture: MetadataServiceImplementation;
+      let containerRequestServiceImplementationFixture: ContainerRequestServiceImplementation;
+      let containerSingletonServiceImplementationFixture: ContainerSingletonServiceImplementation;
 
-      let dependentTaskRunnerMock: jest.Mocked<cuaktask.DependentTaskRunner>;
+      let dependentTaskRunnerFixture: cuaktask.DependentTaskRunner;
 
-      let directTaskDependencyEngineMock: jest.Mocked<DirectTaskDependencyEngine>;
-      let taskDependencyEngineMock: jest.Mocked<TaskDependencyEngine>;
-      let taskBuilderWithNoDependenciesMock: jest.Mocked<TaskBuilderWithNoDependencies>;
-      let taskBuilderMock: jest.Mocked<TaskBuilder>;
+      let directTaskDependencyEngineFixture: DirectTaskDependencyEngine;
+      let taskDependencyEngineFixture: TaskDependencyEngine;
+      let taskBuilderWithNoDependenciesFixture: TaskBuilderWithNoDependencies;
+      let taskBuilderFixture: TaskBuilder;
 
-      let containerInstanceServiceImplementationMock: jest.Mocked<ContainerInstanceServiceImplementation>;
+      let containerInstanceServiceImplementationFixture: ContainerInstanceServiceImplementation;
+
+      let containerModuleTaskDependencyEngineFixture: ContainerModuleTaskDependencyEngine;
+      let containerModuleTaskBuilderWithNoDependenciesFixture: ContainerModuleTaskBuilderWithNoDependencies;
+      let containerModuleTaskBuilderFixture: ContainerModuleTaskBuilder;
+
+      let containerModuleServiceImplementationFixture: ContainerModuleServiceImplementation;
 
       let result: unknown;
 
       beforeAll(() => {
-        containerBindingServiceImplementationMock = buildEmptyMock();
-        bindMockToConstructor(
+        containerBindingServiceImplementationFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
           ContainerBindingServiceImplementation,
-          containerBindingServiceImplementationMock,
+          containerBindingServiceImplementationFixture,
         );
 
-        metadataServiceImplementationMock = buildEmptyMock();
-        bindMockToConstructor(
+        metadataServiceImplementationFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
           MetadataServiceImplementation,
-          metadataServiceImplementationMock,
+          metadataServiceImplementationFixture,
         );
 
-        containerRequestServiceImplementationMock = buildEmptyMock();
-        bindMockToConstructor(
+        containerRequestServiceImplementationFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
           ContainerRequestServiceImplementation,
-          containerRequestServiceImplementationMock,
+          containerRequestServiceImplementationFixture,
         );
 
-        containerSingletonServiceImplementationMock = buildEmptyMock();
-        bindMockToConstructor(
+        containerSingletonServiceImplementationFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
           ContainerSingletonServiceImplementation,
-          containerSingletonServiceImplementationMock,
+          containerSingletonServiceImplementationFixture,
         );
 
-        dependentTaskRunnerMock = buildEmptyMock();
-        bindMockToConstructor(
+        dependentTaskRunnerFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
           cuaktask.DependentTaskRunner,
-          dependentTaskRunnerMock,
+          dependentTaskRunnerFixture,
         );
 
-        directTaskDependencyEngineMock = buildEmptyMock();
-        bindMockToConstructor(
+        directTaskDependencyEngineFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
           DirectTaskDependencyEngine,
-          directTaskDependencyEngineMock,
+          directTaskDependencyEngineFixture,
         );
 
-        taskDependencyEngineMock = buildEmptyMock();
-        bindMockToConstructor(TaskDependencyEngine, taskDependencyEngineMock);
+        taskDependencyEngineFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
+          TaskDependencyEngine,
+          taskDependencyEngineFixture,
+        );
 
-        taskBuilderWithNoDependenciesMock = buildEmptyMock();
-        bindMockToConstructor(
+        taskBuilderWithNoDependenciesFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
           TaskBuilderWithNoDependencies,
-          taskBuilderWithNoDependenciesMock,
+          taskBuilderWithNoDependenciesFixture,
         );
 
-        taskBuilderMock = buildEmptyMock();
-        bindMockToConstructor(TaskBuilder, taskBuilderMock);
+        taskBuilderFixture = buildEmptyFixture();
+        bindFixtureToConstructor(TaskBuilder, taskBuilderFixture);
 
-        containerInstanceServiceImplementationMock = buildEmptyMock();
-        bindMockToConstructor(
+        containerInstanceServiceImplementationFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
           ContainerInstanceServiceImplementation,
-          containerInstanceServiceImplementationMock,
+          containerInstanceServiceImplementationFixture,
+        );
+
+        containerModuleTaskDependencyEngineFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
+          ContainerModuleTaskDependencyEngine,
+          containerModuleTaskDependencyEngineFixture,
+        );
+
+        containerModuleTaskBuilderWithNoDependenciesFixture =
+          buildEmptyFixture();
+        bindFixtureToConstructor(
+          ContainerModuleTaskBuilderWithNoDependencies,
+          containerModuleTaskBuilderWithNoDependenciesFixture,
+        );
+
+        containerModuleTaskBuilderFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
+          ContainerModuleTaskBuilder,
+          containerModuleTaskBuilderFixture,
+        );
+
+        containerModuleServiceImplementationFixture = buildEmptyFixture();
+        bindFixtureToConstructor(
+          ContainerModuleServiceImplementation,
+          containerModuleServiceImplementationFixture,
         );
 
         result = ContainerApi.build();
@@ -147,22 +193,23 @@ describe(ContainerApi.name, () => {
       });
 
       it('should call new cuaktask.DependentTaskRunner()', () => {
-        expect(cuaktask.DependentTaskRunner).toHaveBeenCalledTimes(1);
-        expect(cuaktask.DependentTaskRunner).toHaveBeenCalledWith();
+        expect(cuaktask.DependentTaskRunner).toHaveBeenCalledTimes(2);
+        expect(cuaktask.DependentTaskRunner).toHaveBeenNthCalledWith(1);
+        expect(cuaktask.DependentTaskRunner).toHaveBeenNthCalledWith(2);
       });
 
       it('should call new DirectTaskDependencyEngine()', () => {
         expect(DirectTaskDependencyEngine).toHaveBeenCalledTimes(1);
         expect(DirectTaskDependencyEngine).toHaveBeenCalledWith(
-          containerBindingServiceImplementationMock,
-          metadataServiceImplementationMock,
+          containerBindingServiceImplementationFixture,
+          metadataServiceImplementationFixture,
         );
       });
 
       it('should call new TaskDependencyEngine()', () => {
         expect(TaskDependencyEngine).toHaveBeenCalledTimes(1);
         expect(TaskDependencyEngine).toHaveBeenCalledWith(
-          directTaskDependencyEngineMock,
+          directTaskDependencyEngineFixture,
           {
             build: expect.any(Function) as () => SetLike<TaskKind>,
           },
@@ -172,26 +219,60 @@ describe(ContainerApi.name, () => {
       it('should call new TaskBuilderWithNoDependencies()', () => {
         expect(TaskBuilderWithNoDependencies).toHaveBeenCalledTimes(1);
         expect(TaskBuilderWithNoDependencies).toHaveBeenCalledWith(
-          containerBindingServiceImplementationMock,
-          containerRequestServiceImplementationMock,
-          containerSingletonServiceImplementationMock,
+          containerBindingServiceImplementationFixture,
+          containerRequestServiceImplementationFixture,
+          containerSingletonServiceImplementationFixture,
         );
       });
 
       it('should call new TaskBuilder()', () => {
         expect(TaskBuilder).toHaveBeenCalledTimes(1);
         expect(TaskBuilder).toHaveBeenCalledWith(
-          taskDependencyEngineMock,
-          taskBuilderWithNoDependenciesMock,
+          taskDependencyEngineFixture,
+          taskBuilderWithNoDependenciesFixture,
         );
       });
 
       it('should call new ContainerInstanceServiceImplementation()', () => {
         expect(ContainerInstanceServiceImplementation).toHaveBeenCalledTimes(1);
         expect(ContainerInstanceServiceImplementation).toHaveBeenCalledWith(
-          containerRequestServiceImplementationMock,
-          dependentTaskRunnerMock,
-          taskBuilderMock,
+          containerRequestServiceImplementationFixture,
+          dependentTaskRunnerFixture,
+          taskBuilderFixture,
+        );
+      });
+
+      it('should call new ContainerModuleTaskDependencyEngine()', () => {
+        expect(ContainerModuleTaskDependencyEngine).toHaveBeenCalledTimes(1);
+        expect(ContainerModuleTaskDependencyEngine).toHaveBeenCalledWith();
+      });
+
+      it('should call new ContainerModuleTaskBuilderWithNoDependencies()', () => {
+        expect(
+          ContainerModuleTaskBuilderWithNoDependencies,
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          ContainerModuleTaskBuilderWithNoDependencies,
+        ).toHaveBeenCalledWith(
+          containerBindingServiceImplementationFixture,
+          containerInstanceServiceImplementationFixture,
+          metadataServiceImplementationFixture,
+        );
+      });
+
+      it('should call new ContainerModuleTaskBuilder()', () => {
+        expect(ContainerModuleTaskBuilder).toHaveBeenCalledTimes(1);
+        expect(ContainerModuleTaskBuilder).toHaveBeenCalledWith(
+          containerModuleTaskDependencyEngineFixture,
+          containerModuleTaskBuilderWithNoDependenciesFixture,
+        );
+      });
+
+      it('should call new ContainerModuleServiceImplementation()', () => {
+        expect(ContainerModuleServiceImplementation).toHaveBeenCalledTimes(1);
+        expect(ContainerModuleServiceImplementation).toHaveBeenCalledWith(
+          containerModuleTaskBuilderFixture,
+          dependentTaskRunnerFixture,
         );
       });
 

@@ -1,9 +1,15 @@
+jest.mock(
+  '../../../containerModuleTask/utils/convertToContainerModuleMetadata',
+);
 jest.mock('../../utils/bind');
 jest.mock('../../utils/bindToValue');
 jest.mock('../../../metadata/utils/api/convertBindingToBindingApi');
 
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ContainerModuleMetadataApi } from '../../../containerModuleTask/models/api/ContainerModuleMetadataApi';
+import { ContainerModuleMetadata } from '../../../containerModuleTask/models/domain/ContainerModuleMetadata';
+import { convertToContainerModuleMetadata } from '../../../containerModuleTask/utils/convertToContainerModuleMetadata';
 import { BindingApi } from '../../../metadata/models/api/BindingApi';
 import { BindingTypeApi } from '../../../metadata/models/api/BindingTypeApi';
 import { Binding } from '../../../metadata/models/domain/Binding';
@@ -15,29 +21,44 @@ import { bind } from '../../utils/bind';
 import { bindToValue } from '../../utils/bindToValue';
 import { ContainerBindingService } from '../domain/ContainerBindingService';
 import { ContainerInstanceService } from '../domain/ContainerInstanceService';
+import { ContainerModuleService } from '../domain/ContainerModuleService';
 import { ContainerService } from '../domain/ContainerService';
 import { ContainerServiceApiImplementation } from './ContainerServiceApiImplementation';
 
 describe(ContainerServiceApiImplementation.name, () => {
-  let containerServiceMock: jest.Mocked<ContainerService>;
+  let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+  let containerInstanceServiceMock: jest.Mocked<ContainerInstanceService>;
+  let metadataServiceMock: jest.Mocked<MetadataService>;
+  let containerModuleServiceMock: jest.Mocked<ContainerModuleService>;
+  let containerServiceMock: ContainerService;
   let containerServiceApiImplementation: ContainerServiceApiImplementation;
 
   beforeAll(() => {
-    containerServiceMock = {
-      binding: {
-        getAll: jest.fn(),
-        remove: jest.fn(),
-        set: jest.fn(),
-      } as Partial<ContainerBindingService>,
-      instance: {
-        create: jest.fn(),
-      } as Partial<ContainerInstanceService>,
-      metadata: {
-        getBindingMetadata: jest.fn(),
-      } as Partial<MetadataService>,
+    containerBindingServiceMock = {
+      getAll: jest.fn(),
+      remove: jest.fn(),
+      set: jest.fn(),
     } as Partial<
-      jest.Mocked<ContainerService>
-    > as jest.Mocked<ContainerService>;
+      jest.Mocked<ContainerBindingService>
+    > as jest.Mocked<ContainerBindingService>;
+    containerInstanceServiceMock = {
+      create: jest.fn(),
+    } as Partial<
+      jest.Mocked<ContainerInstanceService>
+    > as jest.Mocked<ContainerInstanceService>;
+    metadataServiceMock = {
+      getBindingMetadata: jest.fn(),
+    } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
+    containerModuleServiceMock = {
+      loadMetadata: jest.fn(),
+    };
+
+    containerServiceMock = {
+      binding: containerBindingServiceMock,
+      instance: containerInstanceServiceMock,
+      metadata: metadataServiceMock,
+      module: containerModuleServiceMock,
+    } as Partial<ContainerService> as ContainerService;
 
     containerServiceApiImplementation = new ContainerServiceApiImplementation(
       containerServiceMock,
@@ -113,7 +134,7 @@ describe(ContainerServiceApiImplementation.name, () => {
           foo: 'bar',
         };
 
-        (containerServiceMock.instance.create as jest.Mock).mockReturnValueOnce(
+        containerInstanceServiceMock.create.mockReturnValueOnce(
           instanceFixture,
         );
 
@@ -156,12 +177,9 @@ describe(ContainerServiceApiImplementation.name, () => {
           value: bindingFixture.value,
         };
 
-        (
-          containerServiceMock.binding.getAll as jest.Mock<
-            Map<ServiceId, Binding>,
-            []
-          >
-        ).mockReturnValueOnce(new Map([[bindingFixture.id, bindingFixture]]));
+        containerBindingServiceMock.getAll.mockReturnValueOnce(
+          new Map([[bindingFixture.id, bindingFixture]]),
+        );
 
         (
           convertBindingToBindingApi as jest.Mock<BindingApi, [Binding]>
@@ -208,6 +226,51 @@ describe(ContainerServiceApiImplementation.name, () => {
 
       it('should call containerModuleApi.load()', () => {
         expect(containerModuleApiMock.load).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
+
+  describe('.loadMetadata', () => {
+    describe('when called', () => {
+      let containerModuleMetadataApiFixture: ContainerModuleMetadataApi;
+      let containerModuleMetadataFixture: ContainerModuleMetadata;
+
+      beforeAll(async () => {
+        containerModuleMetadataApiFixture = {
+          _tag: Symbol('ContainerModuleMetadataApi'),
+        } as unknown as ContainerModuleMetadataApi;
+
+        containerModuleMetadataFixture = {
+          _tag: Symbol('ContainerModule'),
+        } as unknown as ContainerModuleMetadata;
+
+        (
+          convertToContainerModuleMetadata as jest.Mock<ContainerModuleMetadata>
+        ).mockReturnValueOnce(containerModuleMetadataFixture);
+
+        await containerServiceApiImplementation.loadMetadata(
+          containerModuleMetadataApiFixture,
+        );
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should call convertToContainerModuleMetadata()', () => {
+        expect(convertToContainerModuleMetadata).toHaveBeenCalledTimes(1);
+        expect(convertToContainerModuleMetadata).toHaveBeenCalledWith(
+          containerModuleMetadataApiFixture,
+        );
+      });
+
+      it('should call containerService.module.loadMetadata()', () => {
+        expect(containerModuleServiceMock.loadMetadata).toHaveBeenCalledTimes(
+          1,
+        );
+        expect(containerModuleServiceMock.loadMetadata).toHaveBeenCalledWith(
+          containerModuleMetadataFixture,
+        );
       });
     });
   });

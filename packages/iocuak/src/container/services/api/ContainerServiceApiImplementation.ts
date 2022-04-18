@@ -1,5 +1,8 @@
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ContainerModuleMetadataApi } from '../../../containerModuleTask/models/api/ContainerModuleMetadataApi';
+import { ContainerModuleMetadata } from '../../../containerModuleTask/models/domain/ContainerModuleMetadata';
+import { convertToContainerModuleMetadata } from '../../../containerModuleTask/utils/convertToContainerModuleMetadata';
 import { BindingApi } from '../../../metadata/models/api/BindingApi';
 import { Binding } from '../../../metadata/models/domain/Binding';
 import { convertBindingToBindingApi } from '../../../metadata/utils/api/convertBindingToBindingApi';
@@ -46,6 +49,15 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
 
   public load(containerModuleApi: ContainerModuleApi): void {
     containerModuleApi.load(this);
+  }
+
+  public async loadMetadata(
+    containerModuleMetadataApi: ContainerModuleMetadataApi,
+  ): Promise<void> {
+    const containerModuleMetadata: ContainerModuleMetadata =
+      convertToContainerModuleMetadata(containerModuleMetadataApi);
+
+    await this._containerService.module.loadMetadata(containerModuleMetadata);
   }
 
   public unbind(serviceId: ServiceId): void {

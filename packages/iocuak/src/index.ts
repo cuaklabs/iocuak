@@ -4,6 +4,7 @@ import { ContainerApi } from './container/modules/api/ContainerApi';
 import { ContainerModuleApi } from './container/modules/api/ContainerModuleApi';
 import { ContainerModuleBindingServiceApi } from './container/services/api/ContainerModuleBindingServiceApi';
 import { ContainerServiceApi } from './container/services/api/ContainerServiceApi';
+import { ContainerModuleMetadataApi } from './containerModuleTask/models/api/ContainerModuleMetadataApi';
 import { inject } from './metadata/decorators/inject';
 import { injectable } from './metadata/decorators/injectable';
 import { injectFrom } from './metadata/decorators/injectFrom';
@@ -22,9 +23,10 @@ export type {
   BindingApi as Binding,
   BindingTypeApi as BindingType,
   ClassMetadataApi as ClassMetadata,
-  ContainerServiceApi as ContainerService,
+  ContainerModuleMetadataApi as ContainerModuleMetadata,
   ContainerModuleApi as ContainerModule,
   ContainerModuleBindingServiceApi as ContainerModuleBindingService,
+  ContainerServiceApi as ContainerService,
   InjectableOptionsApi as InjectableOptions,
   MetadataServiceApi as MetadataService,
   Newable,
