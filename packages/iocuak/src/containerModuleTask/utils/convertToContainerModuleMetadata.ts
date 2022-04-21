@@ -12,11 +12,8 @@ export function convertToContainerModuleMetadata<TArgs extends unknown[]>(
     ContainerModuleApi,
     TArgs
   >,
-): ContainerModuleMetadata<ContainerModule, TArgs> {
-  const containerModuleMetadata: ContainerModuleMetadata<
-    ContainerModule,
-    TArgs
-  > = {
+): ContainerModuleMetadata<TArgs> {
+  const containerModuleMetadata: ContainerModuleMetadata<TArgs> = {
     factory: convertToContainerModuleMetadataFactory(
       containerModuleMetadataApi.factory,
     ),
