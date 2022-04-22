@@ -1,4 +1,5 @@
 import { ContainerModuleMetadata } from '../../../models/domain/ContainerModuleMetadata';
+import { ContainerModuleMetadataType } from '../../../models/domain/ContainerModuleMetadataType';
 
 export class ContainerModuleMetadataMocks {
   public static get any(): ContainerModuleMetadata {
@@ -6,6 +7,7 @@ export class ContainerModuleMetadataMocks {
       factory: jest.fn(),
       imports: [],
       injects: [],
+      type: ContainerModuleMetadataType.factory,
     };
 
     return fixture;

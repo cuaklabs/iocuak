@@ -6,6 +6,7 @@ import { ContainerModule } from '../../container/modules/domain/ContainerModule'
 import { ContainerModuleMetadataApiMocks } from '../mocks/models/api/ContainerModuleMetadataApiMocks';
 import { ContainerModuleMetadataApi } from '../models/api/ContainerModuleMetadataApi';
 import { ContainerModuleMetadata } from '../models/domain/ContainerModuleMetadata';
+import { ContainerModuleMetadataType } from '../models/domain/ContainerModuleMetadataType';
 import { convertToContainerModule } from './convertToContainerModule';
 import { convertToContainerModuleAsync } from './convertToContainerModuleAsync';
 import { convertToContainerModuleMetadata } from './convertToContainerModuleMetadata';
@@ -47,9 +48,11 @@ describe(convertToContainerModuleMetadata.name, () => {
               ) as ContainerModuleMetadata['factory'],
               imports: expect.any(Array) as ContainerModuleMetadata[],
               injects: [...containerModuleMetadataApiImportMock.injects],
+              type: ContainerModuleMetadataType.factory,
             },
           ],
           injects: [...containerModuleMetadataApiMock.injects],
+          type: ContainerModuleMetadataType.factory,
         };
 
         expect(result).toStrictEqual(expected);
@@ -79,6 +82,7 @@ describe(convertToContainerModuleMetadata.name, () => {
         factory: expect.any(Function) as ContainerModuleMetadata['factory'],
         imports: expect.any(Array) as ContainerModuleMetadata[],
         injects: [...containerModuleMetadataApiMock.injects],
+        type: ContainerModuleMetadataType.factory,
       };
 
       expect(result).toStrictEqual(expected);
