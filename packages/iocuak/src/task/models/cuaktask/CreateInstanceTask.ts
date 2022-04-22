@@ -8,7 +8,7 @@ import { Binding } from '../../../metadata/models/domain/Binding';
 import { BindingScope } from '../../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../../metadata/models/domain/BindingType';
 import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
-import { stringifyServiceId } from '../../../utils/stringifyServiceId';
+import { lazyGetBindingOrThrow } from '../../../metadata/utils/domain/lazyGetBindingOrThrow';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
 import { TaskKind } from '../domain/TaskKind';
@@ -168,15 +168,10 @@ export class CreateInstanceTask<
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   #getBinding(serviceId: ServiceId): Binding<TInstance, TArgs> {
-    const binding: Binding<TInstance, TArgs> | undefined =
-      this.#containerBindingService.get(serviceId);
+    const binding: Binding<TInstance, TArgs> =
+      this.#containerBindingService.get(serviceId) ??
+      lazyGetBindingOrThrow(serviceId);
 
-    if (binding === undefined) {
-      throw new Error(
-        `No bindings found for type ${stringifyServiceId(serviceId)}`,
-      );
-    } else {
-      return binding;
-    }
+    return binding;
   }
 }

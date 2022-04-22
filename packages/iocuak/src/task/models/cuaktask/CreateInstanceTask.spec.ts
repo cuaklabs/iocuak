@@ -1,10 +1,14 @@
+jest.mock('../../../metadata/utils/domain/lazyGetBindingOrThrow');
+
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
+import { Binding } from '../../../metadata/models/domain/Binding';
 import { BindingScope } from '../../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../../metadata/models/domain/BindingType';
 import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
 import { ValueBinding } from '../../../metadata/models/domain/ValueBinding';
+import { lazyGetBindingOrThrow } from '../../../metadata/utils/domain/lazyGetBindingOrThrow';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { ServiceDependenciesFixtures } from '../../fixtures/domain/ServiceDependenciesFixtures';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
@@ -24,6 +28,7 @@ describe(CreateInstanceTask.name, () => {
       });
 
       describe('when called and containerService.binding.get() returns no binding', () => {
+        let bindingFixture: TypeBinding<InstanceTest, [] | [string]>;
         let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
         let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
         let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
@@ -32,11 +37,31 @@ describe(CreateInstanceTask.name, () => {
         let result: unknown;
 
         beforeAll(() => {
+          const instanceConstructorCallMock: jest.Mock<
+            InstanceTest,
+            [] | [string]
+          > = jest
+            .fn<InstanceTest, []>()
+            .mockImplementation((foo?: string) => new InstanceTest(foo));
+
+          bindingFixture = {
+            bindingType: BindingType.type,
+            id: 'sample-id',
+            scope: BindingScope.transient,
+            type: instanceConstructorCallMock,
+          };
+
           containerBindingServiceMock = {
             get: jest.fn().mockReturnValueOnce(undefined),
           } as Partial<
             jest.Mocked<ContainerBindingService>
           > as jest.Mocked<ContainerBindingService>;
+
+          (
+            lazyGetBindingOrThrow as jest.Mock<
+              Binding<InstanceTest, [] | [string]>
+            >
+          ).mockReturnValueOnce(bindingFixture);
 
           containerRequestServiceMock = {} as Partial<
             jest.Mocked<ContainerRequestService>
@@ -53,13 +78,9 @@ describe(CreateInstanceTask.name, () => {
             containerSingletonServiceMock,
           );
 
-          try {
-            createInstanceTask.perform(
-              ServiceDependenciesFixtures.withConstructorArgumentsAndProperties,
-            );
-          } catch (error) {
-            result = error;
-          }
+          result = createInstanceTask.perform(
+            ServiceDependenciesFixtures.withConstructorArgumentsAndProperties,
+          );
         });
 
         afterAll(() => {
@@ -73,15 +94,23 @@ describe(CreateInstanceTask.name, () => {
           );
         });
 
-        it('should throw an error', () => {
-          expect(result).toBeInstanceOf(Error);
-          expect(result).toStrictEqual(
-            expect.objectContaining<Partial<Error>>({
-              message: expect.stringContaining(
-                'No bindings found for type',
-              ) as string,
-            }),
+        it('should call lazyGetBindingOrThrow()', () => {
+          expect(lazyGetBindingOrThrow).toHaveBeenCalledTimes(1);
+          expect(lazyGetBindingOrThrow).toHaveBeenCalledWith(
+            taskKindFixture.id,
           );
+        });
+
+        it('should return an instance of InstanceTest with properties set', () => {
+          expect(result).toBeInstanceOf(InstanceTest);
+
+          Object.entries(
+            ServiceDependenciesFixtures.withConstructorArgumentsAndProperties
+              .properties,
+          ).map(([key, value]: [string, unknown]): void => {
+            expect(result).toHaveProperty(key);
+            expect((result as Record<string, unknown>)[key]).toBe(value);
+          });
         });
       });
 
