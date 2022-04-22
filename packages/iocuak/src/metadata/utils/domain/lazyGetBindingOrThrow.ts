@@ -1,23 +1,22 @@
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { stringifyServiceId } from '../../../utils/stringifyServiceId';
-import { Binding } from '../../models/domain/Binding';
-import { BindingType } from '../../models/domain/BindingType';
-import { getDefaultBindingScope } from './getDefaultBindingScope';
+import { TypeBinding } from '../../models/domain/TypeBinding';
+import { MetadataService } from '../../services/domain/MetadataService';
+import { getBindingOrThrow } from './getBindingOrThrow';
 
 export function lazyGetBindingOrThrow<TInstance, TArgs extends unknown[]>(
   serviceId: ServiceId,
-): Binding<TInstance, TArgs> {
+  metadataService: MetadataService,
+): TypeBinding<TInstance, TArgs> {
   if (serviceId instanceof Function) {
-    return {
-      bindingType: BindingType.type,
-      id: serviceId,
-      scope: getDefaultBindingScope(),
-      type: serviceId as Newable<TInstance, TArgs>,
-    };
+    return getBindingOrThrow(
+      serviceId as Newable<TInstance, TArgs>,
+      metadataService,
+    );
   } else {
     throw new Error(
-      `No bindings found for type ${stringifyServiceId(serviceId)}`,
+      `No registered bindings found for type ${stringifyServiceId(serviceId)}`,
     );
   }
 }

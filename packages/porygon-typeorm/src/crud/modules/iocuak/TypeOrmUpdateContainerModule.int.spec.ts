@@ -82,7 +82,7 @@ describe(TypeOrmUpdateContainerModule.name, () => {
             expect(result).toStrictEqual(
               expect.objectContaining<Partial<Error>>({
                 message: expect.stringContaining(
-                  'No bindings found for type Symbol()',
+                  'No registered bindings found for type',
                 ) as string,
               }),
             );

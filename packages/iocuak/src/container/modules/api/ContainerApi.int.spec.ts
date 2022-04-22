@@ -301,7 +301,10 @@ describe(ContainerApi.name, () => {
       let serviceIdFixture: Newable;
 
       beforeAll(() => {
-        serviceIdFixture = class {};
+        @injectable()
+        class Foo {}
+
+        serviceIdFixture = Foo;
       });
 
       describe('when called', () => {
@@ -321,10 +324,13 @@ describe(ContainerApi.name, () => {
     });
 
     describe('having a newable serviceId with binding metadata and constructor type metadata and properties type metadata', () => {
+      @injectable()
       class ParameterTypeFixture {}
 
+      @injectable()
       class PropertyTypeFixture {}
 
+      @injectable()
       class TypeFixture {
         @inject(PropertyTypeFixture)
         public property: unknown;

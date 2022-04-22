@@ -222,6 +222,7 @@ describe(ContainerApi.name, () => {
           containerBindingServiceImplementationFixture,
           containerRequestServiceImplementationFixture,
           containerSingletonServiceImplementationFixture,
+          metadataServiceImplementationFixture,
         );
       });
 

@@ -52,9 +52,9 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     const containerInstanceService: ContainerInstanceService =
       this.#initializeContainerInstanceService(
         containerBindingService,
-        metadataService,
         containerRequestService,
         containerSingletonService,
+        metadataService,
       );
     const containerModuleService: ContainerModuleService =
       ContainerApi.#initializeContainerModuleService(
@@ -76,9 +76,9 @@ export class ContainerApi extends ContainerServiceApiImplementation {
 
   static #initializeContainerInstanceService(
     containerBindingService: ContainerBindingService,
-    metadataService: MetadataService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
+    metadataService: MetadataService,
   ): ContainerInstanceService {
     const dependentTaskRunner: cuaktask.DependentTaskRunner =
       new cuaktask.DependentTaskRunner();
@@ -88,9 +88,9 @@ export class ContainerApi extends ContainerServiceApiImplementation {
       [TaskKind]
     > = this.#initializeTaskBuilder(
       containerBindingService,
-      metadataService,
       containerRequestService,
       containerSingletonService,
+      metadataService,
     );
 
     const containerInstanceService: ContainerInstanceService =
@@ -130,9 +130,9 @@ export class ContainerApi extends ContainerServiceApiImplementation {
 
   static #initializeTaskBuilder(
     containerBindingService: ContainerBindingService,
-    metadataService: MetadataService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
+    metadataService: MetadataService,
   ): Builder<cuaktask.DependentTask<TaskKind, TaskKind>, [TaskKind]> {
     const taskDependenciesKindSetBuilder: Builder<SetLike<TaskKind>> = {
       build: () => new TaskKindSet(),
@@ -154,6 +154,7 @@ export class ContainerApi extends ContainerServiceApiImplementation {
         containerBindingService,
         containerRequestService,
         containerSingletonService,
+        metadataService,
       );
 
     const taskBuilder: Builder<
