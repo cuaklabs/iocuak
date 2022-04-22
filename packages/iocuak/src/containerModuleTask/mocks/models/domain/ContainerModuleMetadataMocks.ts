@@ -1,3 +1,4 @@
+import { ContainerModuleFactoryMetadata } from '../../../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from '../../../models/domain/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from '../../../models/domain/ContainerModuleMetadataType';
 
@@ -13,9 +14,9 @@ export class ContainerModuleMetadataMocks {
     return fixture;
   }
 
-  public static get withImportsEmptyAndInjectsEmpty(): ContainerModuleMetadata {
-    const fixture: ContainerModuleMetadata = {
-      ...ContainerModuleMetadataMocks.any,
+  public static get withImportsEmptyAndInjectsEmpty(): ContainerModuleFactoryMetadata {
+    const fixture: ContainerModuleFactoryMetadata = {
+      ...ContainerModuleMetadataMocks.withTypeFactory,
       imports: [],
       injects: [],
     };
@@ -23,11 +24,22 @@ export class ContainerModuleMetadataMocks {
     return fixture;
   }
 
-  public static get withImportsEmptyAndInjectsWithOneServiceId(): ContainerModuleMetadata {
-    const fixture: ContainerModuleMetadata = {
-      ...ContainerModuleMetadataMocks.any,
+  public static get withImportsEmptyAndInjectsWithOneServiceId(): ContainerModuleFactoryMetadata {
+    const fixture: ContainerModuleFactoryMetadata = {
+      ...ContainerModuleMetadataMocks.withTypeFactory,
       imports: [],
       injects: ['service-id'],
+    };
+
+    return fixture;
+  }
+
+  public static get withTypeFactory(): ContainerModuleFactoryMetadata {
+    const fixture: ContainerModuleMetadata = {
+      factory: jest.fn(),
+      imports: [],
+      injects: [],
+      type: ContainerModuleMetadataType.factory,
     };
 
     return fixture;

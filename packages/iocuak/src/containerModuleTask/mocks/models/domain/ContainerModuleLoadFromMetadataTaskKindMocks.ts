@@ -1,3 +1,4 @@
+import { ContainerModuleFactoryMetadata } from '../../../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../../../models/domain/ContainerModuleLoadFromMetadataTaskKind';
 import { ContainerModuleTaskKindType } from '../../../models/domain/ContainerModuleTaskKindType';
 import { ContainerModuleMetadataMocks } from './ContainerModuleMetadataMocks';
@@ -12,21 +13,33 @@ export class ContainerModuleLoadFromMetadataTaskKindMocks {
     return fixture;
   }
 
-  public static get withMetadataWithImportsEmptyAndInjectsEmpty(): ContainerModuleLoadFromMetadataTaskKind {
-    const fixture: ContainerModuleLoadFromMetadataTaskKind = {
-      ...ContainerModuleLoadFromMetadataTaskKindMocks.any,
-      metadata: ContainerModuleMetadataMocks.withImportsEmptyAndInjectsEmpty,
-    };
+  public static get withMetadataContainerModuleFactoryMetadata(): ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata> {
+    const fixture: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata> =
+      {
+        ...ContainerModuleLoadFromMetadataTaskKindMocks.any,
+        metadata: ContainerModuleMetadataMocks.withTypeFactory,
+      };
 
     return fixture;
   }
 
-  public static get withMetadataWithImportsEmptyAndInjectsWithOneServiceId(): ContainerModuleLoadFromMetadataTaskKind {
-    const fixture: ContainerModuleLoadFromMetadataTaskKind = {
-      ...ContainerModuleLoadFromMetadataTaskKindMocks.any,
-      metadata:
-        ContainerModuleMetadataMocks.withImportsEmptyAndInjectsWithOneServiceId,
-    };
+  public static get withMetadataWithImportsEmptyAndInjectsEmpty(): ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata> {
+    const fixture: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata> =
+      {
+        ...ContainerModuleLoadFromMetadataTaskKindMocks.any,
+        metadata: ContainerModuleMetadataMocks.withImportsEmptyAndInjectsEmpty,
+      };
+
+    return fixture;
+  }
+
+  public static get withMetadataWithImportsEmptyAndInjectsWithOneServiceId(): ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata> {
+    const fixture: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata> =
+      {
+        ...ContainerModuleLoadFromMetadataTaskKindMocks.any,
+        metadata:
+          ContainerModuleMetadataMocks.withImportsEmptyAndInjectsWithOneServiceId,
+      };
 
     return fixture;
   }

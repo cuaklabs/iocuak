@@ -5,6 +5,7 @@ import { ContainerModuleApi } from '../../container/modules/api/ContainerModuleA
 import { ContainerModule } from '../../container/modules/domain/ContainerModule';
 import { ContainerModuleMetadataApiMocks } from '../mocks/models/api/ContainerModuleMetadataApiMocks';
 import { ContainerModuleMetadataApi } from '../models/api/ContainerModuleMetadataApi';
+import { ContainerModuleFactoryMetadata } from '../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from '../models/domain/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from '../models/domain/ContainerModuleMetadataType';
 import { convertToContainerModule } from './convertToContainerModule';
@@ -40,12 +41,14 @@ describe(convertToContainerModuleMetadata.name, () => {
 
       it('should return a ContainerModuleMetadata', () => {
         const expected: ContainerModuleMetadata = {
-          factory: expect.any(Function) as ContainerModuleMetadata['factory'],
+          factory: expect.any(
+            Function,
+          ) as ContainerModuleFactoryMetadata['factory'],
           imports: [
             {
               factory: expect.any(
                 Function,
-              ) as ContainerModuleMetadata['factory'],
+              ) as ContainerModuleFactoryMetadata['factory'],
               imports: expect.any(Array) as ContainerModuleMetadata[],
               injects: [...containerModuleMetadataApiImportMock.injects],
               type: ContainerModuleMetadataType.factory,
@@ -63,14 +66,14 @@ describe(convertToContainerModuleMetadata.name, () => {
   describe('when called', () => {
     let containerModuleMetadataApiMock: jest.Mocked<ContainerModuleMetadataApi>;
     let result: unknown;
-    let containerModuleMetadata: ContainerModuleMetadata;
+    let containerModuleMetadata: ContainerModuleFactoryMetadata;
 
     beforeAll(() => {
       containerModuleMetadataApiMock = ContainerModuleMetadataApiMocks.any;
 
       result = convertToContainerModuleMetadata(containerModuleMetadataApiMock);
 
-      containerModuleMetadata = result as ContainerModuleMetadata;
+      containerModuleMetadata = result as ContainerModuleFactoryMetadata;
     });
 
     afterAll(() => {
@@ -79,7 +82,9 @@ describe(convertToContainerModuleMetadata.name, () => {
 
     it('should return a ContainerModuleMetadata', () => {
       const expected: ContainerModuleMetadata = {
-        factory: expect.any(Function) as ContainerModuleMetadata['factory'],
+        factory: expect.any(
+          Function,
+        ) as ContainerModuleFactoryMetadata['factory'],
         imports: expect.any(Array) as ContainerModuleMetadata[],
         injects: [...containerModuleMetadataApiMock.injects],
         type: ContainerModuleMetadataType.factory,
