@@ -10,7 +10,7 @@ import { ContainerApi } from './ContainerApi';
 import { ContainerModuleApi } from './ContainerModuleApi';
 
 describe(ContainerApi.name, () => {
-  describe('.bind()', () => {
+  describe('.bind', () => {
     describe('having a type with no metadata', () => {
       let typeFixture: Newable;
 
@@ -226,7 +226,7 @@ describe(ContainerApi.name, () => {
     });
   });
 
-  describe('.bindToValue()', () => {
+  describe('.bindToValue', () => {
     describe('when called', () => {
       let serviceIdFixture: ServiceId;
       let valueFixture: unknown;
@@ -258,7 +258,7 @@ describe(ContainerApi.name, () => {
     });
   });
 
-  describe('.createChild()', () => {
+  describe('.createChild', () => {
     describe('when called .bind()', () => {
       let containerApi: ContainerApi;
       let typeFixture: Newable;
@@ -296,7 +296,73 @@ describe(ContainerApi.name, () => {
     });
   });
 
-  describe('.loadMetadata()', () => {
+  describe('.get', () => {
+    describe('having a newable serviceId', () => {
+      let serviceIdFixture: Newable;
+
+      beforeAll(() => {
+        serviceIdFixture = class {};
+      });
+
+      describe('when called', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          const containerApi: ContainerApi = ContainerApi.build();
+
+          result = containerApi.get(serviceIdFixture);
+        });
+
+        it('should return an instance', () => {
+          expect(result).toBeInstanceOf(serviceIdFixture);
+          expect(result).toStrictEqual(new serviceIdFixture());
+        });
+      });
+    });
+
+    describe('having a newable serviceId with binding metadata and constructor type metadata and properties type metadata', () => {
+      class ParameterTypeFixture {}
+
+      class PropertyTypeFixture {}
+
+      class TypeFixture {
+        @inject(PropertyTypeFixture)
+        public property: unknown;
+
+        constructor(
+          @inject(ParameterTypeFixture)
+          public readonly parameter: unknown,
+        ) {}
+      }
+
+      let serviceIdFixture: Newable<TypeFixture, [unknown]>;
+
+      beforeAll(() => {
+        serviceIdFixture = TypeFixture;
+      });
+
+      describe('when called', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          const containerApi: ContainerApi = ContainerApi.build();
+
+          result = containerApi.get(serviceIdFixture);
+        });
+
+        it('should return an instance', () => {
+          const expected: TypeFixture = new TypeFixture(
+            new ParameterTypeFixture(),
+          );
+          expected.property = new PropertyTypeFixture();
+
+          expect(result).toStrictEqual(expected);
+        });
+      });
+    });
+  });
+
+  describe('.loadMetadata', () => {
     let containerApi: ContainerApi;
 
     beforeAll(() => {
