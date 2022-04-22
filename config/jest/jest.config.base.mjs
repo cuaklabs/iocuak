@@ -41,7 +41,7 @@ function buildIntegrationPackageJsProject(packageName) {
     `${packageName}-Integration`,
     ['/node_modules'],
     packageName,
-    '.spec.js',
+    '.int.spec.js',
   );
 }
 
@@ -55,7 +55,7 @@ function buildIntegrationPackageTsProject(packageName) {
     `${packageName}-Integration`,
     ['/node_modules'],
     packageName,
-    '.spec.ts',
+    '.int.spec.ts',
   );
 }
 
