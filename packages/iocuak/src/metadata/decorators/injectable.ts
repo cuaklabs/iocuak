@@ -6,6 +6,7 @@ import { BindingScope } from '../models/domain/BindingScope';
 import { BindingType } from '../models/domain/BindingType';
 import { MetadataKey } from '../models/domain/MetadataKey';
 import { TypeBinding } from '../models/domain/TypeBinding';
+import { getDefaultBindingScope } from '../utils/domain/getDefaultBindingScope';
 
 export function injectable(bindingApi?: InjectableOptionsApi): ClassDecorator {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -17,7 +18,7 @@ export function injectable(bindingApi?: InjectableOptionsApi): ClassDecorator {
 
     const bindingScope: BindingScope =
       bindingApi?.scope === undefined
-        ? BindingScope.transient
+        ? getDefaultBindingScope()
         : bindingScopeApiToBindingScopeMap[bindingApi.scope];
 
     const binding: TypeBinding = {

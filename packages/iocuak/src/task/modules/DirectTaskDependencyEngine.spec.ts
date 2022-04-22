@@ -1,3 +1,5 @@
+jest.mock('../../metadata/utils/domain/lazyGetBindingOrThrow');
+
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
@@ -5,6 +7,7 @@ import { Binding } from '../../metadata/models/domain/Binding';
 import { BindingScope } from '../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../metadata/models/domain/BindingType';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
+import { lazyGetBindingOrThrow } from '../../metadata/utils/domain/lazyGetBindingOrThrow';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
@@ -15,7 +18,7 @@ import { DirectTaskDependencyEngine } from './DirectTaskDependencyEngine';
 
 describe(DirectTaskDependencyEngine.name, () => {
   let containerBindingService: jest.Mocked<ContainerBindingService>;
-  let metadataService: jest.Mocked<MetadataService>;
+  let metadataServiceMock: jest.Mocked<MetadataService>;
 
   let directTaskDependencyEngine: DirectTaskDependencyEngine;
 
@@ -26,13 +29,13 @@ describe(DirectTaskDependencyEngine.name, () => {
       jest.Mocked<ContainerBindingService>
     > as jest.Mocked<ContainerBindingService>;
 
-    metadataService = {
+    metadataServiceMock = {
       getClassMetadata: jest.fn(),
     } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
 
     directTaskDependencyEngine = new DirectTaskDependencyEngine(
       containerBindingService,
-      metadataService,
+      metadataServiceMock,
     );
   });
 
@@ -45,33 +48,55 @@ describe(DirectTaskDependencyEngine.name, () => {
       });
 
       describe('when called, and containerService.binding.get() returns undefined', () => {
+        let bindingFixture: Binding;
         let result: unknown;
 
         beforeAll(() => {
+          bindingFixture = {
+            bindingType: BindingType.type,
+            id: createInstanceTaskKindFixture.id,
+            scope: BindingScope.transient,
+            type: class {},
+          };
+
           containerBindingService.get.mockReturnValueOnce(undefined);
 
-          try {
-            directTaskDependencyEngine.getDirectDependencies(
-              createInstanceTaskKindFixture,
-            );
-          } catch (error) {
-            result = error;
-          }
+          (lazyGetBindingOrThrow as jest.Mock<Binding>).mockReturnValueOnce(
+            bindingFixture,
+          );
+
+          metadataServiceMock.getClassMetadata.mockReturnValueOnce(
+            ClassMetadataFixtures.any,
+          );
+
+          result = directTaskDependencyEngine.getDirectDependencies(
+            createInstanceTaskKindFixture,
+          );
         });
 
         afterAll(() => {
           jest.clearAllMocks();
         });
 
-        it('should throw an Error', () => {
-          expect(result).toBeInstanceOf(Error);
-          expect(result).toStrictEqual(
-            expect.objectContaining<Partial<Error>>({
-              message: expect.stringContaining(
-                'No bindings found for type',
-              ) as string,
-            }),
+        it('should call lazyGetBindingOrThrow()', () => {
+          expect(lazyGetBindingOrThrow).toHaveBeenCalledTimes(1);
+          expect(lazyGetBindingOrThrow).toHaveBeenCalledWith(
+            createInstanceTaskKindFixture.id,
+            metadataServiceMock,
           );
+        });
+
+        it('should return a TDependencyKind[]', () => {
+          const expected: TaskKind[] = [
+            {
+              id: createInstanceTaskKindFixture.id,
+              metadata: ClassMetadataFixtures.any,
+              requestId: createInstanceTaskKindFixture.requestId,
+              type: TaskKindType.getInstanceDependencies,
+            },
+          ];
+
+          expect(result).toStrictEqual(expected);
         });
       });
 
@@ -89,7 +114,7 @@ describe(DirectTaskDependencyEngine.name, () => {
 
           containerBindingService.get.mockReturnValueOnce(bindingFixture);
 
-          metadataService.getClassMetadata.mockReturnValueOnce(
+          metadataServiceMock.getClassMetadata.mockReturnValueOnce(
             ClassMetadataFixtures.any,
           );
 

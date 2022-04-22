@@ -5,7 +5,7 @@ import { BindingType } from '../../metadata/models/domain/BindingType';
 import { ClassMetadata } from '../../metadata/models/domain/ClassMetadata';
 import { TypeBinding } from '../../metadata/models/domain/TypeBinding';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
-import { stringifyServiceId } from '../../utils/stringifyServiceId';
+import { lazyGetBindingOrThrow } from '../../metadata/utils/domain/lazyGetBindingOrThrow';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../models/domain/TaskKind';
@@ -43,16 +43,11 @@ export class DirectTaskDependencyEngine {
   }
 
   #getBinding(serviceId: ServiceId): Binding {
-    const binding: Binding | undefined =
-      this.#containerBindingService.get(serviceId);
+    const binding: Binding =
+      this.#containerBindingService.get(serviceId) ??
+      lazyGetBindingOrThrow(serviceId, this.#metadataService);
 
-    if (binding === undefined) {
-      throw new Error(
-        `No bindings found for type ${stringifyServiceId(serviceId)}`,
-      );
-    } else {
-      return binding;
-    }
+    return binding;
   }
 
   #getCreateInstanceTaskKindDependencies(
