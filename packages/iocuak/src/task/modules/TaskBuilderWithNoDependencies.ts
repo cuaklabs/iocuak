@@ -3,6 +3,7 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
+import { MetadataService } from '../../metadata/services/domain/MetadataService';
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
@@ -14,15 +15,18 @@ export class TaskBuilderWithNoDependencies {
   #containerBindingService: ContainerBindingService;
   #containerRequestService: ContainerRequestService;
   #containerSingletonService: ContainerSingletonService;
+  #metadataService: MetadataService;
 
   constructor(
     containerBindingService: ContainerBindingService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
+    metadataService: MetadataService,
   ) {
     this.#containerBindingService = containerBindingService;
     this.#containerRequestService = containerRequestService;
     this.#containerSingletonService = containerSingletonService;
+    this.#metadataService = metadataService;
   }
 
   public buildWithNoDependencies<TKind, TArgs extends unknown[], TReturn>(
@@ -62,6 +66,7 @@ export class TaskBuilderWithNoDependencies {
       this.#containerBindingService,
       this.#containerRequestService,
       this.#containerSingletonService,
+      this.#metadataService,
     );
   }
 

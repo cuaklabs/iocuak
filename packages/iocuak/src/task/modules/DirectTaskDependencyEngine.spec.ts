@@ -18,7 +18,7 @@ import { DirectTaskDependencyEngine } from './DirectTaskDependencyEngine';
 
 describe(DirectTaskDependencyEngine.name, () => {
   let containerBindingService: jest.Mocked<ContainerBindingService>;
-  let metadataService: jest.Mocked<MetadataService>;
+  let metadataServiceMock: jest.Mocked<MetadataService>;
 
   let directTaskDependencyEngine: DirectTaskDependencyEngine;
 
@@ -29,13 +29,13 @@ describe(DirectTaskDependencyEngine.name, () => {
       jest.Mocked<ContainerBindingService>
     > as jest.Mocked<ContainerBindingService>;
 
-    metadataService = {
+    metadataServiceMock = {
       getClassMetadata: jest.fn(),
     } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
 
     directTaskDependencyEngine = new DirectTaskDependencyEngine(
       containerBindingService,
-      metadataService,
+      metadataServiceMock,
     );
   });
 
@@ -65,7 +65,7 @@ describe(DirectTaskDependencyEngine.name, () => {
             bindingFixture,
           );
 
-          metadataService.getClassMetadata.mockReturnValueOnce(
+          metadataServiceMock.getClassMetadata.mockReturnValueOnce(
             ClassMetadataFixtures.any,
           );
 
@@ -82,6 +82,7 @@ describe(DirectTaskDependencyEngine.name, () => {
           expect(lazyGetBindingOrThrow).toHaveBeenCalledTimes(1);
           expect(lazyGetBindingOrThrow).toHaveBeenCalledWith(
             createInstanceTaskKindFixture.id,
+            metadataServiceMock,
           );
         });
 
@@ -113,7 +114,7 @@ describe(DirectTaskDependencyEngine.name, () => {
 
           containerBindingService.get.mockReturnValueOnce(bindingFixture);
 
-          metadataService.getClassMetadata.mockReturnValueOnce(
+          metadataServiceMock.getClassMetadata.mockReturnValueOnce(
             ClassMetadataFixtures.any,
           );
 

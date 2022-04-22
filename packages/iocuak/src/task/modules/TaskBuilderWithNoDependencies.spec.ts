@@ -3,6 +3,7 @@ jest.mock('../utils/isTaskKind');
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
+import { MetadataService } from '../../metadata/services/domain/MetadataService';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
@@ -13,27 +14,32 @@ import { isTaskKind } from '../utils/isTaskKind';
 import { TaskBuilderWithNoDependencies } from './TaskBuilderWithNoDependencies';
 
 describe(TaskBuilderWithNoDependencies.name, () => {
-  let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
-  let containerRequestService: jest.Mocked<ContainerRequestService>;
-  let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
+  let containerBindingServiceFixture: ContainerBindingService;
+  let containerRequestServiceFixture: ContainerRequestService;
+  let containerSingletonServiceFixture: ContainerSingletonService;
+  let metadataServiceFixture: MetadataService;
 
   let taskBuilderWithNoDependencies: TaskBuilderWithNoDependencies;
 
   beforeAll(() => {
-    containerBindingServiceMock = {} as Partial<
-      jest.Mocked<ContainerBindingService>
-    > as jest.Mocked<ContainerBindingService>;
-    containerRequestService = {} as Partial<
-      jest.Mocked<ContainerRequestService>
-    > as jest.Mocked<ContainerRequestService>;
-    containerSingletonServiceMock = {} as Partial<
-      jest.Mocked<ContainerSingletonService>
-    > as jest.Mocked<ContainerSingletonService>;
+    containerBindingServiceFixture = {
+      _tag: Symbol('ContainerBindingService'),
+    } as Partial<ContainerBindingService> as ContainerBindingService;
+    containerRequestServiceFixture = {
+      _tag: Symbol('ContainerRequestService'),
+    } as Partial<ContainerRequestService> as ContainerRequestService;
+    containerSingletonServiceFixture = {
+      _tag: Symbol('ContainerSingletonService'),
+    } as Partial<ContainerSingletonService> as ContainerSingletonService;
+    metadataServiceFixture = {
+      _tag: Symbol('MetadataService'),
+    } as Partial<MetadataService> as MetadataService;
 
     taskBuilderWithNoDependencies = new TaskBuilderWithNoDependencies(
-      containerBindingServiceMock,
-      containerRequestService,
-      containerSingletonServiceMock,
+      containerBindingServiceFixture,
+      containerRequestServiceFixture,
+      containerSingletonServiceFixture,
+      metadataServiceFixture,
     );
   });
 

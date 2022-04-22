@@ -45,7 +45,7 @@ export class DirectTaskDependencyEngine {
   #getBinding(serviceId: ServiceId): Binding {
     const binding: Binding =
       this.#containerBindingService.get(serviceId) ??
-      lazyGetBindingOrThrow(serviceId);
+      lazyGetBindingOrThrow(serviceId, this.#metadataService);
 
     return binding;
   }
