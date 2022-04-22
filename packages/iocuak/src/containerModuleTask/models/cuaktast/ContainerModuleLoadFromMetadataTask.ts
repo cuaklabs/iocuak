@@ -2,7 +2,9 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { ContainerInstanceService } from '../../../container/services/domain/ContainerInstanceService';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
+import { ContainerModuleClassMetadata } from '../domain/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from '../domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../domain/ContainerModuleLoadFromMetadataTaskKind';
 import { ContainerModuleMetadataType } from '../domain/ContainerModuleMetadataType';
@@ -15,6 +17,7 @@ export class ContainerModuleLoadFromMetadataTask extends cuaktask.BaseDependentT
   ContainerModule | Promise<ContainerModule>
 > {
   readonly #containerBindingService: ContainerBindingService;
+  readonly #containerInstanceService: ContainerInstanceService;
   readonly #metadataService: MetadataService;
 
   constructor(
@@ -26,11 +29,13 @@ export class ContainerModuleLoadFromMetadataTask extends cuaktask.BaseDependentT
         >[]
       | undefined,
     containerBindingService: ContainerBindingService,
+    containerInstanceService: ContainerInstanceService,
     metadataService: MetadataService,
   ) {
     super(kind, dependencies);
 
     this.#containerBindingService = containerBindingService;
+    this.#containerInstanceService = containerInstanceService;
     this.#metadataService = metadataService;
   }
 
@@ -44,8 +49,18 @@ export class ContainerModuleLoadFromMetadataTask extends cuaktask.BaseDependentT
           instances,
         );
       case ContainerModuleMetadataType.clazz:
-        throw new Error('Not implemented');
+        return this.#loadFromContainerModuleClassMetadata(this.kind.metadata);
     }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  #loadFromContainerModuleClassMetadata(
+    metadata: ContainerModuleClassMetadata,
+  ): ContainerModule {
+    const containerModule: ContainerModule =
+      this.#containerInstanceService.create(metadata.module);
+
+    return containerModule;
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering

@@ -1,17 +1,87 @@
 import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { ContainerInstanceService } from '../../../container/services/domain/ContainerInstanceService';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleLoadFromMetadataTaskKindMocks } from '../../mocks/models/domain/ContainerModuleLoadFromMetadataTaskKindMocks';
+import { ContainerModuleClassMetadata } from '../domain/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from '../domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../domain/ContainerModuleLoadFromMetadataTaskKind';
 import { ContainerModuleLoadFromMetadataTask } from './ContainerModuleLoadFromMetadataTask';
 
 describe(ContainerModuleLoadFromMetadataTask.name, () => {
   describe('.perform()', () => {
+    describe('having a ContainerModuleLoadFromMetadataTaskKind with ContainerModuleClassMetadata', () => {
+      let taskKindMock: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleClassMetadata>;
+
+      let containerBindingServiceFixture: ContainerBindingService;
+      let containerInstanceServiceMock: jest.Mocked<ContainerInstanceService>;
+      let metadataServiceFixture: MetadataService;
+
+      let containerModuleMock: jest.Mocked<ContainerModule>;
+
+      beforeAll(() => {
+        taskKindMock =
+          ContainerModuleLoadFromMetadataTaskKindMocks.withMetadataContainerModuleClassMetadata;
+
+        containerBindingServiceFixture = {
+          _tag: Symbol('containerBindingService'),
+        } as unknown as ContainerBindingService;
+        containerInstanceServiceMock = {
+          create: jest.fn(),
+        };
+        metadataServiceFixture = {
+          _tag: Symbol('MetadataService'),
+        } as unknown as MetadataService;
+
+        containerModuleMock = {
+          load: jest.fn(),
+        };
+      });
+
+      describe('when called', () => {
+        let containerModuleLoadFromMetadataTask: ContainerModuleLoadFromMetadataTask;
+
+        let result: unknown;
+
+        beforeAll(() => {
+          containerModuleLoadFromMetadataTask =
+            new ContainerModuleLoadFromMetadataTask(
+              taskKindMock,
+              [],
+              containerBindingServiceFixture,
+              containerInstanceServiceMock,
+              metadataServiceFixture,
+            );
+
+          containerInstanceServiceMock.create.mockReturnValueOnce(
+            containerModuleMock,
+          );
+
+          result = containerModuleLoadFromMetadataTask.perform();
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call containerInstanceService.create()', () => {
+          expect(containerInstanceServiceMock.create).toHaveBeenCalledTimes(1);
+          expect(containerInstanceServiceMock.create).toHaveBeenCalledWith(
+            taskKindMock.metadata.module,
+          );
+        });
+
+        it('should return a ContainerModule', () => {
+          expect(result).toBe(containerModuleMock);
+        });
+      });
+    });
+
     describe('having a ContainerModuleLoadFromMetadataTaskKind with ContainerModuleFactoryMetadata', () => {
       let taskKindMock: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata>;
 
       let containerBindingServiceFixture: ContainerBindingService;
+      let containerInstanceServiceMock: jest.Mocked<ContainerInstanceService>;
       let metadataServiceFixture: MetadataService;
 
       let containerModuleMock: jest.Mocked<ContainerModule>;
@@ -23,6 +93,9 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
         containerBindingServiceFixture = {
           _tag: Symbol('containerBindingService'),
         } as unknown as ContainerBindingService;
+        containerInstanceServiceMock = {
+          create: jest.fn(),
+        };
         metadataServiceFixture = {
           _tag: Symbol('MetadataService'),
         } as unknown as MetadataService;
@@ -48,6 +121,7 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
                 taskKindMock,
                 [],
                 containerBindingServiceFixture,
+                containerInstanceServiceMock,
                 metadataServiceFixture,
               );
 
@@ -93,6 +167,7 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
                 taskKindMock,
                 [],
                 containerBindingServiceFixture,
+                containerInstanceServiceMock,
                 metadataServiceFixture,
               );
 
@@ -144,6 +219,7 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
                 taskKindMock,
                 [],
                 containerBindingServiceFixture,
+                containerInstanceServiceMock,
                 metadataServiceFixture,
               );
 
@@ -193,6 +269,7 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
                 taskKindMock,
                 [],
                 containerBindingServiceFixture,
+                containerInstanceServiceMock,
                 metadataServiceFixture,
               );
 
