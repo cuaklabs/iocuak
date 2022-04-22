@@ -3,7 +3,9 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 import { ContainerModuleCreateInstancesTaskKindMocks } from '../mocks/models/domain/ContainerModuleCreateInstancesTaskKindMocks';
 import { ContainerModuleLoadFromMetadataTaskKindMocks } from '../mocks/models/domain/ContainerModuleLoadFromMetadataTaskKindMocks';
 import { ContainerModuleMetadataMocks } from '../mocks/models/domain/ContainerModuleMetadataMocks';
+import { ContainerModuleClassMetadata } from '../models/domain/ContainerModuleClassMetadata';
 import { ContainerModuleCreateInstancesTaskKind } from '../models/domain/ContainerModuleCreateInstancesTaskKind';
+import { ContainerModuleFactoryMetadata } from '../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../models/domain/ContainerModuleLoadFromMetadataTaskKind';
 import { ContainerModuleMetadata } from '../models/domain/ContainerModuleMetadata';
 import { ContainerModuleTaskKind } from '../models/domain/ContainerModuleTaskKind';
@@ -50,8 +52,48 @@ describe(ContainerModuleTaskDependencyEngine.name, () => {
       });
     });
 
-    describe('having a task kind with metadata with no imports nor injects', () => {
-      let taskKindFixture: ContainerModuleLoadFromMetadataTaskKind;
+    describe('having a task kind with class metadata', () => {
+      let taskKindFixture: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleClassMetadata>;
+
+      beforeAll(() => {
+        taskKindFixture =
+          ContainerModuleLoadFromMetadataTaskKindMocks.withMetadataContainerModuleClassMetadata;
+      });
+
+      describe('when called', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result =
+            containerModuleTaskDependencyEngine.getDependencies(
+              taskKindFixture,
+            );
+        });
+
+        it('should return a task kind graph', () => {
+          const expectedTaskKindGraphNode: cuaktask.TaskDependencyKindGraphNode<
+            ContainerModuleTaskKind,
+            ContainerModuleTaskKind
+          > = {
+            dependencies: [],
+            kind: taskKindFixture,
+          };
+
+          const expectedTaskKindGraph: cuaktask.TaskDependencyKindGraph<
+            ContainerModuleTaskKind,
+            ContainerModuleTaskKind
+          > = {
+            nodes: [expectedTaskKindGraphNode],
+            rootNode: expectedTaskKindGraphNode,
+          };
+
+          expect(result).toStrictEqual(expectedTaskKindGraph);
+        });
+      });
+    });
+
+    describe('having a task kind with factory metadata with no imports nor injects', () => {
+      let taskKindFixture: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata>;
 
       beforeAll(() => {
         taskKindFixture =
@@ -90,8 +132,8 @@ describe(ContainerModuleTaskDependencyEngine.name, () => {
       });
     });
 
-    describe('having a task with metadata with no imports and injects', () => {
-      let taskKindFixture: ContainerModuleLoadFromMetadataTaskKind;
+    describe('having a task kind with factory metadata with no imports and injects', () => {
+      let taskKindFixture: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata>;
 
       beforeAll(() => {
         taskKindFixture =
@@ -140,10 +182,10 @@ describe(ContainerModuleTaskDependencyEngine.name, () => {
       });
     });
 
-    describe('having a task with imports and no injects', () => {
-      let containerModuleMetadataFixture: ContainerModuleMetadata;
+    describe('having a task kind with factory metadata with imports and no injects', () => {
+      let containerModuleMetadataFixture: ContainerModuleFactoryMetadata;
       let dependencyContainerModuleMetadataFixture: ContainerModuleMetadata;
-      let taskKindFixture: ContainerModuleLoadFromMetadataTaskKind;
+      let taskKindFixture: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata>;
 
       beforeAll(() => {
         dependencyContainerModuleMetadataFixture =
@@ -202,10 +244,10 @@ describe(ContainerModuleTaskDependencyEngine.name, () => {
       });
     });
 
-    describe('having a task with imports and injects', () => {
-      let containerModuleMetadataFixture: ContainerModuleMetadata;
+    describe('having a task kind with factory metadata with imports and injects', () => {
+      let containerModuleMetadataFixture: ContainerModuleFactoryMetadata;
       let dependencyContainerModuleMetadataFixture: ContainerModuleMetadata;
-      let taskKindFixture: ContainerModuleLoadFromMetadataTaskKind;
+      let taskKindFixture: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata>;
 
       beforeAll(() => {
         dependencyContainerModuleMetadataFixture =

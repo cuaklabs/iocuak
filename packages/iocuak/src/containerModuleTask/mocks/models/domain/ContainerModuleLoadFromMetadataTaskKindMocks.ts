@@ -1,3 +1,4 @@
+import { ContainerModuleClassMetadata } from '../../../models/domain/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from '../../../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../../../models/domain/ContainerModuleLoadFromMetadataTaskKind';
 import { ContainerModuleTaskKindType } from '../../../models/domain/ContainerModuleTaskKindType';
@@ -9,6 +10,16 @@ export class ContainerModuleLoadFromMetadataTaskKindMocks {
       metadata: ContainerModuleMetadataMocks.any,
       type: ContainerModuleTaskKindType.loadFromMetadata,
     };
+
+    return fixture;
+  }
+
+  public static get withMetadataContainerModuleClassMetadata(): ContainerModuleLoadFromMetadataTaskKind<ContainerModuleClassMetadata> {
+    const fixture: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleClassMetadata> =
+      {
+        ...ContainerModuleLoadFromMetadataTaskKindMocks.any,
+        metadata: ContainerModuleMetadataMocks.withTypeClazz,
+      };
 
     return fixture;
   }
