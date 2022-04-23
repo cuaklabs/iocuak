@@ -14,6 +14,10 @@ export class ContainerSingletonServiceImplementation
     return this.#serviceIdToInstanceMap.get(serviceId) as TInstance | undefined;
   }
 
+  public remove(serviceId: ServiceId): void {
+    this.#serviceIdToInstanceMap.delete(serviceId);
+  }
+
   public set<TInstance>(serviceId: ServiceId, value: TInstance): void {
     this.#serviceIdToInstanceMap.set(serviceId, value);
   }
