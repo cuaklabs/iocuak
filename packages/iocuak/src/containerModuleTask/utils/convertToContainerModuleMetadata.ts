@@ -9,10 +9,7 @@ import { convertToContainerModule } from './convertToContainerModule';
 import { convertToContainerModuleAsync } from './convertToContainerModuleAsync';
 
 export function convertToContainerModuleMetadata<TArgs extends unknown[]>(
-  containerModuleMetadataApi: ContainerModuleMetadataApi<
-    ContainerModuleApi,
-    TArgs
-  >,
+  containerModuleMetadataApi: ContainerModuleMetadataApi<TArgs>,
 ): ContainerModuleMetadata<TArgs> {
   const containerModuleMetadata: ContainerModuleMetadata<TArgs> = {
     factory: convertToContainerModuleMetadataFactory(

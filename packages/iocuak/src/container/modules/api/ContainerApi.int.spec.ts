@@ -7,7 +7,6 @@ import { inject } from '../../../metadata/decorators/inject';
 import { injectable } from '../../../metadata/decorators/injectable';
 import { ContainerModuleBindingServiceApi } from '../../services/api/ContainerModuleBindingServiceApi';
 import { ContainerApi } from './ContainerApi';
-import { ContainerModuleApi } from './ContainerModuleApi';
 
 describe(ContainerApi.name, () => {
   describe('.bind', () => {
@@ -380,10 +379,7 @@ describe(ContainerApi.name, () => {
       let dependentServiceIdFixture: ServiceId;
       let valueFixture: unknown;
 
-      let containerModuleMetadataApi: ContainerModuleMetadataApi<
-        ContainerModuleApi,
-        [unknown]
-      >;
+      let containerModuleMetadataApi: ContainerModuleMetadataApi<[unknown]>;
 
       beforeAll(() => {
         serviceIdFixture = 'service';
