@@ -61,6 +61,7 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
   }
 
   public unbind(serviceId: ServiceId): void {
+    this._containerService.singleton.remove(serviceId);
     this._containerService.binding.remove(serviceId);
   }
 }

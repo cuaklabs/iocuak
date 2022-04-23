@@ -23,13 +23,15 @@ import { ContainerBindingService } from '../domain/ContainerBindingService';
 import { ContainerInstanceService } from '../domain/ContainerInstanceService';
 import { ContainerModuleService } from '../domain/ContainerModuleService';
 import { ContainerService } from '../domain/ContainerService';
+import { ContainerSingletonService } from '../domain/ContainerSingletonService';
 import { ContainerServiceApiImplementation } from './ContainerServiceApiImplementation';
 
 describe(ContainerServiceApiImplementation.name, () => {
   let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
   let containerInstanceServiceMock: jest.Mocked<ContainerInstanceService>;
-  let metadataServiceMock: jest.Mocked<MetadataService>;
   let containerModuleServiceMock: jest.Mocked<ContainerModuleService>;
+  let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
+  let metadataServiceMock: jest.Mocked<MetadataService>;
   let containerServiceMock: ContainerService;
   let containerServiceApiImplementation: ContainerServiceApiImplementation;
 
@@ -46,18 +48,24 @@ describe(ContainerServiceApiImplementation.name, () => {
     } as Partial<
       jest.Mocked<ContainerInstanceService>
     > as jest.Mocked<ContainerInstanceService>;
-    metadataServiceMock = {
-      getBindingMetadata: jest.fn(),
-    } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
     containerModuleServiceMock = {
       loadMetadata: jest.fn(),
     };
+    containerSingletonServiceMock = {
+      remove: jest.fn(),
+    } as Partial<
+      jest.Mocked<ContainerSingletonService>
+    > as jest.Mocked<ContainerSingletonService>;
+    metadataServiceMock = {
+      getBindingMetadata: jest.fn(),
+    } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
 
     containerServiceMock = {
       binding: containerBindingServiceMock,
       instance: containerInstanceServiceMock,
       metadata: metadataServiceMock,
       module: containerModuleServiceMock,
+      singleton: containerSingletonServiceMock,
     } as Partial<ContainerService> as ContainerService;
 
     containerServiceApiImplementation = new ContainerServiceApiImplementation(
@@ -287,6 +295,13 @@ describe(ContainerServiceApiImplementation.name, () => {
 
       afterAll(() => {
         jest.clearAllMocks();
+      });
+
+      it('should call unbind containerService.singleton.remove()', () => {
+        expect(containerServiceMock.singleton.remove).toHaveBeenCalledTimes(1);
+        expect(containerServiceMock.singleton.remove).toHaveBeenCalledWith(
+          serviceIdFixture,
+        );
       });
 
       it('should call containerService.binding.remove()', () => {
