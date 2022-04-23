@@ -25,7 +25,7 @@
     "typeorm": "^0.3.6"
   },
   "devDependencies": {
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.5"
   },
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
   "publishConfig": {
