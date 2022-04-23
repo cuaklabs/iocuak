@@ -4,6 +4,7 @@ import { ContainerModuleApi } from '../../container/modules/api/ContainerModuleA
 import { ContainerModule } from '../../container/modules/domain/ContainerModule';
 import { ContainerModuleMetadataApi } from '../models/api/ContainerModuleMetadataApi';
 import { ContainerModuleMetadata } from '../models/domain/ContainerModuleMetadata';
+import { ContainerModuleMetadataType } from '../models/domain/ContainerModuleMetadataType';
 import { convertToContainerModule } from './convertToContainerModule';
 import { convertToContainerModuleAsync } from './convertToContainerModuleAsync';
 
@@ -22,6 +23,7 @@ export function convertToContainerModuleMetadata<TArgs extends unknown[]>(
         convertToContainerModuleMetadata(containerModuleImport),
     ),
     injects: [...containerModuleMetadataApi.injects],
+    type: ContainerModuleMetadataType.factory,
   };
 
   return containerModuleMetadata;

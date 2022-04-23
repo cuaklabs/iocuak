@@ -65,6 +65,7 @@ export class ContainerModuleTaskBuilderWithNoDependencies {
       taskKind,
       [],
       this.#containerBindingService,
+      this.#containerInstanceService,
       this.#metadataService,
     ) as unknown as cuaktask.DependentTask<TKind, unknown, TArgs, TReturn>;
   }

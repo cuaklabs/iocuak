@@ -88,6 +88,7 @@ describe(ContainerModuleTaskBuilderWithNoDependencies.name, () => {
             taskKindFixture,
             [],
             containerBindingServiceFixture,
+            containerInstanceServiceFixture,
             metadataServiceFixture,
           );
 

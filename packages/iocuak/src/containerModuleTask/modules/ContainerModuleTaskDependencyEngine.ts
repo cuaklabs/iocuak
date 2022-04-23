@@ -1,8 +1,11 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
+import { PickKeys } from '../../common/models/domain/PickKeys';
 import { ServiceId } from '../../common/models/domain/ServiceId';
+import { ContainerModuleFactoryMetadata } from '../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../models/domain/ContainerModuleLoadFromMetadataTaskKind';
 import { ContainerModuleMetadata } from '../models/domain/ContainerModuleMetadata';
+import { ContainerModuleMetadataType } from '../models/domain/ContainerModuleMetadataType';
 import { ContainerModuleTaskKind } from '../models/domain/ContainerModuleTaskKind';
 import { ContainerModuleTaskKindType } from '../models/domain/ContainerModuleTaskKindType';
 
@@ -37,6 +40,19 @@ export class ContainerModuleTaskDependencyEngine
       case ContainerModuleTaskKindType.loadFromMetadata:
         return this.#getLoadFromMetadataTaskKindDependencies(taskKind);
     }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  static #isFactoryMetadataWithInjects(
+    metadata: ContainerModuleMetadata,
+  ): metadata is ContainerModuleFactoryMetadata & {
+    [T in PickKeys<ContainerModuleFactoryMetadata, 'injects'>]: [ServiceId] &
+      ServiceId[];
+  } {
+    return (
+      metadata.type === ContainerModuleMetadataType.factory &&
+      metadata.injects.length !== 0
+    );
   }
 
   #getLoadFromMetadataTaskKindDependencies(
@@ -99,16 +115,17 @@ export class ContainerModuleTaskDependencyEngine
         loadModuleTaskKindGraphNode,
       );
 
-    const loadModuleTaskKindGraphNodeInjects: ServiceId[] =
-      loadModuleTaskKindGraphNode.kind.metadata.injects;
+    const metadata: ContainerModuleMetadata =
+      loadModuleTaskKindGraphNode.kind.metadata;
 
-    if (loadModuleTaskKindGraphNodeInjects.length === 0) {
-      loadModuleTaskKindGraphNode.dependencies.push(
-        ...loadDependencyModuleTaskKindGraphNodes,
-      );
+    if (
+      ContainerModuleTaskDependencyEngine.#isFactoryMetadataWithInjects(
+        metadata,
+      )
+    ) {
+      const loadModuleTaskKindGraphNodeInjects: [ServiceId] & ServiceId[] =
+        metadata.injects;
 
-      yield loadModuleTaskKindGraphNode;
-    } else {
       const createInstancesTaskKindGraphNode: TaskKindGraphNode =
         this.#buildCreateInstancesTaskKindGraphNode(
           loadModuleTaskKindGraphNodeInjects,
@@ -121,6 +138,12 @@ export class ContainerModuleTaskDependencyEngine
 
       yield loadModuleTaskKindGraphNode;
       yield createInstancesTaskKindGraphNode;
+    } else {
+      loadModuleTaskKindGraphNode.dependencies.push(
+        ...loadDependencyModuleTaskKindGraphNodes,
+      );
+
+      yield loadModuleTaskKindGraphNode;
     }
 
     for (const loadModuleTaskKindGraphNode of loadDependencyModuleTaskKindGraphNodes) {
