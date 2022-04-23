@@ -1,5 +1,5 @@
-import { ContainerModuleApi } from '../../container/modules/api/ContainerModuleApi';
-import { ContainerModule } from '../../container/modules/domain/ContainerModule';
+import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
+import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
 import { convertToContainerModule } from './convertToContainerModule';
 
 export async function convertToContainerModuleAsync(

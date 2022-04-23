@@ -1,10 +1,10 @@
 import { isPromiseLike } from '@cuaklabs/cuaktask';
 
-import { ContainerModuleApi } from '../../container/modules/api/ContainerModuleApi';
-import { ContainerModule } from '../../container/modules/domain/ContainerModule';
-import { ContainerModuleMetadataApi } from '../models/api/ContainerModuleMetadataApi';
-import { ContainerModuleMetadata } from '../models/domain/ContainerModuleMetadata';
-import { ContainerModuleMetadataType } from '../models/domain/ContainerModuleMetadataType';
+import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
+import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
+import { ContainerModuleMetadataApi } from '../../models/api/ContainerModuleMetadataApi';
+import { ContainerModuleMetadata } from '../../models/domain/ContainerModuleMetadata';
+import { ContainerModuleMetadataType } from '../../models/domain/ContainerModuleMetadataType';
 import { convertToContainerModule } from './convertToContainerModule';
 import { convertToContainerModuleAsync } from './convertToContainerModuleAsync';
 

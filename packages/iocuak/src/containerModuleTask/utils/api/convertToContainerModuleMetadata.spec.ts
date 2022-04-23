@@ -1,13 +1,13 @@
 jest.mock('./convertToContainerModule');
 jest.mock('./convertToContainerModuleAsync');
 
-import { ContainerModuleApi } from '../../container/modules/api/ContainerModuleApi';
-import { ContainerModule } from '../../container/modules/domain/ContainerModule';
-import { ContainerModuleMetadataApiMocks } from '../mocks/models/api/ContainerModuleMetadataApiMocks';
-import { ContainerModuleMetadataApi } from '../models/api/ContainerModuleMetadataApi';
-import { ContainerModuleFactoryMetadata } from '../models/domain/ContainerModuleFactoryMetadata';
-import { ContainerModuleMetadata } from '../models/domain/ContainerModuleMetadata';
-import { ContainerModuleMetadataType } from '../models/domain/ContainerModuleMetadataType';
+import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
+import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
+import { ContainerModuleMetadataApiMocks } from '../../mocks/models/api/ContainerModuleMetadataApiMocks';
+import { ContainerModuleMetadataApi } from '../../models/api/ContainerModuleMetadataApi';
+import { ContainerModuleFactoryMetadata } from '../../models/domain/ContainerModuleFactoryMetadata';
+import { ContainerModuleMetadata } from '../../models/domain/ContainerModuleMetadata';
+import { ContainerModuleMetadataType } from '../../models/domain/ContainerModuleMetadataType';
 import { convertToContainerModule } from './convertToContainerModule';
 import { convertToContainerModuleAsync } from './convertToContainerModuleAsync';
 import { convertToContainerModuleMetadata } from './convertToContainerModuleMetadata';
