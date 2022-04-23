@@ -8,7 +8,7 @@ import { ContainerModuleLoadFromMetadataTask } from '../models/cuaktast/Containe
 import { ContainerModuleCreateInstancesTaskKind } from '../models/domain/ContainerModuleCreateInstancesTaskKind';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../models/domain/ContainerModuleLoadFromMetadataTaskKind';
 import { ContainerModuleTaskKindType } from '../models/domain/ContainerModuleTaskKindType';
-import { isContainerModuleTaskKind } from '../utils/isContainerModuleTaskKind';
+import { isContainerModuleTaskKind } from '../utils/domain/isContainerModuleTaskKind';
 
 export class ContainerModuleTaskBuilderWithNoDependencies {
   readonly #containerBindingService: ContainerBindingService;

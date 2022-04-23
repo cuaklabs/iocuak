@@ -1,4 +1,4 @@
-import { ContainerModuleTaskKindType } from '../models/domain/ContainerModuleTaskKindType';
+import { ContainerModuleTaskKindType } from '../../models/domain/ContainerModuleTaskKindType';
 import { isContainerModuleTaskKind } from './isContainerModuleTaskKind';
 
 describe(isContainerModuleTaskKind.name, () => {
