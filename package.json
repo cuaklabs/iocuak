@@ -14,6 +14,8 @@
     "prepare": "husky install",
     "prepublish:packages": "pnpm run build && pnpm run test",
     "test:coverage": "pnpm run test -- --coverage",
+    "test:e2e": "cucumber-js --config=config/cucumber/cucumber.ts.config.mjs",
+    "test:e2e:js": "cucumber-js --config=config/cucumber/cucumber.js.config.mjs",
     "test:integration": "jest --config=config/jest/jest.config.mjs --selectProjects Integration",
     "test:integration:js": "jest --config=config/jest/jest.js.config.mjs --selectProjects Integration",
     "test:master": "pnpm run test -- --changedSince=origin/master",
