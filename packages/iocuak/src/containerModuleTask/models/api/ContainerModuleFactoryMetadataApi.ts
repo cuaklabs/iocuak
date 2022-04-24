@@ -6,5 +6,5 @@ export interface ContainerModuleFactoryMetadataApi<
   TArgs extends unknown[] = unknown[],
 > extends ContainerModuleMetadataBaseApi {
   factory: (...args: TArgs) => ContainerModuleApi | Promise<ContainerModuleApi>;
-  injects: ServiceId[];
+  injects?: ServiceId[];
 }

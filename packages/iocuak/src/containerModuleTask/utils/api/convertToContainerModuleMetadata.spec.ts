@@ -1,6 +1,7 @@
 jest.mock('./convertToContainerModule');
 jest.mock('./convertToContainerModuleAsync');
 
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
 import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
@@ -160,6 +161,44 @@ describe(convertToContainerModuleMetadata.name, () => {
     });
   });
 
+  describe('having a ContainerModuleClassMetadataApi with no imports', () => {
+    let containerModuleClassMetadataApiMock: jest.Mocked<ContainerModuleClassMetadataApi>;
+
+    beforeAll(() => {
+      containerModuleClassMetadataApiMock =
+        ContainerModuleMetadataApiMocks.anyContainerModuleClassMetadataApi;
+
+      delete containerModuleClassMetadataApiMock.imports;
+    });
+
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        result = convertToContainerModuleMetadata(
+          containerModuleClassMetadataApiMock,
+        );
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should return a ContainerModuleMetadata', () => {
+        const expected: ContainerModuleClassMetadata = {
+          imports: [],
+          loader: expect.any(
+            Function,
+          ) as ContainerModuleClassMetadata['loader'],
+          moduleType: containerModuleClassMetadataApiMock.module,
+          type: ContainerModuleMetadataType.clazz,
+        };
+
+        expect(result).toStrictEqual(expected);
+      });
+    });
+  });
+
   describe('having a ContainerModuleFactoryMetadataApi', () => {
     let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
 
@@ -190,7 +229,7 @@ describe(convertToContainerModuleMetadata.name, () => {
             Function,
           ) as ContainerModuleFactoryMetadata['factory'],
           imports: expect.any(Array) as ContainerModuleMetadata[],
-          injects: [...containerModuleFactoryMetadataApiMock.injects],
+          injects: expect.any(Array) as ServiceId[],
           type: ContainerModuleMetadataType.factory,
         };
 
@@ -305,6 +344,78 @@ describe(convertToContainerModuleMetadata.name, () => {
     });
   });
 
+  describe('having a ContainerModuleFactoryMetadataApi with injects', () => {
+    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
+
+    beforeAll(() => {
+      containerModuleFactoryMetadataApiMock =
+        ContainerModuleMetadataApiMocks.withInjects;
+    });
+
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        result = convertToContainerModuleMetadata(
+          containerModuleFactoryMetadataApiMock,
+        );
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should return a ContainerModuleMetadata', () => {
+        const expected: ContainerModuleMetadata = {
+          factory: expect.any(
+            Function,
+          ) as ContainerModuleFactoryMetadata['factory'],
+          imports: expect.any(Array) as ContainerModuleMetadata[],
+          injects: containerModuleFactoryMetadataApiMock.injects as ServiceId[],
+          type: ContainerModuleMetadataType.factory,
+        };
+
+        expect(result).toStrictEqual(expected);
+      });
+    });
+  });
+
+  describe('having a ContainerModuleFactoryMetadataApi with no injects', () => {
+    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
+
+    beforeAll(() => {
+      containerModuleFactoryMetadataApiMock =
+        ContainerModuleMetadataApiMocks.withNoInjects;
+    });
+
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        result = convertToContainerModuleMetadata(
+          containerModuleFactoryMetadataApiMock,
+        );
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should return a ContainerModuleMetadata', () => {
+        const expected: ContainerModuleMetadata = {
+          factory: expect.any(
+            Function,
+          ) as ContainerModuleFactoryMetadata['factory'],
+          imports: expect.any(Array) as ContainerModuleMetadata[],
+          injects: [],
+          type: ContainerModuleMetadataType.factory,
+        };
+
+        expect(result).toStrictEqual(expected);
+      });
+    });
+  });
+
   describe('having a ContainerModuleFactoryMetadataApi with imports', () => {
     let dependencyContainerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
     let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
@@ -342,13 +453,11 @@ describe(convertToContainerModuleMetadata.name, () => {
                 Function,
               ) as ContainerModuleFactoryMetadata['factory'],
               imports: expect.any(Array) as ContainerModuleMetadata[],
-              injects: [
-                ...dependencyContainerModuleFactoryMetadataApiMock.injects,
-              ],
+              injects: expect.any(Array) as ServiceId[],
               type: ContainerModuleMetadataType.factory,
             },
           ],
-          injects: [...containerModuleFactoryMetadataApiMock.injects],
+          injects: expect.any(Array) as ServiceId[],
           type: ContainerModuleMetadataType.factory,
         };
 
