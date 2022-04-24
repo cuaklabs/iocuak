@@ -108,10 +108,11 @@ function getJestProjectConfig(
     collectCoverageFrom: [],
     coveragePathIgnorePatterns: [
       ...getPackagesUnlessPackageIgnorePatterns(packageName),
-      '/node_modules/',
+      '/e2e/stepDefinitions/',
       '/fixtures/',
-      '/mocks/',
       '/lib/index.js',
+      '/mocks/',
+      '/node_modules/',
     ],
     coverageThreshold: {
       global: {
