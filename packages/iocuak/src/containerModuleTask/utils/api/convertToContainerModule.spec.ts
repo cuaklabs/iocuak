@@ -1,15 +1,15 @@
-jest.mock('../../container/utils/bind');
-jest.mock('../../container/utils/bindToValue');
+jest.mock('../../../container/utils/bind');
+jest.mock('../../../container/utils/bindToValue');
 
-import { Newable } from '../../common/models/domain/Newable';
-import { ServiceId } from '../../common/models/domain/ServiceId';
-import { ContainerModuleApi } from '../../container/modules/api/ContainerModuleApi';
-import { ContainerModule } from '../../container/modules/domain/ContainerModule';
-import { ContainerModuleBindingServiceApi } from '../../container/services/api/ContainerModuleBindingServiceApi';
-import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
-import { bind } from '../../container/utils/bind';
-import { bindToValue } from '../../container/utils/bindToValue';
-import { MetadataService } from '../../metadata/services/domain/MetadataService';
+import { Newable } from '../../../common/models/domain/Newable';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
+import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
+import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
+import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { bind } from '../../../container/utils/bind';
+import { bindToValue } from '../../../container/utils/bindToValue';
+import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { convertToContainerModule } from './convertToContainerModule';
 
 describe(convertToContainerModule.name, () => {

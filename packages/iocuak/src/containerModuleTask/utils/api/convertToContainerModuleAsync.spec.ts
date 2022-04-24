@@ -1,6 +1,6 @@
 jest.mock('./convertToContainerModule');
 
-import { ContainerModuleApi } from '../../container/modules/api/ContainerModuleApi';
+import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
 import { convertToContainerModule } from './convertToContainerModule';
 import { convertToContainerModuleAsync } from './convertToContainerModuleAsync';
 

@@ -1,11 +1,6 @@
-import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
+import { ContainerModuleClassMetadataApi } from './ContainerModuleClassMetadataApi';
+import { ContainerModuleFactoryMetadataApi } from './ContainerModuleFactoryMetadataApi';
 
-export interface ContainerModuleMetadataApi<
-  TModule extends ContainerModuleApi = ContainerModuleApi,
-  TArgs extends unknown[] = unknown[],
-> {
-  factory: (...args: TArgs) => TModule | Promise<TModule>;
-  imports: ContainerModuleMetadataApi<ContainerModuleApi>[];
-  injects: ServiceId[];
-}
+export type ContainerModuleMetadataApi<TArgs extends unknown[] = unknown[]> =
+  | ContainerModuleFactoryMetadataApi<TArgs>
+  | ContainerModuleClassMetadataApi;

@@ -1,9 +1,15 @@
 import { Newable } from '../../../common/models/domain/Newable';
-import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
+import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleMetadataBase } from './ContainerModuleMetadataBase';
 import { ContainerModuleMetadataType } from './ContainerModuleMetadataType';
 
-export interface ContainerModuleClassMetadata
+export interface ContainerModuleClassMetadata<TModule = unknown>
   extends ContainerModuleMetadataBase<ContainerModuleMetadataType.clazz> {
-  module: Newable<ContainerModule>;
+  loader: (
+    module: TModule,
+    containerBindingService: ContainerBindingService,
+    metadataService: MetadataService,
+  ) => void;
+  moduleType: Newable<TModule>;
 }

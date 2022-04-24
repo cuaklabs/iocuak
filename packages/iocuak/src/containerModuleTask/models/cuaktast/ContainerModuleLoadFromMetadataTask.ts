@@ -57,8 +57,21 @@ export class ContainerModuleLoadFromMetadataTask extends cuaktask.BaseDependentT
   #loadFromContainerModuleClassMetadata(
     metadata: ContainerModuleClassMetadata,
   ): ContainerModule {
-    const containerModule: ContainerModule =
-      this.#containerInstanceService.create(metadata.module);
+    const containerModuleFromMetadata: unknown =
+      this.#containerInstanceService.create(metadata.moduleType);
+
+    const containerModule: ContainerModule = {
+      load: (
+        containerBindingService: ContainerBindingService,
+        metadataService: MetadataService,
+      ): void => {
+        metadata.loader(
+          containerModuleFromMetadata,
+          containerBindingService,
+          metadataService,
+        );
+      },
+    };
 
     return containerModule;
   }

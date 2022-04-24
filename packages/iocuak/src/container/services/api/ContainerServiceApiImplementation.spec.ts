@@ -1,5 +1,5 @@
 jest.mock(
-  '../../../containerModuleTask/utils/convertToContainerModuleMetadata',
+  '../../../containerModuleTask/utils/api/convertToContainerModuleMetadata',
 );
 jest.mock('../../utils/bind');
 jest.mock('../../utils/bindToValue');
@@ -9,7 +9,7 @@ import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleMetadataApi } from '../../../containerModuleTask/models/api/ContainerModuleMetadataApi';
 import { ContainerModuleMetadata } from '../../../containerModuleTask/models/domain/ContainerModuleMetadata';
-import { convertToContainerModuleMetadata } from '../../../containerModuleTask/utils/convertToContainerModuleMetadata';
+import { convertToContainerModuleMetadata } from '../../../containerModuleTask/utils/api/convertToContainerModuleMetadata';
 import { BindingApi } from '../../../metadata/models/api/BindingApi';
 import { BindingTypeApi } from '../../../metadata/models/api/BindingTypeApi';
 import { Binding } from '../../../metadata/models/domain/Binding';

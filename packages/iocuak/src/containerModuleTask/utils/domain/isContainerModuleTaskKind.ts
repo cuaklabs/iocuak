@@ -1,5 +1,5 @@
-import { ContainerModuleTaskKind } from '../models/domain/ContainerModuleTaskKind';
-import { ContainerModuleTaskKindType } from '../models/domain/ContainerModuleTaskKindType';
+import { ContainerModuleTaskKind } from '../../models/domain/ContainerModuleTaskKind';
+import { ContainerModuleTaskKindType } from '../../models/domain/ContainerModuleTaskKindType';
 
 export function isContainerModuleTaskKind(
   value: unknown,
