@@ -6,7 +6,6 @@ export class ContainerModuleMetadataApiMocks {
   public static get any(): jest.Mocked<ContainerModuleMetadataApi> {
     const fixture: jest.Mocked<ContainerModuleMetadataApi> = {
       factory: jest.fn(),
-      imports: [],
     };
 
     return fixture;
@@ -14,7 +13,6 @@ export class ContainerModuleMetadataApiMocks {
 
   public static get anyContainerModuleClassMetadataApi(): jest.Mocked<ContainerModuleClassMetadataApi> {
     const fixture: jest.Mocked<ContainerModuleClassMetadataApi> = {
-      imports: [],
       module: jest.fn(),
     };
 
@@ -24,7 +22,6 @@ export class ContainerModuleMetadataApiMocks {
   public static get anyContainerModuleFactoryMetadataApi(): jest.Mocked<ContainerModuleFactoryMetadataApi> {
     const fixture: jest.Mocked<ContainerModuleMetadataApi> = {
       factory: jest.fn(),
-      imports: [],
     };
 
     return fixture;

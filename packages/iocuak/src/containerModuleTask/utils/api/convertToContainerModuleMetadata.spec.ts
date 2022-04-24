@@ -161,6 +161,44 @@ describe(convertToContainerModuleMetadata.name, () => {
     });
   });
 
+  describe('having a ContainerModuleClassMetadataApi with no imports', () => {
+    let containerModuleClassMetadataApiMock: jest.Mocked<ContainerModuleClassMetadataApi>;
+
+    beforeAll(() => {
+      containerModuleClassMetadataApiMock =
+        ContainerModuleMetadataApiMocks.anyContainerModuleClassMetadataApi;
+
+      delete containerModuleClassMetadataApiMock.imports;
+    });
+
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        result = convertToContainerModuleMetadata(
+          containerModuleClassMetadataApiMock,
+        );
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should return a ContainerModuleMetadata', () => {
+        const expected: ContainerModuleClassMetadata = {
+          imports: [],
+          loader: expect.any(
+            Function,
+          ) as ContainerModuleClassMetadata['loader'],
+          moduleType: containerModuleClassMetadataApiMock.module,
+          type: ContainerModuleMetadataType.clazz,
+        };
+
+        expect(result).toStrictEqual(expected);
+      });
+    });
+  });
+
   describe('having a ContainerModuleFactoryMetadataApi', () => {
     let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
 

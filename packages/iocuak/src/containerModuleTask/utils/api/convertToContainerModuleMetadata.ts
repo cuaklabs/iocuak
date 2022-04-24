@@ -39,9 +39,8 @@ function convertToContainerModuleClassMetadata(
 ): ContainerModuleClassMetadata {
   const containerModuleClassMetadata: ContainerModuleClassMetadata<ContainerModuleApi> =
     {
-      imports: containerModuleClassMetadataApi.imports.map(
-        (containerModuleImport: ContainerModuleMetadataApi) =>
-          convertToContainerModuleMetadata(containerModuleImport),
+      imports: convertToContainerModuleMetadataArray(
+        containerModuleClassMetadataApi.imports,
       ),
       loader: (
         containerModuleApi: ContainerModuleApi,
@@ -60,6 +59,23 @@ function convertToContainerModuleClassMetadata(
   return containerModuleClassMetadata as ContainerModuleClassMetadata;
 }
 
+function convertToContainerModuleMetadataArray(
+  containerModuleMetadataApiImports: ContainerModuleMetadataApi[] | undefined,
+): ContainerModuleMetadata[] {
+  let containerModuleMetadataArray: ContainerModuleMetadata[];
+
+  if (containerModuleMetadataApiImports === undefined) {
+    containerModuleMetadataArray = [];
+  } else {
+    containerModuleMetadataArray = containerModuleMetadataApiImports.map(
+      (containerModuleImport: ContainerModuleMetadataApi) =>
+        convertToContainerModuleMetadata(containerModuleImport),
+    );
+  }
+
+  return containerModuleMetadataArray;
+}
+
 function convertToContainerModuleFactoryMetadata<TArgs extends unknown[]>(
   containerModuleFactoryMetadataApi: ContainerModuleFactoryMetadataApi<TArgs>,
 ): ContainerModuleFactoryMetadata<TArgs> {
@@ -72,9 +88,8 @@ function convertToContainerModuleFactoryMetadata<TArgs extends unknown[]>(
       factory: convertToContainerModuleMetadataFactory(
         containerModuleFactoryMetadataApi.factory,
       ),
-      imports: containerModuleFactoryMetadataApi.imports.map(
-        (containerModuleImport: ContainerModuleMetadataApi) =>
-          convertToContainerModuleMetadata(containerModuleImport),
+      imports: convertToContainerModuleMetadataArray(
+        containerModuleFactoryMetadataApi.imports,
       ),
       injects: containerModuleFactoryMetadataInjects,
       type: ContainerModuleMetadataType.factory,
