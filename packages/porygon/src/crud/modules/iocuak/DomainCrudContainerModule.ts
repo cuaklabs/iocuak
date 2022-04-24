@@ -1,7 +1,4 @@
-import {
-  ContainerModule,
-  ContainerModuleBindingService,
-} from '@cuaklabs/iocuak';
+import * as iocuak from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
 import { ModuleTypeToSymbolMap } from '../../models/domain/ModuleTypeToSymbolMap';
@@ -10,11 +7,11 @@ import { DomainDeleteContainerModule } from './DomainDeleteContainerModule';
 import { DomainReadContainerModule } from './DomainReadContainerModule';
 import { DomainUpdateContainerModule } from './DomainUpdateContainerModule';
 
-export class DomainCrudContainerModule implements ContainerModule {
-  readonly #domainCreationContainerModule: ContainerModule;
-  readonly #domainDeleteContainerModule: ContainerModule;
-  readonly #domainReadContainerModule: ContainerModule;
-  readonly #domainUpdateContainerModule: ContainerModule;
+export class DomainCrudContainerModule implements iocuak.ContainerModule {
+  readonly #domainCreationContainerModule: iocuak.ContainerModule;
+  readonly #domainDeleteContainerModule: iocuak.ContainerModule;
+  readonly #domainReadContainerModule: iocuak.ContainerModule;
+  readonly #domainUpdateContainerModule: iocuak.ContainerModule;
 
   constructor(
     crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>,
@@ -33,8 +30,16 @@ export class DomainCrudContainerModule implements ContainerModule {
     );
   }
 
+  public static forRoot(
+    crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>,
+  ): iocuak.ContainerModuleMetadata {
+    return {
+      factory: () => new DomainCrudContainerModule(crudModuleTypeToSymbolMap),
+    };
+  }
+
   public load(
-    containerModuleBindingService: ContainerModuleBindingService,
+    containerModuleBindingService: iocuak.ContainerModuleBindingService,
   ): void {
     this.#domainCreationContainerModule.load(containerModuleBindingService);
     this.#domainDeleteContainerModule.load(containerModuleBindingService);

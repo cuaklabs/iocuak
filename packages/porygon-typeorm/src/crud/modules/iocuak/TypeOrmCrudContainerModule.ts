@@ -1,8 +1,5 @@
-import {
-  ContainerModule,
-  ContainerModuleBindingService,
-} from '@cuaklabs/iocuak';
-import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
+import * as iocuak from '@cuaklabs/iocuak';
+import * as porygon from '@cuaklabs/porygon';
 import { Repository } from 'typeorm';
 
 import { CrudTypeOrmModuleType } from '../../models/domain/CrudTypeOrmModuleType';
@@ -11,18 +8,20 @@ import { TypeOrmDeleteContainerModule } from './TypeOrmDeleteContainerModule';
 import { TypeOrmReadContainerModule } from './TypeOrmReadContainerModule';
 import { TypeOrmUpdateContainerModule } from './TypeOrmUpdateContainerModule';
 
-export class TypeOrmCrudContainerModule<TModelDb> implements ContainerModule {
-  readonly #crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
+export class TypeOrmCrudContainerModule<TModelDb>
+  implements iocuak.ContainerModule
+{
+  readonly #crudTypeOrmModuleTypeToSymbolMap: porygon.ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
   readonly #repository: Repository<TModelDb>;
 
-  readonly #typeOrmCreationContainerModule: ContainerModule;
-  readonly #typeOrmDeleteContainerModule: ContainerModule;
-  readonly #typeOrmReadContainerModule: ContainerModule;
-  readonly #typeOrmUpdateContainerModule: ContainerModule;
+  readonly #typeOrmCreationContainerModule: iocuak.ContainerModule;
+  readonly #typeOrmDeleteContainerModule: iocuak.ContainerModule;
+  readonly #typeOrmReadContainerModule: iocuak.ContainerModule;
+  readonly #typeOrmUpdateContainerModule: iocuak.ContainerModule;
 
   constructor(
-    crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>,
-    crudTypeOrmModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>,
+    crudModuleTypeToSymbolMap: porygon.ModuleTypeToSymbolMap<porygon.CrudModuleType>,
+    crudTypeOrmModuleTypeToSymbolMap: porygon.ModuleTypeToSymbolMap<CrudTypeOrmModuleType>,
     repository: Repository<TModelDb>,
   ) {
     this.#crudTypeOrmModuleTypeToSymbolMap = crudTypeOrmModuleTypeToSymbolMap;
@@ -46,8 +45,26 @@ export class TypeOrmCrudContainerModule<TModelDb> implements ContainerModule {
     );
   }
 
+  public static forRoot<TModelDb>(
+    crudModuleTypeToSymbolMap: porygon.ModuleTypeToSymbolMap<porygon.CrudModuleType>,
+    crudTypeOrmModuleTypeToSymbolMap: porygon.ModuleTypeToSymbolMap<CrudTypeOrmModuleType>,
+    repository: Repository<TModelDb>,
+  ): iocuak.ContainerModuleMetadata {
+    return {
+      factory: () =>
+        new TypeOrmCrudContainerModule(
+          crudModuleTypeToSymbolMap,
+          crudTypeOrmModuleTypeToSymbolMap,
+          repository,
+        ),
+      imports: [
+        porygon.DomainCrudContainerModule.forRoot(crudModuleTypeToSymbolMap),
+      ],
+    };
+  }
+
   public load(
-    containerModuleBindingService: ContainerModuleBindingService,
+    containerModuleBindingService: iocuak.ContainerModuleBindingService,
   ): void {
     containerModuleBindingService.bindToValue(
       this.#crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
