@@ -48,7 +48,8 @@ export class ContainerModuleMetadataMocks {
   public static get withTypeClazz(): ContainerModuleClassMetadata {
     const fixture: ContainerModuleMetadata = {
       imports: [],
-      module: ContainerModuleMetadataMocks.#classFixture,
+      loader: () => undefined,
+      moduleType: ContainerModuleMetadataMocks.#classFixture,
       type: ContainerModuleMetadataType.clazz,
     };
 
