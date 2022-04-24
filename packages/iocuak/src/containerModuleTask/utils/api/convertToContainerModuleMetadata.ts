@@ -2,28 +2,80 @@ import { isPromiseLike } from '@cuaklabs/cuaktask';
 
 import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
 import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
+import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { MetadataService } from '../../../metadata/services/domain/MetadataService';
+import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
+import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
 import { ContainerModuleMetadataApi } from '../../models/api/ContainerModuleMetadataApi';
+import { ContainerModuleClassMetadata } from '../../models/domain/ContainerModuleClassMetadata';
+import { ContainerModuleFactoryMetadata } from '../../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from '../../models/domain/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from '../../models/domain/ContainerModuleMetadataType';
 import { convertToContainerModule } from './convertToContainerModule';
 import { convertToContainerModuleAsync } from './convertToContainerModuleAsync';
+import { isContainerModuleClassMetadataApi } from './isContainerModuleClassMetadataApi';
 
 export function convertToContainerModuleMetadata<TArgs extends unknown[]>(
   containerModuleMetadataApi: ContainerModuleMetadataApi<TArgs>,
 ): ContainerModuleMetadata<TArgs> {
-  const containerModuleMetadata: ContainerModuleMetadata<TArgs> = {
-    factory: convertToContainerModuleMetadataFactory(
-      containerModuleMetadataApi.factory,
-    ),
-    imports: containerModuleMetadataApi.imports.map(
-      (containerModuleImport: ContainerModuleMetadataApi) =>
-        convertToContainerModuleMetadata(containerModuleImport),
-    ),
-    injects: [...containerModuleMetadataApi.injects],
-    type: ContainerModuleMetadataType.factory,
-  };
+  let containerModuleMetadata: ContainerModuleMetadata<TArgs>;
+
+  if (isContainerModuleClassMetadataApi(containerModuleMetadataApi)) {
+    containerModuleMetadata = convertToContainerModuleClassMetadata(
+      containerModuleMetadataApi,
+    );
+  } else {
+    containerModuleMetadata = convertToContainerModuleFactoryMetadata(
+      containerModuleMetadataApi,
+    );
+  }
 
   return containerModuleMetadata;
+}
+
+function convertToContainerModuleClassMetadata(
+  containerModuleClassMetadataApi: ContainerModuleClassMetadataApi,
+): ContainerModuleClassMetadata {
+  const containerModuleClassMetadata: ContainerModuleClassMetadata<ContainerModuleApi> =
+    {
+      imports: containerModuleClassMetadataApi.imports.map(
+        (containerModuleImport: ContainerModuleMetadataApi) =>
+          convertToContainerModuleMetadata(containerModuleImport),
+      ),
+      loader: (
+        containerModuleApi: ContainerModuleApi,
+        containerBindingService: ContainerBindingService,
+        metadataService: MetadataService,
+      ) => {
+        const containerModule: ContainerModule =
+          convertToContainerModule(containerModuleApi);
+
+        containerModule.load(containerBindingService, metadataService);
+      },
+      moduleType: containerModuleClassMetadataApi.module,
+      type: ContainerModuleMetadataType.clazz,
+    };
+
+  return containerModuleClassMetadata as ContainerModuleClassMetadata;
+}
+
+function convertToContainerModuleFactoryMetadata<TArgs extends unknown[]>(
+  containerModuleFactoryMetadataApi: ContainerModuleFactoryMetadataApi<TArgs>,
+): ContainerModuleFactoryMetadata<TArgs> {
+  const containerModuleFactoryMetadata: ContainerModuleFactoryMetadata<TArgs> =
+    {
+      factory: convertToContainerModuleMetadataFactory(
+        containerModuleFactoryMetadataApi.factory,
+      ),
+      imports: containerModuleFactoryMetadataApi.imports.map(
+        (containerModuleImport: ContainerModuleMetadataApi) =>
+          convertToContainerModuleMetadata(containerModuleImport),
+      ),
+      injects: [...containerModuleFactoryMetadataApi.injects],
+      type: ContainerModuleMetadataType.factory,
+    };
+
+  return containerModuleFactoryMetadata;
 }
 
 function convertToContainerModuleMetadataFactory<TArgs extends unknown[]>(
