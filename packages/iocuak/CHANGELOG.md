@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Updated `Container.get` to create instance of newable unbinded types.
 - Updated `ContainerModuleMetadata` to allow class metadata
+- Updated `ContainerModuleMetadata.imports` to be optional.
+- Updated `ContainerModuleMetadata.injects` to be optional.
 
 ### Fixed
 - Fixed `Container.unbind` to remove unbound singleton services
