@@ -1,5 +1,6 @@
 import { isPromiseLike } from '@cuaklabs/cuaktask';
 
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
 import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
@@ -62,6 +63,10 @@ function convertToContainerModuleClassMetadata(
 function convertToContainerModuleFactoryMetadata<TArgs extends unknown[]>(
   containerModuleFactoryMetadataApi: ContainerModuleFactoryMetadataApi<TArgs>,
 ): ContainerModuleFactoryMetadata<TArgs> {
+  const containerModuleFactoryMetadataInjects: ServiceId[] = [
+    ...(containerModuleFactoryMetadataApi.injects ?? []),
+  ];
+
   const containerModuleFactoryMetadata: ContainerModuleFactoryMetadata<TArgs> =
     {
       factory: convertToContainerModuleMetadataFactory(
@@ -71,7 +76,7 @@ function convertToContainerModuleFactoryMetadata<TArgs extends unknown[]>(
         (containerModuleImport: ContainerModuleMetadataApi) =>
           convertToContainerModuleMetadata(containerModuleImport),
       ),
-      injects: [...containerModuleFactoryMetadataApi.injects],
+      injects: containerModuleFactoryMetadataInjects,
       type: ContainerModuleMetadataType.factory,
     };
 
