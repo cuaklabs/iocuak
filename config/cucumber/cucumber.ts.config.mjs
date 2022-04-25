@@ -5,7 +5,7 @@ import { getBaseConfiguration } from './cucumber.config.base.mjs';
  * @returns { string }
  */
 function getRequiredModulesPaths(packageName) {
-  return `packages/${packageName ?? '*'}/src/e2e/stepDefinitions/**/*.ts`;
+  return `packages/${packageName ?? '*'}/src/e2e/definitions/**/*.ts`;
 }
 
 /**

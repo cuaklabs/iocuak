@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fixed `Container.unbind` to remove unbound singleton services
+- Fixed `Container.get` to successfully create request scoped services instances.
 
 
 
