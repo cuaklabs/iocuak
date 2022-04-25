@@ -15,7 +15,8 @@ Feature: Create instance
 
   Scenario Outline: A bound type service is instantiated
     Given a <type_service>
-    When the type service is bound
+    When the type service dependencies are bound
+    And the type service is bound
     And an instace of the type service is requested
     Then an instance from the type service is returned
     And the instance from the type service was constructed with the right parameters

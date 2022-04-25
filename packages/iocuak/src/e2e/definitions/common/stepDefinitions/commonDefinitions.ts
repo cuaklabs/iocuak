@@ -8,9 +8,7 @@ import { ValueServiceParameter } from '../parameters/ValueServiceParameter';
 Given<TypeServiceWorld>(
   'a {typeService}',
   function (typeServiceParameter: TypeServiceParameter): void {
-    this.typeServiceBinding = typeServiceParameter.bindingApi;
-    this.typeService = typeServiceParameter.service;
-    this.typeServiceSpy = typeServiceParameter.spy;
+    this.typeServiceParameter = typeServiceParameter;
   },
 );
 

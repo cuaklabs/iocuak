@@ -12,9 +12,37 @@ import { MetadataProviderApi } from '../../../metadata/modules/MetadataProviderA
 import { ResultWorld } from '../common/models/worlds/ResultWorld';
 import { TypeServiceWorld } from '../common/models/worlds/TypeServiceWorld';
 import { ValueServiceWorld } from '../common/models/worlds/ValueServiceWorld';
+import { TypeServiceParameter } from '../common/parameters/typeService/TypeServiceParameter';
+import { ValueServiceParameter } from '../common/parameters/ValueServiceParameter';
 import { ContainerWorld } from './models/worlds/ContainerWorld';
 
 chai.use(sinonChai);
+
+function bindServiceDependencies(
+  this: ContainerWorld,
+  typeServiceParameter: TypeServiceParameter,
+): void {
+  if (typeServiceParameter.dependencies !== undefined) {
+    for (const dependency of typeServiceParameter.dependencies) {
+      switch (dependency.bindingApi.bindingType) {
+        case BindingTypeApi.type:
+          bindServiceDependencies.bind(this)(
+            dependency as TypeServiceParameter,
+          );
+
+          this.container.bind((dependency as TypeServiceParameter).service);
+
+          break;
+        case BindingTypeApi.value:
+          this.container.bindToValue(
+            dependency.bindingApi.id,
+            (dependency as ValueServiceParameter).bindingApi.value,
+          );
+          break;
+      }
+    }
+  }
+}
 
 function bindingToSinonMatcher(
   binding: BindingApi | undefined,
@@ -91,7 +119,7 @@ Given<ContainerWorld>('a container', function (): void {
 When<ContainerWorld & ResultWorld & TypeServiceWorld>(
   'an instace of the type service is requested',
   function (): void {
-    this.result = this.container.get(this.typeServiceBinding.id);
+    this.result = this.container.get(this.typeServiceParameter.bindingApi.id);
   },
 );
 
@@ -103,9 +131,16 @@ When<ContainerWorld & ResultWorld & ValueServiceWorld>(
 );
 
 When<ContainerWorld & TypeServiceWorld>(
+  'the type service dependencies are bound',
+  function () {
+    bindServiceDependencies.bind(this)(this.typeServiceParameter);
+  },
+);
+
+When<ContainerWorld & TypeServiceWorld>(
   'the type service is bound',
   function (): void {
-    this.container.bind(this.typeService);
+    this.container.bind(this.typeServiceParameter.service);
   },
 );
 
@@ -126,7 +161,9 @@ When<ContainerWorld & ResultWorld>(
 Then<ResultWorld & TypeServiceWorld>(
   'an instance from the type service is returned',
   function (): void {
-    chai.expect(this.result).to.be.instanceOf(this.typeService);
+    chai
+      .expect(this.result)
+      .to.be.instanceOf(this.typeServiceParameter.service);
   },
 );
 
@@ -143,7 +180,7 @@ Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
     const metadataProvider: MetadataProviderApi = MetadataProviderApi.build();
 
     const instanceMetadata: ClassMetadataApi =
-      metadataProvider.getClassMetadata(this.typeService);
+      metadataProvider.getClassMetadata(this.typeServiceParameter.service);
 
     const constructorMetadataBindings: (BindingApi | undefined)[] =
       instanceMetadata.constructorArguments.map(getBinding.bind(this));
@@ -151,10 +188,10 @@ Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
     const constructorArgumentMatchers: sinon.SinonMatcher[] =
       constructorMetadataBindings.map(bindingToSinonMatcher);
 
-    chai.expect(this.typeServiceSpy.callCount).to.be.equal(1);
+    chai.expect(this.typeServiceParameter.spy.callCount).to.be.equal(1);
 
     chai
-      .expect(this.typeServiceSpy)
+      .expect(this.typeServiceParameter.spy)
       .to.have.been.calledOnceWith(...constructorArgumentMatchers);
   },
 );
@@ -165,7 +202,7 @@ Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
     const metadataProvider: MetadataProviderApi = MetadataProviderApi.build();
 
     const instanceMetadata: ClassMetadataApi =
-      metadataProvider.getClassMetadata(this.typeService);
+      metadataProvider.getClassMetadata(this.typeServiceParameter.service);
 
     const propertiesMetadataBindings: [
       string | symbol,
@@ -198,7 +235,9 @@ Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
 Then<TypeServiceWorld & ResultWorld>(
   'type service metadata is included in the result',
   function (): void {
-    chai.expect(this.result).to.deep.include(this.typeServiceBinding);
+    chai
+      .expect(this.result)
+      .to.deep.include(this.typeServiceParameter.bindingApi);
   },
 );
 
