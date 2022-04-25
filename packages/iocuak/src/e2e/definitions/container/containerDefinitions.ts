@@ -2,44 +2,44 @@ import { Given, When, Then } from '@cucumber/cucumber';
 import { expect } from 'chai';
 
 import { ContainerApi } from '../../../container/modules/api/ContainerApi';
-import { ContainerBindingGetMetadataWorld } from './models/worlds/ContainerBindingGetMetadataWorld';
-import { ContainerBindingGetTypeMetadataWorld } from './models/worlds/ContainerBindingGetTypeMetadataWorld';
-import { ContainerBindingGetValueMetadataWorld } from './models/worlds/ContainerBindingGetValueMetadataWorld';
+import { ResultWorld } from '../common/models/worlds/ResultWorld';
+import { TypeServiceWorld } from '../common/models/worlds/TypeServiceWorld';
+import { ValueServiceWorld } from '../common/models/worlds/ValueServiceWorld';
 import { ContainerWorld } from './models/worlds/ContainerWorld';
 
 Given<ContainerWorld>('a container', function () {
   this.container = ContainerApi.build();
 });
 
-When<ContainerBindingGetTypeMetadataWorld>(
+When<ContainerWorld & TypeServiceWorld>(
   'the type service is bound',
   function () {
     this.container.bind(this.typeService);
   },
 );
 
-When<ContainerBindingGetValueMetadataWorld>(
+When<ContainerWorld & ValueServiceWorld>(
   'the value service is bound',
   function () {
     this.container.bindToValue(this.valueServiceBinding.id, this.valueService);
   },
 );
 
-When<ContainerBindingGetMetadataWorld>(
+When<ContainerWorld & ResultWorld>(
   'container metadata is requested',
   function () {
     this.result = this.container.getAllBindinds();
   },
 );
 
-Then<ContainerBindingGetTypeMetadataWorld>(
+Then<TypeServiceWorld & ResultWorld>(
   'type service metadata is included in the result',
   function () {
     expect(this.result).to.deep.include(this.typeServiceBinding);
   },
 );
 
-Then<ContainerBindingGetValueMetadataWorld>(
+Then<ValueServiceWorld & ResultWorld>(
   'value service metadata is included in the result',
   function () {
     expect(this.result).to.deep.include(this.valueServiceBinding);
