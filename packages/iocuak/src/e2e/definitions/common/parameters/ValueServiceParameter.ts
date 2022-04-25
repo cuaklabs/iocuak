@@ -5,21 +5,21 @@ import { BindingTypeApi } from '../../../../metadata/models/api/BindingTypeApi';
 import { ValueBindingApi } from '../../../../metadata/models/api/ValueBindingApi';
 
 export interface ValueServiceParameter {
-  bindingApi: ValueBindingApi;
+  binding: ValueBindingApi;
   service: unknown;
 }
 
 function getValueServiceParameter(): ValueServiceParameter {
   const value: unknown = Symbol('value');
 
-  const bindingApi: ValueBindingApi = {
+  const binding: ValueBindingApi = {
     bindingType: BindingTypeApi.value,
     id: Symbol('value-service'),
     value,
   };
 
   return {
-    bindingApi,
+    binding,
     service: value,
   };
 }

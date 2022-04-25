@@ -16,7 +16,7 @@ export function getTypeServiceWithBindingWithTransientScope(): TypeServiceParame
     }
   }
 
-  const bindingApi: TypeBindingApi = {
+  const binding: TypeBindingApi = {
     bindingType: BindingTypeApi.type,
     id: Symbol(Foo.name),
     scope: BindingScopeApi.transient,
@@ -24,12 +24,12 @@ export function getTypeServiceWithBindingWithTransientScope(): TypeServiceParame
   };
 
   injectable({
-    id: bindingApi.id,
-    scope: bindingApi.scope,
+    id: binding.id,
+    scope: binding.scope,
   })(Foo);
 
   return {
-    bindingApi,
+    binding,
     service: Foo,
     spy: constructorSpy,
   };

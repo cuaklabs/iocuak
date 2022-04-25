@@ -5,7 +5,7 @@ import { TypeBindingApi } from '../../../../../metadata/models/api/TypeBindingAp
 import { ValueServiceParameter } from '../ValueServiceParameter';
 
 export interface TypeServiceParameter {
-  bindingApi: TypeBindingApi;
+  binding: TypeBindingApi;
   dependencies?: (TypeServiceParameter | ValueServiceParameter)[];
   service: Newable;
   spy: sinon.SinonSpy;

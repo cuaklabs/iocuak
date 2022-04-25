@@ -24,7 +24,7 @@ function bindServiceDependencies(
 ): void {
   if (typeServiceParameter.dependencies !== undefined) {
     for (const dependency of typeServiceParameter.dependencies) {
-      switch (dependency.bindingApi.bindingType) {
+      switch (dependency.binding.bindingType) {
         case BindingTypeApi.type:
           bindServiceDependencies.bind(this)(
             dependency as TypeServiceParameter,
@@ -35,8 +35,8 @@ function bindServiceDependencies(
           break;
         case BindingTypeApi.value:
           this.container.bindToValue(
-            dependency.bindingApi.id,
-            (dependency as ValueServiceParameter).bindingApi.value,
+            dependency.binding.id,
+            (dependency as ValueServiceParameter).binding.value,
           );
           break;
       }
@@ -119,14 +119,14 @@ Given<ContainerWorld>('a container', function (): void {
 When<ContainerWorld & ResultWorld & TypeServiceWorld>(
   'an instace of the type service is requested',
   function (): void {
-    this.result = this.container.get(this.typeServiceParameter.bindingApi.id);
+    this.result = this.container.get(this.typeServiceParameter.binding.id);
   },
 );
 
 When<ContainerWorld & ResultWorld & ValueServiceWorld>(
   'an instace of the value service is requested',
   function (): void {
-    this.result = this.container.get(this.valueServiceParameter.bindingApi.id);
+    this.result = this.container.get(this.valueServiceParameter.binding.id);
   },
 );
 
@@ -148,7 +148,7 @@ When<ContainerWorld & ValueServiceWorld>(
   'the value service is bound',
   function (): void {
     this.container.bindToValue(
-      this.valueServiceParameter.bindingApi.id,
+      this.valueServiceParameter.binding.id,
       this.valueServiceParameter.service,
     );
   },
@@ -175,7 +175,7 @@ Then<ResultWorld & ValueServiceWorld>(
   function () {
     chai
       .expect(this.result)
-      .to.be.equal(this.valueServiceParameter.bindingApi.value);
+      .to.be.equal(this.valueServiceParameter.binding.value);
   },
 );
 
@@ -240,9 +240,7 @@ Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
 Then<TypeServiceWorld & ResultWorld>(
   'type service metadata is included in the result',
   function (): void {
-    chai
-      .expect(this.result)
-      .to.deep.include(this.typeServiceParameter.bindingApi);
+    chai.expect(this.result).to.deep.include(this.typeServiceParameter.binding);
   },
 );
 
@@ -251,6 +249,6 @@ Then<ValueServiceWorld & ResultWorld>(
   function (): void {
     chai
       .expect(this.result)
-      .to.deep.include(this.valueServiceParameter.bindingApi);
+      .to.deep.include(this.valueServiceParameter.binding);
   },
 );
