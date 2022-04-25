@@ -38,11 +38,11 @@ export class ContainerInstanceServiceImplementation
     const createInstanceTask: CreateInstanceTask<TInstance> =
       this.#taskBuilder.build(taskKind) as CreateInstanceTask<TInstance>;
 
-    this.#containerRequestService.end(requestId);
-
     const instance: TInstance = this.#dependentTaskRunner.run(
       createInstanceTask,
     ) as TInstance;
+
+    this.#containerRequestService.end(requestId);
 
     return instance;
   }
