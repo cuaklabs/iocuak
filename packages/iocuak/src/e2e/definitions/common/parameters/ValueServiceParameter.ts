@@ -24,23 +24,14 @@ function getValueServiceParameter(): ValueServiceParameter {
   };
 }
 
-function valueServiceParameterDefinitionTransformer(
-  serviceType: string | undefined,
-): ValueServiceParameter {
-  switch (serviceType) {
-    case undefined:
-      return getValueServiceParameter();
-    default:
-      throw new Error(
-        `No value service of type "${serviceType}" could be provided`,
-      );
-  }
+function valueServiceParameterDefinitionTransformer(): ValueServiceParameter {
+  return getValueServiceParameter();
 }
 
 const valueServiceParameterDefinition: IParameterTypeDefinition<ValueServiceParameter> =
   {
     name: 'valueService',
-    regexp: /"value service(?: (?:of type|with) ([^"]+))?"/,
+    regexp: /"value service"/,
     transformer: valueServiceParameterDefinitionTransformer,
   };
 
