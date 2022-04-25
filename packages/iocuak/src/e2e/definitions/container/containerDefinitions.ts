@@ -16,6 +16,74 @@ import { ContainerWorld } from './models/worlds/ContainerWorld';
 
 chai.use(sinonChai);
 
+function bindingToSinonMatcher(
+  binding: BindingApi | undefined,
+  index: number,
+): sinon.SinonMatcher {
+  let match: sinon.SinonMatcher;
+  if (binding === undefined) {
+    // eslint-disable-next-line import/no-named-as-default-member
+    match = sinon.match(
+      `No metatada found constructor argument at position ${index}`,
+    );
+  } else {
+    switch (binding.bindingType) {
+      case BindingTypeApi.type:
+        // eslint-disable-next-line import/no-named-as-default-member
+        match = sinon.match.instanceOf(binding.type);
+        break;
+      case BindingTypeApi.value:
+        // eslint-disable-next-line import/no-named-as-default-member
+        match = sinon.match(binding.value as object);
+        break;
+    }
+  }
+
+  return match;
+}
+
+function getBinding(
+  this: ContainerWorld,
+  serviceId: ServiceId,
+): BindingApi | undefined {
+  const containerBindings: BindingApi[] = this.container.getAllBindinds();
+  const metadataProvider: MetadataProviderApi = MetadataProviderApi.build();
+
+  return (
+    containerBindings.find((binding: BindingApi) => binding.id === serviceId) ??
+    (typeof serviceId === 'function'
+      ? metadataProvider.getBindingMetadata(serviceId)
+      : undefined)
+  );
+}
+
+function propertyBindingToChaiAssertionInvocation(
+  result: unknown,
+  propertyName: string | symbol,
+  binding: BindingApi | undefined,
+): void {
+  if (binding === undefined) {
+    chai.assert.fail(
+      `No metatada found for property ${propertyName.toString()}`,
+    );
+  } else {
+    chai.expect(result).to.haveOwnProperty(propertyName);
+
+    const propertyAssertion: Chai.Assertion = chai.expect(
+      (result as Record<string | symbol, unknown>)[propertyName],
+    );
+
+    switch (binding.bindingType) {
+      case BindingTypeApi.type:
+        propertyAssertion.to.be.instanceOf(binding.type);
+        break;
+      case BindingTypeApi.value:
+        propertyAssertion.to.be.equal(binding.value);
+        break;
+    }
+  }
+}
+
 Given<ContainerWorld>('a container', function (): void {
   this.container = ContainerApi.build();
 });
@@ -24,6 +92,13 @@ When<ContainerWorld & ResultWorld & TypeServiceWorld>(
   'an instace of the type service is requested',
   function (): void {
     this.result = this.container.get(this.typeServiceBinding.id);
+  },
+);
+
+When<ContainerWorld & ResultWorld & ValueServiceWorld>(
+  'an instace of the value service is requested',
+  function (): void {
+    this.result = this.container.get(this.valueServiceBinding.id);
   },
 );
 
@@ -48,54 +123,49 @@ When<ContainerWorld & ResultWorld>(
   },
 );
 
-Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
+Then<ResultWorld & TypeServiceWorld>(
   'an instance from the type service is returned',
   function (): void {
-    const containerBindings: BindingApi[] = this.container.getAllBindinds();
+    chai.expect(this.result).to.be.instanceOf(this.typeService);
+  },
+);
+
+Then<ResultWorld & ValueServiceWorld>(
+  'an instance from the value service is returned',
+  function () {
+    chai.expect(this.result).to.be.equal(this.valueServiceBinding.value);
+  },
+);
+
+Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
+  'the instance from the type service was constructed with the right parameters',
+  function () {
     const metadataProvider: MetadataProviderApi = MetadataProviderApi.build();
 
     const instanceMetadata: ClassMetadataApi =
       metadataProvider.getClassMetadata(this.typeService);
 
-    function getBinding(serviceId: ServiceId): BindingApi | undefined {
-      return (
-        containerBindings.find(
-          (binding: BindingApi) => binding.id === serviceId,
-        ) ??
-        (typeof serviceId === 'function'
-          ? metadataProvider.getBindingMetadata(serviceId)
-          : undefined)
-      );
-    }
-
     const constructorMetadataBindings: (BindingApi | undefined)[] =
-      instanceMetadata.constructorArguments.map(getBinding);
+      instanceMetadata.constructorArguments.map(getBinding.bind(this));
 
     const constructorArgumentMatchers: sinon.SinonMatcher[] =
-      constructorMetadataBindings.map(
-        (binding: BindingApi | undefined, index: number) => {
-          let match: sinon.SinonMatcher;
-          if (binding === undefined) {
-            // eslint-disable-next-line import/no-named-as-default-member
-            match = sinon.match(
-              `No metatada found constructor argument at position ${index}`,
-            );
-          } else {
-            switch (binding.bindingType) {
-              case BindingTypeApi.type:
-                // eslint-disable-next-line import/no-named-as-default-member
-                match = sinon.match.instanceOf(binding.type);
-                break;
-              case BindingTypeApi.value:
-                // eslint-disable-next-line import/no-named-as-default-member
-                match = sinon.match(binding.value as object);
-                break;
-            }
-          }
+      constructorMetadataBindings.map(bindingToSinonMatcher);
 
-          return match;
-        },
-      );
+    chai.expect(this.typeServiceSpy.callCount).to.be.equal(1);
+
+    chai
+      .expect(this.typeServiceSpy)
+      .to.have.been.calledOnceWith(...constructorArgumentMatchers);
+  },
+);
+
+Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
+  'the instance from the type service has the right properties',
+  function () {
+    const metadataProvider: MetadataProviderApi = MetadataProviderApi.build();
+
+    const instanceMetadata: ClassMetadataApi =
+      metadataProvider.getClassMetadata(this.typeService);
 
     const propertiesMetadataBindings: [
       string | symbol,
@@ -103,7 +173,7 @@ Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
     ][] = [...instanceMetadata.properties.entries()].map(
       ([propertyName, serviceId]: [string | symbol, ServiceId]) => [
         propertyName,
-        getBinding(serviceId),
+        getBinding.bind(this)(serviceId),
       ],
     );
 
@@ -111,42 +181,13 @@ Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
       propertiesMetadataBindings.map(
         ([propertyName, binding]: [string | symbol, BindingApi | undefined]) =>
           (result: unknown) => {
-            if (binding === undefined) {
-              chai.assert.fail(
-                `No metatada found for property ${propertyName.toString()}`,
-              );
-            } else {
-              chai.expect(result).to.haveOwnProperty(propertyName);
-
-              const propertyAssertion: Chai.Assertion = chai.expect(
-                (result as Record<string | symbol, unknown>)[propertyName],
-              );
-
-              switch (binding.bindingType) {
-                case BindingTypeApi.type:
-                  propertyAssertion.to.be.instanceOf(binding.type);
-                  break;
-                case BindingTypeApi.value:
-                  propertyAssertion.to.be.equal(binding.value);
-                  break;
-              }
-            }
+            propertyBindingToChaiAssertionInvocation(
+              result,
+              propertyName,
+              binding,
+            );
           },
       );
-
-    chai
-      .expect(
-        // eslint-disable-next-line import/no-named-as-default-member
-        this.typeServiceSpy.callCount,
-      )
-      .to.be.equal(1);
-
-    chai
-      .expect(
-        // eslint-disable-next-line import/no-named-as-default-member
-        this.typeServiceSpy,
-      )
-      .to.have.been.calledOnceWith(...constructorArgumentMatchers);
 
     for (const propertyChaiAssertion of propertyChaiAssertions) {
       propertyChaiAssertion(this.result);
