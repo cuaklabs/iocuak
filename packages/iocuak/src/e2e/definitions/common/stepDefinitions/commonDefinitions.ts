@@ -3,7 +3,7 @@ import { Given } from '@cucumber/cucumber';
 import { TypeServiceWorld } from '../models/worlds/TypeServiceWorld';
 import { ValueServiceWorld } from '../models/worlds/ValueServiceWorld';
 import { TypeServiceParameter } from '../parameters/typeService/TypeServiceParameter';
-import { ValueServiceParameter } from '../parameters/ValueServiceParameter';
+import { ValueServiceParameter } from '../parameters/valueService/ValueServiceParameter';
 
 Given<TypeServiceWorld>(
   'a {typeService}',

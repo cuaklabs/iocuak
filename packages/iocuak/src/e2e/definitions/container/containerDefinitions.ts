@@ -13,7 +13,7 @@ import { ResultWorld } from '../common/models/worlds/ResultWorld';
 import { TypeServiceWorld } from '../common/models/worlds/TypeServiceWorld';
 import { ValueServiceWorld } from '../common/models/worlds/ValueServiceWorld';
 import { TypeServiceParameter } from '../common/parameters/typeService/TypeServiceParameter';
-import { ValueServiceParameter } from '../common/parameters/ValueServiceParameter';
+import { ValueServiceParameter } from '../common/parameters/valueService/ValueServiceParameter';
 import { ContainerWorld } from './models/worlds/ContainerWorld';
 
 chai.use(sinonChai);

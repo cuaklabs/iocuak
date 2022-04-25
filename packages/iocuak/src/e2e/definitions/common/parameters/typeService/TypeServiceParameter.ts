@@ -2,7 +2,7 @@ import sinon from 'sinon';
 
 import { Newable } from '../../../../../common/models/domain/Newable';
 import { TypeBindingApi } from '../../../../../metadata/models/api/TypeBindingApi';
-import { ValueServiceParameter } from '../ValueServiceParameter';
+import { ValueServiceParameter } from '../valueService/ValueServiceParameter';
 
 export interface TypeServiceParameter {
   binding: TypeBindingApi;
