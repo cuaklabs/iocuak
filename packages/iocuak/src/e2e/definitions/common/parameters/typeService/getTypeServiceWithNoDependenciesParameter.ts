@@ -10,7 +10,7 @@ export function getTypeServiceWithNoDependenciesParameter(): TypeServiceParamete
   // eslint-disable-next-line import/no-named-as-default-member
   const constructorSpy: sinon.SinonSpy = sinon.spy();
 
-  class Foo {
+  class TypeServiceWithNoDependenciesParameter {
     constructor() {
       constructorSpy();
     }
@@ -18,19 +18,19 @@ export function getTypeServiceWithNoDependenciesParameter(): TypeServiceParamete
 
   const binding: TypeBindingApi = {
     bindingType: BindingTypeApi.type,
-    id: Symbol(Foo.name),
+    id: Symbol(TypeServiceWithNoDependenciesParameter.name),
     scope: BindingScopeApi.request,
-    type: Foo,
+    type: TypeServiceWithNoDependenciesParameter,
   };
 
   injectable({
     id: binding.id,
     scope: binding.scope,
-  })(Foo);
+  })(TypeServiceWithNoDependenciesParameter);
 
   return {
     binding,
-    service: Foo,
+    service: TypeServiceWithNoDependenciesParameter,
     spy: constructorSpy,
   };
 }

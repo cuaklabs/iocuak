@@ -28,3 +28,4 @@ Feature: Create instance
         | "type service with binding with request scope"      |
         | "type service with binding with singleton scope"    |
         | "type service with binding with transient scope"    |
+        | "type service with constructor parameters"          |

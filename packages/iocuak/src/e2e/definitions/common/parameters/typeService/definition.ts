@@ -4,6 +4,7 @@ import { IParameterTypeDefinition } from '@cucumber/cucumber/lib/support_code_li
 import { getTypeServiceWithBindingWithRequestScope } from './getTypeServiceWithBindingWithRequestScope';
 import { getTypeServiceWithBindingWithSingletonScope } from './getTypeServiceWithBindingWithSingletonScope';
 import { getTypeServiceWithBindingWithTransientScope } from './getTypeServiceWithBindingWithTransientScope';
+import { getTypeServiceWithConstructorParameters } from './getTypeServiceWithConstructorParameters';
 import { getTypeServiceWithNoDependenciesParameter } from './getTypeServiceWithNoDependenciesParameter';
 import { TypeServiceParameter } from './TypeServiceParameter';
 
@@ -20,6 +21,8 @@ function typeServiceParameterDefinitionTransformer(
       return getTypeServiceWithBindingWithSingletonScope();
     case 'binding with transient scope':
       return getTypeServiceWithBindingWithTransientScope();
+    case 'constructor parameters':
+      return getTypeServiceWithConstructorParameters();
     default:
       throw new Error(
         `No type service of type "${serviceType}" could be provided`,

@@ -10,7 +10,7 @@ export function getTypeServiceWithBindingWithSingletonScope(): TypeServiceParame
   // eslint-disable-next-line import/no-named-as-default-member
   const constructorSpy: sinon.SinonSpy = sinon.spy();
 
-  class Foo {
+  class TypeServiceWithBindingWithSingletonScope {
     constructor() {
       constructorSpy();
     }
@@ -18,19 +18,19 @@ export function getTypeServiceWithBindingWithSingletonScope(): TypeServiceParame
 
   const binding: TypeBindingApi = {
     bindingType: BindingTypeApi.type,
-    id: Symbol(Foo.name),
+    id: Symbol(TypeServiceWithBindingWithSingletonScope.name),
     scope: BindingScopeApi.singleton,
-    type: Foo,
+    type: TypeServiceWithBindingWithSingletonScope,
   };
 
   injectable({
     id: binding.id,
     scope: binding.scope,
-  })(Foo);
+  })(TypeServiceWithBindingWithSingletonScope);
 
   return {
     binding,
-    service: Foo,
+    service: TypeServiceWithBindingWithSingletonScope,
     spy: constructorSpy,
   };
 }
