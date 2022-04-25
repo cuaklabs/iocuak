@@ -126,7 +126,7 @@ When<ContainerWorld & ResultWorld & TypeServiceWorld>(
 When<ContainerWorld & ResultWorld & ValueServiceWorld>(
   'an instace of the value service is requested',
   function (): void {
-    this.result = this.container.get(this.valueServiceBinding.id);
+    this.result = this.container.get(this.valueServiceParameter.bindingApi.id);
   },
 );
 
@@ -147,7 +147,10 @@ When<ContainerWorld & TypeServiceWorld>(
 When<ContainerWorld & ValueServiceWorld>(
   'the value service is bound',
   function (): void {
-    this.container.bindToValue(this.valueServiceBinding.id, this.valueService);
+    this.container.bindToValue(
+      this.valueServiceParameter.bindingApi.id,
+      this.valueServiceParameter.service,
+    );
   },
 );
 
@@ -170,7 +173,9 @@ Then<ResultWorld & TypeServiceWorld>(
 Then<ResultWorld & ValueServiceWorld>(
   'an instance from the value service is returned',
   function () {
-    chai.expect(this.result).to.be.equal(this.valueServiceBinding.value);
+    chai
+      .expect(this.result)
+      .to.be.equal(this.valueServiceParameter.bindingApi.value);
   },
 );
 
@@ -244,6 +249,8 @@ Then<TypeServiceWorld & ResultWorld>(
 Then<ValueServiceWorld & ResultWorld>(
   'value service metadata is included in the result',
   function (): void {
-    chai.expect(this.result).to.deep.include(this.valueServiceBinding);
+    chai
+      .expect(this.result)
+      .to.deep.include(this.valueServiceParameter.bindingApi);
   },
 );

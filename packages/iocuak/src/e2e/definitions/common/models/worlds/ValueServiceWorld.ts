@@ -1,8 +1,7 @@
 import { IWorld } from '@cucumber/cucumber';
 
-import { ValueBindingApi } from '../../../../../metadata/models/api/ValueBindingApi';
+import { ValueServiceParameter } from '../../parameters/ValueServiceParameter';
 
 export interface ValueServiceWorld extends IWorld {
-  valueService: unknown;
-  valueServiceBinding: ValueBindingApi;
+  valueServiceParameter: ValueServiceParameter;
 }

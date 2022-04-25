@@ -15,7 +15,6 @@ Given<TypeServiceWorld>(
 Given<ValueServiceWorld>(
   'a {valueService}',
   function (valueServiceParameter: ValueServiceParameter): void {
-    this.valueService = valueServiceParameter.service;
-    this.valueServiceBinding = valueServiceParameter.bindingApi;
+    this.valueServiceParameter = valueServiceParameter;
   },
 );
