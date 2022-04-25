@@ -12,7 +12,7 @@ export interface TypeServiceParameter {
   bindingApi: TypeBindingApi;
 }
 
-function getTypeServiceParameter(): TypeServiceParameter {
+function getTypeServiceWithNoDependenciesParameter(): TypeServiceParameter {
   class Foo {}
 
   const bindingApi: TypeBindingApi = {
@@ -34,12 +34,12 @@ function getTypeServiceParameter(): TypeServiceParameter {
 }
 
 function typeServiceParameterDefinitionTransformer(
-  _: string | undefined,
   serviceType: string | undefined,
 ): TypeServiceParameter {
   switch (serviceType) {
     case undefined:
-      return getTypeServiceParameter();
+    case 'no dependencies':
+      return getTypeServiceWithNoDependenciesParameter();
     default:
       throw new Error(
         `No type service of type "${serviceType}" could be provided`,
@@ -50,7 +50,7 @@ function typeServiceParameterDefinitionTransformer(
 const typeServiceParameterDefinition: IParameterTypeDefinition<TypeServiceParameter> =
   {
     name: 'typeService',
-    regexp: /"type service( of type ([^"]+))?"/,
+    regexp: /"type service(?: (?:of type|with) ([^"]+))?"/,
     transformer: typeServiceParameterDefinitionTransformer,
   };
 

@@ -25,7 +25,6 @@ function getValueServiceParameter(): ValueServiceParameter {
 }
 
 function valueServiceParameterDefinitionTransformer(
-  _: string | undefined,
   serviceType: string | undefined,
 ): ValueServiceParameter {
   switch (serviceType) {
@@ -41,7 +40,7 @@ function valueServiceParameterDefinitionTransformer(
 const valueServiceParameterDefinition: IParameterTypeDefinition<ValueServiceParameter> =
   {
     name: 'valueService',
-    regexp: /"value service( of type ([^"]+))?"/,
+    regexp: /"value service(?: (?:of type|with) ([^"]+))?"/,
     transformer: valueServiceParameterDefinitionTransformer,
   };
 
