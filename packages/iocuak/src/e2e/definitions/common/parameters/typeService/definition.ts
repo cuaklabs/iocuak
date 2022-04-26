@@ -7,12 +7,17 @@ import { getTypeServiceWithBindingWithTransientScope } from './getTypeServiceWit
 import { getTypeServiceWithConstructorParameters } from './getTypeServiceWithConstructorParameters';
 import { getTypeServiceWithNoDependenciesParameter } from './getTypeServiceWithNoDependenciesParameter';
 import { getTypeServiceWithProperties } from './getTypeServiceWithProperties';
+import { getTypeServiceWithTypeServiceId } from './getTypeServiceWithTypeServiceId';
+import { getTypeServiceWithUnboundClassTypeServiceConstructorParameters } from './getTypeServiceWithUnboundClassTypeServiceConstructorParameters';
+import { getTypeServiceWithUnboundClassTypeServiceProperties } from './getTypeServiceWithUnboundClassTypeServiceProperties';
 import { TypeServiceParameter } from './TypeServiceParameter';
 
 function typeServiceParameterDefinitionTransformer(
   serviceType: string | undefined,
 ): TypeServiceParameter {
   switch (serviceType) {
+    case 'type service id':
+      return getTypeServiceWithTypeServiceId();
     case undefined:
     case 'no dependencies':
       return getTypeServiceWithNoDependenciesParameter();
@@ -26,6 +31,10 @@ function typeServiceParameterDefinitionTransformer(
       return getTypeServiceWithConstructorParameters();
     case 'properties':
       return getTypeServiceWithProperties();
+    case 'unbound class type service constructor parameters':
+      return getTypeServiceWithUnboundClassTypeServiceConstructorParameters();
+    case 'unbound class type service properties':
+      return getTypeServiceWithUnboundClassTypeServiceProperties();
     default:
       throw new Error(
         `No type service of type "${serviceType}" could be provided`,
