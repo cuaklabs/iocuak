@@ -21,9 +21,13 @@ Given<ValueServiceWorld>(
   },
 );
 
-Then<ResultWorld>('an error is thrown', function () {
-  chai.expect(this.error).not.to.be.equal(undefined);
-});
+Then<ResultWorld>(
+  'an error containing "{}" is thrown',
+  function (errorContent: string) {
+    chai.expect(this.error).to.be.instanceOf(Error);
+    chai.expect((this.error as Error).message).to.contain(errorContent);
+  },
+);
 
 Then<ResultWorld>('no errors are thrown', function () {
   chai.expect(this.error).to.be.equal(undefined);
