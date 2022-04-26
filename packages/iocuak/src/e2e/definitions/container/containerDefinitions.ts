@@ -119,14 +119,22 @@ Given<ContainerWorld>('a container', function (): void {
 When<ContainerWorld & ResultWorld & TypeServiceWorld>(
   'an instace of the type service is requested',
   function (): void {
-    this.result = this.container.get(this.typeServiceParameter.binding.id);
+    try {
+      this.result = this.container.get(this.typeServiceParameter.binding.id);
+    } catch (error: unknown) {
+      this.error = error;
+    }
   },
 );
 
 When<ContainerWorld & ResultWorld & ValueServiceWorld>(
   'an instace of the value service is requested',
   function (): void {
-    this.result = this.container.get(this.valueServiceParameter.binding.id);
+    try {
+      this.result = this.container.get(this.valueServiceParameter.binding.id);
+    } catch (error: unknown) {
+      this.error = error;
+    }
   },
 );
 
