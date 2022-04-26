@@ -145,10 +145,14 @@ When<ContainerWorld & TypeServiceWorld>(
   },
 );
 
-When<ContainerWorld & TypeServiceWorld>(
+When<ContainerWorld & ResultWorld & TypeServiceWorld>(
   'the type service is bound',
   function (): void {
-    this.container.bind(this.typeServiceParameter.service);
+    try {
+      this.container.bind(this.typeServiceParameter.service);
+    } catch (error: unknown) {
+      this.error = error;
+    }
   },
 );
 
