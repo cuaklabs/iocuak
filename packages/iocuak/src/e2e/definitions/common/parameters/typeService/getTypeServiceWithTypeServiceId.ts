@@ -6,11 +6,11 @@ import { BindingTypeApi } from '../../../../../metadata/models/api/BindingTypeAp
 import { TypeBindingApi } from '../../../../../metadata/models/api/TypeBindingApi';
 import { TypeServiceParameter } from './TypeServiceParameter';
 
-export function getTypeServiceWithBindingWithRequestScope(): TypeServiceParameter {
+export function getTypeServiceWithTypeServiceId(): TypeServiceParameter {
   // eslint-disable-next-line import/no-named-as-default-member
   const constructorSpy: sinon.SinonSpy = sinon.spy();
 
-  class TypeServiceWithBindingWithRequestScope {
+  class TypeServiceWithTypeServiceId {
     constructor() {
       constructorSpy();
     }
@@ -18,19 +18,19 @@ export function getTypeServiceWithBindingWithRequestScope(): TypeServiceParamete
 
   const binding: TypeBindingApi = {
     bindingType: BindingTypeApi.type,
-    id: Symbol(TypeServiceWithBindingWithRequestScope.name),
-    scope: BindingScopeApi.request,
-    type: TypeServiceWithBindingWithRequestScope,
+    id: TypeServiceWithTypeServiceId,
+    scope: BindingScopeApi.singleton,
+    type: TypeServiceWithTypeServiceId,
   };
 
   injectable({
     id: binding.id,
     scope: binding.scope,
-  })(TypeServiceWithBindingWithRequestScope);
+  })(TypeServiceWithTypeServiceId);
 
   return {
     binding,
-    service: TypeServiceWithBindingWithRequestScope,
+    service: TypeServiceWithTypeServiceId,
     spy: constructorSpy,
   };
 }
