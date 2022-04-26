@@ -8,21 +8,21 @@ Feature: Bind service
 
   Rule: A value service is bound successfully
 
-    Scenario: A value service is bound with no errors
+    Scenario: Value service binding
       Given a "value service"
       When the value service is bound
       Then no errors are thrown
 
   Rule: An injectable type service is bound successfully
 
-    Scenario: An injectable service is bound with no errors
+    Scenario: Injectable type service binding
       Given a "type service with any binding"
       When the type service is bound
       Then no errors are thrown
 
   Rule: A non injectable type service is not bound successfully
 
-    Scenario: An injectable service is bound with no errors
+    Scenario: Non injectable type service binding
       Given a "type service with no binding"
       When the type service is bound
       Then an error containing "No bindings found for type" is thrown

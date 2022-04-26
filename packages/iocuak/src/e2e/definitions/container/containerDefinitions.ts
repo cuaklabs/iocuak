@@ -10,6 +10,7 @@ import { BindingTypeApi } from '../../../metadata/models/api/BindingTypeApi';
 import { ClassMetadataApi } from '../../../metadata/models/api/ClassMetadataApi';
 import { MetadataProviderApi } from '../../../metadata/modules/MetadataProviderApi';
 import { ResultWorld } from '../common/models/worlds/ResultWorld';
+import { TwoResultsWorld } from '../common/models/worlds/TwoResultsWorld';
 import { TypeServiceWorld } from '../common/models/worlds/TypeServiceWorld';
 import { ValueServiceWorld } from '../common/models/worlds/ValueServiceWorld';
 import { TypeServiceParameter } from '../common/parameters/typeService/TypeServiceParameter';
@@ -116,6 +117,19 @@ Given<ContainerWorld>('a container', function (): void {
   this.container = ContainerApi.build();
 });
 
+When<ContainerWorld & TypeServiceWorld & TwoResultsWorld>(
+  'a second instace of the type service is requested',
+  function (): void {
+    try {
+      this.secondResult = this.container.get(
+        this.typeServiceParameter.binding.id,
+      );
+    } catch (error: unknown) {
+      this.error = error;
+    }
+  },
+);
+
 When<ContainerWorld & ResultWorld & TypeServiceWorld>(
   'an instace of the type service is requested',
   function (): void {
@@ -188,6 +202,22 @@ Then<ResultWorld & ValueServiceWorld>(
     chai
       .expect(this.result)
       .to.be.equal(this.valueServiceParameter.binding.value);
+  },
+);
+
+Then<ResultWorld & TypeServiceWorld>(
+  'every type dependency constructor is the same one and has been caled {int} times',
+  function (times: number): void {
+    for (const dependency of this.typeServiceParameter.dependencies ?? []) {
+      if (dependency.binding.bindingType === BindingTypeApi.type) {
+        const typeServiceParameterDependency: TypeServiceParameter =
+          dependency as TypeServiceParameter;
+
+        chai
+          .expect(typeServiceParameterDependency.spy.callCount)
+          .to.be.equal(times);
+      }
+    }
   },
 );
 
