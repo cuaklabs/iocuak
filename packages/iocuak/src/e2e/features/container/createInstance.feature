@@ -2,10 +2,10 @@ Feature: Create instance
 
   Containers are able to create services whenever the service and all its dependencies are bound
 
-  Rule: Any bound type service is instantiated
+  Background: Having a container
+  Given a container
 
-    Background: Having a container
-    Given a container
+  Rule: Any bound type service is instantiated
 
     Scenario: A bound value service is instantiated
       Given a "value service"
@@ -46,9 +46,6 @@ Feature: Create instance
           | "type service with unbound class type service properties"                |
 
   Rule: Any unbound class type service is instantiated
-
-    Background: Having a container
-    Given a container
 
     Scenario: An unbound class type service is instantiated
       Given a "type service with type service id"

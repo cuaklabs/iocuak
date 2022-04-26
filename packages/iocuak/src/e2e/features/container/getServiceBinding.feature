@@ -4,10 +4,10 @@ Feature: Get service binding
   registered, allowing the container to infer how to create instances of that type if every dependency
   is also bound.
 
-  Rule: Any bound service metadata is provided
+  Background: Having a container
+  Given a container
 
-    Background: Having a container
-    Given a container
+  Rule: Any bound service metadata is provided
 
     Scenario: A type service binding is provided
       Given a "type service"
