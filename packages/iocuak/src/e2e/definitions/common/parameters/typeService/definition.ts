@@ -5,6 +5,7 @@ import { getTypeServiceWithBindingWithRequestScope } from './getTypeServiceWithB
 import { getTypeServiceWithBindingWithSingletonScope } from './getTypeServiceWithBindingWithSingletonScope';
 import { getTypeServiceWithBindingWithTransientScope } from './getTypeServiceWithBindingWithTransientScope';
 import { getTypeServiceWithConstructorParameters } from './getTypeServiceWithConstructorParameters';
+import { getTypeServiceWithNoBinding } from './getTypeServiceWithNoBindingParameter';
 import { getTypeServiceWithNoDependenciesParameter } from './getTypeServiceWithNoDependenciesParameter';
 import { getTypeServiceWithProperties } from './getTypeServiceWithProperties';
 import { getTypeServiceWithTypeServiceId } from './getTypeServiceWithTypeServiceId';
@@ -19,6 +20,7 @@ function typeServiceParameterDefinitionTransformer(
     case 'type service id':
       return getTypeServiceWithTypeServiceId();
     case undefined:
+    case 'any binding':
     case 'no dependencies':
       return getTypeServiceWithNoDependenciesParameter();
     case 'binding with request scope':
@@ -29,6 +31,8 @@ function typeServiceParameterDefinitionTransformer(
       return getTypeServiceWithBindingWithTransientScope();
     case 'constructor parameters':
       return getTypeServiceWithConstructorParameters();
+    case 'no binding':
+      return getTypeServiceWithNoBinding();
     case 'properties':
       return getTypeServiceWithProperties();
     case 'unbound class type service constructor parameters':
