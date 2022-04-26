@@ -19,7 +19,7 @@ export function getTypeServiceWithBindingWithRequestScope(): TypeServiceParamete
   const binding: TypeBindingApi = {
     bindingType: BindingTypeApi.type,
     id: Symbol(TypeServiceWithBindingWithRequestScope.name),
-    scope: BindingScopeApi.singleton,
+    scope: BindingScopeApi.request,
     type: TypeServiceWithBindingWithRequestScope,
   };
 

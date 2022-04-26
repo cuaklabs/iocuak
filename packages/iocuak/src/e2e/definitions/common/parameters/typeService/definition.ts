@@ -8,6 +8,9 @@ import { getTypeServiceWithConstructorParameters } from './getTypeServiceWithCon
 import { getTypeServiceWithNoBinding } from './getTypeServiceWithNoBindingParameter';
 import { getTypeServiceWithNoDependenciesParameter } from './getTypeServiceWithNoDependenciesParameter';
 import { getTypeServiceWithProperties } from './getTypeServiceWithProperties';
+import { getTypeServiceWithTwoDependenciesOfTheSameTypeWithRequestScope } from './getTypeServiceWithTwoDependenciesOfTheSameTypeWithRequestScope';
+import { getTypeServiceWithTwoDependenciesOfTheSameTypeWithSingletonScope } from './getTypeServiceWithTwoDependenciesOfTheSameTypeWithSingletonScope';
+import { getTypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScope } from './getTypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScope';
 import { getTypeServiceWithTypeServiceId } from './getTypeServiceWithTypeServiceId';
 import { getTypeServiceWithUnboundClassTypeServiceConstructorParameters } from './getTypeServiceWithUnboundClassTypeServiceConstructorParameters';
 import { getTypeServiceWithUnboundClassTypeServiceProperties } from './getTypeServiceWithUnboundClassTypeServiceProperties';
@@ -35,6 +38,12 @@ function typeServiceParameterDefinitionTransformer(
       return getTypeServiceWithNoBinding();
     case 'properties':
       return getTypeServiceWithProperties();
+    case 'two dependencies of the same type with request scope':
+      return getTypeServiceWithTwoDependenciesOfTheSameTypeWithRequestScope();
+    case 'two dependencies of the same type with singleton scope':
+      return getTypeServiceWithTwoDependenciesOfTheSameTypeWithSingletonScope();
+    case 'two dependencies of the same type with transient scope':
+      return getTypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScope();
     case 'unbound class type service constructor parameters':
       return getTypeServiceWithUnboundClassTypeServiceConstructorParameters();
     case 'unbound class type service properties':
