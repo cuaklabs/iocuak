@@ -25,4 +25,4 @@ Feature: Bind service
     Scenario: An injectable service is bound with no errors
       Given a "type service with no binding"
       When the type service is bound
-      Then an error containing "@injectable()" is thrown
+      Then an error containing "No bindings found for type" is thrown
