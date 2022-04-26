@@ -1,4 +1,4 @@
-Feature: Get service binding
+Feature: Get service bindings
 
   Containers provides binding features to register types and values. When a type is bound, its metadata is
   registered, allowing the container to infer how to create instances of that type if every dependency
