@@ -3,8 +3,11 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
+import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerApi } from '../../../container/modules/api/ContainerApi';
+import { ContainerModuleClassMetadataApi } from '../../../containerModuleTask/models/api/ContainerModuleClassMetadataApi';
+import { ContainerModuleFactoryMetadataApi } from '../../../containerModuleTask/models/api/ContainerModuleFactoryMetadataApi';
 import { BindingApi } from '../../../metadata/models/api/BindingApi';
 import { BindingTypeApi } from '../../../metadata/models/api/BindingTypeApi';
 import { ClassMetadataApi } from '../../../metadata/models/api/ClassMetadataApi';
@@ -76,10 +79,10 @@ function bindingToSinonMatcher(
 }
 
 function getBinding(
-  this: ContainerWorld,
+  container: ContainerApi,
   serviceId: ServiceId,
 ): BindingApi | undefined {
-  const containerBindings: BindingApi[] = this.container.getAllBindinds();
+  const containerBindings: BindingApi[] = container.getAllBindinds();
   const metadataProvider: MetadataProviderApi = MetadataProviderApi.build();
 
   return (
@@ -88,6 +91,48 @@ function getBinding(
       ? metadataProvider.getBindingMetadata(serviceId)
       : undefined)
   );
+}
+
+function isCalledOnceWith(
+  parameterBindings: (BindingApi | undefined)[],
+  spy: sinon.SinonSpy,
+): void {
+  const constructorArgumentMatchers: sinon.SinonMatcher[] =
+    parameterBindings.map(bindingToSinonMatcher);
+
+  chai.expect(spy.callCount).to.be.equal(1);
+
+  chai.expect(spy).to.have.been.calledOnceWith(...constructorArgumentMatchers);
+}
+
+function isContainerModuleMetadataInitialized(
+  container: ContainerApi,
+  containerModuleMetadataParameter: ContainerModuleMetadataParameter,
+): void {
+  if (
+    (
+      containerModuleMetadataParameter.containerModuleMetadata as ContainerModuleClassMetadataApi
+    ).module !== undefined
+  ) {
+    isTypeServiceInitialized(
+      container,
+      containerModuleMetadataParameter.containerModuleMetadata
+        .constructor as Newable,
+      containerModuleMetadataParameter.spy,
+    );
+  } else {
+    const containerModuleMetadata: ContainerModuleFactoryMetadataApi =
+      containerModuleMetadataParameter.containerModuleMetadata as ContainerModuleFactoryMetadataApi;
+
+    const constructorMetadataBindings: (BindingApi | undefined)[] = (
+      containerModuleMetadata.injects ?? []
+    ).map((serviceId: ServiceId) => getBinding(container, serviceId));
+
+    isCalledOnceWith(
+      constructorMetadataBindings,
+      containerModuleMetadataParameter.spy,
+    );
+  }
 }
 
 function isContainerModuleMetadataLoaded(
@@ -104,6 +149,61 @@ function isContainerModuleMetadataLoaded(
       bindToValue: sinon.match.instanceOf(Function),
     }),
   );
+}
+
+function isTypeServiceInitialized(
+  container: ContainerApi,
+  service: Newable,
+  constructorSpy: sinon.SinonSpy,
+): void {
+  const metadataProvider: MetadataProviderApi = MetadataProviderApi.build();
+
+  const instanceMetadata: ClassMetadataApi =
+    metadataProvider.getClassMetadata(service);
+
+  const constructorMetadataBindings: (BindingApi | undefined)[] =
+    instanceMetadata.constructorArguments.map((serviceId: ServiceId) =>
+      getBinding(container, serviceId),
+    );
+
+  isCalledOnceWith(constructorMetadataBindings, constructorSpy);
+}
+
+function isTypeServicePropertiesAssigned(
+  container: ContainerApi,
+  instance: unknown,
+  service: Newable,
+): void {
+  const metadataProvider: MetadataProviderApi = MetadataProviderApi.build();
+
+  const instanceMetadata: ClassMetadataApi =
+    metadataProvider.getClassMetadata(service);
+
+  const propertiesMetadataBindings: [
+    string | symbol,
+    BindingApi | undefined,
+  ][] = [...instanceMetadata.properties.entries()].map(
+    ([propertyName, serviceId]: [string | symbol, ServiceId]) => [
+      propertyName,
+      getBinding(container, serviceId),
+    ],
+  );
+
+  const propertyChaiAssertions: ((result: unknown) => void)[] =
+    propertiesMetadataBindings.map(
+      ([propertyName, binding]: [string | symbol, BindingApi | undefined]) =>
+        (result: unknown) => {
+          propertyBindingToChaiAssertionInvocation(
+            result,
+            propertyName,
+            binding,
+          );
+        },
+    );
+
+  for (const propertyChaiAssertion of propertyChaiAssertions) {
+    propertyChaiAssertion(instance);
+  }
 }
 
 function propertyBindingToChaiAssertionInvocation(
@@ -255,8 +355,23 @@ Then<ResultWorld & ValueServiceWorld>(
   },
 );
 
+Then<ContainerWorld & ContainerModuleMetadataWorld>(
+  'container metadata container metadata imports are initialized',
+  function () {
+    if (this.containerModuleMetadataParameter.importParameters !== undefined) {
+      for (const containerModuleMetadaParameter of this
+        .containerModuleMetadataParameter.importParameters) {
+        isContainerModuleMetadataInitialized(
+          this.container,
+          containerModuleMetadaParameter,
+        );
+      }
+    }
+  },
+);
+
 Then<ContainerModuleMetadataWorld>(
-  'container metadata container imports are loaded',
+  'container metadata container metadata imports are loaded',
   function () {
     if (this.containerModuleMetadataParameter.importParameters !== undefined) {
       for (const containerModuleMetadaParameter of this
@@ -267,12 +382,19 @@ Then<ContainerModuleMetadataWorld>(
   },
 );
 
-Then<ContainerModuleMetadataWorld>(
-  'container metadata container is loaded',
+Then<ContainerWorld & ContainerModuleMetadataWorld>(
+  'container metadata is initialized',
   function () {
-    isContainerModuleMetadataLoaded(this.containerModuleMetadataParameter);
+    isContainerModuleMetadataInitialized(
+      this.container,
+      this.containerModuleMetadataParameter,
+    );
   },
 );
+
+Then<ContainerModuleMetadataWorld>('container metadata is loaded', function () {
+  isContainerModuleMetadataLoaded(this.containerModuleMetadataParameter);
+});
 
 Then<ContainerModuleWorld & ResultWorld>(
   'container services metadata are included in the result',
@@ -310,58 +432,22 @@ Then<ResultWorld & TypeServiceWorld>(
 Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
   'the instance from the type service was constructed with the right parameters',
   function () {
-    const metadataProvider: MetadataProviderApi = MetadataProviderApi.build();
-
-    const instanceMetadata: ClassMetadataApi =
-      metadataProvider.getClassMetadata(this.typeServiceParameter.service);
-
-    const constructorMetadataBindings: (BindingApi | undefined)[] =
-      instanceMetadata.constructorArguments.map(getBinding.bind(this));
-
-    const constructorArgumentMatchers: sinon.SinonMatcher[] =
-      constructorMetadataBindings.map(bindingToSinonMatcher);
-
-    chai.expect(this.typeServiceParameter.spy.callCount).to.be.equal(1);
-
-    chai
-      .expect(this.typeServiceParameter.spy)
-      .to.have.been.calledOnceWith(...constructorArgumentMatchers);
+    isTypeServiceInitialized(
+      this.container,
+      this.typeServiceParameter.service,
+      this.typeServiceParameter.spy,
+    );
   },
 );
 
 Then<ContainerWorld & ResultWorld & TypeServiceWorld>(
   'the instance from the type service has the right properties',
   function () {
-    const metadataProvider: MetadataProviderApi = MetadataProviderApi.build();
-
-    const instanceMetadata: ClassMetadataApi =
-      metadataProvider.getClassMetadata(this.typeServiceParameter.service);
-
-    const propertiesMetadataBindings: [
-      string | symbol,
-      BindingApi | undefined,
-    ][] = [...instanceMetadata.properties.entries()].map(
-      ([propertyName, serviceId]: [string | symbol, ServiceId]) => [
-        propertyName,
-        getBinding.bind(this)(serviceId),
-      ],
+    isTypeServicePropertiesAssigned(
+      this.container,
+      this.result,
+      this.typeServiceParameter.service,
     );
-
-    const propertyChaiAssertions: ((result: unknown) => void)[] =
-      propertiesMetadataBindings.map(
-        ([propertyName, binding]: [string | symbol, BindingApi | undefined]) =>
-          (result: unknown) => {
-            propertyBindingToChaiAssertionInvocation(
-              result,
-              propertyName,
-              binding,
-            );
-          },
-      );
-
-    for (const propertyChaiAssertion of propertyChaiAssertions) {
-      propertyChaiAssertion(this.result);
-    }
   },
 );
 
