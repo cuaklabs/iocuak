@@ -42,8 +42,6 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
 
       describe('when called', () => {
         let containerModuleLoadFromMetadataTask: ContainerModuleLoadFromMetadataTask;
-
-        let containerModule: ContainerModule;
         let result: unknown;
 
         beforeAll(() => {
@@ -61,8 +59,6 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
           );
 
           result = containerModuleLoadFromMetadataTask.perform();
-
-          containerModule = result as ContainerModule;
         });
 
         afterAll(() => {
@@ -76,41 +72,18 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
           );
         });
 
+        it('should call metadata.loader()', () => {
+          expect(taskKindMock.metadata.loader).toHaveBeenCalledTimes(1);
+          expect(taskKindMock.metadata.loader).toHaveBeenCalledWith(
+            containerModuleMock,
+            containerBindingServiceFixture,
+            metadataServiceFixture,
+          );
+        });
+
         it('should return a ContainerModule', () => {
           expect(result).toStrictEqual<ContainerModule>({
             load: expect.any(Function) as ContainerModule['load'],
-          });
-        });
-
-        describe('when ContainerModule.load is called', () => {
-          let containerBindingServiceFixture: ContainerBindingService;
-          let metadataServiceFixture: MetadataService;
-
-          beforeAll(() => {
-            containerBindingServiceFixture = {
-              _tag: Symbol('ContainerBindingService'),
-            } as Partial<ContainerBindingService> as ContainerBindingService;
-            metadataServiceFixture = {
-              _tag: Symbol('MetadataService'),
-            } as Partial<MetadataService> as MetadataService;
-
-            containerModule.load(
-              containerBindingServiceFixture,
-              metadataServiceFixture,
-            );
-          });
-
-          afterAll(() => {
-            jest.clearAllMocks();
-          });
-
-          it('should call metadata.loader()', () => {
-            expect(taskKindMock.metadata.loader).toHaveBeenCalledTimes(1);
-            expect(taskKindMock.metadata.loader).toHaveBeenCalledWith(
-              containerModuleMock,
-              containerBindingServiceFixture,
-              metadataServiceFixture,
-            );
           });
         });
       });
