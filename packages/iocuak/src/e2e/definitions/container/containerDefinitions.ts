@@ -320,6 +320,13 @@ When<ContainerWorld & ResultWorld & TypeServiceWorld>(
   },
 );
 
+When<ContainerWorld & ResultWorld & TypeServiceWorld>(
+  'the type service is unbound',
+  function (): void {
+    this.container.unbind(this.typeServiceParameter.binding.id);
+  },
+);
+
 When<ContainerWorld & ValueServiceWorld>(
   'the value service is bound',
   function (): void {
@@ -327,6 +334,13 @@ When<ContainerWorld & ValueServiceWorld>(
       this.valueServiceParameter.binding.id,
       this.valueServiceParameter.service,
     );
+  },
+);
+
+When<ContainerWorld & ValueServiceWorld>(
+  'the value service is unbound',
+  function (): void {
+    this.container.unbind(this.valueServiceParameter.binding.id);
   },
 );
 
@@ -458,11 +472,29 @@ Then<TypeServiceWorld & ResultWorld>(
   },
 );
 
+Then<TypeServiceWorld & ResultWorld>(
+  'type service metadata is not included in the result',
+  function (): void {
+    chai
+      .expect(this.result)
+      .not.to.deep.include(this.typeServiceParameter.binding);
+  },
+);
+
 Then<ValueServiceWorld & ResultWorld>(
   'value service metadata is included in the result',
   function (): void {
     chai
       .expect(this.result)
       .to.deep.include(this.valueServiceParameter.binding);
+  },
+);
+
+Then<ValueServiceWorld & ResultWorld>(
+  'value service metadata is not included in the result',
+  function (): void {
+    chai
+      .expect(this.result)
+      .not.to.deep.include(this.valueServiceParameter.binding);
   },
 );
