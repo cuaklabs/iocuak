@@ -1,3 +1,5 @@
+import sinon from 'sinon';
+
 import { ContainerModuleApi } from '../../../../../container/modules/api/ContainerModuleApi';
 import { ContainerModuleBindingServiceApi } from '../../../../../container/services/api/ContainerModuleBindingServiceApi';
 import { getTypeServiceWithNoDependenciesParameter } from '../../../common/parameters/typeService/getTypeServiceWithNoDependenciesParameter';
@@ -12,10 +14,15 @@ export function getContainerModuleWithTypeServiceAndValueServiceParameter(): Con
   const valueServiceParameter: ValueServiceParameter =
     getValueServiceParameter();
 
+  // eslint-disable-next-line import/no-named-as-default-member
+  const loadSpy: sinon.SinonSpy = sinon.spy();
+
   const containerModule: ContainerModuleApi = {
     load: (
       containerModuleBindingServiceApi: ContainerModuleBindingServiceApi,
     ) => {
+      loadSpy(containerModuleBindingServiceApi);
+
       containerModuleBindingServiceApi.bind(typeServiceParameter.service);
       containerModuleBindingServiceApi.bindToValue(
         valueServiceParameter.binding.id,
@@ -26,6 +33,7 @@ export function getContainerModuleWithTypeServiceAndValueServiceParameter(): Con
 
   return {
     containerModule,
+    loadSpy,
     typeServices: [typeServiceParameter],
     valueServices: [valueServiceParameter],
   };
