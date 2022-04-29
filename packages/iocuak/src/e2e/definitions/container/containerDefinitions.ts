@@ -15,9 +15,11 @@ import { TypeServiceWorld } from '../common/models/worlds/TypeServiceWorld';
 import { ValueServiceWorld } from '../common/models/worlds/ValueServiceWorld';
 import { TypeServiceParameter } from '../common/parameters/typeService/TypeServiceParameter';
 import { ValueServiceParameter } from '../common/parameters/valueService/ValueServiceParameter';
+import { ContainerModuleMetadataWorld } from './models/worlds/ContainerModuleMetadataWorld';
 import { ContainerModuleWorld } from './models/worlds/ContainerModuleWorld';
 import { ContainerWorld } from './models/worlds/ContainerWorld';
 import { ContainerModuleParameter } from './parameters/containerModule/ContainerModuleParameter';
+import { ContainerModuleMetadataParameter } from './parameters/containerModuleMetadata/ContainerModuleMetadataParameter';
 
 chai.use(sinonChai);
 
@@ -88,6 +90,22 @@ function getBinding(
   );
 }
 
+function isContainerModuleMetadataLoaded(
+  containerModuleMetadataParameter: ContainerModuleMetadataParameter,
+): void {
+  chai.expect(containerModuleMetadataParameter.loadSpy.callCount).to.equal(1);
+
+  chai.expect(containerModuleMetadataParameter.loadSpy).to.calledOnceWith(
+    // eslint-disable-next-line import/no-named-as-default-member
+    sinon.match({
+      // eslint-disable-next-line import/no-named-as-default-member
+      bind: sinon.match.instanceOf(Function),
+      // eslint-disable-next-line import/no-named-as-default-member
+      bindToValue: sinon.match.instanceOf(Function),
+    }),
+  );
+}
+
 function propertyBindingToChaiAssertionInvocation(
   result: unknown,
   propertyName: string | symbol,
@@ -126,6 +144,13 @@ Given<ContainerModuleWorld>(
   },
 );
 
+Given<ContainerModuleMetadataWorld>(
+  'a {containerModuleMetadata}',
+  function (containerModuleMetadaParameter: ContainerModuleMetadataParameter) {
+    this.containerModuleMetadataParameter = containerModuleMetadaParameter;
+  },
+);
+
 When<ContainerWorld & TypeServiceWorld & TwoResultsWorld>(
   'a second instace of the type service is requested',
   function (): void {
@@ -158,6 +183,15 @@ When<ContainerWorld & ResultWorld & ValueServiceWorld>(
     } catch (error: unknown) {
       this.error = error;
     }
+  },
+);
+
+When<ContainerWorld & ContainerModuleMetadataWorld>(
+  'the container module metadata is loaded',
+  async function (): Promise<void> {
+    await this.container.loadMetadata(
+      this.containerModuleMetadataParameter.containerModuleMetadata,
+    );
   },
 );
 
@@ -218,6 +252,25 @@ Then<ResultWorld & ValueServiceWorld>(
     chai
       .expect(this.result)
       .to.be.equal(this.valueServiceParameter.binding.value);
+  },
+);
+
+Then<ContainerModuleMetadataWorld>(
+  'container metadata container imports are loaded',
+  function () {
+    if (this.containerModuleMetadataParameter.importParameters !== undefined) {
+      for (const containerModuleMetadaParameter of this
+        .containerModuleMetadataParameter.importParameters) {
+        isContainerModuleMetadataLoaded(containerModuleMetadaParameter);
+      }
+    }
+  },
+);
+
+Then<ContainerModuleMetadataWorld>(
+  'container metadata container is loaded',
+  function () {
+    isContainerModuleMetadataLoaded(this.containerModuleMetadataParameter);
   },
 );
 
