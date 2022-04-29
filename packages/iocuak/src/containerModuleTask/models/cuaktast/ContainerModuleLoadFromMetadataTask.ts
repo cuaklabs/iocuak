@@ -73,6 +73,8 @@ export class ContainerModuleLoadFromMetadataTask extends cuaktask.BaseDependentT
       },
     };
 
+    containerModule.load(this.#containerBindingService, this.#metadataService);
+
     return containerModule;
   }
 
