@@ -8,7 +8,7 @@ function containerModuleParameterDefinitionTransformer(
   containerModuleType: string,
 ): ContainerModuleParameter {
   switch (containerModuleType) {
-    case 'with a type service and a value service':
+    case 'a type service and a value service':
       return getContainerModuleWithTypeServiceAndValueServiceParameter();
     default:
       throw new Error(
