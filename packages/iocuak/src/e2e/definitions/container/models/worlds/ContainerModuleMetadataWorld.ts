@@ -1,7 +1,7 @@
 import { IWorld } from '@cucumber/cucumber';
 
-import { ContainerModuleMetadaParameter } from '../../parameters/containerModuleMetadata/ContainerModuleMetadaParameter';
+import { ContainerModuleMetadataParameter } from '../../parameters/containerModuleMetadata/ContainerModuleMetadataParameter';
 
 export interface ContainerModuleMetadataWorld extends IWorld {
-  containerModuleMetadaParameter: ContainerModuleMetadaParameter;
+  containerModuleMetadataParameter: ContainerModuleMetadataParameter;
 }
