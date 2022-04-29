@@ -15,7 +15,9 @@ import { TypeServiceWorld } from '../common/models/worlds/TypeServiceWorld';
 import { ValueServiceWorld } from '../common/models/worlds/ValueServiceWorld';
 import { TypeServiceParameter } from '../common/parameters/typeService/TypeServiceParameter';
 import { ValueServiceParameter } from '../common/parameters/valueService/ValueServiceParameter';
+import { ContainerModuleWorld } from './models/worlds/ContainerModuleWorld';
 import { ContainerWorld } from './models/worlds/ContainerWorld';
+import { ContainerModuleParameter } from './parameters/containerModule/ContainerModuleParameter';
 
 chai.use(sinonChai);
 
@@ -117,6 +119,13 @@ Given<ContainerWorld>('a container', function (): void {
   this.container = ContainerApi.build();
 });
 
+Given<ContainerModuleWorld>(
+  'a {containerModule}',
+  function (containerModuleParameter: ContainerModuleParameter) {
+    this.containerModuleParameter = containerModuleParameter;
+  },
+);
+
 When<ContainerWorld & TypeServiceWorld & TwoResultsWorld>(
   'a second instace of the type service is requested',
   function (): void {
@@ -149,6 +158,13 @@ When<ContainerWorld & ResultWorld & ValueServiceWorld>(
     } catch (error: unknown) {
       this.error = error;
     }
+  },
+);
+
+When<ContainerWorld & ContainerModuleWorld>(
+  'the container module is loaded',
+  function () {
+    this.container.load(this.containerModuleParameter.containerModule);
   },
 );
 
@@ -202,6 +218,23 @@ Then<ResultWorld & ValueServiceWorld>(
     chai
       .expect(this.result)
       .to.be.equal(this.valueServiceParameter.binding.value);
+  },
+);
+
+Then<ContainerModuleWorld & ResultWorld>(
+  'container services metadata are included in the result',
+  function () {
+    const bindings: BindingApi[] = [
+      ...this.containerModuleParameter.typeServices,
+      ...this.containerModuleParameter.valueServices,
+    ].map(
+      (serviceParameter: TypeServiceParameter | ValueServiceParameter) =>
+        serviceParameter.binding,
+    );
+
+    for (const binding of bindings) {
+      chai.expect(this.result).to.deep.include(binding);
+    }
   },
 );
 
