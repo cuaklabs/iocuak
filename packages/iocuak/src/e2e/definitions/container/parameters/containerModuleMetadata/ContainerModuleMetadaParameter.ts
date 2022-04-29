@@ -5,5 +5,6 @@ import { ContainerModuleMetadataApi } from '../../../../../containerModuleTask/m
 export interface ContainerModuleMetadaParameter {
   containerModuleMetadata: ContainerModuleMetadataApi;
   importParameters?: ContainerModuleMetadaParameter[];
+  loadSpy: sinon.SinonSpy;
   spy: sinon.SinonSpy;
 }
