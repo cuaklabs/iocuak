@@ -8,7 +8,9 @@ Feature: Load module
 
   Rule: Once a module is loaded, every service binding call inside the module is performed
 
-    Given a "container module with a type service and a value service"
-    When the container module is loaded
-    And container metadata is requested
-    Then container services metadata are included in the result
+    Scenario: Load container
+
+      Given a "container module with a type service and a value service"
+      When the container module is loaded
+      And container metadata is requested
+      Then container services metadata are included in the result
