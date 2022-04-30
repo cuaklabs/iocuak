@@ -108,7 +108,7 @@ function getJestProjectConfig(
     collectCoverageFrom: [],
     coveragePathIgnorePatterns: [
       ...getPackagesUnlessPackageIgnorePatterns(packageName),
-      '/e2e/stepDefinitions/',
+      '/e2e/definitions/',
       '/fixtures/',
       '/lib/index.js',
       '/mocks/',
