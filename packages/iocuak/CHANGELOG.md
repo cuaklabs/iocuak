@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
-## [UNRELEASED]
+## 0.2.1 - 2022-04-30
 
 ### Changed
 - Updated `Container.get` to create instance of newable unbinded types.
