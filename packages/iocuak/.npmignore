@@ -1,3 +1,4 @@
+e2e/
 **/*.spec.js
 **/*.spec.js.map
 **/*.ts
