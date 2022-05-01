@@ -1,5 +1,5 @@
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
+import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModuleMetadataBaseApi } from './ContainerModuleMetadataBaseApi';
 
 export interface ContainerModuleFactoryMetadataApi<

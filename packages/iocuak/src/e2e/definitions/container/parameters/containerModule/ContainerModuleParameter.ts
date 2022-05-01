@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 
-import { ContainerModuleApi } from '../../../../../container/modules/api/ContainerModuleApi';
+import { ContainerModuleApi } from '../../../../../containerModule/models/api/ContainerModuleApi';
 import { TypeServiceParameter } from '../../../common/parameters/typeService/TypeServiceParameter';
 import { ValueServiceParameter } from '../../../common/parameters/valueService/ValueServiceParameter';
 

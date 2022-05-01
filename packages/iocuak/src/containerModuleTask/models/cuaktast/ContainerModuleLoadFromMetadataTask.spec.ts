@@ -1,6 +1,6 @@
-import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerInstanceService } from '../../../container/services/domain/ContainerInstanceService';
+import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleLoadFromMetadataTaskKindMocks } from '../../mocks/models/domain/ContainerModuleLoadFromMetadataTaskKindMocks';
 import { ContainerModuleClassMetadata } from '../domain/ContainerModuleClassMetadata';

@@ -2,10 +2,12 @@ import { isPromiseLike } from '@cuaklabs/cuaktask';
 
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { isFunction } from '../../../common/utils/isFunction';
-import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
-import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
-import { isContainerModuleApi } from '../../../container/utils/api/isContainerModuleApi';
+import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
+import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
+import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';
+import { convertToContainerModuleAsync } from '../../../containerModule/utils/api/convertToContainerModuleAsync';
+import { isContainerModuleApi } from '../../../containerModule/utils/api/isContainerModuleApi';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
@@ -14,8 +16,6 @@ import { ContainerModuleClassMetadata } from '../../models/domain/ContainerModul
 import { ContainerModuleFactoryMetadata } from '../../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from '../../models/domain/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from '../../models/domain/ContainerModuleMetadataType';
-import { convertToContainerModule } from './convertToContainerModule';
-import { convertToContainerModuleAsync } from './convertToContainerModuleAsync';
 import { isContainerModuleClassMetadataApi } from './isContainerModuleClassMetadataApi';
 
 export function convertToContainerModuleMetadata<TArgs extends unknown[]>(

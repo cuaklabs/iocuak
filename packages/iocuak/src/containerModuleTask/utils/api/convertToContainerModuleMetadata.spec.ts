@@ -1,11 +1,13 @@
-jest.mock('./convertToContainerModule');
-jest.mock('./convertToContainerModuleAsync');
+jest.mock('../../../containerModule/utils/api/convertToContainerModule');
+jest.mock('../../../containerModule/utils/api/convertToContainerModuleAsync');
 
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
-import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
+import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
+import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';
+import { convertToContainerModuleAsync } from '../../../containerModule/utils/api/convertToContainerModuleAsync';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleMetadataApiMocks } from '../../mocks/models/api/ContainerModuleMetadataApiMocks';
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
@@ -14,8 +16,6 @@ import { ContainerModuleClassMetadata } from '../../models/domain/ContainerModul
 import { ContainerModuleFactoryMetadata } from '../../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from '../../models/domain/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from '../../models/domain/ContainerModuleMetadataType';
-import { convertToContainerModule } from './convertToContainerModule';
-import { convertToContainerModuleAsync } from './convertToContainerModuleAsync';
 import { convertToContainerModuleMetadata } from './convertToContainerModuleMetadata';
 
 describe(convertToContainerModuleMetadata.name, () => {

@@ -1,12 +1,12 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { Builder } from '../../../common/modules/domain/Builder';
+import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleLoadFromMetadataTask } from '../../../containerModuleTask/models/cuaktast/ContainerModuleLoadFromMetadataTask';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../../../containerModuleTask/models/domain/ContainerModuleLoadFromMetadataTaskKind';
 import { ContainerModuleMetadata } from '../../../containerModuleTask/models/domain/ContainerModuleMetadata';
 import { ContainerModuleTaskKind } from '../../../containerModuleTask/models/domain/ContainerModuleTaskKind';
 import { ContainerModuleTaskKindType } from '../../../containerModuleTask/models/domain/ContainerModuleTaskKindType';
-import { ContainerModule } from '../../modules/domain/ContainerModule';
 import { ContainerModuleServiceImplementation } from './ContainerModuleServiceImplementation';
 
 describe(ContainerModuleServiceImplementation.name, () => {

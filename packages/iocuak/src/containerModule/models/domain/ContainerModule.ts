@@ -1,5 +1,5 @@
+import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
-import { ContainerBindingService } from '../../services/domain/ContainerBindingService';
 
 export interface ContainerModule {
   load(

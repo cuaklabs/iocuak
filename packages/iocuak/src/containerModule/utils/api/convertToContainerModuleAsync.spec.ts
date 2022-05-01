@@ -1,8 +1,8 @@
 jest.mock('./convertToContainerModule');
 
-import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
-import { convertToContainerModule } from './convertToContainerModule';
-import { convertToContainerModuleAsync } from './convertToContainerModuleAsync';
+import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';
+import { convertToContainerModuleAsync } from '../../../containerModule/utils/api/convertToContainerModuleAsync';
+import { ContainerModuleApi } from '../../models/api/ContainerModuleApi';
 
 describe(convertToContainerModuleAsync.name, () => {
   describe('when called', () => {
