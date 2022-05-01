@@ -1,5 +1,5 @@
 import { Newable } from '../../../../common/models/domain/Newable';
-import { ContainerModule } from '../../../../container/modules/domain/ContainerModule';
+import { ContainerModule } from '../../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleClassMetadata } from '../../../models/domain/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from '../../../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from '../../../models/domain/ContainerModuleMetadata';

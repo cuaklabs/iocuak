@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 
-import { ContainerModuleApi } from '../../../../../container/modules/api/ContainerModuleApi';
 import { ContainerModuleBindingServiceApi } from '../../../../../container/services/api/ContainerModuleBindingServiceApi';
+import { ContainerModuleApi } from '../../../../../containerModule/models/api/ContainerModuleApi';
 import { getTypeServiceWithNoDependenciesParameter } from '../../../common/parameters/typeService/getTypeServiceWithNoDependenciesParameter';
 import { TypeServiceParameter } from '../../../common/parameters/typeService/TypeServiceParameter';
 import { getValueServiceParameter } from '../../../common/parameters/valueService/getValueServiceParameter';

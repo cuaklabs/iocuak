@@ -1,5 +1,5 @@
 import { isFunction } from '../../../common/utils/isFunction';
-import { ContainerModuleApi } from '../../modules/api/ContainerModuleApi';
+import { ContainerModuleApi } from '../../models/api/ContainerModuleApi';
 
 export function isContainerModuleApi(
   value: unknown,

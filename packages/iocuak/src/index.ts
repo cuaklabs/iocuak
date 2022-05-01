@@ -1,9 +1,9 @@
 import { Newable } from './common/models/domain/Newable';
 import { ServiceId } from './common/models/domain/ServiceId';
 import { ContainerApi } from './container/modules/api/ContainerApi';
-import { ContainerModuleApi } from './container/modules/api/ContainerModuleApi';
 import { ContainerModuleBindingServiceApi } from './container/services/api/ContainerModuleBindingServiceApi';
 import { ContainerServiceApi } from './container/services/api/ContainerServiceApi';
+import { ContainerModuleApi } from './containerModule/models/api/ContainerModuleApi';
 import { ContainerModuleMetadataApi } from './containerModuleTask/models/api/ContainerModuleMetadataApi';
 import { inject } from './metadata/decorators/inject';
 import { injectable } from './metadata/decorators/injectable';

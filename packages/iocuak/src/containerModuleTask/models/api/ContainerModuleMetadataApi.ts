@@ -1,5 +1,5 @@
 import { Newable } from '../../../common/models/domain/Newable';
-import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
+import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModuleClassMetadataApi } from './ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from './ContainerModuleFactoryMetadataApi';
 

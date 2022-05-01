@@ -1,8 +1,8 @@
 import sinon from 'sinon';
 
 import { Newable } from '../../../../../common/models/domain/Newable';
-import { ContainerModuleApi } from '../../../../../container/modules/api/ContainerModuleApi';
 import { ContainerModuleBindingServiceApi } from '../../../../../container/services/api/ContainerModuleBindingServiceApi';
+import { ContainerModuleApi } from '../../../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModuleClassMetadataApi } from '../../../../../containerModuleTask/models/api/ContainerModuleClassMetadataApi';
 import { inject } from '../../../../../metadata/decorators/inject';
 import { injectable } from '../../../../../metadata/decorators/injectable';

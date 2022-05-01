@@ -1,5 +1,5 @@
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
+import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleMetadataBase } from './ContainerModuleMetadataBase';
 import { ContainerModuleMetadataType } from './ContainerModuleMetadataType';
 
