@@ -1,5 +1,6 @@
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { isFunction } from '../../../common/utils/isFunction';
 import { stringifyServiceId } from '../../../utils/stringifyServiceId';
 import { TypeBinding } from '../../models/domain/TypeBinding';
 import { MetadataService } from '../../services/domain/MetadataService';
@@ -9,7 +10,7 @@ export function lazyGetBindingOrThrow<TInstance, TArgs extends unknown[]>(
   serviceId: ServiceId,
   metadataService: MetadataService,
 ): TypeBinding<TInstance, TArgs> {
-  if (serviceId instanceof Function) {
+  if (isFunction(serviceId)) {
     return getBindingOrThrow(
       serviceId as Newable<TInstance, TArgs>,
       metadataService,
