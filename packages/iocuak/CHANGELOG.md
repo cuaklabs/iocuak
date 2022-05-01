@@ -19,6 +19,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [UNRELEASED]
+
+### Changed
+- Updated `ContainerModuleMetadata` to allow module classes and modules.
+
+
+
+
 ## 0.2.1 - 2022-04-30
 
 ### Changed
