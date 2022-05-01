@@ -1,9 +1,11 @@
 import { isPromiseLike } from '@cuaklabs/cuaktask';
 
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { isFunction } from '../../../common/utils/isFunction';
 import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
 import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { isContainerModuleApi } from '../../../container/utils/api/isContainerModuleApi';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
@@ -21,14 +23,26 @@ export function convertToContainerModuleMetadata<TArgs extends unknown[]>(
 ): ContainerModuleMetadata<TArgs> {
   let containerModuleMetadata: ContainerModuleMetadata<TArgs>;
 
-  if (isContainerModuleClassMetadataApi(containerModuleMetadataApi)) {
-    containerModuleMetadata = convertToContainerModuleClassMetadata(
-      containerModuleMetadataApi,
-    );
+  if (isFunction(containerModuleMetadataApi)) {
+    containerModuleMetadata = convertToContainerModuleClassMetadata({
+      module: containerModuleMetadataApi,
+    });
   } else {
-    containerModuleMetadata = convertToContainerModuleFactoryMetadata(
-      containerModuleMetadataApi,
-    );
+    if (isContainerModuleApi(containerModuleMetadataApi)) {
+      containerModuleMetadata = convertToContainerModuleFactoryMetadata({
+        factory: () => containerModuleMetadataApi,
+      });
+    } else {
+      if (isContainerModuleClassMetadataApi(containerModuleMetadataApi)) {
+        containerModuleMetadata = convertToContainerModuleClassMetadata(
+          containerModuleMetadataApi,
+        );
+      } else {
+        containerModuleMetadata = convertToContainerModuleFactoryMetadata(
+          containerModuleMetadataApi,
+        );
+      }
+    }
   }
 
   return containerModuleMetadata;

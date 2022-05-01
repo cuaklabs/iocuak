@@ -12,13 +12,11 @@ import { ContainerModuleMetadataParameter } from './ContainerModuleMetadataParam
 import { getContainerModuleMetadataWithModuleParameter } from './getContainerModuleMetadataWithModuleParameter';
 
 export function getContainerModuleMetadataWithContainerModuleClassMetadataImports(): ContainerModuleMetadataParameter {
-  const containerModuleClassMetadataParameter: ContainerModuleMetadataParameter =
+  const containerModuleClassMetadataParameter: ContainerModuleMetadataParameter<ContainerModuleClassMetadataApi> =
     getContainerModuleMetadataWithModuleParameter();
 
   const containerModuleClassMetadataParameterClass: Newable<ContainerModuleApi> =
-    (
-      containerModuleClassMetadataParameter.containerModuleMetadata as ContainerModuleClassMetadataApi
-    ).module;
+    containerModuleClassMetadataParameter.containerModuleMetadata.module;
 
   const typeServiceParameter: TypeServiceParameter =
     getTypeServiceWithNoDependenciesParameter();

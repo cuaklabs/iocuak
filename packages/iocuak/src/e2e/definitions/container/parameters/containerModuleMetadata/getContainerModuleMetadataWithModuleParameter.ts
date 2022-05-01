@@ -6,7 +6,7 @@ import { ContainerModuleClassMetadataApi } from '../../../../../containerModuleT
 import { injectable } from '../../../../../metadata/decorators/injectable';
 import { ContainerModuleMetadataParameter } from './ContainerModuleMetadataParameter';
 
-export function getContainerModuleMetadataWithModuleParameter(): ContainerModuleMetadataParameter {
+export function getContainerModuleMetadataWithModuleParameter(): ContainerModuleMetadataParameter<ContainerModuleClassMetadataApi> {
   // eslint-disable-next-line import/no-named-as-default-member
   const loadSpy: sinon.SinonSpy = sinon.spy();
   // eslint-disable-next-line import/no-named-as-default-member
@@ -29,11 +29,12 @@ export function getContainerModuleMetadataWithModuleParameter(): ContainerModule
     module: ContainerModuleClass,
   };
 
-  const containerModuleMetadaParameter: ContainerModuleMetadataParameter = {
-    containerModuleMetadata,
-    loadSpy,
-    spy,
-  };
+  const containerModuleMetadaParameter: ContainerModuleMetadataParameter<ContainerModuleClassMetadataApi> =
+    {
+      containerModuleMetadata,
+      loadSpy,
+      spy,
+    };
 
   return containerModuleMetadaParameter;
 }
