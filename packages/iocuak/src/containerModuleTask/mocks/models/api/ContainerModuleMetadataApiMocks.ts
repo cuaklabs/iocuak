@@ -20,7 +20,7 @@ export class ContainerModuleMetadataApiMocks {
   }
 
   public static get anyContainerModuleFactoryMetadataApi(): jest.Mocked<ContainerModuleFactoryMetadataApi> {
-    const fixture: jest.Mocked<ContainerModuleMetadataApi> = {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadataApi> = {
       factory: jest.fn(),
     };
 
@@ -28,7 +28,7 @@ export class ContainerModuleMetadataApiMocks {
   }
 
   public static get withInjects(): jest.Mocked<ContainerModuleFactoryMetadataApi> {
-    const fixture: jest.Mocked<ContainerModuleMetadataApi> = {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadataApi> = {
       ...ContainerModuleMetadataApiMocks.anyContainerModuleFactoryMetadataApi,
       injects: ['service-id'],
     };
@@ -37,7 +37,7 @@ export class ContainerModuleMetadataApiMocks {
   }
 
   public static get withNoInjects(): jest.Mocked<ContainerModuleFactoryMetadataApi> {
-    const fixture: jest.Mocked<ContainerModuleMetadataApi> = {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadataApi> = {
       ...ContainerModuleMetadataApiMocks.anyContainerModuleFactoryMetadataApi,
     };
 
