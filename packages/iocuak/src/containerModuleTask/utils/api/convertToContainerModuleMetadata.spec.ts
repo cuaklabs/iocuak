@@ -1,6 +1,7 @@
 jest.mock('./convertToContainerModule');
 jest.mock('./convertToContainerModuleAsync');
 
+import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../../container/modules/api/ContainerModuleApi';
 import { ContainerModule } from '../../../container/modules/domain/ContainerModule';
@@ -18,6 +19,118 @@ import { convertToContainerModuleAsync } from './convertToContainerModuleAsync';
 import { convertToContainerModuleMetadata } from './convertToContainerModuleMetadata';
 
 describe(convertToContainerModuleMetadata.name, () => {
+  describe('having a ContainerModuleApi', () => {
+    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleApi>;
+
+    beforeAll(() => {
+      containerModuleFactoryMetadataApiMock = {
+        load: jest.fn(),
+      };
+    });
+
+    describe('when called', () => {
+      let containerModuleMetadata: ContainerModuleFactoryMetadata;
+      let result: unknown;
+
+      beforeAll(() => {
+        result = convertToContainerModuleMetadata(
+          containerModuleFactoryMetadataApiMock,
+        );
+
+        containerModuleMetadata = result as ContainerModuleFactoryMetadata;
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should return a ContainerModuleMetadata', () => {
+        const expected: ContainerModuleFactoryMetadata = {
+          factory: expect.any(
+            Function,
+          ) as ContainerModuleFactoryMetadata['factory'],
+          imports: [],
+          injects: [],
+          type: ContainerModuleMetadataType.factory,
+        };
+
+        expect(result).toStrictEqual(expected);
+      });
+
+      describe('when factory is called and containerModuleMetadataApi.factory returns a non promise', () => {
+        let containerModuleFixture: ContainerModule;
+        let argumentsFixture: unknown[];
+        let result: unknown;
+
+        beforeAll(() => {
+          containerModuleFixture = {
+            _tag: 'containerModule',
+          } as unknown as ContainerModule;
+
+          (
+            convertToContainerModule as jest.Mock<ContainerModule>
+          ).mockReturnValueOnce(containerModuleFixture);
+
+          argumentsFixture = [Symbol()];
+
+          result = containerModuleMetadata.factory(...argumentsFixture);
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call convertToContainerModule()', () => {
+          expect(convertToContainerModule).toHaveBeenCalledTimes(1);
+          expect(convertToContainerModule).toHaveBeenCalledWith(
+            containerModuleFactoryMetadataApiMock,
+          );
+        });
+
+        it('should return a ContainerModule', () => {
+          expect(result).toBe(containerModuleFixture);
+        });
+      });
+    });
+  });
+
+  describe('having a ContainerModuleApi Newable', () => {
+    let containerModuleClassMetadataApiMock: jest.Mocked<
+      Newable<ContainerModuleApi>
+    >;
+
+    beforeAll(() => {
+      containerModuleClassMetadataApiMock = jest.fn();
+    });
+
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        result = convertToContainerModuleMetadata(
+          containerModuleClassMetadataApiMock,
+        );
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should return a ContainerModuleMetadata', () => {
+        const expected: ContainerModuleClassMetadata = {
+          imports: [],
+          loader: expect.any(
+            Function,
+          ) as ContainerModuleClassMetadata['loader'],
+          moduleType: containerModuleClassMetadataApiMock,
+          type: ContainerModuleMetadataType.clazz,
+        };
+
+        expect(result).toStrictEqual(expected);
+      });
+    });
+  });
+
   describe('having a ContainerModuleClassMetadataApi', () => {
     let containerModuleClassMetadataApiMock: jest.Mocked<ContainerModuleClassMetadataApi>;
 
