@@ -3,11 +3,11 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerInstanceService } from '../../../container/services/domain/ContainerInstanceService';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
+import { ContainerModuleClassMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleClassMetadata';
+import { ContainerModuleFactoryMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleFactoryMetadata';
+import { ContainerModuleMetadataType } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadataType';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
-import { ContainerModuleClassMetadata } from '../domain/ContainerModuleClassMetadata';
-import { ContainerModuleFactoryMetadata } from '../domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../domain/ContainerModuleLoadFromMetadataTaskKind';
-import { ContainerModuleMetadataType } from '../domain/ContainerModuleMetadataType';
 import { ContainerModuleTaskKind } from '../domain/ContainerModuleTaskKind';
 
 export class ContainerModuleLoadFromMetadataTask extends cuaktask.BaseDependentTask<

@@ -1,9 +1,9 @@
 import { Newable } from '../../../../common/models/domain/Newable';
 import { ContainerModule } from '../../../../containerModule/models/domain/ContainerModule';
-import { ContainerModuleClassMetadata } from '../../../models/domain/ContainerModuleClassMetadata';
-import { ContainerModuleFactoryMetadata } from '../../../models/domain/ContainerModuleFactoryMetadata';
-import { ContainerModuleMetadata } from '../../../models/domain/ContainerModuleMetadata';
-import { ContainerModuleMetadataType } from '../../../models/domain/ContainerModuleMetadataType';
+import { ContainerModuleClassMetadata } from '../../../../containerModuleMetadata/models/domain/ContainerModuleClassMetadata';
+import { ContainerModuleFactoryMetadata } from '../../../../containerModuleMetadata/models/domain/ContainerModuleFactoryMetadata';
+import { ContainerModuleMetadata } from '../../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
+import { ContainerModuleMetadataType } from '../../../../containerModuleMetadata/models/domain/ContainerModuleMetadataType';
 
 export class ContainerModuleMetadataMocks {
   static #classFixture: Newable<ContainerModule> = class Foo

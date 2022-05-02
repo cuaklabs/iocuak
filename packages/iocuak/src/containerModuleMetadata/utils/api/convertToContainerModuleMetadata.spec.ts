@@ -8,8 +8,8 @@ import { ContainerModuleApi } from '../../../containerModule/models/api/Containe
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';
 import { convertToContainerModuleAsync } from '../../../containerModule/utils/api/convertToContainerModuleAsync';
+import { ContainerModuleMetadataApiMocks } from '../../../containerModuleTask/mocks/models/api/ContainerModuleMetadataApiMocks';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
-import { ContainerModuleMetadataApiMocks } from '../../mocks/models/api/ContainerModuleMetadataApiMocks';
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
 import { ContainerModuleClassMetadata } from '../../models/domain/ContainerModuleClassMetadata';

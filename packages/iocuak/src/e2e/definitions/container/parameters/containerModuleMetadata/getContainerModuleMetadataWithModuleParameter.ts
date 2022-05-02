@@ -2,7 +2,7 @@ import sinon from 'sinon';
 
 import { ContainerModuleBindingServiceApi } from '../../../../../container/services/api/ContainerModuleBindingServiceApi';
 import { ContainerModuleApi } from '../../../../../containerModule/models/api/ContainerModuleApi';
-import { ContainerModuleClassMetadataApi } from '../../../../../containerModuleTask/models/api/ContainerModuleClassMetadataApi';
+import { ContainerModuleClassMetadataApi } from '../../../../../containerModuleMetadata/models/api/ContainerModuleClassMetadataApi';
 import { injectable } from '../../../../../metadata/decorators/injectable';
 import { ContainerModuleMetadataParameter } from './ContainerModuleMetadataParameter';
 

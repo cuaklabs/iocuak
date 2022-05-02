@@ -4,7 +4,7 @@ import { ContainerApi } from './container/modules/api/ContainerApi';
 import { ContainerModuleBindingServiceApi } from './container/services/api/ContainerModuleBindingServiceApi';
 import { ContainerServiceApi } from './container/services/api/ContainerServiceApi';
 import { ContainerModuleApi } from './containerModule/models/api/ContainerModuleApi';
-import { ContainerModuleMetadataApi } from './containerModuleTask/models/api/ContainerModuleMetadataApi';
+import { ContainerModuleMetadataApi } from './containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { inject } from './metadata/decorators/inject';
 import { injectable } from './metadata/decorators/injectable';
 import { injectFrom } from './metadata/decorators/injectFrom';

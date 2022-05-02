@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 
 import { ContainerModuleApi } from '../../../../../containerModule/models/api/ContainerModuleApi';
-import { ContainerModuleFactoryMetadataApi } from '../../../../../containerModuleTask/models/api/ContainerModuleFactoryMetadataApi';
+import { ContainerModuleFactoryMetadataApi } from '../../../../../containerModuleMetadata/models/api/ContainerModuleFactoryMetadataApi';
 import { ContainerModuleParameter } from '../containerModule/ContainerModuleParameter';
 import { getContainerModuleWithTypeServiceAndValueServiceParameter } from '../containerModule/getContainerModuleWithTypeServiceAndValueServiceParameter';
 import { ContainerModuleMetadataParameter } from './ContainerModuleMetadataParameter';

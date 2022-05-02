@@ -1,13 +1,13 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
+import { ContainerModuleClassMetadata } from '../../containerModuleMetadata/models/domain/ContainerModuleClassMetadata';
+import { ContainerModuleFactoryMetadata } from '../../containerModuleMetadata/models/domain/ContainerModuleFactoryMetadata';
+import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
 import { ContainerModuleCreateInstancesTaskKindMocks } from '../mocks/models/domain/ContainerModuleCreateInstancesTaskKindMocks';
 import { ContainerModuleLoadFromMetadataTaskKindMocks } from '../mocks/models/domain/ContainerModuleLoadFromMetadataTaskKindMocks';
 import { ContainerModuleMetadataMocks } from '../mocks/models/domain/ContainerModuleMetadataMocks';
-import { ContainerModuleClassMetadata } from '../models/domain/ContainerModuleClassMetadata';
 import { ContainerModuleCreateInstancesTaskKind } from '../models/domain/ContainerModuleCreateInstancesTaskKind';
-import { ContainerModuleFactoryMetadata } from '../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../models/domain/ContainerModuleLoadFromMetadataTaskKind';
-import { ContainerModuleMetadata } from '../models/domain/ContainerModuleMetadata';
 import { ContainerModuleTaskKind } from '../models/domain/ContainerModuleTaskKind';
 import { ContainerModuleTaskKindType } from '../models/domain/ContainerModuleTaskKindType';
 import { ContainerModuleTaskDependencyEngine } from './ContainerModuleTaskDependencyEngine';
