@@ -33,9 +33,7 @@ export class DomainCrudContainerModule implements iocuak.ContainerModule {
   public static forRoot(
     crudModuleTypeToSymbolMap: ModuleTypeToSymbolMap<CrudModuleType>,
   ): iocuak.ContainerModuleMetadata {
-    return {
-      factory: () => new DomainCrudContainerModule(crudModuleTypeToSymbolMap),
-    };
+    return new DomainCrudContainerModule(crudModuleTypeToSymbolMap);
   }
 
   public load(
