@@ -1,6 +1,6 @@
-import { ContainerModuleClassMetadataApi } from '../../../models/api/ContainerModuleClassMetadataApi';
-import { ContainerModuleFactoryMetadataApi } from '../../../models/api/ContainerModuleFactoryMetadataApi';
-import { ContainerModuleMetadataApi } from '../../../models/api/ContainerModuleMetadataApi';
+import { ContainerModuleClassMetadataApi } from '../../../../containerModuleMetadata/models/api/ContainerModuleClassMetadataApi';
+import { ContainerModuleFactoryMetadataApi } from '../../../../containerModuleMetadata/models/api/ContainerModuleFactoryMetadataApi';
+import { ContainerModuleMetadataApi } from '../../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 
 export class ContainerModuleMetadataApiMocks {
   public static get any(): jest.Mocked<ContainerModuleMetadataApi> {

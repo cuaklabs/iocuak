@@ -1,5 +1,5 @@
+import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
 import { ContainerModuleBaseTaskKind } from './ContainerModuleBaseTaskKind';
-import { ContainerModuleMetadata } from './ContainerModuleMetadata';
 import { ContainerModuleTaskKindType } from './ContainerModuleTaskKindType';
 
 export interface ContainerModuleLoadFromMetadataTaskKind<

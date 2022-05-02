@@ -1,5 +1,5 @@
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
-import { ContainerModuleMetadata } from '../../../containerModuleTask/models/domain/ContainerModuleMetadata';
+import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
 
 export interface ContainerModuleService {
   loadMetadata(

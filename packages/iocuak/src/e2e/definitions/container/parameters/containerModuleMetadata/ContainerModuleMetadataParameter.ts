@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 
-import { ContainerModuleMetadataApi } from '../../../../../containerModuleTask/models/api/ContainerModuleMetadataApi';
+import { ContainerModuleMetadataApi } from '../../../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 
 export interface ContainerModuleMetadataParameter<
   TContainerModuleMetadata extends ContainerModuleMetadataApi = ContainerModuleMetadataApi,

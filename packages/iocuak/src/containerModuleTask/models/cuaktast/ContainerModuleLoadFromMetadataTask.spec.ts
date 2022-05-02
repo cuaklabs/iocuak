@@ -1,10 +1,10 @@
 import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerInstanceService } from '../../../container/services/domain/ContainerInstanceService';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
+import { ContainerModuleClassMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleClassMetadata';
+import { ContainerModuleFactoryMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleFactoryMetadata';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleLoadFromMetadataTaskKindMocks } from '../../mocks/models/domain/ContainerModuleLoadFromMetadataTaskKindMocks';
-import { ContainerModuleClassMetadata } from '../domain/ContainerModuleClassMetadata';
-import { ContainerModuleFactoryMetadata } from '../domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../domain/ContainerModuleLoadFromMetadataTaskKind';
 import { ContainerModuleLoadFromMetadataTask } from './ContainerModuleLoadFromMetadataTask';
 

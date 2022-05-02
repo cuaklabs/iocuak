@@ -1,5 +1,5 @@
-import { ContainerModuleClassMetadata } from '../../../models/domain/ContainerModuleClassMetadata';
-import { ContainerModuleFactoryMetadata } from '../../../models/domain/ContainerModuleFactoryMetadata';
+import { ContainerModuleClassMetadata } from '../../../../containerModuleMetadata/models/domain/ContainerModuleClassMetadata';
+import { ContainerModuleFactoryMetadata } from '../../../../containerModuleMetadata/models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../../../models/domain/ContainerModuleLoadFromMetadataTaskKind';
 import { ContainerModuleTaskKindType } from '../../../models/domain/ContainerModuleTaskKindType';
 import { ContainerModuleMetadataMocks } from './ContainerModuleMetadataMocks';

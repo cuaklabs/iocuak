@@ -2,10 +2,10 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { PickKeys } from '../../common/models/domain/PickKeys';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { ContainerModuleFactoryMetadata } from '../models/domain/ContainerModuleFactoryMetadata';
+import { ContainerModuleFactoryMetadata } from '../../containerModuleMetadata/models/domain/ContainerModuleFactoryMetadata';
+import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
+import { ContainerModuleMetadataType } from '../../containerModuleMetadata/models/domain/ContainerModuleMetadataType';
 import { ContainerModuleLoadFromMetadataTaskKind } from '../models/domain/ContainerModuleLoadFromMetadataTaskKind';
-import { ContainerModuleMetadata } from '../models/domain/ContainerModuleMetadata';
-import { ContainerModuleMetadataType } from '../models/domain/ContainerModuleMetadataType';
 import { ContainerModuleTaskKind } from '../models/domain/ContainerModuleTaskKind';
 import { ContainerModuleTaskKindType } from '../models/domain/ContainerModuleTaskKindType';
 
