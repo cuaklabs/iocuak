@@ -1,0 +1,108 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run File",
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register"
+      ],
+      "args": [
+        "${file}"
+      ],
+      "console": "integratedTerminal",
+      "protocol": "inspector",
+      "cwd": "${workspaceFolder}/api"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run File (JS)",
+      "runtimeArgs": ["--nolazy"],
+      "args": [
+        "${file}"
+      ],
+      "console": "integratedTerminal",
+      "protocol": "inspector",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test File",
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register"
+      ],
+      "args": [
+        "${workspaceRoot}/node_modules/jest/bin/jest.js",
+        "--config=${workspaceRoot}/config/jest/jest.config.mjs",
+        "${file}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "protocol": "inspector"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test Files",
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register"
+      ],
+      "args": [
+        "${workspaceRoot}/node_modules/jest/bin/jest.js",
+        "--config=config/jest/jest.config.mjs",
+        "${input:someArgs}"
+      ],
+      "console": "integratedTerminal",
+      "protocol": "inspector",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test E2E",
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "args": [
+        "${workspaceRoot}/node_modules/@cucumber/cucumber/bin/cucumber.js",
+        "--config=config/cucumber/cucumber.ts.config.mjs"
+      ],
+      "console": "integratedTerminal",
+      "protocol": "inspector",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test E2E (CI)",
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "args": [
+        "${workspaceRoot}/node_modules/@cucumber/cucumber/bin/cucumber.js",
+        "--config=config/cucumber/cucumber.ts.config.mjs",
+        "--profile",
+        "ci"
+      ],
+      "console": "integratedTerminal",
+      "protocol": "inspector",
+      "cwd": "${workspaceFolder}"
+    },
+  ],
+  "inputs": [
+    {
+      "id": "someArgs",
+      "type": "promptString",
+      "description": "enter some arguments"
+    }
+  ]
+}
