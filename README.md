@@ -1,9 +1,9 @@
 [![Build status](https://github.com/cuaklabs/cuaktask/workflows/ci/badge.svg)](https://github.com/cuaklabs/cuaktask/workflows/ci/badge.svg)
 
-# Cuaktask
+# Iocuak
 
-Simple agnostic zero-dependencies abstract task manager.
+The simple IoC container.
 
 ## Documentation
 
-Coming soon...
+Feel free to visit the [documentation pages](https://cuaklabs.github.io/iocuak-docs)
