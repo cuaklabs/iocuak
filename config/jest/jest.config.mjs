@@ -22,6 +22,7 @@ const tsIntegrationProject = getJestTsProjectConfig(
 
 /** @type {!import("@jest/types/build/Config").GlobalConfig} */
 const globalConfig = {
+  passWithNoTests: true,
   projects: [tsIntegrationProject, tsUnitProject, ...packageProjects],
 };
 

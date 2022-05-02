@@ -103,6 +103,7 @@ function getJestProjectConfig(
   testMatch,
   testPathIgnorePatterns,
 ) {
+  /** @type { !import("@jest/types/build/Config").GlobalConfig } */
   const projectConfig = {
     displayName: projectName,
     collectCoverageFrom: [],

@@ -26,6 +26,7 @@ const globalConfig = {
     'packages/*/lib/**/*.js',
     '!packages/*/lib/**/*.spec.js',
   ],
+  passWithNoTests: true,
   projects: [jsIntegrationProject, jsUnitProject, ...packageProjects],
 };
 
