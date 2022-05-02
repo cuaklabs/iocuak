@@ -125,7 +125,7 @@ jobs:
         if: ${{ !(github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true) }}
 
       - name: Launch Integration Tests
-        run: pnpm run test:package:js:ci -- --passWithNoTests --selectProjects ${{ matrix.package }}-Integration
+        run: pnpm run test:package:js:ci -- --selectProjects ${{ matrix.package }}-Integration
 
       - name: Start SSH session on failure
         if: ${{ failure() && contains(github.event.head_commit.message, '[ci-open-ssh]') }}
