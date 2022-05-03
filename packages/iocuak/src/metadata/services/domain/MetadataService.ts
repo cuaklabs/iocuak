@@ -1,5 +1,5 @@
+import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
 import { Newable } from '../../../common/models/domain/Newable';
-import { ClassMetadata } from '../../models/domain/ClassMetadata';
 import { TypeBinding } from '../../models/domain/TypeBinding';
 
 export interface MetadataService {

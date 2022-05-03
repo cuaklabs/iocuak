@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 
+import { inject } from '../../classMetadata/decorators/inject';
+import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { ClassMetadata } from '../models/domain/ClassMetadata';
-import { MetadataKey } from '../models/domain/MetadataKey';
-import { inject } from './inject';
+import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
 
 describe(inject.name, () => {
   describe('when called, as property decorator', () => {

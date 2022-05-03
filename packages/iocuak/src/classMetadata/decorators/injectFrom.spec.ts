@@ -1,15 +1,15 @@
-jest.mock('../utils/getReflectMetadata');
-jest.mock('../utils/updateReflectMetadata');
+jest.mock('../../reflectMetadata/utils/domain/getReflectMetadata');
+jest.mock('../../reflectMetadata/utils/domain/updateReflectMetadata');
 
+import { injectFrom } from '../../classMetadata/decorators/injectFrom';
+import { ClassMetadataExtensionApi } from '../../classMetadata/models/api/ClassMetadataExtensionApi';
+import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
+import { getDefaultClassMetadata } from '../../classMetadata/utils/domain/getDefaultClassMetadata';
 import { Newable } from '../../common/models/domain/Newable';
+import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
+import { getReflectMetadata } from '../../reflectMetadata/utils/domain/getReflectMetadata';
+import { updateReflectMetadata } from '../../reflectMetadata/utils/domain/updateReflectMetadata';
 import { ClassMetadataFixtures } from '../fixtures/domain/ClassMetadataFixtures';
-import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionApi';
-import { ClassMetadata } from '../models/domain/ClassMetadata';
-import { MetadataKey } from '../models/domain/MetadataKey';
-import { getReflectMetadata } from '../utils/getReflectMetadata';
-import { updateReflectMetadata } from '../utils/updateReflectMetadata';
-import { getDefaultClassMetadata } from './getDefaultClassMetadata';
-import { injectFrom } from './injectFrom';
 
 describe(injectFrom.name, () => {
   describe('when called, and getReflectMetadata() returns undefined', () => {

@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 
-jest.mock('../utils/updateReflectMetadata');
+jest.mock('../../reflectMetadata/utils/domain/updateReflectMetadata');
 
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { MetadataKey } from '../models/domain/MetadataKey';
-import { updateReflectMetadata } from '../utils/updateReflectMetadata';
+import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
+import { updateReflectMetadata } from '../../reflectMetadata/utils/domain/updateReflectMetadata';
 import { inject } from './inject';
 
 describe(inject.name, () => {

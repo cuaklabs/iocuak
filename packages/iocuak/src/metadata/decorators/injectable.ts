@@ -1,10 +1,10 @@
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
+import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { InjectableOptionsApi } from '../models/api/InjectableOptionsApi';
 import { BindingScope } from '../models/domain/BindingScope';
 import { BindingType } from '../models/domain/BindingType';
-import { MetadataKey } from '../models/domain/MetadataKey';
 import { TypeBinding } from '../models/domain/TypeBinding';
 import { getDefaultBindingScope } from '../utils/domain/getDefaultBindingScope';
 

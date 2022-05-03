@@ -1,10 +1,10 @@
+import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
+import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
+import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';
 import { Newable } from '../../../common/models/domain/Newable';
-import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { TypeBindingApi } from '../../models/api/TypeBindingApi';
-import { ClassMetadata } from '../../models/domain/ClassMetadata';
 import { TypeBinding } from '../../models/domain/TypeBinding';
 import { convertBindingToBindingApi } from '../../utils/api/convertBindingToBindingApi';
-import { convertClassMetadataToClassMetadataApi } from '../../utils/api/convertClassMetadataToClassMetadataApi';
 import { MetadataService } from '../domain/MetadataService';
 import { MetadataServiceApi } from './MetadataServiceApi';
 
@@ -32,6 +32,6 @@ export class MetadataServiceApiImplementation implements MetadataServiceApi {
     const classMetadata: ClassMetadata =
       this.#metadataService.getClassMetadata(type);
 
-    return convertClassMetadataToClassMetadataApi(classMetadata);
+    return convertToClassMetadataApi(classMetadata);
   }
 }

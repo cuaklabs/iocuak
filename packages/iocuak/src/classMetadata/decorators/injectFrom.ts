@@ -1,11 +1,11 @@
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { chain } from '../../common/utils/chain';
+import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
+import { getReflectMetadata } from '../../reflectMetadata/utils/domain/getReflectMetadata';
+import { updateReflectMetadata } from '../../reflectMetadata/utils/domain/updateReflectMetadata';
 import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionApi';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
-import { MetadataKey } from '../models/domain/MetadataKey';
-import { getReflectMetadata } from '../utils/getReflectMetadata';
-import { updateReflectMetadata } from '../utils/updateReflectMetadata';
-import { getDefaultClassMetadata } from './getDefaultClassMetadata';
+import { getDefaultClassMetadata } from '../utils/domain/getDefaultClassMetadata';
 
 export function injectFrom(
   classMetadataExtensionApi: ClassMetadataExtensionApi,

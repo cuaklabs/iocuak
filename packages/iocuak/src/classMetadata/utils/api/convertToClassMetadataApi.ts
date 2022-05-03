@@ -1,7 +1,7 @@
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { ClassMetadata } from '../../models/domain/ClassMetadata';
 
-export function convertClassMetadataToClassMetadataApi(
+export function convertToClassMetadataApi(
   classMetadata: ClassMetadata,
 ): ClassMetadataApi {
   return {

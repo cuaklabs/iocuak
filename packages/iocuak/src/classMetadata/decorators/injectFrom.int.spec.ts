@@ -1,13 +1,13 @@
 import 'reflect-metadata';
 
+import { inject } from '../../classMetadata/decorators/inject';
+import { injectFrom } from '../../classMetadata/decorators/injectFrom';
+import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
+import { getDefaultClassMetadata } from '../../classMetadata/utils/domain/getDefaultClassMetadata';
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { ClassMetadata } from '../models/domain/ClassMetadata';
-import { MetadataKey } from '../models/domain/MetadataKey';
-import { getReflectMetadata } from '../utils/getReflectMetadata';
-import { getDefaultClassMetadata } from './getDefaultClassMetadata';
-import { inject } from './inject';
-import { injectFrom } from './injectFrom';
+import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
+import { getReflectMetadata } from '../../reflectMetadata/utils/domain/getReflectMetadata';
 
 describe(injectFrom.name, () => {
   describe('having a ClassMetadataExtensionApi with extendConstructorArguments false and extendProperties false', () => {

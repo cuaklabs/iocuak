@@ -1,11 +1,11 @@
 jest.mock('../../utils/getBaseType');
 jest.mock('./injectFrom');
 
+import { injectFrom } from '../../classMetadata/decorators/injectFrom';
+import { injectFromBase } from '../../classMetadata/decorators/injectFromBase';
+import { ClassMetadataExtensionApi } from '../../classMetadata/models/api/ClassMetadataExtensionApi';
 import { Newable } from '../../common/models/domain/Newable';
 import { getBaseType } from '../../utils/getBaseType';
-import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionApi';
-import { injectFrom } from './injectFrom';
-import { injectFromBase } from './injectFromBase';
 
 describe(injectFromBase.name, () => {
   describe('when called, and getBaseType() returns undefined', () => {

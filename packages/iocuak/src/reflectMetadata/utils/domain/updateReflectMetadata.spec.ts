@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 jest.mock('./getReflectMetadata');
 
-import { Newable } from '../../common/models/domain/Newable';
+import { Newable } from '../../../common/models/domain/Newable';
 import { getReflectMetadata } from './getReflectMetadata';
 import { updateReflectMetadata } from './updateReflectMetadata';
 

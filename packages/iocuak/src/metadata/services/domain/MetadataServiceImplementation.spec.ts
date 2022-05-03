@@ -1,12 +1,12 @@
-jest.mock('../../../metadata/decorators/getDefaultClassMetadata');
-jest.mock('../../../metadata/utils/getReflectMetadata');
+jest.mock('../../../classMetadata/utils/domain/getDefaultClassMetadata');
+jest.mock('../../../reflectMetadata/utils/domain/getReflectMetadata');
 
+import { ClassMetadataFixtures } from '../../../classMetadata/fixtures/domain/ClassMetadataFixtures';
+import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
+import { getDefaultClassMetadata } from '../../../classMetadata/utils/domain/getDefaultClassMetadata';
 import { Newable } from '../../../common/models/domain/Newable';
-import { getDefaultClassMetadata } from '../../decorators/getDefaultClassMetadata';
-import { ClassMetadataFixtures } from '../../fixtures/domain/ClassMetadataFixtures';
-import { ClassMetadata } from '../../models/domain/ClassMetadata';
-import { MetadataKey } from '../../models/domain/MetadataKey';
-import { getReflectMetadata } from '../../utils/getReflectMetadata';
+import { MetadataKey } from '../../../reflectMetadata/models/domain/MetadataKey';
+import { getReflectMetadata } from '../../../reflectMetadata/utils/domain/getReflectMetadata';
 import { MetadataServiceImplementation } from './MetadataServiceImplementation';
 
 describe(MetadataServiceImplementation.name, () => {

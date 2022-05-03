@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 
-import { inject } from '../../../../../metadata/decorators/inject';
+import { inject } from '../../../../../classMetadata/decorators/inject';
 import { injectable } from '../../../../../metadata/decorators/injectable';
 import { BindingScopeApi } from '../../../../../metadata/models/api/BindingScopeApi';
 import { BindingTypeApi } from '../../../../../metadata/models/api/BindingTypeApi';

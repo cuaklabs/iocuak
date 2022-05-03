@@ -1,8 +1,8 @@
+import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { Binding } from '../../metadata/models/domain/Binding';
 import { BindingType } from '../../metadata/models/domain/BindingType';
-import { ClassMetadata } from '../../metadata/models/domain/ClassMetadata';
 import { TypeBinding } from '../../metadata/models/domain/TypeBinding';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
 import { lazyGetBindingOrThrow } from '../../metadata/utils/domain/lazyGetBindingOrThrow';

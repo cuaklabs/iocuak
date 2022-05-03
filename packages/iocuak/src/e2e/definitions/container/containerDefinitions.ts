@@ -3,6 +3,7 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
+import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerApi } from '../../../container/modules/api/ContainerApi';
@@ -10,7 +11,6 @@ import { ContainerModuleClassMetadataApi } from '../../../containerModuleMetadat
 import { ContainerModuleFactoryMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleFactoryMetadataApi';
 import { BindingApi } from '../../../metadata/models/api/BindingApi';
 import { BindingTypeApi } from '../../../metadata/models/api/BindingTypeApi';
-import { ClassMetadataApi } from '../../../metadata/models/api/ClassMetadataApi';
 import { MetadataProviderApi } from '../../../metadata/modules/MetadataProviderApi';
 import { ResultWorld } from '../common/models/worlds/ResultWorld';
 import { TwoResultsWorld } from '../common/models/worlds/TwoResultsWorld';

@@ -1,8 +1,8 @@
 import { ServiceId } from '../../common/models/domain/ServiceId';
+import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
+import { updateReflectMetadata } from '../../reflectMetadata/utils/domain/updateReflectMetadata';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
-import { MetadataKey } from '../models/domain/MetadataKey';
-import { updateReflectMetadata } from '../utils/updateReflectMetadata';
-import { getDefaultClassMetadata } from './getDefaultClassMetadata';
+import { getDefaultClassMetadata } from '../utils/domain/getDefaultClassMetadata';
 
 export function inject(
   serviceId: ServiceId,

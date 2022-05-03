@@ -1,8 +1,8 @@
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { ClassMetadata } from '../../models/domain/ClassMetadata';
-import { convertClassMetadataToClassMetadataApi } from './convertClassMetadataToClassMetadataApi';
+import { convertToClassMetadataApi } from './convertToClassMetadataApi';
 
-describe(convertClassMetadataToClassMetadataApi.name, () => {
+describe(convertToClassMetadataApi.name, () => {
   describe('when called', () => {
     let classMetadataFixture: ClassMetadata;
     let classMetadataApiFixture: ClassMetadataApi;
@@ -19,7 +19,7 @@ describe(convertClassMetadataToClassMetadataApi.name, () => {
         properties: new Map([['foo', Symbol.for('bar')]]),
       };
 
-      result = convertClassMetadataToClassMetadataApi(classMetadataFixture);
+      result = convertToClassMetadataApi(classMetadataFixture);
     });
 
     it('should return ClassMetadataApi', () => {

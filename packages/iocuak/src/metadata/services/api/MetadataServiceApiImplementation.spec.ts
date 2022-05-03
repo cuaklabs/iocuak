@@ -1,17 +1,17 @@
+jest.mock('../../../classMetadata/utils/api/convertToClassMetadataApi');
 jest.mock('../../utils/api/convertBindingToBindingApi');
-jest.mock('../../utils/api/convertClassMetadataToClassMetadataApi');
 
+import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
+import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
+import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { BindingApi } from '../../models/api/BindingApi';
 import { BindingScopeApi } from '../../models/api/BindingScopeApi';
 import { BindingTypeApi } from '../../models/api/BindingTypeApi';
-import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { Binding } from '../../models/domain/Binding';
 import { BindingScope } from '../../models/domain/BindingScope';
 import { BindingType } from '../../models/domain/BindingType';
-import { ClassMetadata } from '../../models/domain/ClassMetadata';
 import { convertBindingToBindingApi } from '../../utils/api/convertBindingToBindingApi';
-import { convertClassMetadataToClassMetadataApi } from '../../utils/api/convertClassMetadataToClassMetadataApi';
 import { MetadataService } from '../domain/MetadataService';
 import { MetadataServiceApiImplementation } from './MetadataServiceApiImplementation';
 
@@ -145,7 +145,7 @@ describe(MetadataServiceApiImplementation.name, () => {
         );
 
         (
-          convertClassMetadataToClassMetadataApi as jest.Mock<
+          convertToClassMetadataApi as jest.Mock<
             ClassMetadataApi,
             [ClassMetadata]
           >
@@ -166,8 +166,8 @@ describe(MetadataServiceApiImplementation.name, () => {
       });
 
       it('should call convertClassMetadataToClassMetadataApi()', () => {
-        expect(convertClassMetadataToClassMetadataApi).toHaveBeenCalledTimes(1);
-        expect(convertClassMetadataToClassMetadataApi).toHaveBeenCalledWith(
+        expect(convertToClassMetadataApi).toHaveBeenCalledTimes(1);
+        expect(convertToClassMetadataApi).toHaveBeenCalledWith(
           classMetadataFixture,
         );
       });

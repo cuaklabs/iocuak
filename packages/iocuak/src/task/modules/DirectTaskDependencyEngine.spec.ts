@@ -1,8 +1,8 @@
 jest.mock('../../metadata/utils/domain/lazyGetBindingOrThrow');
 
+import { ClassMetadataFixtures } from '../../classMetadata/fixtures/domain/ClassMetadataFixtures';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
-import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
 import { Binding } from '../../metadata/models/domain/Binding';
 import { BindingScope } from '../../metadata/models/domain/BindingScope';
 import { BindingType } from '../../metadata/models/domain/BindingType';

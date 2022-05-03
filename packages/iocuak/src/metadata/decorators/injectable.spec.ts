@@ -2,12 +2,12 @@ import 'reflect-metadata';
 
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
+import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
 import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
 import { BindingScopeApi } from '../models/api/BindingScopeApi';
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { BindingScope } from '../models/domain/BindingScope';
 import { BindingType } from '../models/domain/BindingType';
-import { MetadataKey } from '../models/domain/MetadataKey';
 import { TypeBinding } from '../models/domain/TypeBinding';
 import { injectable } from './injectable';
 
