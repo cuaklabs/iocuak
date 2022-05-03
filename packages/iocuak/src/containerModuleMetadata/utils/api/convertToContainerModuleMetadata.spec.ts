@@ -1,9 +1,9 @@
 jest.mock('../../../containerModule/utils/api/convertToContainerModule');
 jest.mock('../../../containerModule/utils/api/convertToContainerModuleAsync');
 
+import { BindingService } from '../../../binding/services/domain/BindingService';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';
@@ -171,7 +171,7 @@ describe(convertToContainerModuleMetadata.name, () => {
       describe('when loader is called', () => {
         let containerModuleMock: jest.Mocked<ContainerModule>;
         let containerModuleApiFixture: ContainerModuleApi;
-        let containerBindingServiceFixture: ContainerBindingService;
+        let containerBindingServiceFixture: BindingService;
         let metadataServiceFixture: MetadataService;
 
         beforeAll(() => {
@@ -185,7 +185,7 @@ describe(convertToContainerModuleMetadata.name, () => {
 
           containerBindingServiceFixture = {
             _tag: Symbol('ContainerBindingService'),
-          } as Partial<ContainerBindingService> as ContainerBindingService;
+          } as Partial<BindingService> as BindingService;
 
           metadataServiceFixture = {
             _tag: Symbol('MetadataService'),

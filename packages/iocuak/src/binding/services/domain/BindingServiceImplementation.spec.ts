@@ -1,20 +1,20 @@
-import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingScope } from '../../../binding/models/domain/BindingScope';
-import { BindingType } from '../../../binding/models/domain/BindingType';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { ContainerBindingService } from './ContainerBindingService';
-import { ContainerBindingServiceImplementation } from './ContainerBindingServiceImplementation';
+import { Binding } from '../../models/domain/Binding';
+import { BindingScope } from '../../models/domain/BindingScope';
+import { BindingType } from '../../models/domain/BindingType';
+import { BindingService } from './BindingService';
+import { BindingServiceImplementation } from './BindingServiceImplementation';
 
-describe(ContainerBindingServiceImplementation.name, () => {
+describe(BindingServiceImplementation.name, () => {
   describe('.get()', () => {
     describe('when called, and serviceIdToInstanceMap has no entries and parent is undefined', () => {
-      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
 
       let result: unknown;
 
       beforeAll(() => {
         containerBindingServiceImplementation =
-          new ContainerBindingServiceImplementation();
+          new BindingServiceImplementation();
 
         result = containerBindingServiceImplementation.get('service-id');
       });
@@ -25,8 +25,8 @@ describe(ContainerBindingServiceImplementation.name, () => {
     });
 
     describe('when called, and serviceIdToInstanceMap has no entries and parent has no entries', () => {
-      let parent: jest.Mocked<ContainerBindingService>;
-      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let parent: jest.Mocked<BindingService>;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
 
       let result: unknown;
 
@@ -34,11 +34,11 @@ describe(ContainerBindingServiceImplementation.name, () => {
         parent = {
           get: jest.fn().mockReturnValueOnce(undefined),
         } as Partial<
-          jest.Mocked<ContainerBindingService>
-        > as jest.Mocked<ContainerBindingService>;
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
         containerBindingServiceImplementation =
-          new ContainerBindingServiceImplementation(parent);
+          new BindingServiceImplementation(parent);
 
         result = containerBindingServiceImplementation.get('service-id');
       });
@@ -49,8 +49,8 @@ describe(ContainerBindingServiceImplementation.name, () => {
     });
 
     describe('when called, and serviceIdToInstanceMap has no entries and parent has an entry with the same service id', () => {
-      let parent: jest.Mocked<ContainerBindingService>;
-      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let parent: jest.Mocked<BindingService>;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
       let bindingFixture: Binding;
 
       let result: unknown;
@@ -68,11 +68,11 @@ describe(ContainerBindingServiceImplementation.name, () => {
         parent = {
           get: jest.fn().mockReturnValueOnce(bindingFixture),
         } as Partial<
-          jest.Mocked<ContainerBindingService>
-        > as jest.Mocked<ContainerBindingService>;
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
         containerBindingServiceImplementation =
-          new ContainerBindingServiceImplementation(parent);
+          new BindingServiceImplementation(parent);
 
         result = containerBindingServiceImplementation.get(serviceIdFixture);
       });
@@ -83,14 +83,14 @@ describe(ContainerBindingServiceImplementation.name, () => {
     });
 
     describe('when called, and serviceIdToInstanceMap has an entry with the same service id', () => {
-      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
       let bindingFixture: Binding;
 
       let result: unknown;
 
       beforeAll(() => {
         containerBindingServiceImplementation =
-          new ContainerBindingServiceImplementation();
+          new BindingServiceImplementation();
 
         bindingFixture = {
           bindingType: BindingType.type,
@@ -112,14 +112,14 @@ describe(ContainerBindingServiceImplementation.name, () => {
 
   describe('.getAll()', () => {
     describe('when called, and serviceIdToInstanceMap has an entry and parent is undefined', () => {
-      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
       let bindingFixture: Binding;
 
       let result: unknown;
 
       beforeAll(() => {
         containerBindingServiceImplementation =
-          new ContainerBindingServiceImplementation();
+          new BindingServiceImplementation();
 
         bindingFixture = {
           bindingType: BindingType.type,
@@ -141,8 +141,8 @@ describe(ContainerBindingServiceImplementation.name, () => {
     });
 
     describe('when called, and serviceIdToInstanceMap has an entry and parent has an entry with different id', () => {
-      let parentMock: jest.Mocked<ContainerBindingService>;
-      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let parentMock: jest.Mocked<BindingService>;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
       let parentBindingFixture: Binding;
       let bindingFixture: Binding;
 
@@ -165,11 +165,11 @@ describe(ContainerBindingServiceImplementation.name, () => {
               ]),
             ),
         } as Partial<
-          jest.Mocked<ContainerBindingService>
-        > as jest.Mocked<ContainerBindingService>;
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
         containerBindingServiceImplementation =
-          new ContainerBindingServiceImplementation(parentMock);
+          new BindingServiceImplementation(parentMock);
 
         bindingFixture = {
           bindingType: BindingType.type,
@@ -194,8 +194,8 @@ describe(ContainerBindingServiceImplementation.name, () => {
     });
 
     describe('when called, and serviceIdToInstanceMap has an entry and parent has an entry with same id', () => {
-      let parentMock: jest.Mocked<ContainerBindingService>;
-      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let parentMock: jest.Mocked<BindingService>;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
       let parentBindingFixture: Binding;
       let bindingFixture: Binding;
 
@@ -218,11 +218,11 @@ describe(ContainerBindingServiceImplementation.name, () => {
               ]),
             ),
         } as Partial<
-          jest.Mocked<ContainerBindingService>
-        > as jest.Mocked<ContainerBindingService>;
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
         containerBindingServiceImplementation =
-          new ContainerBindingServiceImplementation(parentMock);
+          new BindingServiceImplementation(parentMock);
 
         bindingFixture = {
           bindingType: BindingType.type,
@@ -247,11 +247,11 @@ describe(ContainerBindingServiceImplementation.name, () => {
   describe('.set()', () => {
     describe('when called', () => {
       let bindingFixture: Binding;
-      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
 
       beforeAll(() => {
         containerBindingServiceImplementation =
-          new ContainerBindingServiceImplementation();
+          new BindingServiceImplementation();
 
         bindingFixture = {
           bindingType: BindingType.type,
@@ -279,12 +279,12 @@ describe(ContainerBindingServiceImplementation.name, () => {
 
   describe('.remove()', () => {
     describe('when called, and serviceIdToInstanceMap has no entries', () => {
-      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
       let serviceIdFixture: ServiceId;
 
       beforeAll(() => {
         containerBindingServiceImplementation =
-          new ContainerBindingServiceImplementation();
+          new BindingServiceImplementation();
 
         serviceIdFixture = 'sample-service-id';
 
@@ -305,12 +305,12 @@ describe(ContainerBindingServiceImplementation.name, () => {
     });
 
     describe('when called, and serviceIdToInstanceMap has an entry with the same service id', () => {
-      let containerBindingServiceImplementation: ContainerBindingServiceImplementation;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
       let bindingFixture: Binding;
 
       beforeAll(() => {
         containerBindingServiceImplementation =
-          new ContainerBindingServiceImplementation();
+          new BindingServiceImplementation();
 
         bindingFixture = {
           bindingType: BindingType.type,

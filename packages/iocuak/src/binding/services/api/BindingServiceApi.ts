@@ -1,8 +1,8 @@
-import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { BindingApi } from '../../models/api/BindingApi';
 
-export interface ContainerBindingServiceApi {
+export interface BindingServiceApi {
   bind<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): void;

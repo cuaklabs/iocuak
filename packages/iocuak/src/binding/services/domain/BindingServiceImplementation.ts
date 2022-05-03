@@ -1,14 +1,12 @@
 import { Binding } from '../../../binding/models/domain/Binding';
+import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { ContainerBindingService } from './ContainerBindingService';
 
-export class ContainerBindingServiceImplementation
-  implements ContainerBindingService
-{
-  readonly #parent: ContainerBindingService | undefined;
+export class BindingServiceImplementation implements BindingService {
+  readonly #parent: BindingService | undefined;
   readonly #serviceIdToBindingMap: Map<ServiceId, Binding>;
 
-  constructor(parent?: ContainerBindingService) {
+  constructor(parent?: BindingService) {
     this.#parent = parent;
     this.#serviceIdToBindingMap = new Map();
   }

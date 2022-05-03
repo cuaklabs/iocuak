@@ -1,7 +1,7 @@
-import { Binding } from '../../../binding/models/domain/Binding';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { Binding } from '../../models/domain/Binding';
 
-export interface ContainerBindingService {
+export interface BindingService {
   get<TInstance, TArgs extends unknown[]>(
     serviceId: ServiceId,
   ): Binding<TInstance, TArgs> | undefined;

@@ -1,6 +1,6 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
-import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ContainerInstanceService } from '../../../container/services/domain/ContainerInstanceService';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleClassMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleClassMetadata';
@@ -16,7 +16,7 @@ export class ContainerModuleLoadFromMetadataTask extends cuaktask.BaseDependentT
   [unknown[] | void],
   ContainerModule | Promise<ContainerModule>
 > {
-  readonly #containerBindingService: ContainerBindingService;
+  readonly #containerBindingService: BindingService;
   readonly #containerInstanceService: ContainerInstanceService;
   readonly #metadataService: MetadataService;
 
@@ -28,7 +28,7 @@ export class ContainerModuleLoadFromMetadataTask extends cuaktask.BaseDependentT
           ContainerModuleTaskKind
         >[]
       | undefined,
-    containerBindingService: ContainerBindingService,
+    containerBindingService: BindingService,
     containerInstanceService: ContainerInstanceService,
     metadataService: MetadataService,
   ) {
@@ -62,7 +62,7 @@ export class ContainerModuleLoadFromMetadataTask extends cuaktask.BaseDependentT
 
     const containerModule: ContainerModule = {
       load: (
-        containerBindingService: ContainerBindingService,
+        containerBindingService: BindingService,
         metadataService: MetadataService,
       ): void => {
         metadata.loader(

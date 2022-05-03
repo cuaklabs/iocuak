@@ -1,23 +1,21 @@
 import { BindingType } from '../../binding/models/domain/BindingType';
 import { ValueBinding } from '../../binding/models/domain/ValueBinding';
+import { BindingService } from '../../binding/services/domain/BindingService';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { bindToValue } from '../../container/utils/bindToValue';
 
 describe(bindToValue.name, () => {
   describe('when called', () => {
     let serviceIdFixture: ServiceId;
     let valueFixture: unknown;
-    let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+    let containerBindingServiceMock: jest.Mocked<BindingService>;
 
     beforeAll(() => {
       serviceIdFixture = 'service-id';
       valueFixture = {};
       containerBindingServiceMock = {
         set: jest.fn(),
-      } as Partial<
-        jest.Mocked<ContainerBindingService>
-      > as jest.Mocked<ContainerBindingService>;
+      } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
 
       bindToValue(serviceIdFixture, valueFixture, containerBindingServiceMock);
     });
