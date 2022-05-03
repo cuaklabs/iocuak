@@ -1,6 +1,6 @@
 import { BaseDependentTask } from '@cuaklabs/cuaktask';
 
-import { ClassMetadata } from '../../../metadata/models/domain/ClassMetadata';
+import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
 import { stringifyServiceId } from '../../../utils/stringifyServiceId';
 import { GetInstanceDependenciesTaskKind } from '../domain/GetInstanceDependenciesTaskKind';
 import { ServiceDependencies } from '../domain/ServiceDependencies';

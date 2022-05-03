@@ -1,4 +1,4 @@
-import { ValueBindingApi } from '../../../../../metadata/models/api/ValueBindingApi';
+import { ValueBindingApi } from '../../../../../binding/models/api/ValueBindingApi';
 
 export interface ValueServiceParameter {
   binding: ValueBindingApi;

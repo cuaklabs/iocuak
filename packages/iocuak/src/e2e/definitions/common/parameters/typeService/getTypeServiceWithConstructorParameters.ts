@@ -1,10 +1,10 @@
 import sinon from 'sinon';
 
-import { inject } from '../../../../../metadata/decorators/inject';
-import { injectable } from '../../../../../metadata/decorators/injectable';
-import { BindingScopeApi } from '../../../../../metadata/models/api/BindingScopeApi';
-import { BindingTypeApi } from '../../../../../metadata/models/api/BindingTypeApi';
-import { TypeBindingApi } from '../../../../../metadata/models/api/TypeBindingApi';
+import { injectable } from '../../../../../binding/decorators/injectable';
+import { BindingScopeApi } from '../../../../../binding/models/api/BindingScopeApi';
+import { BindingTypeApi } from '../../../../../binding/models/api/BindingTypeApi';
+import { TypeBindingApi } from '../../../../../binding/models/api/TypeBindingApi';
+import { inject } from '../../../../../classMetadata/decorators/inject';
 import { getValueServiceParameter } from '../valueService/getValueServiceParameter';
 import { ValueServiceParameter } from '../valueService/ValueServiceParameter';
 import { getTypeServiceWithBindingWithRequestScope } from './getTypeServiceWithBindingWithRequestScope';

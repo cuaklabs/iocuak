@@ -1,22 +1,22 @@
+import { Binding } from '../../binding/models/domain/Binding';
+import { BindingType } from '../../binding/models/domain/BindingType';
+import { TypeBinding } from '../../binding/models/domain/TypeBinding';
+import { BindingService } from '../../binding/services/domain/BindingService';
+import { lazyGetBindingOrThrow } from '../../binding/utils/domain/lazyGetBindingOrThrow';
+import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
-import { Binding } from '../../metadata/models/domain/Binding';
-import { BindingType } from '../../metadata/models/domain/BindingType';
-import { ClassMetadata } from '../../metadata/models/domain/ClassMetadata';
-import { TypeBinding } from '../../metadata/models/domain/TypeBinding';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
-import { lazyGetBindingOrThrow } from '../../metadata/utils/domain/lazyGetBindingOrThrow';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
 
 export class DirectTaskDependencyEngine {
-  readonly #containerBindingService: ContainerBindingService;
+  readonly #containerBindingService: BindingService;
   readonly #metadataService: MetadataService;
 
   constructor(
-    containerBindingService: ContainerBindingService,
+    containerBindingService: BindingService,
     metadataService: MetadataService,
   ) {
     this.#containerBindingService = containerBindingService;

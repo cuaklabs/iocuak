@@ -1,12 +1,12 @@
+import { BindingApi } from '../../../binding/models/api/BindingApi';
+import { Binding } from '../../../binding/models/domain/Binding';
+import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/utils/api/convertToContainerModuleMetadata';
-import { BindingApi } from '../../../metadata/models/api/BindingApi';
-import { Binding } from '../../../metadata/models/domain/Binding';
-import { convertBindingToBindingApi } from '../../../metadata/utils/api/convertBindingToBindingApi';
 import { bind } from '../../utils/bind';
 import { bindToValue } from '../../utils/bindToValue';
 import { ContainerService } from '../domain/ContainerService';

@@ -1,4 +1,4 @@
-import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ContainerInstanceService } from '../../../container/services/domain/ContainerInstanceService';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleClassMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleClassMetadata';
@@ -13,7 +13,7 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
     describe('having a ContainerModuleLoadFromMetadataTaskKind with ContainerModuleClassMetadata', () => {
       let taskKindMock: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleClassMetadata>;
 
-      let containerBindingServiceFixture: ContainerBindingService;
+      let containerBindingServiceFixture: BindingService;
       let containerInstanceServiceMock: jest.Mocked<ContainerInstanceService>;
       let metadataServiceFixture: MetadataService;
 
@@ -27,7 +27,7 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
 
         containerBindingServiceFixture = {
           _tag: Symbol('containerBindingService'),
-        } as unknown as ContainerBindingService;
+        } as unknown as BindingService;
         containerInstanceServiceMock = {
           create: jest.fn(),
         };
@@ -92,7 +92,7 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
     describe('having a ContainerModuleLoadFromMetadataTaskKind with ContainerModuleFactoryMetadata', () => {
       let taskKindMock: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata>;
 
-      let containerBindingServiceFixture: ContainerBindingService;
+      let containerBindingServiceFixture: BindingService;
       let containerInstanceServiceMock: jest.Mocked<ContainerInstanceService>;
       let metadataServiceFixture: MetadataService;
 
@@ -104,7 +104,7 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
 
         containerBindingServiceFixture = {
           _tag: Symbol('containerBindingService'),
-        } as unknown as ContainerBindingService;
+        } as unknown as BindingService;
         containerInstanceServiceMock = {
           create: jest.fn(),
         };

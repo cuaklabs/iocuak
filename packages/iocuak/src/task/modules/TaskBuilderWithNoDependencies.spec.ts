@@ -1,6 +1,6 @@
 jest.mock('../utils/isTaskKind');
 
-import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
+import { BindingService } from '../../binding/services/domain/BindingService';
 import { ContainerRequestService } from '../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
@@ -14,7 +14,7 @@ import { isTaskKind } from '../utils/isTaskKind';
 import { TaskBuilderWithNoDependencies } from './TaskBuilderWithNoDependencies';
 
 describe(TaskBuilderWithNoDependencies.name, () => {
-  let containerBindingServiceFixture: ContainerBindingService;
+  let containerBindingServiceFixture: BindingService;
   let containerRequestServiceFixture: ContainerRequestService;
   let containerSingletonServiceFixture: ContainerSingletonService;
   let metadataServiceFixture: MetadataService;
@@ -24,7 +24,7 @@ describe(TaskBuilderWithNoDependencies.name, () => {
   beforeAll(() => {
     containerBindingServiceFixture = {
       _tag: Symbol('ContainerBindingService'),
-    } as Partial<ContainerBindingService> as ContainerBindingService;
+    } as Partial<BindingService> as BindingService;
     containerRequestServiceFixture = {
       _tag: Symbol('ContainerRequestService'),
     } as Partial<ContainerRequestService> as ContainerRequestService;

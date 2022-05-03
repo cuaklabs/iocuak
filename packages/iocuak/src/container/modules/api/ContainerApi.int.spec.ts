@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 
+import { injectable } from '../../../binding/decorators/injectable';
+import { inject } from '../../../classMetadata/decorators/inject';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
-import { inject } from '../../../metadata/decorators/inject';
-import { injectable } from '../../../metadata/decorators/injectable';
 import { ContainerModuleBindingServiceApi } from '../../services/api/ContainerModuleBindingServiceApi';
 import { ContainerApi } from './ContainerApi';
 

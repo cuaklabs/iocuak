@@ -1,8 +1,8 @@
-import { ContainerBindingServiceApi } from './ContainerBindingServiceApi';
+import { BindingServiceApi } from '../../../binding/services/api/BindingServiceApi';
 import { ContainerInstanceServiceApi } from './ContainerInstanceServiceApi';
 import { ContainerModuleServiceApi } from './ContainerModuleServiceApi';
 
 export interface ContainerServiceApi
-  extends ContainerBindingServiceApi,
+  extends BindingServiceApi,
     ContainerInstanceServiceApi,
     ContainerModuleServiceApi {}

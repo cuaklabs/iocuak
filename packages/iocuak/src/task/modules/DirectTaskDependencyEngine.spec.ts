@@ -1,13 +1,13 @@
-jest.mock('../../metadata/utils/domain/lazyGetBindingOrThrow');
+jest.mock('../../binding/utils/domain/lazyGetBindingOrThrow');
 
+import { Binding } from '../../binding/models/domain/Binding';
+import { BindingScope } from '../../binding/models/domain/BindingScope';
+import { BindingType } from '../../binding/models/domain/BindingType';
+import { BindingService } from '../../binding/services/domain/BindingService';
+import { lazyGetBindingOrThrow } from '../../binding/utils/domain/lazyGetBindingOrThrow';
+import { ClassMetadataFixtures } from '../../classMetadata/fixtures/domain/ClassMetadataFixtures';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
-import { ClassMetadataFixtures } from '../../metadata/fixtures/domain/ClassMetadataFixtures';
-import { Binding } from '../../metadata/models/domain/Binding';
-import { BindingScope } from '../../metadata/models/domain/BindingScope';
-import { BindingType } from '../../metadata/models/domain/BindingType';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
-import { lazyGetBindingOrThrow } from '../../metadata/utils/domain/lazyGetBindingOrThrow';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
@@ -17,7 +17,7 @@ import { TaskKindType } from '../models/domain/TaskKindType';
 import { DirectTaskDependencyEngine } from './DirectTaskDependencyEngine';
 
 describe(DirectTaskDependencyEngine.name, () => {
-  let containerBindingService: jest.Mocked<ContainerBindingService>;
+  let containerBindingService: jest.Mocked<BindingService>;
   let metadataServiceMock: jest.Mocked<MetadataService>;
 
   let directTaskDependencyEngine: DirectTaskDependencyEngine;
@@ -25,9 +25,7 @@ describe(DirectTaskDependencyEngine.name, () => {
   beforeAll(() => {
     containerBindingService = {
       get: jest.fn(),
-    } as Partial<
-      jest.Mocked<ContainerBindingService>
-    > as jest.Mocked<ContainerBindingService>;
+    } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
 
     metadataServiceMock = {
       getClassMetadata: jest.fn(),

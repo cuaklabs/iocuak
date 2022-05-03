@@ -2,6 +2,7 @@ jest.mock('@cuaklabs/cuaktask');
 
 import * as cuaktask from '@cuaklabs/cuaktask';
 
+jest.mock('../../../binding/services/domain/BindingServiceImplementation');
 jest.mock('../../../containerModuleTask/modules/ContainerModuleTaskBuilder');
 jest.mock(
   '../../../containerModuleTask/modules/ContainerModuleTaskBuilderWithNoDependencies',
@@ -16,10 +17,10 @@ jest.mock('../../../task/modules/TaskBuilderWithNoDependencies');
 jest.mock('../../../task/modules/TaskDependencyEngine');
 jest.mock('../../services/cuaktask/ContainerInstanceServiceImplementation');
 jest.mock('../../services/cuaktask/ContainerModuleServiceImplementation');
-jest.mock('../../services/domain/ContainerBindingServiceImplementation');
 jest.mock('../../services/domain/ContainerRequestServiceImplementation');
 jest.mock('../../services/domain/ContainerSingletonServiceImplementation');
 
+import { BindingServiceImplementation } from '../../../binding/services/domain/BindingServiceImplementation';
 import { Newable } from '../../../common/models/domain/Newable';
 import { SetLike } from '../../../common/modules/domain/SetLike';
 import { ContainerModuleTaskBuilder } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilder';
@@ -33,7 +34,6 @@ import { TaskBuilderWithNoDependencies } from '../../../task/modules/TaskBuilder
 import { TaskDependencyEngine } from '../../../task/modules/TaskDependencyEngine';
 import { ContainerInstanceServiceImplementation } from '../../services/cuaktask/ContainerInstanceServiceImplementation';
 import { ContainerModuleServiceImplementation } from '../../services/cuaktask/ContainerModuleServiceImplementation';
-import { ContainerBindingServiceImplementation } from '../../services/domain/ContainerBindingServiceImplementation';
 import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
 import { ContainerSingletonServiceImplementation } from '../../services/domain/ContainerSingletonServiceImplementation';
 import { ContainerApi } from './ContainerApi';
@@ -56,7 +56,7 @@ function bindFixtureToConstructor<T>(
 describe(ContainerApi.name, () => {
   describe('.build', () => {
     describe('when called', () => {
-      let containerBindingServiceImplementationFixture: ContainerBindingServiceImplementation;
+      let containerBindingServiceImplementationFixture: BindingServiceImplementation;
       let metadataServiceImplementationFixture: MetadataServiceImplementation;
       let containerRequestServiceImplementationFixture: ContainerRequestServiceImplementation;
       let containerSingletonServiceImplementationFixture: ContainerSingletonServiceImplementation;
@@ -81,7 +81,7 @@ describe(ContainerApi.name, () => {
       beforeAll(() => {
         containerBindingServiceImplementationFixture = buildEmptyFixture();
         bindFixtureToConstructor(
-          ContainerBindingServiceImplementation,
+          BindingServiceImplementation,
           containerBindingServiceImplementationFixture,
         );
 
@@ -169,10 +169,8 @@ describe(ContainerApi.name, () => {
       });
 
       it('should call new ContainerBindingServiceImplementation()', () => {
-        expect(ContainerBindingServiceImplementation).toHaveBeenCalledTimes(1);
-        expect(ContainerBindingServiceImplementation).toHaveBeenCalledWith(
-          undefined,
-        );
+        expect(BindingServiceImplementation).toHaveBeenCalledTimes(1);
+        expect(BindingServiceImplementation).toHaveBeenCalledWith(undefined);
       });
 
       it('should call new MetadataServiceImplementation()', () => {

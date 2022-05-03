@@ -1,4 +1,4 @@
-import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
+import { BindingService } from '../../binding/services/domain/BindingService';
 import { ContainerInstanceService } from '../../container/services/domain/ContainerInstanceService';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
 import { ContainerModuleCreateInstancesTaskKindMocks } from '../mocks/models/domain/ContainerModuleCreateInstancesTaskKindMocks';
@@ -10,7 +10,7 @@ import { ContainerModuleLoadFromMetadataTaskKind } from '../models/domain/Contai
 import { ContainerModuleTaskBuilderWithNoDependencies } from './ContainerModuleTaskBuilderWithNoDependencies';
 
 describe(ContainerModuleTaskBuilderWithNoDependencies.name, () => {
-  let containerBindingServiceFixture: ContainerBindingService;
+  let containerBindingServiceFixture: BindingService;
   let containerInstanceServiceFixture: ContainerInstanceService;
   let metadataServiceFixture: MetadataService;
 
@@ -19,7 +19,7 @@ describe(ContainerModuleTaskBuilderWithNoDependencies.name, () => {
   beforeAll(() => {
     containerBindingServiceFixture = {
       _tag: Symbol('ContainerBindingService'),
-    } as unknown as ContainerBindingService;
+    } as unknown as BindingService;
     containerInstanceServiceFixture = {
       _tag: Symbol('ContainerInstanceService'),
     } as unknown as ContainerInstanceService;

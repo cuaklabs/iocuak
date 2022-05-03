@@ -1,6 +1,6 @@
+import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
+import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { Newable } from '../../../common/models/domain/Newable';
-import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
-import { TypeBindingApi } from '../../models/api/TypeBindingApi';
 
 export interface MetadataServiceApi {
   getBindingMetadata<TInstance, TArgs extends unknown[]>(

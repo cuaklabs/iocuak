@@ -1,9 +1,9 @@
+import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
+import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
+import { getDefaultClassMetadata } from '../../../classMetadata/utils/domain/getDefaultClassMetadata';
 import { Newable } from '../../../common/models/domain/Newable';
-import { getDefaultClassMetadata } from '../../decorators/getDefaultClassMetadata';
-import { ClassMetadata } from '../../models/domain/ClassMetadata';
-import { MetadataKey } from '../../models/domain/MetadataKey';
-import { TypeBinding } from '../../models/domain/TypeBinding';
-import { getReflectMetadata } from '../../utils/getReflectMetadata';
+import { MetadataKey } from '../../../reflectMetadata/models/domain/MetadataKey';
+import { getReflectMetadata } from '../../../reflectMetadata/utils/domain/getReflectMetadata';
 import { MetadataService } from './MetadataService';
 
 export class MetadataServiceImplementation implements MetadataService {

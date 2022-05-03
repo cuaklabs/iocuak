@@ -1,15 +1,15 @@
 import { BaseDependentTask, DependentTask } from '@cuaklabs/cuaktask';
 
+import { Binding } from '../../../binding/models/domain/Binding';
+import { BindingScope } from '../../../binding/models/domain/BindingScope';
+import { BindingType } from '../../../binding/models/domain/BindingType';
+import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
+import { BindingService } from '../../../binding/services/domain/BindingService';
+import { lazyGetBindingOrThrow } from '../../../binding/utils/domain/lazyGetBindingOrThrow';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
-import { Binding } from '../../../metadata/models/domain/Binding';
-import { BindingScope } from '../../../metadata/models/domain/BindingScope';
-import { BindingType } from '../../../metadata/models/domain/BindingType';
-import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
-import { lazyGetBindingOrThrow } from '../../../metadata/utils/domain/lazyGetBindingOrThrow';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
 import { TaskKind } from '../domain/TaskKind';
@@ -23,14 +23,14 @@ export class CreateInstanceTask<
   [ServiceDependencies<TArgs>],
   TInstance
 > {
-  readonly #containerBindingService: ContainerBindingService;
+  readonly #containerBindingService: BindingService;
   readonly #containerRequestService: ContainerRequestService;
   readonly #containerSingletonService: ContainerSingletonService;
   readonly #metadataService: MetadataService;
 
   constructor(
     kind: CreateInstanceTaskKind,
-    containerBindingService: ContainerBindingService,
+    containerBindingService: BindingService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
     metadataService: MetadataService,

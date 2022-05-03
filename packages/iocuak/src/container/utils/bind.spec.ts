@@ -1,17 +1,17 @@
-jest.mock('../../metadata/utils/domain/getBindingOrThrow');
+jest.mock('../../binding/utils/domain/getBindingOrThrow');
 
+import { BindingScope } from '../../binding/models/domain/BindingScope';
+import { BindingType } from '../../binding/models/domain/BindingType';
+import { TypeBinding } from '../../binding/models/domain/TypeBinding';
+import { BindingService } from '../../binding/services/domain/BindingService';
+import { getBindingOrThrow } from '../../binding/utils/domain/getBindingOrThrow';
 import { Newable } from '../../common/models/domain/Newable';
-import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { bind } from '../../container/utils/bind';
-import { BindingScope } from '../../metadata/models/domain/BindingScope';
-import { BindingType } from '../../metadata/models/domain/BindingType';
-import { TypeBinding } from '../../metadata/models/domain/TypeBinding';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
-import { getBindingOrThrow } from '../../metadata/utils/domain/getBindingOrThrow';
 
 describe(bind.name, () => {
   let typeFixture: Newable;
-  let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+  let containerBindingServiceMock: jest.Mocked<BindingService>;
   let metadataServiceMock: jest.Mocked<MetadataService>;
 
   beforeAll(() => {
@@ -19,9 +19,7 @@ describe(bind.name, () => {
 
     containerBindingServiceMock = {
       set: jest.fn(),
-    } as Partial<
-      jest.Mocked<ContainerBindingService>
-    > as jest.Mocked<ContainerBindingService>;
+    } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
 
     metadataServiceMock = {
       getBindingMetadata: jest.fn(),

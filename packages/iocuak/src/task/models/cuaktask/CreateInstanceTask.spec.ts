@@ -1,15 +1,15 @@
-jest.mock('../../../metadata/utils/domain/lazyGetBindingOrThrow');
+jest.mock('../../../binding/utils/domain/lazyGetBindingOrThrow');
 
-import { ContainerBindingService } from '../../../container/services/domain/ContainerBindingService';
+import { Binding } from '../../../binding/models/domain/Binding';
+import { BindingScope } from '../../../binding/models/domain/BindingScope';
+import { BindingType } from '../../../binding/models/domain/BindingType';
+import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
+import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
+import { BindingService } from '../../../binding/services/domain/BindingService';
+import { lazyGetBindingOrThrow } from '../../../binding/utils/domain/lazyGetBindingOrThrow';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
-import { Binding } from '../../../metadata/models/domain/Binding';
-import { BindingScope } from '../../../metadata/models/domain/BindingScope';
-import { BindingType } from '../../../metadata/models/domain/BindingType';
-import { TypeBinding } from '../../../metadata/models/domain/TypeBinding';
-import { ValueBinding } from '../../../metadata/models/domain/ValueBinding';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
-import { lazyGetBindingOrThrow } from '../../../metadata/utils/domain/lazyGetBindingOrThrow';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { ServiceDependenciesFixtures } from '../../fixtures/domain/ServiceDependenciesFixtures';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
@@ -20,7 +20,7 @@ class InstanceTest {
 }
 
 describe(CreateInstanceTask.name, () => {
-  let containerBindingServiceMock: jest.Mocked<ContainerBindingService>;
+  let containerBindingServiceMock: jest.Mocked<BindingService>;
   let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
   let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
   let metadataServiceMock: jest.Mocked<MetadataService>;
@@ -28,9 +28,7 @@ describe(CreateInstanceTask.name, () => {
   beforeAll(() => {
     containerBindingServiceMock = {
       get: jest.fn(),
-    } as Partial<
-      jest.Mocked<ContainerBindingService>
-    > as jest.Mocked<ContainerBindingService>;
+    } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
 
     containerRequestServiceMock = {
       get: jest.fn(),

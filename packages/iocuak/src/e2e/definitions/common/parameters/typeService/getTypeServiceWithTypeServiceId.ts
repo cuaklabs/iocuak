@@ -1,9 +1,9 @@
 import sinon from 'sinon';
 
-import { injectable } from '../../../../../metadata/decorators/injectable';
-import { BindingScopeApi } from '../../../../../metadata/models/api/BindingScopeApi';
-import { BindingTypeApi } from '../../../../../metadata/models/api/BindingTypeApi';
-import { TypeBindingApi } from '../../../../../metadata/models/api/TypeBindingApi';
+import { injectable } from '../../../../../binding/decorators/injectable';
+import { BindingScopeApi } from '../../../../../binding/models/api/BindingScopeApi';
+import { BindingTypeApi } from '../../../../../binding/models/api/BindingTypeApi';
+import { TypeBindingApi } from '../../../../../binding/models/api/TypeBindingApi';
 import { TypeServiceParameter } from './TypeServiceParameter';
 
 export function getTypeServiceWithTypeServiceId(): TypeServiceParameter {

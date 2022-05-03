@@ -1,5 +1,7 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
+import { BindingService } from '../../../binding/services/domain/BindingService';
+import { BindingServiceImplementation } from '../../../binding/services/domain/BindingServiceImplementation';
 import { Builder } from '../../../common/modules/domain/Builder';
 import { SetLike } from '../../../common/modules/domain/SetLike';
 import { ContainerModuleTaskKind } from '../../../containerModuleTask/models/domain/ContainerModuleTaskKind';
@@ -17,8 +19,6 @@ import { TaskKindSet } from '../../../task/modules/TaskKindSet';
 import { ContainerServiceApiImplementation } from '../../services/api/ContainerServiceApiImplementation';
 import { ContainerInstanceServiceImplementation } from '../../services/cuaktask/ContainerInstanceServiceImplementation';
 import { ContainerModuleServiceImplementation } from '../../services/cuaktask/ContainerModuleServiceImplementation';
-import { ContainerBindingService } from '../../services/domain/ContainerBindingService';
-import { ContainerBindingServiceImplementation } from '../../services/domain/ContainerBindingServiceImplementation';
 import { ContainerInstanceService } from '../../services/domain/ContainerInstanceService';
 import { ContainerModuleService } from '../../services/domain/ContainerModuleService';
 import { ContainerRequestService } from '../../services/domain/ContainerRequestService';
@@ -39,10 +39,10 @@ export class ContainerApi extends ContainerServiceApiImplementation {
   }
 
   static #initializeContainerService(
-    parentContainerBindingService?: ContainerBindingService,
+    parentContainerBindingService?: BindingService,
   ): ContainerService {
-    const containerBindingService: ContainerBindingService =
-      new ContainerBindingServiceImplementation(parentContainerBindingService);
+    const containerBindingService: BindingService =
+      new BindingServiceImplementation(parentContainerBindingService);
     const metadataService: MetadataService =
       new MetadataServiceImplementation();
     const containerRequestService: ContainerRequestService =
@@ -75,7 +75,7 @@ export class ContainerApi extends ContainerServiceApiImplementation {
   }
 
   static #initializeContainerInstanceService(
-    containerBindingService: ContainerBindingService,
+    containerBindingService: BindingService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
     metadataService: MetadataService,
@@ -103,7 +103,7 @@ export class ContainerApi extends ContainerServiceApiImplementation {
   }
 
   static #initializeContainerModuleService(
-    containerBindingService: ContainerBindingService,
+    containerBindingService: BindingService,
     containerInstanceService: ContainerInstanceService,
     metadataService: MetadataService,
   ): ContainerModuleService {
@@ -129,7 +129,7 @@ export class ContainerApi extends ContainerServiceApiImplementation {
   }
 
   static #initializeTaskBuilder(
-    containerBindingService: ContainerBindingService,
+    containerBindingService: BindingService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
     metadataService: MetadataService,
@@ -166,7 +166,7 @@ export class ContainerApi extends ContainerServiceApiImplementation {
   }
 
   static #initializeContainerModuleTaskBuilder(
-    containerBindingService: ContainerBindingService,
+    containerBindingService: BindingService,
     containerInstanceService: ContainerInstanceService,
     metadataService: MetadataService,
   ): Builder<

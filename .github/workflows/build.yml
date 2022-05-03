@@ -84,7 +84,7 @@ jobs:
 
       - uses: pnpm/action-setup@v2.2.1
         with:
-          version: 6.31.0
+          version: 7.0.0
           run_install: |
             - recursive: true
 
@@ -107,7 +107,7 @@ jobs:
         if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
 
       - name: Launch Unit Tests and generate coverage report
-        run: pnpm run test:package:js:ci:coverage -- --selectProjects ${{ matrix.package }}-Unit
+        run: pnpm run test:package:js:ci:coverage --selectProjects ${{ matrix.package }}-Unit
 
       - name: Upload coverage to Codecov (base branch)
         uses: codecov/codecov-action@v2
@@ -125,7 +125,7 @@ jobs:
         if: ${{ !(github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true) }}
 
       - name: Launch Integration Tests
-        run: pnpm run test:package:js:ci -- --selectProjects ${{ matrix.package }}-Integration
+        run: pnpm run test:package:js:ci --selectProjects ${{ matrix.package }}-Integration
 
       - name: Start SSH session on failure
         if: ${{ failure() && contains(github.event.head_commit.message, '[ci-open-ssh]') }}
@@ -162,7 +162,7 @@ jobs:
 
       - uses: pnpm/action-setup@v2.2.1
         with:
-          version: 6.31.0
+          version: 7.0.0
           run_install: |
             - recursive: true
 
@@ -185,7 +185,7 @@ jobs:
         if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
 
       - name: Launch E2E tests
-        run: pnpm run test:e2e:js -- --profile ci
+        run: pnpm run test:e2e:js --profile ci
 
   test-coverage:
     name: Test with coverage

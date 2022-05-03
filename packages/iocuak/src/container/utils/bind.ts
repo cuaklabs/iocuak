@@ -1,12 +1,12 @@
+import { TypeBinding } from '../../binding/models/domain/TypeBinding';
+import { BindingService } from '../../binding/services/domain/BindingService';
+import { getBindingOrThrow } from '../../binding/utils/domain/getBindingOrThrow';
 import { Newable } from '../../common/models/domain/Newable';
-import { TypeBinding } from '../../metadata/models/domain/TypeBinding';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
-import { getBindingOrThrow } from '../../metadata/utils/domain/getBindingOrThrow';
-import { ContainerBindingService } from '../services/domain/ContainerBindingService';
 
 export function bind<TInstance, TArgs extends unknown[]>(
   type: Newable<TInstance, TArgs>,
-  containerBindingService: ContainerBindingService,
+  containerBindingService: BindingService,
   metadataService: MetadataService,
 ): void {
   const bindingFromType: TypeBinding<TInstance, TArgs> = getBindingOrThrow(

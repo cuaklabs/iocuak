@@ -1,6 +1,6 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
-import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
+import { BindingService } from '../../binding/services/domain/BindingService';
 import { ContainerRequestService } from '../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
@@ -12,13 +12,13 @@ import { TaskKindType } from '../models/domain/TaskKindType';
 import { isTaskKind } from '../utils/isTaskKind';
 
 export class TaskBuilderWithNoDependencies {
-  #containerBindingService: ContainerBindingService;
+  #containerBindingService: BindingService;
   #containerRequestService: ContainerRequestService;
   #containerSingletonService: ContainerSingletonService;
   #metadataService: MetadataService;
 
   constructor(
-    containerBindingService: ContainerBindingService,
+    containerBindingService: BindingService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
     metadataService: MetadataService,

@@ -1,6 +1,6 @@
-import { ContainerBindingServiceApi } from './ContainerBindingServiceApi';
+import { BindingServiceApi } from '../../../binding/services/api/BindingServiceApi';
 
 export type ContainerModuleBindingServiceApi = Pick<
-  ContainerBindingServiceApi,
+  BindingServiceApi,
   'bind' | 'bindToValue'
 >;

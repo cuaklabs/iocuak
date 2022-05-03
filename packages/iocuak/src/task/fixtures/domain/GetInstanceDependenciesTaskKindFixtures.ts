@@ -1,4 +1,4 @@
-import { ClassMetadataFixtures } from '../../../metadata/fixtures/domain/ClassMetadataFixtures';
+import { ClassMetadataFixtures } from '../../../classMetadata/fixtures/domain/ClassMetadataFixtures';
 import { GetInstanceDependenciesTaskKind } from '../../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
 

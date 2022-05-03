@@ -1,12 +1,12 @@
+import { BindingType } from '../../binding/models/domain/BindingType';
+import { ValueBinding } from '../../binding/models/domain/ValueBinding';
+import { BindingService } from '../../binding/services/domain/BindingService';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { BindingType } from '../../metadata/models/domain/BindingType';
-import { ValueBinding } from '../../metadata/models/domain/ValueBinding';
-import { ContainerBindingService } from '../services/domain/ContainerBindingService';
 
 export function bindToValue<TInstance>(
   serviceId: ServiceId,
   value: TInstance,
-  containerBindingService: ContainerBindingService,
+  containerBindingService: BindingService,
 ): void {
   const valueBinding: ValueBinding<TInstance> = {
     bindingType: BindingType.value,
