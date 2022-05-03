@@ -1,6 +1,6 @@
-jest.mock('../services/domain/MetadataServiceImplementation');
+jest.mock('../../services/domain/MetadataServiceImplementation');
 
-import { MetadataServiceImplementation } from '../services/domain/MetadataServiceImplementation';
+import { MetadataServiceImplementation } from '../../services/domain/MetadataServiceImplementation';
 import { MetadataProviderApi } from './MetadataProviderApi';
 
 describe(MetadataProviderApi.name, () => {

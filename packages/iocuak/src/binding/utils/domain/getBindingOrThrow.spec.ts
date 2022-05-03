@@ -1,8 +1,8 @@
 import { Newable } from '../../../common/models/domain/Newable';
+import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { BindingScope } from '../../models/domain/BindingScope';
 import { BindingType } from '../../models/domain/BindingType';
 import { TypeBinding } from '../../models/domain/TypeBinding';
-import { MetadataService } from '../../services/domain/MetadataService';
 import { getBindingOrThrow } from './getBindingOrThrow';
 
 describe(getBindingOrThrow.name, () => {

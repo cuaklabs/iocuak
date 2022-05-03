@@ -1,13 +1,13 @@
-jest.mock('../../metadata/utils/domain/lazyGetBindingOrThrow');
+jest.mock('../../binding/utils/domain/lazyGetBindingOrThrow');
 
+import { Binding } from '../../binding/models/domain/Binding';
+import { BindingScope } from '../../binding/models/domain/BindingScope';
+import { BindingType } from '../../binding/models/domain/BindingType';
+import { lazyGetBindingOrThrow } from '../../binding/utils/domain/lazyGetBindingOrThrow';
 import { ClassMetadataFixtures } from '../../classMetadata/fixtures/domain/ClassMetadataFixtures';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
-import { Binding } from '../../metadata/models/domain/Binding';
-import { BindingScope } from '../../metadata/models/domain/BindingScope';
-import { BindingType } from '../../metadata/models/domain/BindingType';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
-import { lazyGetBindingOrThrow } from '../../metadata/utils/domain/lazyGetBindingOrThrow';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';

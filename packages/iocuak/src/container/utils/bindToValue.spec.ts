@@ -1,8 +1,8 @@
+import { BindingType } from '../../binding/models/domain/BindingType';
+import { ValueBinding } from '../../binding/models/domain/ValueBinding';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { bindToValue } from '../../container/utils/bindToValue';
-import { BindingType } from '../../metadata/models/domain/BindingType';
-import { ValueBinding } from '../../metadata/models/domain/ValueBinding';
 
 describe(bindToValue.name, () => {
   describe('when called', () => {

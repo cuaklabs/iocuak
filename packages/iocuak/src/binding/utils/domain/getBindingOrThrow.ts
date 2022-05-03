@@ -1,6 +1,6 @@
 import { Newable } from '../../../common/models/domain/Newable';
+import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TypeBinding } from '../../models/domain/TypeBinding';
-import { MetadataService } from '../../services/domain/MetadataService';
 
 export function getBindingOrThrow<TInstance, TArgs extends unknown[]>(
   type: Newable<TInstance, TArgs>,

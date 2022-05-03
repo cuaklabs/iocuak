@@ -1,17 +1,17 @@
+jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock('../../../classMetadata/utils/api/convertToClassMetadataApi');
-jest.mock('../../utils/api/convertBindingToBindingApi');
 
+import { BindingApi } from '../../../binding/models/api/BindingApi';
+import { BindingScopeApi } from '../../../binding/models/api/BindingScopeApi';
+import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
+import { Binding } from '../../../binding/models/domain/Binding';
+import { BindingScope } from '../../../binding/models/domain/BindingScope';
+import { BindingType } from '../../../binding/models/domain/BindingType';
+import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
 import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';
 import { Newable } from '../../../common/models/domain/Newable';
-import { BindingApi } from '../../models/api/BindingApi';
-import { BindingScopeApi } from '../../models/api/BindingScopeApi';
-import { BindingTypeApi } from '../../models/api/BindingTypeApi';
-import { Binding } from '../../models/domain/Binding';
-import { BindingScope } from '../../models/domain/BindingScope';
-import { BindingType } from '../../models/domain/BindingType';
-import { convertBindingToBindingApi } from '../../utils/api/convertBindingToBindingApi';
 import { MetadataService } from '../domain/MetadataService';
 import { MetadataServiceApiImplementation } from './MetadataServiceApiImplementation';
 

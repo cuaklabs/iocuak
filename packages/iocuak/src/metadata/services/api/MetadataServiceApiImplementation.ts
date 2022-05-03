@@ -1,10 +1,10 @@
+import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
+import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
+import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
 import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';
 import { Newable } from '../../../common/models/domain/Newable';
-import { TypeBindingApi } from '../../models/api/TypeBindingApi';
-import { TypeBinding } from '../../models/domain/TypeBinding';
-import { convertBindingToBindingApi } from '../../utils/api/convertBindingToBindingApi';
 import { MetadataService } from '../domain/MetadataService';
 import { MetadataServiceApi } from './MetadataServiceApi';
 

@@ -1,11 +1,11 @@
 import sinon from 'sinon';
 
+import { injectable } from '../../../../../binding/decorators/injectable';
 import { inject } from '../../../../../classMetadata/decorators/inject';
 import { Newable } from '../../../../../common/models/domain/Newable';
 import { ContainerModuleBindingServiceApi } from '../../../../../container/services/api/ContainerModuleBindingServiceApi';
 import { ContainerModuleApi } from '../../../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModuleClassMetadataApi } from '../../../../../containerModuleMetadata/models/api/ContainerModuleClassMetadataApi';
-import { injectable } from '../../../../../metadata/decorators/injectable';
 import { getTypeServiceWithNoDependenciesParameter } from '../../../common/parameters/typeService/getTypeServiceWithNoDependenciesParameter';
 import { TypeServiceParameter } from '../../../common/parameters/typeService/TypeServiceParameter';
 import { ContainerModuleMetadataParameter } from './ContainerModuleMetadataParameter';

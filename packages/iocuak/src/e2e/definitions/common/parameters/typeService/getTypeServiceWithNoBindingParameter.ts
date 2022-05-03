@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 
-import { TypeBindingApi } from '../../../../../metadata/models/api/TypeBindingApi';
+import { TypeBindingApi } from '../../../../../binding/models/api/TypeBindingApi';
 import { TypeServiceParameter } from './TypeServiceParameter';
 
 export function getTypeServiceWithNoBinding(): TypeServiceParameter {

@@ -1,6 +1,6 @@
+import { BindingType } from '../../binding/models/domain/BindingType';
+import { ValueBinding } from '../../binding/models/domain/ValueBinding';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { BindingType } from '../../metadata/models/domain/BindingType';
-import { ValueBinding } from '../../metadata/models/domain/ValueBinding';
 import { ContainerBindingService } from '../services/domain/ContainerBindingService';
 
 export function bindToValue<TInstance>(

@@ -1,9 +1,9 @@
 import sinon from 'sinon';
 
+import { injectable } from '../../../../../binding/decorators/injectable';
 import { ContainerModuleBindingServiceApi } from '../../../../../container/services/api/ContainerModuleBindingServiceApi';
 import { ContainerModuleApi } from '../../../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModuleClassMetadataApi } from '../../../../../containerModuleMetadata/models/api/ContainerModuleClassMetadataApi';
-import { injectable } from '../../../../../metadata/decorators/injectable';
 import { ContainerModuleMetadataParameter } from './ContainerModuleMetadataParameter';
 
 export function getContainerModuleMetadataWithModuleParameter(): ContainerModuleMetadataParameter<ContainerModuleClassMetadataApi> {

@@ -1,13 +1,13 @@
-jest.mock('../../metadata/utils/domain/getBindingOrThrow');
+jest.mock('../../binding/utils/domain/getBindingOrThrow');
 
+import { BindingScope } from '../../binding/models/domain/BindingScope';
+import { BindingType } from '../../binding/models/domain/BindingType';
+import { TypeBinding } from '../../binding/models/domain/TypeBinding';
+import { getBindingOrThrow } from '../../binding/utils/domain/getBindingOrThrow';
 import { Newable } from '../../common/models/domain/Newable';
 import { ContainerBindingService } from '../../container/services/domain/ContainerBindingService';
 import { bind } from '../../container/utils/bind';
-import { BindingScope } from '../../metadata/models/domain/BindingScope';
-import { BindingType } from '../../metadata/models/domain/BindingType';
-import { TypeBinding } from '../../metadata/models/domain/TypeBinding';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
-import { getBindingOrThrow } from '../../metadata/utils/domain/getBindingOrThrow';
 
 describe(bind.name, () => {
   let typeFixture: Newable;

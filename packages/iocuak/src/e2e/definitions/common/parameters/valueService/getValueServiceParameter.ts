@@ -1,5 +1,5 @@
-import { BindingTypeApi } from '../../../../../metadata/models/api/BindingTypeApi';
-import { ValueBindingApi } from '../../../../../metadata/models/api/ValueBindingApi';
+import { BindingTypeApi } from '../../../../../binding/models/api/BindingTypeApi';
+import { ValueBindingApi } from '../../../../../binding/models/api/ValueBindingApi';
 import { ValueServiceParameter } from './ValueServiceParameter';
 
 export function getValueServiceParameter(): ValueServiceParameter {

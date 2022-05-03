@@ -1,7 +1,7 @@
+import { Binding } from '../../../binding/models/domain/Binding';
+import { BindingScope } from '../../../binding/models/domain/BindingScope';
+import { BindingType } from '../../../binding/models/domain/BindingType';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { Binding } from '../../../metadata/models/domain/Binding';
-import { BindingScope } from '../../../metadata/models/domain/BindingScope';
-import { BindingType } from '../../../metadata/models/domain/BindingType';
 import { ContainerBindingService } from './ContainerBindingService';
 import { ContainerBindingServiceImplementation } from './ContainerBindingServiceImplementation';
 

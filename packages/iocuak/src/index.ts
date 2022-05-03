@@ -1,3 +1,10 @@
+import { injectable } from './binding/decorators/injectable';
+import { BindingApi } from './binding/models/api/BindingApi';
+import { BindingScopeApi } from './binding/models/api/BindingScopeApi';
+import { BindingTypeApi } from './binding/models/api/BindingTypeApi';
+import { InjectableOptionsApi } from './binding/models/api/InjectableOptionsApi';
+import { TypeBindingApi } from './binding/models/api/TypeBindingApi';
+import { ValueBindingApi } from './binding/models/api/ValueBindingApi';
 import { inject } from './classMetadata/decorators/inject';
 import { injectFrom } from './classMetadata/decorators/injectFrom';
 import { injectFromBase } from './classMetadata/decorators/injectFromBase';
@@ -9,14 +16,7 @@ import { ContainerModuleBindingServiceApi } from './container/services/api/Conta
 import { ContainerServiceApi } from './container/services/api/ContainerServiceApi';
 import { ContainerModuleApi } from './containerModule/models/api/ContainerModuleApi';
 import { ContainerModuleMetadataApi } from './containerModuleMetadata/models/api/ContainerModuleMetadataApi';
-import { injectable } from './metadata/decorators/injectable';
-import { BindingApi } from './metadata/models/api/BindingApi';
-import { BindingScopeApi } from './metadata/models/api/BindingScopeApi';
-import { BindingTypeApi } from './metadata/models/api/BindingTypeApi';
-import { InjectableOptionsApi } from './metadata/models/api/InjectableOptionsApi';
-import { TypeBindingApi } from './metadata/models/api/TypeBindingApi';
-import { ValueBindingApi } from './metadata/models/api/ValueBindingApi';
-import { MetadataProviderApi } from './metadata/modules/MetadataProviderApi';
+import { MetadataProviderApi } from './metadata/modules/api/MetadataProviderApi';
 import { MetadataServiceApi } from './metadata/services/api/MetadataServiceApi';
 
 export type {
