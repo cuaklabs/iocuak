@@ -1,7 +1,6 @@
 import { Newable } from '../../../common/models/domain/Newable';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
-import { BindingScope } from '../../models/domain/BindingScope';
-import { BindingType } from '../../models/domain/BindingType';
+import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
 import { TypeBinding } from '../../models/domain/TypeBinding';
 import { getBindingOrThrow } from './getBindingOrThrow';
 
@@ -59,12 +58,7 @@ describe(getBindingOrThrow.name, () => {
     let result: unknown;
 
     beforeAll(() => {
-      bindingFixture = {
-        bindingType: BindingType.type,
-        id: 'sample-service-id',
-        scope: BindingScope.transient,
-        type: typeFixture,
-      };
+      bindingFixture = TypeBindingFixtures.any;
 
       metadataServiceMock.getBindingMetadata.mockReturnValueOnce(
         bindingFixture,

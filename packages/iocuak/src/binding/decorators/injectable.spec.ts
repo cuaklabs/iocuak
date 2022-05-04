@@ -4,10 +4,10 @@ import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
 import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
+import { TypeBindingFixtures } from '../fixtures/domain/TypeBindingFixtures';
 import { BindingScopeApi } from '../models/api/BindingScopeApi';
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { BindingScope } from '../models/domain/BindingScope';
-import { BindingType } from '../models/domain/BindingType';
 import { TypeBinding } from '../models/domain/TypeBinding';
 import { injectable } from './injectable';
 
@@ -30,9 +30,8 @@ describe(injectable.name, () => {
 
     it('should set reflect metadata', () => {
       expect(reflectMetadata).toStrictEqual<TypeBinding>({
-        bindingType: BindingType.type,
+        ...TypeBindingFixtures.withScopeTransientAndTagsEmpty,
         id: targetFixture,
-        scope: BindingScope.transient,
         type: targetFixture,
       });
     });
@@ -56,9 +55,8 @@ describe(injectable.name, () => {
 
     it('should set reflect metadata', () => {
       expect(reflectMetadata).toStrictEqual<TypeBinding>({
-        bindingType: BindingType.type,
+        ...TypeBindingFixtures.withScopeTransientAndTagsEmpty,
         id: targetFixture,
-        scope: BindingScope.transient,
         type: targetFixture,
       });
     });
@@ -82,9 +80,8 @@ describe(injectable.name, () => {
 
     it('should set reflect metadata', () => {
       expect(reflectMetadata).toStrictEqual<TypeBinding>({
-        bindingType: BindingType.type,
+        ...TypeBindingFixtures.withScopeTransientAndTagsEmpty,
         id: InjectableOptionsApiFixtures.withId.id as ServiceId,
-        scope: BindingScope.transient,
         type: targetFixture,
       });
     });
@@ -113,7 +110,7 @@ describe(injectable.name, () => {
         ];
 
       expect(reflectMetadata).toStrictEqual<TypeBinding>({
-        bindingType: BindingType.type,
+        ...TypeBindingFixtures.withTagsEmpty,
         id: targetFixture,
         scope: expectedScope,
         type: targetFixture,

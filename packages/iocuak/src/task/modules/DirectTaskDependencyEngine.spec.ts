@@ -1,8 +1,9 @@
 jest.mock('../../binding/utils/domain/lazyGetBindingOrThrow');
 
-import { Binding } from '../../binding/models/domain/Binding';
-import { BindingScope } from '../../binding/models/domain/BindingScope';
-import { BindingType } from '../../binding/models/domain/BindingType';
+import { TypeBindingFixtures } from '../../binding/fixtures/domain/TypeBindingFixtures';
+import { ValueBindingFixtures } from '../../binding/fixtures/domain/ValueBindingFixtures';
+import { TypeBinding } from '../../binding/models/domain/TypeBinding';
+import { ValueBinding } from '../../binding/models/domain/ValueBinding';
 import { BindingService } from '../../binding/services/domain/BindingService';
 import { lazyGetBindingOrThrow } from '../../binding/utils/domain/lazyGetBindingOrThrow';
 import { ClassMetadataFixtures } from '../../classMetadata/fixtures/domain/ClassMetadataFixtures';
@@ -46,20 +47,15 @@ describe(DirectTaskDependencyEngine.name, () => {
       });
 
       describe('when called, and containerService.binding.get() returns undefined', () => {
-        let bindingFixture: Binding;
+        let bindingFixture: TypeBinding;
         let result: unknown;
 
         beforeAll(() => {
-          bindingFixture = {
-            bindingType: BindingType.type,
-            id: createInstanceTaskKindFixture.id,
-            scope: BindingScope.transient,
-            type: class {},
-          };
+          bindingFixture = TypeBindingFixtures.any;
 
           containerBindingService.get.mockReturnValueOnce(undefined);
 
-          (lazyGetBindingOrThrow as jest.Mock<Binding>).mockReturnValueOnce(
+          (lazyGetBindingOrThrow as jest.Mock<TypeBinding>).mockReturnValueOnce(
             bindingFixture,
           );
 
@@ -99,16 +95,11 @@ describe(DirectTaskDependencyEngine.name, () => {
       });
 
       describe('when called, and containerService.binding.get() returns a type binding and containerService.metadata.get() returns metadata', () => {
-        let bindingFixture: Binding;
+        let bindingFixture: TypeBinding;
         let result: unknown;
 
         beforeAll(() => {
-          bindingFixture = {
-            bindingType: BindingType.type,
-            id: createInstanceTaskKindFixture.id,
-            scope: BindingScope.transient,
-            type: class {},
-          };
+          bindingFixture = TypeBindingFixtures.any;
 
           containerBindingService.get.mockReturnValueOnce(bindingFixture);
 
@@ -140,14 +131,13 @@ describe(DirectTaskDependencyEngine.name, () => {
       });
 
       describe('when called, and containerService.binding.get() returns a value binding', () => {
-        let bindingFixture: Binding;
+        let bindingFixture: ValueBinding;
         let result: unknown;
 
         beforeAll(() => {
           bindingFixture = {
-            bindingType: BindingType.value,
+            ...ValueBindingFixtures.any,
             id: createInstanceTaskKindFixture.id,
-            value: {},
           };
 
           containerBindingService.get.mockReturnValueOnce(bindingFixture);

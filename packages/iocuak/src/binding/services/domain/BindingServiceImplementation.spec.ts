@@ -1,4 +1,5 @@
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
 import { Binding } from '../../models/domain/Binding';
 import { BindingScope } from '../../models/domain/BindingScope';
 import { BindingType } from '../../models/domain/BindingType';
@@ -56,14 +57,7 @@ describe(BindingServiceImplementation.name, () => {
       let result: unknown;
 
       beforeAll(() => {
-        const serviceIdFixture: ServiceId = 'service-id';
-
-        bindingFixture = {
-          bindingType: BindingType.type,
-          id: serviceIdFixture,
-          scope: BindingScope.transient,
-          type: class {},
-        };
+        bindingFixture = TypeBindingFixtures.any;
 
         parent = {
           get: jest.fn().mockReturnValueOnce(bindingFixture),
@@ -74,7 +68,7 @@ describe(BindingServiceImplementation.name, () => {
         containerBindingServiceImplementation =
           new BindingServiceImplementation(parent);
 
-        result = containerBindingServiceImplementation.get(serviceIdFixture);
+        result = containerBindingServiceImplementation.get(bindingFixture.id);
       });
 
       it('should return the entry value', () => {
@@ -92,12 +86,7 @@ describe(BindingServiceImplementation.name, () => {
         containerBindingServiceImplementation =
           new BindingServiceImplementation();
 
-        bindingFixture = {
-          bindingType: BindingType.type,
-          id: 'service-id',
-          scope: BindingScope.transient,
-          type: class {},
-        };
+        bindingFixture = TypeBindingFixtures.any;
 
         containerBindingServiceImplementation.set(bindingFixture);
 
@@ -121,12 +110,7 @@ describe(BindingServiceImplementation.name, () => {
         containerBindingServiceImplementation =
           new BindingServiceImplementation();
 
-        bindingFixture = {
-          bindingType: BindingType.type,
-          id: 'service-id',
-          scope: BindingScope.transient,
-          type: class {},
-        };
+        bindingFixture = TypeBindingFixtures.any;
 
         containerBindingServiceImplementation.set(bindingFixture);
 
@@ -150,10 +134,8 @@ describe(BindingServiceImplementation.name, () => {
 
       beforeAll(() => {
         parentBindingFixture = {
-          bindingType: BindingType.type,
+          ...TypeBindingFixtures.any,
           id: 'parent-service-id',
-          scope: BindingScope.transient,
-          type: class {},
         };
 
         parentMock = {
@@ -172,10 +154,8 @@ describe(BindingServiceImplementation.name, () => {
           new BindingServiceImplementation(parentMock);
 
         bindingFixture = {
-          bindingType: BindingType.type,
+          ...TypeBindingFixtures.any,
           id: 'service-id',
-          scope: BindingScope.transient,
-          type: class {},
         };
 
         containerBindingServiceImplementation.set(bindingFixture);
@@ -203,10 +183,8 @@ describe(BindingServiceImplementation.name, () => {
 
       beforeAll(() => {
         parentBindingFixture = {
-          bindingType: BindingType.type,
+          ...TypeBindingFixtures.withScopeSingleton,
           id: 'service-id',
-          scope: BindingScope.singleton,
-          type: class {},
         };
 
         parentMock = {
@@ -225,10 +203,8 @@ describe(BindingServiceImplementation.name, () => {
           new BindingServiceImplementation(parentMock);
 
         bindingFixture = {
-          bindingType: BindingType.type,
+          ...TypeBindingFixtures.withScopeTransient,
           id: 'service-id',
-          scope: BindingScope.transient,
-          type: class {},
         };
 
         containerBindingServiceImplementation.set(bindingFixture);
@@ -253,12 +229,7 @@ describe(BindingServiceImplementation.name, () => {
         containerBindingServiceImplementation =
           new BindingServiceImplementation();
 
-        bindingFixture = {
-          bindingType: BindingType.type,
-          id: 'sample-service-id',
-          scope: BindingScope.transient,
-          type: class {},
-        };
+        bindingFixture = TypeBindingFixtures.any;
 
         containerBindingServiceImplementation.set(bindingFixture);
       });
@@ -312,12 +283,7 @@ describe(BindingServiceImplementation.name, () => {
         containerBindingServiceImplementation =
           new BindingServiceImplementation();
 
-        bindingFixture = {
-          bindingType: BindingType.type,
-          id: 'sample-service-id',
-          scope: BindingScope.transient,
-          type: class {},
-        };
+        bindingFixture = TypeBindingFixtures.any;
 
         containerBindingServiceImplementation.set(bindingFixture);
 

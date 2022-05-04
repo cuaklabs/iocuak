@@ -5,10 +5,10 @@ jest.mock(
 jest.mock('../../utils/bind');
 jest.mock('../../utils/bindToValue');
 
+import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
 import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingType } from '../../../binding/models/domain/BindingType';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { Newable } from '../../../common/models/domain/Newable';
@@ -164,18 +164,14 @@ describe(ContainerServiceApiImplementation.name, () => {
     });
   });
 
-  describe('.getAll', () => {
+  describe('.getAllBindinds', () => {
     describe('when called', () => {
       let bindingFixture: Binding;
       let bindingApiFixture: BindingApi;
       let result: unknown;
 
       beforeAll(() => {
-        bindingFixture = {
-          bindingType: BindingType.value,
-          id: 'service-id',
-          value: {},
-        };
+        bindingFixture = ValueBindingFixtures.any;
 
         bindingApiFixture = {
           bindingType: BindingTypeApi.value,

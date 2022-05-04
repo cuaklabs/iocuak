@@ -3,6 +3,7 @@ jest.mock('./getBindingOrThrow');
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
+import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
 import { BindingScope } from '../../models/domain/BindingScope';
 import { BindingType } from '../../models/domain/BindingType';
 import { TypeBinding } from '../../models/domain/TypeBinding';
@@ -19,7 +20,7 @@ describe(lazyGetBindingOrThrow.name, () => {
   });
 
   describe('having a newable serviceId', () => {
-    let serviceIdFixture: ServiceId;
+    let serviceIdFixture: Newable;
 
     beforeAll(() => {
       serviceIdFixture = class {};
@@ -32,10 +33,9 @@ describe(lazyGetBindingOrThrow.name, () => {
 
       beforeAll(() => {
         bindingFixture = {
-          bindingType: BindingType.type,
+          ...TypeBindingFixtures.any,
           id: serviceIdFixture,
-          scope: BindingScope.transient,
-          type: serviceIdFixture as Newable,
+          type: serviceIdFixture,
         };
 
         (getBindingOrThrow as jest.Mock<TypeBinding>).mockReturnValueOnce(

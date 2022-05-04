@@ -11,6 +11,7 @@ export function bindToValue<TInstance>(
   const valueBinding: ValueBinding<TInstance> = {
     bindingType: BindingType.value,
     id: serviceId,
+    tags: [],
     value: value,
   };
 

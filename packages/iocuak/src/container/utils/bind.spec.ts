@@ -1,7 +1,6 @@
 jest.mock('../../binding/utils/domain/getBindingOrThrow');
 
-import { BindingScope } from '../../binding/models/domain/BindingScope';
-import { BindingType } from '../../binding/models/domain/BindingType';
+import { TypeBindingFixtures } from '../../binding/fixtures/domain/TypeBindingFixtures';
 import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { BindingService } from '../../binding/services/domain/BindingService';
 import { getBindingOrThrow } from '../../binding/utils/domain/getBindingOrThrow';
@@ -30,12 +29,7 @@ describe(bind.name, () => {
     let bindingFixture: TypeBinding;
 
     beforeAll(() => {
-      bindingFixture = {
-        bindingType: BindingType.type,
-        id: 'sample-service-id',
-        scope: BindingScope.transient,
-        type: typeFixture,
-      };
+      bindingFixture = TypeBindingFixtures.any;
 
       (getBindingOrThrow as jest.Mock<TypeBinding>).mockReturnValueOnce(
         bindingFixture,
