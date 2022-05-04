@@ -25,6 +25,7 @@ export function injectable(bindingApi?: InjectableOptionsApi): ClassDecorator {
       bindingType: BindingType.type,
       id: bindingId,
       scope: bindingScope,
+      tags: [],
       type: target as unknown as Newable,
     };
 

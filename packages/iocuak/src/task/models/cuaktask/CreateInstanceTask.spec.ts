@@ -1,5 +1,7 @@
 jest.mock('../../../binding/utils/domain/lazyGetBindingOrThrow');
 
+import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
+import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingScope } from '../../../binding/models/domain/BindingScope';
 import { BindingType } from '../../../binding/models/domain/BindingType';
@@ -57,7 +59,7 @@ describe(CreateInstanceTask.name, () => {
         taskKindFixture = CreateInstanceTaskKindFixtures.any;
       });
 
-      describe('when called and containerService.binding.get() returns no binding', () => {
+      describe('when called and containerService.binding.get() returns no binding and lazyGetBindingOrThrow() returns a Binding in transient scope', () => {
         let bindingFixture: TypeBinding<InstanceTest, [] | [string]>;
         let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
 
@@ -72,9 +74,7 @@ describe(CreateInstanceTask.name, () => {
             .mockImplementation((foo?: string) => new InstanceTest(foo));
 
           bindingFixture = {
-            bindingType: BindingType.type,
-            id: 'sample-id',
-            scope: BindingScope.transient,
+            ...TypeBindingFixtures.withScopeTransient,
             type: instanceConstructorCallMock,
           };
 
@@ -143,9 +143,7 @@ describe(CreateInstanceTask.name, () => {
             .mockImplementation((foo?: string) => new InstanceTest(foo));
 
           bindingFixture = {
-            bindingType: BindingType.type,
-            id: 'sample-id',
-            scope: BindingScope.transient,
+            ...TypeBindingFixtures.withScopeTransient,
             type: instanceConstructorCallMock,
           };
 
@@ -208,9 +206,7 @@ describe(CreateInstanceTask.name, () => {
             .mockImplementation((foo?: string) => new InstanceTest(foo));
 
           bindingFixture = {
-            bindingType: BindingType.type,
-            id: taskKindFixture.id,
-            scope: BindingScope.singleton,
+            ...TypeBindingFixtures.withScopeSingleton,
             type: instanceConstructorCallMock,
           };
 
@@ -301,9 +297,7 @@ describe(CreateInstanceTask.name, () => {
           >();
 
           bindingFixture = {
-            bindingType: BindingType.type,
-            id: 'sample-id',
-            scope: BindingScope.singleton,
+            ...TypeBindingFixtures.withScopeSingleton,
             type: instanceConstructorCallMock,
           };
 
@@ -367,9 +361,7 @@ describe(CreateInstanceTask.name, () => {
             .mockImplementation((foo?: string) => new InstanceTest(foo));
 
           bindingFixture = {
-            bindingType: BindingType.type,
-            id: taskKindFixture.id,
-            scope: BindingScope.request,
+            ...TypeBindingFixtures.withScopeRequest,
             type: instanceConstructorCallMock,
           };
 
@@ -463,9 +455,7 @@ describe(CreateInstanceTask.name, () => {
           >();
 
           bindingFixture = {
-            bindingType: BindingType.type,
-            id: 'sample-id',
-            scope: BindingScope.request,
+            ...TypeBindingFixtures.withScopeRequest,
             type: instanceConstructorCallMock,
           };
 
@@ -526,8 +516,7 @@ describe(CreateInstanceTask.name, () => {
 
         beforeAll(() => {
           bindingFixture = {
-            bindingType: BindingType.value,
-            id: 'sample-id',
+            ...ValueBindingFixtures.any,
             value: new InstanceTest('fooValue'),
           };
 

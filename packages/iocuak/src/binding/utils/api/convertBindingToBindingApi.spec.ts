@@ -1,8 +1,9 @@
+import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
+import { ValueBindingFixtures } from '../../fixtures/domain/ValueBindingFixtures';
 import { BindingApi } from '../../models/api/BindingApi';
 import { BindingScopeApi } from '../../models/api/BindingScopeApi';
+import { bindingScopeToBindingScopeApiMap } from '../../models/api/bindingScopeToBindingScopeApiMap';
 import { BindingTypeApi } from '../../models/api/BindingTypeApi';
-import { BindingScope } from '../../models/domain/BindingScope';
-import { BindingType } from '../../models/domain/BindingType';
 import { TypeBinding } from '../../models/domain/TypeBinding';
 import { ValueBinding } from '../../models/domain/ValueBinding';
 import { convertBindingToBindingApi } from './convertBindingToBindingApi';
@@ -12,12 +13,7 @@ describe(convertBindingToBindingApi.name, () => {
     let bindingFixture: TypeBinding;
 
     beforeAll(() => {
-      bindingFixture = {
-        bindingType: BindingType.type,
-        id: 'service-id',
-        scope: BindingScope.transient,
-        type: class {},
-      };
+      bindingFixture = TypeBindingFixtures.any;
     });
 
     describe('when called', () => {
@@ -28,10 +24,13 @@ describe(convertBindingToBindingApi.name, () => {
       });
 
       it('should return a bindingApi', () => {
+        const expectedScope: BindingScopeApi =
+          bindingScopeToBindingScopeApiMap[bindingFixture.scope];
+
         const expected: BindingApi = {
           bindingType: BindingTypeApi.type,
           id: bindingFixture.id,
-          scope: BindingScopeApi.transient,
+          scope: expectedScope,
           type: bindingFixture.type,
         };
 
@@ -44,13 +43,7 @@ describe(convertBindingToBindingApi.name, () => {
     let bindingFixture: ValueBinding;
 
     beforeAll(() => {
-      bindingFixture = {
-        bindingType: BindingType.value,
-        id: 'service-id',
-        value: {
-          foo: 'bar',
-        },
-      };
+      bindingFixture = ValueBindingFixtures.any;
     });
 
     describe('when called', () => {

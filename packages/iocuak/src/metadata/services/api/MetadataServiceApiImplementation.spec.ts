@@ -1,12 +1,13 @@
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock('../../../classMetadata/utils/api/convertToClassMetadataApi');
 
+import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { BindingScopeApi } from '../../../binding/models/api/BindingScopeApi';
 import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
+import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
 import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingScope } from '../../../binding/models/domain/BindingScope';
-import { BindingType } from '../../../binding/models/domain/BindingType';
+import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
@@ -63,18 +64,13 @@ describe(MetadataServiceApiImplementation.name, () => {
       });
     });
 
-    describe('when called, and metadataService.getBindingMetadata() returns Binding', () => {
-      let bindingFixture: Binding;
-      let bindingApiFixture: BindingApi;
+    describe('when called, and metadataService.getBindingMetadata() returns TypeBinding', () => {
+      let bindingFixture: TypeBinding;
+      let bindingApiFixture: TypeBindingApi;
       let result: unknown;
 
       beforeAll(() => {
-        bindingFixture = {
-          bindingType: BindingType.type,
-          id: 'service-id',
-          scope: BindingScope.singleton,
-          type: class {},
-        };
+        bindingFixture = TypeBindingFixtures.any;
 
         bindingApiFixture = {
           bindingType: BindingTypeApi.type,
