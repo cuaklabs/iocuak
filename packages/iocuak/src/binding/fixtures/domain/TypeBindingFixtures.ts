@@ -1,5 +1,7 @@
 import { Newable } from '../../../common/models/domain/Newable';
+import { PickKeys } from '../../../common/models/domain/PickKeys';
 import { BindingScope } from '../../models/domain/BindingScope';
+import { BindingTag } from '../../models/domain/BindingTag';
 import { BindingType } from '../../models/domain/BindingType';
 import { TypeBinding } from '../../models/domain/TypeBinding';
 
@@ -13,6 +15,19 @@ export class TypeBindingFixtures {
       scope: BindingScope.request,
       tags: [],
       type: TypeBindingFixtures.#type,
+    };
+
+    return fixture;
+  }
+
+  public static get withTagsOne(): TypeBinding & {
+    [T in PickKeys<TypeBinding, 'tags'>]: [BindingTag] & BindingTag[];
+  } {
+    const fixture: TypeBinding & {
+      [T in PickKeys<TypeBinding, 'tags'>]: [BindingTag] & BindingTag[];
+    } = {
+      ...TypeBindingFixtures.any,
+      tags: ['tag'],
     };
 
     return fixture;
