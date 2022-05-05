@@ -1,13 +1,12 @@
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
 import { Binding } from '../../models/domain/Binding';
-import { BindingScope } from '../../models/domain/BindingScope';
-import { BindingType } from '../../models/domain/BindingType';
+import { BindingTag } from '../../models/domain/BindingTag';
 import { BindingService } from './BindingService';
 import { BindingServiceImplementation } from './BindingServiceImplementation';
 
 describe(BindingServiceImplementation.name, () => {
-  describe('.get()', () => {
+  describe('.get', () => {
     describe('when called, and serviceIdToInstanceMap has no entries and parent is undefined', () => {
       let containerBindingServiceImplementation: BindingServiceImplementation;
 
@@ -99,7 +98,201 @@ describe(BindingServiceImplementation.name, () => {
     });
   });
 
-  describe('.getAll()', () => {
+  describe('.getByTag', () => {
+    describe('having removeDuplicates false', () => {
+      let removeDuplicatesFixture: boolean;
+
+      beforeAll(() => {
+        removeDuplicatesFixture = false;
+      });
+
+      describe('when called, and tagToBindingsMap has an entry with the same tag and parent has the same entry', () => {
+        let parent: jest.Mocked<BindingService>;
+        let containerBindingServiceImplementation: BindingServiceImplementation;
+        let bindingFixture: Binding;
+
+        let result: unknown;
+
+        beforeAll(() => {
+          bindingFixture = TypeBindingFixtures.withTagsOne;
+          const [tag]: BindingTag[] = TypeBindingFixtures.withTagsOne.tags;
+
+          parent = {
+            getByTag: jest.fn().mockReturnValueOnce([bindingFixture]),
+          } as Partial<
+            jest.Mocked<BindingService>
+          > as jest.Mocked<BindingService>;
+
+          containerBindingServiceImplementation =
+            new BindingServiceImplementation(parent);
+
+          containerBindingServiceImplementation.set(bindingFixture);
+
+          result = [
+            ...containerBindingServiceImplementation.getByTag(
+              tag,
+              removeDuplicatesFixture,
+            ),
+          ];
+        });
+
+        it('should return the entry value duplicated', () => {
+          expect(result).toStrictEqual([bindingFixture, bindingFixture]);
+        });
+      });
+    });
+
+    describe('having removeDuplicates true', () => {
+      let removeDuplicatesFixture: boolean;
+
+      beforeAll(() => {
+        removeDuplicatesFixture = true;
+      });
+
+      describe('when called, and tagToBindingsMap has an entry with the same tag and parent has the same entry', () => {
+        let parent: jest.Mocked<BindingService>;
+        let containerBindingServiceImplementation: BindingServiceImplementation;
+        let bindingFixture: Binding;
+
+        let result: unknown;
+
+        beforeAll(() => {
+          bindingFixture = TypeBindingFixtures.withTagsOne;
+          const [tag]: BindingTag[] = TypeBindingFixtures.withTagsOne.tags;
+
+          parent = {
+            getByTag: jest.fn().mockReturnValueOnce([bindingFixture]),
+          } as Partial<
+            jest.Mocked<BindingService>
+          > as jest.Mocked<BindingService>;
+
+          containerBindingServiceImplementation =
+            new BindingServiceImplementation(parent);
+
+          containerBindingServiceImplementation.set(bindingFixture);
+
+          result = [
+            ...containerBindingServiceImplementation.getByTag(
+              tag,
+              removeDuplicatesFixture,
+            ),
+          ];
+        });
+
+        it('should return the entry value', () => {
+          expect(result).toStrictEqual([bindingFixture]);
+        });
+      });
+    });
+
+    describe('when called, and tagToBindingsMap has no entries and parent is undefined', () => {
+      let containerBindingServiceImplementation: BindingServiceImplementation;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        containerBindingServiceImplementation =
+          new BindingServiceImplementation();
+
+        result = [
+          ...containerBindingServiceImplementation.getByTag('tag-id', false),
+        ];
+      });
+
+      it('should return an empty iterable', () => {
+        expect(result).toStrictEqual([]);
+      });
+    });
+
+    describe('when called, and tagToBindingsMap has no entries and parent has no entries', () => {
+      let parent: jest.Mocked<BindingService>;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        parent = {
+          getByTag: jest.fn().mockReturnValueOnce([]),
+        } as Partial<
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
+
+        containerBindingServiceImplementation =
+          new BindingServiceImplementation(parent);
+
+        result = [
+          ...containerBindingServiceImplementation.getByTag('tag-id', false),
+        ];
+      });
+
+      it('should return an empty iterable', () => {
+        expect(result).toStrictEqual([]);
+      });
+    });
+
+    describe('when called, and tagToBindingsMap has no entries and parent has an entry with the same tag', () => {
+      let parent: jest.Mocked<BindingService>;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
+      let bindingFixture: Binding;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        bindingFixture = TypeBindingFixtures.any;
+
+        parent = {
+          getByTag: jest.fn().mockReturnValueOnce([bindingFixture]),
+        } as Partial<
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
+
+        containerBindingServiceImplementation =
+          new BindingServiceImplementation(parent);
+
+        result = [
+          ...containerBindingServiceImplementation.getByTag('tag-id', false),
+        ];
+      });
+
+      it('should return the entry value', () => {
+        expect(result).toStrictEqual([bindingFixture]);
+      });
+    });
+
+    describe('when called, and tagToBindingsMap has an entry with the same tag and parent has no entries', () => {
+      let parent: jest.Mocked<BindingService>;
+      let containerBindingServiceImplementation: BindingServiceImplementation;
+      let bindingFixture: Binding;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        parent = {
+          getByTag: jest.fn().mockReturnValueOnce([]),
+        } as Partial<
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
+
+        containerBindingServiceImplementation =
+          new BindingServiceImplementation(parent);
+
+        bindingFixture = TypeBindingFixtures.withTagsOne;
+        const [tag]: BindingTag[] = TypeBindingFixtures.withTagsOne.tags;
+
+        containerBindingServiceImplementation.set(bindingFixture);
+
+        result = [
+          ...containerBindingServiceImplementation.getByTag(tag, false),
+        ];
+      });
+
+      it('should return the entry value', () => {
+        expect(result).toStrictEqual([bindingFixture]);
+      });
+    });
+  });
+
+  describe('.getAll', () => {
     describe('when called, and serviceIdToInstanceMap has an entry and parent is undefined', () => {
       let containerBindingServiceImplementation: BindingServiceImplementation;
       let bindingFixture: Binding;
@@ -220,7 +413,43 @@ describe(BindingServiceImplementation.name, () => {
     });
   });
 
-  describe('.set()', () => {
+  describe('.set', () => {
+    describe('having a bindingFixture with a tag', () => {
+      let bindingFixture: Binding;
+      let tag: BindingTag;
+
+      beforeAll(() => {
+        bindingFixture = TypeBindingFixtures.withTagsOne;
+        // eslint-disable-next-line @typescript-eslint/typedef
+        [tag] = TypeBindingFixtures.withTagsOne.tags;
+      });
+
+      describe('when called', () => {
+        let containerBindingServiceImplementation: BindingServiceImplementation;
+
+        beforeAll(() => {
+          containerBindingServiceImplementation =
+            new BindingServiceImplementation();
+
+          containerBindingServiceImplementation.set(bindingFixture);
+        });
+
+        describe('when .getByTag() is called with the same tag', () => {
+          let result: unknown;
+
+          beforeAll(() => {
+            result = [
+              ...containerBindingServiceImplementation.getByTag(tag, true),
+            ];
+          });
+
+          it('should return an instance', () => {
+            expect(result).toStrictEqual([bindingFixture]);
+          });
+        });
+      });
+    });
+
     describe('when called', () => {
       let bindingFixture: Binding;
       let containerBindingServiceImplementation: BindingServiceImplementation;
@@ -248,7 +477,7 @@ describe(BindingServiceImplementation.name, () => {
     });
   });
 
-  describe('.remove()', () => {
+  describe('.remove', () => {
     describe('when called, and serviceIdToInstanceMap has no entries', () => {
       let containerBindingServiceImplementation: BindingServiceImplementation;
       let serviceIdFixture: ServiceId;

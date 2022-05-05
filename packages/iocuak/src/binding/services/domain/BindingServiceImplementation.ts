@@ -1,14 +1,18 @@
 import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { BindingTag } from '../../models/domain/BindingTag';
+import { removeBindingDuplicates } from '../../utils/domain/removeBindingDuplicates';
 
 export class BindingServiceImplementation implements BindingService {
   readonly #parent: BindingService | undefined;
   readonly #serviceIdToBindingMap: Map<ServiceId, Binding>;
+  readonly #tagToBindingsMap: Map<BindingTag, Map<ServiceId, Binding>>;
 
   constructor(parent?: BindingService) {
     this.#parent = parent;
     this.#serviceIdToBindingMap = new Map();
+    this.#tagToBindingsMap = new Map();
   }
 
   public get<TInstance, TArgs extends unknown[]>(
@@ -23,6 +27,24 @@ export class BindingServiceImplementation implements BindingService {
       bindingFromMap ?? this.#parent?.get<TInstance, TArgs>(serviceId);
 
     return binding;
+  }
+
+  public *getByTag(
+    tag: BindingTag,
+    removeDuplicates: boolean,
+  ): Iterable<Binding> {
+    if (removeDuplicates) {
+      const duplicatedServices: Iterable<Binding<unknown, unknown[]>> =
+        this.getByTag(tag, false);
+
+      yield* removeBindingDuplicates(duplicatedServices);
+    } else {
+      if (this.#parent !== undefined) {
+        yield* this.#parent.getByTag(tag, false);
+      }
+
+      yield* this.#tagToBindingsMap.get(tag)?.values() ?? [];
+    }
   }
 
   public getAll(): Map<ServiceId, Binding> {
@@ -46,5 +68,21 @@ export class BindingServiceImplementation implements BindingService {
     binding: Binding<TInstance, TArgs>,
   ): void {
     this.#serviceIdToBindingMap.set(binding.id, binding as Binding);
+
+    this.#setBindingTags(binding as Binding);
+  }
+
+  #setBindingTags(binding: Binding): void {
+    for (const tag of binding.tags) {
+      let tagBindings: Map<ServiceId, Binding> | undefined =
+        this.#tagToBindingsMap.get(tag);
+
+      if (tagBindings === undefined) {
+        tagBindings = new Map();
+        this.#tagToBindingsMap.set(tag, tagBindings);
+      }
+
+      tagBindings.set(binding.id, binding);
+    }
   }
 }
