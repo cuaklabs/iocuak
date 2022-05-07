@@ -3,8 +3,6 @@ jest.mock('../../../binding/utils/domain/lazyGetBindingOrThrow');
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingScope } from '../../../binding/models/domain/BindingScope';
-import { BindingType } from '../../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
 import { BindingService } from '../../../binding/services/domain/BindingService';

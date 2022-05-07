@@ -1,8 +1,8 @@
 import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
-import { BaseTaskKind } from './BaseTaskKind';
+import { BaseServiceTaskKind } from './BaseServiceTaskKind';
 import { TaskKindType } from './TaskKindType';
 
 export interface GetInstanceDependenciesTaskKind
-  extends BaseTaskKind<TaskKindType.getInstanceDependencies> {
+  extends BaseServiceTaskKind<TaskKindType.getInstanceDependencies> {
   metadata: ClassMetadata;
 }
