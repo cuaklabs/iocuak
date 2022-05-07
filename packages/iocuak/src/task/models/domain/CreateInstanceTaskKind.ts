@@ -1,4 +1,5 @@
-import { BaseTaskKind } from './BaseTaskKind';
+import { BaseServiceTaskKind } from './BaseServiceTaskKind';
 import { TaskKindType } from './TaskKindType';
 
-export type CreateInstanceTaskKind = BaseTaskKind<TaskKindType.createInstance>;
+export type CreateInstanceTaskKind =
+  BaseServiceTaskKind<TaskKindType.createInstance>;
