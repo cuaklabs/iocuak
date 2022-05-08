@@ -21,7 +21,7 @@ export class ClassMetadataFixtures {
     return fixture;
   }
 
-  public static get withConstructorArgumentsAndPropertiesEmpty(): ClassMetadata {
+  public static get withConstructorArgumentsOneAndPropertiesEmpty(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: ['sample-constructor-dependency-id'],
       properties: new Map(),
@@ -30,7 +30,7 @@ export class ClassMetadataFixtures {
     return fixture;
   }
 
-  public static get withConstructorArgumentsEmptyAndProperties(): ClassMetadata {
+  public static get withConstructorArgumentsEmptyAndPropertiesOne(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: [],
       properties: new Map([

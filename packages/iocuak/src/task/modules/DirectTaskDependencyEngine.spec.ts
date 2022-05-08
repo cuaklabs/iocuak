@@ -189,7 +189,7 @@ describe(DirectTaskDependencyEngine.name, () => {
 
       beforeAll(() => {
         getInstanceDependenciesTaskKindFixture =
-          GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsAndPropertiesEmpty;
+          GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsOneAndPropertiesEmpty;
       });
 
       describe('when called', () => {
@@ -209,7 +209,7 @@ describe(DirectTaskDependencyEngine.name, () => {
           const expected: TaskKind[] = [
             {
               id: ClassMetadataFixtures
-                .withConstructorArgumentsAndPropertiesEmpty
+                .withConstructorArgumentsOneAndPropertiesEmpty
                 .constructorArguments[0] as ServiceId,
               requestId: getInstanceDependenciesTaskKindFixture.requestId,
               type: TaskKindType.createInstance,
@@ -245,7 +245,7 @@ describe(DirectTaskDependencyEngine.name, () => {
         it('should return a TDependencyKind[]', () => {
           const expected: TaskKind[] = [
             {
-              id: ClassMetadataFixtures.withConstructorArgumentsEmptyAndProperties.properties
+              id: ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesOne.properties
                 .values()
                 .next().value as ServiceId,
               requestId: getInstanceDependenciesTaskKindFixture.requestId,
