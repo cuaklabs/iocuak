@@ -11,10 +11,9 @@ jest.mock(
   '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine',
 );
 jest.mock('../../../metadata/services/domain/MetadataServiceImplementation');
-jest.mock('../../../task/modules/DirectTaskDependencyEngine');
+jest.mock('../../../task/modules/CreateInstancesTaskDependencyEngine');
 jest.mock('../../../task/modules/TaskBuilder');
 jest.mock('../../../task/modules/TaskBuilderWithNoDependencies');
-jest.mock('../../../task/modules/TaskDependencyEngine');
 jest.mock('../../services/cuaktask/ContainerInstanceServiceImplementation');
 jest.mock('../../services/cuaktask/ContainerModuleServiceImplementation');
 jest.mock('../../services/domain/ContainerRequestServiceImplementation');
@@ -28,10 +27,9 @@ import { ContainerModuleTaskBuilderWithNoDependencies } from '../../../container
 import { ContainerModuleTaskDependencyEngine } from '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine';
 import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
-import { DirectTaskDependencyEngine } from '../../../task/modules/DirectTaskDependencyEngine';
+import { CreateInstancesTaskDependencyEngine } from '../../../task/modules/CreateInstancesTaskDependencyEngine';
 import { TaskBuilder } from '../../../task/modules/TaskBuilder';
 import { TaskBuilderWithNoDependencies } from '../../../task/modules/TaskBuilderWithNoDependencies';
-import { TaskDependencyEngine } from '../../../task/modules/TaskDependencyEngine';
 import { ContainerInstanceServiceImplementation } from '../../services/cuaktask/ContainerInstanceServiceImplementation';
 import { ContainerModuleServiceImplementation } from '../../services/cuaktask/ContainerModuleServiceImplementation';
 import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
@@ -63,8 +61,7 @@ describe(ContainerApi.name, () => {
 
       let dependentTaskRunnerFixture: cuaktask.DependentTaskRunner;
 
-      let directTaskDependencyEngineFixture: DirectTaskDependencyEngine;
-      let taskDependencyEngineFixture: TaskDependencyEngine;
+      let createInstancesTaskDependencyEngineFixture: CreateInstancesTaskDependencyEngine;
       let taskBuilderWithNoDependenciesFixture: TaskBuilderWithNoDependencies;
       let taskBuilderFixture: TaskBuilder;
 
@@ -109,16 +106,10 @@ describe(ContainerApi.name, () => {
           dependentTaskRunnerFixture,
         );
 
-        directTaskDependencyEngineFixture = buildEmptyFixture();
+        createInstancesTaskDependencyEngineFixture = buildEmptyFixture();
         bindFixtureToConstructor(
-          DirectTaskDependencyEngine,
-          directTaskDependencyEngineFixture,
-        );
-
-        taskDependencyEngineFixture = buildEmptyFixture();
-        bindFixtureToConstructor(
-          TaskDependencyEngine,
-          taskDependencyEngineFixture,
+          CreateInstancesTaskDependencyEngine,
+          createInstancesTaskDependencyEngineFixture,
         );
 
         taskBuilderWithNoDependenciesFixture = buildEmptyFixture();
@@ -197,17 +188,10 @@ describe(ContainerApi.name, () => {
       });
 
       it('should call new DirectTaskDependencyEngine()', () => {
-        expect(DirectTaskDependencyEngine).toHaveBeenCalledTimes(1);
-        expect(DirectTaskDependencyEngine).toHaveBeenCalledWith(
+        expect(CreateInstancesTaskDependencyEngine).toHaveBeenCalledTimes(1);
+        expect(CreateInstancesTaskDependencyEngine).toHaveBeenCalledWith(
           containerBindingServiceImplementationFixture,
           metadataServiceImplementationFixture,
-        );
-      });
-
-      it('should call new TaskDependencyEngine()', () => {
-        expect(TaskDependencyEngine).toHaveBeenCalledTimes(1);
-        expect(TaskDependencyEngine).toHaveBeenCalledWith(
-          directTaskDependencyEngineFixture,
           {
             build: expect.any(Function) as () => SetLike<TaskKind>,
           },
@@ -227,7 +211,7 @@ describe(ContainerApi.name, () => {
       it('should call new TaskBuilder()', () => {
         expect(TaskBuilder).toHaveBeenCalledTimes(1);
         expect(TaskBuilder).toHaveBeenCalledWith(
-          taskDependencyEngineFixture,
+          createInstancesTaskDependencyEngineFixture,
           taskBuilderWithNoDependenciesFixture,
         );
       });
