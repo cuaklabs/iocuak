@@ -11,10 +11,9 @@ import { ContainerModuleTaskDependencyEngine } from '../../../containerModuleTas
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
-import { DirectTaskDependencyEngine } from '../../../task/modules/DirectTaskDependencyEngine';
+import { CreateInstancesTaskDependencyEngine } from '../../../task/modules/CreateInstancesTaskDependencyEngine';
 import { TaskBuilder } from '../../../task/modules/TaskBuilder';
 import { TaskBuilderWithNoDependencies } from '../../../task/modules/TaskBuilderWithNoDependencies';
-import { TaskDependencyEngine } from '../../../task/modules/TaskDependencyEngine';
 import { TaskKindSet } from '../../../task/modules/TaskKindSet';
 import { ContainerServiceApiImplementation } from '../../services/api/ContainerServiceApiImplementation';
 import { ContainerInstanceServiceImplementation } from '../../services/cuaktask/ContainerInstanceServiceImplementation';
@@ -138,14 +137,12 @@ export class ContainerApi extends ContainerServiceApiImplementation {
       build: () => new TaskKindSet(),
     };
 
-    const directTaskDependencyEngine: DirectTaskDependencyEngine =
-      new DirectTaskDependencyEngine(containerBindingService, metadataService);
-
     const taskDependencyEngine: cuaktask.TaskDependencyEngine<
       TaskKind,
       TaskKind
-    > = new TaskDependencyEngine(
-      directTaskDependencyEngine,
+    > = new CreateInstancesTaskDependencyEngine(
+      containerBindingService,
+      metadataService,
       taskDependenciesKindSetBuilder,
     );
 
