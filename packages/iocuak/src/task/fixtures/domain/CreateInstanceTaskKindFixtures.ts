@@ -3,10 +3,12 @@ import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKi
 import { TaskKindType } from '../../models/domain/TaskKindType';
 
 export class CreateInstanceTaskKindFixtures {
+  static #requestIdSymbol: symbol = Symbol();
+
   public static get any(): CreateInstanceTaskKind {
     const fixture: CreateInstanceTaskKind = {
       binding: ValueBindingFixtures.any,
-      requestId: Symbol(),
+      requestId: CreateInstanceTaskKindFixtures.#requestIdSymbol,
       type: TaskKindType.createInstance,
     };
 

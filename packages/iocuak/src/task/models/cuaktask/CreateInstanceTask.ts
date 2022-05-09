@@ -4,12 +4,8 @@ import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingScope } from '../../../binding/models/domain/BindingScope';
 import { BindingType } from '../../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
-import { BindingService } from '../../../binding/services/domain/BindingService';
-import { lazyGetBindingOrThrow } from '../../../binding/utils/domain/lazyGetBindingOrThrow';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
 import { TaskKind } from '../domain/TaskKind';
@@ -23,33 +19,28 @@ export class CreateInstanceTask<
   [ServiceDependencies<TArgs>],
   TInstance
 > {
-  readonly #containerBindingService: BindingService;
   readonly #containerRequestService: ContainerRequestService;
   readonly #containerSingletonService: ContainerSingletonService;
-  readonly #metadataService: MetadataService;
 
   constructor(
     kind: CreateInstanceTaskKind,
-    containerBindingService: BindingService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
-    metadataService: MetadataService,
     dependencies: DependentTask<TaskKind, TaskKind, TArgs, TInstance>[] = [],
   ) {
     super(kind, dependencies);
 
-    this.#containerBindingService = containerBindingService;
     this.#containerRequestService = containerRequestService;
     this.#containerSingletonService = containerSingletonService;
-    this.#metadataService = metadataService;
   }
 
   protected innerPerform(
     serviceDependencies: ServiceDependencies<TArgs>,
   ): TInstance {
-    const binding: Binding<TInstance, TArgs> = this.#getBinding(
-      this.kind.binding.id,
-    );
+    const binding: Binding<TInstance, TArgs> = this.kind.binding as Binding<
+      TInstance,
+      TArgs
+    >;
 
     let instance: TInstance;
 
@@ -170,14 +161,5 @@ export class CreateInstanceTask<
     }
 
     return instance;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  #getBinding(serviceId: ServiceId): Binding<TInstance, TArgs> {
-    const binding: Binding<TInstance, TArgs> =
-      this.#containerBindingService.get(serviceId) ??
-      lazyGetBindingOrThrow(serviceId, this.#metadataService);
-
-    return binding;
   }
 }

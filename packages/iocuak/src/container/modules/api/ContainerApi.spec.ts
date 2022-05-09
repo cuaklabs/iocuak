@@ -201,10 +201,8 @@ describe(ContainerApi.name, () => {
       it('should call new TaskBuilderWithNoDependencies()', () => {
         expect(TaskBuilderWithNoDependencies).toHaveBeenCalledTimes(1);
         expect(TaskBuilderWithNoDependencies).toHaveBeenCalledWith(
-          containerBindingServiceImplementationFixture,
           containerRequestServiceImplementationFixture,
           containerSingletonServiceImplementationFixture,
-          metadataServiceImplementationFixture,
         );
       });
 

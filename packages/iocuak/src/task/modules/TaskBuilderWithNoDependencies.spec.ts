@@ -1,9 +1,7 @@
 jest.mock('../utils/isTaskKind');
 
-import { BindingService } from '../../binding/services/domain/BindingService';
 import { ContainerRequestService } from '../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
-import { MetadataService } from '../../metadata/services/domain/MetadataService';
 import { CreateInstanceRootTaskKindFixtures } from '../fixtures/domain/CreateInstanceRootTaskKindFixtures';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
@@ -16,32 +14,22 @@ import { isTaskKind } from '../utils/isTaskKind';
 import { TaskBuilderWithNoDependencies } from './TaskBuilderWithNoDependencies';
 
 describe(TaskBuilderWithNoDependencies.name, () => {
-  let containerBindingServiceFixture: BindingService;
   let containerRequestServiceFixture: ContainerRequestService;
   let containerSingletonServiceFixture: ContainerSingletonService;
-  let metadataServiceFixture: MetadataService;
 
   let taskBuilderWithNoDependencies: TaskBuilderWithNoDependencies;
 
   beforeAll(() => {
-    containerBindingServiceFixture = {
-      _tag: Symbol('ContainerBindingService'),
-    } as Partial<BindingService> as BindingService;
     containerRequestServiceFixture = {
       _tag: Symbol('ContainerRequestService'),
     } as Partial<ContainerRequestService> as ContainerRequestService;
     containerSingletonServiceFixture = {
       _tag: Symbol('ContainerSingletonService'),
     } as Partial<ContainerSingletonService> as ContainerSingletonService;
-    metadataServiceFixture = {
-      _tag: Symbol('MetadataService'),
-    } as Partial<MetadataService> as MetadataService;
 
     taskBuilderWithNoDependencies = new TaskBuilderWithNoDependencies(
-      containerBindingServiceFixture,
       containerRequestServiceFixture,
       containerSingletonServiceFixture,
-      metadataServiceFixture,
     );
   });
 
