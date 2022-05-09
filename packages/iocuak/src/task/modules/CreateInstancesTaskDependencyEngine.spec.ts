@@ -13,8 +13,10 @@ import { ServiceId } from '../../common/models/domain/ServiceId';
 import { Builder } from '../../common/modules/domain/Builder';
 import { SetLike } from '../../common/modules/domain/SetLike';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
+import { CreateInstanceRootTaskKindFixtures } from '../fixtures/domain/CreateInstanceRootTaskKindFixtures';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
+import { CreateInstanceRootTaskKind } from '../models/domain/CreateInstanceRootTaskKind';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../models/domain/TaskKind';
@@ -84,19 +86,60 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
     });
 
     describe('having a TaskKind with type createInstance', () => {
-      let createInstanceTaskKindFixture: CreateInstanceTaskKind;
+      let taskKindFixture: CreateInstanceTaskKind;
 
       beforeAll(() => {
-        createInstanceTaskKindFixture = CreateInstanceTaskKindFixtures.any;
+        taskKindFixture = CreateInstanceTaskKindFixtures.any;
+      });
+
+      describe('when called', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          try {
+            createInstancesTaskDependencyEngine.getDependencies(
+              taskKindFixture,
+            );
+          } catch (error: unknown) {
+            result = error;
+          }
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should throw an error', () => {
+          expect(result).toBeInstanceOf(Error);
+          expect(result).toStrictEqual(
+            expect.objectContaining<Partial<Error>>({
+              message: 'Unsupported type',
+            }),
+          );
+        });
+      });
+    });
+
+    describe('having a TaskKind with type createInstanceRoot', () => {
+      let createInstanceRootTaskKindFixture: CreateInstanceRootTaskKind;
+
+      beforeAll(() => {
+        createInstanceRootTaskKindFixture =
+          CreateInstanceRootTaskKindFixtures.any;
       });
 
       describe('when called, and containerService.binding.get() returns undefined', () => {
         let bindingFixture: TypeBinding;
+        let createInstanceTaskKindFixture: CreateInstanceTaskKind;
         let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
         let result: unknown;
 
         beforeAll(() => {
           bindingFixture = TypeBindingFixtures.any;
+          createInstanceTaskKindFixture = {
+            ...createInstanceRootTaskKindFixture,
+            type: TaskKindType.createInstance,
+          };
           taskKindSetMock = {
             add: jest.fn(),
             delete: jest.fn(),
@@ -117,7 +160,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           );
 
           result = createInstancesTaskDependencyEngine.getDependencies(
-            createInstanceTaskKindFixture,
+            createInstanceRootTaskKindFixture,
           );
         });
 
@@ -195,11 +238,16 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
 
       describe('when called, and containerService.binding.get() returns a ValueBinding', () => {
         let bindingFixture: ValueBinding;
+        let createInstanceTaskKindFixture: CreateInstanceTaskKind;
         let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
         let result: unknown;
 
         beforeAll(() => {
           bindingFixture = ValueBindingFixtures.any;
+          createInstanceTaskKindFixture = {
+            ...createInstanceRootTaskKindFixture,
+            type: TaskKindType.createInstance,
+          };
           taskKindSetMock = {
             add: jest.fn(),
             delete: jest.fn(),
@@ -212,7 +260,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           taskKindSetBuilderMock.build.mockReturnValueOnce(taskKindSetMock);
 
           result = createInstancesTaskDependencyEngine.getDependencies(
-            createInstanceTaskKindFixture,
+            createInstanceRootTaskKindFixture,
           );
         });
 
@@ -250,11 +298,16 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
 
       describe('when called, and containerService.binding.get() returns a TypeBinding and metadataService.getClassMetadata returns metadata with constructor arguments', () => {
         let bindingFixture: TypeBinding;
+        let createInstanceTaskKindFixture: CreateInstanceTaskKind;
         let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
         let result: unknown;
 
         beforeAll(() => {
           bindingFixture = TypeBindingFixtures.any;
+          createInstanceTaskKindFixture = {
+            ...createInstanceRootTaskKindFixture,
+            type: TaskKindType.createInstance,
+          };
           taskKindSetMock = {
             add: jest.fn(),
             delete: jest.fn(),
@@ -281,7 +334,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
             );
 
           result = createInstancesTaskDependencyEngine.getDependencies(
-            createInstanceTaskKindFixture,
+            createInstanceRootTaskKindFixture,
           );
         });
 
@@ -414,11 +467,16 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
 
       describe('when called, and containerService.binding.get() returns a TypeBinding and metadataService.getClassMetadata returns metadata with properties arguments', () => {
         let bindingFixture: TypeBinding;
+        let createInstanceTaskKindFixture: CreateInstanceTaskKind;
         let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
         let result: unknown;
 
         beforeAll(() => {
           bindingFixture = TypeBindingFixtures.any;
+          createInstanceTaskKindFixture = {
+            ...createInstanceRootTaskKindFixture,
+            type: TaskKindType.createInstance,
+          };
           taskKindSetMock = {
             add: jest.fn(),
             delete: jest.fn(),
@@ -445,7 +503,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
             );
 
           result = createInstancesTaskDependencyEngine.getDependencies(
-            createInstanceTaskKindFixture,
+            createInstanceRootTaskKindFixture,
           );
         });
 

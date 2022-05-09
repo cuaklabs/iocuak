@@ -11,6 +11,7 @@ import { Builder } from '../../common/modules/domain/Builder';
 import { SetLike } from '../../common/modules/domain/SetLike';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
 import { stringifyServiceId } from '../../utils/stringifyServiceId';
+import { CreateInstanceRootTaskKind } from '../models/domain/CreateInstanceRootTaskKind';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../models/domain/TaskKind';
@@ -56,6 +57,8 @@ export class CreateInstancesTaskDependencyEngine
       case TaskKindType.getInstanceDependencies:
         throw new Error('Unsupported type');
       case TaskKindType.createInstance:
+        throw new Error('Unsupported type');
+      case TaskKindType.createInstanceRoot:
         return this.#getCreateInstanceTaskKindDependencies(taskKind);
     }
   }
@@ -69,11 +72,11 @@ export class CreateInstancesTaskDependencyEngine
   }
 
   #getCreateInstanceTaskKindDependencies(
-    taskKind: CreateInstanceTaskKind,
+    taskKind: CreateInstanceRootTaskKind,
   ): TaskKindGraph {
     const taskDependencyKindGraphRootNode: CreateInstanceTaskKindGraphNode = {
       dependencies: [],
-      kind: taskKind,
+      kind: { ...taskKind, type: TaskKindType.createInstance },
     };
 
     const taskKindSet: SetLike<TaskKind> = this.#taskKindSerBuilder.build();

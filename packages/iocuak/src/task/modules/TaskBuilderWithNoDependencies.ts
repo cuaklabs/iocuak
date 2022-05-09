@@ -43,6 +43,8 @@ export class TaskBuilderWithNoDependencies {
             TArgs,
             TReturn
           >;
+        case TaskKindType.createInstanceRoot:
+          throw new Error('Invalid task kind');
         case TaskKindType.getInstanceDependencies:
           return this.#buildGetInstanceDependenciesTaskWithNoDependencies(
             taskKind,
