@@ -138,6 +138,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           bindingFixture = TypeBindingFixtures.any;
           createInstanceTaskKindFixture = {
             ...createInstanceRootTaskKindFixture,
+            binding: bindingFixture,
             type: TaskKindType.createInstance,
           };
           taskKindSetMock = {
@@ -246,6 +247,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           bindingFixture = ValueBindingFixtures.any;
           createInstanceTaskKindFixture = {
             ...createInstanceRootTaskKindFixture,
+            binding: bindingFixture,
             type: TaskKindType.createInstance,
           };
           taskKindSetMock = {
@@ -306,6 +308,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           bindingFixture = TypeBindingFixtures.any;
           createInstanceTaskKindFixture = {
             ...createInstanceRootTaskKindFixture,
+            binding: bindingFixture,
             type: TaskKindType.createInstance,
           };
           taskKindSetMock = {
@@ -353,6 +356,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
             .constructorArguments[0] as ServiceId;
 
           const expectedSecondArgument: CreateInstanceTaskKind = {
+            binding: bindingFixture,
             id: expectedSecondArgumentId,
             requestId: createInstanceTaskKindFixture.requestId,
             type: TaskKindType.createInstance,
@@ -421,6 +425,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           > = {
             dependencies: [getInstanceConstructorDependencyTaskKindGraphNode],
             kind: {
+              binding: bindingFixture,
               id: expectedConstructorDependencyServiceId,
               requestId: createInstanceTaskKindFixture.requestId,
               type: TaskKindType.createInstance,
@@ -475,6 +480,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           bindingFixture = TypeBindingFixtures.any;
           createInstanceTaskKindFixture = {
             ...createInstanceRootTaskKindFixture,
+            binding: bindingFixture,
             type: TaskKindType.createInstance,
           };
           taskKindSetMock = {
@@ -522,6 +528,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           ][0] as ServiceId;
 
           const expectedSecondArgument: CreateInstanceTaskKind = {
+            binding: bindingFixture,
             id: expectedSecondArgumentId,
             requestId: createInstanceTaskKindFixture.requestId,
             type: TaskKindType.createInstance,
@@ -590,6 +597,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           > = {
             dependencies: [getInstanceConstructorDependencyTaskKindGraphNode],
             kind: {
+              binding: bindingFixture,
               id: expectedConstructorDependencyServiceId,
               requestId: createInstanceTaskKindFixture.requestId,
               type: TaskKindType.createInstance,
