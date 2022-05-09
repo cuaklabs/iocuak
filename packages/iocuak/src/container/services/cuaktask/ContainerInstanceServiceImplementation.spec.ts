@@ -6,7 +6,7 @@ import {
 
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Builder } from '../../../common/modules/domain/Builder';
-import { CreateInstanceTaskKindFixtures } from '../../../task/fixtures/domain/CreateInstanceTaskKindFixtures';
+import { CreateInstanceRootTaskKindFixtures } from '../../../task/fixtures/domain/CreateInstanceRootTaskKindFixtures';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
 import { ContainerRequestService } from '../domain/ContainerRequestService';
 import { ContainerInstanceServiceImplementation } from './ContainerInstanceServiceImplementation';
@@ -56,7 +56,7 @@ describe(ContainerInstanceServiceImplementation.name, () => {
     let result: unknown;
 
     beforeAll(() => {
-      taskKindFixture = CreateInstanceTaskKindFixtures.any;
+      taskKindFixture = CreateInstanceRootTaskKindFixtures.any;
       requestIdFixture = taskKindFixture.requestId;
       serviceIdFixture = taskKindFixture.id;
 

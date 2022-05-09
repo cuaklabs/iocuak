@@ -148,10 +148,8 @@ export class ContainerApi extends ContainerServiceApiImplementation {
 
     const taskBuilderWithNoDependencies: TaskBuilderWithNoDependencies =
       new TaskBuilderWithNoDependencies(
-        containerBindingService,
         containerRequestService,
         containerSingletonService,
-        metadataService,
       );
 
     const taskBuilder: Builder<

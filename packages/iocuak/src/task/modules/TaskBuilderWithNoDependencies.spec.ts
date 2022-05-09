@@ -1,45 +1,35 @@
 jest.mock('../utils/isTaskKind');
 
-import { BindingService } from '../../binding/services/domain/BindingService';
 import { ContainerRequestService } from '../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
-import { MetadataService } from '../../metadata/services/domain/MetadataService';
+import { CreateInstanceRootTaskKindFixtures } from '../fixtures/domain/CreateInstanceRootTaskKindFixtures';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
+import { CreateInstanceRootTaskKind } from '../models/domain/CreateInstanceRootTaskKind';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { isTaskKind } from '../utils/isTaskKind';
 import { TaskBuilderWithNoDependencies } from './TaskBuilderWithNoDependencies';
 
 describe(TaskBuilderWithNoDependencies.name, () => {
-  let containerBindingServiceFixture: BindingService;
   let containerRequestServiceFixture: ContainerRequestService;
   let containerSingletonServiceFixture: ContainerSingletonService;
-  let metadataServiceFixture: MetadataService;
 
   let taskBuilderWithNoDependencies: TaskBuilderWithNoDependencies;
 
   beforeAll(() => {
-    containerBindingServiceFixture = {
-      _tag: Symbol('ContainerBindingService'),
-    } as Partial<BindingService> as BindingService;
     containerRequestServiceFixture = {
       _tag: Symbol('ContainerRequestService'),
     } as Partial<ContainerRequestService> as ContainerRequestService;
     containerSingletonServiceFixture = {
       _tag: Symbol('ContainerSingletonService'),
     } as Partial<ContainerSingletonService> as ContainerSingletonService;
-    metadataServiceFixture = {
-      _tag: Symbol('MetadataService'),
-    } as Partial<MetadataService> as MetadataService;
 
     taskBuilderWithNoDependencies = new TaskBuilderWithNoDependencies(
-      containerBindingServiceFixture,
       containerRequestServiceFixture,
       containerSingletonServiceFixture,
-      metadataServiceFixture,
     );
   });
 
@@ -73,6 +63,43 @@ describe(TaskBuilderWithNoDependencies.name, () => {
           expect.objectContaining<Partial<CreateInstanceTask>>({
             dependencies: [],
             kind: createInstanceTaskKindFixture,
+          }),
+        );
+      });
+    });
+
+    describe('when called, with a taskKind of type TaskKindType.createInstanceRoot', () => {
+      let createInstanceTaskKindFixture: CreateInstanceRootTaskKind;
+      let result: unknown;
+
+      beforeAll(() => {
+        createInstanceTaskKindFixture = CreateInstanceRootTaskKindFixtures.any;
+
+        (isTaskKind as unknown as jest.Mock).mockReturnValueOnce(true);
+
+        try {
+          taskBuilderWithNoDependencies.buildWithNoDependencies(
+            createInstanceTaskKindFixture,
+          );
+        } catch (error: unknown) {
+          result = error;
+        }
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should call .isTaskKind()', () => {
+        expect(isTaskKind).toHaveBeenCalledTimes(1);
+        expect(isTaskKind).toHaveBeenCalledWith(createInstanceTaskKindFixture);
+      });
+
+      it('should throw an error', () => {
+        expect(result).toBeInstanceOf(Error);
+        expect(result).toStrictEqual(
+          expect.objectContaining<Partial<Error>>({
+            message: 'Invalid task kind',
           }),
         );
       });
