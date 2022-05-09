@@ -137,8 +137,8 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
         beforeAll(() => {
           bindingFixture = TypeBindingFixtures.any;
           createInstanceTaskKindFixture = {
-            ...createInstanceRootTaskKindFixture,
             binding: bindingFixture,
+            requestId: createInstanceRootTaskKindFixture.requestId,
             type: TaskKindType.createInstance,
           };
           taskKindSetMock = {
@@ -184,14 +184,14 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
         it('should call containerBindingService.get()', () => {
           expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
-            createInstanceTaskKindFixture.id,
+            createInstanceRootTaskKindFixture.id,
           );
         });
 
         it('should call lazyGetBindingOrThrow()', () => {
           expect(lazyGetBindingOrThrow).toHaveBeenCalledTimes(1);
           expect(lazyGetBindingOrThrow).toHaveBeenCalledWith(
-            createInstanceTaskKindFixture.id,
+            createInstanceRootTaskKindFixture.id,
             metadataServiceMock,
           );
         });
@@ -210,7 +210,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           > = {
             dependencies: [],
             kind: {
-              id: createInstanceTaskKindFixture.id,
+              id: createInstanceTaskKindFixture.binding.id,
               metadata:
                 ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
               requestId: createInstanceTaskKindFixture.requestId,
@@ -246,8 +246,8 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
         beforeAll(() => {
           bindingFixture = ValueBindingFixtures.any;
           createInstanceTaskKindFixture = {
-            ...createInstanceRootTaskKindFixture,
             binding: bindingFixture,
+            requestId: createInstanceRootTaskKindFixture.requestId,
             type: TaskKindType.createInstance,
           };
           taskKindSetMock = {
@@ -273,7 +273,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
         it('should call containerBindingService.get()', () => {
           expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
-            createInstanceTaskKindFixture.id,
+            createInstanceRootTaskKindFixture.id,
           );
         });
 
@@ -307,8 +307,8 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
         beforeAll(() => {
           bindingFixture = TypeBindingFixtures.any;
           createInstanceTaskKindFixture = {
-            ...createInstanceRootTaskKindFixture,
             binding: bindingFixture,
+            requestId: createInstanceRootTaskKindFixture.requestId,
             type: TaskKindType.createInstance,
           };
           taskKindSetMock = {
@@ -351,13 +351,8 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
         });
 
         it('should call taskKindSet.has()', () => {
-          const expectedSecondArgumentId: ServiceId = ClassMetadataFixtures
-            .withConstructorArgumentsOneAndPropertiesEmpty
-            .constructorArguments[0] as ServiceId;
-
           const expectedSecondArgument: CreateInstanceTaskKind = {
             binding: bindingFixture,
-            id: expectedSecondArgumentId,
             requestId: createInstanceTaskKindFixture.requestId,
             type: TaskKindType.createInstance,
           };
@@ -381,7 +376,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(2);
           expect(containerBindingServiceMock.get).toHaveBeenNthCalledWith(
             1,
-            createInstanceTaskKindFixture.id,
+            createInstanceRootTaskKindFixture.id,
           );
           expect(containerBindingServiceMock.get).toHaveBeenNthCalledWith(
             2,
@@ -402,17 +397,13 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
         });
 
         it('should return a task kind graph', () => {
-          const expectedConstructorDependencyServiceId: ServiceId =
-            ClassMetadataFixtures.withConstructorArgumentsOneAndPropertiesEmpty
-              .constructorArguments[0] as ServiceId;
-
           const getInstanceConstructorDependencyTaskKindGraphNode: cuaktask.TaskDependencyKindGraphNode<
             TaskKind,
             TaskKind
           > = {
             dependencies: [],
             kind: {
-              id: expectedConstructorDependencyServiceId,
+              id: bindingFixture.id,
               metadata:
                 ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
               requestId: createInstanceTaskKindFixture.requestId,
@@ -426,7 +417,6 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
             dependencies: [getInstanceConstructorDependencyTaskKindGraphNode],
             kind: {
               binding: bindingFixture,
-              id: expectedConstructorDependencyServiceId,
               requestId: createInstanceTaskKindFixture.requestId,
               type: TaskKindType.createInstance,
             },
@@ -438,7 +428,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           > = {
             dependencies: [constructorDependencyKindGraphNode],
             kind: {
-              id: createInstanceTaskKindFixture.id,
+              id: createInstanceTaskKindFixture.binding.id,
               metadata:
                 ClassMetadataFixtures.withConstructorArgumentsOneAndPropertiesEmpty,
               requestId: createInstanceTaskKindFixture.requestId,
@@ -479,8 +469,8 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
         beforeAll(() => {
           bindingFixture = TypeBindingFixtures.any;
           createInstanceTaskKindFixture = {
-            ...createInstanceRootTaskKindFixture,
             binding: bindingFixture,
+            requestId: createInstanceRootTaskKindFixture.requestId,
             type: TaskKindType.createInstance,
           };
           taskKindSetMock = {
@@ -523,13 +513,8 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
         });
 
         it('should call taskKindSet.has()', () => {
-          const expectedSecondArgumentId: ServiceId = [
-            ...ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesOne.properties.values(),
-          ][0] as ServiceId;
-
           const expectedSecondArgument: CreateInstanceTaskKind = {
             binding: bindingFixture,
-            id: expectedSecondArgumentId,
             requestId: createInstanceTaskKindFixture.requestId,
             type: TaskKindType.createInstance,
           };
@@ -553,7 +538,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(2);
           expect(containerBindingServiceMock.get).toHaveBeenNthCalledWith(
             1,
-            createInstanceTaskKindFixture.id,
+            createInstanceRootTaskKindFixture.id,
           );
           expect(containerBindingServiceMock.get).toHaveBeenNthCalledWith(
             2,
@@ -574,17 +559,13 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
         });
 
         it('should return a task kind graph', () => {
-          const expectedConstructorDependencyServiceId: ServiceId = [
-            ...ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesOne.properties.values(),
-          ][0] as ServiceId;
-
           const getInstanceConstructorDependencyTaskKindGraphNode: cuaktask.TaskDependencyKindGraphNode<
             TaskKind,
             TaskKind
           > = {
             dependencies: [],
             kind: {
-              id: expectedConstructorDependencyServiceId,
+              id: bindingFixture.id,
               metadata:
                 ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
               requestId: createInstanceTaskKindFixture.requestId,
@@ -598,7 +579,6 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
             dependencies: [getInstanceConstructorDependencyTaskKindGraphNode],
             kind: {
               binding: bindingFixture,
-              id: expectedConstructorDependencyServiceId,
               requestId: createInstanceTaskKindFixture.requestId,
               type: TaskKindType.createInstance,
             },
@@ -610,7 +590,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           > = {
             dependencies: [constructorDependencyKindGraphNode],
             kind: {
-              id: createInstanceTaskKindFixture.id,
+              id: createInstanceTaskKindFixture.binding.id,
               metadata:
                 ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesOne,
               requestId: createInstanceTaskKindFixture.requestId,

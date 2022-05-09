@@ -47,7 +47,9 @@ export class CreateInstanceTask<
   protected innerPerform(
     serviceDependencies: ServiceDependencies<TArgs>,
   ): TInstance {
-    const binding: Binding<TInstance, TArgs> = this.#getBinding(this.kind.id);
+    const binding: Binding<TInstance, TArgs> = this.#getBinding(
+      this.kind.binding.id,
+    );
 
     let instance: TInstance;
 
@@ -123,7 +125,7 @@ export class CreateInstanceTask<
   ): TInstance {
     const instanceFromRequestScope: unknown = this.#containerRequestService.get(
       this.kind.requestId,
-      this.kind.id,
+      this.kind.binding.id,
     );
 
     let instance: TInstance;
@@ -136,7 +138,7 @@ export class CreateInstanceTask<
 
       this.#containerRequestService.set(
         this.kind.requestId,
-        this.kind.id,
+        this.kind.binding.id,
         instance,
       );
     } else {
@@ -152,7 +154,7 @@ export class CreateInstanceTask<
     binding: TypeBinding<TInstance, TArgs>,
   ): TInstance {
     const instanceFromSingletonScope: unknown =
-      this.#containerSingletonService.get(this.kind.id);
+      this.#containerSingletonService.get(this.kind.binding.id);
 
     let instance: TInstance;
 
@@ -162,7 +164,7 @@ export class CreateInstanceTask<
         binding,
       );
 
-      this.#containerSingletonService.set(this.kind.id, instance);
+      this.#containerSingletonService.set(this.kind.binding.id, instance);
     } else {
       instance = instanceFromSingletonScope as TInstance;
     }

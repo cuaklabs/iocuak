@@ -54,18 +54,30 @@ export class TaskKindSet implements SetLike<TaskKind> {
     );
   }
 
+  #getId(elem: TaskKind): ServiceId {
+    switch (elem.type) {
+      case TaskKindType.createInstance:
+        return elem.binding.id;
+      case TaskKindType.createInstanceRoot:
+      case TaskKindType.getInstanceDependencies:
+        return elem.id;
+    }
+  }
+
   #traverseTaskKindMap<TReturn>(
     elem: TaskKind,
     action: (key: unknown, map: Map<unknown, TaskKind> | undefined) => TReturn,
     buildLeafNodes: boolean,
   ): TReturn {
+    const relatedServiceId: ServiceId = this.#getId(elem);
+
     let taskKindTypeToTaskKindMap: Map<TaskKindType, TaskKind> | undefined =
-      this.#innerTaskKindMap.get(elem.id);
+      this.#innerTaskKindMap.get(relatedServiceId);
 
     if (buildLeafNodes && taskKindTypeToTaskKindMap === undefined) {
       taskKindTypeToTaskKindMap = new Map();
 
-      this.#innerTaskKindMap.set(elem.id, taskKindTypeToTaskKindMap);
+      this.#innerTaskKindMap.set(relatedServiceId, taskKindTypeToTaskKindMap);
     }
 
     return action(elem.type, taskKindTypeToTaskKindMap);

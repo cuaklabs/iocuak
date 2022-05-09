@@ -83,8 +83,8 @@ export class CreateInstancesTaskDependencyEngine
     const taskDependencyKindGraphRootNode: CreateInstanceTaskKindGraphNode = {
       dependencies: [],
       kind: {
-        ...taskKind,
         binding: this.#getBinding(taskKind.id),
+        requestId: taskKind.requestId,
         type: TaskKindType.createInstance,
       },
     };
@@ -112,7 +112,7 @@ export class CreateInstancesTaskDependencyEngine
     );
 
     const getInstanceDependenciesTaskKind: GetInstanceDependenciesTaskKind = {
-      id: taskKind.id,
+      id: taskKind.binding.id,
       metadata: metadata,
       requestId: taskKind.requestId,
       type: TaskKindType.getInstanceDependencies,
@@ -128,9 +128,8 @@ export class CreateInstancesTaskDependencyEngine
       this.#getInstanceDependenciesTaskKindDependenciesServiceIds(taskKind);
 
     const createInstanceTaskKinds: CreateInstanceTaskKind[] = serviceIds.map(
-      (serviceId: ServiceId) => ({
+      (serviceId: ServiceId): CreateInstanceTaskKind => ({
         binding: this.#getBinding(serviceId),
-        id: serviceId,
         requestId: taskKind.requestId,
         type: TaskKindType.createInstance,
       }),
@@ -202,7 +201,7 @@ export class CreateInstancesTaskDependencyEngine
     if (taskKindSet.has(createInstanceTaskKindGraphNode.kind)) {
       throw new Error(
         `Circular dependency found related to ${stringifyServiceId(
-          createInstanceTaskKindGraphNode.kind.id,
+          createInstanceTaskKindGraphNode.kind.binding.id,
         )}!`,
       );
     } else {

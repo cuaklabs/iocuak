@@ -104,14 +104,14 @@ describe(CreateInstanceTask.name, () => {
         it('should call containerBindingService.get()', () => {
           expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
           );
         });
 
         it('should call lazyGetBindingOrThrow()', () => {
           expect(lazyGetBindingOrThrow).toHaveBeenCalledTimes(1);
           expect(lazyGetBindingOrThrow).toHaveBeenCalledWith(
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
             metadataServiceMock,
           );
         });
@@ -167,7 +167,7 @@ describe(CreateInstanceTask.name, () => {
         it('should call containerBindingService.binding.get()', () => {
           expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
           );
         });
 
@@ -232,14 +232,14 @@ describe(CreateInstanceTask.name, () => {
         it('should call containerBindingService.get()', () => {
           expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
           );
         });
 
         it('should call containerSingletonService.get()', () => {
           expect(containerSingletonServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerSingletonServiceMock.get).toHaveBeenCalledWith(
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
           );
         });
 
@@ -254,7 +254,7 @@ describe(CreateInstanceTask.name, () => {
         it('should call containerSingletonService.set()', () => {
           expect(containerSingletonServiceMock.set).toHaveBeenCalledTimes(1);
           expect(containerSingletonServiceMock.set).toHaveBeenCalledWith(
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
             expect.any(InstanceTest),
           );
           Object.entries(
@@ -262,7 +262,7 @@ describe(CreateInstanceTask.name, () => {
               .properties,
           ).map(([key, value]: [string, unknown]): void => {
             expect(containerSingletonServiceMock.set).toHaveBeenCalledWith(
-              taskKindFixture.id,
+              taskKindFixture.binding.id,
               expect.objectContaining({ [key]: value }),
             );
           });
@@ -327,14 +327,14 @@ describe(CreateInstanceTask.name, () => {
         it('should call containerBindingService.get()', () => {
           expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
           );
         });
 
         it('should call containerSingletonService.singleton.get()', () => {
           expect(containerSingletonServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerSingletonServiceMock.get).toHaveBeenCalledWith(
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
           );
         });
 
@@ -387,7 +387,7 @@ describe(CreateInstanceTask.name, () => {
         it('should call containerBindingService.get()', () => {
           expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
           );
         });
 
@@ -395,7 +395,7 @@ describe(CreateInstanceTask.name, () => {
           expect(containerRequestServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerRequestServiceMock.get).toHaveBeenCalledWith(
             taskKindFixture.requestId,
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
           );
         });
 
@@ -411,7 +411,7 @@ describe(CreateInstanceTask.name, () => {
           expect(containerRequestServiceMock.set).toHaveBeenCalledTimes(1);
           expect(containerRequestServiceMock.set).toHaveBeenCalledWith(
             taskKindFixture.requestId,
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
             expect.any(InstanceTest),
           );
           Object.entries(
@@ -420,7 +420,7 @@ describe(CreateInstanceTask.name, () => {
           ).map(([key, value]: [string, unknown]): void => {
             expect(containerSingletonServiceMock.set).toHaveBeenCalledWith(
               taskKindFixture.requestId,
-              taskKindFixture.id,
+              taskKindFixture.binding.id,
               expect.objectContaining({ [key]: value }),
             );
           });
@@ -485,7 +485,7 @@ describe(CreateInstanceTask.name, () => {
         it('should call containerBindingService.get()', () => {
           expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerBindingServiceMock.get).toHaveBeenCalledWith(
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
           );
         });
 
@@ -493,7 +493,7 @@ describe(CreateInstanceTask.name, () => {
           expect(containerRequestServiceMock.get).toHaveBeenCalledTimes(1);
           expect(containerRequestServiceMock.get).toHaveBeenCalledWith(
             taskKindFixture.requestId,
-            taskKindFixture.id,
+            taskKindFixture.binding.id,
           );
         });
 
