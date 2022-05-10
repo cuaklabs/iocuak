@@ -2,7 +2,7 @@ import { FlatPromise } from '../../common/models/FlatPromise';
 import { MayBePromise } from '../../common/models/MayBePromise';
 import { NonThenableProperties } from '../../common/models/NonThenableProperties';
 import { PromiseIfThenable } from '../../common/models/PromiseIfThenable';
-import { isPromiseLike } from '../../utils/isPromiseLike';
+import { isPromiseLike } from '../../common/utils/domain/isPromiseLike';
 import { DependentTask } from '../models/domain/DependentTask';
 import { ExpandedDependentTask } from '../models/domain/ExpandedDependentTask';
 import { TaskStatus } from '../models/domain/TaskStatus';
