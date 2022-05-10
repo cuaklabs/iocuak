@@ -1,7 +1,7 @@
 import { NonThenableProperties } from '../../../common/models/NonThenableProperties';
 import { PromiseIfThenable } from '../../../common/models/PromiseIfThenable';
 import { PromiseLikeResult } from '../../../common/models/PromiseLikeResult';
-import { isPromiseLike } from '../../../utils/isPromiseLike';
+import { isPromiseLike } from '../../../common/utils/domain/isPromiseLike';
 import { Task } from './Task';
 import { TaskStatus } from './TaskStatus';
 

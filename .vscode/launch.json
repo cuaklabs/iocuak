@@ -14,7 +14,6 @@
         "${file}"
       ],
       "console": "integratedTerminal",
-      "protocol": "inspector",
       "cwd": "${workspaceFolder}/api"
     },
     {
@@ -26,7 +25,6 @@
         "${file}"
       ],
       "console": "integratedTerminal",
-      "protocol": "inspector",
       "cwd": "${workspaceFolder}"
     },
     {
@@ -44,8 +42,7 @@
         "${file}"
       ],
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "protocol": "inspector"
+      "cwd": "${workspaceFolder}"
     },
     {
       "type": "node",
@@ -62,7 +59,6 @@
         "${input:someArgs}"
       ],
       "console": "integratedTerminal",
-      "protocol": "inspector",
       "cwd": "${workspaceFolder}"
     },
     {
@@ -77,7 +73,6 @@
         "--config=config/cucumber/cucumber.ts.config.mjs"
       ],
       "console": "integratedTerminal",
-      "protocol": "inspector",
       "cwd": "${workspaceFolder}"
     },
     {
@@ -94,7 +89,6 @@
         "ci"
       ],
       "console": "integratedTerminal",
-      "protocol": "inspector",
       "cwd": "${workspaceFolder}"
     },
   ],
