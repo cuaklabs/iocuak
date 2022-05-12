@@ -41,7 +41,7 @@ type TaskKindGraphNode = cuaktask.TaskDependencyKindGraphNode<
 
 type TaskKindGraph = cuaktask.TaskDependencyKindGraph<TaskKind, TaskKind>;
 
-export class CreateInstancesTaskDependencyEngineOperation {
+export class CreateInstancesTaskDependenciesOperation {
   readonly #containerBindingService: BindingService;
   readonly #metadataService: MetadataService;
   readonly #taskKindSerBuilder: Builder<SetLike<TaskKind>>;

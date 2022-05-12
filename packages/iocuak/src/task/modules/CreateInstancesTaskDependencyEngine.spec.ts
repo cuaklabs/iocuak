@@ -1,6 +1,6 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
-jest.mock('./CreateInstancesTaskDependencyEngineOperation.ts');
+jest.mock('./CreateInstancesTaskDependenciesOperation.ts');
 
 import { BindingService } from '../../binding/services/domain/BindingService';
 import { Builder } from '../../common/modules/domain/Builder';
@@ -8,8 +8,8 @@ import { SetLike } from '../../common/modules/domain/SetLike';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { TaskKind } from '../models/domain/TaskKind';
+import { CreateInstancesTaskDependenciesOperation } from './CreateInstancesTaskDependenciesOperation';
 import { CreateInstancesTaskDependencyEngine } from './CreateInstancesTaskDependencyEngine';
-import { CreateInstancesTaskDependencyEngineOperation } from './CreateInstancesTaskDependencyEngineOperation';
 
 describe(CreateInstancesTaskDependencyEngine, () => {
   describe('.getDependencies()', () => {
@@ -56,10 +56,10 @@ describe(CreateInstancesTaskDependencyEngine, () => {
         } as unknown as cuaktask.TaskDependencyKindGraph<TaskKind, TaskKind>;
 
         (
-          CreateInstancesTaskDependencyEngineOperation as jest.Mock<CreateInstancesTaskDependencyEngineOperation>
+          CreateInstancesTaskDependenciesOperation as jest.Mock<CreateInstancesTaskDependenciesOperation>
         ).mockReturnValueOnce({
           run: jest.fn().mockReturnValueOnce(taskKindGraphFixture),
-        } as Partial<CreateInstancesTaskDependencyEngineOperation> as CreateInstancesTaskDependencyEngineOperation);
+        } as Partial<CreateInstancesTaskDependenciesOperation> as CreateInstancesTaskDependenciesOperation);
 
         result =
           createInstancesTaskDependencyEngine.getDependencies(taskKindFixture);
@@ -70,12 +70,10 @@ describe(CreateInstancesTaskDependencyEngine, () => {
       });
 
       it('should call CreateInstancesTaskDependencyEngineOperation', () => {
-        expect(
-          CreateInstancesTaskDependencyEngineOperation,
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          CreateInstancesTaskDependencyEngineOperation,
-        ).toHaveBeenCalledWith(
+        expect(CreateInstancesTaskDependenciesOperation).toHaveBeenCalledTimes(
+          1,
+        );
+        expect(CreateInstancesTaskDependenciesOperation).toHaveBeenCalledWith(
           containerBindingServiceMock,
           metadataServiceMock,
           taskKindSetBuilderMock,

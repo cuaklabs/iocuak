@@ -5,7 +5,7 @@ import { Builder } from '../../common/modules/domain/Builder';
 import { SetLike } from '../../common/modules/domain/SetLike';
 import { MetadataService } from '../../metadata/services/domain/MetadataService';
 import { TaskKind } from '../models/domain/TaskKind';
-import { CreateInstancesTaskDependencyEngineOperation } from './CreateInstancesTaskDependencyEngineOperation';
+import { CreateInstancesTaskDependenciesOperation } from './CreateInstancesTaskDependenciesOperation';
 
 type TaskKindGraph = cuaktask.TaskDependencyKindGraph<TaskKind, TaskKind>;
 
@@ -27,8 +27,8 @@ export class CreateInstancesTaskDependencyEngine
   }
 
   public getDependencies(taskKind: TaskKind): TaskKindGraph {
-    const createInstancesTaskDependencyEngineOperation: CreateInstancesTaskDependencyEngineOperation =
-      new CreateInstancesTaskDependencyEngineOperation(
+    const createInstancesTaskDependencyEngineOperation: CreateInstancesTaskDependenciesOperation =
+      new CreateInstancesTaskDependenciesOperation(
         this.#containerBindingService,
         this.#metadataService,
         this.#taskKindSerBuilder,
