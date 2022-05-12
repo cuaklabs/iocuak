@@ -1,6 +1,6 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
-jest.mock('./CreateInstancesTaskDependenciesOperation.ts');
+jest.mock('./CreateInstancesTaskDependenciesOperation');
 
 import { BindingService } from '../../binding/services/domain/BindingService';
 import { Builder } from '../../common/modules/domain/Builder';
