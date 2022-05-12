@@ -11,7 +11,7 @@ jest.mock(
   '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine',
 );
 jest.mock('../../../metadata/services/domain/MetadataServiceImplementation');
-jest.mock('../../../task/modules/CreateInstancesTaskDependencyEngineOperation');
+jest.mock('../../../task/modules/CreateInstancesTaskDependencyEngine');
 jest.mock('../../../task/modules/TaskBuilder');
 jest.mock('../../../task/modules/TaskBuilderWithNoDependencies');
 jest.mock('../../services/cuaktask/ContainerInstanceServiceImplementation');
@@ -27,7 +27,7 @@ import { ContainerModuleTaskBuilderWithNoDependencies } from '../../../container
 import { ContainerModuleTaskDependencyEngine } from '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine';
 import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
-import { CreateInstancesTaskDependencyEngineOperation } from '../../../task/modules/CreateInstancesTaskDependencyEngineOperation';
+import { CreateInstancesTaskDependencyEngine } from '../../../task/modules/CreateInstancesTaskDependencyEngine';
 import { TaskBuilder } from '../../../task/modules/TaskBuilder';
 import { TaskBuilderWithNoDependencies } from '../../../task/modules/TaskBuilderWithNoDependencies';
 import { ContainerInstanceServiceImplementation } from '../../services/cuaktask/ContainerInstanceServiceImplementation';
@@ -61,7 +61,7 @@ describe(ContainerApi.name, () => {
 
       let dependentTaskRunnerFixture: cuaktask.DependentTaskRunner;
 
-      let createInstancesTaskDependencyEngineFixture: CreateInstancesTaskDependencyEngineOperation;
+      let createInstancesTaskDependencyEngineFixture: CreateInstancesTaskDependencyEngine;
       let taskBuilderWithNoDependenciesFixture: TaskBuilderWithNoDependencies;
       let taskBuilderFixture: TaskBuilder;
 
@@ -108,7 +108,7 @@ describe(ContainerApi.name, () => {
 
         createInstancesTaskDependencyEngineFixture = buildEmptyFixture();
         bindFixtureToConstructor(
-          CreateInstancesTaskDependencyEngineOperation,
+          CreateInstancesTaskDependencyEngine,
           createInstancesTaskDependencyEngineFixture,
         );
 
@@ -188,12 +188,8 @@ describe(ContainerApi.name, () => {
       });
 
       it('should call new DirectTaskDependencyEngine()', () => {
-        expect(
-          CreateInstancesTaskDependencyEngineOperation,
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          CreateInstancesTaskDependencyEngineOperation,
-        ).toHaveBeenCalledWith(
+        expect(CreateInstancesTaskDependencyEngine).toHaveBeenCalledTimes(1);
+        expect(CreateInstancesTaskDependencyEngine).toHaveBeenCalledWith(
           containerBindingServiceImplementationFixture,
           metadataServiceImplementationFixture,
           {

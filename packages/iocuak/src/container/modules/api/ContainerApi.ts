@@ -11,7 +11,7 @@ import { ContainerModuleTaskDependencyEngine } from '../../../containerModuleTas
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
 import { TaskKind } from '../../../task/models/domain/TaskKind';
-import { CreateInstancesTaskDependencyEngineOperation } from '../../../task/modules/CreateInstancesTaskDependencyEngineOperation';
+import { CreateInstancesTaskDependencyEngine } from '../../../task/modules/CreateInstancesTaskDependencyEngine';
 import { TaskBuilder } from '../../../task/modules/TaskBuilder';
 import { TaskBuilderWithNoDependencies } from '../../../task/modules/TaskBuilderWithNoDependencies';
 import { TaskKindSet } from '../../../task/modules/TaskKindSet';
@@ -140,7 +140,7 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     const taskDependencyEngine: cuaktask.TaskDependencyEngine<
       TaskKind,
       TaskKind
-    > = new CreateInstancesTaskDependencyEngineOperation(
+    > = new CreateInstancesTaskDependencyEngine(
       containerBindingService,
       metadataService,
       taskDependenciesKindSetBuilder,
