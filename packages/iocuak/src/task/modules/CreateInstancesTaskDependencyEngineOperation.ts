@@ -41,9 +41,7 @@ type TaskKindGraphNode = cuaktask.TaskDependencyKindGraphNode<
 
 type TaskKindGraph = cuaktask.TaskDependencyKindGraph<TaskKind, TaskKind>;
 
-export class CreateInstancesTaskDependencyEngineOperation
-  implements cuaktask.TaskDependencyEngine<TaskKind, TaskKind>
-{
+export class CreateInstancesTaskDependencyEngineOperation {
   readonly #containerBindingService: BindingService;
   readonly #metadataService: MetadataService;
   readonly #taskKindSerBuilder: Builder<SetLike<TaskKind>>;
@@ -58,7 +56,7 @@ export class CreateInstancesTaskDependencyEngineOperation
     this.#taskKindSerBuilder = taskKindSerBuilder;
   }
 
-  public getDependencies(taskKind: TaskKind): TaskKindGraph {
+  public run(taskKind: TaskKind): TaskKindGraph {
     switch (taskKind.type) {
       case TaskKindType.getInstanceDependencies:
         throw new Error('Unsupported type');

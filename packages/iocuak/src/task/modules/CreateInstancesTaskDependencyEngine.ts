@@ -35,7 +35,7 @@ export class CreateInstancesTaskDependencyEngine
       );
 
     const taskKindGraph: TaskKindGraph =
-      createInstancesTaskDependencyEngineOperation.getDependencies(taskKind);
+      createInstancesTaskDependencyEngineOperation.run(taskKind);
 
     return taskKindGraph;
   }

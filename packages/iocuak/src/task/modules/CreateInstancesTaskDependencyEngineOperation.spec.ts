@@ -49,7 +49,7 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
       );
   });
 
-  describe('.getDependencies', () => {
+  describe('.run', () => {
     describe('having a TaskKind with type getInstanceDependencies', () => {
       let taskKindFixture: GetInstanceDependenciesTaskKind;
 
@@ -62,9 +62,7 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
 
         beforeAll(() => {
           try {
-            createInstancesTaskDependencyEngineOperation.getDependencies(
-              taskKindFixture,
-            );
+            createInstancesTaskDependencyEngineOperation.run(taskKindFixture);
           } catch (error: unknown) {
             result = error;
           }
@@ -97,9 +95,7 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
 
         beforeAll(() => {
           try {
-            createInstancesTaskDependencyEngineOperation.getDependencies(
-              taskKindFixture,
-            );
+            createInstancesTaskDependencyEngineOperation.run(taskKindFixture);
           } catch (error: unknown) {
             result = error;
           }
@@ -160,7 +156,7 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
             ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
           );
 
-          result = createInstancesTaskDependencyEngineOperation.getDependencies(
+          result = createInstancesTaskDependencyEngineOperation.run(
             createInstanceRootTaskKindFixture,
           );
         });
@@ -261,7 +257,7 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
           containerBindingServiceMock.get.mockReturnValueOnce(bindingFixture);
           taskKindSetBuilderMock.build.mockReturnValueOnce(taskKindSetMock);
 
-          result = createInstancesTaskDependencyEngineOperation.getDependencies(
+          result = createInstancesTaskDependencyEngineOperation.run(
             createInstanceRootTaskKindFixture,
           );
         });
@@ -336,7 +332,7 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
               ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
             );
 
-          result = createInstancesTaskDependencyEngineOperation.getDependencies(
+          result = createInstancesTaskDependencyEngineOperation.run(
             createInstanceRootTaskKindFixture,
           );
         });
@@ -498,7 +494,7 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
               ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
             );
 
-          result = createInstancesTaskDependencyEngineOperation.getDependencies(
+          result = createInstancesTaskDependencyEngineOperation.run(
             createInstanceRootTaskKindFixture,
           );
         });

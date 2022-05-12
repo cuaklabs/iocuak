@@ -58,7 +58,7 @@ describe(CreateInstancesTaskDependencyEngine, () => {
         (
           CreateInstancesTaskDependencyEngineOperation as jest.Mock<CreateInstancesTaskDependencyEngineOperation>
         ).mockReturnValueOnce({
-          getDependencies: jest.fn().mockReturnValueOnce(taskKindGraphFixture),
+          run: jest.fn().mockReturnValueOnce(taskKindGraphFixture),
         } as Partial<CreateInstancesTaskDependencyEngineOperation> as CreateInstancesTaskDependencyEngineOperation);
 
         result =
