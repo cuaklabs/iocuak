@@ -28,8 +28,6 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
   let metadataServiceMock: jest.Mocked<MetadataService>;
   let taskKindSetBuilderMock: jest.Mocked<Builder<SetLike<TaskKind>>>;
 
-  let createInstancesTaskDependencyEngineOperation: CreateInstancesTaskDependencyEngineOperation;
-
   beforeAll(() => {
     containerBindingServiceMock = {
       get: jest.fn(),
@@ -40,13 +38,6 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
     taskKindSetBuilderMock = {
       build: jest.fn(),
     };
-
-    createInstancesTaskDependencyEngineOperation =
-      new CreateInstancesTaskDependencyEngineOperation(
-        containerBindingServiceMock,
-        metadataServiceMock,
-        taskKindSetBuilderMock,
-      );
   });
 
   describe('.run', () => {
@@ -58,9 +49,18 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
       });
 
       describe('when called', () => {
+        let createInstancesTaskDependencyEngineOperation: CreateInstancesTaskDependencyEngineOperation;
+
         let result: unknown;
 
         beforeAll(() => {
+          createInstancesTaskDependencyEngineOperation =
+            new CreateInstancesTaskDependencyEngineOperation(
+              containerBindingServiceMock,
+              metadataServiceMock,
+              taskKindSetBuilderMock,
+            );
+
           try {
             createInstancesTaskDependencyEngineOperation.run(taskKindFixture);
           } catch (error: unknown) {
@@ -91,9 +91,18 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
       });
 
       describe('when called', () => {
+        let createInstancesTaskDependencyEngineOperation: CreateInstancesTaskDependencyEngineOperation;
+
         let result: unknown;
 
         beforeAll(() => {
+          createInstancesTaskDependencyEngineOperation =
+            new CreateInstancesTaskDependencyEngineOperation(
+              containerBindingServiceMock,
+              metadataServiceMock,
+              taskKindSetBuilderMock,
+            );
+
           try {
             createInstancesTaskDependencyEngineOperation.run(taskKindFixture);
           } catch (error: unknown) {
@@ -128,9 +137,18 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
         let bindingFixture: TypeBinding;
         let createInstanceTaskKindFixture: CreateInstanceTaskKind;
         let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
+        let createInstancesTaskDependencyEngineOperation: CreateInstancesTaskDependencyEngineOperation;
+
         let result: unknown;
 
         beforeAll(() => {
+          createInstancesTaskDependencyEngineOperation =
+            new CreateInstancesTaskDependencyEngineOperation(
+              containerBindingServiceMock,
+              metadataServiceMock,
+              taskKindSetBuilderMock,
+            );
+
           bindingFixture = TypeBindingFixtures.any;
           createInstanceTaskKindFixture = {
             binding: bindingFixture,
@@ -237,9 +255,18 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
         let bindingFixture: ValueBinding;
         let createInstanceTaskKindFixture: CreateInstanceTaskKind;
         let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
+        let createInstancesTaskDependencyEngineOperation: CreateInstancesTaskDependencyEngineOperation;
+
         let result: unknown;
 
         beforeAll(() => {
+          createInstancesTaskDependencyEngineOperation =
+            new CreateInstancesTaskDependencyEngineOperation(
+              containerBindingServiceMock,
+              metadataServiceMock,
+              taskKindSetBuilderMock,
+            );
+
           bindingFixture = ValueBindingFixtures.any;
           createInstanceTaskKindFixture = {
             binding: bindingFixture,
@@ -298,9 +325,18 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
         let bindingFixture: TypeBinding;
         let createInstanceTaskKindFixture: CreateInstanceTaskKind;
         let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
+        let createInstancesTaskDependencyEngineOperation: CreateInstancesTaskDependencyEngineOperation;
+
         let result: unknown;
 
         beforeAll(() => {
+          createInstancesTaskDependencyEngineOperation =
+            new CreateInstancesTaskDependencyEngineOperation(
+              containerBindingServiceMock,
+              metadataServiceMock,
+              taskKindSetBuilderMock,
+            );
+
           bindingFixture = TypeBindingFixtures.any;
           createInstanceTaskKindFixture = {
             binding: bindingFixture,
@@ -460,9 +496,18 @@ describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
         let bindingFixture: TypeBinding;
         let createInstanceTaskKindFixture: CreateInstanceTaskKind;
         let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
+        let createInstancesTaskDependencyEngineOperation: CreateInstancesTaskDependencyEngineOperation;
+
         let result: unknown;
 
         beforeAll(() => {
+          createInstancesTaskDependencyEngineOperation =
+            new CreateInstancesTaskDependencyEngineOperation(
+              containerBindingServiceMock,
+              metadataServiceMock,
+              taskKindSetBuilderMock,
+            );
+
           bindingFixture = TypeBindingFixtures.any;
           createInstanceTaskKindFixture = {
             binding: bindingFixture,
