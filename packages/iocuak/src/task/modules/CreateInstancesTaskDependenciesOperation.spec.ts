@@ -58,11 +58,12 @@ describe(CreateInstancesTaskDependenciesOperation.name, () => {
             new CreateInstancesTaskDependenciesOperation(
               containerBindingServiceMock,
               metadataServiceMock,
+              taskKindFixture,
               taskKindSetBuilderMock,
             );
 
           try {
-            createInstancesTaskDependencyEngineOperation.run(taskKindFixture);
+            createInstancesTaskDependencyEngineOperation.run();
           } catch (error: unknown) {
             result = error;
           }
@@ -100,11 +101,12 @@ describe(CreateInstancesTaskDependenciesOperation.name, () => {
             new CreateInstancesTaskDependenciesOperation(
               containerBindingServiceMock,
               metadataServiceMock,
+              taskKindFixture,
               taskKindSetBuilderMock,
             );
 
           try {
-            createInstancesTaskDependencyEngineOperation.run(taskKindFixture);
+            createInstancesTaskDependencyEngineOperation.run();
           } catch (error: unknown) {
             result = error;
           }
@@ -146,6 +148,7 @@ describe(CreateInstancesTaskDependenciesOperation.name, () => {
             new CreateInstancesTaskDependenciesOperation(
               containerBindingServiceMock,
               metadataServiceMock,
+              createInstanceRootTaskKindFixture,
               taskKindSetBuilderMock,
             );
 
@@ -174,9 +177,7 @@ describe(CreateInstancesTaskDependenciesOperation.name, () => {
             ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
           );
 
-          result = createInstancesTaskDependencyEngineOperation.run(
-            createInstanceRootTaskKindFixture,
-          );
+          result = createInstancesTaskDependencyEngineOperation.run();
         });
 
         afterAll(() => {
@@ -264,6 +265,7 @@ describe(CreateInstancesTaskDependenciesOperation.name, () => {
             new CreateInstancesTaskDependenciesOperation(
               containerBindingServiceMock,
               metadataServiceMock,
+              createInstanceRootTaskKindFixture,
               taskKindSetBuilderMock,
             );
 
@@ -284,9 +286,7 @@ describe(CreateInstancesTaskDependenciesOperation.name, () => {
           containerBindingServiceMock.get.mockReturnValueOnce(bindingFixture);
           taskKindSetBuilderMock.build.mockReturnValueOnce(taskKindSetMock);
 
-          result = createInstancesTaskDependencyEngineOperation.run(
-            createInstanceRootTaskKindFixture,
-          );
+          result = createInstancesTaskDependencyEngineOperation.run();
         });
 
         afterAll(() => {
@@ -334,6 +334,7 @@ describe(CreateInstancesTaskDependenciesOperation.name, () => {
             new CreateInstancesTaskDependenciesOperation(
               containerBindingServiceMock,
               metadataServiceMock,
+              createInstanceRootTaskKindFixture,
               taskKindSetBuilderMock,
             );
 
@@ -368,9 +369,7 @@ describe(CreateInstancesTaskDependenciesOperation.name, () => {
               ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
             );
 
-          result = createInstancesTaskDependencyEngineOperation.run(
-            createInstanceRootTaskKindFixture,
-          );
+          result = createInstancesTaskDependencyEngineOperation.run();
         });
 
         afterAll(() => {
@@ -505,6 +504,7 @@ describe(CreateInstancesTaskDependenciesOperation.name, () => {
             new CreateInstancesTaskDependenciesOperation(
               containerBindingServiceMock,
               metadataServiceMock,
+              createInstanceRootTaskKindFixture,
               taskKindSetBuilderMock,
             );
 
@@ -539,9 +539,7 @@ describe(CreateInstancesTaskDependenciesOperation.name, () => {
               ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
             );
 
-          result = createInstancesTaskDependencyEngineOperation.run(
-            createInstanceRootTaskKindFixture,
-          );
+          result = createInstancesTaskDependencyEngineOperation.run();
         });
 
         afterAll(() => {

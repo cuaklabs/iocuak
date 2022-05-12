@@ -44,26 +44,29 @@ type TaskKindGraph = cuaktask.TaskDependencyKindGraph<TaskKind, TaskKind>;
 export class CreateInstancesTaskDependenciesOperation {
   readonly #containerBindingService: BindingService;
   readonly #metadataService: MetadataService;
+  readonly #taskKind: TaskKind;
   readonly #taskKindSerBuilder: Builder<SetLike<TaskKind>>;
 
   constructor(
     containerBindingService: BindingService,
     metadataService: MetadataService,
+    taskKind: TaskKind,
     taskKindSerBuilder: Builder<SetLike<TaskKind>>,
   ) {
     this.#containerBindingService = containerBindingService;
     this.#metadataService = metadataService;
+    this.#taskKind = taskKind;
     this.#taskKindSerBuilder = taskKindSerBuilder;
   }
 
-  public run(taskKind: TaskKind): TaskKindGraph {
-    switch (taskKind.type) {
+  public run(): TaskKindGraph {
+    switch (this.#taskKind.type) {
       case TaskKindType.getInstanceDependencies:
         throw new Error('Unsupported type');
       case TaskKindType.createInstance:
         throw new Error('Unsupported type');
       case TaskKindType.createInstanceRoot:
-        return this.#getCreateInstanceTaskKindDependencies(taskKind);
+        return this.#getCreateInstanceTaskKindDependencies(this.#taskKind);
     }
   }
 

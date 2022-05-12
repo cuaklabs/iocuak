@@ -15,6 +15,7 @@ describe(CreateInstancesTaskDependencyEngine, () => {
   describe('.getDependencies()', () => {
     let containerBindingServiceMock: jest.Mocked<BindingService>;
     let metadataServiceMock: jest.Mocked<MetadataService>;
+    let taskKindFixture: TaskKind;
     let taskKindSetBuilderMock: jest.Mocked<Builder<SetLike<TaskKind>>>;
 
     let createInstancesTaskDependencyEngine: CreateInstancesTaskDependencyEngine;
@@ -28,6 +29,7 @@ describe(CreateInstancesTaskDependencyEngine, () => {
       } as Partial<
         jest.Mocked<MetadataService>
       > as jest.Mocked<MetadataService>;
+      taskKindFixture = CreateInstanceTaskKindFixtures.any;
       taskKindSetBuilderMock = {
         build: jest.fn(),
       };
@@ -41,7 +43,6 @@ describe(CreateInstancesTaskDependencyEngine, () => {
     });
 
     describe('when called', () => {
-      let taskKindFixture: TaskKind;
       let taskKindGraphFixture: cuaktask.TaskDependencyKindGraph<
         TaskKind,
         TaskKind
@@ -50,7 +51,6 @@ describe(CreateInstancesTaskDependencyEngine, () => {
       let result: unknown;
 
       beforeAll(() => {
-        taskKindFixture = CreateInstanceTaskKindFixtures.any;
         taskKindGraphFixture = {
           _type: Symbol,
         } as unknown as cuaktask.TaskDependencyKindGraph<TaskKind, TaskKind>;
@@ -76,6 +76,7 @@ describe(CreateInstancesTaskDependencyEngine, () => {
         expect(CreateInstancesTaskDependenciesOperation).toHaveBeenCalledWith(
           containerBindingServiceMock,
           metadataServiceMock,
+          taskKindFixture,
           taskKindSetBuilderMock,
         );
       });

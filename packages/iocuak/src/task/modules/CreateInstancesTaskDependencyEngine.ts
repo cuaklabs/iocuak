@@ -31,11 +31,12 @@ export class CreateInstancesTaskDependencyEngine
       new CreateInstancesTaskDependenciesOperation(
         this.#containerBindingService,
         this.#metadataService,
+        taskKind,
         this.#taskKindSerBuilder,
       );
 
     const taskKindGraph: TaskKindGraph =
-      createInstancesTaskDependencyEngineOperation.run(taskKind);
+      createInstancesTaskDependencyEngineOperation.run();
 
     return taskKindGraph;
   }
