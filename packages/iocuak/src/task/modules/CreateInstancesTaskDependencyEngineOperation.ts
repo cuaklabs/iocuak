@@ -41,7 +41,7 @@ type TaskKindGraphNode = cuaktask.TaskDependencyKindGraphNode<
 
 type TaskKindGraph = cuaktask.TaskDependencyKindGraph<TaskKind, TaskKind>;
 
-export class CreateInstancesTaskDependencyEngine
+export class CreateInstancesTaskDependencyEngineOperation
   implements cuaktask.TaskDependencyEngine<TaskKind, TaskKind>
 {
   readonly #containerBindingService: BindingService;

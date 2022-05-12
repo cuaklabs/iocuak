@@ -21,14 +21,14 @@ import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind'
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../models/domain/TaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
-import { CreateInstancesTaskDependencyEngine } from './CreateInstancesTaskDependencyEngine';
+import { CreateInstancesTaskDependencyEngineOperation } from './CreateInstancesTaskDependencyEngineOperation';
 
-describe(CreateInstancesTaskDependencyEngine.name, () => {
+describe(CreateInstancesTaskDependencyEngineOperation.name, () => {
   let containerBindingServiceMock: jest.Mocked<BindingService>;
   let metadataServiceMock: jest.Mocked<MetadataService>;
   let taskKindSetBuilderMock: jest.Mocked<Builder<SetLike<TaskKind>>>;
 
-  let createInstancesTaskDependencyEngine: CreateInstancesTaskDependencyEngine;
+  let createInstancesTaskDependencyEngineOperation: CreateInstancesTaskDependencyEngineOperation;
 
   beforeAll(() => {
     containerBindingServiceMock = {
@@ -41,8 +41,8 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
       build: jest.fn(),
     };
 
-    createInstancesTaskDependencyEngine =
-      new CreateInstancesTaskDependencyEngine(
+    createInstancesTaskDependencyEngineOperation =
+      new CreateInstancesTaskDependencyEngineOperation(
         containerBindingServiceMock,
         metadataServiceMock,
         taskKindSetBuilderMock,
@@ -62,7 +62,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
 
         beforeAll(() => {
           try {
-            createInstancesTaskDependencyEngine.getDependencies(
+            createInstancesTaskDependencyEngineOperation.getDependencies(
               taskKindFixture,
             );
           } catch (error: unknown) {
@@ -97,7 +97,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
 
         beforeAll(() => {
           try {
-            createInstancesTaskDependencyEngine.getDependencies(
+            createInstancesTaskDependencyEngineOperation.getDependencies(
               taskKindFixture,
             );
           } catch (error: unknown) {
@@ -160,7 +160,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
             ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
           );
 
-          result = createInstancesTaskDependencyEngine.getDependencies(
+          result = createInstancesTaskDependencyEngineOperation.getDependencies(
             createInstanceRootTaskKindFixture,
           );
         });
@@ -261,7 +261,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
           containerBindingServiceMock.get.mockReturnValueOnce(bindingFixture);
           taskKindSetBuilderMock.build.mockReturnValueOnce(taskKindSetMock);
 
-          result = createInstancesTaskDependencyEngine.getDependencies(
+          result = createInstancesTaskDependencyEngineOperation.getDependencies(
             createInstanceRootTaskKindFixture,
           );
         });
@@ -336,7 +336,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
               ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
             );
 
-          result = createInstancesTaskDependencyEngine.getDependencies(
+          result = createInstancesTaskDependencyEngineOperation.getDependencies(
             createInstanceRootTaskKindFixture,
           );
         });
@@ -498,7 +498,7 @@ describe(CreateInstancesTaskDependencyEngine.name, () => {
               ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
             );
 
-          result = createInstancesTaskDependencyEngine.getDependencies(
+          result = createInstancesTaskDependencyEngineOperation.getDependencies(
             createInstanceRootTaskKindFixture,
           );
         });
