@@ -30,6 +30,18 @@ export class ClassMetadataFixtures {
     return fixture;
   }
 
+  public static get withConstructorArgumentsTheSameTwoAndPropertiesEmpty(): ClassMetadata {
+    const fixture: ClassMetadata = {
+      constructorArguments: [
+        'sample-constructor-dependency-id',
+        'sample-constructor-dependency-id',
+      ],
+      properties: new Map(),
+    };
+
+    return fixture;
+  }
+
   public static get withConstructorArgumentsEmptyAndPropertiesOne(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: [],

@@ -113,14 +113,27 @@ export class CreateInstancesTaskDependenciesOperation {
       node: createDependencyInstanceTaskKindGraphNode,
     };
 
-    const existingNode: CreateInstanceTaskKindGraphNode | undefined =
-      this.#getExistingCreateInstanceTaskKindGraphNode(taskKind.binding);
+    if (this.#isTypeCreateInstanceTaskKind(taskKind)) {
+      const binding: TypeBinding = taskKind.binding;
 
-    if (existingNode !== undefined) {
-      nodeExpandOptions = {
-        expand: false,
-        node: existingNode,
-      };
+      switch (binding.scope) {
+        case BindingScope.singleton:
+          nodeExpandOptions =
+            this.#getCreateInstanceTaskKindGraphNodeExpandOptionsOnScope(
+              this.#serviceIdToSingletonCreateInstanceTaskKindNode,
+              taskKind,
+            );
+          break;
+        case BindingScope.request:
+          nodeExpandOptions =
+            this.#getCreateInstanceTaskKindGraphNodeExpandOptionsOnScope(
+              this.#serviceIdToRequestCreateInstanceTaskKindNode,
+              taskKind,
+            );
+          break;
+        default:
+          break;
+      }
     }
 
     return nodeExpandOptions;
@@ -153,32 +166,6 @@ export class CreateInstancesTaskDependenciesOperation {
     };
 
     return taskDependencyKindGraph;
-  }
-
-  #getExistingCreateInstanceTaskKindGraphNode(
-    binding: Binding,
-  ): CreateInstanceTaskKindGraphNode | undefined {
-    let existingNode: CreateInstanceTaskKindGraphNode | undefined;
-
-    if (binding.bindingType === BindingType.type) {
-      switch (binding.scope) {
-        case BindingScope.singleton:
-          existingNode =
-            this.#serviceIdToSingletonCreateInstanceTaskKindNode.get(
-              binding.id,
-            );
-          break;
-        case BindingScope.request:
-          existingNode = this.#serviceIdToRequestCreateInstanceTaskKindNode.get(
-            binding.id,
-          );
-          break;
-        default:
-          existingNode = undefined;
-      }
-    }
-
-    return existingNode;
   }
 
   #getGetInstanceDependenciesTaskKind(
@@ -264,12 +251,54 @@ export class CreateInstancesTaskDependenciesOperation {
     return servicesId;
   }
 
+  #getCreateInstanceTaskKindGraphNodeExpandOptionsOnScope(
+    serviceIdToCreateInstanceTaskKindNodeMap: Map<
+      ServiceId,
+      TypeBindingCreateInstanceTaskKindGraphNode
+    >,
+    taskKind: CreateInstanceTaskKind<TypeBinding>,
+  ): CreateInstanceTaskKindGraphNodeExpandOptions {
+    let expandNodeOptions: CreateInstanceTaskKindGraphNodeExpandOptions;
+
+    const binding: TypeBinding = taskKind.binding;
+
+    const existingNode: TypeBindingCreateInstanceTaskKindGraphNode | undefined =
+      serviceIdToCreateInstanceTaskKindNodeMap.get(binding.id);
+
+    if (existingNode === undefined) {
+      const createInstanceTaskKindGraphNode: TypeBindingCreateInstanceTaskKindGraphNode =
+        {
+          dependencies: [],
+          kind: taskKind,
+        };
+
+      serviceIdToCreateInstanceTaskKindNodeMap.set(
+        binding.id,
+        createInstanceTaskKindGraphNode,
+      );
+
+      expandNodeOptions = {
+        expand: true,
+        node: createInstanceTaskKindGraphNode,
+      };
+    } else {
+      expandNodeOptions = {
+        expand: false,
+        node: existingNode,
+      };
+    }
+
+    return expandNodeOptions;
+  }
+
   *#expandCreateInstanceTaskKindGraphNodes(
     createInstanceTaskKindGraphNode: CreateInstanceTaskKindGraphNode,
     taskKindSet: SetLike<TaskKind>,
   ): Iterable<TaskKindGraphNode> {
     if (
-      this.#isCreateInstanceTaskKindGraphNode(createInstanceTaskKindGraphNode)
+      this.#isTypeBindingCreateInstanceTaskKindGraphNode(
+        createInstanceTaskKindGraphNode,
+      )
     ) {
       yield* this.#expandCreateInstanceTypeTaskKindGraphNodes(
         createInstanceTaskKindGraphNode,
@@ -318,12 +347,17 @@ export class CreateInstancesTaskDependenciesOperation {
     }
   }
 
-  #isCreateInstanceTaskKindGraphNode(
+  #isTypeBindingCreateInstanceTaskKindGraphNode(
     createInstanceTaskKindGraphNode: CreateInstanceTaskKindGraphNode,
   ): createInstanceTaskKindGraphNode is TypeBindingCreateInstanceTaskKindGraphNode {
-    return (
-      createInstanceTaskKindGraphNode.kind.binding.bindingType ===
-      BindingType.type
+    return this.#isTypeCreateInstanceTaskKind(
+      createInstanceTaskKindGraphNode.kind,
     );
+  }
+
+  #isTypeCreateInstanceTaskKind(
+    createInstanceTaskKind: CreateInstanceTaskKind,
+  ): createInstanceTaskKind is CreateInstanceTaskKind<TypeBinding> {
+    return createInstanceTaskKind.binding.bindingType === BindingType.type;
   }
 }
