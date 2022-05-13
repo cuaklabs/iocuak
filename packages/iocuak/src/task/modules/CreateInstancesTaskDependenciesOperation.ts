@@ -41,11 +41,21 @@ type TaskKindGraphNode = cuaktask.TaskDependencyKindGraphNode<
 
 type TaskKindGraph = cuaktask.TaskDependencyKindGraph<TaskKind, TaskKind>;
 
+interface GetGetInstanceDependenciesTaskKindGraphNodeResult {
+  node: GetInstanceDependenciesTaskKindGraphNode;
+  dependenciesExpandOptions: CreateInstanceTaskKindGraphNodeExpandOptions[];
+}
+
+interface CreateInstanceTaskKindGraphNodeExpandOptions {
+  node: CreateInstanceTaskKindGraphNode;
+  expand: boolean;
+}
+
 export class CreateInstancesTaskDependenciesOperation {
   readonly #containerBindingService: BindingService;
   readonly #metadataService: MetadataService;
   readonly #taskKind: TaskKind;
-  readonly #taskKindSerBuilder: Builder<SetLike<TaskKind>>;
+  readonly #taskKindSetBuilder: Builder<SetLike<TaskKind>>;
 
   constructor(
     containerBindingService: BindingService,
@@ -56,7 +66,7 @@ export class CreateInstancesTaskDependenciesOperation {
     this.#containerBindingService = containerBindingService;
     this.#metadataService = metadataService;
     this.#taskKind = taskKind;
-    this.#taskKindSerBuilder = taskKindSerBuilder;
+    this.#taskKindSetBuilder = taskKindSerBuilder;
   }
 
   public run(): TaskKindGraph {
@@ -81,16 +91,18 @@ export class CreateInstancesTaskDependenciesOperation {
   #getCreateInstanceTaskKindDependencies(
     taskKind: CreateInstanceRootTaskKind,
   ): TaskKindGraph {
+    const binding: Binding = this.#getBinding(taskKind.id);
+
     const taskDependencyKindGraphRootNode: CreateInstanceTaskKindGraphNode = {
       dependencies: [],
       kind: {
-        binding: this.#getBinding(taskKind.id),
+        binding,
         requestId: taskKind.requestId,
         type: TaskKindType.createInstance,
       },
     };
 
-    const taskKindSet: SetLike<TaskKind> = this.#taskKindSerBuilder.build();
+    const taskKindSet: SetLike<TaskKind> = this.#taskKindSetBuilder.build();
 
     const taskDependencyKindGraph: TaskKindGraph = {
       nodes: [
@@ -141,7 +153,7 @@ export class CreateInstancesTaskDependenciesOperation {
 
   #getGetInstanceDependenciesTaskKindGraphNode(
     taskKind: CreateInstanceTaskKind<TypeBinding>,
-  ): GetInstanceDependenciesTaskKindGraphNode {
+  ): GetGetInstanceDependenciesTaskKindGraphNodeResult {
     const getInstanceDependenciesTaskKind: GetInstanceDependenciesTaskKind =
       this.#getGetInstanceDependenciesTaskKind(taskKind);
 
@@ -156,13 +168,29 @@ export class CreateInstancesTaskDependenciesOperation {
         kind: taskKind,
       }));
 
+    const dependenciesExpandOptions: CreateInstanceTaskKindGraphNodeExpandOptions[] =
+      createDependencyInstanceTaskKindGraphNodes.map(
+        (
+          createDependencyInstanceTaskKindGraphNode: CreateInstanceTaskKindGraphNode,
+        ) => ({
+          expand: true,
+          node: createDependencyInstanceTaskKindGraphNode,
+        }),
+      );
+
     const getInstanceDependenciesTaskNode: GetInstanceDependenciesTaskKindGraphNode =
       {
         dependencies: createDependencyInstanceTaskKindGraphNodes,
         kind: getInstanceDependenciesTaskKind,
       };
 
-    return getInstanceDependenciesTaskNode;
+    const getGetInstanceDependenciesTaskKindGraphNodeResult: GetGetInstanceDependenciesTaskKindGraphNodeResult =
+      {
+        dependenciesExpandOptions: dependenciesExpandOptions,
+        node: getInstanceDependenciesTaskNode,
+      };
+
+    return getGetInstanceDependenciesTaskKindGraphNodeResult;
   }
 
   #getInstanceDependenciesTaskKindDependenciesServiceIds(
@@ -208,23 +236,25 @@ export class CreateInstancesTaskDependenciesOperation {
     } else {
       taskKindSet.add(createInstanceTaskKindGraphNode.kind);
 
-      const getInstanceDependenciesTaskNode: GetInstanceDependenciesTaskKindGraphNode =
+      const getInstanceDependenciesTaskNodeResult: GetGetInstanceDependenciesTaskKindGraphNodeResult =
         this.#getGetInstanceDependenciesTaskKindGraphNode(
           createInstanceTaskKindGraphNode.kind,
         );
 
       createInstanceTaskKindGraphNode.dependencies.push(
-        getInstanceDependenciesTaskNode,
+        getInstanceDependenciesTaskNodeResult.node,
       );
 
       yield createInstanceTaskKindGraphNode;
-      yield getInstanceDependenciesTaskNode;
+      yield getInstanceDependenciesTaskNodeResult.node;
 
-      for (const createDependencyInstanceTaskKindGraphNode of getInstanceDependenciesTaskNode.dependencies) {
-        yield* this.#expandCreateInstanceTaskKindGraphNodes(
-          createDependencyInstanceTaskKindGraphNode,
-          taskKindSet,
-        );
+      for (const dependencyExpandOptions of getInstanceDependenciesTaskNodeResult.dependenciesExpandOptions) {
+        if (dependencyExpandOptions.expand) {
+          yield* this.#expandCreateInstanceTaskKindGraphNodes(
+            dependencyExpandOptions.node,
+            taskKindSet,
+          );
+        }
       }
 
       taskKindSet.delete(createInstanceTaskKindGraphNode.kind);
