@@ -660,6 +660,189 @@ describe(CreateInstancesTaskDependenciesOperation.name, () => {
           expect(result).toStrictEqual(expectedKindGraph);
         });
       });
+
+      describe('when called, and containerService.binding.get() returns a TypeBinding on singleton scope and metadataService.getClassMetadata returns metadata with the same two constructor arguments', () => {
+        let bindingFixture: TypeBinding;
+        let createInstanceTaskKindFixture: CreateInstanceTaskKind;
+        let taskKindSetMock: jest.Mocked<SetLike<TaskKind>>;
+        let createInstancesTaskDependencyEngineOperation: CreateInstancesTaskDependenciesOperation;
+
+        let result: unknown;
+
+        beforeAll(() => {
+          createInstancesTaskDependencyEngineOperation =
+            new CreateInstancesTaskDependenciesOperation(
+              containerBindingServiceMock,
+              metadataServiceMock,
+              createInstanceRootTaskKindFixture,
+              taskKindSetBuilderMock,
+            );
+
+          bindingFixture = TypeBindingFixtures.withScopeSingleton;
+          createInstanceTaskKindFixture = {
+            binding: bindingFixture,
+            requestId: createInstanceRootTaskKindFixture.requestId,
+            type: TaskKindType.createInstance,
+          };
+          taskKindSetMock = {
+            add: jest.fn(),
+            delete: jest.fn(),
+            has: jest
+              .fn()
+              .mockReturnValueOnce(false)
+              .mockReturnValueOnce(false)
+              .mockReturnValueOnce(false),
+          } as Partial<jest.Mocked<SetLike<TaskKind>>> as jest.Mocked<
+            SetLike<TaskKind>
+          >;
+
+          taskKindSetBuilderMock.build.mockReturnValueOnce(taskKindSetMock);
+
+          containerBindingServiceMock.get
+            .mockReturnValueOnce(bindingFixture)
+            .mockReturnValueOnce(bindingFixture)
+            .mockReturnValueOnce(bindingFixture);
+
+          metadataServiceMock.getClassMetadata
+            .mockReturnValueOnce(
+              ClassMetadataFixtures.withConstructorArgumentsTheSameTwoAndPropertiesEmpty,
+            )
+            .mockReturnValueOnce(
+              ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
+            );
+
+          result = createInstancesTaskDependencyEngineOperation.run();
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call taskKindSerBuilder.build()', () => {
+          expect(taskKindSetBuilderMock.build).toHaveBeenCalledTimes(1);
+          expect(taskKindSetBuilderMock.build).toHaveBeenCalledWith();
+        });
+
+        it('should call taskKindSet.has()', () => {
+          const expectedSecondArgument: CreateInstanceTaskKind = {
+            binding: bindingFixture,
+            requestId: createInstanceTaskKindFixture.requestId,
+            type: TaskKindType.createInstance,
+          };
+
+          expect(taskKindSetMock.has).toHaveBeenCalledTimes(2);
+          expect(taskKindSetMock.has).toHaveBeenNthCalledWith(
+            1,
+            createInstanceTaskKindFixture,
+          );
+          expect(taskKindSetMock.has).toHaveBeenNthCalledWith(
+            2,
+            expectedSecondArgument,
+          );
+        });
+
+        it('should call containerBindingService.get()', () => {
+          const expectedSecondArgument: ServiceId = ClassMetadataFixtures
+            .withConstructorArgumentsTheSameTwoAndPropertiesEmpty
+            .constructorArguments[0] as ServiceId;
+
+          const expectedThirdArgument: ServiceId = ClassMetadataFixtures
+            .withConstructorArgumentsTheSameTwoAndPropertiesEmpty
+            .constructorArguments[1] as ServiceId;
+
+          expect(containerBindingServiceMock.get).toHaveBeenCalledTimes(3);
+          expect(containerBindingServiceMock.get).toHaveBeenNthCalledWith(
+            1,
+            createInstanceRootTaskKindFixture.id,
+          );
+          expect(containerBindingServiceMock.get).toHaveBeenNthCalledWith(
+            2,
+            expectedSecondArgument,
+          );
+          expect(containerBindingServiceMock.get).toHaveBeenNthCalledWith(
+            3,
+            expectedThirdArgument,
+          );
+        });
+
+        it('should call metadataService.getClassMetadata()', () => {
+          expect(metadataServiceMock.getClassMetadata).toHaveBeenCalledTimes(2);
+          expect(metadataServiceMock.getClassMetadata).toHaveBeenNthCalledWith(
+            1,
+            bindingFixture.type,
+          );
+          expect(metadataServiceMock.getClassMetadata).toHaveBeenNthCalledWith(
+            2,
+            bindingFixture.type,
+          );
+        });
+
+        it('should return a task kind graph', () => {
+          const getInstanceConstructorDependencyTaskKindGraphNode: cuaktask.TaskDependencyKindGraphNode<
+            TaskKind,
+            TaskKind
+          > = {
+            dependencies: [],
+            kind: {
+              id: bindingFixture.id,
+              metadata:
+                ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesEmpty,
+              requestId: createInstanceTaskKindFixture.requestId,
+              type: TaskKindType.getInstanceDependencies,
+            },
+          };
+          const constructorDependencyKindGraphNode: cuaktask.TaskDependencyKindGraphNode<
+            TaskKind,
+            TaskKind
+          > = {
+            dependencies: [getInstanceConstructorDependencyTaskKindGraphNode],
+            kind: {
+              binding: bindingFixture,
+              requestId: createInstanceTaskKindFixture.requestId,
+              type: TaskKindType.createInstance,
+            },
+          };
+
+          const getInstanceDependencyTaskKindGraphNode: cuaktask.TaskDependencyKindGraphNode<
+            TaskKind,
+            TaskKind
+          > = {
+            dependencies: [
+              constructorDependencyKindGraphNode,
+              constructorDependencyKindGraphNode,
+            ],
+            kind: {
+              id: createInstanceTaskKindFixture.binding.id,
+              metadata:
+                ClassMetadataFixtures.withConstructorArgumentsTheSameTwoAndPropertiesEmpty,
+              requestId: createInstanceTaskKindFixture.requestId,
+              type: TaskKindType.getInstanceDependencies,
+            },
+          };
+          const expectedKindGraphNode: cuaktask.TaskDependencyKindGraphNode<
+            TaskKind,
+            TaskKind
+          > = {
+            dependencies: [getInstanceDependencyTaskKindGraphNode],
+            kind: createInstanceTaskKindFixture,
+          };
+
+          const expectedKindGraph: cuaktask.TaskDependencyKindGraph<
+            TaskKind,
+            TaskKind
+          > = {
+            nodes: [
+              expectedKindGraphNode,
+              getInstanceDependencyTaskKindGraphNode,
+              constructorDependencyKindGraphNode,
+              getInstanceConstructorDependencyTaskKindGraphNode,
+            ],
+            rootNode: expectedKindGraphNode,
+          };
+
+          expect(result).toStrictEqual(expectedKindGraph);
+        });
+      });
     });
   });
 });
