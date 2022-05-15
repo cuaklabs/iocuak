@@ -14,7 +14,7 @@
         "${file}"
       ],
       "console": "integratedTerminal",
-      "cwd": "${workspaceFolder}/api"
+      "cwd": "${workspaceFolder}"
     },
     {
       "type": "node",
