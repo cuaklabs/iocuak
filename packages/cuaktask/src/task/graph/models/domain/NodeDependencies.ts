@@ -1,7 +1,6 @@
-import { Node } from './Node';
 import { NodeDependenciesType } from './NodeExecutionOperator';
+import { ResolvedNodeDependencies } from './ResolvedNodeDependencies';
 
-export interface NodeDependencies<T> {
-  dependencies: (Node<T> | NodeDependencies<T>)[];
-  type: NodeDependenciesType;
-}
+export type NodeDependencies<TElem> =
+  | ResolvedNodeDependencies<NodeDependenciesType.and, TElem>
+  | ResolvedNodeDependencies<NodeDependenciesType.orElse, TElem>;
