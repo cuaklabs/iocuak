@@ -1,4 +1,4 @@
-export enum NodeExecutionOperator {
+export enum NodeDependenciesType {
   and,
   orElse,
 }
