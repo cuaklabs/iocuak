@@ -1,6 +1,6 @@
 import { Node } from './Node';
 import { NodeDependencies } from './NodeDependencies';
-import { NodeDependenciesType } from './NodeExecutionOperator';
+import { NodeDependenciesType } from './NodeDependenciesType';
 
 export interface BaseNodeDependencies<
   TType extends NodeDependenciesType,
