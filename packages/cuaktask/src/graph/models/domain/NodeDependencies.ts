@@ -1,8 +1,6 @@
-import { BaseNodeDependencies } from './BaseNodeDependencies';
-import { LazyNodeDependencies } from './LazyNodeDependencies';
-import { NodeDependenciesType } from './NodeDependenciesType';
+import { AndNodeDependencies } from './AndNodeDependencies';
+import { OrElseNodeDependencies } from './OrElseNodeDependencies';
 
 export type NodeDependencies<TElem> =
-  | BaseNodeDependencies<NodeDependenciesType.and, TElem>
-  | BaseNodeDependencies<NodeDependenciesType.orElse, TElem>
-  | LazyNodeDependencies<TElem>;
+  | AndNodeDependencies<TElem>
+  | OrElseNodeDependencies<TElem>;
