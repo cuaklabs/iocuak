@@ -1,4 +1,11 @@
 import { isPromiseLike } from './common/utils/domain/isPromiseLike';
+import { AndNodeDependencies } from './graph/models/domain/AndNodeDependencies';
+import { Graph } from './graph/models/domain/Graph';
+import { Node } from './graph/models/domain/Node';
+import { NodeDependencies } from './graph/models/domain/NodeDependencies';
+import { NodeDependency } from './graph/models/domain/NodeDependency';
+import { OrElseNodeDependencies } from './graph/models/domain/OrElseNodeDependencies';
+import { RootedGraph } from './graph/models/domain/RootedGraph';
 import { BaseDependentTask } from './task/models/domain/BaseDependentTask';
 import { BaseTask } from './task/models/domain/BaseTask';
 import { DependentTask } from './task/models/domain/DependentTask';
@@ -8,10 +15,18 @@ import { TaskDependencyKindGraphNode } from './task/models/domain/TaskDependency
 import { TaskStatus } from './task/models/domain/TaskStatus';
 import { DependentTaskBuilder } from './task/modules/DependentTaskBuilder';
 import { DependentTaskRunner } from './task/modules/DependentTaskRunner';
+import { RootedTaskGraphRunner } from './task/modules/RootedTaskGraphRunner';
 import { TaskDependencyEngine } from './task/modules/TaskDependencyEngine';
 
 export type {
+  AndNodeDependencies,
   DependentTask,
+  Graph,
+  Node,
+  NodeDependencies,
+  NodeDependency,
+  OrElseNodeDependencies,
+  RootedGraph,
   Task,
   TaskDependencyEngine,
   TaskDependencyKindGraph,
@@ -24,5 +39,6 @@ export {
   DependentTaskBuilder,
   DependentTaskRunner,
   isPromiseLike,
+  RootedTaskGraphRunner,
   TaskStatus,
 };
