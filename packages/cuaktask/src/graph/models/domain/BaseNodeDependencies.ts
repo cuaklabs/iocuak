@@ -6,5 +6,5 @@ export interface BaseNodeDependencies<
   TElem,
 > {
   type: TType;
-  dependencies: NodeDependency<TElem>[];
+  nodes: NodeDependency<TElem>[];
 }
