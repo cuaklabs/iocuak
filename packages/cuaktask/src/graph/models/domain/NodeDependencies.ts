@@ -1,6 +1,6 @@
 import { AndNodeDependencies } from './AndNodeDependencies';
-import { OrElseNodeDependencies } from './OrElseNodeDependencies';
+import { BitwiseOrNodeDependencies } from './BitwiseOrNodeDependencies';
 
 export type NodeDependencies<TElem> =
   | AndNodeDependencies<TElem>
-  | OrElseNodeDependencies<TElem>;
+  | BitwiseOrNodeDependencies<TElem>;
