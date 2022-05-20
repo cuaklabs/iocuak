@@ -2,10 +2,10 @@ import { DependentTask, DependentTaskRunner } from '@cuaklabs/cuaktask';
 
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Builder } from '../../../common/modules/domain/Builder';
-import { CreateInstanceTask } from '../../../task/models/cuaktask/CreateInstanceTask';
-import { CreateInstanceRootTaskKind } from '../../../task/models/domain/CreateInstanceRootTaskKind';
-import { TaskKind } from '../../../task/models/domain/TaskKind';
-import { TaskKindType } from '../../../task/models/domain/TaskKindType';
+import { CreateInstanceTask } from '../../../createInstanceTask/models/cuaktask/CreateInstanceTask';
+import { CreateInstanceRootTaskKind } from '../../../createInstanceTask/models/domain/CreateInstanceRootTaskKind';
+import { TaskKind } from '../../../createInstanceTask/models/domain/TaskKind';
+import { TaskKindType } from '../../../createInstanceTask/models/domain/TaskKindType';
 import { ContainerInstanceService } from '../domain/ContainerInstanceService';
 import { ContainerRequestService } from '../domain/ContainerRequestService';
 
