@@ -232,7 +232,7 @@ describe(RootedTaskGraphRunner.name, () => {
       },
     );
 
-    describe('having a graph with a single root node with empty orElse dependencies', () => {
+    describe('having a graph with a single root node with empty bitwiseOr dependencies', () => {
       let graphFixture: RootedGraph<UnknownTask<unknown>>;
       let nodeFixture: Node<UnknownTask<unknown>>;
 
@@ -256,7 +256,7 @@ describe(RootedTaskGraphRunner.name, () => {
         nodeFixture = {
           dependencies: {
             nodes: [],
-            type: NodeDependenciesType.orElse,
+            type: NodeDependenciesType.bitwiseOr,
           },
           element: taskMock,
         };
@@ -402,7 +402,7 @@ describe(RootedTaskGraphRunner.name, () => {
 
       describe.each<[string, NodeDependenciesType]>([
         ['with an and dependency', NodeDependenciesType.and],
-        ['with an orElse dependency', NodeDependenciesType.orElse],
+        ['with an bitwiseOr dependency', NodeDependenciesType.bitwiseOr],
       ])(
         'having a graph with a root node %s',
         (_: string, nodeDependencyType: NodeDependenciesType) => {
@@ -779,7 +779,7 @@ describe(RootedTaskGraphRunner.name, () => {
           });
         });
 
-        describe('having a graph with a root node with an orElse dependency', () => {
+        describe('having a graph with a root node with an bitwiseOr dependency', () => {
           let graphFixture: RootedGraph<UnknownTask<unknown>>;
           let nodeFixture: Node<UnknownTask<unknown>>;
 
@@ -802,7 +802,7 @@ describe(RootedTaskGraphRunner.name, () => {
             nodeFixture = {
               dependencies: {
                 nodes: [dependencyNodeFixture, secondDependencyNodeFixture],
-                type: NodeDependenciesType.orElse,
+                type: NodeDependenciesType.bitwiseOr,
               },
               element: taskMock,
             };

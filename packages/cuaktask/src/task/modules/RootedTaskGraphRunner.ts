@@ -204,7 +204,7 @@ export class RootedTaskGraphRunner {
       case NodeDependenciesType.and:
         result = this.#innerRunAndDependencies(nodeDependencies);
         break;
-      case NodeDependenciesType.orElse:
+      case NodeDependenciesType.bitwiseOr:
         result = this.#innerRunOrElseDependencies(nodeDependencies);
         break;
     }
