@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `Node`.
 - Added `NodeDependencies`.
 - Added `NodeDependency`.
-- Added `OrElseNodeDependencies`.
+- Added `BitwiseOrNodeDependencies`.
 - Added `RootedGraph`.
 - Added `RootedTaskGraphRunner`.
 

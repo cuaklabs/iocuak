@@ -3,11 +3,11 @@ import { NonThenableProperties } from '../../common/models/NonThenableProperties
 import { isPromiseLike } from '../../common/utils/domain/isPromiseLike';
 import { mapIterable } from '../../common/utils/domain/mapIterable';
 import { AndNodeDependencies } from '../../graph/models/domain/AndNodeDependencies';
+import { BitwiseOrNodeDependencies } from '../../graph/models/domain/BitwiseOrNodeDependencies';
 import { Node } from '../../graph/models/domain/Node';
 import { NodeDependencies } from '../../graph/models/domain/NodeDependencies';
 import { NodeDependenciesType } from '../../graph/models/domain/NodeDependenciesType';
 import { NodeDependency } from '../../graph/models/domain/NodeDependency';
-import { OrElseNodeDependencies } from '../../graph/models/domain/OrElseNodeDependencies';
 import { RootedGraph } from '../../graph/models/domain/RootedGraph';
 import { ExpandedTask } from '../models/domain/ExpandedTask';
 import { Task } from '../models/domain/Task';
@@ -228,7 +228,7 @@ export class RootedTaskGraphRunner {
   }
 
   #innerRunOrElseDependencies<TKind>(
-    nodeDependencies: OrElseNodeDependencies<UnknownExpandedTask<TKind>>,
+    nodeDependencies: BitwiseOrNodeDependencies<UnknownExpandedTask<TKind>>,
   ): MayBePromise<OperationResult<unknown[]>> {
     let result: MayBePromise<OperationResult<unknown[]>>;
 

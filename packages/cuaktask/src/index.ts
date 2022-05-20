@@ -1,10 +1,10 @@
 import { isPromiseLike } from './common/utils/domain/isPromiseLike';
 import { AndNodeDependencies } from './graph/models/domain/AndNodeDependencies';
+import { BitwiseOrNodeDependencies } from './graph/models/domain/BitwiseOrNodeDependencies';
 import { Graph } from './graph/models/domain/Graph';
 import { Node } from './graph/models/domain/Node';
 import { NodeDependencies } from './graph/models/domain/NodeDependencies';
 import { NodeDependency } from './graph/models/domain/NodeDependency';
-import { OrElseNodeDependencies } from './graph/models/domain/OrElseNodeDependencies';
 import { RootedGraph } from './graph/models/domain/RootedGraph';
 import { BaseDependentTask } from './task/models/domain/BaseDependentTask';
 import { BaseTask } from './task/models/domain/BaseTask';
@@ -25,7 +25,7 @@ export type {
   Node,
   NodeDependencies,
   NodeDependency,
-  OrElseNodeDependencies,
+  BitwiseOrNodeDependencies,
   RootedGraph,
   Task,
   TaskDependencyEngine,

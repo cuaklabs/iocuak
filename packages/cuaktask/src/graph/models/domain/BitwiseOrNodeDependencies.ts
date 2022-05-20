@@ -1,7 +1,7 @@
 import { BaseNodeDependencies } from './BaseNodeDependencies';
 import { NodeDependenciesType } from './NodeDependenciesType';
 
-export type OrElseNodeDependencies<TElem> = BaseNodeDependencies<
+export type BitwiseOrNodeDependencies<TElem> = BaseNodeDependencies<
   NodeDependenciesType.bitwiseOr,
   TElem
 >;
