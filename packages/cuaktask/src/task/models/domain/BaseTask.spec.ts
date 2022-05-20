@@ -1,5 +1,6 @@
 import { NonThenableProperties } from '../../../common/models/NonThenableProperties';
 import { BaseTask } from './BaseTask';
+import { TaskStatus } from './TaskStatus';
 
 class BaseTaskMock<TKind, TArgs extends unknown[], TReturn> extends BaseTask<
   TKind,
@@ -32,42 +33,10 @@ describe(BaseTask.name, () => {
   });
 
   describe('.perform()', () => {
-    describe('when called, and innerPerform returns a syncronous result and .result is called', () => {
-      let baseTask: BaseTaskMock<string, [], unknown>;
-
-      let innerPerformResultFixture: unknown;
-      let result: unknown;
-
-      beforeAll(() => {
-        baseTask = new BaseTaskMock(kindFixture, innerPerformMock);
-
-        innerPerformResultFixture = {
-          foo: 'bar',
-        };
-        innerPerformMock.mockReturnValueOnce(innerPerformResultFixture);
-        baseTask.perform();
-
-        result = baseTask.result;
-      });
-
-      afterAll(() => {
-        jest.clearAllMocks();
-      });
-
-      it('should call innerPerformMock', () => {
-        expect(innerPerformMock).toHaveBeenCalledTimes(1);
-        expect(innerPerformMock).toHaveBeenCalledWith();
-      });
-
-      it('should return a syncronous result', () => {
-        expect(result).toBe(innerPerformResultFixture);
-      });
-    });
-
     describe('when called, and innerPerform returns a syncronous result', () => {
       let baseTask: BaseTaskMock<string, [], unknown>;
-
       let innerPerformResultFixture: unknown;
+
       let result: unknown;
 
       beforeAll(() => {
@@ -93,12 +62,96 @@ describe(BaseTask.name, () => {
       it('should return a syncronous result', () => {
         expect(result).toBe(innerPerformResultFixture);
       });
+
+      describe('when called .result', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result = baseTask.result;
+        });
+
+        it('should return a syncronous result', () => {
+          expect(result).toBe(innerPerformResultFixture);
+        });
+      });
+
+      describe('when called .status', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result = baseTask.status;
+        });
+
+        it('should return the ended status', () => {
+          expect(result).toBe(TaskStatus.Ended);
+        });
+      });
+    });
+
+    describe('when called, and innerPerform throws an Error', () => {
+      let baseTask: BaseTaskMock<string, [], unknown>;
+      let errorFixture: unknown;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        baseTask = new BaseTaskMock(kindFixture, innerPerformMock);
+
+        errorFixture = new Error();
+        innerPerformMock.mockImplementationOnce(() => {
+          throw errorFixture;
+        });
+
+        try {
+          baseTask.perform();
+        } catch (error: unknown) {
+          result = error;
+        }
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should call innerPerformMock', () => {
+        expect(innerPerformMock).toHaveBeenCalledTimes(1);
+        expect(innerPerformMock).toHaveBeenCalledWith();
+      });
+
+      it('should return throw an error', () => {
+        expect(result).toBe(errorFixture);
+      });
+
+      describe('when called .result', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result = baseTask.result;
+        });
+
+        it('should return undefined', () => {
+          expect(result).toBeUndefined();
+        });
+      });
+
+      describe('when called .status', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result = baseTask.status;
+        });
+
+        it('should return the error status', () => {
+          expect(result).toBe(TaskStatus.Error);
+        });
+      });
     });
 
     describe('when called, and innerPerform returns a promise result', () => {
       let baseTask: BaseTaskMock<string, [], Promise<unknown>>;
 
       let innerPerformResultFixture: unknown;
+      let taskResultBeforeTaskPerformIsResolved: unknown;
       let result: unknown;
 
       beforeAll(async () => {
@@ -115,7 +168,11 @@ describe(BaseTask.name, () => {
           innerPerformMock as jest.Mock<Promise<unknown>, []>
         ).mockResolvedValueOnce(innerPerformResultFixture);
 
-        result = await baseTask.perform();
+        const taskPerformResult: Promise<unknown> = baseTask.perform();
+
+        taskResultBeforeTaskPerformIsResolved = baseTask.result;
+
+        result = await taskPerformResult;
       });
 
       afterAll(() => {
@@ -125,37 +182,50 @@ describe(BaseTask.name, () => {
       it('should call innerPerformMock', () => {
         expect(innerPerformMock).toHaveBeenCalledTimes(1);
         expect(innerPerformMock).toHaveBeenCalledWith();
+      });
+
+      it('should return a result before task.perform() result is resolved', async () => {
+        await expect(
+          taskResultBeforeTaskPerformIsResolved,
+        ).resolves.toStrictEqual(innerPerformResultFixture);
       });
 
       it('should return an asyncronous result', () => {
         expect(result).toStrictEqual(innerPerformResultFixture);
       });
+
+      describe('when called .result', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result = baseTask.result;
+        });
+
+        it('should return a syncronous result', () => {
+          expect(result).toBe(innerPerformResultFixture);
+        });
+      });
     });
 
-    describe('when called, and innerPerform returns a promise result, and .result is called before promise is resolved', () => {
-      let baseTask: BaseTaskMock<string, [], Promise<unknown>>;
+    describe('when called, and innerPerform returns a rejected promise', () => {
+      let baseTask: BaseTaskMock<string, [], unknown>;
+      let errorFixture: unknown;
 
-      let innerPerformResultFixture: unknown;
-      let firstCallResult: unknown;
-      let secondCallResult: unknown;
+      let result: unknown;
 
       beforeAll(async () => {
-        baseTask = new BaseTaskMock(
-          kindFixture,
-          innerPerformMock as jest.Mock<Promise<unknown>, []>,
-        );
+        baseTask = new BaseTaskMock(kindFixture, innerPerformMock);
 
-        innerPerformResultFixture = {
-          foo: 'bar',
-        };
+        errorFixture = new Error();
+        innerPerformMock.mockImplementationOnce(async () => {
+          throw errorFixture;
+        });
 
-        (
-          innerPerformMock as jest.Mock<Promise<unknown>, []>
-        ).mockResolvedValueOnce(innerPerformResultFixture);
-
-        firstCallResult = baseTask.perform();
-
-        secondCallResult = await baseTask.result;
+        try {
+          await baseTask.perform();
+        } catch (error: unknown) {
+          result = error;
+        }
       });
 
       afterAll(() => {
@@ -167,58 +237,32 @@ describe(BaseTask.name, () => {
         expect(innerPerformMock).toHaveBeenCalledWith();
       });
 
-      it('should return a result on first call', async () => {
-        await expect(firstCallResult).resolves.toStrictEqual(
-          innerPerformResultFixture,
-        );
+      it('should return throw an error', () => {
+        expect(result).toBe(errorFixture);
       });
 
-      it('should return a result on the second call', () => {
-        expect(secondCallResult).toStrictEqual(innerPerformResultFixture);
-      });
-    });
+      describe('when called .result', () => {
+        let result: unknown;
 
-    describe('when called, and innerPerform returns a promise result, and .result is called after promise is resolved', () => {
-      let baseTask: BaseTaskMock<string, [], Promise<unknown>>;
+        beforeAll(() => {
+          result = baseTask.result;
+        });
 
-      let innerPerformResultFixture: unknown;
-      let firstCallResult: unknown;
-      let secondCallResult: unknown;
-
-      beforeAll(async () => {
-        baseTask = new BaseTaskMock(
-          kindFixture,
-          innerPerformMock as jest.Mock<Promise<unknown>, []>,
-        );
-
-        innerPerformResultFixture = {
-          foo: 'bar',
-        };
-
-        (
-          innerPerformMock as jest.Mock<Promise<unknown>, []>
-        ).mockResolvedValueOnce(innerPerformResultFixture);
-
-        firstCallResult = await baseTask.perform();
-
-        secondCallResult = baseTask.result;
+        it('should return the rejected promise', async () => {
+          await expect(result).rejects.toBe(errorFixture);
+        });
       });
 
-      afterAll(() => {
-        jest.clearAllMocks();
-      });
+      describe('when called .status', () => {
+        let result: unknown;
 
-      it('should call innerPerformMock', () => {
-        expect(innerPerformMock).toHaveBeenCalledTimes(1);
-        expect(innerPerformMock).toHaveBeenCalledWith();
-      });
+        beforeAll(() => {
+          result = baseTask.status;
+        });
 
-      it('should return a result on first call', () => {
-        expect(firstCallResult).toStrictEqual(innerPerformResultFixture);
-      });
-
-      it('should return a result on the second call', () => {
-        expect(secondCallResult).toStrictEqual(innerPerformResultFixture);
+        it('should return the error status', () => {
+          expect(result).toBe(TaskStatus.Error);
+        });
       });
     });
   });

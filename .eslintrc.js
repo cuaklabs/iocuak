@@ -55,6 +55,7 @@ module.exports = {
       {
         selector: ['function', 'classMethod'],
         format: ['strictCamelCase'],
+        leadingUnderscore: 'allow',
       },
       {
         selector: ['parameter'],
@@ -143,12 +144,5 @@ module.exports = {
         'jest/valid-title': 'off',
       },
     },
-    {
-      files: ['**/*InjectionTypes.ts'],
-      rules: {
-        '@typescript-eslint/typedef': 'off',
-      },
-    },
   ],
-  ignorePatterns: ['dangerfile.ts'],
 };

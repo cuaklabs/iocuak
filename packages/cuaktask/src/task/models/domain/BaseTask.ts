@@ -44,12 +44,12 @@ export abstract class BaseTask<TKind, TArgs extends unknown[], TReturn>
           ) as PromiseIfThenable<TReturn>;
         } else {
           this.#innerResult = innerResult as PromiseIfThenable<TReturn>;
-          this.#innerStatus = TaskStatus.Ended;
+          this.#setEndedStatusIfNoErrorStatus();
         }
 
         return this.#innerResult;
       } catch (error: unknown) {
-        this.#innerStatus = TaskStatus.Error;
+        this._setErrorStatus();
 
         throw error;
       }
@@ -58,6 +58,11 @@ export abstract class BaseTask<TKind, TArgs extends unknown[], TReturn>
     }
   }
 
+  protected _setErrorStatus(): void {
+    this.#innerStatus = TaskStatus.Error;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   async #awaitAsyncResult<TSyncReturn>(
     result: PromiseLike<TSyncReturn>,
   ): Promise<TSyncReturn> {
@@ -65,13 +70,20 @@ export abstract class BaseTask<TKind, TArgs extends unknown[], TReturn>
       const syncResult: TSyncReturn = await result;
 
       this.#innerResult = syncResult as PromiseLikeResult<TReturn>;
-      this.#innerStatus = TaskStatus.Ended;
+      this.#setEndedStatusIfNoErrorStatus();
 
       return syncResult;
     } catch (error: unknown) {
-      this.#innerStatus = TaskStatus.Error;
+      this._setErrorStatus();
 
       throw error;
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  #setEndedStatusIfNoErrorStatus(): void {
+    if (this.#innerStatus !== TaskStatus.Error) {
+      this.#innerStatus = TaskStatus.Ended;
     }
   }
 
