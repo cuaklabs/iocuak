@@ -6,8 +6,8 @@ import {
 
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Builder } from '../../../common/modules/domain/Builder';
-import { CreateInstanceRootTaskKindFixtures } from '../../../task/fixtures/domain/CreateInstanceRootTaskKindFixtures';
-import { TaskKind } from '../../../task/models/domain/TaskKind';
+import { CreateInstanceRootTaskKindFixtures } from '../../../createInstanceTask/fixtures/domain/CreateInstanceRootTaskKindFixtures';
+import { TaskKind } from '../../../createInstanceTask/models/domain/TaskKind';
 import { ContainerRequestService } from '../domain/ContainerRequestService';
 import { ContainerInstanceServiceImplementation } from './ContainerInstanceServiceImplementation';
 

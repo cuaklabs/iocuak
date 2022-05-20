@@ -10,10 +10,12 @@ jest.mock(
 jest.mock(
   '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine',
 );
+jest.mock(
+  '../../../createInstanceTask/modules/CreateInstancesTaskDependencyEngine',
+);
+jest.mock('../../../createInstanceTask/modules/TaskBuilder');
+jest.mock('../../../createInstanceTask/modules/TaskBuilderWithNoDependencies');
 jest.mock('../../../metadata/services/domain/MetadataServiceImplementation');
-jest.mock('../../../task/modules/CreateInstancesTaskDependencyEngine');
-jest.mock('../../../task/modules/TaskBuilder');
-jest.mock('../../../task/modules/TaskBuilderWithNoDependencies');
 jest.mock('../../services/cuaktask/ContainerInstanceServiceImplementation');
 jest.mock('../../services/cuaktask/ContainerModuleServiceImplementation');
 jest.mock('../../services/domain/ContainerRequestServiceImplementation');
@@ -25,11 +27,11 @@ import { SetLike } from '../../../common/modules/domain/SetLike';
 import { ContainerModuleTaskBuilder } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilder';
 import { ContainerModuleTaskBuilderWithNoDependencies } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilderWithNoDependencies';
 import { ContainerModuleTaskDependencyEngine } from '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine';
+import { TaskKind } from '../../../createInstanceTask/models/domain/TaskKind';
+import { CreateInstancesTaskDependencyEngine } from '../../../createInstanceTask/modules/CreateInstancesTaskDependencyEngine';
+import { TaskBuilder } from '../../../createInstanceTask/modules/TaskBuilder';
+import { TaskBuilderWithNoDependencies } from '../../../createInstanceTask/modules/TaskBuilderWithNoDependencies';
 import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
-import { TaskKind } from '../../../task/models/domain/TaskKind';
-import { CreateInstancesTaskDependencyEngine } from '../../../task/modules/CreateInstancesTaskDependencyEngine';
-import { TaskBuilder } from '../../../task/modules/TaskBuilder';
-import { TaskBuilderWithNoDependencies } from '../../../task/modules/TaskBuilderWithNoDependencies';
 import { ContainerInstanceServiceImplementation } from '../../services/cuaktask/ContainerInstanceServiceImplementation';
 import { ContainerModuleServiceImplementation } from '../../services/cuaktask/ContainerModuleServiceImplementation';
 import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
