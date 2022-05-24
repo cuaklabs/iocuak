@@ -7,13 +7,13 @@ import { ContainerSingletonService } from '../../../container/services/domain/Co
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { ServiceDependenciesFixtures } from '../../fixtures/domain/ServiceDependenciesFixtures';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
-import { CreateInstanceTask } from './CreateInstanceTask';
+import { CreateInstanceDependentTask } from './CreateInstanceDependentTask';
 
 class InstanceTest {
   constructor(public readonly foo?: string) {}
 }
 
-describe(CreateInstanceTask.name, () => {
+describe(CreateInstanceDependentTask.name, () => {
   let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
   let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
 
@@ -54,14 +54,17 @@ describe(CreateInstanceTask.name, () => {
       });
 
       describe('when called, and containerService.request.get() returns no instance', () => {
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceDependentTask<
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 
         beforeAll(() => {
           containerRequestServiceMock.get.mockReturnValueOnce(undefined);
 
-          createInstanceTask = new CreateInstanceTask(
+          createInstanceTask = new CreateInstanceDependentTask(
             taskKindFixture,
             containerRequestServiceMock,
             containerSingletonServiceMock,
@@ -126,7 +129,10 @@ describe(CreateInstanceTask.name, () => {
 
       describe('when called, and containerService.request.get() returns an instance', () => {
         let instanceTestFixture: InstanceTest;
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceDependentTask<
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 
@@ -137,7 +143,7 @@ describe(CreateInstanceTask.name, () => {
             instanceTestFixture,
           );
 
-          createInstanceTask = new CreateInstanceTask(
+          createInstanceTask = new CreateInstanceDependentTask(
             taskKindFixture,
             containerRequestServiceMock,
             containerSingletonServiceMock,
@@ -190,14 +196,17 @@ describe(CreateInstanceTask.name, () => {
       });
 
       describe('when called, and containerService.singleton.get() returns no instance', () => {
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceDependentTask<
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 
         beforeAll(() => {
           containerSingletonServiceMock.get.mockReturnValueOnce(undefined);
 
-          createInstanceTask = new CreateInstanceTask(
+          createInstanceTask = new CreateInstanceDependentTask(
             taskKindFixture,
             containerRequestServiceMock,
             containerSingletonServiceMock,
@@ -259,7 +268,10 @@ describe(CreateInstanceTask.name, () => {
 
       describe('when called, and containerService.singleton.get() returns an instance', () => {
         let instanceTestFixture: InstanceTest;
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceDependentTask<
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 
@@ -270,7 +282,7 @@ describe(CreateInstanceTask.name, () => {
             instanceTestFixture,
           );
 
-          createInstanceTask = new CreateInstanceTask(
+          createInstanceTask = new CreateInstanceDependentTask(
             taskKindFixture,
             containerRequestServiceMock,
             containerSingletonServiceMock,
@@ -322,12 +334,15 @@ describe(CreateInstanceTask.name, () => {
       });
 
       describe('when called', () => {
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceDependentTask<
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 
         beforeAll(() => {
-          createInstanceTask = new CreateInstanceTask(
+          createInstanceTask = new CreateInstanceDependentTask(
             taskKindFixture,
             containerRequestServiceMock,
             containerSingletonServiceMock,
@@ -380,12 +395,15 @@ describe(CreateInstanceTask.name, () => {
       });
 
       describe('when called', () => {
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceDependentTask<
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 
         beforeAll(() => {
-          createInstanceTask = new CreateInstanceTask(
+          createInstanceTask = new CreateInstanceDependentTask(
             taskKindFixture,
             containerRequestServiceMock,
             containerSingletonServiceMock,

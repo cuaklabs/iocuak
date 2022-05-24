@@ -2,7 +2,7 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { ContainerRequestService } from '../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
-import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
+import { CreateInstanceDependentTask } from '../models/cuaktask/CreateInstanceDependentTask';
 import { GetInstanceDependenciesDependentTask } from '../models/cuaktask/GetInstanceDependenciesDependentTask';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
@@ -54,8 +54,8 @@ export class TaskBuilderWithNoDependencies {
 
   #buildCreateInstanceTaskWithNoDependencies(
     taskKind: CreateInstanceTaskKind,
-  ): CreateInstanceTask {
-    return new CreateInstanceTask(
+  ): CreateInstanceDependentTask {
+    return new CreateInstanceDependentTask(
       taskKind,
       this.#containerRequestService,
       this.#containerSingletonService,

@@ -5,7 +5,7 @@ import { ContainerSingletonService } from '../../container/services/domain/Conta
 import { CreateInstanceRootTaskKindFixtures } from '../fixtures/domain/CreateInstanceRootTaskKindFixtures';
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
-import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
+import { CreateInstanceDependentTask } from '../models/cuaktask/CreateInstanceDependentTask';
 import { GetInstanceDependenciesDependentTask } from '../models/cuaktask/GetInstanceDependenciesDependentTask';
 import { CreateInstanceRootTaskKind } from '../models/domain/CreateInstanceRootTaskKind';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
@@ -58,9 +58,9 @@ describe(TaskBuilderWithNoDependencies.name, () => {
       });
 
       it('should return a CreateInstanceTask instance', () => {
-        expect(result).toBeInstanceOf(CreateInstanceTask);
+        expect(result).toBeInstanceOf(CreateInstanceDependentTask);
         expect(result).toStrictEqual(
-          expect.objectContaining<Partial<CreateInstanceTask>>({
+          expect.objectContaining<Partial<CreateInstanceDependentTask>>({
             dependencies: [],
             kind: createInstanceTaskKindFixture,
           }),
