@@ -2,7 +2,7 @@ import { DependentTask, DependentTaskRunner } from '@cuaklabs/cuaktask';
 
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Builder } from '../../../common/modules/domain/Builder';
-import { CreateInstanceTask } from '../../../createInstanceTask/models/cuaktask/CreateInstanceTask';
+import { CreateInstanceDependentTask } from '../../../createInstanceTask/models/cuaktask/CreateInstanceDependentTask';
 import { CreateInstanceRootTaskKind } from '../../../createInstanceTask/models/domain/CreateInstanceRootTaskKind';
 import { TaskKind } from '../../../createInstanceTask/models/domain/TaskKind';
 import { TaskKindType } from '../../../createInstanceTask/models/domain/TaskKindType';
@@ -35,8 +35,10 @@ export class ContainerInstanceServiceImplementation
       type: TaskKindType.createInstanceRoot,
     };
 
-    const createInstanceTask: CreateInstanceTask<TInstance> =
-      this.#taskBuilder.build(taskKind) as CreateInstanceTask<TInstance>;
+    const createInstanceTask: CreateInstanceDependentTask<TInstance> =
+      this.#taskBuilder.build(
+        taskKind,
+      ) as CreateInstanceDependentTask<TInstance>;
 
     const instance: TInstance = this.#dependentTaskRunner.run(
       createInstanceTask,

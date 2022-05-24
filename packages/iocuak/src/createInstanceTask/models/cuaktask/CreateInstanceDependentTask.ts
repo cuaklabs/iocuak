@@ -10,7 +10,7 @@ import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
 import { TaskKind } from '../domain/TaskKind';
 
-export class CreateInstanceTask<
+export class CreateInstanceDependentTask<
   TInstance = unknown,
   TArgs extends unknown[] = unknown[],
 > extends BaseDependentTask<

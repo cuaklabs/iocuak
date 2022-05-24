@@ -2,8 +2,8 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { ContainerRequestService } from '../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../container/services/domain/ContainerSingletonService';
-import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
-import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
+import { CreateInstanceDependentTask } from '../models/cuaktask/CreateInstanceDependentTask';
+import { GetInstanceDependenciesDependentTask } from '../models/cuaktask/GetInstanceDependenciesDependentTask';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKindType } from '../models/domain/TaskKindType';
@@ -54,8 +54,8 @@ export class TaskBuilderWithNoDependencies {
 
   #buildCreateInstanceTaskWithNoDependencies(
     taskKind: CreateInstanceTaskKind,
-  ): CreateInstanceTask {
-    return new CreateInstanceTask(
+  ): CreateInstanceDependentTask {
+    return new CreateInstanceDependentTask(
       taskKind,
       this.#containerRequestService,
       this.#containerSingletonService,
@@ -64,7 +64,7 @@ export class TaskBuilderWithNoDependencies {
 
   #buildGetInstanceDependenciesTaskWithNoDependencies(
     taskKind: GetInstanceDependenciesTaskKind,
-  ): GetInstanceDependenciesTask {
-    return new GetInstanceDependenciesTask(taskKind);
+  ): GetInstanceDependenciesDependentTask {
+    return new GetInstanceDependenciesDependentTask(taskKind);
   }
 }
