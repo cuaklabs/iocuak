@@ -6,7 +6,7 @@ import { CreateInstanceRootTaskKindFixtures } from '../fixtures/domain/CreateIns
 import { CreateInstanceTaskKindFixtures } from '../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { GetInstanceDependenciesTaskKindFixtures } from '../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTask } from '../models/cuaktask/CreateInstanceTask';
-import { GetInstanceDependenciesTask } from '../models/cuaktask/GetInstanceDependenciesTask';
+import { GetInstanceDependenciesDependentTask } from '../models/cuaktask/GetInstanceDependenciesDependentTask';
 import { CreateInstanceRootTaskKind } from '../models/domain/CreateInstanceRootTaskKind';
 import { CreateInstanceTaskKind } from '../models/domain/CreateInstanceTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../models/domain/GetInstanceDependenciesTaskKind';
@@ -132,9 +132,11 @@ describe(TaskBuilderWithNoDependencies.name, () => {
       });
 
       it('should return a GetInstanceDependenciesTask instance', () => {
-        expect(result).toBeInstanceOf(GetInstanceDependenciesTask);
+        expect(result).toBeInstanceOf(GetInstanceDependenciesDependentTask);
         expect(result).toStrictEqual(
-          expect.objectContaining<Partial<GetInstanceDependenciesTask>>({
+          expect.objectContaining<
+            Partial<GetInstanceDependenciesDependentTask>
+          >({
             dependencies: [],
             kind: getInstanceDependenciesTaskKindFixture,
           }),

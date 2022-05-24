@@ -6,7 +6,7 @@ import { GetInstanceDependenciesTaskKind } from '../domain/GetInstanceDependenci
 import { ServiceDependencies } from '../domain/ServiceDependencies';
 import { TaskKind } from '../domain/TaskKind';
 
-export class GetInstanceDependenciesTask<
+export class GetInstanceDependenciesDependentTask<
   TArgs extends unknown[] = unknown[],
 > extends BaseDependentTask<
   GetInstanceDependenciesTaskKind,

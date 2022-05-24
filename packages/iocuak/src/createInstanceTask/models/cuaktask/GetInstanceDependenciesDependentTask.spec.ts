@@ -1,12 +1,12 @@
 import { GetInstanceDependenciesTaskKindFixtures } from '../../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
-import { GetInstanceDependenciesTask } from './GetInstanceDependenciesTask';
+import { GetInstanceDependenciesDependentTask } from './GetInstanceDependenciesDependentTask';
 
-describe(GetInstanceDependenciesTask.name, () => {
-  let getInstanceDependenciesTask: GetInstanceDependenciesTask;
+describe(GetInstanceDependenciesDependentTask.name, () => {
+  let getInstanceDependenciesTask: GetInstanceDependenciesDependentTask;
 
   beforeAll(() => {
-    getInstanceDependenciesTask = new GetInstanceDependenciesTask(
+    getInstanceDependenciesTask = new GetInstanceDependenciesDependentTask(
       GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsAndProperties,
     );
   });
