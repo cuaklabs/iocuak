@@ -12,27 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     if: "!(github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == false)"
     steps:
-      - name: Git checkout
-        uses: actions/checkout@v2
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: 16
-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
+          version: 7
+      - uses: actions/setup-node@v3
         with:
-          path: ~/.pnpm-store
-          key: -${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-modules
-
-      - uses: pnpm/action-setup@v2.2.1
-        with:
-          version: 6.31.0
-          run_install: |
-            - recursive: true
+          node-version: '16'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile --recursive
 
       - name: Compile source files
         run: pnpm run build
@@ -66,27 +54,15 @@ jobs:
           - porygon
           - porygon-typeorm
     steps:
-      - name: Git checkout
-        uses: actions/checkout@v2
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: 16
-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
+          version: 7
+      - uses: actions/setup-node@v3
         with:
-          path: ~/.pnpm-store
-          key: -${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-modules
-
-      - uses: pnpm/action-setup@v2.2.1
-        with:
-          version: 7.0.0
-          run_install: |
-            - recursive: true
+          node-version: '16'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile --recursive
 
       - name: Get current git commit hash
         id: get-git-commit-hash
@@ -144,27 +120,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Git checkout
-        uses: actions/checkout@v2
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: 16
-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
+          version: 7
+      - uses: actions/setup-node@v3
         with:
-          path: ~/.pnpm-store
-          key: -${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-modules
-
-      - uses: pnpm/action-setup@v2.2.1
-        with:
-          version: 7.0.0
-          run_install: |
-            - recursive: true
+          node-version: '16'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile --recursive
 
       - name: Get current git commit hash
         id: get-git-commit-hash
