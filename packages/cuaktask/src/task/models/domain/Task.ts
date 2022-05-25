@@ -6,7 +6,11 @@ import { TaskStatus } from './TaskStatus';
 /**
  * Task model
  */
-export interface Task<TKind, TArgs extends unknown[], TReturn> {
+export interface Task<
+  TKind,
+  TArgs extends unknown[] = unknown[],
+  TReturn = unknown,
+> {
   /**
    * Task kind.
    */

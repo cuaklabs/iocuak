@@ -2,7 +2,7 @@ import { Graph, Node, Task } from '@cuaklabs/cuaktask';
 
 export interface GraphExpandCommand<
   TTaskKindType,
-  TGraphNode extends Node<Task<unknown, unknown[], unknown>>,
+  TGraphNode extends Node<Task<unknown>>,
   TNode extends TGraphNode,
 > {
   graph: Graph<TGraphNode>;

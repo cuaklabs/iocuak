@@ -18,7 +18,6 @@ type UnknownExpandedTaskNode<TKind> = Node<UnknownExpandedTask<TKind>>;
 type UnknownExpandedTaskNodeDependency<TKind> = NodeDependency<
   UnknownExpandedTask<TKind>
 >;
-type UnknownTask<TKind> = Task<TKind, unknown[], unknown>;
 
 type OperationResult<TValue = unknown> = SucessResult<TValue> | FailResult;
 
@@ -34,7 +33,7 @@ interface BaseOperationResult<TSuccess extends boolean = boolean> {
 
 export class RootedTaskGraphRunner {
   public run<TKind, TReturn>(
-    graph: RootedGraph<UnknownTask<TKind>>,
+    graph: RootedGraph<Task<TKind>>,
   ): MayBePromise<TReturn> {
     const result: MayBePromise<OperationResult> = this.#innerRun(
       graph.root as UnknownExpandedTaskNode<TKind>,
