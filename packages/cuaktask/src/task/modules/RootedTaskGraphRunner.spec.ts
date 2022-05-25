@@ -6,8 +6,6 @@ import { Task } from '../models/domain/Task';
 import { TaskStatus } from '../models/domain/TaskStatus';
 import { RootedTaskGraphRunner } from './RootedTaskGraphRunner';
 
-type UnknownTask<TKind> = Task<TKind, unknown[], unknown>;
-
 describe(RootedTaskGraphRunner.name, () => {
   let rootedTaskGraphRunner: RootedTaskGraphRunner;
 
@@ -16,29 +14,27 @@ describe(RootedTaskGraphRunner.name, () => {
   });
 
   describe('.run', () => {
-    describe.each<[string, NodeDependencies<UnknownTask<unknown>> | undefined]>(
+    describe.each<[string, NodeDependencies<Task<unknown>> | undefined]>([
+      ['with no dependencies', undefined],
       [
-        ['with no dependencies', undefined],
-        [
-          'with empty and dependencies',
-          {
-            nodes: [],
-            type: NodeDependenciesType.and,
-          },
-        ],
+        'with empty and dependencies',
+        {
+          nodes: [],
+          type: NodeDependenciesType.and,
+        },
       ],
-    )(
+    ])(
       'having a graph with a single root node %s',
       (
         _: string,
-        nodeDependencies: NodeDependencies<UnknownTask<unknown>> | undefined,
+        nodeDependencies: NodeDependencies<Task<unknown>> | undefined,
       ) => {
-        let graphFixture: RootedGraph<UnknownTask<unknown>>;
-        let nodeFixture: Node<UnknownTask<unknown>>;
+        let graphFixture: RootedGraph<Task<unknown>>;
+        let nodeFixture: Node<Task<unknown>>;
 
         let taskResult: unknown;
 
-        let taskMock: jest.Mocked<UnknownTask<unknown>>;
+        let taskMock: jest.Mocked<Task<unknown>>;
         let taskMockStatus: TaskStatus;
 
         beforeAll(() => {
@@ -233,12 +229,12 @@ describe(RootedTaskGraphRunner.name, () => {
     );
 
     describe('having a graph with a single root node with empty bitwiseOr dependencies', () => {
-      let graphFixture: RootedGraph<UnknownTask<unknown>>;
-      let nodeFixture: Node<UnknownTask<unknown>>;
+      let graphFixture: RootedGraph<Task<unknown>>;
+      let nodeFixture: Node<Task<unknown>>;
 
       let taskResult: unknown;
 
-      let taskMock: jest.Mocked<UnknownTask<unknown>>;
+      let taskMock: jest.Mocked<Task<unknown>>;
       let taskMockStatus: TaskStatus;
 
       beforeAll(() => {
@@ -306,12 +302,12 @@ describe(RootedTaskGraphRunner.name, () => {
     });
 
     describe('having a graph with a single node with and dependencies with empty and dependencies', () => {
-      let graphFixture: RootedGraph<UnknownTask<unknown>>;
-      let nodeFixture: Node<UnknownTask<unknown>>;
+      let graphFixture: RootedGraph<Task<unknown>>;
+      let nodeFixture: Node<Task<unknown>>;
 
       let taskResult: unknown;
 
-      let taskMock: jest.Mocked<UnknownTask<unknown>>;
+      let taskMock: jest.Mocked<Task<unknown>>;
       let taskMockStatus: TaskStatus;
 
       beforeAll(() => {
@@ -376,10 +372,10 @@ describe(RootedTaskGraphRunner.name, () => {
     });
 
     describe('having a dependency node', () => {
-      let dependencyNodeFixture: Node<UnknownTask<unknown>>;
+      let dependencyNodeFixture: Node<Task<unknown>>;
 
       let dependencyTaskResult: unknown;
-      let dependencyTaskMock: jest.Mocked<UnknownTask<unknown>>;
+      let dependencyTaskMock: jest.Mocked<Task<unknown>>;
       let dependencyTaskMockStatus: TaskStatus;
 
       beforeAll(() => {
@@ -406,11 +402,11 @@ describe(RootedTaskGraphRunner.name, () => {
       ])(
         'having a graph with a root node %s',
         (_: string, nodeDependencyType: NodeDependenciesType) => {
-          let graphFixture: RootedGraph<UnknownTask<unknown>>;
-          let nodeFixture: Node<UnknownTask<unknown>>;
+          let graphFixture: RootedGraph<Task<unknown>>;
+          let nodeFixture: Node<Task<unknown>>;
 
           let taskResult: unknown;
-          let taskMock: jest.Mocked<UnknownTask<unknown>>;
+          let taskMock: jest.Mocked<Task<unknown>>;
           let taskMockStatus: TaskStatus;
 
           beforeAll(() => {
@@ -610,10 +606,10 @@ describe(RootedTaskGraphRunner.name, () => {
       );
 
       describe('having a second dependency node', () => {
-        let secondDependencyNodeFixture: Node<UnknownTask<unknown>>;
+        let secondDependencyNodeFixture: Node<Task<unknown>>;
 
         let secondDependencyTaskResult: unknown;
-        let secondDependencyTaskMock: jest.Mocked<UnknownTask<unknown>>;
+        let secondDependencyTaskMock: jest.Mocked<Task<unknown>>;
         let secondDependencyTaskMockStatus: TaskStatus;
 
         beforeAll(() => {
@@ -635,11 +631,11 @@ describe(RootedTaskGraphRunner.name, () => {
         });
 
         describe('having a graph with a root node with an and dependency', () => {
-          let graphFixture: RootedGraph<UnknownTask<unknown>>;
-          let nodeFixture: Node<UnknownTask<unknown>>;
+          let graphFixture: RootedGraph<Task<unknown>>;
+          let nodeFixture: Node<Task<unknown>>;
 
           let taskResult: unknown;
-          let taskMock: jest.Mocked<UnknownTask<unknown>>;
+          let taskMock: jest.Mocked<Task<unknown>>;
           let taskMockStatus: TaskStatus;
 
           beforeAll(() => {
@@ -780,11 +776,11 @@ describe(RootedTaskGraphRunner.name, () => {
         });
 
         describe('having a graph with a root node with an bitwiseOr dependency', () => {
-          let graphFixture: RootedGraph<UnknownTask<unknown>>;
-          let nodeFixture: Node<UnknownTask<unknown>>;
+          let graphFixture: RootedGraph<Task<unknown>>;
+          let nodeFixture: Node<Task<unknown>>;
 
           let taskResult: unknown;
-          let taskMock: jest.Mocked<UnknownTask<unknown>>;
+          let taskMock: jest.Mocked<Task<unknown>>;
           let taskMockStatus: TaskStatus;
 
           beforeAll(() => {
