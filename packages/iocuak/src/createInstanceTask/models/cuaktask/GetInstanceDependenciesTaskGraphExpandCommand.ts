@@ -7,6 +7,5 @@ import { TaskKindType } from '../domain/TaskKindType';
 
 export type GetInstanceDependenciesTaskGraphExpandCommand = GraphExpandCommand<
   TaskKindType.getInstanceDependencies,
-  Node<Task<TaskKind>>,
-  Node<Task<GetInstanceDependenciesTaskKind>>
+  Node<Task<GetInstanceDependenciesTaskKind>, Task<TaskKind>>
 >;
