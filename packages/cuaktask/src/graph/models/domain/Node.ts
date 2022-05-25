@@ -1,6 +1,6 @@
 import { NodeDependencies } from './NodeDependencies';
 
-export interface Node<TElem> {
+export interface Node<TElem, TDependencyElem = TElem> {
   element: TElem;
-  dependencies: NodeDependencies<TElem> | undefined;
+  dependencies: NodeDependencies<TDependencyElem> | undefined;
 }
