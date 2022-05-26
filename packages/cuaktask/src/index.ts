@@ -4,6 +4,7 @@ import { BitwiseOrNodeDependencies } from './graph/models/domain/BitwiseOrNodeDe
 import { Graph } from './graph/models/domain/Graph';
 import { Node } from './graph/models/domain/Node';
 import { NodeDependencies } from './graph/models/domain/NodeDependencies';
+import { NodeDependenciesType } from './graph/models/domain/NodeDependenciesType';
 import { NodeDependency } from './graph/models/domain/NodeDependency';
 import { RootedGraph } from './graph/models/domain/RootedGraph';
 import { BaseDependentTask } from './task/models/domain/BaseDependentTask';
@@ -39,6 +40,7 @@ export {
   DependentTaskBuilder,
   DependentTaskRunner,
   isPromiseLike,
+  NodeDependenciesType,
   RootedTaskGraphRunner,
   TaskStatus,
 };
