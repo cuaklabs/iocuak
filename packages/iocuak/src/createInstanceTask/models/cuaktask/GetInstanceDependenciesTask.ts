@@ -1,16 +1,14 @@
-import { BaseDependentTask } from '@cuaklabs/cuaktask';
+import { BaseTask } from '@cuaklabs/cuaktask';
 
 import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
 import { stringifyServiceId } from '../../../utils/stringifyServiceId';
 import { GetInstanceDependenciesTaskKind } from '../domain/GetInstanceDependenciesTaskKind';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
-import { TaskKind } from '../domain/TaskKind';
 
 export class GetInstanceDependenciesTask<
   TArgs extends unknown[] = unknown[],
-> extends BaseDependentTask<
+> extends BaseTask<
   GetInstanceDependenciesTaskKind,
-  TaskKind,
   unknown[],
   ServiceDependencies<TArgs>
 > {
