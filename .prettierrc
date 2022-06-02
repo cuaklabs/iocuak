@@ -6,7 +6,6 @@
   "singleQuote": true,
   "bracketSpacing": true,
   "arrowParens": "always",
-  "parser": "typescript",
   "endOfLine": "lf",
   "trailingComma": "all"
 }
