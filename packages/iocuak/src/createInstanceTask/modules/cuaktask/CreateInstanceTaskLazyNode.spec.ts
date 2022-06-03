@@ -3,6 +3,8 @@ import { Task } from '@cuaklabs/cuaktask';
 import { TaskGraphExpandCommand } from '../../../common/models/cuaktask/TaskGraphExpandCommand';
 import { TaskGraphExpandOperationContext } from '../../../common/models/cuaktask/TaskGraphExpandOperationContext';
 import { Handler } from '../../../common/modules/domain/Handler';
+import { TaskKind } from '../../models/domain/TaskKind';
+import { TaskKindType } from '../../models/domain/TaskKindType';
 import { CreateInstanceTaskLazyNode } from './CreateInstanceTaskLazyNode';
 
 describe(CreateInstanceTaskLazyNode.name, () => {
@@ -17,8 +19,8 @@ describe(CreateInstanceTaskLazyNode.name, () => {
     >
   >;
   let context: TaskGraphExpandOperationContext;
-  let element: Task<unknown>;
-  let taskKindType: unknown;
+  let element: Task<TaskKind>;
+  let taskKindType: TaskKindType;
 
   beforeAll(() => {
     busMock = {
@@ -29,16 +31,13 @@ describe(CreateInstanceTaskLazyNode.name, () => {
     } as unknown as TaskGraphExpandOperationContext;
     element = {
       _type: Symbol(),
-    } as unknown as Task<unknown>;
-    taskKindType = Symbol();
+    } as unknown as Task<TaskKind>;
+    taskKindType = TaskKindType.createInstance;
   });
 
   describe('.dependencies', () => {
     describe('when called', () => {
-      let createInstanceTaskLazyNode: CreateInstanceTaskLazyNode<
-        TaskGraphExpandOperationContext,
-        Task<unknown>
-      >;
+      let createInstanceTaskLazyNode: CreateInstanceTaskLazyNode;
 
       let result: unknown;
 
@@ -78,10 +77,7 @@ describe(CreateInstanceTaskLazyNode.name, () => {
     });
 
     describe('when called twice', () => {
-      let createInstanceTaskLazyNode: CreateInstanceTaskLazyNode<
-        TaskGraphExpandOperationContext,
-        Task<unknown>
-      >;
+      let createInstanceTaskLazyNode: CreateInstanceTaskLazyNode;
 
       let result: unknown;
 
