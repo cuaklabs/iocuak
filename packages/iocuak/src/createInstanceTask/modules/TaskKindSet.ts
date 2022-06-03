@@ -61,6 +61,8 @@ export class TaskKindSet implements SetLike<TaskKind> {
       case TaskKindType.createInstanceRoot:
       case TaskKindType.getInstanceDependencies:
         return elem.id;
+      default:
+        throw new Error('Unexpected task kind');
     }
   }
 

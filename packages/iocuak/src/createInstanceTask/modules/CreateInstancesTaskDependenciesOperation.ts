@@ -88,6 +88,8 @@ export class CreateInstancesTaskDependenciesOperation {
         throw new Error('Unsupported type');
       case TaskKindType.createInstanceRoot:
         return this.#getCreateInstanceTaskKindDependencies(this.#taskKind);
+      default:
+        throw new Error('Unexpected task kind');
     }
   }
 

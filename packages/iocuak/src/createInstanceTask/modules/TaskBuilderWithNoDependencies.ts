@@ -46,6 +46,8 @@ export class TaskBuilderWithNoDependencies {
             TArgs,
             TReturn
           >;
+        default:
+          throw new Error('Unexpected task kind');
       }
     } else {
       throw new Error('Task kind not supported');

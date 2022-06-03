@@ -8,28 +8,29 @@ import {
 import { TaskGraphExpandCommand } from '../../../common/models/cuaktask/TaskGraphExpandCommand';
 import { TaskGraphExpandOperationContext } from '../../../common/models/cuaktask/TaskGraphExpandOperationContext';
 import { Handler } from '../../../common/modules/domain/Handler';
+import { TaskKind } from '../../models/domain/TaskKind';
+import { TaskKindType } from '../../models/domain/TaskKindType';
 
-export class CreateInstanceTaskLazyNode<
-  TContext extends TaskGraphExpandOperationContext,
-  TElem extends Task<unknown>,
-  TTaskKindType = unknown,
-> implements Node<TElem, Task<unknown>>
-{
+export class CreateInstanceTaskLazyNode implements Node<Task<TaskKind>> {
   readonly #bus: Handler<unknown, void | Promise<void>>;
-  readonly #context: TContext;
-  readonly #taskKindType: TTaskKindType;
+  readonly #context: TaskGraphExpandOperationContext;
+  readonly #taskKindType: TaskKindType;
 
-  #dependencies: NodeDependencies<Task<unknown>> | undefined;
+  #dependencies: NodeDependencies<Task<TaskKind>> | undefined;
   #isLoaded: boolean;
 
   constructor(
     bus: Handler<
-      TaskGraphExpandCommand<TContext, TTaskKindType, TElem>,
+      TaskGraphExpandCommand<
+        TaskGraphExpandOperationContext,
+        TaskKindType,
+        Task<TaskKind>
+      >,
       void | Promise<void>
     >,
-    context: TContext,
-    public readonly element: TElem,
-    taskKindType: TTaskKindType,
+    context: TaskGraphExpandOperationContext,
+    public readonly element: Task<TaskKind>,
+    taskKindType: TaskKindType,
   ) {
     this.#bus = bus;
     this.#context = context;
@@ -37,9 +38,13 @@ export class CreateInstanceTaskLazyNode<
     this.#taskKindType = taskKindType;
   }
 
-  public get dependencies(): NodeDependencies<Task<unknown>> | undefined {
+  public get dependencies(): NodeDependencies<Task<TaskKind>> | undefined {
     if (!this.#isLoaded) {
-      const command: TaskGraphExpandCommand<TContext, TTaskKindType, TElem> = {
+      const command: TaskGraphExpandCommand<
+        TaskGraphExpandOperationContext,
+        TaskKindType,
+        Task<TaskKind>
+      > = {
         context: this.#context,
         node: this,
         taskKindType: this.#taskKindType,
@@ -57,7 +62,7 @@ export class CreateInstanceTaskLazyNode<
     return this.#dependencies;
   }
 
-  public set dependencies(value: NodeDependencies<Task<unknown>> | undefined) {
+  public set dependencies(value: NodeDependencies<Task<TaskKind>> | undefined) {
     this.#dependencies = value;
   }
 }
