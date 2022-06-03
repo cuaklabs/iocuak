@@ -1,5 +1,6 @@
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
+import { Binding } from '../../../binding/models/domain/Binding';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
@@ -54,7 +55,11 @@ describe(CreateInstanceTask.name, () => {
       });
 
       describe('when called, and containerService.request.get() returns no instance', () => {
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceTask<
+          Binding,
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 
@@ -126,7 +131,11 @@ describe(CreateInstanceTask.name, () => {
 
       describe('when called, and containerService.request.get() returns an instance', () => {
         let instanceTestFixture: InstanceTest;
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceTask<
+          Binding,
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 
@@ -190,7 +199,11 @@ describe(CreateInstanceTask.name, () => {
       });
 
       describe('when called, and containerService.singleton.get() returns no instance', () => {
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceTask<
+          Binding,
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 
@@ -259,7 +272,11 @@ describe(CreateInstanceTask.name, () => {
 
       describe('when called, and containerService.singleton.get() returns an instance', () => {
         let instanceTestFixture: InstanceTest;
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceTask<
+          Binding,
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 
@@ -322,7 +339,11 @@ describe(CreateInstanceTask.name, () => {
       });
 
       describe('when called', () => {
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceTask<
+          Binding,
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 
@@ -380,7 +401,11 @@ describe(CreateInstanceTask.name, () => {
       });
 
       describe('when called', () => {
-        let createInstanceTask: CreateInstanceTask<InstanceTest, [] | [string]>;
+        let createInstanceTask: CreateInstanceTask<
+          Binding,
+          InstanceTest,
+          [] | [string]
+        >;
 
         let result: unknown;
 

@@ -10,10 +10,11 @@ import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
 
 export class CreateInstanceTask<
+  TBinding extends Binding = Binding,
   TInstance = unknown,
   TArgs extends unknown[] = unknown[],
 > extends BaseTask<
-  CreateInstanceTaskKind,
+  CreateInstanceTaskKind<TBinding>,
   [ServiceDependencies<TArgs>],
   TInstance
 > {
@@ -21,7 +22,7 @@ export class CreateInstanceTask<
   readonly #containerSingletonService: ContainerSingletonService;
 
   constructor(
-    kind: CreateInstanceTaskKind,
+    kind: CreateInstanceTaskKind<TBinding>,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
   ) {
