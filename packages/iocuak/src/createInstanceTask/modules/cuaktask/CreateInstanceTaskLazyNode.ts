@@ -34,6 +34,7 @@ export class CreateInstanceTaskLazyNode implements Node<Task<TaskKind>> {
   ) {
     this.#bus = bus;
     this.#context = context;
+    this.#dependencies = undefined;
     this.#isLoaded = false;
     this.#taskKindType = taskKindType;
   }
