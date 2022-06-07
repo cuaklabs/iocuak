@@ -58,12 +58,12 @@
     "@types/node": "^16.11.32",
     "@types/sinon": "^10.0.11",
     "@types/sinon-chai": "^3.2.8",
-    "@typescript-eslint/eslint-plugin": "5.27.0",
-    "@typescript-eslint/parser": "5.27.0",
+    "@typescript-eslint/eslint-plugin": "5.27.1",
+    "@typescript-eslint/parser": "5.27.1",
     "chai": "^4.3.6",
-    "eslint": "8.16.0",
+    "eslint": "8.17.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "26.4.6",
+    "eslint-plugin-jest": "26.5.3",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "8.0.1",
     "jest": "^27.5.1",
@@ -75,9 +75,9 @@
     "sinon-chai": "^3.7.0",
     "sqlite3": "5.0.8",
     "ts-jest": "^27.1.4",
-    "ts-node": "10.8.0",
+    "ts-node": "10.8.1",
     "typeorm": "^0.3.6",
-    "typescript": "4.7.2"
+    "typescript": "4.7.3"
   },
   "lint-staged": {
     "*.js": [
