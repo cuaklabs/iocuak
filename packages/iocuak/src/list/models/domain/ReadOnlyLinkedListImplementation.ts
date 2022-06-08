@@ -1,6 +1,10 @@
 import { ReadOnlyLinkedList } from './ReadOnlyLinkedList';
 import { ReadOnlyLinkedListNodeImplementation } from './ReadOnlyLinkedListNodeImplementation';
 
+interface MapInReverseOrderCallbackResult {
+  breakIteration: boolean;
+}
+
 export class ReadOnlyLinkedListImplementation<T>
   implements ReadOnlyLinkedList<T>
 {
@@ -36,6 +40,31 @@ export class ReadOnlyLinkedListImplementation<T>
     return list;
   }
 
+  public [Symbol.iterator](): Iterator<T> {
+    const nodeStack: ReadOnlyLinkedListNodeImplementation<T>[] = [];
+
+    this.#mapInReverseOrder(
+      (node: ReadOnlyLinkedListNodeImplementation<T>): void => {
+        nodeStack.push(node);
+      },
+    );
+
+    const iterator: Iterator<T> = {
+      next: (): IteratorResult<T, undefined> => {
+        const node: ReadOnlyLinkedListNodeImplementation<T> | undefined =
+          nodeStack.pop();
+
+        if (node === undefined) {
+          return { done: true, value: undefined };
+        } else {
+          return { done: false, value: node.elem };
+        }
+      },
+    };
+
+    return iterator;
+  }
+
   public concat(elem: T): ReadOnlyLinkedList<T> {
     const lastNode: ReadOnlyLinkedListNodeImplementation<T> =
       new ReadOnlyLinkedListNodeImplementation(elem, this.#last);
@@ -49,18 +78,41 @@ export class ReadOnlyLinkedListImplementation<T>
   public includes(compareFn: (elem: T) => boolean): boolean {
     let result: boolean = false;
 
+    this.#mapInReverseOrder(
+      (
+        node: ReadOnlyLinkedListNodeImplementation<T>,
+      ): MapInReverseOrderCallbackResult => {
+        const comparisonResult: boolean = compareFn(node.elem);
+
+        if (comparisonResult) {
+          result = true;
+        }
+
+        return {
+          breakIteration: comparisonResult,
+        };
+      },
+    );
+
+    return result;
+  }
+
+  #mapInReverseOrder(
+    callback: (
+      node: ReadOnlyLinkedListNodeImplementation<T>,
+    ) => MapInReverseOrderCallbackResult | void,
+  ): void {
     for (
       let node: ReadOnlyLinkedListNodeImplementation<T> | undefined =
         this.#last;
       node !== undefined;
       node = node.previous
     ) {
-      if (compareFn(node.elem)) {
-        result = true;
+      const result: MapInReverseOrderCallbackResult | void = callback(node);
+
+      if (result?.breakIteration === true) {
         break;
       }
     }
-
-    return result;
   }
 }

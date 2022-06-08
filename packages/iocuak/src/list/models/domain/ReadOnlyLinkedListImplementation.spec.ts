@@ -1,6 +1,60 @@
 import { ReadOnlyLinkedListImplementation } from './ReadOnlyLinkedListImplementation';
 
 describe(ReadOnlyLinkedListImplementation.name, () => {
+  describe('.[Symbol.iterator]', () => {
+    describe('having a ReadOnlyLinkedListImplementation with two nodes', () => {
+      let elementArrayFixture: unknown[];
+      let readOnlyLinkedListImplementation: ReadOnlyLinkedListImplementation<unknown>;
+
+      beforeAll(() => {
+        elementArrayFixture = [Symbol(), Symbol()];
+        readOnlyLinkedListImplementation =
+          ReadOnlyLinkedListImplementation.build(elementArrayFixture);
+      });
+
+      describe('when spreaded into an array', () => {
+        let result: unknown;
+
+        beforeAll(() => {
+          result = [...readOnlyLinkedListImplementation];
+        });
+
+        it('should result in an array with node elements', () => {
+          expect(result).toStrictEqual(elementArrayFixture);
+        });
+      });
+    });
+  });
+
+  describe('.concat', () => {
+    describe('having a ReadOnlyLinkedListImplementation with two nodes', () => {
+      let elementArrayFixture: unknown[];
+      let readOnlyLinkedListImplementation: ReadOnlyLinkedListImplementation<unknown>;
+
+      beforeAll(() => {
+        elementArrayFixture = [Symbol(), Symbol()];
+        readOnlyLinkedListImplementation =
+          ReadOnlyLinkedListImplementation.build(elementArrayFixture);
+      });
+
+      describe('when called, and spreaded into an array', () => {
+        let newElement: unknown;
+
+        let result: unknown;
+
+        beforeAll(() => {
+          newElement = Symbol();
+
+          result = [...readOnlyLinkedListImplementation.concat(newElement)];
+        });
+
+        it('should result in an array with node elements', () => {
+          expect(result).toStrictEqual([...elementArrayFixture, newElement]);
+        });
+      });
+    });
+  });
+
   describe('.includes', () => {
     describe('having a ReadOnlyLinkedListImplementation with no nodes', () => {
       let readOnlyLinkedListImplementation: ReadOnlyLinkedListImplementation<unknown>;
