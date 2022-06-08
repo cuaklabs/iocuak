@@ -88,8 +88,20 @@ describe(
         it('should call bus.handle()', () => {
           const createInstanceTaskGraphExpandCommand: CreateInstanceTaskGraphExpandCommand =
             {
-              context:
-                createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand.context,
+              context: {
+                graph:
+                  createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                    .context.graph,
+                serviceIdAncestorList:
+                  createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                    .context.serviceIdAncestorList,
+                serviceIdToRequestCreateInstanceTaskKindNode:
+                  createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                    .context.serviceIdToRequestCreateInstanceTaskKindNode,
+                serviceIdToSingletonCreateInstanceTaskKindNode:
+                  createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                    .context.serviceIdToSingletonCreateInstanceTaskKindNode,
+              },
               node: createInstanceTaskKindGraphNode,
               taskKindType: TaskKindType.createInstance,
             };

@@ -4,9 +4,13 @@ import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingType } from '../../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
+import { ReadOnlyLinkedList } from '../../../list/models/domain/ReadOnlyLinkedList';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
+import { stringifyServiceId } from '../../../utils/stringifyServiceId';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
+import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
 import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
@@ -14,7 +18,8 @@ import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
 
 export class CreateInstanceTaskGraphExpandCommandHandler
-  implements Handler<CreateInstanceTaskGraphExpandCommand, void>
+  implements
+    Handler<CreateInstanceTaskGraphExpandCommand, void | Promise<void>>
 {
   readonly #bus: Handler<unknown, void | Promise<void>>;
   readonly #metadataService: MetadataService;
@@ -34,6 +39,11 @@ export class CreateInstanceTaskGraphExpandCommandHandler
       createInstanceTaskGraphExpandCommand.node.element.kind;
 
     if (this.#isTypeCreateInstanceTaskKind(taskKind)) {
+      this.#checkCircularDependencies(
+        createInstanceTaskGraphExpandCommand.context.serviceIdAncestorList,
+        taskKind.binding.id,
+      );
+
       const getInstanteDependenciesNode: Node<
         GetInstanceDependenciesTask,
         Task<TaskKind>
@@ -44,15 +54,15 @@ export class CreateInstanceTaskGraphExpandCommandHandler
         getInstanteDependenciesNode,
       );
 
-      const getInstanceDependenciesTraphGraphExpandCommand: GetInstanceDependenciesTaskGraphExpandCommand =
-        {
-          context: createInstanceTaskGraphExpandCommand.context,
-          node: getInstanteDependenciesNode,
-          taskKindType: TaskKindType.getInstanceDependencies,
-        };
+      const getInstanceDependenciesTaskGraphExpandCommand: GetInstanceDependenciesTaskGraphExpandCommand =
+        this.#buildGetInstanceDependenciesTaskGraphExpandCommand(
+          createInstanceTaskGraphExpandCommand.context,
+          taskKind,
+          getInstanteDependenciesNode,
+        );
 
       const result: void | Promise<void> = this.#bus.handle(
-        getInstanceDependenciesTraphGraphExpandCommand,
+        getInstanceDependenciesTaskGraphExpandCommand,
       );
 
       return result;
@@ -80,6 +90,57 @@ export class CreateInstanceTaskGraphExpandCommandHandler
     };
 
     return getInstanteDependenciesNode;
+  }
+
+  #buildGetInstanceDependenciesTaskGraphExpandCommand(
+    context: CreateInstanceTaskGraphExpandOperationContext,
+    taskKind: CreateInstanceTaskKind<Binding>,
+    getInstanteDependenciesNode: Node<
+      GetInstanceDependenciesTask,
+      Task<TaskKind>
+    >,
+  ): GetInstanceDependenciesTaskGraphExpandCommand {
+    const createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskGraphExpandOperationContext =
+      {
+        graph: context.graph,
+        serviceIdAncestorList: context.serviceIdAncestorList.concat(
+          taskKind.binding.id,
+        ),
+        serviceIdToRequestCreateInstanceTaskKindNode:
+          context.serviceIdToRequestCreateInstanceTaskKindNode,
+        serviceIdToSingletonCreateInstanceTaskKindNode:
+          context.serviceIdToSingletonCreateInstanceTaskKindNode,
+      };
+
+    const getInstanceDependenciesTaskGraphExpandCommand: GetInstanceDependenciesTaskGraphExpandCommand =
+      {
+        context: createInstanceTaskGraphExpandOperationContext,
+        node: getInstanteDependenciesNode,
+        taskKindType: TaskKindType.getInstanceDependencies,
+      };
+
+    return getInstanceDependenciesTaskGraphExpandCommand;
+  }
+
+  #checkCircularDependencies(
+    serviceIdAncestorList: ReadOnlyLinkedList<ServiceId>,
+    serviceId: ServiceId,
+  ): void {
+    if (
+      serviceIdAncestorList.includes(
+        (serviceId: ServiceId) => serviceId === serviceId,
+      )
+    ) {
+      const serviceIdTrace: string = [...serviceIdAncestorList]
+        .map(stringifyServiceId)
+        .join(',\n');
+      throw new Error(
+        `Circular dependency found related to ${stringifyServiceId(serviceId)}!
+Trace:
+
+${serviceIdTrace}`,
+      );
+    }
   }
 
   #isTypeCreateInstanceTaskKind(

@@ -7,6 +7,7 @@ import { ContainerSingletonService } from '../../../container/services/domain/Co
 import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
+import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { CreateInstanceTaskGraphFromTaskKindExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphFromTaskKindExpandOperationContext';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
@@ -45,6 +46,34 @@ export class CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler
     return createInstanceTaskKindGraphNode;
   }
 
+  #createNewCreateInstanceTaskGraphExpandCommand(
+    context: CreateInstanceTaskGraphFromTaskKindExpandOperationContext<
+      CreateInstanceTaskKind<TypeBinding>
+    >,
+    createInstanceTaskKindGraphNode: cuaktask.Node<
+      cuaktask.Task<CreateInstanceTaskKind>
+    >,
+  ): CreateInstanceTaskGraphExpandCommand {
+    const createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskGraphExpandOperationContext =
+      {
+        graph: context.graph,
+        serviceIdAncestorList: context.serviceIdAncestorList,
+        serviceIdToRequestCreateInstanceTaskKindNode:
+          context.serviceIdToRequestCreateInstanceTaskKindNode,
+        serviceIdToSingletonCreateInstanceTaskKindNode:
+          context.serviceIdToSingletonCreateInstanceTaskKindNode,
+      };
+
+    const createInstanceTaskGraphExpandCommand: CreateInstanceTaskGraphExpandCommand =
+      {
+        context: createInstanceTaskGraphExpandOperationContext,
+        node: createInstanceTaskKindGraphNode,
+        taskKindType: TaskKindType.createInstance,
+      };
+
+    return createInstanceTaskGraphExpandCommand;
+  }
+
   #createNewCreateInstanceTaskKindGraphNode(
     context: CreateInstanceTaskGraphFromTaskKindExpandOperationContext<
       CreateInstanceTaskKind<TypeBinding>
@@ -62,11 +91,10 @@ export class CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler
     };
 
     const createInstanceTaskGraphExpandCommand: CreateInstanceTaskGraphExpandCommand =
-      {
-        context: context,
-        node: createInstanceTaskKindGraphNode,
-        taskKindType: TaskKindType.createInstance,
-      };
+      this.#createNewCreateInstanceTaskGraphExpandCommand(
+        context,
+        createInstanceTaskKindGraphNode,
+      );
 
     const result: void | Promise<void> = this.#bus.handle(
       createInstanceTaskGraphExpandCommand,
