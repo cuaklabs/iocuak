@@ -2,7 +2,9 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
+import { ReadOnlyLinkedList } from '../../../list/models/domain/ReadOnlyLinkedList';
 import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
@@ -99,6 +101,9 @@ describe(CreateCreateInstanceTaskGraphNodeCommandHandler.name, () => {
               graph: {
                 nodes: [],
               },
+              serviceIdAncestorList: {
+                _type: Symbol(),
+              } as unknown as ReadOnlyLinkedList<ServiceId>,
               serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
               taskKind: {
