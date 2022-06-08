@@ -91,10 +91,20 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
       this.#containerSingletonService,
     );
 
+    const createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskGraphExpandOperationContext =
+      {
+        graph: context.graph,
+        serviceIdAncestorList: context.serviceIdAncestorList,
+        serviceIdToRequestCreateInstanceTaskKindNode:
+          context.serviceIdToRequestCreateInstanceTaskKindNode,
+        serviceIdToSingletonCreateInstanceTaskKindNode:
+          context.serviceIdToSingletonCreateInstanceTaskKindNode,
+      };
+
     const createInstanceTaskLazyNode: cuaktask.Node<cuaktask.Task<TaskKind>> =
       new CreateInstanceTaskLazyNode(
         this.#bus,
-        context,
+        createInstanceTaskGraphExpandOperationContext,
         createInstanceTask,
         TaskKindType.createInstance,
       );

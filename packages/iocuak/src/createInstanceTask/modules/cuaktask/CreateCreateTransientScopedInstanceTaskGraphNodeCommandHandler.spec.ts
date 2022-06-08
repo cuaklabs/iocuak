@@ -1,8 +1,10 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
+import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
+import { ReadOnlyLinkedList } from '../../../list/models/domain/ReadOnlyLinkedList';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
@@ -53,6 +55,9 @@ describe(
               graph: {
                 nodes: [],
               },
+              serviceIdAncestorList: {
+                _type: Symbol(),
+              } as unknown as ReadOnlyLinkedList<ServiceId>,
               serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
               taskKind: CreateInstanceTaskKindFixtures.withBindingType,

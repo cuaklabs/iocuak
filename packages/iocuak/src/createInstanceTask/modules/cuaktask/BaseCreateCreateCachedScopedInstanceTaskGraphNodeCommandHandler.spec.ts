@@ -4,11 +4,13 @@ import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
+import { ReadOnlyLinkedList } from '../../../list/models/domain/ReadOnlyLinkedList';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { GetCachedInstanceTask } from '../../models/cuaktask/GetCachedInstanceTask';
 import { TaskKind } from '../../models/domain/TaskKind';
+import { TaskKindType } from '../../models/domain/TaskKindType';
 import { BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandler } from './BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandler';
 import { CreateInstanceTaskLazyNode } from './CreateInstanceTaskLazyNode';
 
@@ -109,6 +111,9 @@ describe(
               graph: {
                 nodes: [],
               },
+              serviceIdAncestorList: {
+                _type: Symbol(),
+              } as unknown as ReadOnlyLinkedList<ServiceId>,
               serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
               taskKind: CreateInstanceTaskKindFixtures.withBindingType,
@@ -134,9 +139,19 @@ describe(
             nodes: [
               {
                 dependencies: undefined,
-                element: expect.any(
-                  GetCachedInstanceTask,
-                ) as GetCachedInstanceTask,
+                element: new GetCachedInstanceTask(
+                  {
+                    binding:
+                      createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                        .context.taskKind.binding,
+                    requestId:
+                      createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                        .context.taskKind.requestId,
+                    type: TaskKindType.getCachedInstance,
+                  },
+                  containerRequestServiceFixture,
+                  containerSingletonServiceFixture,
+                ),
               },
               expect.any(
                 CreateInstanceTaskLazyNode,
