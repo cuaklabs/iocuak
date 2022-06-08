@@ -39,17 +39,14 @@ describe(ContainerApi.name, () => {
     });
 
     describe('having a type with binding metadata and no constructor metadata nor properties metadata', () => {
-      let typeFixture: Newable;
+      class TypeFixture {
+        public property!: unknown;
+
+        constructor(public readonly parameter: unknown) {}
+      }
 
       beforeAll(() => {
-        @injectable()
-        class TypeFixture {
-          public property!: string;
-
-          constructor(public readonly parameter: string) {}
-        }
-
-        typeFixture = TypeFixture;
+        injectable()(TypeFixture);
       });
 
       describe('when called', () => {
@@ -58,19 +55,19 @@ describe(ContainerApi.name, () => {
         beforeAll(() => {
           containerApi = ContainerApi.build();
 
-          containerApi.bind(typeFixture);
+          containerApi.bind(TypeFixture);
         });
 
         describe('when called .get()', () => {
           let result: unknown;
 
           beforeAll(() => {
-            result = containerApi.get(typeFixture);
+            result = containerApi.get(TypeFixture);
           });
 
           it('should return an instance with no properties set', () => {
-            expect(result).toBeInstanceOf(typeFixture);
-            expect(result).not.toHaveProperty('property');
+            expect(result).toBeInstanceOf(TypeFixture);
+            expect(result).toStrictEqual(new TypeFixture(undefined));
           });
         });
       });

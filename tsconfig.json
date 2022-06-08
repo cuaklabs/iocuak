@@ -5,9 +5,9 @@
     "esModuleInterop": true,
     "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["ES2021"],
+    "lib": ["ES2022"],
     "module": "CommonJS",
-    "moduleResolution": "Node",
+    "moduleResolution": "Node16",
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -15,14 +15,16 @@
     "noUncheckedIndexedAccess": true,
     "paths": {
       "@cuaklabs/cuaktask": ["./packages/cuaktask"],
-      "@cuaklabs/iocuak": ["./packages/iocuak"]
+      "@cuaklabs/iocuak": ["./packages/iocuak"],
+      "@cuaklabs/porygon": ["./packages/porygon"],
+      "@cuaklabs/porygon-typeorm": ["./packages/porygon-typeorm"]
     },
     "resolveJsonModule": true,
     "rootDir": "packages",
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES2021"
+    "target": "ES2022"
   },
   "include": ["packages"],
   "exclude": ["node_modules/**"]

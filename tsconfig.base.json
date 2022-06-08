@@ -6,9 +6,9 @@
     "esModuleInterop": true,
     "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["ES2021"],
+    "lib": ["ES2022"],
     "module": "CommonJS",
-    "moduleResolution": "Node",
+    "moduleResolution": "Node16",
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -24,6 +24,6 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES2021"
+    "target": "ES2022"
   }
 }
