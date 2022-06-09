@@ -62,7 +62,7 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
       };
 
       graphFixture = {
-        nodes: [nodeFixture],
+        nodes: new Set([nodeFixture]),
       };
 
       expectedGetInstanteDependenciesNode = {
@@ -152,7 +152,7 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
 
       it('should expand graph', () => {
         expect(graphFixture).toStrictEqual<Graph<Task<unknown>>>({
-          nodes: [nodeFixture, expectedGetInstanteDependenciesNode],
+          nodes: new Set([nodeFixture, expectedGetInstanteDependenciesNode]),
         });
       });
 
@@ -235,7 +235,7 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
       };
 
       graphFixture = {
-        nodes: [nodeFixture],
+        nodes: new Set([nodeFixture]),
       };
 
       createInstanceTaskGraphExpandCommand = {
@@ -270,7 +270,7 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
 
       it('should not expand graph', () => {
         expect(graphFixture).toStrictEqual<Graph<Task<unknown>>>({
-          nodes: [nodeFixture],
+          nodes: new Set([nodeFixture]),
         });
       });
 

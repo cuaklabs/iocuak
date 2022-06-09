@@ -158,6 +158,6 @@ ${serviceIdTrace}`,
       type: NodeDependenciesType.and,
     };
 
-    createInstanceTaskGraphExpandCommand.context.graph.nodes.push(dependency);
+    createInstanceTaskGraphExpandCommand.context.graph.nodes.add(dependency);
   }
 }

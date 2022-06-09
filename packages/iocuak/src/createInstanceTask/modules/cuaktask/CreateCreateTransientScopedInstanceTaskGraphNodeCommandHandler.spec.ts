@@ -53,7 +53,7 @@ describe(
           createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand = {
             context: {
               graph: {
-                nodes: [],
+                nodes: new Set(),
               },
               serviceIdAncestorList: {
                 _type: Symbol(),

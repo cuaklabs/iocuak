@@ -99,7 +99,7 @@ describe(CreateCreateInstanceTaskGraphNodeCommandHandler.name, () => {
           createCreateInstanceTaskGraphNodeCommandFixture = {
             context: {
               graph: {
-                nodes: [],
+                nodes: new Set(),
               },
               serviceIdAncestorList: {
                 _type: Symbol(),

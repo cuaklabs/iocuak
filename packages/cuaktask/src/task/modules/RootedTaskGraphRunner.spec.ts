@@ -55,7 +55,7 @@ describe(RootedTaskGraphRunner.name, () => {
           };
 
           graphFixture = {
-            nodes: [nodeFixture],
+            nodes: new Set([nodeFixture]),
             root: nodeFixture,
           };
         });
@@ -258,7 +258,7 @@ describe(RootedTaskGraphRunner.name, () => {
         };
 
         graphFixture = {
-          nodes: [nodeFixture],
+          nodes: new Set([nodeFixture]),
           root: nodeFixture,
         };
       });
@@ -336,7 +336,7 @@ describe(RootedTaskGraphRunner.name, () => {
         };
 
         graphFixture = {
-          nodes: [nodeFixture],
+          nodes: new Set([nodeFixture]),
           root: nodeFixture,
         };
       });
@@ -430,7 +430,7 @@ describe(RootedTaskGraphRunner.name, () => {
             };
 
             graphFixture = {
-              nodes: [nodeFixture, dependencyNodeFixture],
+              nodes: new Set([nodeFixture, dependencyNodeFixture]),
               root: nodeFixture,
             };
           });
@@ -659,11 +659,11 @@ describe(RootedTaskGraphRunner.name, () => {
             };
 
             graphFixture = {
-              nodes: [
+              nodes: new Set([
                 nodeFixture,
                 dependencyNodeFixture,
                 secondDependencyNodeFixture,
-              ],
+              ]),
               root: nodeFixture,
             };
           });
@@ -804,11 +804,11 @@ describe(RootedTaskGraphRunner.name, () => {
             };
 
             graphFixture = {
-              nodes: [
+              nodes: new Set([
                 nodeFixture,
                 dependencyNodeFixture,
                 secondDependencyNodeFixture,
-              ],
+              ]),
               root: nodeFixture,
             };
           });
