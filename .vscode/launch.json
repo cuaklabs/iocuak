@@ -39,7 +39,8 @@
       "args": [
         "${workspaceRoot}/node_modules/jest/bin/jest.js",
         "--config=${workspaceRoot}/config/jest/jest.config.mjs",
-        "${file}"
+        "--selectProjects=\"${input:testType}\"",
+        "--testMatch=\"<rootDir>/${relativeFile}\""
       ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}"
@@ -51,7 +52,28 @@
       "args": [
         "${workspaceRoot}/node_modules/jest/bin/jest.js",
         "--config=${workspaceRoot}/config/jest/jest.js.config.mjs",
-        "${file}"
+        "--selectProjects=\"${input:testType}\"",
+        "--testMatch=\"<rootDir>/${relativeFile}\""
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test File (watch)",
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register"
+      ],
+      "args": [
+        "${workspaceRoot}/node_modules/jest/bin/jest.js",
+        "--config=${workspaceRoot}/config/jest/jest.config.mjs",
+        "--runInBand",
+        "--selectProjects=\"${input:testType}\"",
+        "--watch",
+        "--testMatch=\"<rootDir>/${relativeFile}\""
       ],
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}"
@@ -105,6 +127,16 @@
     },
   ],
   "inputs": [
+    {
+      "type": "pickString",
+      "id": "testType",
+      "description": "What type test are you running?",
+      "options": [
+        "Unit",
+        "Integration"
+      ],
+      "default": "Unit"
+    },
     {
       "id": "someArgs",
       "type": "promptString",
