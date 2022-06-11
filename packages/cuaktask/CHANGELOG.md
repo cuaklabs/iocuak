@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `BitwiseOrNodeDependencies`.
 - Added `RootedGraph`.
 - Added `RootedTaskGraphRunner`.
+- Added `TaskGraphEngine`.
 
 ### Changed
 - Updated `BaseTask` with protected `_setErrorStatus` method.
