@@ -18,6 +18,7 @@ import { DependentTaskBuilder } from './task/modules/DependentTaskBuilder';
 import { DependentTaskRunner } from './task/modules/DependentTaskRunner';
 import { RootedTaskGraphRunner } from './task/modules/RootedTaskGraphRunner';
 import { TaskDependencyEngine } from './task/modules/TaskDependencyEngine';
+import { TaskGraphEngine } from './task/modules/TaskGraphEngine';
 
 export type {
   AndNodeDependencies,
@@ -32,6 +33,7 @@ export type {
   TaskDependencyEngine,
   TaskDependencyKindGraph,
   TaskDependencyKindGraphNode,
+  TaskGraphEngine,
 };
 
 export {

@@ -1,4 +1,9 @@
-import { Node, NodeDependenciesType, Task } from '@cuaklabs/cuaktask';
+import {
+  isPromiseLike,
+  Node,
+  NodeDependenciesType,
+  Task,
+} from '@cuaklabs/cuaktask';
 
 import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingType } from '../../../binding/models/domain/BindingType';
@@ -18,8 +23,7 @@ import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
 
 export class CreateInstanceTaskGraphExpandCommandHandler
-  implements
-    Handler<CreateInstanceTaskGraphExpandCommand, void | Promise<void>>
+  implements Handler<CreateInstanceTaskGraphExpandCommand, void>
 {
   readonly #bus: Handler<unknown, void | Promise<void>>;
   readonly #metadataService: MetadataService;
@@ -34,7 +38,7 @@ export class CreateInstanceTaskGraphExpandCommandHandler
 
   public handle(
     createInstanceTaskGraphExpandCommand: CreateInstanceTaskGraphExpandCommand,
-  ): void | Promise<void> {
+  ): void {
     const taskKind: CreateInstanceTaskKind<Binding> =
       createInstanceTaskGraphExpandCommand.node.element.kind;
 
@@ -65,7 +69,9 @@ export class CreateInstanceTaskGraphExpandCommandHandler
         getInstanceDependenciesTaskGraphExpandCommand,
       );
 
-      return result;
+      if (isPromiseLike(result)) {
+        throw new Error('Expecting a syncronous result');
+      }
     }
   }
 
@@ -158,6 +164,6 @@ ${serviceIdTrace}`,
       type: NodeDependenciesType.and,
     };
 
-    createInstanceTaskGraphExpandCommand.context.graph.nodes.push(dependency);
+    createInstanceTaskGraphExpandCommand.context.graph.nodes.add(dependency);
   }
 }
