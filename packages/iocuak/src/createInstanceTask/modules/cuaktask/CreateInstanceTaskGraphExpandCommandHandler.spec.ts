@@ -161,10 +161,85 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
       });
     });
 
+    describe('when called, and context.serviceIdAncestorList returns false and bus.handle() returns a promise', () => {
+      let serviceIdAncestorListConcatFixture: ReadOnlyLinkedList<ServiceId>;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        metadataService.getClassMetadata.mockReturnValueOnce(
+          classMetadataFixture,
+        );
+
+        serviceIdAncestorListConcatFixture = {
+          _type: Symbol(),
+        } as unknown as ReadOnlyLinkedList<ServiceId>;
+
+        serviceIdAncestorListMock.concat.mockReturnValueOnce(
+          serviceIdAncestorListConcatFixture,
+        );
+        serviceIdAncestorListMock.includes.mockReturnValueOnce(false);
+
+        busMock.handle.mockResolvedValueOnce(undefined);
+
+        try {
+          createInstanceTaskGraphExpandCommandHandler.handle(
+            createInstanceTaskGraphExpandCommand,
+          );
+        } catch (error: unknown) {
+          result = error;
+        }
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should call context.serviceIdAncestorList.includes', () => {
+        expect(serviceIdAncestorListMock.includes).toHaveBeenCalledTimes(1);
+        expect(serviceIdAncestorListMock.includes).toHaveBeenCalledWith(
+          expect.any(Function),
+        );
+      });
+
+      it('should call context.serviceIdAncestorList.concat', () => {
+        expect(serviceIdAncestorListMock.concat).toHaveBeenCalledTimes(1);
+        expect(serviceIdAncestorListMock.concat).toHaveBeenCalledWith(
+          nodeFixture.element.kind.binding.id,
+        );
+      });
+
+      it('should call bus', () => {
+        const getInstanceDependenciesTraphGraphExpandCommand: GetInstanceDependenciesTaskGraphExpandCommand =
+          {
+            context: {
+              ...createInstanceTaskGraphExpandCommand.context,
+              serviceIdAncestorList: serviceIdAncestorListConcatFixture,
+            },
+            node: expectedGetInstanteDependenciesNode,
+            taskKindType: TaskKindType.getInstanceDependencies,
+          };
+
+        expect(busMock.handle).toHaveBeenCalledTimes(1);
+        expect(busMock.handle).toHaveBeenCalledWith(
+          getInstanceDependenciesTraphGraphExpandCommand,
+        );
+      });
+
+      it('should throw an Error', () => {
+        expect(result).toBeInstanceOf(Error);
+        expect(result).toStrictEqual(
+          expect.objectContaining<Partial<Error>>({
+            message: 'Expecting a syncronous result',
+          }),
+        );
+      });
+    });
+
     describe('when called, and context.serviceIdAncestorList returns true', () => {
       let result: unknown;
 
-      beforeAll(async () => {
+      beforeAll(() => {
         serviceIdAncestorListMock.includes.mockReturnValueOnce(true);
         serviceIdAncestorListMock[Symbol.iterator].mockReturnValueOnce({
           next: (): IteratorResult<ServiceId> => ({
@@ -174,7 +249,7 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
         });
 
         try {
-          await createInstanceTaskGraphExpandCommandHandler.handle(
+          createInstanceTaskGraphExpandCommandHandler.handle(
             createInstanceTaskGraphExpandCommand,
           );
         } catch (error: unknown) {
