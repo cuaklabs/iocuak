@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "automerge": true,
+  "automerge": false,
   "constraints": {
     "pnpm": "7"
   },
@@ -10,13 +10,11 @@
   "schedule": [
     "at any time"
   ],
-  "updateTypes": ["patch", "minor"],
   "packageRules": [
     {
-      "groupName": "typescript",
-      "automerge": false,
-      "matchPackageNames": ["typescript"],
-      "updateTypes": ["patch", "minor"]
+      "groupName": "auto merge on patch or minor",
+      "automerge": true,
+      "matchUpdateTypes": ["patch", "minor"]
     }
   ]
 }
