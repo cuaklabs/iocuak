@@ -54,7 +54,7 @@ jobs:
         run: |
           echo "::set-output name=gitCommitHash::$(git rev-parse HEAD)"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: ts-build-cache
         with:
           path: |
@@ -111,7 +111,7 @@ jobs:
         run: |
           echo "::set-output name=gitCommitHash::$(git rev-parse HEAD)"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: ts-build-cache
         with:
           path: |
@@ -198,7 +198,7 @@ jobs:
         run: |
           echo "::set-output name=gitCommitHash::$(git rev-parse HEAD)"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: ts-build-cache
         with:
           path: |
