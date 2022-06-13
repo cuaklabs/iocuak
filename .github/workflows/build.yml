@@ -128,7 +128,7 @@ jobs:
         run: pnpm run test:package:js:ci:coverage --selectProjects ${{ matrix.package }}-Unit
 
       - name: Upload coverage to Codecov (base branch)
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           flags: ${{ matrix.package }}
           override_branch: ${{ github.base_ref }}
@@ -136,7 +136,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true }}
 
       - name: Upload coverage to Codecov (branch)
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           flags: ${{ matrix.package }}
           token: ${{ secrets.CODECOV_TOKEN }}
