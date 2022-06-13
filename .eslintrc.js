@@ -110,6 +110,7 @@ module.exports = {
       },
     ],
     '@typescript-eslint/unified-signatures': 'error',
+    'import/namespace': 'off',
     'import/newline-after-import': 'error',
     'import/order': [
       'error',

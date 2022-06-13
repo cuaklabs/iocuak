@@ -1,0 +1,22 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "automerge": true,
+  "constraints": {
+    "pnpm": "7"
+  },
+  "extends": ["config:base", ":disableRateLimiting"],
+  "rebaseWhen": "conflicted",
+  "semanticCommits": "enabled",
+  "schedule": [
+    "at any time"
+  ],
+  "updateTypes": ["patch", "minor"],
+  "packageRules": [
+    {
+      "groupName": "typescript",
+      "automerge": false,
+      "matchPackageNames": ["typescript"],
+      "updateTypes": ["patch", "minor"]
+    }
+  ]
+}
