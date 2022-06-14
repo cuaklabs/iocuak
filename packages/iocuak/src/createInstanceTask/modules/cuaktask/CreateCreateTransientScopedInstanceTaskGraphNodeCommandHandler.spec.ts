@@ -1,5 +1,6 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
+import { TaskGraphExpandCommand } from '../../../common/models/cuaktask/TaskGraphExpandCommand';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
@@ -9,6 +10,7 @@ import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInst
 import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
+import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
 import { CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler } from './CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler';
@@ -16,7 +18,16 @@ import { CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler } from '
 describe(
   CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler.name,
   () => {
-    let busMock: jest.Mocked<Handler<unknown, void | Promise<void>>>;
+    let busMock: jest.Mocked<
+      Handler<
+        TaskGraphExpandCommand<
+          CreateInstanceTaskGraphExpandOperationContext,
+          TaskKindType,
+          cuaktask.Task<unknown>
+        >,
+        void | Promise<void>
+      >
+    >;
     let containerRequestServiceFixture: ContainerRequestService;
     let containerSingletonServiceFixture: ContainerSingletonService;
 
