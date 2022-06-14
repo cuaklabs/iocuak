@@ -1,6 +1,7 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
+import { TaskGraphExpandCommand } from '../../../common/models/cuaktask/TaskGraphExpandCommand';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
@@ -23,12 +24,26 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >
 {
-  readonly #bus: Handler<unknown, void | Promise<void>>;
+  readonly #bus: Handler<
+    TaskGraphExpandCommand<
+      CreateInstanceTaskGraphExpandOperationContext,
+      TaskKindType,
+      cuaktask.Task<unknown>
+    >,
+    void | Promise<void>
+  >;
   readonly #containerRequestService: ContainerRequestService;
   readonly #containerSingletonService: ContainerSingletonService;
 
   constructor(
-    bus: Handler<unknown, void | Promise<void>>,
+    bus: Handler<
+      TaskGraphExpandCommand<
+        CreateInstanceTaskGraphExpandOperationContext,
+        TaskKindType,
+        cuaktask.Task<unknown>
+      >,
+      void | Promise<void>
+    >,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
   ) {

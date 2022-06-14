@@ -1,8 +1,9 @@
-import { Task } from '@cuaklabs/cuaktask';
+import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { TaskGraphExpandCommand } from '../../../common/models/cuaktask/TaskGraphExpandCommand';
 import { TaskGraphExpandOperationContext } from '../../../common/models/cuaktask/TaskGraphExpandOperationContext';
 import { Handler } from '../../../common/modules/domain/Handler';
+import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
 import { CreateInstanceTaskLazyNode } from './CreateInstanceTaskLazyNode';
@@ -11,15 +12,15 @@ describe(CreateInstanceTaskLazyNode.name, () => {
   let busMock: jest.Mocked<
     Handler<
       TaskGraphExpandCommand<
-        TaskGraphExpandOperationContext,
-        unknown,
-        Task<unknown>
+        CreateInstanceTaskGraphExpandOperationContext,
+        TaskKindType,
+        cuaktask.Task<unknown>
       >,
       void | Promise<void>
     >
   >;
-  let context: TaskGraphExpandOperationContext;
-  let element: Task<TaskKind>;
+  let context: CreateInstanceTaskGraphExpandOperationContext;
+  let element: cuaktask.Task<TaskKind>;
   let taskKindType: TaskKindType;
 
   beforeAll(() => {
@@ -28,10 +29,10 @@ describe(CreateInstanceTaskLazyNode.name, () => {
     };
     context = {
       _type: Symbol(),
-    } as unknown as TaskGraphExpandOperationContext;
+    } as unknown as CreateInstanceTaskGraphExpandOperationContext;
     element = {
       _type: Symbol(),
-    } as unknown as Task<TaskKind>;
+    } as unknown as cuaktask.Task<TaskKind>;
     taskKindType = TaskKindType.createInstance;
   });
 
@@ -60,7 +61,7 @@ describe(CreateInstanceTaskLazyNode.name, () => {
         const command: TaskGraphExpandCommand<
           TaskGraphExpandOperationContext,
           unknown,
-          Task<unknown>
+          cuaktask.Task<unknown>
         > = {
           context: context,
           node: createInstanceTaskLazyNode,
@@ -103,7 +104,7 @@ describe(CreateInstanceTaskLazyNode.name, () => {
         const command: TaskGraphExpandCommand<
           TaskGraphExpandOperationContext,
           unknown,
-          Task<unknown>
+          cuaktask.Task<unknown>
         > = {
           context: context,
           node: createInstanceTaskLazyNode,

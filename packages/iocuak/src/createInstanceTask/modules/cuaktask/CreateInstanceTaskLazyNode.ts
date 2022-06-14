@@ -1,35 +1,39 @@
-import {
-  isPromiseLike,
-  Node,
-  NodeDependencies,
-  Task,
-} from '@cuaklabs/cuaktask';
+import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { TaskGraphExpandCommand } from '../../../common/models/cuaktask/TaskGraphExpandCommand';
-import { TaskGraphExpandOperationContext } from '../../../common/models/cuaktask/TaskGraphExpandOperationContext';
 import { Handler } from '../../../common/modules/domain/Handler';
+import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
 
-export class CreateInstanceTaskLazyNode implements Node<Task<TaskKind>> {
-  readonly #bus: Handler<unknown, void | Promise<void>>;
-  readonly #context: TaskGraphExpandOperationContext;
+export class CreateInstanceTaskLazyNode
+  implements cuaktask.Node<cuaktask.Task<TaskKind>>
+{
+  readonly #bus: Handler<
+    TaskGraphExpandCommand<
+      CreateInstanceTaskGraphExpandOperationContext,
+      TaskKindType,
+      cuaktask.Task<unknown>
+    >,
+    void | Promise<void>
+  >;
+  readonly #context: CreateInstanceTaskGraphExpandOperationContext;
   readonly #taskKindType: TaskKindType;
 
-  #dependencies: NodeDependencies<Task<TaskKind>> | undefined;
+  #dependencies: cuaktask.NodeDependencies<cuaktask.Task<TaskKind>> | undefined;
   #isLoaded: boolean;
 
   constructor(
     bus: Handler<
       TaskGraphExpandCommand<
-        TaskGraphExpandOperationContext,
+        CreateInstanceTaskGraphExpandOperationContext,
         TaskKindType,
-        Task<TaskKind>
+        cuaktask.Task<unknown>
       >,
       void | Promise<void>
     >,
-    context: TaskGraphExpandOperationContext,
-    public readonly element: Task<TaskKind>,
+    context: CreateInstanceTaskGraphExpandOperationContext,
+    public readonly element: cuaktask.Task<TaskKind>,
     taskKindType: TaskKindType,
   ) {
     this.#bus = bus;
@@ -39,12 +43,14 @@ export class CreateInstanceTaskLazyNode implements Node<Task<TaskKind>> {
     this.#taskKindType = taskKindType;
   }
 
-  public get dependencies(): NodeDependencies<Task<TaskKind>> | undefined {
+  public get dependencies():
+    | cuaktask.NodeDependencies<cuaktask.Task<TaskKind>>
+    | undefined {
     if (!this.#isLoaded) {
       const command: TaskGraphExpandCommand<
-        TaskGraphExpandOperationContext,
+        CreateInstanceTaskGraphExpandOperationContext,
         TaskKindType,
-        Task<TaskKind>
+        cuaktask.Task<unknown>
       > = {
         context: this.#context,
         node: this,
@@ -53,7 +59,7 @@ export class CreateInstanceTaskLazyNode implements Node<Task<TaskKind>> {
 
       const result: void | Promise<void> = this.#bus.handle(command);
 
-      if (isPromiseLike(result)) {
+      if (cuaktask.isPromiseLike(result)) {
         throw new Error('Expected a sync handler response');
       } else {
         this.#isLoaded = true;
@@ -63,7 +69,9 @@ export class CreateInstanceTaskLazyNode implements Node<Task<TaskKind>> {
     return this.#dependencies;
   }
 
-  public set dependencies(value: NodeDependencies<Task<TaskKind>> | undefined) {
+  public set dependencies(
+    value: cuaktask.NodeDependencies<cuaktask.Task<TaskKind>> | undefined,
+  ) {
     this.#dependencies = value;
   }
 }

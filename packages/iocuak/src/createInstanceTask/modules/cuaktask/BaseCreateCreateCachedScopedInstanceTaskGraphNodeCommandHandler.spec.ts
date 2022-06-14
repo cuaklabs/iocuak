@@ -1,5 +1,6 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
+import { TaskGraphExpandCommand } from '../../../common/models/cuaktask/TaskGraphExpandCommand';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
@@ -24,7 +25,14 @@ class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock extend
   >;
 
   constructor(
-    bus: Handler<unknown, void | Promise<void>>,
+    bus: Handler<
+      TaskGraphExpandCommand<
+        CreateInstanceTaskGraphExpandOperationContext,
+        TaskKindType,
+        cuaktask.Task<unknown>
+      >,
+      void | Promise<void>
+    >,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
     getServiceIdToCreateInstanceTaskKindNodeMapMock: jest.Mock<
@@ -54,7 +62,16 @@ class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock extend
 describe(
   BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandler.name,
   () => {
-    let busMock: jest.Mocked<Handler<unknown, void | Promise<void>>>;
+    let busMock: jest.Mocked<
+      Handler<
+        TaskGraphExpandCommand<
+          CreateInstanceTaskGraphExpandOperationContext,
+          TaskKindType,
+          cuaktask.Task<unknown>
+        >,
+        void | Promise<void>
+      >
+    >;
     let containerRequestServiceFixture: ContainerRequestService;
     let containerSingletonServiceFixture: ContainerSingletonService;
     let getServiceIdToNodeDependencyMapMock: jest.Mock<
