@@ -1,6 +1,5 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
-import { TaskGraphExpandCommand } from '../../../common/models/cuaktask/TaskGraphExpandCommand';
 import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
@@ -12,6 +11,7 @@ import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/Crea
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
 import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
+import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
 import { TaskKindType } from '../../models/domain/TaskKindType';
 import { TaskGraphExpandCommandHandler } from './TaskGraphExpandCommandHandler';
 

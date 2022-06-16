@@ -1,7 +1,6 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
-import { TaskGraphExpandCommand } from '../../../common/models/cuaktask/TaskGraphExpandCommand';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
@@ -11,6 +10,7 @@ import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { CreateInstanceTaskGraphFromTaskKindExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphFromTaskKindExpandOperationContext';
 import { GetCachedInstanceTask } from '../../models/cuaktask/GetCachedInstanceTask';
+import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { GetCachedInstanceTaskKind } from '../../models/domain/GetCachedInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
