@@ -1,13 +1,6 @@
-import { Node, Task } from '@cuaklabs/cuaktask';
+import { CreateInstanceTaskGraphExpandCommand } from './CreateInstanceTaskGraphExpandCommand';
+import { GetInstanceDependenciesTaskGraphExpandCommand } from './GetInstanceDependenciesTaskGraphExpandCommand';
 
-import { TaskGraphExpandOperationContext } from './TaskGraphExpandOperationContext';
-
-export interface TaskGraphExpandCommand<
-  TContext extends TaskGraphExpandOperationContext,
-  TTaskKindType,
-  TNodeTask extends Task<unknown>,
-> {
-  context: TContext;
-  node: Node<TNodeTask, Task<unknown>>;
-  taskKindType: TTaskKindType;
-}
+export type TaskGraphExpandCommand =
+  | CreateInstanceTaskGraphExpandCommand
+  | GetInstanceDependenciesTaskGraphExpandCommand;

@@ -21,26 +21,12 @@ export class CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >
 {
-  readonly #bus: Handler<
-    TaskGraphExpandCommand<
-      CreateInstanceTaskGraphExpandOperationContext,
-      TaskKindType,
-      cuaktask.Task<unknown>
-    >,
-    void | Promise<void>
-  >;
+  readonly #bus: Handler<TaskGraphExpandCommand, void | Promise<void>>;
   readonly #containerRequestService: ContainerRequestService;
   readonly #containerSingletonService: ContainerSingletonService;
 
   constructor(
-    bus: Handler<
-      TaskGraphExpandCommand<
-        CreateInstanceTaskGraphExpandOperationContext,
-        TaskKindType,
-        cuaktask.Task<unknown>
-      >,
-      void | Promise<void>
-    >,
+    bus: Handler<TaskGraphExpandCommand, void | Promise<void>>,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
   ) {

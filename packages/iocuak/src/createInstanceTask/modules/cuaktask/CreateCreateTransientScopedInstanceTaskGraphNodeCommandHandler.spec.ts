@@ -10,7 +10,7 @@ import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
-import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskGraphExpandCommandBase } from '../../models/cuaktask/TaskGraphExpandCommandBase';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
 import { CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler } from './CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler';
@@ -20,7 +20,7 @@ describe(
   () => {
     let busMock: jest.Mocked<
       Handler<
-        TaskGraphExpandCommand<
+        TaskGraphExpandCommandBase<
           CreateInstanceTaskGraphExpandOperationContext,
           TaskKindType,
           cuaktask.Task<unknown>

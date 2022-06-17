@@ -21,25 +21,11 @@ import { TaskKindType } from '../../models/domain/TaskKindType';
 export class CreateInstanceTaskGraphExpandCommandHandler
   implements Handler<CreateInstanceTaskGraphExpandCommand, void>
 {
-  readonly #bus: Handler<
-    TaskGraphExpandCommand<
-      CreateInstanceTaskGraphExpandOperationContext,
-      TaskKindType,
-      cuaktask.Task<unknown>
-    >,
-    void | Promise<void>
-  >;
+  readonly #bus: Handler<TaskGraphExpandCommand, void | Promise<void>>;
   readonly #metadataService: MetadataService;
 
   constructor(
-    bus: Handler<
-      TaskGraphExpandCommand<
-        CreateInstanceTaskGraphExpandOperationContext,
-        TaskKindType,
-        cuaktask.Task<unknown>
-      >,
-      void | Promise<void>
-    >,
+    bus: Handler<TaskGraphExpandCommand, void | Promise<void>>,
     metadataService: MetadataService,
   ) {
     this.#bus = bus;

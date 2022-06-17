@@ -1,5 +1,3 @@
-import * as cuaktask from '@cuaklabs/cuaktask';
-
 import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
@@ -8,7 +6,6 @@ import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInst
 import { GetInstanceDependenciesTaskKindFixtures } from '../../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
-import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
 import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
 import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
@@ -41,69 +38,8 @@ describe(TaskGraphExpandCommandHandler.name, () => {
   });
 
   describe('.handle', () => {
-    describe('having an invalid createInstance task graph expand command', () => {
-      let taskGraphExpandCommandFixture: TaskGraphExpandCommand<
-        CreateInstanceTaskGraphExpandOperationContext,
-        TaskKindType,
-        cuaktask.Task<unknown>
-      >;
-
-      beforeAll(() => {
-        taskGraphExpandCommandFixture = {
-          node: {
-            dependencies: undefined,
-            element: {
-              kind: Symbol(),
-            },
-          },
-          taskKindType: TaskKindType.createInstance,
-        } as Partial<
-          TaskGraphExpandCommand<
-            CreateInstanceTaskGraphExpandOperationContext,
-            TaskKindType,
-            cuaktask.Task<unknown>
-          >
-        > as TaskGraphExpandCommand<
-          CreateInstanceTaskGraphExpandOperationContext,
-          TaskKindType,
-          cuaktask.Task<unknown>
-        >;
-      });
-
-      afterAll(() => {
-        jest.clearAllMocks();
-      });
-
-      describe('when called', () => {
-        let result: unknown;
-
-        beforeAll(() => {
-          try {
-            result = taskGraphExpandCommandHandler.handle(
-              taskGraphExpandCommandFixture,
-            );
-          } catch (error: unknown) {
-            result = error;
-          }
-        });
-
-        it('should throw an error', () => {
-          expect(result).toBeInstanceOf(Error);
-          expect(result).toStrictEqual(
-            expect.objectContaining<Partial<Error>>({
-              message: 'Invalid createInstance task graph command',
-            }),
-          );
-        });
-      });
-    });
-
     describe('having a createInstance task graph expand command', () => {
-      let taskGraphExpandCommandFixture: TaskGraphExpandCommand<
-        CreateInstanceTaskGraphExpandOperationContext,
-        TaskKindType,
-        cuaktask.Task<unknown>
-      >;
+      let taskGraphExpandCommandFixture: TaskGraphExpandCommand;
 
       beforeAll(() => {
         taskGraphExpandCommandFixture = {
@@ -155,69 +91,8 @@ describe(TaskGraphExpandCommandHandler.name, () => {
       });
     });
 
-    describe('having an invalid getInstanceDependencies task graph expand command', () => {
-      let taskGraphExpandCommandFixture: TaskGraphExpandCommand<
-        CreateInstanceTaskGraphExpandOperationContext,
-        TaskKindType,
-        cuaktask.Task<unknown>
-      >;
-
-      beforeAll(() => {
-        taskGraphExpandCommandFixture = {
-          node: {
-            dependencies: undefined,
-            element: {
-              kind: Symbol(),
-            },
-          },
-          taskKindType: TaskKindType.getInstanceDependencies,
-        } as Partial<
-          TaskGraphExpandCommand<
-            CreateInstanceTaskGraphExpandOperationContext,
-            TaskKindType,
-            cuaktask.Task<unknown>
-          >
-        > as TaskGraphExpandCommand<
-          CreateInstanceTaskGraphExpandOperationContext,
-          TaskKindType,
-          cuaktask.Task<unknown>
-        >;
-      });
-
-      afterAll(() => {
-        jest.clearAllMocks();
-      });
-
-      describe('when called', () => {
-        let result: unknown;
-
-        beforeAll(() => {
-          try {
-            result = taskGraphExpandCommandHandler.handle(
-              taskGraphExpandCommandFixture,
-            );
-          } catch (error: unknown) {
-            result = error;
-          }
-        });
-
-        it('should throw an error', () => {
-          expect(result).toBeInstanceOf(Error);
-          expect(result).toStrictEqual(
-            expect.objectContaining<Partial<Error>>({
-              message: 'Invalid getInstanceDependencies task graph command',
-            }),
-          );
-        });
-      });
-    });
-
     describe('having a getInstanceDependencies task graph expand command', () => {
-      let taskGraphExpandCommandFixture: TaskGraphExpandCommand<
-        CreateInstanceTaskGraphExpandOperationContext,
-        TaskKindType,
-        cuaktask.Task<unknown>
-      >;
+      let taskGraphExpandCommandFixture: TaskGraphExpandCommand;
 
       beforeAll(() => {
         taskGraphExpandCommandFixture = {

@@ -13,7 +13,7 @@ import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInst
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
 import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
-import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskGraphExpandCommandBase } from '../../models/cuaktask/TaskGraphExpandCommandBase';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
@@ -22,7 +22,7 @@ import { CreateInstanceTaskGraphExpandCommandHandler } from './CreateInstanceTas
 describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
   let busMock: jest.Mocked<
     Handler<
-      TaskGraphExpandCommand<
+      TaskGraphExpandCommandBase<
         CreateInstanceTaskGraphExpandOperationContext,
         TaskKindType,
         cuaktask.Task<unknown>

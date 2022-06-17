@@ -25,14 +25,7 @@ class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock extend
   >;
 
   constructor(
-    bus: Handler<
-      TaskGraphExpandCommand<
-        CreateInstanceTaskGraphExpandOperationContext,
-        TaskKindType,
-        cuaktask.Task<unknown>
-      >,
-      void | Promise<void>
-    >,
+    bus: Handler<TaskGraphExpandCommand, void | Promise<void>>,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
     getServiceIdToCreateInstanceTaskKindNodeMapMock: jest.Mock<
@@ -63,14 +56,7 @@ describe(
   BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandler.name,
   () => {
     let busMock: jest.Mocked<
-      Handler<
-        TaskGraphExpandCommand<
-          CreateInstanceTaskGraphExpandOperationContext,
-          TaskKindType,
-          cuaktask.Task<unknown>
-        >,
-        void | Promise<void>
-      >
+      Handler<TaskGraphExpandCommand, void | Promise<void>>
     >;
     let containerRequestServiceFixture: ContainerRequestService;
     let containerSingletonServiceFixture: ContainerSingletonService;
