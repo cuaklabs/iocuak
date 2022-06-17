@@ -1,66 +1,25 @@
 import { Handler } from '../../../common/modules/domain/Handler';
-import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
-import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
-import { ReadOnlyLinkedListImplementation } from '../../../list/models/domain/ReadOnlyLinkedListImplementation';
-import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
-import { GetInstanceDependenciesTaskKindFixtures } from '../../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
-import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
-import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
-import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
 import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
 import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
 import { TaskGraphExpandCommandHandler } from './TaskGraphExpandCommandHandler';
 
 describe(TaskGraphExpandCommandHandler.name, () => {
-  let createInstanceTaskGraphExpandCommandHandlerMock: jest.Mocked<
-    Handler<CreateInstanceTaskGraphExpandCommand, void>
-  >;
-  let getInstanceDependenciesTaskGraphExpandCommandHandlerMock: jest.Mocked<
-    Handler<GetInstanceDependenciesTaskGraphExpandCommand, void>
-  >;
-
-  let taskGraphExpandCommandHandler: TaskGraphExpandCommandHandler;
-
-  beforeAll(() => {
-    createInstanceTaskGraphExpandCommandHandlerMock = {
-      handle: jest.fn(),
-    };
-
-    getInstanceDependenciesTaskGraphExpandCommandHandlerMock = {
-      handle: jest.fn(),
-    };
-
-    taskGraphExpandCommandHandler = new TaskGraphExpandCommandHandler(
-      createInstanceTaskGraphExpandCommandHandlerMock,
-      getInstanceDependenciesTaskGraphExpandCommandHandlerMock,
-    );
-  });
-
   describe('.handle', () => {
-    describe('having a createInstance task graph expand command', () => {
+    describe('having a task graph expand command and a registered handler', () => {
+      let handlerMock: jest.Mocked<
+        Handler<CreateInstanceTaskGraphExpandCommand, void>
+      >;
       let taskGraphExpandCommandFixture: TaskGraphExpandCommand;
 
       beforeAll(() => {
-        taskGraphExpandCommandFixture = {
-          context: {
-            graph: {
-              nodes: new Set(),
-            },
-            serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
-            serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
-            serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
-          },
-          node: {
-            dependencies: undefined,
-            element: new CreateInstanceTask(
-              CreateInstanceTaskKindFixtures.any,
-              { _type: Symbol() } as unknown as ContainerRequestService,
-              { _type: Symbol() } as unknown as ContainerSingletonService,
-            ),
-          },
-          taskKindType: TaskGraphExpandCommandType.createInstance,
+        handlerMock = {
+          handle: jest.fn(),
         };
+
+        taskGraphExpandCommandFixture = {
+          taskKindType: TaskGraphExpandCommandType.createInstance,
+        } as Partial<TaskGraphExpandCommand> as TaskGraphExpandCommand;
       });
 
       afterAll(() => {
@@ -68,21 +27,28 @@ describe(TaskGraphExpandCommandHandler.name, () => {
       });
 
       describe('when called', () => {
+        let taskGraphExpandCommandHandler: TaskGraphExpandCommandHandler;
+
         let result: unknown;
 
         beforeAll(() => {
+          taskGraphExpandCommandHandler = new TaskGraphExpandCommandHandler();
+
+          taskGraphExpandCommandHandler.register(
+            taskGraphExpandCommandFixture.taskKindType,
+            handlerMock,
+          );
+
           result = taskGraphExpandCommandHandler.handle(
             taskGraphExpandCommandFixture,
           );
         });
 
         it('should call createInstanceTaskGraphExpandCommandHandler.handle()', () => {
-          expect(
-            createInstanceTaskGraphExpandCommandHandlerMock.handle,
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            createInstanceTaskGraphExpandCommandHandlerMock.handle,
-          ).toHaveBeenCalledWith(taskGraphExpandCommandFixture);
+          expect(handlerMock.handle).toHaveBeenCalledTimes(1);
+          expect(handlerMock.handle).toHaveBeenCalledWith(
+            taskGraphExpandCommandFixture,
+          );
         });
 
         it('should return undefined', () => {
@@ -91,53 +57,41 @@ describe(TaskGraphExpandCommandHandler.name, () => {
       });
     });
 
-    describe('having a getInstanceDependencies task graph expand command', () => {
+    describe('having a task graph expand command', () => {
       let taskGraphExpandCommandFixture: TaskGraphExpandCommand;
 
       beforeAll(() => {
         taskGraphExpandCommandFixture = {
-          context: {
-            graph: {
-              nodes: new Set(),
-            },
-            serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
-            serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
-            serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
-          },
-          node: {
-            dependencies: undefined,
-            element: new GetInstanceDependenciesTask(
-              GetInstanceDependenciesTaskKindFixtures.any,
-            ),
-          },
           taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
-        };
+        } as Partial<TaskGraphExpandCommand> as TaskGraphExpandCommand;
       });
 
       describe('when called', () => {
+        let taskGraphExpandCommandHandler: TaskGraphExpandCommandHandler;
+
         let result: unknown;
 
         beforeAll(() => {
-          result = taskGraphExpandCommandHandler.handle(
-            taskGraphExpandCommandFixture,
-          );
+          taskGraphExpandCommandHandler = new TaskGraphExpandCommandHandler();
+
+          try {
+            taskGraphExpandCommandHandler.handle(taskGraphExpandCommandFixture);
+          } catch (error: unknown) {
+            result = error;
+          }
         });
 
         afterAll(() => {
           jest.clearAllMocks();
         });
 
-        it('should call getInstanceDependenciesTaskGraphExpandCommandHandlerMock.handle()', () => {
-          expect(
-            getInstanceDependenciesTaskGraphExpandCommandHandlerMock.handle,
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            getInstanceDependenciesTaskGraphExpandCommandHandlerMock.handle,
-          ).toHaveBeenCalledWith(taskGraphExpandCommandFixture);
-        });
-
-        it('should return undefined', () => {
-          expect(result).toBeUndefined();
+        it('should throw an Error', () => {
+          expect(result).toBeInstanceOf(Error);
+          expect(result).toStrictEqual(
+            expect.objectContaining<Partial<Error>>({
+              message: 'Unexpected task graph expand command',
+            }),
+          );
         });
       });
     });
