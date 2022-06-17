@@ -14,6 +14,7 @@ import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuak
 import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
 import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
 import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
@@ -118,7 +119,7 @@ export class CreateInstanceTaskGraphExpandCommandHandler
       {
         context: createInstanceTaskGraphExpandOperationContext,
         node: getInstanteDependenciesNode,
-        taskKindType: TaskKindType.getInstanceDependencies,
+        taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
       };
 
     return getInstanceDependenciesTaskGraphExpandCommand;

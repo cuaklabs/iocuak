@@ -1,13 +1,14 @@
-import { Node, Task } from '@cuaklabs/cuaktask';
+import * as cuaktask from '@cuaklabs/cuaktask';
 
+import { TaskGraphExpandCommandType } from './TaskGraphExpandCommandType';
 import { TaskGraphExpandOperationContext } from './TaskGraphExpandOperationContext';
 
 export interface TaskGraphExpandCommandBase<
   TContext extends TaskGraphExpandOperationContext,
-  TTaskKindType,
-  TNodeTask extends Task<unknown>,
+  TTaskKindType extends TaskGraphExpandCommandType,
+  TNodeTask extends cuaktask.Task<unknown>,
 > {
   context: TContext;
-  node: Node<TNodeTask, Task<unknown>>;
+  node: cuaktask.Node<TNodeTask, cuaktask.Task<unknown>>;
   taskKindType: TTaskKindType;
 }

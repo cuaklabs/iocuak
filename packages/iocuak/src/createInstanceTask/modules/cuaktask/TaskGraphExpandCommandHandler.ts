@@ -2,7 +2,7 @@ import { Handler } from '../../../common/modules/domain/Handler';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
 import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
 import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
-import { TaskKindType } from '../../models/domain/TaskKindType';
+import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
 
 export class TaskGraphExpandCommandHandler
   implements Handler<TaskGraphExpandCommand, void>
@@ -35,12 +35,12 @@ export class TaskGraphExpandCommandHandler
 
   public handle(taskGraphExpandCommand: TaskGraphExpandCommand): void {
     switch (taskGraphExpandCommand.taskKindType) {
-      case TaskKindType.createInstance:
+      case TaskGraphExpandCommandType.createInstance:
         this.#createInstanceTaskGraphExpandCommandHandler.handle(
           taskGraphExpandCommand,
         );
         break;
-      case TaskKindType.getInstanceDependencies:
+      case TaskGraphExpandCommandType.getInstanceDependencies:
         this.#getInstanceDependenciesTaskGraphExpandCommandHandler.handle(
           taskGraphExpandCommand,
         );

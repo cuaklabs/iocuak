@@ -11,6 +11,7 @@ import { ReadOnlyLinkedListImplementation } from '../../../list/models/domain/Re
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
+import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
 import { CreateInstanceRootTaskKind } from '../../models/domain/CreateInstanceRootTaskKind';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
@@ -99,7 +100,7 @@ export class CreateInstanceTaskGraphEngine
           serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
         },
         node: createInstanceTaskNode,
-        taskKindType: TaskKindType.createInstance,
+        taskKindType: TaskGraphExpandCommandType.createInstance,
       };
 
     const result: void | Promise<void> =

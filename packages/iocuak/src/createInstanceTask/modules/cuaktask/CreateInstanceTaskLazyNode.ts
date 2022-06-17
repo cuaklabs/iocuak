@@ -3,8 +3,8 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 import { Handler } from '../../../common/modules/domain/Handler';
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
-import { TaskKindType } from '../../models/domain/TaskKindType';
 import { BaseCreateInstanceTaskLazyNode } from './BaseCreateInstanceTaskLazyNode';
 
 export class CreateInstanceTaskLazyNode
@@ -32,7 +32,7 @@ export class CreateInstanceTaskLazyNode
     return {
       context: this.#createInstanceTaskGraphExpandOperationContext,
       node: this,
-      taskKindType: TaskKindType.createInstance,
+      taskKindType: TaskGraphExpandCommandType.createInstance,
     };
   }
 }

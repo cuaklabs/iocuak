@@ -10,9 +10,9 @@ import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/Crea
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { CreateInstanceTaskGraphFromTaskKindExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphFromTaskKindExpandOperationContext';
 import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
-import { TaskKindType } from '../../models/domain/TaskKindType';
 
 export class CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler
   implements
@@ -69,7 +69,7 @@ export class CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler
       {
         context: createInstanceTaskGraphExpandOperationContext,
         node: createInstanceTaskKindGraphNode,
-        taskKindType: TaskKindType.createInstance,
+        taskKindType: TaskGraphExpandCommandType.createInstance,
       };
 
     return createInstanceTaskGraphExpandCommand;

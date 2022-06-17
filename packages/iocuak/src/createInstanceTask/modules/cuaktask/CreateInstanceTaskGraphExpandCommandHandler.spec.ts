@@ -13,7 +13,8 @@ import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInst
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
 import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
-import { TaskGraphExpandCommandBase } from '../../models/cuaktask/TaskGraphExpandCommandBase';
+import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
@@ -21,14 +22,7 @@ import { CreateInstanceTaskGraphExpandCommandHandler } from './CreateInstanceTas
 
 describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
   let busMock: jest.Mocked<
-    Handler<
-      TaskGraphExpandCommandBase<
-        CreateInstanceTaskGraphExpandOperationContext,
-        TaskKindType,
-        cuaktask.Task<unknown>
-      >,
-      void | Promise<void>
-    >
+    Handler<TaskGraphExpandCommand, void | Promise<void>>
   >;
   let metadataService: jest.Mocked<MetadataService>;
 
@@ -99,7 +93,7 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
           serviceIdAncestorList: serviceIdAncestorListMock,
         } as Partial<CreateInstanceTaskGraphExpandOperationContext> as CreateInstanceTaskGraphExpandOperationContext,
         node: nodeFixture,
-        taskKindType: TaskKindType.createInstance,
+        taskKindType: TaskGraphExpandCommandType.createInstance,
       };
     });
 
@@ -153,7 +147,7 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
               serviceIdAncestorList: serviceIdAncestorListConcatFixture,
             },
             node: expectedGetInstanteDependenciesNode,
-            taskKindType: TaskKindType.getInstanceDependencies,
+            taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
           };
 
         expect(busMock.handle).toHaveBeenCalledTimes(1);
@@ -231,7 +225,7 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
               serviceIdAncestorList: serviceIdAncestorListConcatFixture,
             },
             node: expectedGetInstanteDependenciesNode,
-            taskKindType: TaskKindType.getInstanceDependencies,
+            taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
           };
 
         expect(busMock.handle).toHaveBeenCalledTimes(1);
@@ -334,7 +328,7 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
           graph: graphFixture,
         } as Partial<CreateInstanceTaskGraphExpandOperationContext> as CreateInstanceTaskGraphExpandOperationContext,
         node: nodeFixture,
-        taskKindType: TaskKindType.createInstance,
+        taskKindType: TaskGraphExpandCommandType.createInstance,
       };
     });
 

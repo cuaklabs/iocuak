@@ -9,7 +9,7 @@ import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/Crea
 import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
 import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
 import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
-import { TaskKindType } from '../../models/domain/TaskKindType';
+import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
 import { TaskGraphExpandCommandHandler } from './TaskGraphExpandCommandHandler';
 
 describe(TaskGraphExpandCommandHandler.name, () => {
@@ -59,7 +59,7 @@ describe(TaskGraphExpandCommandHandler.name, () => {
               { _type: Symbol() } as unknown as ContainerSingletonService,
             ),
           },
-          taskKindType: TaskKindType.createInstance,
+          taskKindType: TaskGraphExpandCommandType.createInstance,
         };
       });
 
@@ -110,7 +110,7 @@ describe(TaskGraphExpandCommandHandler.name, () => {
               GetInstanceDependenciesTaskKindFixtures.any,
             ),
           },
-          taskKindType: TaskKindType.getInstanceDependencies,
+          taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
         };
       });
 

@@ -1,10 +1,5 @@
-import * as cuaktask from '@cuaklabs/cuaktask';
-
 import { Handler } from '../../../common/modules/domain/Handler';
-import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
-import { TaskGraphExpandCommandBase } from '../../models/cuaktask/TaskGraphExpandCommandBase';
-import { TaskKindType } from '../../models/domain/TaskKindType';
 import { BaseCreateInstanceTaskLazyNode } from './BaseCreateInstanceTaskLazyNode';
 
 class BaseCreateInstanceTaskLazyNodeMock extends BaseCreateInstanceTaskLazyNode {
@@ -22,14 +17,7 @@ class BaseCreateInstanceTaskLazyNodeMock extends BaseCreateInstanceTaskLazyNode 
 
 describe(BaseCreateInstanceTaskLazyNode.name, () => {
   let busMock: jest.Mocked<
-    Handler<
-      TaskGraphExpandCommandBase<
-        CreateInstanceTaskGraphExpandOperationContext,
-        TaskKindType,
-        cuaktask.Task<unknown>
-      >,
-      void | Promise<void>
-    >
+    Handler<TaskGraphExpandCommand, void | Promise<void>>
   >;
   let taskGraphExpandCommandFixture: TaskGraphExpandCommand;
 
