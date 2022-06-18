@@ -3,19 +3,17 @@ import { ServiceDependencies } from '../domain/ServiceDependencies';
 import { GetInstanceDependenciesTask } from './GetInstanceDependenciesTask';
 
 describe(GetInstanceDependenciesTask.name, () => {
-  let getInstanceDependenciesTask: GetInstanceDependenciesTask;
-
-  beforeAll(() => {
-    getInstanceDependenciesTask = new GetInstanceDependenciesTask(
-      GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsAndProperties,
-    );
-  });
-
   describe('.perform()', () => {
     describe('when called, and dependencies do not match metadata', () => {
+      let getInstanceDependenciesTask: GetInstanceDependenciesTask;
+
       let result: unknown;
 
       beforeAll(() => {
+        getInstanceDependenciesTask = new GetInstanceDependenciesTask(
+          GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsAndProperties,
+        );
+
         try {
           getInstanceDependenciesTask.perform();
         } catch (error: unknown) {
@@ -36,17 +34,23 @@ describe(GetInstanceDependenciesTask.name, () => {
     });
 
     describe('when called, and dependencies match metadata', () => {
+      let getInstanceDependenciesTask: GetInstanceDependenciesTask;
+
       let constructorArgumentFixure: unknown;
       let propertyArgumentFixture: unknown;
 
       let result: unknown;
 
       beforeAll(() => {
+        getInstanceDependenciesTask = new GetInstanceDependenciesTask(
+          GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsAndProperties,
+        );
+
         constructorArgumentFixure = 'constructor argument';
         propertyArgumentFixture = 'property';
 
         result = getInstanceDependenciesTask.perform(
-          constructorArgumentFixure,
+          [constructorArgumentFixure],
           propertyArgumentFixture,
         );
       });
@@ -62,6 +66,44 @@ describe(GetInstanceDependenciesTask.name, () => {
         };
 
         expect(result).toStrictEqual(expected);
+      });
+    });
+
+    describe('when called, and invalid dependencies match metadata', () => {
+      let getInstanceDependenciesTask: GetInstanceDependenciesTask;
+
+      let constructorArgumentFixure: unknown;
+      let propertyArgumentFixture: unknown;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        getInstanceDependenciesTask = new GetInstanceDependenciesTask(
+          GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsAndProperties,
+        );
+
+        constructorArgumentFixure = 'constructor argument';
+        propertyArgumentFixture = 'property';
+
+        try {
+          getInstanceDependenciesTask.perform(
+            [constructorArgumentFixure, Symbol()],
+            propertyArgumentFixture,
+          );
+        } catch (error: unknown) {
+          result = error;
+        }
+      });
+
+      it('should throw an Error', () => {
+        expect(result).toBeInstanceOf(Error);
+        expect(result).toStrictEqual(
+          expect.objectContaining<Partial<Error>>({
+            message: expect.stringContaining(
+              'Unexpected dependencies for service',
+            ) as string,
+          }),
+        );
       });
     });
   });
