@@ -1,11 +1,6 @@
-import {
-  DependentTask,
-  DependentTaskRunner,
-  TaskStatus,
-} from '@cuaklabs/cuaktask';
+import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { Builder } from '../../../common/modules/domain/Builder';
 import { CreateInstanceRootTaskKindFixtures } from '../../../createInstanceTask/fixtures/domain/CreateInstanceRootTaskKindFixtures';
 import { TaskKind } from '../../../createInstanceTask/models/domain/TaskKind';
 import { ContainerRequestService } from '../domain/ContainerRequestService';
@@ -13,10 +8,8 @@ import { ContainerInstanceServiceImplementation } from './ContainerInstanceServi
 
 describe(ContainerInstanceServiceImplementation.name, () => {
   let containerRequestService: jest.Mocked<ContainerRequestService>;
-  let dependentTaskRunner: jest.Mocked<DependentTaskRunner>;
-  let taskBuilder: jest.Mocked<
-    Builder<DependentTask<TaskKind, TaskKind>, [TaskKind]>
-  >;
+  let rootedTaskGraphRunner: jest.Mocked<cuaktask.RootedTaskGraphRunner>;
+  let taskGraphEngine: jest.Mocked<cuaktask.TaskGraphEngine<TaskKind>>;
 
   let containerInstanceServiceImplementation: ContainerInstanceServiceImplementation;
 
@@ -28,21 +21,21 @@ describe(ContainerInstanceServiceImplementation.name, () => {
       jest.Mocked<ContainerRequestService>
     > as jest.Mocked<ContainerRequestService>;
 
-    dependentTaskRunner = {
+    rootedTaskGraphRunner = {
       run: jest.fn(),
     } as Partial<
-      jest.Mocked<DependentTaskRunner>
-    > as jest.Mocked<DependentTaskRunner>;
+      jest.Mocked<cuaktask.RootedTaskGraphRunner>
+    > as jest.Mocked<cuaktask.RootedTaskGraphRunner>;
 
-    taskBuilder = {
-      build: jest.fn(),
+    taskGraphEngine = {
+      create: jest.fn(),
     };
 
     containerInstanceServiceImplementation =
       new ContainerInstanceServiceImplementation(
         containerRequestService,
-        dependentTaskRunner,
-        taskBuilder,
+        rootedTaskGraphRunner,
+        taskGraphEngine,
       );
   });
 
@@ -50,7 +43,8 @@ describe(ContainerInstanceServiceImplementation.name, () => {
     let requestIdFixture: symbol;
     let serviceIdFixture: ServiceId;
     let taskKindFixture: TaskKind;
-    let dependentTaskFixture: DependentTask<TaskKind, TaskKind>;
+    let graphFixture: cuaktask.RootedGraph<cuaktask.Task<TaskKind>>;
+    let nodeFixture: cuaktask.Node<cuaktask.Task<TaskKind>>;
     let instanceFixture: unknown;
 
     let result: unknown;
@@ -60,23 +54,31 @@ describe(ContainerInstanceServiceImplementation.name, () => {
       requestIdFixture = taskKindFixture.requestId;
       serviceIdFixture = taskKindFixture.id;
 
-      dependentTaskFixture = {
-        dependencies: [],
-        kind: taskKindFixture,
-        perform: jest.fn(),
-        result: {
-          get: () => {
-            throw new Error();
+      const taskMockStatus: cuaktask.TaskStatus =
+        cuaktask.TaskStatus.NotStarted;
+
+      nodeFixture = {
+        dependencies: undefined,
+        element: {
+          kind: taskKindFixture,
+          perform: jest.fn(),
+          result: undefined,
+          get status(): cuaktask.TaskStatus {
+            return taskMockStatus;
           },
         },
-        status: TaskStatus.NotStarted,
+      };
+
+      graphFixture = {
+        nodes: new Set([nodeFixture]),
+        root: nodeFixture,
       };
 
       instanceFixture = { foo: 'bar' };
 
       containerRequestService.start.mockReturnValueOnce(requestIdFixture);
-      taskBuilder.build.mockReturnValueOnce(dependentTaskFixture);
-      dependentTaskRunner.run.mockReturnValueOnce(instanceFixture);
+      taskGraphEngine.create.mockReturnValueOnce(graphFixture);
+      rootedTaskGraphRunner.run.mockReturnValueOnce(instanceFixture);
 
       result = containerInstanceServiceImplementation.create(serviceIdFixture);
     });
@@ -90,9 +92,9 @@ describe(ContainerInstanceServiceImplementation.name, () => {
       expect(containerRequestService.start).toHaveBeenCalledWith();
     });
 
-    it('should call taskBuilder.build()', () => {
-      expect(taskBuilder.build).toHaveBeenCalledTimes(1);
-      expect(taskBuilder.build).toHaveBeenCalledWith(taskKindFixture);
+    it('should call taskGraphEngine.create()', () => {
+      expect(taskGraphEngine.create).toHaveBeenCalledTimes(1);
+      expect(taskGraphEngine.create).toHaveBeenCalledWith(taskKindFixture);
     });
 
     it('should call containerRequestService.end()', () => {
@@ -102,11 +104,9 @@ describe(ContainerInstanceServiceImplementation.name, () => {
       );
     });
 
-    it('should call dependentTaskRunner.run()', () => {
-      expect(dependentTaskRunner.run).toHaveBeenCalledTimes(1);
-      expect(dependentTaskRunner.run).toHaveBeenCalledWith(
-        dependentTaskFixture,
-      );
+    it('should call rootedTaskGraphRunner.run()', () => {
+      expect(rootedTaskGraphRunner.run).toHaveBeenCalledTimes(1);
+      expect(rootedTaskGraphRunner.run).toHaveBeenCalledWith(graphFixture);
     });
 
     it('should return an instance', () => {
