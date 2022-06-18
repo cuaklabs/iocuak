@@ -10,6 +10,7 @@ import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { CreateInstanceTaskGraphFromTaskKindExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphFromTaskKindExpandOperationContext';
 import { GetCachedInstanceTask } from '../../models/cuaktask/GetCachedInstanceTask';
+import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { GetCachedInstanceTaskKind } from '../../models/domain/GetCachedInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
@@ -23,12 +24,12 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >
 {
-  readonly #bus: Handler<unknown, void | Promise<void>>;
+  readonly #bus: Handler<TaskGraphExpandCommand, void | Promise<void>>;
   readonly #containerRequestService: ContainerRequestService;
   readonly #containerSingletonService: ContainerSingletonService;
 
   constructor(
-    bus: Handler<unknown, void | Promise<void>>,
+    bus: Handler<TaskGraphExpandCommand, void | Promise<void>>,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
   ) {
@@ -106,7 +107,6 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
         this.#bus,
         createInstanceTaskGraphExpandOperationContext,
         createInstanceTask,
-        TaskKindType.createInstance,
       );
 
     return createInstanceTaskLazyNode;

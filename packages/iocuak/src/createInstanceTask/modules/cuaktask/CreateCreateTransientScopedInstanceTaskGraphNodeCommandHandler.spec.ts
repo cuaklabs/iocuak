@@ -9,14 +9,17 @@ import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInst
 import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
+import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
-import { TaskKindType } from '../../models/domain/TaskKindType';
 import { CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler } from './CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler';
 
 describe(
   CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler.name,
   () => {
-    let busMock: jest.Mocked<Handler<unknown, void | Promise<void>>>;
+    let busMock: jest.Mocked<
+      Handler<TaskGraphExpandCommand, void | Promise<void>>
+    >;
     let containerRequestServiceFixture: ContainerRequestService;
     let containerSingletonServiceFixture: ContainerSingletonService;
 
@@ -103,7 +106,7 @@ describe(
                     .context.serviceIdToSingletonCreateInstanceTaskKindNode,
               },
               node: createInstanceTaskKindGraphNode,
-              taskKindType: TaskKindType.createInstance,
+              taskKindType: TaskGraphExpandCommandType.createInstance,
             };
 
           expect(busMock.handle).toHaveBeenCalledTimes(1);

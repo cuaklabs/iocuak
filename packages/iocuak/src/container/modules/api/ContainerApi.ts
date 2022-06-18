@@ -3,16 +3,25 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { BindingServiceImplementation } from '../../../binding/services/domain/BindingServiceImplementation';
 import { Builder } from '../../../common/modules/domain/Builder';
-import { SetLike } from '../../../common/modules/domain/SetLike';
+import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerModuleTaskKind } from '../../../containerModuleTask/models/domain/ContainerModuleTaskKind';
 import { ContainerModuleTaskBuilder } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilder';
 import { ContainerModuleTaskBuilderWithNoDependencies } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilderWithNoDependencies';
 import { ContainerModuleTaskDependencyEngine } from '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine';
+import { CreateCreateInstanceTaskGraphNodeCommand } from '../../../createInstanceTask/models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
+import { CreateInstanceTaskGraphExpandCommand } from '../../../createInstanceTask/models/cuaktask/CreateInstanceTaskGraphExpandCommand';
+import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../../createInstanceTask/models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
+import { TaskGraphExpandCommand } from '../../../createInstanceTask/models/cuaktask/TaskGraphExpandCommand';
+import { TaskGraphExpandCommandType } from '../../../createInstanceTask/models/cuaktask/TaskGraphExpandCommandType';
 import { TaskKind } from '../../../createInstanceTask/models/domain/TaskKind';
-import { CreateInstancesTaskDependencyEngine } from '../../../createInstanceTask/modules/CreateInstancesTaskDependencyEngine';
-import { TaskBuilder } from '../../../createInstanceTask/modules/TaskBuilder';
-import { TaskBuilderWithNoDependencies } from '../../../createInstanceTask/modules/TaskBuilderWithNoDependencies';
-import { TaskKindSet } from '../../../createInstanceTask/modules/TaskKindSet';
+import { CreateCreateInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateInstanceTaskGraphNodeCommandHandler';
+import { CreateCreateRequestScopedInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateRequestScopedInstanceTaskGraphNodeCommandHandler';
+import { CreateCreateSingletonScopedInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateSingletonScopedInstanceTaskGraphNodeCommandHandler';
+import { CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler';
+import { CreateInstanceTaskGraphEngine } from '../../../createInstanceTask/modules/cuaktask/CreateInstanceTaskGraphEngine';
+import { CreateInstanceTaskGraphExpandCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateInstanceTaskGraphExpandCommandHandler';
+import { GetInstanceDependenciesTaskGraphExpandCommandHandler } from '../../../createInstanceTask/modules/cuaktask/GetInstanceDependenciesTaskGraphExpandCommandHandler';
+import { TaskGraphExpandCommandHandler } from '../../../createInstanceTask/modules/cuaktask/TaskGraphExpandCommandHandler';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
 import { ContainerServiceApiImplementation } from '../../services/api/ContainerServiceApiImplementation';
@@ -79,24 +88,22 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     containerSingletonService: ContainerSingletonService,
     metadataService: MetadataService,
   ): ContainerInstanceService {
-    const dependentTaskRunner: cuaktask.DependentTaskRunner =
-      new cuaktask.DependentTaskRunner();
+    const taskGraphEngine: cuaktask.TaskGraphEngine<TaskKind> =
+      this.#initializeTaskEngine(
+        containerBindingService,
+        containerRequestService,
+        containerSingletonService,
+        metadataService,
+      );
 
-    const taskBuilder: Builder<
-      cuaktask.DependentTask<TaskKind, TaskKind>,
-      [TaskKind]
-    > = this.#initializeTaskBuilder(
-      containerBindingService,
-      containerRequestService,
-      containerSingletonService,
-      metadataService,
-    );
+    const rootedTaskGraphRunner: cuaktask.RootedTaskGraphRunner =
+      new cuaktask.RootedTaskGraphRunner();
 
     const containerInstanceService: ContainerInstanceService =
       new ContainerInstanceServiceImplementation(
         containerRequestService,
-        dependentTaskRunner,
-        taskBuilder,
+        rootedTaskGraphRunner,
+        taskGraphEngine,
       );
     return containerInstanceService;
   }
@@ -127,37 +134,137 @@ export class ContainerApi extends ContainerServiceApiImplementation {
     return containerModuleService;
   }
 
-  static #initializeTaskBuilder(
+  static #initializeCreateCreateInstanceTaskGraphNodeCommandHandler(
+    taskGraphExpandCommandHandler: Handler<
+      TaskGraphExpandCommand,
+      void | Promise<void>
+    >,
+    containerRequestService: ContainerRequestService,
+    containerSingletonService: ContainerSingletonService,
+  ): Handler<
+    CreateCreateInstanceTaskGraphNodeCommand,
+    cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
+  > {
+    const createCreateRequestScopedInstanceTaskGraphNodeCommandHandler: Handler<
+      CreateCreateInstanceTaskGraphNodeCommand,
+      cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
+    > = new CreateCreateRequestScopedInstanceTaskGraphNodeCommandHandler(
+      taskGraphExpandCommandHandler,
+      containerRequestService,
+      containerSingletonService,
+    );
+
+    const createCreateSingletonScopedInstanceTaskGraphNodeCommandHandler: Handler<
+      CreateCreateInstanceTaskGraphNodeCommand,
+      cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
+    > = new CreateCreateSingletonScopedInstanceTaskGraphNodeCommandHandler(
+      taskGraphExpandCommandHandler,
+      containerRequestService,
+      containerSingletonService,
+    );
+
+    const createCreateTransientScopedInstanceTaskGraphNodeCommandHandler: Handler<
+      CreateCreateInstanceTaskGraphNodeCommand,
+      cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
+    > = new CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler(
+      taskGraphExpandCommandHandler,
+      containerRequestService,
+      containerSingletonService,
+    );
+
+    const createCreateInstanceTaskGraphNodeCommandHandler: Handler<
+      CreateCreateInstanceTaskGraphNodeCommand,
+      cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
+    > = new CreateCreateInstanceTaskGraphNodeCommandHandler(
+      createCreateRequestScopedInstanceTaskGraphNodeCommandHandler,
+      createCreateSingletonScopedInstanceTaskGraphNodeCommandHandler,
+      createCreateTransientScopedInstanceTaskGraphNodeCommandHandler,
+    );
+
+    return createCreateInstanceTaskGraphNodeCommandHandler;
+  }
+
+  static #initializeGetInstanceDependenciesTaskGraphExpandCommandHandler(
+    taskGraphExpandCommandHandler: Handler<
+      TaskGraphExpandCommand,
+      void | Promise<void>
+    >,
     containerBindingService: BindingService,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
     metadataService: MetadataService,
-  ): Builder<cuaktask.DependentTask<TaskKind, TaskKind>, [TaskKind]> {
-    const taskDependenciesKindSetBuilder: Builder<SetLike<TaskKind>> = {
-      build: () => new TaskKindSet(),
-    };
-
-    const taskDependencyEngine: cuaktask.TaskDependencyEngine<
-      TaskKind,
-      TaskKind
-    > = new CreateInstancesTaskDependencyEngine(
-      containerBindingService,
-      metadataService,
-      taskDependenciesKindSetBuilder,
+  ): Handler<GetInstanceDependenciesTaskGraphExpandCommand, void> {
+    const createCreateInstanceTaskGraphNodeCommandHandler: Handler<
+      CreateCreateInstanceTaskGraphNodeCommand,
+      cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
+    > = this.#initializeCreateCreateInstanceTaskGraphNodeCommandHandler(
+      taskGraphExpandCommandHandler,
+      containerRequestService,
+      containerSingletonService,
     );
 
-    const taskBuilderWithNoDependencies: TaskBuilderWithNoDependencies =
-      new TaskBuilderWithNoDependencies(
+    const getInstanceDependenciesTaskGraphExpandCommandHandler: Handler<
+      GetInstanceDependenciesTaskGraphExpandCommand,
+      void
+    > = new GetInstanceDependenciesTaskGraphExpandCommandHandler(
+      containerBindingService,
+      containerRequestService,
+      containerSingletonService,
+      createCreateInstanceTaskGraphNodeCommandHandler,
+      metadataService,
+    );
+
+    return getInstanceDependenciesTaskGraphExpandCommandHandler;
+  }
+
+  static #initializeTaskEngine(
+    containerBindingService: BindingService,
+    containerRequestService: ContainerRequestService,
+    containerSingletonService: ContainerSingletonService,
+    metadataService: MetadataService,
+  ): cuaktask.TaskGraphEngine<TaskKind> {
+    const taskGraphExpandCommandHandler: TaskGraphExpandCommandHandler =
+      new TaskGraphExpandCommandHandler();
+
+    const createInstanceTaskGraphExpandCommandHandler: Handler<
+      CreateInstanceTaskGraphExpandCommand,
+      void
+    > = new CreateInstanceTaskGraphExpandCommandHandler(
+      taskGraphExpandCommandHandler,
+      metadataService,
+    );
+
+    const getInstanceDependenciesTaskGraphExpandCommandHandler: Handler<
+      GetInstanceDependenciesTaskGraphExpandCommand,
+      void
+    > = this.#initializeGetInstanceDependenciesTaskGraphExpandCommandHandler(
+      taskGraphExpandCommandHandler,
+      containerBindingService,
+      containerRequestService,
+      containerSingletonService,
+      metadataService,
+    );
+
+    taskGraphExpandCommandHandler.register(
+      TaskGraphExpandCommandType.createInstance,
+      createInstanceTaskGraphExpandCommandHandler,
+    );
+
+    taskGraphExpandCommandHandler.register(
+      TaskGraphExpandCommandType.getInstanceDependencies,
+      getInstanceDependenciesTaskGraphExpandCommandHandler,
+    );
+
+    const taskGraphEngine: cuaktask.TaskGraphEngine<TaskKind> =
+      new CreateInstanceTaskGraphEngine(
+        containerBindingService,
         containerRequestService,
         containerSingletonService,
+        metadataService,
+        taskGraphExpandCommandHandler,
       );
 
-    const taskBuilder: Builder<
-      cuaktask.DependentTask<TaskKind, TaskKind>,
-      [TaskKind]
-    > = new TaskBuilder(taskDependencyEngine, taskBuilderWithNoDependencies);
-
-    return taskBuilder;
+    return taskGraphEngine;
   }
 
   static #initializeContainerModuleTaskBuilder(

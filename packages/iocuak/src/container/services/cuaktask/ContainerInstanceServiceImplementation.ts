@@ -1,8 +1,6 @@
-import { DependentTask, DependentTaskRunner } from '@cuaklabs/cuaktask';
+import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { Builder } from '../../../common/modules/domain/Builder';
-import { CreateInstanceDependentTask } from '../../../createInstanceTask/models/cuaktask/CreateInstanceDependentTask';
 import { CreateInstanceRootTaskKind } from '../../../createInstanceTask/models/domain/CreateInstanceRootTaskKind';
 import { TaskKind } from '../../../createInstanceTask/models/domain/TaskKind';
 import { TaskKindType } from '../../../createInstanceTask/models/domain/TaskKindType';
@@ -13,17 +11,17 @@ export class ContainerInstanceServiceImplementation
   implements ContainerInstanceService
 {
   readonly #containerRequestService: ContainerRequestService;
-  readonly #dependentTaskRunner: DependentTaskRunner;
-  readonly #taskBuilder: Builder<DependentTask<TaskKind, TaskKind>, [TaskKind]>;
+  readonly #rootedTaskGraphRunner: cuaktask.RootedTaskGraphRunner;
+  readonly #taskGraphEngine: cuaktask.TaskGraphEngine<TaskKind>;
 
   constructor(
     containerRequestService: ContainerRequestService,
-    dependentTaskRunner: DependentTaskRunner,
-    taskBuilder: Builder<DependentTask<TaskKind, TaskKind>, [TaskKind]>,
+    rootedTaskGraphRunner: cuaktask.RootedTaskGraphRunner,
+    taskGraphEngine: cuaktask.TaskGraphEngine<TaskKind>,
   ) {
     this.#containerRequestService = containerRequestService;
-    this.#dependentTaskRunner = dependentTaskRunner;
-    this.#taskBuilder = taskBuilder;
+    this.#rootedTaskGraphRunner = rootedTaskGraphRunner;
+    this.#taskGraphEngine = taskGraphEngine;
   }
 
   public create<TInstance>(serviceId: ServiceId): TInstance {
@@ -35,13 +33,11 @@ export class ContainerInstanceServiceImplementation
       type: TaskKindType.createInstanceRoot,
     };
 
-    const createInstanceTask: CreateInstanceDependentTask<TInstance> =
-      this.#taskBuilder.build(
-        taskKind,
-      ) as CreateInstanceDependentTask<TInstance>;
+    const taskGraph: cuaktask.RootedGraph<cuaktask.Task<TaskKind>> =
+      this.#taskGraphEngine.create(taskKind);
 
-    const instance: TInstance = this.#dependentTaskRunner.run(
-      createInstanceTask,
+    const instance: TInstance = this.#rootedTaskGraphRunner.run(
+      taskGraph,
     ) as TInstance;
 
     this.#containerRequestService.end(requestId);

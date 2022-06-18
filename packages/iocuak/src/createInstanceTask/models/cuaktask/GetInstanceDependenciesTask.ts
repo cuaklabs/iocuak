@@ -15,34 +15,64 @@ export class GetInstanceDependenciesTask<
   protected innerPerform(
     ...dependencies: unknown[]
   ): ServiceDependencies<TArgs> {
-    if (this.#areValidDependencies(dependencies)) {
-      const constructorArguments: TArgs =
-        this.#getConstructorArguments(dependencies);
+    const serviceDependenciesArray: unknown[] =
+      this.#extractServiceDependencies(dependencies);
 
-      const properties: Map<string | symbol, unknown> =
-        this.#getProperties(dependencies);
+    const constructorArguments: TArgs = this.#getConstructorArguments(
+      serviceDependenciesArray,
+    );
 
-      const serviceDependencies: ServiceDependencies<TArgs> = {
-        constructorArguments: constructorArguments,
-        properties: properties,
-      };
+    const properties: Map<string | symbol, unknown> = this.#getProperties(
+      serviceDependenciesArray,
+    );
 
-      return serviceDependencies;
-    } else {
-      throw new Error(
-        `Invalid dependencies for service ${stringifyServiceId(this.kind.id)}`,
-      );
-    }
+    const serviceDependencies: ServiceDependencies<TArgs> = {
+      constructorArguments: constructorArguments,
+      properties: properties,
+    };
+
+    return serviceDependencies;
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  #areValidDependencies(dependencies: unknown[]): boolean {
+  #areValidDependenciesAmount(dependencies: unknown[]): boolean {
     const metadata: ClassMetadata = this.kind.metadata;
     const constructorArgumentsCount: number =
       metadata.constructorArguments.length;
     const propertiesCount: number = metadata.properties.size;
 
     return dependencies.length === constructorArgumentsCount + propertiesCount;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  #extractServiceDependencies(dependencies: unknown[]): unknown[] {
+    if (this.#areValidDependenciesAmount(dependencies)) {
+      const serviceDependenciesArray: unknown[] = dependencies.map(
+        (dependency: unknown) => {
+          if (Array.isArray(dependency)) {
+            if (dependency.length === 1) {
+              const [serviceDependency]: [string] = dependency as [string];
+
+              return serviceDependency;
+            } else {
+              throw new Error(
+                `Unexpected dependencies for service ${stringifyServiceId(
+                  this.kind.id,
+                )}. This is probably due a bug`,
+              );
+            }
+          } else {
+            return dependency;
+          }
+        },
+      );
+
+      return serviceDependenciesArray;
+    } else {
+      throw new Error(
+        `Invalid dependencies for service ${stringifyServiceId(this.kind.id)}`,
+      );
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering

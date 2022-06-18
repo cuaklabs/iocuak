@@ -1,69 +1,38 @@
-import {
-  isPromiseLike,
-  Node,
-  NodeDependencies,
-  Task,
-} from '@cuaklabs/cuaktask';
+import * as cuaktask from '@cuaklabs/cuaktask';
 
-import { TaskGraphExpandCommand } from '../../../common/models/cuaktask/TaskGraphExpandCommand';
-import { TaskGraphExpandOperationContext } from '../../../common/models/cuaktask/TaskGraphExpandOperationContext';
 import { Handler } from '../../../common/modules/domain/Handler';
-import { TaskKind } from '../../models/domain/TaskKind';
-import { TaskKindType } from '../../models/domain/TaskKindType';
+import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
+import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
+import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
+import { BaseCreateInstanceTaskLazyNode } from './BaseCreateInstanceTaskLazyNode';
 
-export class CreateInstanceTaskLazyNode implements Node<Task<TaskKind>> {
-  readonly #bus: Handler<unknown, void | Promise<void>>;
-  readonly #context: TaskGraphExpandOperationContext;
-  readonly #taskKindType: TaskKindType;
-
-  #dependencies: NodeDependencies<Task<TaskKind>> | undefined;
-  #isLoaded: boolean;
+export class CreateInstanceTaskLazyNode
+  extends BaseCreateInstanceTaskLazyNode
+  implements
+    cuaktask.Node<
+      cuaktask.Task<CreateInstanceTaskKind>,
+      cuaktask.Task<unknown>
+    >
+{
+  readonly #createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskGraphExpandOperationContext;
 
   constructor(
-    bus: Handler<
-      TaskGraphExpandCommand<
-        TaskGraphExpandOperationContext,
-        TaskKindType,
-        Task<TaskKind>
-      >,
-      void | Promise<void>
-    >,
-    context: TaskGraphExpandOperationContext,
-    public readonly element: Task<TaskKind>,
-    taskKindType: TaskKindType,
+    bus: Handler<TaskGraphExpandCommand, void | Promise<void>>,
+    createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskGraphExpandOperationContext,
+    public readonly element: cuaktask.Task<CreateInstanceTaskKind>,
   ) {
-    this.#bus = bus;
-    this.#context = context;
-    this.#dependencies = undefined;
-    this.#isLoaded = false;
-    this.#taskKindType = taskKindType;
+    super(bus);
+
+    this.#createInstanceTaskGraphExpandOperationContext =
+      createInstanceTaskGraphExpandOperationContext;
   }
 
-  public get dependencies(): NodeDependencies<Task<TaskKind>> | undefined {
-    if (!this.#isLoaded) {
-      const command: TaskGraphExpandCommand<
-        TaskGraphExpandOperationContext,
-        TaskKindType,
-        Task<TaskKind>
-      > = {
-        context: this.#context,
-        node: this,
-        taskKindType: this.#taskKindType,
-      };
-
-      const result: void | Promise<void> = this.#bus.handle(command);
-
-      if (isPromiseLike(result)) {
-        throw new Error('Expected a sync handler response');
-      } else {
-        this.#isLoaded = true;
-      }
-    }
-
-    return this.#dependencies;
-  }
-
-  public set dependencies(value: NodeDependencies<Task<TaskKind>> | undefined) {
-    this.#dependencies = value;
+  protected buildTaskGraphExpandCommand(): TaskGraphExpandCommand {
+    return {
+      context: this.#createInstanceTaskGraphExpandOperationContext,
+      node: this,
+      taskKindType: TaskGraphExpandCommandType.createInstance,
+    };
   }
 }

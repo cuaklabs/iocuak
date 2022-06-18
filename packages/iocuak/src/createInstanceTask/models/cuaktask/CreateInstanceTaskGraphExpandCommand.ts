@@ -1,12 +1,12 @@
 import { Task } from '@cuaklabs/cuaktask';
 
-import { TaskGraphExpandCommand } from '../../../common/models/cuaktask/TaskGraphExpandCommand';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
-import { TaskKindType } from '../domain/TaskKindType';
+import { BaseTaskGraphExpandCommand } from './BaseTaskGraphExpandCommand';
 import { CreateInstanceTaskGraphExpandOperationContext } from './CreateInstanceTaskGraphExpandOperationContext';
+import { TaskGraphExpandCommandType } from './TaskGraphExpandCommandType';
 
-export type CreateInstanceTaskGraphExpandCommand = TaskGraphExpandCommand<
+export type CreateInstanceTaskGraphExpandCommand = BaseTaskGraphExpandCommand<
   CreateInstanceTaskGraphExpandOperationContext,
-  TaskKindType.createInstance,
+  TaskGraphExpandCommandType.createInstance,
   Task<CreateInstanceTaskKind>
 >;

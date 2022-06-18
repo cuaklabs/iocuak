@@ -16,6 +16,7 @@ import { CreateInstanceRootTaskKindFixtures } from '../../fixtures/domain/Create
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
+import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
 import { CreateInstanceRootTaskKind } from '../../models/domain/CreateInstanceRootTaskKind';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
@@ -125,7 +126,7 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
             },
             node: expectedCreateInstanceTaskNode,
-            taskKindType: TaskKindType.createInstance,
+            taskKindType: TaskGraphExpandCommandType.createInstance,
           });
         });
 
@@ -204,7 +205,7 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
             },
             node: expectedCreateInstanceTaskNode,
-            taskKindType: TaskKindType.createInstance,
+            taskKindType: TaskGraphExpandCommandType.createInstance,
           });
         });
 

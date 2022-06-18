@@ -13,6 +13,7 @@ import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
 import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
+import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
 import { GetInstanceDependenciesTaskKind } from '../../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
@@ -90,7 +91,7 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
             },
             node: nodeFixture,
-            taskKindType: TaskKindType.getInstanceDependencies,
+            taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
           };
 
           bindingServiceMock.get.mockReturnValueOnce(ValueBindingFixtures.any);
@@ -155,7 +156,7 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
             },
             node: nodeFixture,
-            taskKindType: TaskKindType.getInstanceDependencies,
+            taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
           };
 
           bindingServiceMock.get.mockReturnValueOnce(TypeBindingFixtures.any);
