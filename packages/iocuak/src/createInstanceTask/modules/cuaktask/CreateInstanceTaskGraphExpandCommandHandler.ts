@@ -131,7 +131,7 @@ export class CreateInstanceTaskGraphExpandCommandHandler
   ): void {
     if (
       serviceIdAncestorList.includes(
-        (serviceId: ServiceId) => serviceId === serviceId,
+        (listServiceId: ServiceId) => listServiceId === serviceId,
       )
     ) {
       const serviceIdTrace: string = [...serviceIdAncestorList]
