@@ -98,3 +98,18 @@ Feature: Create instance
       Then an instance from the type service is returned
       And the instance from the type service was constructed with the right parameters
       And the instance from the type service has the right properties
+
+  Rule: Rule: Given a type service, any two service instances dependencies from the same request are not the same if and only if the service is bound on transient scope
+
+    Scenario Outline: Bound type service with the same dependency type service request
+      Given a "type service with two dependencies of the same type with <scope> scope and dependencies with transient scope"
+      When the type service dependencies are bound
+      And the type service is bound
+      And an instace of the type service is requested
+      Then every type dependency dependency constructor is the same one and has been caled <times> times
+
+    Examples:
+      | scope     | times |
+      | request   | 1     |
+      | singleton | 1     |
+      | transient | 2     |
