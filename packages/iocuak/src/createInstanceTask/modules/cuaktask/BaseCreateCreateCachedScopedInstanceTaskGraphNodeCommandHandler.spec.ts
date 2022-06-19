@@ -8,6 +8,7 @@ import { ReadOnlyLinkedList } from '../../../list/models/domain/ReadOnlyLinkedLi
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
 import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
+import { DestructureOneTask } from '../../models/cuaktask/DestructureOneTask';
 import { GetCachedInstanceTask } from '../../models/cuaktask/GetCachedInstanceTask';
 import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
 import { TaskKind } from '../../models/domain/TaskKind';
@@ -136,31 +137,37 @@ describe(
         });
 
         it('should return a NodeDependency', () => {
-          expect(result).toStrictEqual<
-            cuaktask.BitwiseOrNodeDependencies<cuaktask.Task<TaskKind>>
-          >({
-            nodes: [
-              {
-                dependencies: undefined,
-                element: new GetCachedInstanceTask(
-                  {
-                    binding:
-                      createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
-                        .context.taskKind.binding,
-                    requestId:
-                      createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
-                        .context.taskKind.requestId,
-                    type: TaskKindType.getCachedInstance,
-                  },
-                  containerRequestServiceFixture,
-                  containerSingletonServiceFixture,
-                ),
-              },
-              expect.any(
-                CreateInstanceTaskLazyNode,
-              ) as CreateInstanceTaskLazyNode,
-            ],
-            type: cuaktask.NodeDependenciesType.bitwiseOr,
+          expect(result).toStrictEqual<cuaktask.Node<cuaktask.Task<TaskKind>>>({
+            dependencies: {
+              nodes: [
+                {
+                  dependencies: undefined,
+                  element: new GetCachedInstanceTask(
+                    {
+                      binding:
+                        createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                          .context.taskKind.binding,
+                      requestId:
+                        createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                          .context.taskKind.requestId,
+                      type: TaskKindType.getCachedInstance,
+                    },
+                    containerRequestServiceFixture,
+                    containerSingletonServiceFixture,
+                  ),
+                },
+                expect.any(
+                  CreateInstanceTaskLazyNode,
+                ) as CreateInstanceTaskLazyNode,
+              ],
+              type: cuaktask.NodeDependenciesType.bitwiseOr,
+            },
+            element: new DestructureOneTask({
+              requestId:
+                createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                  .context.taskKind.requestId,
+              type: TaskKindType.destructureOne,
+            }),
           });
         });
       });
