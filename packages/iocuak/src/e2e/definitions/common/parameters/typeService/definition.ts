@@ -3,6 +3,7 @@ import { IParameterTypeDefinition } from '@cucumber/cucumber/lib/support_code_li
 
 import { getTypeServiceWithBindingWithRequestScope } from './getTypeServiceWithBindingWithRequestScope';
 import { getTypeServiceWithBindingWithSingletonScope } from './getTypeServiceWithBindingWithSingletonScope';
+import { getTypeServiceWithBindingWithSingletonScopeAndDependenciesWithTransientScope } from './getTypeServiceWithBindingWithSingletonScopeAndDependenciesWithTransientScope';
 import { getTypeServiceWithBindingWithTransientScope } from './getTypeServiceWithBindingWithTransientScope';
 import { getTypeServiceWithConstructorParameters } from './getTypeServiceWithConstructorParameters';
 import { getTypeServiceWithNoBinding } from './getTypeServiceWithNoBindingParameter';
@@ -30,6 +31,8 @@ function typeServiceParameterDefinitionTransformer(
       return getTypeServiceWithBindingWithRequestScope();
     case 'binding with singleton scope':
       return getTypeServiceWithBindingWithSingletonScope();
+    case 'binding with singleton scope and dependencies with transient scope':
+      return getTypeServiceWithBindingWithSingletonScopeAndDependenciesWithTransientScope();
     case 'binding with transient scope':
       return getTypeServiceWithBindingWithTransientScope();
     case 'constructor parameters':
