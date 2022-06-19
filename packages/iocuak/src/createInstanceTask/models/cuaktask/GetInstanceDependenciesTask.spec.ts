@@ -50,7 +50,7 @@ describe(GetInstanceDependenciesTask.name, () => {
         propertyArgumentFixture = 'property';
 
         result = getInstanceDependenciesTask.perform(
-          [constructorArgumentFixure],
+          constructorArgumentFixure,
           propertyArgumentFixture,
         );
       });
@@ -66,44 +66,6 @@ describe(GetInstanceDependenciesTask.name, () => {
         };
 
         expect(result).toStrictEqual(expected);
-      });
-    });
-
-    describe('when called, and invalid dependencies match metadata', () => {
-      let getInstanceDependenciesTask: GetInstanceDependenciesTask;
-
-      let constructorArgumentFixure: unknown;
-      let propertyArgumentFixture: unknown;
-
-      let result: unknown;
-
-      beforeAll(() => {
-        getInstanceDependenciesTask = new GetInstanceDependenciesTask(
-          GetInstanceDependenciesTaskKindFixtures.withMetadataWithConstructorArgumentsAndProperties,
-        );
-
-        constructorArgumentFixure = 'constructor argument';
-        propertyArgumentFixture = 'property';
-
-        try {
-          getInstanceDependenciesTask.perform(
-            [constructorArgumentFixure, Symbol()],
-            propertyArgumentFixture,
-          );
-        } catch (error: unknown) {
-          result = error;
-        }
-      });
-
-      it('should throw an Error', () => {
-        expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message: expect.stringContaining(
-              'Unexpected dependencies for service',
-            ) as string,
-          }),
-        );
       });
     });
   });
