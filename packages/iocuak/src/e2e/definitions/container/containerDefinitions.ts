@@ -265,7 +265,7 @@ When<ContainerWorld & TypeServiceWorld & TwoResultsWorld>(
 );
 
 When<ContainerWorld & ResultWorld & TypeServiceWorld>(
-  'an instace of the type service is requested',
+  'an instace of the type service is requested( again)',
   function (): void {
     try {
       this.result = this.container.get(this.typeServiceParameter.binding.id);

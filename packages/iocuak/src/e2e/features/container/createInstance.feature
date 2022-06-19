@@ -85,3 +85,16 @@ Feature: Create instance
       | request   | 1     |
       | singleton | 1     |
       | transient | 2     |
+
+  Rule: Any cached bound type service is instantiated without requesting dependencies
+
+    Scenario: Bound type service with bound dependencies cached request
+
+      Given a "type service with binding with singleton scope and dependencies with transient scope"
+      When the type service dependencies are bound
+      And the type service is bound
+      And an instace of the type service is requested
+      And an instace of the type service is requested again
+      Then an instance from the type service is returned
+      And the instance from the type service was constructed with the right parameters
+      And the instance from the type service has the right properties
