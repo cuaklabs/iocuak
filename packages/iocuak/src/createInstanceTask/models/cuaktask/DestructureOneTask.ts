@@ -4,12 +4,10 @@ import { DestructureOneTaskKind } from '../domain/DestructureOneTaskKind';
 
 export class DestructureOneTask extends cuaktask.BaseTask<
   DestructureOneTaskKind,
-  [[unknown]],
+  [unknown],
   unknown
 > {
-  protected innerPerform(param: [unknown]): unknown {
-    const [deconstructedParam]: [unknown] = param;
-
-    return deconstructedParam;
+  protected innerPerform(param: unknown): unknown {
+    return param;
   }
 }
