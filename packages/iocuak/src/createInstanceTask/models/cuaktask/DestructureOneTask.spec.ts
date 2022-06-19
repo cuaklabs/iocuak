@@ -18,20 +18,20 @@ jest.describe(DestructureOneTask.name, () => {
     jest.describe('when called', () => {
       let destructureOneTask: DestructureOneTask;
 
-      let paramFixture: [unknown];
+      let paramFixture: unknown;
 
       let result: unknown;
 
       jest.beforeAll(() => {
         destructureOneTask = new DestructureOneTask(destructureOneTaskKind);
 
-        paramFixture = [Symbol()];
+        paramFixture = Symbol();
 
         result = destructureOneTask.perform(paramFixture);
       });
 
       it('should return the destructure value', () => {
-        expect([result]).toStrictEqual(paramFixture);
+        expect(result).toStrictEqual(paramFixture);
       });
     });
   });

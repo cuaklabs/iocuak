@@ -9,6 +9,7 @@ import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { CreateInstanceTaskGraphFromTaskKindExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphFromTaskKindExpandOperationContext';
+import { DestructureOneTask } from '../../models/cuaktask/DestructureOneTask';
 import { GetCachedInstanceTask } from '../../models/cuaktask/GetCachedInstanceTask';
 import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
@@ -75,7 +76,15 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
       type: cuaktask.NodeDependenciesType.bitwiseOr,
     };
 
-    return createInstanceTaskKindGraphDependency;
+    const destructureNode: cuaktask.Node<cuaktask.Task<TaskKind>> = {
+      dependencies: createInstanceTaskKindGraphDependency,
+      element: new DestructureOneTask({
+        requestId: context.taskKind.requestId,
+        type: TaskKindType.destructureOne,
+      }),
+    };
+
+    return destructureNode;
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
