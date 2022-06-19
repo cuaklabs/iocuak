@@ -47,27 +47,7 @@ export class GetInstanceDependenciesTask<
   // eslint-disable-next-line @typescript-eslint/member-ordering
   #extractServiceDependencies(dependencies: unknown[]): unknown[] {
     if (this.#areValidDependenciesAmount(dependencies)) {
-      const serviceDependenciesArray: unknown[] = dependencies.map(
-        (dependency: unknown) => {
-          if (Array.isArray(dependency)) {
-            if (dependency.length === 1) {
-              const [serviceDependency]: [string] = dependency as [string];
-
-              return serviceDependency;
-            } else {
-              throw new Error(
-                `Unexpected dependencies for service ${stringifyServiceId(
-                  this.kind.id,
-                )}. This is probably due a bug`,
-              );
-            }
-          } else {
-            return dependency;
-          }
-        },
-      );
-
-      return serviceDependenciesArray;
+      return dependencies;
     } else {
       throw new Error(
         `Invalid dependencies for service ${stringifyServiceId(this.kind.id)}`,
