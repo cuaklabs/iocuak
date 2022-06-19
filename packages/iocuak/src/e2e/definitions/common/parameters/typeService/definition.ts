@@ -34,8 +34,6 @@ function typeServiceParameterDefinitionTransformer(
       return getTypeServiceWithBindingWithRequestScope();
     case 'binding with singleton scope':
       return getTypeServiceWithBindingWithSingletonScope();
-    case 'binding with singleton scope and dependencies with transient scope':
-      return getTypeServiceWithBindingWithSingletonScopeAndDependenciesWithTransientScope();
     case 'binding with transient scope':
       return getTypeServiceWithBindingWithTransientScope();
     case 'constructor parameters':
