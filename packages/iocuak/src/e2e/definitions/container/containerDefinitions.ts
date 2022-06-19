@@ -26,6 +26,36 @@ import { ContainerModuleMetadataParameter } from './parameters/containerModuleMe
 
 chai.use(sinonChai);
 
+function areTypeDependenciesCalledTimes(
+  typeServiceParameter: TypeServiceParameter,
+  times: number,
+): void {
+  const typeDependencies: TypeServiceParameter[] =
+    getTypeServiceParameterDependencies(typeServiceParameter);
+
+  for (const dependency of typeDependencies) {
+    const typeServiceParameterDependency: TypeServiceParameter = dependency;
+
+    chai
+      .expect(typeServiceParameterDependency.spy.callCount)
+      .to.be.equal(times);
+  }
+}
+
+function areTypeDependenciesDependenciesCalledTimes(
+  typeServiceParameter: TypeServiceParameter,
+  times: number,
+): void {
+  const typeDependencies: TypeServiceParameter[] =
+    getTypeServiceParameterDependencies(typeServiceParameter);
+
+  for (const dependency of typeDependencies) {
+    const typeServiceParameterDependency: TypeServiceParameter = dependency;
+
+    areTypeDependenciesCalledTimes(typeServiceParameterDependency, times);
+  }
+}
+
 function bindServiceDependencies(
   this: ContainerWorld,
   typeServiceParameter: TypeServiceParameter,
@@ -91,6 +121,19 @@ function getBinding(
       ? metadataProvider.getBindingMetadata(serviceId)
       : undefined)
   );
+}
+
+function getTypeServiceParameterDependencies(
+  typeServiceParameter: TypeServiceParameter,
+): TypeServiceParameter[] {
+  const dependencies: (TypeServiceParameter | ValueServiceParameter)[] =
+    typeServiceParameter.dependencies ?? [];
+
+  const typeDependencies: TypeServiceParameter[] = dependencies.filter(
+    isTypeServiceParameter,
+  );
+
+  return typeDependencies;
 }
 
 function isCalledOnceWith(
@@ -167,6 +210,12 @@ function isTypeServiceInitialized(
     );
 
   isCalledOnceWith(constructorMetadataBindings, constructorSpy);
+}
+
+function isTypeServiceParameter(
+  parameter: TypeServiceParameter | ValueServiceParameter,
+): parameter is TypeServiceParameter {
+  return parameter.binding.bindingType === BindingTypeApi.type;
 }
 
 function isTypeServicePropertiesAssigned(
@@ -430,16 +479,17 @@ Then<ContainerModuleWorld & ResultWorld>(
 Then<ResultWorld & TypeServiceWorld>(
   'every type dependency constructor is the same one and has been caled {int} times',
   function (times: number): void {
-    for (const dependency of this.typeServiceParameter.dependencies ?? []) {
-      if (dependency.binding.bindingType === BindingTypeApi.type) {
-        const typeServiceParameterDependency: TypeServiceParameter =
-          dependency as TypeServiceParameter;
+    areTypeDependenciesCalledTimes(this.typeServiceParameter, times);
+  },
+);
 
-        chai
-          .expect(typeServiceParameterDependency.spy.callCount)
-          .to.be.equal(times);
-      }
-    }
+Then<ResultWorld & TypeServiceWorld>(
+  'every type dependency dependency constructor is the same one and has been caled {int} times',
+  function (times: number): void {
+    areTypeDependenciesDependenciesCalledTimes(
+      this.typeServiceParameter,
+      times,
+    );
   },
 );
 

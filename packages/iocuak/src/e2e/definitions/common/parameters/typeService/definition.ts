@@ -3,14 +3,18 @@ import { IParameterTypeDefinition } from '@cucumber/cucumber/lib/support_code_li
 
 import { getTypeServiceWithBindingWithRequestScope } from './getTypeServiceWithBindingWithRequestScope';
 import { getTypeServiceWithBindingWithSingletonScope } from './getTypeServiceWithBindingWithSingletonScope';
+import { getTypeServiceWithBindingWithSingletonScopeAndDependenciesWithTransientScope } from './getTypeServiceWithBindingWithSingletonScopeAndDependenciesWithTransientScope';
 import { getTypeServiceWithBindingWithTransientScope } from './getTypeServiceWithBindingWithTransientScope';
 import { getTypeServiceWithConstructorParameters } from './getTypeServiceWithConstructorParameters';
 import { getTypeServiceWithNoBinding } from './getTypeServiceWithNoBindingParameter';
 import { getTypeServiceWithNoDependenciesParameter } from './getTypeServiceWithNoDependenciesParameter';
 import { getTypeServiceWithProperties } from './getTypeServiceWithProperties';
 import { getTypeServiceWithTwoDependenciesOfTheSameTypeWithRequestScope } from './getTypeServiceWithTwoDependenciesOfTheSameTypeWithRequestScope';
+import { getTypeServiceWithTwoDependenciesOfTheSameTypeWithRequestScopeAndDependenciesWithTransientScope } from './getTypeServiceWithTwoDependenciesOfTheSameTypeWithRequestScopeAndDependenciesWithTransientScope';
 import { getTypeServiceWithTwoDependenciesOfTheSameTypeWithSingletonScope } from './getTypeServiceWithTwoDependenciesOfTheSameTypeWithSingletonScope';
+import { getTypeServiceWithTwoDependenciesOfTheSameTypeWithSingletonScopeAndDependenciesWithTransientScope } from './getTypeServiceWithTwoDependenciesOfTheSameTypeWithSingletonScopeAndDependenciesWithTransientScope';
 import { getTypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScope } from './getTypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScope';
+import { getTypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScopeAndDependenciesWithTransientScope } from './getTypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScopeAndDependenciesWithTransientScope';
 import { getTypeServiceWithTypeServiceId } from './getTypeServiceWithTypeServiceId';
 import { getTypeServiceWithUnboundClassTypeServiceConstructorParameters } from './getTypeServiceWithUnboundClassTypeServiceConstructorParameters';
 import { getTypeServiceWithUnboundClassTypeServiceProperties } from './getTypeServiceWithUnboundClassTypeServiceProperties';
@@ -40,10 +44,16 @@ function typeServiceParameterDefinitionTransformer(
       return getTypeServiceWithProperties();
     case 'two dependencies of the same type with request scope':
       return getTypeServiceWithTwoDependenciesOfTheSameTypeWithRequestScope();
+    case 'two dependencies of the same type with request scope and dependencies with transient scope':
+      return getTypeServiceWithTwoDependenciesOfTheSameTypeWithRequestScopeAndDependenciesWithTransientScope();
     case 'two dependencies of the same type with singleton scope':
       return getTypeServiceWithTwoDependenciesOfTheSameTypeWithSingletonScope();
+    case 'two dependencies of the same type with singleton scope and dependencies with transient scope':
+      return getTypeServiceWithTwoDependenciesOfTheSameTypeWithSingletonScopeAndDependenciesWithTransientScope();
     case 'two dependencies of the same type with transient scope':
       return getTypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScope();
+    case 'two dependencies of the same type with transient scope and dependencies with transient scope':
+      return getTypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScopeAndDependenciesWithTransientScope();
     case 'unbound class type service constructor parameters':
       return getTypeServiceWithUnboundClassTypeServiceConstructorParameters();
     case 'unbound class type service properties':
