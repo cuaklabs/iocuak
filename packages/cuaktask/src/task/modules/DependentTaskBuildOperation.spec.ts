@@ -30,7 +30,7 @@ describe(DependentTaskBuildOperation.name, () => {
 
   describe('.run()', () => {
     describe('when called, taskDependencyEngine.getDependencies returns a graph with only the root dependency', () => {
-      let taskFixture: DependentTask<unknown, unknown, unknown[], unknown>;
+      let taskFixture: DependentTask<unknown>;
 
       let result: unknown;
 
@@ -85,13 +85,8 @@ describe(DependentTaskBuildOperation.name, () => {
   });
 
   describe('when called, and taskDependencyEngine.getDependencies return dependencies', () => {
-    let dependentTaskFixture: DependentTask<
-      unknown,
-      unknown,
-      unknown[],
-      unknown
-    >;
-    let taskFixture: DependentTask<unknown, unknown, unknown[], unknown>;
+    let dependentTaskFixture: DependentTask<unknown>;
+    let taskFixture: DependentTask<unknown>;
 
     let result: unknown;
 
