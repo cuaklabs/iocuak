@@ -1,8 +1,8 @@
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
-import { BaseTaskKind } from './BaseTaskKind';
+import { BaseRequestTaskKind } from './BaseRequestTaskKind';
 import { TaskKindType } from './TaskKindType';
 
 export interface GetCachedInstanceTaskKind
-  extends BaseTaskKind<TaskKindType.getCachedInstance> {
+  extends BaseRequestTaskKind<TaskKindType.getCachedInstance> {
   binding: TypeBinding;
 }
