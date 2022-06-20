@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, it, jest } from '@jest/globals';
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 import * as jestMock from 'jest-mock';
 
 jest.mock('./DependentTaskBuildOperation');
@@ -94,7 +94,7 @@ describe(DependentTaskBuilder.name, () => {
           DependentTask<unknown>,
           [unknown]
         > = {
-          build: expect.any(Function) as (
+          build: expect.any(Function) as unknown as (
             taskKind: unknown,
           ) => DependentTask<unknown>,
         };
