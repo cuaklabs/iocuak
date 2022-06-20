@@ -79,7 +79,6 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
     const destructureNode: cuaktask.Node<cuaktask.Task<TaskKind>> = {
       dependencies: createInstanceTaskKindGraphDependency,
       element: new DestructureOneTask({
-        requestId: context.taskKind.requestId,
         type: TaskKindType.destructureOne,
       }),
     };
@@ -104,6 +103,7 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
     const createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskGraphExpandOperationContext =
       {
         graph: context.graph,
+        requestId: context.requestId,
         serviceIdAncestorList: context.serviceIdAncestorList,
         serviceIdToRequestCreateInstanceTaskKindNode:
           context.serviceIdToRequestCreateInstanceTaskKindNode,

@@ -86,6 +86,7 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
               graph: {
                 nodes: new Set(),
               },
+              requestId: Symbol(),
               serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
               serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
@@ -122,7 +123,9 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
                 element: new CreateInstanceTask(
                   {
                     binding: ValueBindingFixtures.any,
-                    requestId: nodeFixture.element.kind.requestId,
+                    requestId:
+                      getInstanceDependenciesTaskGraphExpandCommandFixture
+                        .context.requestId,
                     type: TaskKindType.createInstance,
                   },
                   containerRequestServiceFixture,
@@ -151,6 +154,7 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
               graph: {
                 nodes: new Set(),
               },
+              requestId: Symbol(),
               serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
               serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
@@ -166,7 +170,9 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
             element: new CreateInstanceTask(
               {
                 binding: TypeBindingFixtures.any,
-                requestId: nodeFixture.element.kind.requestId,
+                requestId:
+                  getInstanceDependenciesTaskGraphExpandCommandFixture.context
+                    .requestId,
                 type: TaskKindType.createInstance,
               },
               containerRequestServiceFixture,
@@ -201,7 +207,9 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
                 ...getInstanceDependenciesTaskGraphExpandCommandFixture.context,
                 taskKind: {
                   binding: TypeBindingFixtures.any,
-                  requestId: nodeFixture.element.kind.requestId,
+                  requestId:
+                    getInstanceDependenciesTaskGraphExpandCommandFixture.context
+                      .requestId,
                   type: TaskKindType.createInstance,
                 },
               },

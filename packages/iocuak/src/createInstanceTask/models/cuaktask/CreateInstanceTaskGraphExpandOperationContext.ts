@@ -7,6 +7,7 @@ import { TaskGraphExpandOperationContext } from './TaskGraphExpandOperationConte
 
 export interface CreateInstanceTaskGraphExpandOperationContext
   extends TaskGraphExpandOperationContext {
+  requestId: symbol;
   serviceIdAncestorList: ReadOnlyLinkedList<ServiceId>;
   serviceIdToRequestCreateInstanceTaskKindNode: Map<
     ServiceId,

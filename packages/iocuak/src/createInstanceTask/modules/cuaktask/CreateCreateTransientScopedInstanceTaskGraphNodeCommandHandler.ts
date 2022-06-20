@@ -58,6 +58,7 @@ export class CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler
     const createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskGraphExpandOperationContext =
       {
         graph: context.graph,
+        requestId: context.requestId,
         serviceIdAncestorList: context.serviceIdAncestorList,
         serviceIdToRequestCreateInstanceTaskKindNode:
           context.serviceIdToRequestCreateInstanceTaskKindNode,

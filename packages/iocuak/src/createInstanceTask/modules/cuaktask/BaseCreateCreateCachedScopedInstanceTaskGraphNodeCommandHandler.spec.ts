@@ -115,6 +115,8 @@ describe(
               graph: {
                 nodes: new Set(),
               },
+              requestId:
+                CreateInstanceTaskKindFixtures.withBindingType.requestId,
               serviceIdAncestorList: {
                 _type: Symbol(),
               } as unknown as ReadOnlyLinkedList<ServiceId>,
@@ -163,9 +165,6 @@ describe(
               type: cuaktask.NodeDependenciesType.bitwiseOr,
             },
             element: new DestructureOneTask({
-              requestId:
-                createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
-                  .context.taskKind.requestId,
               type: TaskKindType.destructureOne,
             }),
           });

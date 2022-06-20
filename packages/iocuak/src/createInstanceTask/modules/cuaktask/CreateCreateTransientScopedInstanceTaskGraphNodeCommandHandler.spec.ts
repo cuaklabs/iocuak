@@ -58,6 +58,8 @@ describe(
               graph: {
                 nodes: new Set(),
               },
+              requestId:
+                CreateInstanceTaskKindFixtures.withBindingType.requestId,
               serviceIdAncestorList: {
                 _type: Symbol(),
               } as unknown as ReadOnlyLinkedList<ServiceId>,
@@ -95,6 +97,9 @@ describe(
                 graph:
                   createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
                     .context.graph,
+                requestId:
+                  createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                    .context.requestId,
                 serviceIdAncestorList:
                   createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
                     .context.serviceIdAncestorList,

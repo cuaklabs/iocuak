@@ -121,6 +121,7 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
           >({
             context: {
               graph: expectedRootedTaskGraph,
+              requestId: taskKindFixture.requestId,
               serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
               serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
@@ -200,6 +201,7 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
           >({
             context: {
               graph: expectedRootedTaskGraph,
+              requestId: taskKindFixture.requestId,
               serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
               serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),

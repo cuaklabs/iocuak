@@ -55,6 +55,7 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
   ): void {
     const createInstanceTaskKinds: CreateInstanceTaskKind[] =
       this.#getGetInstanceDependenciesTaskKindDependencies(
+        getInstanceDependenciesTaskGraphExpandCommand.context,
         getInstanceDependenciesTaskGraphExpandCommand.node.element.kind,
       );
 
@@ -158,6 +159,7 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
   }
 
   #getGetInstanceDependenciesTaskKindDependencies(
+    context: CreateInstanceTaskGraphExpandOperationContext,
     taskKind: GetInstanceDependenciesTaskKind,
   ): CreateInstanceTaskKind[] {
     const serviceIds: ServiceId[] =
@@ -166,7 +168,7 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
     const createInstanceTaskKinds: CreateInstanceTaskKind[] = serviceIds.map(
       (serviceId: ServiceId): CreateInstanceTaskKind => ({
         binding: this.#getBinding(serviceId),
-        requestId: taskKind.requestId,
+        requestId: context.requestId,
         type: TaskKindType.createInstance,
       }),
     );
