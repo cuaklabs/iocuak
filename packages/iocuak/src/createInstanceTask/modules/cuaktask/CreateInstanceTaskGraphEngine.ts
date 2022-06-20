@@ -95,6 +95,7 @@ export class CreateInstanceTaskGraphEngine
       {
         context: {
           graph: rootedTaskGraph,
+          requestId: taskKind.requestId,
           serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
           serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
           serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),

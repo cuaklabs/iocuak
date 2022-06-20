@@ -106,6 +106,7 @@ export class CreateInstanceTaskGraphExpandCommandHandler
     const createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskGraphExpandOperationContext =
       {
         graph: context.graph,
+        requestId: context.requestId,
         serviceIdAncestorList: context.serviceIdAncestorList.concat(
           taskKind.binding.id,
         ),

@@ -96,11 +96,14 @@ describe(CreateCreateInstanceTaskGraphNodeCommandHandler.name, () => {
         let createCreateInstanceTaskGraphNodeCommandFixture: CreateCreateInstanceTaskGraphNodeCommand;
 
         beforeAll(() => {
+          const requestId: symbol = Symbol();
+
           createCreateInstanceTaskGraphNodeCommandFixture = {
             context: {
               graph: {
                 nodes: new Set(),
               },
+              requestId: requestId,
               serviceIdAncestorList: {
                 _type: Symbol(),
               } as unknown as ReadOnlyLinkedList<ServiceId>,
@@ -108,7 +111,7 @@ describe(CreateCreateInstanceTaskGraphNodeCommandHandler.name, () => {
               serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
               taskKind: {
                 binding: typeBinding,
-                requestId: Symbol(),
+                requestId: requestId,
                 type: TaskKindType.createInstance,
               },
             },
