@@ -1,4 +1,4 @@
-import { beforeAll, describe, it } from '@jest/globals';
+import { beforeAll, describe, expect, it } from '@jest/globals';
 
 import { DestructureOneTaskKind } from '../domain/DestructureOneTaskKind';
 import { TaskKindType } from '../domain/TaskKindType';

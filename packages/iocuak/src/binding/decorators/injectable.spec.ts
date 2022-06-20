@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
@@ -29,11 +31,13 @@ describe(injectable.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      expect(reflectMetadata).toStrictEqual<TypeBinding>({
+      const expectedReflectMetadata: TypeBinding = {
         ...TypeBindingFixtures.withScopeTransientAndTagsEmpty,
         id: targetFixture,
         type: targetFixture,
-      });
+      };
+
+      expect(reflectMetadata).toStrictEqual(expectedReflectMetadata);
     });
   });
 
@@ -54,11 +58,13 @@ describe(injectable.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      expect(reflectMetadata).toStrictEqual<TypeBinding>({
+      const expectedReflectMetadata: TypeBinding = {
         ...TypeBindingFixtures.withScopeTransientAndTagsEmpty,
         id: targetFixture,
         type: targetFixture,
-      });
+      };
+
+      expect(reflectMetadata).toStrictEqual(expectedReflectMetadata);
     });
   });
 
@@ -79,11 +85,13 @@ describe(injectable.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      expect(reflectMetadata).toStrictEqual<TypeBinding>({
+      const expectedReflectMetadata: TypeBinding = {
         ...TypeBindingFixtures.withScopeTransientAndTagsEmpty,
         id: InjectableOptionsApiFixtures.withId.id as ServiceId,
         type: targetFixture,
-      });
+      };
+
+      expect(reflectMetadata).toStrictEqual(expectedReflectMetadata);
     });
   });
 
@@ -109,12 +117,14 @@ describe(injectable.name, () => {
           InjectableOptionsApiFixtures.withScope.scope as BindingScopeApi
         ];
 
-      expect(reflectMetadata).toStrictEqual<TypeBinding>({
+      const expectedReflectMetadata: TypeBinding = {
         ...TypeBindingFixtures.withTagsEmpty,
         id: targetFixture,
         scope: expectedScope,
         type: targetFixture,
-      });
+      };
+
+      expect(reflectMetadata).toStrictEqual(expectedReflectMetadata);
     });
   });
 });
