@@ -1,6 +1,6 @@
 import { ClassElementMetadataType } from './ClassElementMetadataType';
 
-export interface ClassElementMetadataBase<
+export interface BaseClassElementMetadata<
   TType extends ClassElementMetadataType,
 > {
   type: TType;
