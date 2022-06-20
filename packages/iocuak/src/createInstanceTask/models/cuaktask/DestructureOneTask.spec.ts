@@ -1,28 +1,28 @@
-import jest from '@jest/globals';
+import { beforeAll, describe, it } from '@jest/globals';
 
 import { DestructureOneTaskKind } from '../domain/DestructureOneTaskKind';
 import { TaskKindType } from '../domain/TaskKindType';
 import { DestructureOneTask } from './DestructureOneTask';
 
-jest.describe(DestructureOneTask.name, () => {
+describe(DestructureOneTask.name, () => {
   let destructureOneTaskKind: DestructureOneTaskKind;
 
-  jest.beforeAll(() => {
+  beforeAll(() => {
     destructureOneTaskKind = {
       requestId: Symbol(),
       type: TaskKindType.destructureOne,
     };
   });
 
-  jest.describe('.perform', () => {
-    jest.describe('when called', () => {
+  describe('.perform', () => {
+    describe('when called', () => {
       let destructureOneTask: DestructureOneTask;
 
       let paramFixture: unknown;
 
       let result: unknown;
 
-      jest.beforeAll(() => {
+      beforeAll(() => {
         destructureOneTask = new DestructureOneTask(destructureOneTaskKind);
 
         paramFixture = Symbol();
