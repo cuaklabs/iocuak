@@ -1,8 +1,8 @@
 import { BindingTag } from '../../../binding/models/domain/BindingTag';
-import { ClassElementMetadataBase } from './ClassElementMetadataBase';
+import { BaseClassElementMetadata } from './BaseClassElementMetadata';
 import { ClassElementMetadataType } from './ClassElementMetadataType';
 
 export interface ClassElementTagMetadata
-  extends ClassElementMetadataBase<ClassElementMetadataType.tag> {
+  extends BaseClassElementMetadata<ClassElementMetadataType.tag> {
   value: BindingTag;
 }

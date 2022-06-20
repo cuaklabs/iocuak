@@ -1,8 +1,8 @@
 import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { ClassElementMetadataBase } from './ClassElementMetadataBase';
+import { BaseClassElementMetadata } from './BaseClassElementMetadata';
 import { ClassElementMetadataType } from './ClassElementMetadataType';
 
 export interface ClassElementServiceIdMetadata
-  extends ClassElementMetadataBase<ClassElementMetadataType.serviceId> {
+  extends BaseClassElementMetadata<ClassElementMetadataType.serviceId> {
   value: ServiceId;
 }
