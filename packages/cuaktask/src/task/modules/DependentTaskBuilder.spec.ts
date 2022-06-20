@@ -1,3 +1,6 @@
+import { afterAll, beforeAll, describe, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
+
 jest.mock('./DependentTaskBuildOperation');
 
 import { Builder } from '../../common/modules/Builder';
@@ -12,14 +15,12 @@ class DependentTaskBuilderMock extends DependentTaskBuilder<
   unknown[],
   unknown
 > {
-  readonly #buildWithNoDependenciesMock: jest.Mock<
-    DependentTask<unknown, unknown, unknown[], unknown>,
-    [unknown]
+  readonly #buildWithNoDependenciesMock: jestMock.Mock<
+    (param: unknown) => DependentTask<unknown>
   >;
   constructor(
-    buildWithNoDependenciesMock: jest.Mock<
-      DependentTask<unknown, unknown, unknown[], unknown>,
-      [unknown]
+    buildWithNoDependenciesMock: jestMock.Mock<
+      (param: unknown) => DependentTask<unknown>
     >,
     taskDependencyEngine: TaskDependencyEngine<unknown>,
   ) {
@@ -41,19 +42,16 @@ class DependentTaskBuilderMock extends DependentTaskBuilder<
 }
 
 describe(DependentTaskBuilder.name, () => {
-  let buildWithNoDependenciesMock: jest.Mock<
-    DependentTask<unknown, unknown, unknown[], unknown>,
-    [unknown]
+  let buildWithNoDependenciesMock: jestMock.Mock<
+    (param: unknown) => DependentTask<unknown>
   >;
-  let taskDependencyEngineMock: jest.Mocked<TaskDependencyEngine<unknown>>;
+  let taskDependencyEngineMock: jestMock.Mocked<TaskDependencyEngine<unknown>>;
 
   let dependentTaskBuilder: DependentTaskBuilderMock;
 
   beforeAll(() => {
-    buildWithNoDependenciesMock = jest.fn<
-      DependentTask<unknown, unknown, unknown[], unknown>,
-      [unknown]
-    >();
+    buildWithNoDependenciesMock =
+      jest.fn<(param: unknown) => DependentTask<unknown>>();
     taskDependencyEngineMock = {
       getDependencies: jest.fn(),
     };
@@ -66,7 +64,7 @@ describe(DependentTaskBuilder.name, () => {
 
   describe('.build()', () => {
     describe('when called', () => {
-      let dependentTaskBuildOperationMock: jest.Mocked<DependentTaskBuildOperation>;
+      let dependentTaskBuildOperationMock: jestMock.Mocked<DependentTaskBuildOperation>;
       let taskFixture: DependentTask<unknown, unknown, unknown[], unknown>;
 
       let result: unknown;
@@ -77,8 +75,8 @@ describe(DependentTaskBuilder.name, () => {
         dependentTaskBuildOperationMock = {
           run: jest.fn().mockReturnValueOnce(taskFixture),
         } as Partial<
-          jest.Mocked<DependentTaskBuildOperation>
-        > as jest.Mocked<DependentTaskBuildOperation>;
+          jestMock.Mocked<DependentTaskBuildOperation>
+        > as jestMock.Mocked<DependentTaskBuildOperation>;
 
         (
           DependentTaskBuildOperation as jest.Mock<DependentTaskBuildOperation>
