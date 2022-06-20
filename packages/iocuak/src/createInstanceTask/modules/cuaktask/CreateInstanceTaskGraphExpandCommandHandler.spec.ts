@@ -76,7 +76,6 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
         element: new GetInstanceDependenciesTask({
           id: nodeFixture.element.kind.binding.id,
           metadata: classMetadataFixture,
-          requestId: nodeFixture.element.kind.requestId,
           type: TaskKindType.getInstanceDependencies,
         }),
       };

@@ -1,6 +1,8 @@
 import { BaseTaskKind } from './BaseTaskKind';
 import { TaskKindType } from './TaskKindType';
 
-export type BaseRequestTaskKind<
+export interface BaseRequestTaskKind<
   TTaskKindType extends TaskKindType = TaskKindType,
-> = BaseTaskKind<TTaskKindType>;
+> extends BaseTaskKind<TTaskKindType> {
+  requestId: symbol;
+}

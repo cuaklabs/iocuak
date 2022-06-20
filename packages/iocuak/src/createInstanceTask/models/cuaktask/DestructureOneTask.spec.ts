@@ -9,7 +9,6 @@ describe(DestructureOneTask.name, () => {
 
   beforeAll(() => {
     destructureOneTaskKind = {
-      requestId: Symbol(),
       type: TaskKindType.destructureOne,
     };
   });

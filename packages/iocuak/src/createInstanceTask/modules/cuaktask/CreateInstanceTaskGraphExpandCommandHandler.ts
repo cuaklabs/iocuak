@@ -87,7 +87,6 @@ export class CreateInstanceTaskGraphExpandCommandHandler
       element: new GetInstanceDependenciesTask({
         id: taskKind.binding.id,
         metadata: metadata,
-        requestId: taskKind.requestId,
         type: TaskKindType.getInstanceDependencies,
       }),
     };

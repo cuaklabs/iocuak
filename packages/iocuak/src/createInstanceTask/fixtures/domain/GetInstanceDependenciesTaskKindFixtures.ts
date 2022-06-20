@@ -7,7 +7,6 @@ export class GetInstanceDependenciesTaskKindFixtures {
     const fixture: GetInstanceDependenciesTaskKind = {
       id: 'get-instance-dependencies-task-sample-id',
       metadata: ClassMetadataFixtures.any,
-      requestId: Symbol(),
       type: TaskKindType.getInstanceDependencies,
     };
 
