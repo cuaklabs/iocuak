@@ -1,8 +1,8 @@
 import { Binding } from '../../../binding/models/domain/Binding';
-import { BaseTaskKind } from './BaseTaskKind';
+import { BaseRequestTaskKind } from './BaseRequestTaskKind';
 import { TaskKindType } from './TaskKindType';
 
 export interface CreateInstanceTaskKind<TBinding extends Binding = Binding>
-  extends BaseTaskKind<TaskKindType.createInstance> {
+  extends BaseRequestTaskKind<TaskKindType.createInstance> {
   binding: TBinding;
 }
