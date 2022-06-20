@@ -1,3 +1,6 @@
+import { afterAll, beforeAll, describe, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
+
 import { DependentTaskMocks } from '../mocks/models/domain/DependentTaskMocks';
 import { DependentTask } from '../models/domain/DependentTask';
 import { DependentTaskRunner } from './DependentTaskRunner';
@@ -11,7 +14,7 @@ describe(DependentTaskRunner.name, () => {
 
   describe('.run()', () => {
     describe('having a task with status different than NotStarted', () => {
-      let dependentTaskMock: jest.Mocked<
+      let dependentTaskMock: jestMock.Mocked<
         DependentTask<unknown, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
@@ -47,7 +50,7 @@ describe(DependentTaskRunner.name, () => {
     });
 
     describe('having a task with status NotStarted and no dependencies', () => {
-      let dependentTaskMock: jest.Mocked<
+      let dependentTaskMock: jestMock.Mocked<
         DependentTask<unknown, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
@@ -84,11 +87,11 @@ describe(DependentTaskRunner.name, () => {
     });
 
     describe('having an asyncronous task with with status NotStarted and asyncronous dependencies', () => {
-      let dependencyTaskMock: jest.Mocked<
+      let dependencyTaskMock: jestMock.Mocked<
         DependentTask<unknown, unknown, unknown[], unknown>
       >;
       let dependencyTaskResultFixture: unknown;
-      let dependentTaskMock: jest.Mocked<
+      let dependentTaskMock: jestMock.Mocked<
         DependentTask<unknown, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
@@ -102,7 +105,7 @@ describe(DependentTaskRunner.name, () => {
           kind: 'sample-dependency-task-kind',
         };
         (
-          dependencyTaskMock.perform as jest.Mock<Promise<unknown>>
+          dependencyTaskMock.perform as jestMock.Mock<() => Promise<unknown>>
         ).mockResolvedValue(dependencyTaskResultFixture);
 
         dependentTaskMock = {
@@ -111,7 +114,7 @@ describe(DependentTaskRunner.name, () => {
           kind: 'sample-task-kind',
         };
         (
-          dependentTaskMock.perform as jest.Mock<Promise<unknown>>
+          dependentTaskMock.perform as jestMock.Mock<() => Promise<unknown>>
         ).mockResolvedValue(dependentTaskResultFixture);
       });
 
@@ -163,11 +166,11 @@ describe(DependentTaskRunner.name, () => {
     });
 
     describe('having an asyncronous task with status NotStarted and syncronous dependencies', () => {
-      let dependencyTaskMock: jest.Mocked<
+      let dependencyTaskMock: jestMock.Mocked<
         DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependencyTaskResultFixture: unknown;
-      let dependentTaskMock: jest.Mocked<
+      let dependentTaskMock: jestMock.Mocked<
         DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
@@ -188,7 +191,7 @@ describe(DependentTaskRunner.name, () => {
           kind: 'sample-task-kind',
         };
         (
-          dependentTaskMock.perform as jest.Mock<Promise<unknown>>
+          dependentTaskMock.perform as jestMock.Mock<() => Promise<unknown>>
         ).mockResolvedValue(dependentTaskResultFixture);
       });
 
@@ -240,11 +243,11 @@ describe(DependentTaskRunner.name, () => {
     });
 
     describe('having a syncronous task with status NotStarted and asyncronous dependencies', () => {
-      let dependencyTaskMock: jest.Mocked<
+      let dependencyTaskMock: jestMock.Mocked<
         DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependencyTaskResultFixture: unknown;
-      let dependentTaskMock: jest.Mocked<
+      let dependentTaskMock: jestMock.Mocked<
         DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;
@@ -258,7 +261,7 @@ describe(DependentTaskRunner.name, () => {
           kind: 'sample-dependency-task-kind',
         };
         (
-          dependencyTaskMock.perform as jest.Mock<Promise<unknown>>
+          dependencyTaskMock.perform as jestMock.Mock<() => Promise<unknown>>
         ).mockResolvedValue(dependencyTaskResultFixture);
 
         dependentTaskMock = {
@@ -317,11 +320,11 @@ describe(DependentTaskRunner.name, () => {
     });
 
     describe('having a syncronous task with status NotStarted and syncronous dependencies', () => {
-      let dependencyTaskMock: jest.Mocked<
+      let dependencyTaskMock: jestMock.Mocked<
         DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependencyTaskResultFixture: unknown;
-      let dependentTaskMock: jest.Mocked<
+      let dependentTaskMock: jestMock.Mocked<
         DependentTask<string, unknown, unknown[], unknown>
       >;
       let dependentTaskResultFixture: unknown;

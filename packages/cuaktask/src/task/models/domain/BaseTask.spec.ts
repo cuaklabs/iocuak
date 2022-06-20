@@ -1,3 +1,6 @@
+import { afterAll, beforeAll, describe, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
+
 import { NonThenableProperties } from '../../../common/models/NonThenableProperties';
 import { BaseTask } from './BaseTask';
 import { TaskStatus } from './TaskStatus';
@@ -7,11 +10,15 @@ class BaseTaskMock<TKind, TArgs extends unknown[], TReturn> extends BaseTask<
   TArgs,
   TReturn
 > {
-  #innerPerformMock: jest.Mock<TReturn, NonThenableProperties<TArgs>>;
+  #innerPerformMock: jestMock.Mock<
+    (...params: NonThenableProperties<TArgs>) => TReturn
+  >;
 
   constructor(
     kind: TKind,
-    innerPerformMock: jest.Mock<TReturn, NonThenableProperties<TArgs>>,
+    innerPerformMock: jestMock.Mock<
+      (...params: NonThenableProperties<TArgs>) => TReturn
+    >,
   ) {
     super(kind);
 
@@ -25,11 +32,11 @@ class BaseTaskMock<TKind, TArgs extends unknown[], TReturn> extends BaseTask<
 
 describe(BaseTask.name, () => {
   let kindFixture: string;
-  let innerPerformMock: jest.Mock<unknown, NonThenableProperties<[]>>;
+  let innerPerformMock: jestMock.Mock<() => unknown>;
 
   beforeAll(() => {
     kindFixture = 'kind';
-    innerPerformMock = jest.fn<unknown, []>();
+    innerPerformMock = jest.fn<() => unknown>();
   });
 
   describe('.perform()', () => {
@@ -157,7 +164,7 @@ describe(BaseTask.name, () => {
       beforeAll(async () => {
         baseTask = new BaseTaskMock(
           kindFixture,
-          innerPerformMock as jest.Mock<Promise<unknown>, []>,
+          innerPerformMock as jestMock.Mock<() => Promise<unknown>>,
         );
 
         innerPerformResultFixture = {

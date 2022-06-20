@@ -1,3 +1,6 @@
+import { afterAll, beforeAll, describe, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
+
 import { NonThenableProperties } from '../../../common/models/NonThenableProperties';
 import { BaseDependentTask } from './BaseDependentTask';
 import { DependentTask } from './DependentTask';
@@ -8,12 +11,16 @@ class BaseDependentTaskMock<
   TArgs extends unknown[],
   TReturn,
 > extends BaseDependentTask<TKind, TDependencyKind, TArgs, TReturn> {
-  #innerPerformMock: jest.Mock<TReturn, NonThenableProperties<TArgs>>;
+  #innerPerformMock: jestMock.Mock<
+    (...params: NonThenableProperties<TArgs>) => TReturn
+  >;
 
   constructor(
     kind: TKind,
     dependencies: DependentTask<TDependencyKind>[] = [],
-    innerPerformMock: jest.Mock<TReturn, NonThenableProperties<TArgs>>,
+    innerPerformMock: jestMock.Mock<
+      (...params: NonThenableProperties<TArgs>) => TReturn
+    >,
   ) {
     super(kind, dependencies);
 
@@ -27,14 +34,14 @@ class BaseDependentTaskMock<
 
 describe(BaseDependentTask.name, () => {
   let kindFixture: string;
-  let innerPerformMock: jest.Mock<unknown, NonThenableProperties<[]>>;
+  let innerPerformMock: jestMock.Mock<() => unknown>;
   let dependenciesFixture: DependentTask<string, string, unknown[], unknown>[];
 
   let baseDependentTask: BaseDependentTaskMock<string, string, [], unknown>;
 
   beforeAll(() => {
     kindFixture = 'kind';
-    innerPerformMock = jest.fn<unknown, []>();
+    innerPerformMock = jest.fn<() => unknown>();
 
     dependenciesFixture = [
       new BaseDependentTaskMock(kindFixture, [], innerPerformMock),
@@ -53,6 +60,10 @@ describe(BaseDependentTask.name, () => {
 
       beforeAll(() => {
         result = baseDependentTask.dependencies;
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
       });
 
       it('should not return the same dependencies instance', () => {
