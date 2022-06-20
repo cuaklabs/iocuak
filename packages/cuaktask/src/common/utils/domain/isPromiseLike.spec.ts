@@ -1,3 +1,5 @@
+import { beforeAll, describe, it } from '@jest/globals';
+
 import { isPromiseLike } from './isPromiseLike';
 
 interface Thenable {
