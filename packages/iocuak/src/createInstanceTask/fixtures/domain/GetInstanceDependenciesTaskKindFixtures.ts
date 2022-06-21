@@ -43,11 +43,21 @@ export class GetInstanceDependenciesTaskKindFixtures {
     return fixture;
   }
 
-  public static get withMetadataWithConstructorArgumentsOneAndPropertiesEmpty(): GetInstanceDependenciesTaskKind {
+  public static get withMetadataWithConstructorArgumentsOneServiceAndPropertiesEmpty(): GetInstanceDependenciesTaskKind {
     const fixture: GetInstanceDependenciesTaskKind = {
       ...GetInstanceDependenciesTaskKindFixtures.any,
       metadata:
         ClassMetadataFixtures.withConstructorArgumentsOneServiceAndPropertiesEmpty,
+    };
+
+    return fixture;
+  }
+
+  public static get withMetadataWithConstructorArgumentsOneTagAndPropertiesEmpty(): GetInstanceDependenciesTaskKind {
+    const fixture: GetInstanceDependenciesTaskKind = {
+      ...GetInstanceDependenciesTaskKindFixtures.any,
+      metadata:
+        ClassMetadataFixtures.withConstructorArgumentsOneTagAndPropertiesEmpty,
     };
 
     return fixture;

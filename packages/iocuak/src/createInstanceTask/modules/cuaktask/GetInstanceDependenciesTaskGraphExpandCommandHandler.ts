@@ -124,12 +124,12 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
     }
   }
 
-  #createCreateInstanceTaskGraphNodeDependencyFromServiceId(
+  #createCreateInstanceTaskGraphNodeDependencyFromBinding(
     context: CreateInstanceTaskGraphExpandOperationContext,
-    serviceId: ServiceId,
+    binding: Binding,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {
     const createInstanceTaskKind: CreateInstanceTaskKind = {
-      binding: this.#getBinding(serviceId),
+      binding: binding,
       requestId: context.requestId,
       type: TaskKindType.createInstance,
     };
@@ -158,6 +158,18 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
     return createInstanceTaskKindGraphNodeDependency;
   }
 
+  #createCreateInstanceTaskGraphNodeDependencyFromServiceId(
+    context: CreateInstanceTaskGraphExpandOperationContext,
+    serviceId: ServiceId,
+  ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {
+    const binding: Binding = this.#getBinding(serviceId);
+
+    return this.#createCreateInstanceTaskGraphNodeDependencyFromBinding(
+      context,
+      binding,
+    );
+  }
+
   #createCreateInstanceTaskGraphNodeDependencyFromTag(
     context: CreateInstanceTaskGraphExpandOperationContext,
     tag: BindingTag,
@@ -165,9 +177,9 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
     const bindings: Binding[] = [...this.#getBindings(tag)];
     const tagServiceNodes: cuaktask.NodeDependency<cuaktask.Task<TaskKind>>[] =
       bindings.map((binding: Binding) =>
-        this.#createCreateInstanceTaskGraphNodeDependencyFromServiceId(
+        this.#createCreateInstanceTaskGraphNodeDependencyFromBinding(
           context,
-          binding.id,
+          binding,
         ),
       );
 

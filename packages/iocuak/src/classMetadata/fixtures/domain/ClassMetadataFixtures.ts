@@ -47,6 +47,20 @@ export class ClassMetadataFixtures {
     return fixture;
   }
 
+  public static get withConstructorArgumentsOneTagAndPropertiesEmpty(): ClassMetadata {
+    const fixture: ClassMetadata = {
+      constructorArguments: [
+        {
+          type: ClassElementMetadataType.tag,
+          value: Symbol(),
+        },
+      ],
+      properties: new Map(),
+    };
+
+    return fixture;
+  }
+
   public static get withConstructorArgumentsEmptyAndPropertiesOneService(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: [],
