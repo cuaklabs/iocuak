@@ -95,7 +95,7 @@ describe(MetadataServiceImplementation.name, () => {
       beforeAll(() => {
         typeFixture = class {};
         classMetadataFixture =
-          ClassMetadataFixtures.withConstructorArgumentsAndProperties;
+          ClassMetadataFixtures.withConstructorArgumentsServiceAndPropertiesService;
 
         (getReflectMetadata as jest.Mock<ClassMetadata>).mockReturnValueOnce(
           classMetadataFixture,
@@ -118,7 +118,7 @@ describe(MetadataServiceImplementation.name, () => {
 
       it('should return ClassMetadata', () => {
         expect(result).toStrictEqual(
-          ClassMetadataFixtures.withConstructorArgumentsAndProperties,
+          ClassMetadataFixtures.withConstructorArgumentsServiceAndPropertiesService,
         );
       });
     });

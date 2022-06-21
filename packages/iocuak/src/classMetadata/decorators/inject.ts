@@ -1,6 +1,8 @@
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
 import { updateReflectMetadata } from '../../reflectMetadata/utils/domain/updateReflectMetadata';
+import { ClassElementMetadataType } from '../models/domain/ClassElementMetadataType';
+import { ClassElementServiceIdMetadata } from '../models/domain/ClassElementServiceIdMetadata';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { getDefaultClassMetadata } from '../utils/domain/getDefaultClassMetadata';
 
@@ -36,7 +38,8 @@ function injectParameter(serviceId: ServiceId): ParameterDecorator {
         MetadataKey.inject,
         getDefaultClassMetadata(),
         (classMetadata: ClassMetadata): ClassMetadata => {
-          classMetadata.constructorArguments[parameterIndex] = serviceId;
+          classMetadata.constructorArguments[parameterIndex] =
+            serviceIdToClassElementMatadata(serviceId);
 
           return classMetadata;
         },
@@ -60,7 +63,10 @@ function injectProperty(serviceId: ServiceId): PropertyDecorator {
       MetadataKey.inject,
       getDefaultClassMetadata(),
       (classMetadata: ClassMetadata): ClassMetadata => {
-        classMetadata.properties.set(propertyKey, serviceId);
+        classMetadata.properties.set(
+          propertyKey,
+          serviceIdToClassElementMatadata(serviceId),
+        );
 
         return classMetadata;
       },
@@ -73,4 +79,13 @@ function isConstructorParameter(
   propertyKey: string | symbol | undefined,
 ): boolean {
   return typeof target === 'function' && propertyKey === undefined;
+}
+
+function serviceIdToClassElementMatadata(
+  serviceId: ServiceId,
+): ClassElementServiceIdMetadata {
+  return {
+    type: ClassElementMetadataType.serviceId,
+    value: serviceId,
+  };
 }

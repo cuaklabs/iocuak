@@ -1,24 +1,30 @@
-import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { mapIterable } from '../../../common/utils/mapIterable';
 import { ClassElementMetadataApi } from '../../models/api/ClassElementMetadataApi';
 import { ClassElementMetadatApiType } from '../../models/api/ClassElementMetadatApiType';
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
+import { ClassElementMetadata } from '../../models/domain/ClassElementMetadata';
+import { ClassElementMetadataType } from '../../models/domain/ClassElementMetadataType';
 import { ClassMetadata } from '../../models/domain/ClassMetadata';
 
 export function convertToClassMetadataApi(
   classMetadata: ClassMetadata,
 ): ClassMetadataApi {
   const classMetadataApiConstructorArguments: ClassElementMetadataApi[] =
-    classMetadata.constructorArguments.map(serviceIdToClassMetadataApi);
+    classMetadata.constructorArguments.map(
+      classElementMetadataToClassElementMetadataApi,
+    );
   const classMetadataApiProperties: Map<
     string | symbol,
     ClassElementMetadataApi
   > = new Map(
     mapIterable(
       classMetadata.properties.entries(),
-      ([key, serviceId]: [string | symbol, ServiceId]) => [
+      ([key, classElementMetadata]: [
+        string | symbol,
+        ClassElementMetadata,
+      ]) => [
         key,
-        serviceIdToClassMetadataApi(serviceId),
+        classElementMetadataToClassElementMetadataApi(classElementMetadata),
       ],
     ),
   );
@@ -29,11 +35,19 @@ export function convertToClassMetadataApi(
   };
 }
 
-function serviceIdToClassMetadataApi(
-  serviceId: ServiceId,
+function classElementMetadataToClassElementMetadataApi(
+  classElementMetadata: ClassElementMetadata,
 ): ClassElementMetadataApi {
-  return {
-    type: ClassElementMetadatApiType.serviceId,
-    value: serviceId,
-  };
+  switch (classElementMetadata.type) {
+    case ClassElementMetadataType.serviceId:
+      return {
+        type: ClassElementMetadatApiType.serviceId,
+        value: classElementMetadata.value,
+      };
+    case ClassElementMetadataType.tag:
+      return {
+        type: ClassElementMetadatApiType.tag,
+        value: classElementMetadata.value,
+      };
+  }
 }

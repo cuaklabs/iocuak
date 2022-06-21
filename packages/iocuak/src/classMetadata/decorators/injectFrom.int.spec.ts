@@ -8,6 +8,8 @@ import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
 import { getReflectMetadata } from '../../reflectMetadata/utils/domain/getReflectMetadata';
+import { ClassElementMetadata } from '../models/domain/ClassElementMetadata';
+import { ClassElementMetadataType } from '../models/domain/ClassElementMetadataType';
 
 describe(injectFrom.name, () => {
   describe('having a ClassMetadataExtensionApi with extendConstructorArguments false and extendProperties false', () => {
@@ -49,9 +51,15 @@ describe(injectFrom.name, () => {
     });
 
     describe('when called, having a source type with no metadata and a destination type with metadata', () => {
+      let constructorArgumentServiceId: ServiceId;
+      let propertyServiceId: ServiceId;
+
       let destinationType: Newable;
 
       beforeAll(() => {
+        constructorArgumentServiceId = 'sample-param';
+        propertyServiceId = 'sample-service';
+
         const baseType: Newable = class {};
 
         @injectFrom({
@@ -60,11 +68,11 @@ describe(injectFrom.name, () => {
           type: baseType,
         })
         class DestinationType {
-          @inject('sample-service')
+          @inject(propertyServiceId)
           public foo: unknown;
 
           constructor(
-            @inject('sample-param')
+            @inject(constructorArgumentServiceId)
             public readonly fooParam: unknown,
           ) {}
         }
@@ -81,8 +89,21 @@ describe(injectFrom.name, () => {
 
         it('should return metadata', () => {
           expect(result).toStrictEqual<ClassMetadata>({
-            constructorArguments: ['sample-param'],
-            properties: new Map([['foo', 'sample-service']]),
+            constructorArguments: [
+              {
+                type: ClassElementMetadataType.serviceId,
+                value: constructorArgumentServiceId,
+              },
+            ],
+            properties: new Map([
+              [
+                'foo',
+                {
+                  type: ClassElementMetadataType.serviceId,
+                  value: propertyServiceId,
+                },
+              ],
+            ]),
           });
         });
       });
@@ -181,17 +202,33 @@ describe(injectFrom.name, () => {
           });
 
           it('should return metadata', () => {
-            const expectedConstructorArguments: ServiceId[] =
-              new Array<ServiceId>(3);
+            const expectedConstructorArguments: ClassElementMetadata[] =
+              new Array<ClassElementMetadata>(3);
 
-            expectedConstructorArguments[1] = 'barParam-param-child';
-            expectedConstructorArguments[2] = 'bazParam-param-child';
+            expectedConstructorArguments[1] = {
+              type: ClassElementMetadataType.serviceId,
+              value: 'barParam-param-child',
+            };
+            expectedConstructorArguments[2] = {
+              type: ClassElementMetadataType.serviceId,
+              value: 'bazParam-param-child',
+            };
+
+            const expectedBarPropertyMetadata: ClassElementMetadata = {
+              type: ClassElementMetadataType.serviceId,
+              value: 'bar-property-child',
+            };
+
+            const expectedBazPropertyMetadata: ClassElementMetadata = {
+              type: ClassElementMetadataType.serviceId,
+              value: 'baz-property-child',
+            };
 
             expect(result).toStrictEqual<ClassMetadata>({
               constructorArguments: expectedConstructorArguments,
               properties: new Map([
-                ['bar', 'bar-property-child'],
-                ['baz', 'baz-property-child'],
+                ['bar', expectedBarPropertyMetadata],
+                ['baz', expectedBazPropertyMetadata],
               ]),
             });
           });
@@ -271,8 +308,21 @@ describe(injectFrom.name, () => {
 
         it('should return metadata', () => {
           expect(result).toStrictEqual<ClassMetadata>({
-            constructorArguments: ['sample-param'],
-            properties: new Map([['foo', 'sample-service']]),
+            constructorArguments: [
+              {
+                type: ClassElementMetadataType.serviceId,
+                value: 'sample-param',
+              },
+            ],
+            properties: new Map([
+              [
+                'foo',
+                {
+                  type: ClassElementMetadataType.serviceId,
+                  value: 'sample-service',
+                },
+              ],
+            ]),
           });
         });
       });
@@ -313,8 +363,21 @@ describe(injectFrom.name, () => {
 
         it('should return metadata', () => {
           expect(result).toStrictEqual<ClassMetadata>({
-            constructorArguments: ['sample-param'],
-            properties: new Map([['foo', 'sample-service']]),
+            constructorArguments: [
+              {
+                type: ClassElementMetadataType.serviceId,
+                value: 'sample-param',
+              },
+            ],
+            properties: new Map([
+              [
+                'foo',
+                {
+                  type: ClassElementMetadataType.serviceId,
+                  value: 'sample-service',
+                },
+              ],
+            ]),
           });
         });
       });
@@ -375,14 +438,41 @@ describe(injectFrom.name, () => {
         it('should return metadata', () => {
           expect(result).toStrictEqual<ClassMetadata>({
             constructorArguments: [
-              'fooParam-param-base',
-              'barParam-param-child',
-              'bazParam-param-child',
+              {
+                type: ClassElementMetadataType.serviceId,
+                value: 'fooParam-param-base',
+              },
+              {
+                type: ClassElementMetadataType.serviceId,
+                value: 'barParam-param-child',
+              },
+              {
+                type: ClassElementMetadataType.serviceId,
+                value: 'bazParam-param-child',
+              },
             ],
             properties: new Map([
-              ['foo', 'foo-property-base'],
-              ['bar', 'bar-property-child'],
-              ['baz', 'baz-property-child'],
+              [
+                'foo',
+                {
+                  type: ClassElementMetadataType.serviceId,
+                  value: 'foo-property-base',
+                },
+              ],
+              [
+                'bar',
+                {
+                  type: ClassElementMetadataType.serviceId,
+                  value: 'bar-property-child',
+                },
+              ],
+              [
+                'baz',
+                {
+                  type: ClassElementMetadataType.serviceId,
+                  value: 'baz-property-child',
+                },
+              ],
             ]),
           });
         });

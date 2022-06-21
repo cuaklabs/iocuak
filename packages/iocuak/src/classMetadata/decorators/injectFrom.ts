@@ -1,9 +1,9 @@
-import { ServiceId } from '../../common/models/domain/ServiceId';
 import { chain } from '../../common/utils/chain';
 import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
 import { getReflectMetadata } from '../../reflectMetadata/utils/domain/getReflectMetadata';
 import { updateReflectMetadata } from '../../reflectMetadata/utils/domain/updateReflectMetadata';
 import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionApi';
+import { ClassElementMetadata } from '../models/domain/ClassElementMetadata';
 import { ClassMetadata } from '../models/domain/ClassMetadata';
 import { getDefaultClassMetadata } from '../utils/domain/getDefaultClassMetadata';
 
@@ -61,11 +61,11 @@ function getExtendedConstructorArguments(
   classMetadataExtensionApi: ClassMetadataExtensionApi,
   baseTypeClassMetadata: ClassMetadata,
   typeMetadata: ClassMetadata,
-): ServiceId[] {
+): ClassElementMetadata[] {
   const extendConstructorArguments: boolean =
     classMetadataExtensionApi.extendConstructorArguments ?? false;
 
-  let extendedConstructorArguments: ServiceId[];
+  let extendedConstructorArguments: ClassElementMetadata[];
 
   if (extendConstructorArguments) {
     extendedConstructorArguments = [
@@ -73,8 +73,8 @@ function getExtendedConstructorArguments(
     ];
 
     typeMetadata.constructorArguments.map(
-      (serviceId: ServiceId, index: number) => {
-        extendedConstructorArguments[index] = serviceId;
+      (classElementMetadata: ClassElementMetadata, index: number) => {
+        extendedConstructorArguments[index] = classElementMetadata;
       },
     );
   } else {
@@ -88,11 +88,11 @@ function getExtendedProperties(
   classMetadataExtensionApi: ClassMetadataExtensionApi,
   baseTypeClassMetadata: ClassMetadata,
   typeMetadata: ClassMetadata,
-): Map<string | symbol, ServiceId> {
+): Map<string | symbol, ClassElementMetadata> {
   const extendProperties: boolean =
     classMetadataExtensionApi.extendProperties ?? false;
 
-  let extendedProperties: Map<string | symbol, ServiceId>;
+  let extendedProperties: Map<string | symbol, ClassElementMetadata>;
 
   if (extendProperties) {
     extendedProperties = new Map(
