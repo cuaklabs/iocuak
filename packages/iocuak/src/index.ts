@@ -5,6 +5,7 @@ import { BindingTypeApi } from './binding/models/api/BindingTypeApi';
 import { InjectableOptionsApi } from './binding/models/api/InjectableOptionsApi';
 import { TypeBindingApi } from './binding/models/api/TypeBindingApi';
 import { ValueBindingApi } from './binding/models/api/ValueBindingApi';
+import { BindingTag } from './binding/models/domain/BindingTag';
 import { inject } from './classMetadata/decorators/inject';
 import { injectFrom } from './classMetadata/decorators/injectFrom';
 import { injectFromBase } from './classMetadata/decorators/injectFromBase';
@@ -21,6 +22,7 @@ import { MetadataServiceApi } from './metadata/services/api/MetadataServiceApi';
 
 export type {
   BindingApi as Binding,
+  BindingTag,
   BindingTypeApi as BindingType,
   ClassMetadataApi as ClassMetadata,
   ContainerModuleMetadataApi as ContainerModuleMetadata,
