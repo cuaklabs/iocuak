@@ -2,25 +2,25 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
+import { BindingTag } from '../../binding/models/domain/BindingTag';
 import { Newable } from '../../common/models/domain/Newable';
-import { ServiceId } from '../../common/models/domain/ServiceId';
 import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
 import { ClassElementMetadataType } from '../models/domain/ClassElementMetadataType';
-import { inject } from './inject';
+import { ClassMetadata } from '../models/domain/ClassMetadata';
+import { injectTag } from './injectTag';
 
-describe(inject.name, () => {
+describe(injectTag.name, () => {
   describe('when called, as property decorator', () => {
-    let serviceIdFixture: ServiceId;
+    let bindingTagFixture: BindingTag;
     let targetFixture: Newable;
 
     let reflectMetadata: unknown;
 
     beforeAll(() => {
-      serviceIdFixture = 'service-id';
+      bindingTagFixture = 'service-id';
 
       class TargetFixture {
-        @inject(serviceIdFixture)
+        @injectTag(bindingTagFixture)
         public foo: string | undefined;
       }
 
@@ -39,8 +39,8 @@ describe(inject.name, () => {
           [
             'foo',
             {
-              type: ClassElementMetadataType.serviceId,
-              value: serviceIdFixture,
+              type: ClassElementMetadataType.tag,
+              value: bindingTagFixture,
             },
           ],
         ]),
@@ -51,16 +51,18 @@ describe(inject.name, () => {
   });
 
   describe('when called, as a constructor parameter decorator', () => {
-    let serviceIdFixture: ServiceId;
+    let bindingTagFixture: BindingTag;
     let targetFixture: Newable;
 
     let reflectMetadata: unknown;
 
     beforeAll(() => {
-      serviceIdFixture = 'service-id';
+      bindingTagFixture = 'service-id';
 
       class TargetFixture {
-        constructor(@inject(serviceIdFixture) public foo: string | undefined) {}
+        constructor(
+          @injectTag(bindingTagFixture) public foo: string | undefined,
+        ) {}
       }
 
       targetFixture = TargetFixture;
@@ -75,8 +77,8 @@ describe(inject.name, () => {
       const expectedClassMetadata: ClassMetadata = {
         constructorArguments: [
           {
-            type: ClassElementMetadataType.serviceId,
-            value: serviceIdFixture,
+            type: ClassElementMetadataType.tag,
+            value: bindingTagFixture,
           },
         ],
         properties: new Map(),
@@ -90,14 +92,16 @@ describe(inject.name, () => {
     let result: unknown;
 
     beforeAll(() => {
-      const serviceIdFixture: ServiceId = 'service-id';
+      const bindingTagFixture: BindingTag = 'service-id';
 
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         class TypeFixture {
           constructor(public foo: string | undefined) {}
 
-          public someMethod(@inject(serviceIdFixture) foo: unknown): unknown {
+          public someMethod(
+            @injectTag(bindingTagFixture) foo: unknown,
+          ): unknown {
             return foo;
           }
         }

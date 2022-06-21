@@ -3,15 +3,15 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./injectBase');
 
-import { ServiceId } from '../../common/models/domain/ServiceId';
-import { inject } from './inject';
+import { BindingTag } from '../../binding/models/domain/BindingTag';
 import { injectBase } from './injectBase';
+import { injectTag } from './injectTag';
 
-describe(inject.name, () => {
-  let serviceIdFixture: ServiceId;
+describe(injectTag.name, () => {
+  let bindingTagFixture: BindingTag;
 
   beforeAll(() => {
-    serviceIdFixture = Symbol();
+    bindingTagFixture = Symbol();
   });
 
   describe('when called', () => {
@@ -28,7 +28,7 @@ describe(inject.name, () => {
         decoratorFixture,
       );
 
-      result = inject(serviceIdFixture);
+      result = injectTag(bindingTagFixture);
     });
 
     afterAll(() => {
@@ -38,7 +38,7 @@ describe(inject.name, () => {
     it('should call injectBase', () => {
       expect(injectBase).toHaveBeenCalledTimes(1);
       expect(injectBase).toHaveBeenCalledWith(
-        serviceIdFixture,
+        bindingTagFixture,
         expect.any(Function),
       );
     });
