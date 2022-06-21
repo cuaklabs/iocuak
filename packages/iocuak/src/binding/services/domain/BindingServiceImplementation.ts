@@ -1,6 +1,7 @@
 import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { chain } from '../../../common/utils/chain';
 import { BindingTag } from '../../models/domain/BindingTag';
 import { removeBindingDuplicates } from '../../utils/domain/removeBindingDuplicates';
 
@@ -29,7 +30,7 @@ export class BindingServiceImplementation implements BindingService {
     return binding;
   }
 
-  public *getByTag(
+  public getByTag(
     tag: BindingTag,
     removeDuplicates: boolean,
   ): Iterable<Binding> {
@@ -37,13 +38,19 @@ export class BindingServiceImplementation implements BindingService {
       const duplicatedServices: Iterable<Binding<unknown, unknown[]>> =
         this.getByTag(tag, false);
 
-      yield* removeBindingDuplicates(duplicatedServices);
+      return removeBindingDuplicates(duplicatedServices);
     } else {
+      let bindingIterable: Iterable<Binding> =
+        this.#tagToBindingsMap.get(tag)?.values() ?? [];
+
       if (this.#parent !== undefined) {
-        yield* this.#parent.getByTag(tag, false);
+        bindingIterable = chain(
+          this.#parent.getByTag(tag, false),
+          bindingIterable,
+        );
       }
 
-      yield* this.#tagToBindingsMap.get(tag)?.values() ?? [];
+      return bindingIterable;
     }
   }
 
