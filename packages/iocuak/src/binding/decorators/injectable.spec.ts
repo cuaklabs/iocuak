@@ -10,6 +10,7 @@ import { TypeBindingFixtures } from '../fixtures/domain/TypeBindingFixtures';
 import { BindingScopeApi } from '../models/api/BindingScopeApi';
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { BindingScope } from '../models/domain/BindingScope';
+import { BindingTag } from '../models/domain/BindingTag';
 import { TypeBinding } from '../models/domain/TypeBinding';
 import { injectable } from './injectable';
 
@@ -121,6 +122,64 @@ describe(injectable.name, () => {
         ...TypeBindingFixtures.withTagsEmpty,
         id: targetFixture,
         scope: expectedScope,
+        type: targetFixture,
+      };
+
+      expect(reflectMetadata).toStrictEqual(expectedReflectMetadata);
+    });
+  });
+
+  describe('when called, with InjectableOptionsApi with tags array', () => {
+    let targetFixture: Newable;
+    let reflectMetadata: unknown;
+
+    beforeAll(() => {
+      @injectable(InjectableOptionsApiFixtures.withTags)
+      class TargetFixture {}
+
+      targetFixture = TargetFixture;
+
+      reflectMetadata = Reflect.getOwnMetadata(
+        MetadataKey.injectable,
+        targetFixture,
+      );
+    });
+
+    it('should set reflect metadata', () => {
+      const expectedReflectMetadata: TypeBinding = {
+        ...TypeBindingFixtures.any,
+        id: targetFixture,
+        scope: BindingScope.transient,
+        tags: InjectableOptionsApiFixtures.withTags.tags as BindingTag[],
+        type: targetFixture,
+      };
+
+      expect(reflectMetadata).toStrictEqual(expectedReflectMetadata);
+    });
+  });
+
+  describe('when called, with InjectableOptionsApi with tags tag', () => {
+    let targetFixture: Newable;
+    let reflectMetadata: unknown;
+
+    beforeAll(() => {
+      @injectable(InjectableOptionsApiFixtures.withTag)
+      class TargetFixture {}
+
+      targetFixture = TargetFixture;
+
+      reflectMetadata = Reflect.getOwnMetadata(
+        MetadataKey.injectable,
+        targetFixture,
+      );
+    });
+
+    it('should set reflect metadata', () => {
+      const expectedReflectMetadata: TypeBinding = {
+        ...TypeBindingFixtures.any,
+        id: targetFixture,
+        scope: BindingScope.transient,
+        tags: [InjectableOptionsApiFixtures.withTag.tags as BindingTag],
         type: targetFixture,
       };
 

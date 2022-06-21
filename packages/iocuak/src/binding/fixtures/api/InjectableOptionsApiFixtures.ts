@@ -23,4 +23,20 @@ export class InjectableOptionsApiFixtures {
 
     return fixture;
   }
+
+  public static get withTag(): InjectableOptionsApi {
+    const fixture: InjectableOptionsApi = {
+      tags: 'tag',
+    };
+
+    return fixture;
+  }
+
+  public static get withTags(): InjectableOptionsApi {
+    const fixture: InjectableOptionsApi = {
+      tags: ['tag'],
+    };
+
+    return fixture;
+  }
 }
