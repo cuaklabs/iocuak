@@ -1,11 +1,13 @@
 import 'reflect-metadata';
 
-import { inject } from '../../classMetadata/decorators/inject';
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
 import { ClassElementMetadataType } from '../models/domain/ClassElementMetadataType';
+import { inject } from './inject';
 
 describe(inject.name, () => {
   describe('when called, as property decorator', () => {
@@ -31,7 +33,7 @@ describe(inject.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      expect(reflectMetadata).toStrictEqual<ClassMetadata>({
+      const expectedClassMetadata: ClassMetadata = {
         constructorArguments: [],
         properties: new Map([
           [
@@ -42,7 +44,9 @@ describe(inject.name, () => {
             },
           ],
         ]),
-      });
+      };
+
+      expect(reflectMetadata).toStrictEqual(expectedClassMetadata);
     });
   });
 
@@ -68,7 +72,7 @@ describe(inject.name, () => {
     });
 
     it('should set reflect metadata', () => {
-      expect(reflectMetadata).toStrictEqual<ClassMetadata>({
+      const expectedClassMetadata: ClassMetadata = {
         constructorArguments: [
           {
             type: ClassElementMetadataType.serviceId,
@@ -76,7 +80,9 @@ describe(inject.name, () => {
           },
         ],
         properties: new Map(),
-      });
+      };
+
+      expect(reflectMetadata).toStrictEqual(expectedClassMetadata);
     });
   });
 
@@ -101,13 +107,15 @@ describe(inject.name, () => {
     });
 
     it('should throw an error', () => {
+      const expectedErrorPartial: Partial<Error> = {
+        message:
+          expect.stringContaining(`Found an @inject decorator in a non constructor parameter.
+Found @inject decorator at method`) as unknown as string,
+      };
+
       expect(result).toBeInstanceOf(Error);
       expect(result).toStrictEqual(
-        expect.objectContaining<Partial<Error>>({
-          message:
-            expect.stringContaining(`Found an @inject decorator in a non constructor parameter.
-Found @inject decorator at method`) as string,
-        }),
+        expect.objectContaining(expectedErrorPartial),
       );
     });
   });

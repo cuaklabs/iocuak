@@ -1,107 +1,50 @@
-import 'reflect-metadata';
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
 
-jest.mock('../../reflectMetadata/utils/domain/updateReflectMetadata');
+jest.mock('./injectBase');
 
-import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
-import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
-import { updateReflectMetadata } from '../../reflectMetadata/utils/domain/updateReflectMetadata';
 import { inject } from './inject';
+import { injectBase } from './injectBase';
 
 describe(inject.name, () => {
-  describe('when called, as property decorator', () => {
-    let serviceIdFixture: ServiceId;
-    let targetFixture: Newable;
+  let serviceIdFixture: ServiceId;
 
-    beforeAll(() => {
-      serviceIdFixture = 'service-id';
-
-      class TargetFixture {
-        @inject(serviceIdFixture)
-        public foo: string | undefined;
-      }
-
-      targetFixture = TargetFixture;
-    });
-
-    afterAll(() => {
-      jest.clearAllMocks();
-    });
-
-    it('should call updateReflectMetadata()', () => {
-      expect(updateReflectMetadata).toHaveBeenCalledTimes(1);
-      expect(updateReflectMetadata).toHaveBeenCalledWith(
-        targetFixture,
-        MetadataKey.inject,
-        expect.anything(),
-        expect.any(Function),
-      );
-    });
+  beforeAll(() => {
+    serviceIdFixture = Symbol();
   });
 
-  describe('when called, as constructor parameter decorator', () => {
-    let serviceIdFixture: ServiceId;
-    let targetFixture: Newable;
-
-    beforeAll(() => {
-      serviceIdFixture = 'service-id';
-
-      class TargetFixture {
-        constructor(@inject(serviceIdFixture) public foo: string | undefined) {}
-      }
-
-      targetFixture = TargetFixture;
-    });
-
-    afterAll(() => {
-      jest.clearAllMocks();
-    });
-
-    it('should call updateReflectMetadata()', () => {
-      expect(updateReflectMetadata).toHaveBeenCalledTimes(1);
-      expect(updateReflectMetadata).toHaveBeenCalledWith(
-        targetFixture,
-        MetadataKey.inject,
-        expect.anything(),
-        expect.any(Function),
-      );
-    });
-  });
-
-  describe('when called, as non constructor parameter decorator', () => {
-    let serviceIdFixture: ServiceId;
+  describe('when called', () => {
+    let decoratorFixture: ParameterDecorator & PropertyDecorator;
 
     let result: unknown;
 
     beforeAll(() => {
-      try {
-        serviceIdFixture = 'service-id';
+      decoratorFixture = {
+        _type: Symbol(),
+      } as unknown as ParameterDecorator & PropertyDecorator;
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        class TargetFixture {
-          public doSomethingWithFoo(
-            @inject(serviceIdFixture) foo: string | undefined,
-          ) {
-            console.log(foo ?? '?');
-          }
-        }
-      } catch (error: unknown) {
-        result = error;
-      }
+      (injectBase as jestMock.Mock<typeof injectBase>).mockReturnValueOnce(
+        decoratorFixture,
+      );
+
+      result = inject(serviceIdFixture);
     });
 
     afterAll(() => {
       jest.clearAllMocks();
     });
 
-    it('should throw an error', () => {
-      expect(result).toBeInstanceOf(Error);
-      expect(result).toStrictEqual(
-        expect.objectContaining<Partial<Error>>({
-          message: `Found an @inject decorator in a non constructor parameter.
-Found @inject decorator at method "doSomethingWithFoo" at class "TargetFixture"`,
-        }),
+    it('should call injectBase', () => {
+      expect(injectBase).toHaveBeenCalledTimes(1);
+      expect(injectBase).toHaveBeenCalledWith(
+        serviceIdFixture,
+        expect.any(Function),
       );
+    });
+
+    it('should return a decorator', () => {
+      expect(result).toBe(decoratorFixture);
     });
   });
 });
