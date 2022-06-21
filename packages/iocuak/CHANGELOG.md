@@ -21,8 +21,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [UNRELEASED]
 
+### Added
+- Added `ClassElementMetadata`.
+- Added `ClassElementMetadatType`.
+- Added `ClassElementServiceIdMetadata`.
+- Added `ClassElementTagMetadata`.
+
 ### Changed
 - Updated `ContainerModuleMetadata` to allow module classes and modules.
+- [BC]: Updated `ClassMetadata` to contain `ClassElementMetadata` based properties and constructor arguments.
 
 
 

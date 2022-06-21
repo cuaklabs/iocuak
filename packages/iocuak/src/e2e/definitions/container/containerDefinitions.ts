@@ -5,6 +5,8 @@ import sinonChai from 'sinon-chai';
 
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
+import { ClassElementMetadataApi } from '../../../classMetadata/models/api/ClassElementMetadataApi';
+import { ClassElementMetadatApiType } from '../../../classMetadata/models/api/ClassElementMetadatApiType';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
@@ -123,6 +125,17 @@ function getBinding(
   );
 }
 
+function getBindingFromClassElementMetadata(
+  container: ContainerApi,
+  classElementMetadataApi: ClassElementMetadataApi,
+): BindingApi | undefined {
+  if (classElementMetadataApi.type === ClassElementMetadatApiType.serviceId) {
+    return getBinding(container, classElementMetadataApi.value);
+  } else {
+    throw new Error('Unexpected non service metadata');
+  }
+}
+
 function getTypeServiceParameterDependencies(
   typeServiceParameter: TypeServiceParameter,
 ): TypeServiceParameter[] {
@@ -205,8 +218,9 @@ function isTypeServiceInitialized(
     metadataProvider.getClassMetadata(service);
 
   const constructorMetadataBindings: (BindingApi | undefined)[] =
-    instanceMetadata.constructorArguments.map((serviceId: ServiceId) =>
-      getBinding(container, serviceId),
+    instanceMetadata.constructorArguments.map(
+      (classElementMetadata: ClassElementMetadataApi) =>
+        getBindingFromClassElementMetadata(container, classElementMetadata),
     );
 
   isCalledOnceWith(constructorMetadataBindings, constructorSpy);
@@ -232,9 +246,12 @@ function isTypeServicePropertiesAssigned(
     string | symbol,
     BindingApi | undefined,
   ][] = [...instanceMetadata.properties.entries()].map(
-    ([propertyName, serviceId]: [string | symbol, ServiceId]) => [
+    ([propertyName, classElementMetadata]: [
+      string | symbol,
+      ClassElementMetadataApi,
+    ]) => [
       propertyName,
-      getBinding(container, serviceId),
+      getBindingFromClassElementMetadata(container, classElementMetadata),
     ],
   );
 

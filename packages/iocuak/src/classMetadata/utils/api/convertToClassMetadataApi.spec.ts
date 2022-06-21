@@ -1,3 +1,4 @@
+import { ClassElementMetadatApiType } from '../../models/api/ClassElementMetadatApiType';
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { ClassMetadata } from '../../models/domain/ClassMetadata';
 import { convertToClassMetadataApi } from './convertToClassMetadataApi';
@@ -15,8 +16,21 @@ describe(convertToClassMetadataApi.name, () => {
       };
 
       classMetadataApiFixture = {
-        constructorArguments: ['ctor-first-service-id'],
-        properties: new Map([['foo', Symbol.for('bar')]]),
+        constructorArguments: [
+          {
+            type: ClassElementMetadatApiType.serviceId,
+            value: 'ctor-first-service-id',
+          },
+        ],
+        properties: new Map([
+          [
+            'foo',
+            {
+              type: ClassElementMetadatApiType.serviceId,
+              value: Symbol.for('bar'),
+            },
+          ],
+        ]),
       };
 
       result = convertToClassMetadataApi(classMetadataFixture);

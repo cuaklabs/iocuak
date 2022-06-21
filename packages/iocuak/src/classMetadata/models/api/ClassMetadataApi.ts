@@ -1,6 +1,6 @@
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ClassElementMetadataApi } from './ClassElementMetadataApi';
 
 export interface ClassMetadataApi {
-  constructorArguments: ServiceId[];
-  properties: Map<string | symbol, ServiceId>;
+  constructorArguments: ClassElementMetadataApi[];
+  properties: Map<string | symbol, ClassElementMetadataApi>;
 }
