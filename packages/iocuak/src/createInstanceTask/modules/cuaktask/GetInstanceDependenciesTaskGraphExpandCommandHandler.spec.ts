@@ -109,7 +109,7 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
         it('should call bindingService.get()', () => {
           expect(bindingServiceMock.get).toHaveBeenCalledTimes(1);
           expect(bindingServiceMock.get).toHaveBeenCalledWith(
-            nodeFixture.element.kind.metadata.constructorArguments[0],
+            nodeFixture.element.kind.metadata.constructorArguments[0]?.value,
           );
         });
 
@@ -196,7 +196,7 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
         it('should call bindingService.get()', () => {
           expect(bindingServiceMock.get).toHaveBeenCalledTimes(1);
           expect(bindingServiceMock.get).toHaveBeenCalledWith(
-            nodeFixture.element.kind.metadata.constructorArguments[0],
+            nodeFixture.element.kind.metadata.constructorArguments[0]?.value,
           );
         });
 

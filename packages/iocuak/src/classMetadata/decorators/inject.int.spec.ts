@@ -5,6 +5,7 @@ import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
 import { Newable } from '../../common/models/domain/Newable';
 import { ServiceId } from '../../common/models/domain/ServiceId';
 import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
+import { ClassElementMetadataType } from '../models/domain/ClassElementMetadataType';
 
 describe(inject.name, () => {
   describe('when called, as property decorator', () => {
@@ -32,7 +33,15 @@ describe(inject.name, () => {
     it('should set reflect metadata', () => {
       expect(reflectMetadata).toStrictEqual<ClassMetadata>({
         constructorArguments: [],
-        properties: new Map([['foo', serviceIdFixture]]),
+        properties: new Map([
+          [
+            'foo',
+            {
+              type: ClassElementMetadataType.serviceId,
+              value: serviceIdFixture,
+            },
+          ],
+        ]),
       });
     });
   });
@@ -60,7 +69,12 @@ describe(inject.name, () => {
 
     it('should set reflect metadata', () => {
       expect(reflectMetadata).toStrictEqual<ClassMetadata>({
-        constructorArguments: [serviceIdFixture],
+        constructorArguments: [
+          {
+            type: ClassElementMetadataType.serviceId,
+            value: serviceIdFixture,
+          },
+        ],
         properties: new Map(),
       });
     });

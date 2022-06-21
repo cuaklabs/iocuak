@@ -1,3 +1,4 @@
+import { ClassElementMetadataType } from '../../models/domain/ClassElementMetadataType';
 import { ClassMetadata } from '../../models/domain/ClassMetadata';
 
 export class ClassMetadataFixtures {
@@ -10,31 +11,35 @@ export class ClassMetadataFixtures {
     return fixture;
   }
 
-  public static get withConstructorArgumentsAndProperties(): ClassMetadata {
+  public static get withConstructorArgumentsServiceAndPropertiesService(): ClassMetadata {
     const fixture: ClassMetadata = {
-      constructorArguments: ['sample-constructor-dependency-id'],
+      constructorArguments: [
+        {
+          type: ClassElementMetadataType.serviceId,
+          value: 'sample-constructor-dependency-id',
+        },
+      ],
       properties: new Map([
-        ['sampleProperty', 'sample-property-dependency-id'],
+        [
+          'sampleProperty',
+          {
+            type: ClassElementMetadataType.serviceId,
+            value: 'sample-property-dependency-id',
+          },
+        ],
       ]),
     };
 
     return fixture;
   }
 
-  public static get withConstructorArgumentsOneAndPropertiesEmpty(): ClassMetadata {
-    const fixture: ClassMetadata = {
-      constructorArguments: ['sample-constructor-dependency-id'],
-      properties: new Map(),
-    };
-
-    return fixture;
-  }
-
-  public static get withConstructorArgumentsTheSameTwoAndPropertiesEmpty(): ClassMetadata {
+  public static get withConstructorArgumentsOneServiceAndPropertiesEmpty(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: [
-        'sample-constructor-dependency-id',
-        'sample-constructor-dependency-id',
+        {
+          type: ClassElementMetadataType.serviceId,
+          value: 'sample-constructor-dependency-id',
+        },
       ],
       properties: new Map(),
     };
@@ -42,11 +47,17 @@ export class ClassMetadataFixtures {
     return fixture;
   }
 
-  public static get withConstructorArgumentsEmptyAndPropertiesOne(): ClassMetadata {
+  public static get withConstructorArgumentsEmptyAndPropertiesOneService(): ClassMetadata {
     const fixture: ClassMetadata = {
       constructorArguments: [],
       properties: new Map([
-        ['sampleProperty', 'sample-property-dependency-id'],
+        [
+          'sampleProperty',
+          {
+            type: ClassElementMetadataType.serviceId,
+            value: 'sample-property-dependency-id',
+          },
+        ],
       ]),
     };
 

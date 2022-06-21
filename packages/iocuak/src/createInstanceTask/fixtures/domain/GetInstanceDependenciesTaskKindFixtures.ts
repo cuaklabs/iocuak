@@ -16,7 +16,8 @@ export class GetInstanceDependenciesTaskKindFixtures {
   public static get withMetadataWithConstructorArgumentsAndProperties(): GetInstanceDependenciesTaskKind {
     const fixture: GetInstanceDependenciesTaskKind = {
       ...GetInstanceDependenciesTaskKindFixtures.any,
-      metadata: ClassMetadataFixtures.withConstructorArgumentsAndProperties,
+      metadata:
+        ClassMetadataFixtures.withConstructorArgumentsServiceAndPropertiesService,
     };
 
     return fixture;
@@ -36,7 +37,7 @@ export class GetInstanceDependenciesTaskKindFixtures {
     const fixture: GetInstanceDependenciesTaskKind = {
       ...GetInstanceDependenciesTaskKindFixtures.any,
       metadata:
-        ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesOne,
+        ClassMetadataFixtures.withConstructorArgumentsEmptyAndPropertiesOneService,
     };
 
     return fixture;
@@ -46,7 +47,7 @@ export class GetInstanceDependenciesTaskKindFixtures {
     const fixture: GetInstanceDependenciesTaskKind = {
       ...GetInstanceDependenciesTaskKindFixtures.any,
       metadata:
-        ClassMetadataFixtures.withConstructorArgumentsOneAndPropertiesEmpty,
+        ClassMetadataFixtures.withConstructorArgumentsOneServiceAndPropertiesEmpty,
     };
 
     return fixture;
