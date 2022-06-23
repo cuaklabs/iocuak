@@ -11,6 +11,9 @@ jest.mock(
   '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine',
 );
 jest.mock(
+  '../../../createInstanceTask/modules/cuaktask/CreateCreateInstanceTaskGraphNodeCommandHandler',
+);
+jest.mock(
   '../../../createInstanceTask/modules/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler',
 );
 jest.mock(
@@ -45,6 +48,7 @@ import { Newable } from '../../../common/models/domain/Newable';
 import { ContainerModuleTaskBuilder } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilder';
 import { ContainerModuleTaskBuilderWithNoDependencies } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilderWithNoDependencies';
 import { ContainerModuleTaskDependencyEngine } from '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine';
+import { CreateCreateInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateInstanceTaskGraphNodeCommandHandler';
 import { CreateCreateRequestScopedInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateRequestScopedInstanceTaskGraphNodeCommandHandler';
 import { CreateCreateSingletonScopedInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateSingletonScopedInstanceTaskGraphNodeCommandHandler';
 import { CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler';
@@ -89,6 +93,7 @@ describe(ContainerApi.name, () => {
       let createCreateSingletonScopedInstanceTaskGraphNodeCommandHandlerFixture: CreateCreateSingletonScopedInstanceTaskGraphNodeCommandHandler;
       let createCreateTransientScopedInstanceTaskGraphNodeCommandHandlerFixture: CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler;
       let createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerFixture: CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler;
+      let createCreateInstanceTaskGraphNodeCommandHandlerFixture: CreateCreateInstanceTaskGraphNodeCommandHandler;
       let getInstanceDependenciesTaskGraphExpandCommandHandlerFixture: GetInstanceDependenciesTaskGraphExpandCommandHandler;
       let createInstanceTaskGraphEngineFixture: CreateInstanceTaskGraphEngine;
       let rootedTaskGraphRunnerFixture: cuaktask.RootedTaskGraphRunner;
@@ -198,6 +203,13 @@ describe(ContainerApi.name, () => {
         bindFixtureToConstructor(
           CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler,
           createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerFixture,
+        );
+
+        createCreateInstanceTaskGraphNodeCommandHandlerFixture =
+          buildEmptyFixture();
+        bindFixtureToConstructor(
+          CreateCreateInstanceTaskGraphNodeCommandHandler,
+          createCreateInstanceTaskGraphNodeCommandHandlerFixture,
         );
 
         getInstanceDependenciesTaskGraphExpandCommandHandlerFixture =
@@ -334,6 +346,19 @@ describe(ContainerApi.name, () => {
         );
       });
 
+      it('should call new CreateCreateInstanceTaskGraphNodeCommandHandler()', () => {
+        expect(
+          CreateCreateInstanceTaskGraphNodeCommandHandler,
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          CreateCreateInstanceTaskGraphNodeCommandHandler,
+        ).toHaveBeenCalledWith(
+          containerRequestServiceImplementationFixture,
+          containerSingletonServiceImplementationFixture,
+          createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerFixture,
+        );
+      });
+
       it('should call new GetInstanceDependenciesTaskGraphExpandCommandHandler()', () => {
         expect(
           GetInstanceDependenciesTaskGraphExpandCommandHandler,
@@ -344,7 +369,7 @@ describe(ContainerApi.name, () => {
           containerBindingServiceImplementationFixture,
           containerRequestServiceImplementationFixture,
           containerSingletonServiceImplementationFixture,
-          createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerFixture,
+          createCreateInstanceTaskGraphNodeCommandHandlerFixture,
           metadataServiceImplementationFixture,
         );
       });
