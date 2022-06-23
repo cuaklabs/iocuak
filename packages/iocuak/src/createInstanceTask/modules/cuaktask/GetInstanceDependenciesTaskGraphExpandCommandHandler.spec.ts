@@ -11,6 +11,7 @@ import { ContainerSingletonService } from '../../../container/services/domain/Co
 import { ReadOnlyLinkedListImplementation } from '../../../list/models/domain/ReadOnlyLinkedListImplementation';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { GetInstanceDependenciesTaskKindFixtures } from '../../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
+import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
 import { CreateCreateTypeBindingInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommand';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
@@ -42,12 +43,6 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
     } as Partial<
       jestMock.Mocked<BindingService>
     > as jestMock.Mocked<BindingService>;
-    containerRequestServiceFixture = {
-      _type: Symbol(),
-    } as unknown as ContainerRequestService;
-    containerSingletonServiceFixture = {
-      _type: Symbol(),
-    } as unknown as ContainerSingletonService;
     createCreateInstanceTaskGraphNodeCommandHandlerMock = {
       handle: jest.fn(),
     };
@@ -58,8 +53,6 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
     getInstanceDependenciesTaskGraphExpandCommandHandler =
       new GetInstanceDependenciesTaskGraphExpandCommandHandler(
         bindingServiceMock,
-        containerRequestServiceFixture,
-        containerSingletonServiceFixture,
         createCreateInstanceTaskGraphNodeCommandHandlerMock,
         metadataServiceFixtures,
       );
@@ -80,91 +73,7 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
         };
       });
 
-      describe('when called, and bindingService.get() returns a ValueBinding', () => {
-        let getInstanceDependenciesTaskGraphExpandCommandFixture: GetInstanceDependenciesTaskGraphExpandCommand;
-        let expectedCreateInstanceNodeGenerated: cuaktask.Node<
-          cuaktask.Task<TaskKind>
-        >;
-
-        let result: unknown;
-
-        beforeAll(() => {
-          getInstanceDependenciesTaskGraphExpandCommandFixture = {
-            context: {
-              graph: {
-                nodes: new Set(),
-              },
-              requestId: Symbol(),
-              serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
-              serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
-              serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
-            },
-            node: nodeFixture,
-            taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
-          };
-
-          expectedCreateInstanceNodeGenerated = {
-            dependencies: undefined,
-            element: new CreateInstanceTask(
-              {
-                binding: ValueBindingFixtures.any,
-                requestId:
-                  getInstanceDependenciesTaskGraphExpandCommandFixture.context
-                    .requestId,
-                type: TaskKindType.createInstance,
-              },
-              containerRequestServiceFixture,
-              containerSingletonServiceFixture,
-            ),
-          };
-
-          bindingServiceMock.get.mockReturnValueOnce(ValueBindingFixtures.any);
-
-          result = getInstanceDependenciesTaskGraphExpandCommandHandler.handle(
-            getInstanceDependenciesTaskGraphExpandCommandFixture,
-          );
-        });
-
-        afterAll(() => {
-          jest.clearAllMocks();
-        });
-
-        it('should call bindingService.get()', () => {
-          expect(bindingServiceMock.get).toHaveBeenCalledTimes(1);
-          expect(bindingServiceMock.get).toHaveBeenCalledWith(
-            nodeFixture.element.kind.metadata.constructorArguments[0]?.value,
-          );
-        });
-
-        it('should expand graph nodes', () => {
-          expect(
-            getInstanceDependenciesTaskGraphExpandCommandFixture.context.graph,
-          ).toStrictEqual({
-            nodes: new Set<cuaktask.Node<cuaktask.Task<TaskKind>>>([
-              expectedCreateInstanceNodeGenerated,
-            ]),
-          });
-        });
-
-        it('should set node dependencies', () => {
-          const expectedNodeDependency: cuaktask.NodeDependency<
-            cuaktask.Task<TaskKind>
-          > = {
-            nodes: [expectedCreateInstanceNodeGenerated],
-            type: cuaktask.NodeDependenciesType.and,
-          };
-
-          expect(nodeFixture.dependencies).toStrictEqual(
-            expectedNodeDependency,
-          );
-        });
-
-        it('should return undefined', () => {
-          expect(result).toBeUndefined();
-        });
-      });
-
-      describe('when called, and bindingService.get() returns a TypeBinding', () => {
+      describe('when called, and bindingService.get() returns a Binding', () => {
         let getInstanceDependenciesTaskGraphExpandCommandFixture: GetInstanceDependenciesTaskGraphExpandCommand;
         let createInstanceTaskKindGraphNodeDependencyFixture: cuaktask.Node<
           cuaktask.Task<TaskKind>
@@ -291,9 +200,9 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
         };
       });
 
-      describe('when called, and bindingService.getByTag() returns a ValueBinding', () => {
+      describe('when called, and bindingService.getByTag() returns a Binding', () => {
         let getInstanceDependenciesTaskGraphExpandCommandFixture: GetInstanceDependenciesTaskGraphExpandCommand;
-        let expectedCreateInstanceNodeGenerated: cuaktask.Node<
+        let createInstanceTaskKindGraphNodeDependencyFixture: cuaktask.Node<
           cuaktask.Task<TaskKind>
         >;
 
@@ -314,7 +223,7 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
             taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
           };
 
-          expectedCreateInstanceNodeGenerated = {
+          createInstanceTaskKindGraphNodeDependencyFixture = {
             dependencies: undefined,
             element: new CreateInstanceTask(
               {
@@ -333,6 +242,10 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
             ValueBindingFixtures.any,
           ]);
 
+          createCreateInstanceTaskGraphNodeCommandHandlerMock.handle.mockReturnValueOnce(
+            createInstanceTaskKindGraphNodeDependencyFixture,
+          );
+
           result = getInstanceDependenciesTaskGraphExpandCommandHandler.handle(
             getInstanceDependenciesTaskGraphExpandCommandFixture,
           );
@@ -350,12 +263,37 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
           );
         });
 
+        it('should call createCreateInstanceTaskGraphNodeCommandHandler.handle()', () => {
+          const expectedCreateCreateInstanceTaskGraphNodeCommand: CreateCreateInstanceTaskGraphNodeCommand =
+            {
+              context: {
+                ...getInstanceDependenciesTaskGraphExpandCommandFixture.context,
+                taskKind: {
+                  binding: ValueBindingFixtures.any,
+                  requestId:
+                    getInstanceDependenciesTaskGraphExpandCommandFixture.context
+                      .requestId,
+                  type: TaskKindType.createInstance,
+                },
+              },
+            };
+
+          expect(
+            createCreateInstanceTaskGraphNodeCommandHandlerMock.handle,
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            createCreateInstanceTaskGraphNodeCommandHandlerMock.handle,
+          ).toHaveBeenCalledWith(
+            expectedCreateCreateInstanceTaskGraphNodeCommand,
+          );
+        });
+
         it('should expand graph nodes', () => {
           expect(
             getInstanceDependenciesTaskGraphExpandCommandFixture.context.graph,
           ).toStrictEqual({
             nodes: new Set<cuaktask.Node<cuaktask.Task<TaskKind>>>([
-              expectedCreateInstanceNodeGenerated,
+              createInstanceTaskKindGraphNodeDependencyFixture,
             ]),
           });
         });
@@ -366,7 +304,7 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
           > = {
             nodes: [
               {
-                nodes: [expectedCreateInstanceNodeGenerated],
+                nodes: [createInstanceTaskKindGraphNodeDependencyFixture],
                 type: cuaktask.NodeDependenciesType.and,
               },
             ],
