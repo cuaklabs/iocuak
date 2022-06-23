@@ -4,7 +4,7 @@ import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
-import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
+import { CreateCreateTypeBindingInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommand';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
@@ -17,7 +17,7 @@ import { TaskKind } from '../../models/domain/TaskKind';
 export class CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler
   implements
     Handler<
-      CreateCreateInstanceTaskGraphNodeCommand,
+      CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >
 {
@@ -36,7 +36,7 @@ export class CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler
   }
 
   public handle(
-    createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand: CreateCreateInstanceTaskGraphNodeCommand,
+    createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand: CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>> {
     const createInstanceTaskKindGraphNode: cuaktask.Node<
       cuaktask.Task<CreateInstanceTaskKind>

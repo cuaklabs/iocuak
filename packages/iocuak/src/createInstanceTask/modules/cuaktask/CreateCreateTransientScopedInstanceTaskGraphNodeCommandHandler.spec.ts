@@ -6,7 +6,7 @@ import { ContainerRequestService } from '../../../container/services/domain/Cont
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
 import { ReadOnlyLinkedList } from '../../../list/models/domain/ReadOnlyLinkedList';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
-import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
+import { CreateCreateTypeBindingInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommand';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
 import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
@@ -46,7 +46,7 @@ describe(
 
     describe('.handle', () => {
       describe('when called', () => {
-        let createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand: CreateCreateInstanceTaskGraphNodeCommand;
+        let createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand: CreateCreateTypeBindingInstanceTaskGraphNodeCommand;
         let createInstanceTaskKindGraphNode: cuaktask.Node<
           cuaktask.Task<CreateInstanceTaskKind>
         >;

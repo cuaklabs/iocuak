@@ -6,7 +6,7 @@ import { ContainerRequestService } from '../../../container/services/domain/Cont
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
 import { ReadOnlyLinkedList } from '../../../list/models/domain/ReadOnlyLinkedList';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
-import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
+import { CreateCreateTypeBindingInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommand';
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { DestructureOneTask } from '../../models/cuaktask/DestructureOneTask';
 import { GetCachedInstanceTask } from '../../models/cuaktask/GetCachedInstanceTask';
@@ -105,7 +105,7 @@ describe(
           cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
         >;
 
-        let createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand: CreateCreateInstanceTaskGraphNodeCommand;
+        let createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand: CreateCreateTypeBindingInstanceTaskGraphNodeCommand;
 
         let result: unknown;
 
