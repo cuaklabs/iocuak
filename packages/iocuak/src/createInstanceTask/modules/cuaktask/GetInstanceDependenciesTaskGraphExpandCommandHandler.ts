@@ -14,7 +14,7 @@ import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
-import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
+import { CreateCreateTypeBindingInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommand';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
 import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
@@ -30,7 +30,7 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
   readonly #containerRequestService: ContainerRequestService;
   readonly #containerSingletonService: ContainerSingletonService;
   readonly #createCreateInstanceTaskGraphNodeCommandHandler: Handler<
-    CreateCreateInstanceTaskGraphNodeCommand,
+    CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
     cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
   >;
   readonly #metadataService: MetadataService;
@@ -40,7 +40,7 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
     createCreateInstanceTaskGraphNodeCommandHandler: Handler<
-      CreateCreateInstanceTaskGraphNodeCommand,
+      CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >,
     metadataService: MetadataService,
@@ -197,7 +197,7 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
     context: CreateInstanceTaskGraphExpandOperationContext,
     createInstanceTaskKind: CreateInstanceTaskKind<TypeBinding>,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {
-    const createCreateInstanceTaskGraphNodeCommand: CreateCreateInstanceTaskGraphNodeCommand =
+    const createCreateInstanceTaskGraphNodeCommand: CreateCreateTypeBindingInstanceTaskGraphNodeCommand =
       {
         context: {
           ...context,

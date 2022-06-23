@@ -11,7 +11,7 @@ jest.mock(
   '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine',
 );
 jest.mock(
-  '../../../createInstanceTask/modules/cuaktask/CreateCreateInstanceTaskGraphNodeCommandHandler',
+  '../../../createInstanceTask/modules/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler',
 );
 jest.mock(
   '../../../createInstanceTask/modules/cuaktask/CreateCreateRequestScopedInstanceTaskGraphNodeCommandHandler',
@@ -45,10 +45,10 @@ import { Newable } from '../../../common/models/domain/Newable';
 import { ContainerModuleTaskBuilder } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilder';
 import { ContainerModuleTaskBuilderWithNoDependencies } from '../../../containerModuleTask/modules/ContainerModuleTaskBuilderWithNoDependencies';
 import { ContainerModuleTaskDependencyEngine } from '../../../containerModuleTask/modules/ContainerModuleTaskDependencyEngine';
-import { CreateCreateInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateInstanceTaskGraphNodeCommandHandler';
 import { CreateCreateRequestScopedInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateRequestScopedInstanceTaskGraphNodeCommandHandler';
 import { CreateCreateSingletonScopedInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateSingletonScopedInstanceTaskGraphNodeCommandHandler';
 import { CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler';
+import { CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler';
 import { CreateInstanceTaskGraphEngine } from '../../../createInstanceTask/modules/cuaktask/CreateInstanceTaskGraphEngine';
 import { CreateInstanceTaskGraphExpandCommandHandler } from '../../../createInstanceTask/modules/cuaktask/CreateInstanceTaskGraphExpandCommandHandler';
 import { GetInstanceDependenciesTaskGraphExpandCommandHandler } from '../../../createInstanceTask/modules/cuaktask/GetInstanceDependenciesTaskGraphExpandCommandHandler';
@@ -88,7 +88,7 @@ describe(ContainerApi.name, () => {
       let createCreateRequestScopedInstanceTaskGraphNodeCommandHandlerFixture: CreateCreateRequestScopedInstanceTaskGraphNodeCommandHandler;
       let createCreateSingletonScopedInstanceTaskGraphNodeCommandHandlerFixture: CreateCreateSingletonScopedInstanceTaskGraphNodeCommandHandler;
       let createCreateTransientScopedInstanceTaskGraphNodeCommandHandlerFixture: CreateCreateTransientScopedInstanceTaskGraphNodeCommandHandler;
-      let createCreateInstanceTaskGraphNodeCommandHandlerFixture: CreateCreateInstanceTaskGraphNodeCommandHandler;
+      let createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerFixture: CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler;
       let getInstanceDependenciesTaskGraphExpandCommandHandlerFixture: GetInstanceDependenciesTaskGraphExpandCommandHandler;
       let createInstanceTaskGraphEngineFixture: CreateInstanceTaskGraphEngine;
       let rootedTaskGraphRunnerFixture: cuaktask.RootedTaskGraphRunner;
@@ -193,11 +193,11 @@ describe(ContainerApi.name, () => {
           createCreateTransientScopedInstanceTaskGraphNodeCommandHandlerFixture,
         );
 
-        createCreateInstanceTaskGraphNodeCommandHandlerFixture =
+        createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerFixture =
           buildEmptyFixture();
         bindFixtureToConstructor(
-          CreateCreateInstanceTaskGraphNodeCommandHandler,
-          createCreateInstanceTaskGraphNodeCommandHandlerFixture,
+          CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler,
+          createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerFixture,
         );
 
         getInstanceDependenciesTaskGraphExpandCommandHandlerFixture =
@@ -321,12 +321,12 @@ describe(ContainerApi.name, () => {
         );
       });
 
-      it('should call new CreateCreateInstanceTaskGraphNodeCommandHandler()', () => {
+      it('should call new CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler()', () => {
         expect(
-          CreateCreateInstanceTaskGraphNodeCommandHandler,
+          CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler,
         ).toHaveBeenCalledTimes(1);
         expect(
-          CreateCreateInstanceTaskGraphNodeCommandHandler,
+          CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler,
         ).toHaveBeenCalledWith(
           createCreateRequestScopedInstanceTaskGraphNodeCommandHandlerFixture,
           createCreateSingletonScopedInstanceTaskGraphNodeCommandHandlerFixture,
@@ -344,7 +344,7 @@ describe(ContainerApi.name, () => {
           containerBindingServiceImplementationFixture,
           containerRequestServiceImplementationFixture,
           containerSingletonServiceImplementationFixture,
-          createCreateInstanceTaskGraphNodeCommandHandlerFixture,
+          createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerFixture,
           metadataServiceImplementationFixture,
         );
       });

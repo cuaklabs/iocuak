@@ -11,7 +11,7 @@ import { ContainerSingletonService } from '../../../container/services/domain/Co
 import { ReadOnlyLinkedListImplementation } from '../../../list/models/domain/ReadOnlyLinkedListImplementation';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { GetInstanceDependenciesTaskKindFixtures } from '../../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
-import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
+import { CreateCreateTypeBindingInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommand';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
 import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
@@ -27,7 +27,7 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
   let containerSingletonServiceFixture: ContainerSingletonService;
   let createCreateInstanceTaskGraphNodeCommandHandlerMock: jestMock.Mocked<
     Handler<
-      CreateCreateInstanceTaskGraphNodeCommand,
+      CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >
   >;
@@ -224,7 +224,7 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
         });
 
         it('should call createCreateInstanceTaskGraphNodeCommandHandler.handle()', () => {
-          const expectedCreateCreateInstanceTaskGraphNodeCommand: CreateCreateInstanceTaskGraphNodeCommand =
+          const expectedCreateCreateInstanceTaskGraphNodeCommand: CreateCreateTypeBindingInstanceTaskGraphNodeCommand =
             {
               context: {
                 ...getInstanceDependenciesTaskGraphExpandCommandFixture.context,

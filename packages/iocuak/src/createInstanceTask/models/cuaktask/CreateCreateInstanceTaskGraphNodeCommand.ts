@@ -1,9 +1,11 @@
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
+import { Binding } from '../../../binding/models/domain/Binding';
 import { CreateInstanceTaskKind } from '../domain/CreateInstanceTaskKind';
 import { CreateInstanceTaskGraphFromTaskKindExpandOperationContext } from './CreateInstanceTaskGraphFromTaskKindExpandOperationContext';
 
-export interface CreateCreateInstanceTaskGraphNodeCommand {
+export interface CreateCreateInstanceTaskGraphNodeCommand<
+  TBinding extends Binding = Binding,
+> {
   context: CreateInstanceTaskGraphFromTaskKindExpandOperationContext<
-    CreateInstanceTaskKind<TypeBinding>
+    CreateInstanceTaskKind<TBinding>
   >;
 }
