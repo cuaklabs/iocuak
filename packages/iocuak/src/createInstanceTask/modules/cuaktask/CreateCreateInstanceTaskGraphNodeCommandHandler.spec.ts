@@ -1,157 +1,108 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
 
-import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
-import { ReadOnlyLinkedList } from '../../../list/models/domain/ReadOnlyLinkedList';
-import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
+import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
+import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
+import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
+import { CreateCreateTypeBindingInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommand';
+import { CreateInstanceTaskGraphFromTaskKindExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphFromTaskKindExpandOperationContext';
+import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
-import { TaskKindType } from '../../models/domain/TaskKindType';
 import { CreateCreateInstanceTaskGraphNodeCommandHandler } from './CreateCreateInstanceTaskGraphNodeCommandHandler';
 
 describe(CreateCreateInstanceTaskGraphNodeCommandHandler.name, () => {
-  let createCreateRequestScopedInstanceTaskGraphNodeCommandHandlerMock: jest.Mocked<
+  let containerRequestServiceFixture: ContainerRequestService;
+  let containerSingletonServiceFixture: ContainerSingletonService;
+  let createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerMock: jestMock.Mocked<
     Handler<
-      CreateCreateInstanceTaskGraphNodeCommand,
-      cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
-    >
-  >;
-  let createCreateSingletonScopedInstanceTaskGraphNodeCommandHandlerMock: jest.Mocked<
-    Handler<
-      CreateCreateInstanceTaskGraphNodeCommand,
-      cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
-    >
-  >;
-  let createCreateTransientScopedInstanceTaskGraphNodeCommandHandlerMock: jest.Mocked<
-    Handler<
-      CreateCreateInstanceTaskGraphNodeCommand,
-      cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
+      CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+      cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>>
     >
   >;
 
   let createCreateInstanceTaskGraphNodeCommandHandler: CreateCreateInstanceTaskGraphNodeCommandHandler;
 
   beforeAll(() => {
-    createCreateRequestScopedInstanceTaskGraphNodeCommandHandlerMock = {
-      handle: jest.fn(),
-    };
-    createCreateSingletonScopedInstanceTaskGraphNodeCommandHandlerMock = {
-      handle: jest.fn(),
-    };
-    createCreateTransientScopedInstanceTaskGraphNodeCommandHandlerMock = {
+    containerRequestServiceFixture = {
+      _type: Symbol(),
+    } as unknown as ContainerRequestService;
+    containerSingletonServiceFixture = {
+      _type: Symbol(),
+    } as unknown as ContainerSingletonService;
+    createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerMock = {
       handle: jest.fn(),
     };
 
     createCreateInstanceTaskGraphNodeCommandHandler =
       new CreateCreateInstanceTaskGraphNodeCommandHandler(
-        createCreateRequestScopedInstanceTaskGraphNodeCommandHandlerMock,
-        createCreateSingletonScopedInstanceTaskGraphNodeCommandHandlerMock,
-        createCreateTransientScopedInstanceTaskGraphNodeCommandHandlerMock,
+        containerRequestServiceFixture,
+        containerSingletonServiceFixture,
+        createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerMock,
       );
   });
 
   describe('.handle', () => {
-    describe.each<
-      [
-        string,
-        TypeBinding,
-        () => jest.Mocked<
-          Handler<
-            CreateCreateInstanceTaskGraphNodeCommand,
-            cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
-          >
-        >,
-      ]
-    >([
-      [
-        'request',
-        TypeBindingFixtures.withScopeRequest,
-        () => createCreateRequestScopedInstanceTaskGraphNodeCommandHandlerMock,
-      ],
-      [
-        'singleton',
-        TypeBindingFixtures.withScopeSingleton,
-        () =>
-          createCreateSingletonScopedInstanceTaskGraphNodeCommandHandlerMock,
-      ],
-      [
-        'transient',
-        TypeBindingFixtures.withScopeTransient,
-        () =>
-          createCreateTransientScopedInstanceTaskGraphNodeCommandHandlerMock,
-      ],
-    ])(
-      'having a createCreateInstanceTaskGraphNodeCommand with context with type binding with scope %s',
-      (
-        _: string,
-        typeBinding: TypeBinding,
-        handlerMockFn: () => jest.Mocked<
-          Handler<
-            CreateCreateInstanceTaskGraphNodeCommand,
-            cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
-          >
-        >,
-      ) => {
-        let createCreateInstanceTaskGraphNodeCommandFixture: CreateCreateInstanceTaskGraphNodeCommand;
+    describe('having a CreateCreateTypeBindingInstanceTaskGraphNodeCommand', () => {
+      let createCreateTypeBindingInstanceTaskGraphNodeCommandFixture: CreateCreateTypeBindingInstanceTaskGraphNodeCommand;
+
+      beforeAll(() => {
+        createCreateTypeBindingInstanceTaskGraphNodeCommandFixture = {
+          context: {
+            taskKind: CreateInstanceTaskKindFixtures.withBindingType,
+          } as Partial<
+            CreateInstanceTaskGraphFromTaskKindExpandOperationContext<
+              CreateInstanceTaskKind<TypeBinding>
+            >
+          > as CreateInstanceTaskGraphFromTaskKindExpandOperationContext<
+            CreateInstanceTaskKind<TypeBinding>
+          >,
+        };
+      });
+
+      describe('when called', () => {
+        let nodeDependencyFixture: cuaktask.NodeDependency<
+          cuaktask.Task<TaskKind>
+        >;
+
+        let result: unknown;
 
         beforeAll(() => {
-          const requestId: symbol = Symbol();
-
-          createCreateInstanceTaskGraphNodeCommandFixture = {
-            context: {
-              graph: {
-                nodes: new Set(),
-              },
-              requestId: requestId,
-              serviceIdAncestorList: {
-                _type: Symbol(),
-              } as unknown as ReadOnlyLinkedList<ServiceId>,
-              serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
-              serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
-              taskKind: {
-                binding: typeBinding,
-                requestId: requestId,
-                type: TaskKindType.createInstance,
-              },
-            },
+          nodeDependencyFixture = {
+            nodes: [],
+            type: cuaktask.NodeDependenciesType.and,
           };
+
+          createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerMock.handle.mockReturnValueOnce(
+            nodeDependencyFixture,
+          );
+
+          result = createCreateInstanceTaskGraphNodeCommandHandler.handle(
+            createCreateTypeBindingInstanceTaskGraphNodeCommandFixture,
+          );
         });
 
-        describe('when called', () => {
-          let nodeDependencyFixture: cuaktask.NodeDependency<
-            cuaktask.Task<TaskKind>
-          >;
-          let result: unknown;
-
-          beforeAll(() => {
-            nodeDependencyFixture = {
-              _type: Symbol(),
-            } as unknown as cuaktask.NodeDependency<cuaktask.Task<TaskKind>>;
-
-            handlerMockFn().handle.mockReturnValueOnce(nodeDependencyFixture);
-
-            result = createCreateInstanceTaskGraphNodeCommandHandler.handle(
-              createCreateInstanceTaskGraphNodeCommandFixture,
-            );
-          });
-
-          afterAll(() => {
-            jest.clearAllMocks();
-          });
-
-          it('should call handlerMock.handle()', () => {
-            expect(handlerMockFn().handle).toHaveBeenCalledTimes(1);
-            expect(handlerMockFn().handle).toHaveBeenCalledWith(
-              createCreateInstanceTaskGraphNodeCommandFixture,
-            );
-          });
-
-          it('should return nodeDependencyFixture', () => {
-            expect(result).toStrictEqual(nodeDependencyFixture);
-          });
+        afterAll(() => {
+          jest.clearAllMocks();
         });
-      },
-    );
+
+        it('should call createCreateTypeBindingInstanceTaskGraphNodeCommandHandler.handle()', () => {
+          expect(
+            createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerMock.handle,
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerMock.handle,
+          ).toHaveBeenCalledWith(
+            createCreateTypeBindingInstanceTaskGraphNodeCommandFixture,
+          );
+        });
+
+        it('should return a node dependency', () => {
+          expect(result).toBe(nodeDependencyFixture);
+        });
+      });
+    });
   });
 });
