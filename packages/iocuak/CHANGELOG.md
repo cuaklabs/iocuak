@@ -22,10 +22,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [UNRELEASED]
 
 ### Added
+- Added `BindingTag`.
 - Added `ClassElementMetadata`.
 - Added `ClassElementMetadatType`.
 - Added `ClassElementServiceIdMetadata`.
 - Added `ClassElementTagMetadata`.
+- Added `injectTag`.
 
 ### Changed
 - Updated `ContainerModuleMetadata` to allow module classes and modules.
