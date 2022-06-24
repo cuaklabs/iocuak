@@ -2,6 +2,8 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 import * as jestMock from 'jest-mock';
 
+jest.mock('../../utils/addNodesToGraph');
+
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { BindingService } from '../../../binding/services/domain/BindingService';
@@ -20,6 +22,7 @@ import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpan
 import { GetInstanceDependenciesTaskKind } from '../../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
+import { addNodesToGraph } from '../../utils/addNodesToGraph';
 import { GetInstanceDependenciesTaskGraphExpandCommandHandler } from './GetInstanceDependenciesTaskGraphExpandCommandHandler';
 
 describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
@@ -157,14 +160,19 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
           );
         });
 
-        it('should expand graph nodes', () => {
-          expect(
+        it('should call addNodesToGraph()', () => {
+          const expectedNodeDependency: cuaktask.NodeDependency<
+            cuaktask.Task<TaskKind>
+          > = {
+            nodes: [createInstanceTaskKindGraphNodeDependencyFixture],
+            type: cuaktask.NodeDependenciesType.and,
+          };
+
+          expect(addNodesToGraph).toHaveBeenCalledTimes(1);
+          expect(addNodesToGraph).toHaveBeenCalledWith(
             getInstanceDependenciesTaskGraphExpandCommandFixture.context.graph,
-          ).toStrictEqual({
-            nodes: new Set<cuaktask.Node<cuaktask.Task<TaskKind>>>([
-              createInstanceTaskKindGraphNodeDependencyFixture,
-            ]),
-          });
+            expectedNodeDependency,
+          );
         });
 
         it('should set node dependencies', () => {
@@ -288,14 +296,24 @@ describe(GetInstanceDependenciesTaskGraphExpandCommandHandler.name, () => {
           );
         });
 
-        it('should expand graph nodes', () => {
-          expect(
+        it('should call addNodesToGraph()', () => {
+          const expectedNodeDependency: cuaktask.NodeDependency<
+            cuaktask.Task<TaskKind>
+          > = {
+            nodes: [
+              {
+                nodes: [createInstanceTaskKindGraphNodeDependencyFixture],
+                type: cuaktask.NodeDependenciesType.and,
+              },
+            ],
+            type: cuaktask.NodeDependenciesType.and,
+          };
+
+          expect(addNodesToGraph).toHaveBeenCalledTimes(1);
+          expect(addNodesToGraph).toHaveBeenCalledWith(
             getInstanceDependenciesTaskGraphExpandCommandFixture.context.graph,
-          ).toStrictEqual({
-            nodes: new Set<cuaktask.Node<cuaktask.Task<TaskKind>>>([
-              createInstanceTaskKindGraphNodeDependencyFixture,
-            ]),
-          });
+            expectedNodeDependency,
+          );
         });
 
         it('should set node dependencies', () => {
