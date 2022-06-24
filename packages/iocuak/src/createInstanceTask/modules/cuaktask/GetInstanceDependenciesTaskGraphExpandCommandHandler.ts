@@ -17,6 +17,7 @@ import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKi
 import { GetInstanceDependenciesTaskKind } from '../../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
+import { addNodesToGraph } from '../../utils/addNodesToGraph';
 
 export class GetInstanceDependenciesTaskGraphExpandCommandHandler
   implements Handler<GetInstanceDependenciesTaskGraphExpandCommand, void>
@@ -68,31 +69,10 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
       type: cuaktask.NodeDependenciesType.and,
     };
 
-    this.#addNodesToGraph(
+    addNodesToGraph(
       getInstanceDependenciesTaskGraphExpandCommand.context.graph,
       getInstanceDependenciesTaskGraphExpandCommand.node.dependencies,
     );
-  }
-
-  #addNodesToGraph(
-    graph: cuaktask.Graph<cuaktask.Task<unknown>>,
-    nodeDependencies: cuaktask.NodeDependencies<cuaktask.Task<unknown>>,
-  ): void {
-    for (const nodeDependency of nodeDependencies.nodes) {
-      if (
-        (nodeDependency as cuaktask.NodeDependencies<cuaktask.Task<unknown>>)
-          .nodes === undefined
-      ) {
-        graph.nodes.add(
-          nodeDependency as cuaktask.Node<cuaktask.Task<unknown>>,
-        );
-      } else {
-        this.#addNodesToGraph(
-          graph,
-          nodeDependency as cuaktask.NodeDependencies<cuaktask.Task<unknown>>,
-        );
-      }
-    }
   }
 
   #createCreateInstanceTaskGraphNodeDependency(

@@ -28,7 +28,7 @@
     "test:js:ci:coverage": "pnpm run test:js --ci --coverage",
     "test:package:js:ci": "jest --config=config/jest/jest.js.config.mjs --ci",
     "test:package:js:ci:coverage": "pnpm run test:package:js:ci --coverage",
-    "test:previous": "pnpm run test --changedSince=HEAD~1",
+    "test:uncommitted": "pnpm run test --changedSince=HEAD",
     "test:unit": "jest --config=config/jest/jest.config.mjs --selectProjects Unit",
     "test:unit:js": "jest --config=config/jest/jest.js.config.mjs --selectProjects Unit",
     "test": "jest --config=config/jest/jest.config.mjs --selectProjects Unit Integration"
