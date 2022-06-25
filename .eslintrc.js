@@ -19,9 +19,7 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2021,
-    sourceType: 'module',
-    project: './tsconfig.json',
+    project: ['./packages/*/tsconfig.json'],
     tsconfigRootDir: __dirname,
   },
   plugins: ['@typescript-eslint', 'import'],
