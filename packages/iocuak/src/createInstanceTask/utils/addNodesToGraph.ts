@@ -2,13 +2,17 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 
 export function addNodesToGraph<T>(
   graph: cuaktask.Graph<cuaktask.Task<T>>,
-  nodeDependencies: cuaktask.NodeDependencies<cuaktask.Task<T>>,
+  nodeDependency: cuaktask.NodeDependency<cuaktask.Task<T>>,
 ): void {
-  for (const nodeDependency of nodeDependencies.nodes) {
-    if (isNode(nodeDependency)) {
-      graph.nodes.add(nodeDependency);
-    } else {
-      addNodesToGraph(graph, nodeDependency);
+  if (isNode(nodeDependency)) {
+    graph.nodes.add(nodeDependency);
+
+    if (nodeDependency.dependencies !== undefined) {
+      addNodesToGraph(graph, nodeDependency.dependencies);
+    }
+  } else {
+    for (const nodeDependencyNode of nodeDependency.nodes) {
+      addNodesToGraph(graph, nodeDependencyNode);
     }
   }
 }

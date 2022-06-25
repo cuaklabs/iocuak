@@ -1,8 +1,8 @@
 import { BindingTag } from '../../../binding/models/domain/BindingTag';
-import { BaseRequestTaskKind } from './BaseRequestTaskKind';
+import { BaseTaskKind } from './BaseTaskKind';
 import { TaskKindType } from './TaskKindType';
 
 export interface CreateTagInstancesTaskKind
-  extends BaseRequestTaskKind<TaskKindType.createTagInstances> {
+  extends BaseTaskKind<TaskKindType.createTagInstances> {
   tag: BindingTag;
 }

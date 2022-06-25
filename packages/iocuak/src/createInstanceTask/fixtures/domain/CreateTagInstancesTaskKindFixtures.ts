@@ -4,7 +4,6 @@ import { TaskKindType } from '../../models/domain/TaskKindType';
 export class CreateTagInstancesTaskKindFixtures {
   public static get any(): CreateTagInstancesTaskKind {
     const fixture: CreateTagInstancesTaskKind = {
-      requestId: Symbol(),
       tag: Symbol(),
       type: TaskKindType.createTagInstances,
     };
