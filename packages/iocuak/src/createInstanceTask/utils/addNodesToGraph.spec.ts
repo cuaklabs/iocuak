@@ -4,11 +4,12 @@ import { beforeAll, describe, expect, it } from '@jest/globals';
 import { addNodesToGraph } from './addNodesToGraph';
 
 describe(addNodesToGraph.name, () => {
-  describe('having a nodeDendencies with node dependencies', () => {
+  describe('having a node with node dependencies', () => {
     let nodeFixture: cuaktask.Node<cuaktask.Task<unknown>>;
     let nodeDendenciesFixture: cuaktask.NodeDependencies<
       cuaktask.Task<unknown>
     >;
+    let nodeDendencyFixture: cuaktask.Node<cuaktask.Task<unknown>>;
 
     beforeAll(() => {
       nodeFixture = {
@@ -22,6 +23,13 @@ describe(addNodesToGraph.name, () => {
         nodes: [nodeFixture],
         type: cuaktask.NodeDependenciesType.and,
       };
+
+      nodeDendencyFixture = {
+        dependencies: nodeDendenciesFixture,
+        element: {
+          _type: Symbol(),
+        } as unknown as cuaktask.Task<unknown>,
+      };
     });
 
     describe('when called', () => {
@@ -34,11 +42,13 @@ describe(addNodesToGraph.name, () => {
           nodes: new Set(),
         };
 
-        result = addNodesToGraph(graphFixture, nodeDendenciesFixture);
+        result = addNodesToGraph(graphFixture, nodeDendencyFixture);
       });
 
       it('should set graph.nodes', () => {
-        expect(graphFixture.nodes).toStrictEqual(new Set([nodeFixture]));
+        expect(graphFixture.nodes).toStrictEqual(
+          new Set([nodeDendencyFixture, nodeFixture]),
+        );
       });
 
       it('should return undefined', () => {
@@ -47,11 +57,9 @@ describe(addNodesToGraph.name, () => {
     });
   });
 
-  describe('having a nodeDendencies with node dependencies dependencies', () => {
+  describe('having a nodeDependency with node dependencies dependencies', () => {
     let nodeFixture: cuaktask.Node<cuaktask.Task<unknown>>;
-    let nodeDendenciesFixture: cuaktask.NodeDependencies<
-      cuaktask.Task<unknown>
-    >;
+    let nodeDendencyFixture: cuaktask.NodeDependencies<cuaktask.Task<unknown>>;
 
     beforeAll(() => {
       nodeFixture = {
@@ -61,7 +69,7 @@ describe(addNodesToGraph.name, () => {
         } as unknown as cuaktask.Task<unknown>,
       };
 
-      nodeDendenciesFixture = {
+      nodeDendencyFixture = {
         nodes: [
           {
             nodes: [nodeFixture],
@@ -82,7 +90,7 @@ describe(addNodesToGraph.name, () => {
           nodes: new Set(),
         };
 
-        result = addNodesToGraph(graphFixture, nodeDendenciesFixture);
+        result = addNodesToGraph(graphFixture, nodeDendencyFixture);
       });
 
       it('should set graph.nodes', () => {
