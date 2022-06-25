@@ -242,6 +242,7 @@ export class ContainerApi extends ContainerServiceApiImplementation {
       void
     > = new GetInstanceDependenciesTaskGraphExpandCommandHandler(
       containerBindingService,
+      taskGraphExpandCommandHandler,
       createCreateInstanceTaskGraphNodeCommandHandler,
       metadataService,
     );

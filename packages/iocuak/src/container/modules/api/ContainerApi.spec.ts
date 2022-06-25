@@ -367,6 +367,7 @@ describe(ContainerApi.name, () => {
           GetInstanceDependenciesTaskGraphExpandCommandHandler,
         ).toHaveBeenCalledWith(
           containerBindingServiceImplementationFixture,
+          taskGraphExpandCommandHandlerMock,
           createCreateInstanceTaskGraphNodeCommandHandlerFixture,
           metadataServiceImplementationFixture,
         );
