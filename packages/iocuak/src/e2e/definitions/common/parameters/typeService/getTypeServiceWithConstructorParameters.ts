@@ -49,6 +49,7 @@ export function getTypeServiceWithConstructorParameters(): TypeServiceParameter 
     bindingType: BindingTypeApi.type,
     id: Symbol(TypeServiceWithConstructorParameters.name),
     scope: BindingScopeApi.singleton,
+    tags: [],
     type: TypeServiceWithConstructorParameters,
   };
 

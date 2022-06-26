@@ -30,6 +30,7 @@ export function getTypeServiceWithBindingWithTransientScopeAndDependenciesWithTr
       TypeServiceWithBindingWithTransientScopeAndDependenciesWithTransientScope.name,
     ),
     scope: BindingScopeApi.transient,
+    tags: [],
     type: TypeServiceWithBindingWithTransientScopeAndDependenciesWithTransientScope,
   };
 

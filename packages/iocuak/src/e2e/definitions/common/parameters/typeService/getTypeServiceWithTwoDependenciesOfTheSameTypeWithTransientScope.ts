@@ -32,6 +32,7 @@ export function getTypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScope
       TypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScope.name,
     ),
     scope: BindingScopeApi.singleton,
+    tags: [],
     type: TypeServiceWithTwoDependenciesOfTheSameTypeWithTransientScope,
   };
 

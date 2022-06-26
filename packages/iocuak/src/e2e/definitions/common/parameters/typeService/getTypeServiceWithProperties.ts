@@ -44,6 +44,7 @@ export function getTypeServiceWithProperties(): TypeServiceParameter {
     bindingType: BindingTypeApi.type,
     id: Symbol(TypeServiceWithProperties.name),
     scope: BindingScopeApi.singleton,
+    tags: [],
     type: TypeServiceWithProperties,
   };
 

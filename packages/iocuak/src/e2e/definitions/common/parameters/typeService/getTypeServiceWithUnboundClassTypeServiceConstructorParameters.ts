@@ -30,6 +30,7 @@ export function getTypeServiceWithUnboundClassTypeServiceConstructorParameters()
       TypeServiceWithUnboundClassTypeServiceConstructorParameters.name,
     ),
     scope: BindingScopeApi.singleton,
+    tags: [],
     type: TypeServiceWithUnboundClassTypeServiceConstructorParameters,
   };
 

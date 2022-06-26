@@ -28,6 +28,7 @@ export function convertBindingToBindingApi<TInstance, TArgs extends unknown[]>(
         bindingType: BindingTypeApi.type,
         id: binding.id,
         scope: bindingScopeToBindingScopeApiMap[binding.scope],
+        tags: [...binding.tags],
         type: binding.type,
       };
       break;
@@ -35,6 +36,7 @@ export function convertBindingToBindingApi<TInstance, TArgs extends unknown[]>(
       bindingApi = {
         bindingType: BindingTypeApi.value,
         id: binding.id,
+        tags: [...binding.tags],
         value: binding.value,
       };
       break;

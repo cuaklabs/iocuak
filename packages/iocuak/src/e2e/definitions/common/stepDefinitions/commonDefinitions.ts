@@ -2,11 +2,16 @@ import { Given, Then } from '@cucumber/cucumber';
 import chai from 'chai';
 
 import { ResultWorld } from '../models/worlds/ResultWorld';
+import { TagWorld } from '../models/worlds/TagWorld';
 import { TwoResultsWorld } from '../models/worlds/TwoResultsWorld';
 import { TypeServiceWorld } from '../models/worlds/TypeServiceWorld';
 import { ValueServiceWorld } from '../models/worlds/ValueServiceWorld';
 import { TypeServiceParameter } from '../parameters/typeService/TypeServiceParameter';
 import { ValueServiceParameter } from '../parameters/valueService/ValueServiceParameter';
+
+Given<TagWorld>('a tag', function (): void {
+  this.tag = Symbol();
+});
 
 Given<TypeServiceWorld>(
   'a {typeService}',

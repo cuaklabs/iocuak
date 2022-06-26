@@ -28,6 +28,7 @@ export function getTypeServiceWithUnboundClassTypeServiceProperties(): TypeServi
     bindingType: BindingTypeApi.type,
     id: Symbol(TypeServiceWithUnboundClassTypeServiceProperties.name),
     scope: BindingScopeApi.singleton,
+    tags: [],
     type: TypeServiceWithUnboundClassTypeServiceProperties,
   };
 

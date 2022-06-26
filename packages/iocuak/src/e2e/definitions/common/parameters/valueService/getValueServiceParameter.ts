@@ -8,6 +8,7 @@ export function getValueServiceParameter(): ValueServiceParameter {
   const binding: ValueBindingApi = {
     bindingType: BindingTypeApi.value,
     id: Symbol('value-service'),
+    tags: [],
     value,
   };
 

@@ -30,6 +30,7 @@ export function getTypeServiceWithBindingWithSingletonScopeAndDependenciesWithTr
       TypeServiceWithBindingWithSingletonScopeAndDependenciesWithTransientScope.name,
     ),
     scope: BindingScopeApi.singleton,
+    tags: [],
     type: TypeServiceWithBindingWithSingletonScopeAndDependenciesWithTransientScope,
   };
 

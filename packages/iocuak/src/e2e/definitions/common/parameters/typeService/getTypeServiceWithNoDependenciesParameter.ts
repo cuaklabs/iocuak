@@ -20,6 +20,7 @@ export function getTypeServiceWithNoDependenciesParameter(): TypeServiceParamete
     bindingType: BindingTypeApi.type,
     id: Symbol(TypeServiceWithNoDependenciesParameter.name),
     scope: BindingScopeApi.request,
+    tags: [],
     type: TypeServiceWithNoDependenciesParameter,
   };
 
