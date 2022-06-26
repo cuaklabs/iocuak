@@ -1,3 +1,6 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
+
 import { Handler } from '../../../common/modules/domain/Handler';
 import { TaskNodeExpandCommand } from '../../models/cuaktask/TaskNodeExpandCommand';
 import { BaseCreateInstanceTaskLazyNode } from './BaseCreateInstanceTaskLazyNode';
@@ -16,7 +19,7 @@ class BaseCreateInstanceTaskLazyNodeMock extends BaseCreateInstanceTaskLazyNode 
 }
 
 describe(BaseCreateInstanceTaskLazyNode.name, () => {
-  let busMock: jest.Mocked<
+  let busMock: jestMock.Mocked<
     Handler<TaskNodeExpandCommand, void | Promise<void>>
   >;
   let taskGraphExpandCommandFixture: TaskNodeExpandCommand;

@@ -1,4 +1,6 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
 
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
@@ -15,7 +17,7 @@ import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKi
 import { CreateCreateTransientScopedInstanceTaskNodeCommandHandler } from './CreateCreateTransientScopedInstanceTaskNodeCommandHandler';
 
 describe(CreateCreateTransientScopedInstanceTaskNodeCommandHandler.name, () => {
-  let busMock: jest.Mocked<
+  let busMock: jestMock.Mocked<
     Handler<TaskNodeExpandCommand, void | Promise<void>>
   >;
   let containerRequestServiceFixture: ContainerRequestService;

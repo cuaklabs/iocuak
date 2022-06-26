@@ -1,4 +1,6 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
 
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
@@ -17,24 +19,20 @@ import { BaseCreateCreateCachedScopedInstanceTaskNodeCommandHandler } from './Ba
 import { CreateInstanceTaskLazyNode } from './CreateInstanceTaskLazyNode';
 
 class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock extends BaseCreateCreateCachedScopedInstanceTaskNodeCommandHandler {
-  #getServiceIdToNodeDependencyMapMock: jest.Mock<
-    Map<
-      ServiceId,
-      cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>>
-    >,
-    [CreateInstanceTaskNodeExpandOperationContext]
+  #getServiceIdToNodeDependencyMapMock: jestMock.Mock<
+    (
+      context: CreateInstanceTaskNodeExpandOperationContext,
+    ) => Map<ServiceId, cuaktask.NodeDependency<cuaktask.Task<TaskKind>>>
   >;
 
   constructor(
     bus: Handler<TaskNodeExpandCommand, void | Promise<void>>,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
-    getServiceIdToCreateInstanceTaskKindNodeMapMock: jest.Mock<
-      Map<
-        ServiceId,
-        cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>>
-      >,
-      [CreateInstanceTaskNodeExpandOperationContext]
+    getServiceIdToCreateInstanceTaskKindNodeMapMock: jestMock.Mock<
+      (
+        context: CreateInstanceTaskNodeExpandOperationContext,
+      ) => Map<ServiceId, cuaktask.NodeDependency<cuaktask.Task<TaskKind>>>
     >,
   ) {
     super(bus, containerRequestService, containerSingletonService);
@@ -56,17 +54,15 @@ class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock extend
 describe(
   BaseCreateCreateCachedScopedInstanceTaskNodeCommandHandler.name,
   () => {
-    let busMock: jest.Mocked<
+    let busMock: jestMock.Mocked<
       Handler<TaskNodeExpandCommand, void | Promise<void>>
     >;
     let containerRequestServiceFixture: ContainerRequestService;
     let containerSingletonServiceFixture: ContainerSingletonService;
-    let getServiceIdToNodeDependencyMapMock: jest.Mock<
-      Map<
-        ServiceId,
-        cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>>
-      >,
-      [CreateInstanceTaskNodeExpandOperationContext]
+    let getServiceIdToNodeDependencyMapMock: jestMock.Mock<
+      (
+        context: CreateInstanceTaskNodeExpandOperationContext,
+      ) => Map<ServiceId, cuaktask.NodeDependency<cuaktask.Task<TaskKind>>>
     >;
 
     let baseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock: BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock;
@@ -81,13 +77,17 @@ describe(
       containerSingletonServiceFixture = {
         _type: Symbol(),
       } as unknown as ContainerSingletonService;
-      getServiceIdToNodeDependencyMapMock = jest.fn<
-        Map<
-          ServiceId,
-          cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>>
-        >,
-        [CreateInstanceTaskNodeExpandOperationContext]
-      >();
+      getServiceIdToNodeDependencyMapMock =
+        jest.fn<
+          jestMock.Mock<
+            (
+              context: CreateInstanceTaskNodeExpandOperationContext,
+            ) => Map<
+              ServiceId,
+              cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
+            >
+          >
+        >();
 
       baseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock =
         new BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock(
@@ -135,36 +135,43 @@ describe(
             );
         });
 
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
         it('should return a NodeDependency', () => {
-          expect(result).toStrictEqual<cuaktask.Node<cuaktask.Task<TaskKind>>>({
-            dependencies: {
-              nodes: [
-                {
-                  dependencies: undefined,
-                  element: new GetCachedInstanceTask(
-                    {
-                      binding:
-                        createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
-                          .context.taskKind.binding,
-                      requestId:
-                        createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
-                          .context.taskKind.requestId,
-                      type: TaskKindType.getCachedInstance,
-                    },
-                    containerRequestServiceFixture,
-                    containerSingletonServiceFixture,
-                  ),
-                },
-                expect.any(
-                  CreateInstanceTaskLazyNode,
-                ) as CreateInstanceTaskLazyNode,
-              ],
-              type: cuaktask.NodeDependenciesType.bitwiseOr,
-            },
-            element: new DestructureOneTask({
-              type: TaskKindType.destructureOne,
-            }),
-          });
+          const expectedNodeDependency: cuaktask.Node<cuaktask.Task<TaskKind>> =
+            {
+              dependencies: {
+                nodes: [
+                  {
+                    dependencies: undefined,
+                    element: new GetCachedInstanceTask(
+                      {
+                        binding:
+                          createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                            .context.taskKind.binding,
+                        requestId:
+                          createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand
+                            .context.taskKind.requestId,
+                        type: TaskKindType.getCachedInstance,
+                      },
+                      containerRequestServiceFixture,
+                      containerSingletonServiceFixture,
+                    ),
+                  },
+                  expect.any(
+                    CreateInstanceTaskLazyNode,
+                  ) as unknown as CreateInstanceTaskLazyNode,
+                ],
+                type: cuaktask.NodeDependenciesType.bitwiseOr,
+              },
+              element: new DestructureOneTask({
+                type: TaskKindType.destructureOne,
+              }),
+            };
+
+          expect(result).toStrictEqual(expectedNodeDependency);
         });
       });
     });

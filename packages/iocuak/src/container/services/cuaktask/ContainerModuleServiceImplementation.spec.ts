@@ -1,4 +1,6 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
 
 import { Builder } from '../../../common/modules/domain/Builder';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
@@ -10,7 +12,7 @@ import { ContainerModuleTaskKindType } from '../../../containerModuleTask/models
 import { ContainerModuleServiceImplementation } from './ContainerModuleServiceImplementation';
 
 describe(ContainerModuleServiceImplementation.name, () => {
-  let taskBuilderMock: jest.Mocked<
+  let taskBuilderMock: jestMock.Mocked<
     Builder<
       cuaktask.DependentTask<
         ContainerModuleTaskKind,
@@ -21,7 +23,7 @@ describe(ContainerModuleServiceImplementation.name, () => {
       [ContainerModuleTaskKind]
     >
   >;
-  let dependentTaskRunnerMock: jest.Mocked<cuaktask.DependentTaskRunner>;
+  let dependentTaskRunnerMock: jestMock.Mocked<cuaktask.DependentTaskRunner>;
 
   let containerModuleServiceImplementation: ContainerModuleServiceImplementation;
 
@@ -32,8 +34,8 @@ describe(ContainerModuleServiceImplementation.name, () => {
     dependentTaskRunnerMock = {
       run: jest.fn(),
     } as Partial<
-      jest.Mocked<cuaktask.DependentTaskRunner>
-    > as jest.Mocked<cuaktask.DependentTaskRunner>;
+      jestMock.Mocked<cuaktask.DependentTaskRunner>
+    > as jestMock.Mocked<cuaktask.DependentTaskRunner>;
 
     containerModuleServiceImplementation =
       new ContainerModuleServiceImplementation(

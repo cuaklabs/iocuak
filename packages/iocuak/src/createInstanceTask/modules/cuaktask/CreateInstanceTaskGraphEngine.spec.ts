@@ -1,11 +1,12 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
 
 jest.mock('../../../binding/utils/domain/lazyGetBindingOrThrow');
 jest.mock('../../utils/addNodesToGraph');
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
-import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { lazyGetBindingOrThrow } from '../../../binding/utils/domain/lazyGetBindingOrThrow';
 import { Handler } from '../../../common/modules/domain/Handler';
@@ -31,11 +32,11 @@ import { addNodesToGraph } from '../../utils/addNodesToGraph';
 import { CreateInstanceTaskGraphEngine } from './CreateInstanceTaskGraphEngine';
 
 describe(CreateInstanceTaskGraphEngine.name, () => {
-  let bindingServiceMock: jest.Mocked<BindingService>;
+  let bindingServiceMock: jestMock.Mocked<BindingService>;
   let containerRequestServiceFixture: ContainerRequestService;
   let containerSingletonServiceFixture: ContainerSingletonService;
   let metadataServiceFixture: MetadataService;
-  let taskGraphExpandCommandHandlerMock: jest.Mocked<
+  let taskGraphExpandCommandHandlerMock: jestMock.Mocked<
     Handler<CreateInstanceTaskNodeExpandCommand, void | Promise<void>>
   >;
 
@@ -44,7 +45,9 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
   beforeAll(() => {
     bindingServiceMock = {
       get: jest.fn(),
-    } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
+    } as Partial<
+      jestMock.Mocked<BindingService>
+    > as jestMock.Mocked<BindingService>;
     containerRequestServiceFixture = {
       _type: Symbol(),
     } as unknown as ContainerRequestService;
@@ -120,21 +123,25 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
         });
 
         it('should call taskGraphExpandCommandHandler.handle()', () => {
+          const expectedParams: [CreateInstanceTaskNodeExpandCommand] = [
+            {
+              context: {
+                requestId: taskKindFixture.requestId,
+                serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
+                serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
+                serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
+              },
+              node: expectedCreateInstanceTaskNode,
+              taskKindType: TaskNodeExpandCommandType.createInstance,
+            },
+          ];
+
           expect(
             taskGraphExpandCommandHandlerMock.handle,
           ).toHaveBeenCalledTimes(1);
-          expect(taskGraphExpandCommandHandlerMock.handle).toHaveBeenCalledWith<
-            [CreateInstanceTaskNodeExpandCommand]
-          >({
-            context: {
-              requestId: taskKindFixture.requestId,
-              serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
-              serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
-              serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
-            },
-            node: expectedCreateInstanceTaskNode,
-            taskKindType: TaskNodeExpandCommandType.createInstance,
-          });
+          expect(taskGraphExpandCommandHandlerMock.handle).toHaveBeenCalledWith(
+            ...expectedParams,
+          );
         });
 
         it('should call addNodesToGraph()', () => {
@@ -180,9 +187,9 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
 
           bindingServiceMock.get.mockReturnValueOnce(undefined);
 
-          (lazyGetBindingOrThrow as jest.Mock<Binding>).mockReturnValueOnce(
-            TypeBindingFixtures.any,
-          );
+          (
+            lazyGetBindingOrThrow as jestMock.Mock<typeof lazyGetBindingOrThrow>
+          ).mockReturnValueOnce(TypeBindingFixtures.any);
 
           result = createInstancesTaskGraphEngine.create(taskKindFixture);
         });
@@ -207,21 +214,25 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
         });
 
         it('should call taskGraphExpandCommandHandler.handle()', () => {
+          const expectedParams: [CreateInstanceTaskNodeExpandCommand] = [
+            {
+              context: {
+                requestId: taskKindFixture.requestId,
+                serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
+                serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
+                serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
+              },
+              node: expectedCreateInstanceTaskNode,
+              taskKindType: TaskNodeExpandCommandType.createInstance,
+            },
+          ];
+
           expect(
             taskGraphExpandCommandHandlerMock.handle,
           ).toHaveBeenCalledTimes(1);
-          expect(taskGraphExpandCommandHandlerMock.handle).toHaveBeenCalledWith<
-            [CreateInstanceTaskNodeExpandCommand]
-          >({
-            context: {
-              requestId: taskKindFixture.requestId,
-              serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
-              serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
-              serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
-            },
-            node: expectedCreateInstanceTaskNode,
-            taskKindType: TaskNodeExpandCommandType.createInstance,
-          });
+          expect(taskGraphExpandCommandHandlerMock.handle).toHaveBeenCalledWith(
+            ...expectedParams,
+          );
         });
 
         it('should call addNodesToGraph()', () => {
@@ -276,21 +287,25 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
         });
 
         it('should call taskGraphExpandCommandHandler.handle()', () => {
+          const expectedParams: [CreateTagInstancesTaskNodeExpandCommand] = [
+            {
+              context: {
+                requestId: taskKindFixture.requestId,
+                serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
+                serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
+                serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
+              },
+              node: expectedCreateTagInstancesTaskNode,
+              taskKindType: TaskNodeExpandCommandType.createTagInstances,
+            },
+          ];
+
           expect(
             taskGraphExpandCommandHandlerMock.handle,
           ).toHaveBeenCalledTimes(1);
-          expect(taskGraphExpandCommandHandlerMock.handle).toHaveBeenCalledWith<
-            [CreateTagInstancesTaskNodeExpandCommand]
-          >({
-            context: {
-              requestId: taskKindFixture.requestId,
-              serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
-              serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
-              serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
-            },
-            node: expectedCreateTagInstancesTaskNode,
-            taskKindType: TaskNodeExpandCommandType.createTagInstances,
-          });
+          expect(taskGraphExpandCommandHandlerMock.handle).toHaveBeenCalledWith(
+            ...expectedParams,
+          );
         });
 
         it('should call addNodesToGraph()', () => {
@@ -326,12 +341,12 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
         });
 
         it('should throw an Error', () => {
+          const expectedError: Partial<Error> = {
+            message: 'Unexpected task kind',
+          };
+
           expect(result).toBeInstanceOf(Error);
-          expect(result).toStrictEqual(
-            expect.objectContaining<Partial<Error>>({
-              message: 'Unexpected task kind',
-            }),
-          );
+          expect(result).toStrictEqual(expect.objectContaining(expectedError));
         });
       });
     });

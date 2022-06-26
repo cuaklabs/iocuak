@@ -1,3 +1,6 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
+
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { Binding } from '../../../binding/models/domain/Binding';
@@ -15,33 +18,35 @@ class InstanceTest {
 }
 
 describe(CreateInstanceTask.name, () => {
-  let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
-  let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
+  let containerRequestServiceMock: jestMock.Mocked<ContainerRequestService>;
+  let containerSingletonServiceMock: jestMock.Mocked<ContainerSingletonService>;
 
   beforeAll(() => {
     containerRequestServiceMock = {
       get: jest.fn(),
       set: jest.fn(),
     } as Partial<
-      jest.Mocked<ContainerRequestService>
-    > as jest.Mocked<ContainerRequestService>;
+      jestMock.Mocked<ContainerRequestService>
+    > as jestMock.Mocked<ContainerRequestService>;
 
     containerSingletonServiceMock = {
       get: jest.fn(),
       set: jest.fn(),
     } as Partial<
-      jest.Mocked<ContainerSingletonService>
-    > as jest.Mocked<ContainerSingletonService>;
+      jestMock.Mocked<ContainerSingletonService>
+    > as jestMock.Mocked<ContainerSingletonService>;
   });
 
   describe('.perform()', () => {
     describe('having a CreateInstanceTaskKind with binding TypeBinding with scope request', () => {
-      let bindingFixture: TypeBinding<InstanceTest>;
+      let bindingFixture: TypeBinding<InstanceTest, []>;
       let taskKindFixture: CreateInstanceTaskKind;
 
       beforeAll(() => {
-        const instanceConstructorCallMock: jest.Mock<InstanceTest> = jest
-          .fn<InstanceTest, []>()
+        const instanceConstructorCallMock: jestMock.Mock<
+          (foo?: string) => InstanceTest
+        > = jest
+          .fn<(foo?: string) => InstanceTest>()
           .mockImplementation((foo?: string) => new InstanceTest(foo));
 
         bindingFixture = {
@@ -184,9 +189,10 @@ describe(CreateInstanceTask.name, () => {
       let taskKindFixture: CreateInstanceTaskKind;
 
       beforeAll(() => {
-        const instanceConstructorCallMock: jest.Mock<InstanceTest> = jest
-          .fn<InstanceTest, []>()
-          .mockImplementation((foo?: string) => new InstanceTest(foo));
+        const instanceConstructorCallMock: jestMock.Mock<() => InstanceTest> =
+          jest
+            .fn<() => InstanceTest>()
+            .mockImplementation((foo?: string) => new InstanceTest(foo));
 
         bindingFixture = {
           ...TypeBindingFixtures.withScopeSingleton,
@@ -324,9 +330,10 @@ describe(CreateInstanceTask.name, () => {
       let taskKindFixture: CreateInstanceTaskKind;
 
       beforeAll(() => {
-        const instanceConstructorCallMock: jest.Mock<InstanceTest> = jest
-          .fn<InstanceTest, []>()
-          .mockImplementation((foo?: string) => new InstanceTest(foo));
+        const instanceConstructorCallMock: jestMock.Mock<() => InstanceTest> =
+          jest
+            .fn<() => InstanceTest>()
+            .mockImplementation((foo?: string) => new InstanceTest(foo));
 
         bindingFixture = {
           ...TypeBindingFixtures.withScopeTransient,
