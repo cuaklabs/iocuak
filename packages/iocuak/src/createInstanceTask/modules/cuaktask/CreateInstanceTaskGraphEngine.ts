@@ -88,7 +88,7 @@ export class CreateInstanceTaskGraphEngine
     };
 
     const rootedTaskGraph: cuaktask.RootedGraph<cuaktask.Task<TaskKind>> = {
-      nodes: new Set([createInstanceTaskNode]),
+      nodes: new Set(),
       root: createInstanceTaskNode,
     };
 

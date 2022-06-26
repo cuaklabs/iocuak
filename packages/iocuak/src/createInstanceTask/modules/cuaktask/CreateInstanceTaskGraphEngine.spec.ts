@@ -94,7 +94,7 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
           };
 
           expectedRootedTaskGraph = {
-            nodes: new Set([expectedCreateInstanceTaskNode]),
+            nodes: new Set(),
             root: expectedCreateInstanceTaskNode,
           };
 
@@ -169,7 +169,7 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
           };
 
           expectedRootedTaskGraph = {
-            nodes: new Set([expectedCreateInstanceTaskNode]),
+            nodes: new Set(),
             root: expectedCreateInstanceTaskNode,
           };
 
