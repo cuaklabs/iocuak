@@ -1,5 +1,6 @@
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { Binding } from '../../../binding/models/domain/Binding';
+import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
@@ -34,6 +35,15 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
       this._containerService.instance.create(serviceId);
 
     return instance;
+  }
+
+  public getByTag<TInstances extends unknown[] = unknown[]>(
+    tag: BindingTag,
+  ): TInstances {
+    const instances: TInstances =
+      this._containerService.instance.createByTag(tag);
+
+    return instances;
   }
 
   public getAllBindinds(): BindingApi[] {
