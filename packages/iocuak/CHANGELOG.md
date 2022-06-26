@@ -30,8 +30,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `injectTag`.
 
 ### Changed
+- Updated `Container` with `getByTag`.
 - Updated `ContainerModuleMetadata` to allow module classes and modules.
-- Updated `InjectableOptions` with tags
+- Updated `InjectableOptions` with tags.
 - [BC]: Updated `ClassMetadata` to contain `ClassElementMetadata` based properties and constructor arguments.
 
 
