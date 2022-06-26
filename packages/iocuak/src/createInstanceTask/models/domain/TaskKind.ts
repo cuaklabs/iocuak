@@ -1,5 +1,6 @@
 import { CreateInstanceRootTaskKind } from './CreateInstanceRootTaskKind';
 import { CreateInstanceTaskKind } from './CreateInstanceTaskKind';
+import { CreateTagInstancesRootTaskKind } from './CreateTagInstancesRootTaskKind';
 import { CreateTagInstancesTaskKind } from './CreateTagInstancesTaskKind';
 import { DestructureOneTaskKind } from './DestructureOneTaskKind';
 import { GetCachedInstanceTaskKind } from './GetCachedInstanceTaskKind';
@@ -9,6 +10,7 @@ export type TaskKind =
   | CreateInstanceTaskKind
   | CreateInstanceRootTaskKind
   | CreateTagInstancesTaskKind
+  | CreateTagInstancesRootTaskKind
   | DestructureOneTaskKind
   | GetCachedInstanceTaskKind
   | GetInstanceDependenciesTaskKind;
