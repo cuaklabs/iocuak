@@ -1,3 +1,6 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
+
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock(
   '../../../containerModuleMetadata/utils/api/convertToContainerModuleMetadata',
@@ -9,6 +12,7 @@ import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBind
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
 import { Binding } from '../../../binding/models/domain/Binding';
+import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { Newable } from '../../../common/models/domain/Newable';
@@ -27,11 +31,11 @@ import { ContainerSingletonService } from '../domain/ContainerSingletonService';
 import { ContainerServiceApiImplementation } from './ContainerServiceApiImplementation';
 
 describe(ContainerServiceApiImplementation.name, () => {
-  let containerBindingServiceMock: jest.Mocked<BindingService>;
-  let containerInstanceServiceMock: jest.Mocked<ContainerInstanceService>;
-  let containerModuleServiceMock: jest.Mocked<ContainerModuleService>;
-  let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
-  let metadataServiceMock: jest.Mocked<MetadataService>;
+  let containerBindingServiceMock: jestMock.Mocked<BindingService>;
+  let containerInstanceServiceMock: jestMock.Mocked<ContainerInstanceService>;
+  let containerModuleServiceMock: jestMock.Mocked<ContainerModuleService>;
+  let containerSingletonServiceMock: jestMock.Mocked<ContainerSingletonService>;
+  let metadataServiceMock: jestMock.Mocked<MetadataService>;
   let containerServiceMock: ContainerService;
   let containerServiceApiImplementation: ContainerServiceApiImplementation;
 
@@ -40,23 +44,28 @@ describe(ContainerServiceApiImplementation.name, () => {
       getAll: jest.fn(),
       remove: jest.fn(),
       set: jest.fn(),
-    } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
+    } as Partial<
+      jestMock.Mocked<BindingService>
+    > as jestMock.Mocked<BindingService>;
     containerInstanceServiceMock = {
       create: jest.fn(),
+      createByTag: jest.fn(),
     } as Partial<
-      jest.Mocked<ContainerInstanceService>
-    > as jest.Mocked<ContainerInstanceService>;
+      jestMock.Mocked<ContainerInstanceService>
+    > as jestMock.Mocked<ContainerInstanceService>;
     containerModuleServiceMock = {
       loadMetadata: jest.fn(),
     };
     containerSingletonServiceMock = {
       remove: jest.fn(),
     } as Partial<
-      jest.Mocked<ContainerSingletonService>
-    > as jest.Mocked<ContainerSingletonService>;
+      jestMock.Mocked<ContainerSingletonService>
+    > as jestMock.Mocked<ContainerSingletonService>;
     metadataServiceMock = {
       getBindingMetadata: jest.fn(),
-    } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
+    } as Partial<
+      jestMock.Mocked<MetadataService>
+    > as jestMock.Mocked<MetadataService>;
 
     containerServiceMock = {
       binding: containerBindingServiceMock,
@@ -164,6 +173,46 @@ describe(ContainerServiceApiImplementation.name, () => {
     });
   });
 
+  describe('.getByTag', () => {
+    describe('when called', () => {
+      let bindingTagFixture: BindingTag;
+      let instancesFixture: unknown[];
+      let result: unknown;
+
+      beforeAll(() => {
+        bindingTagFixture = 'tag-id';
+        instancesFixture = [
+          {
+            foo: 'bar',
+          },
+        ];
+
+        containerInstanceServiceMock.createByTag.mockReturnValueOnce(
+          instancesFixture,
+        );
+
+        result = containerServiceApiImplementation.getByTag(bindingTagFixture);
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should call containerService.instance.createByTag()', () => {
+        expect(containerServiceMock.instance.createByTag).toHaveBeenCalledTimes(
+          1,
+        );
+        expect(containerServiceMock.instance.createByTag).toHaveBeenCalledWith(
+          bindingTagFixture,
+        );
+      });
+
+      it('should return an instance', () => {
+        expect(result).toBe(instancesFixture);
+      });
+    });
+  });
+
   describe('.getAllBindinds', () => {
     describe('when called', () => {
       let bindingFixture: Binding;
@@ -212,7 +261,7 @@ describe(ContainerServiceApiImplementation.name, () => {
 
   describe('.load', () => {
     describe('when called', () => {
-      let containerModuleApiMock: jest.Mocked<ContainerModuleApi>;
+      let containerModuleApiMock: jestMock.Mocked<ContainerModuleApi>;
 
       beforeAll(() => {
         containerModuleApiMock = {
