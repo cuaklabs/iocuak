@@ -4,6 +4,68 @@ import { beforeAll, describe, expect, it } from '@jest/globals';
 import { addNodesToGraph } from './addNodesToGraph';
 
 describe(addNodesToGraph.name, () => {
+  describe('having a node with existing node dependencies', () => {
+    let nodeFixture: cuaktask.Node<cuaktask.Task<unknown>>;
+    let nodeDendenciesFixture: cuaktask.NodeDependencies<
+      cuaktask.Task<unknown>
+    >;
+    let nodeDendencyFixture: cuaktask.Node<cuaktask.Task<unknown>>;
+
+    beforeAll(() => {
+      const nodeFixtureDependencies: cuaktask.NodeDependencies<
+        cuaktask.Task<unknown>
+      > = {
+        nodes: [],
+        type: cuaktask.NodeDependenciesType.and,
+      };
+
+      nodeFixture = {
+        dependencies: nodeFixtureDependencies,
+        element: {
+          _type: Symbol(),
+        } as unknown as cuaktask.Task<unknown>,
+      };
+
+      nodeDendenciesFixture = {
+        nodes: [nodeFixture],
+        type: cuaktask.NodeDependenciesType.and,
+      };
+
+      nodeDendencyFixture = {
+        dependencies: nodeDendenciesFixture,
+        element: {
+          _type: Symbol(),
+        } as unknown as cuaktask.Task<unknown>,
+      };
+
+      nodeFixtureDependencies.nodes.push(nodeDendencyFixture);
+    });
+
+    describe('when called', () => {
+      let graphFixture: cuaktask.Graph<cuaktask.Task<unknown>>;
+
+      let result: unknown;
+
+      beforeAll(() => {
+        graphFixture = {
+          nodes: new Set(),
+        };
+
+        result = addNodesToGraph(graphFixture, nodeDendencyFixture);
+      });
+
+      it('should set graph.nodes', () => {
+        expect(graphFixture.nodes).toStrictEqual(
+          new Set([nodeDendencyFixture, nodeFixture]),
+        );
+      });
+
+      it('should return undefined', () => {
+        expect(result).toBeUndefined();
+      });
+    });
+  });
+
   describe('having a node with node dependencies', () => {
     let nodeFixture: cuaktask.Node<cuaktask.Task<unknown>>;
     let nodeDendenciesFixture: cuaktask.NodeDependencies<
