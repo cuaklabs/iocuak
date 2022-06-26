@@ -1,16 +1,16 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { Handler } from '../../../common/modules/domain/Handler';
-import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskNodeExpandCommand } from '../../models/cuaktask/TaskNodeExpandCommand';
 import { TaskKind } from '../../models/domain/TaskKind';
 
 export abstract class BaseCreateInstanceTaskLazyNode {
-  readonly #bus: Handler<TaskGraphExpandCommand, void | Promise<void>>;
+  readonly #bus: Handler<TaskNodeExpandCommand, void | Promise<void>>;
 
   #dependencies: cuaktask.NodeDependencies<cuaktask.Task<TaskKind>> | undefined;
   #isLoaded: boolean;
 
-  constructor(bus: Handler<TaskGraphExpandCommand, void | Promise<void>>) {
+  constructor(bus: Handler<TaskNodeExpandCommand, void | Promise<void>>) {
     this.#bus = bus;
     this.#dependencies = undefined;
     this.#isLoaded = false;
@@ -20,8 +20,7 @@ export abstract class BaseCreateInstanceTaskLazyNode {
     | cuaktask.NodeDependencies<cuaktask.Task<TaskKind>>
     | undefined {
     if (!this.#isLoaded) {
-      const command: TaskGraphExpandCommand =
-        this.buildTaskGraphExpandCommand();
+      const command: TaskNodeExpandCommand = this.buildTaskGraphExpandCommand();
 
       const result: void | Promise<void> = this.#bus.handle(command);
 
@@ -41,5 +40,5 @@ export abstract class BaseCreateInstanceTaskLazyNode {
     this.#dependencies = value;
   }
 
-  protected abstract buildTaskGraphExpandCommand(): TaskGraphExpandCommand;
+  protected abstract buildTaskGraphExpandCommand(): TaskNodeExpandCommand;
 }

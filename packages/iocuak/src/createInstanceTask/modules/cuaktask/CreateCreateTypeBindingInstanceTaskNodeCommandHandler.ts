@@ -2,40 +2,40 @@ import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { BindingScope } from '../../../binding/models/domain/BindingScope';
 import { Handler } from '../../../common/modules/domain/Handler';
-import { CreateCreateTypeBindingInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommand';
+import { CreateCreateTypeBindingInstanceTaskNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskNodeCommand';
 import { TaskKind } from '../../models/domain/TaskKind';
 
-export class CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler
+export class CreateCreateTypeBindingInstanceTaskNodeCommandHandler
   implements
     Handler<
-      CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+      CreateCreateTypeBindingInstanceTaskNodeCommand,
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >
 {
   readonly #createCreateRequestScopedInstanceTaskGraphNodeCommandHandler: Handler<
-    CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+    CreateCreateTypeBindingInstanceTaskNodeCommand,
     cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
   >;
   readonly #createCreateSingletonScopedInstanceTaskGraphNodeCommandHandler: Handler<
-    CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+    CreateCreateTypeBindingInstanceTaskNodeCommand,
     cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
   >;
   readonly #createCreateTransientScopedInstanceTaskGraphNodeCommandHandler: Handler<
-    CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+    CreateCreateTypeBindingInstanceTaskNodeCommand,
     cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
   >;
 
   constructor(
     createCreateRequestScopedInstanceTaskGraphNodeCommandHandler: Handler<
-      CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+      CreateCreateTypeBindingInstanceTaskNodeCommand,
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >,
     createCreateSingletonScopedInstanceTaskGraphNodeCommandHandler: Handler<
-      CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+      CreateCreateTypeBindingInstanceTaskNodeCommand,
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >,
     createCreateTransientScopedInstanceTaskGraphNodeCommandHandler: Handler<
-      CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+      CreateCreateTypeBindingInstanceTaskNodeCommand,
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >,
   ) {
@@ -48,7 +48,7 @@ export class CreateCreateTypeBindingInstanceTaskGraphNodeCommandHandler
   }
 
   public handle(
-    createCreateTypeBindingInstanceTaskGraphNodeCommand: CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+    createCreateTypeBindingInstanceTaskGraphNodeCommand: CreateCreateTypeBindingInstanceTaskNodeCommand,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {
     let createInstanceTaskKindGraphNodeDependency: cuaktask.NodeDependency<
       cuaktask.Task<TaskKind>

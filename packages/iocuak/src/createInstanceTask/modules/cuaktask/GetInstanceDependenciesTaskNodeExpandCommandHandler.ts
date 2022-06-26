@@ -10,36 +10,35 @@ import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadat
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
-import { CreateCreateInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskGraphNodeCommand';
-import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
+import { CreateCreateInstanceTaskNodeCommand } from '../../models/cuaktask/CreateCreateInstanceTaskNodeCommand';
+import { CreateInstanceTaskNodeExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskNodeExpandOperationContext';
 import { CreateTagInstancesTask } from '../../models/cuaktask/CreateTagInstancesTask';
-import { CreateTagInstancesTaskGraphExpandCommand } from '../../models/cuaktask/CreateTagInstancesTaskGraphExpandCommand';
-import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
-import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
-import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
+import { CreateTagInstancesTaskNodeExpandCommand } from '../../models/cuaktask/CreateTagInstancesTaskNodeExpandCommand';
+import { GetInstanceDependenciesTaskNodeExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskNodeExpandCommand';
+import { TaskNodeExpandCommand } from '../../models/cuaktask/TaskNodeExpandCommand';
+import { TaskNodeExpandCommandType } from '../../models/cuaktask/TaskNodeExpandCommandType';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { CreateTagInstancesTaskKind } from '../../models/domain/CreateTagInstancesTaskKind';
 import { GetInstanceDependenciesTaskKind } from '../../models/domain/GetInstanceDependenciesTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
-import { addNodesToGraph } from '../../utils/addNodesToGraph';
 
-export class GetInstanceDependenciesTaskGraphExpandCommandHandler
-  implements Handler<GetInstanceDependenciesTaskGraphExpandCommand, void>
+export class GetInstanceDependenciesTaskNodeExpandCommandHandler
+  implements Handler<GetInstanceDependenciesTaskNodeExpandCommand, void>
 {
   readonly #bindingService: BindingService;
-  readonly #bus: Handler<TaskGraphExpandCommand, void | Promise<void>>;
+  readonly #bus: Handler<TaskNodeExpandCommand, void | Promise<void>>;
   readonly #createCreateInstanceTaskGraphNodeCommandHandler: Handler<
-    CreateCreateInstanceTaskGraphNodeCommand,
+    CreateCreateInstanceTaskNodeCommand,
     cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
   >;
   readonly #metadataService: MetadataService;
 
   constructor(
     bindingService: BindingService,
-    bus: Handler<TaskGraphExpandCommand, void | Promise<void>>,
+    bus: Handler<TaskNodeExpandCommand, void | Promise<void>>,
     createCreateInstanceTaskGraphNodeCommandHandler: Handler<
-      CreateCreateInstanceTaskGraphNodeCommand,
+      CreateCreateInstanceTaskNodeCommand,
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >,
     metadataService: MetadataService,
@@ -52,7 +51,7 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
   }
 
   public handle(
-    getInstanceDependenciesTaskGraphExpandCommand: GetInstanceDependenciesTaskGraphExpandCommand,
+    getInstanceDependenciesTaskGraphExpandCommand: GetInstanceDependenciesTaskNodeExpandCommand,
   ): void {
     const taskKind: TaskKind =
       getInstanceDependenciesTaskGraphExpandCommand.node.element.kind;
@@ -79,7 +78,7 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
   }
 
   #createCreateInstanceTaskGraphNodeDependency(
-    context: CreateInstanceTaskGraphExpandOperationContext,
+    context: CreateInstanceTaskNodeExpandOperationContext,
     classElementMetadata: ClassElementMetadata,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {
     switch (classElementMetadata.type) {
@@ -97,7 +96,7 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
   }
 
   #createCreateInstanceTaskGraphNodeDependencyFromBinding(
-    context: CreateInstanceTaskGraphExpandOperationContext,
+    context: CreateInstanceTaskNodeExpandOperationContext,
     binding: Binding,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {
     const createInstanceTaskKind: CreateInstanceTaskKind = {
@@ -117,7 +116,7 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
   }
 
   #createCreateInstanceTaskGraphNodeDependencyFromServiceId(
-    context: CreateInstanceTaskGraphExpandOperationContext,
+    context: CreateInstanceTaskNodeExpandOperationContext,
     serviceId: ServiceId,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {
     const binding: Binding = this.#getBinding(serviceId);
@@ -128,13 +127,11 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
         binding,
       );
 
-    addNodesToGraph(context.graph, nodeDependency);
-
     return nodeDependency;
   }
 
   #createCreateInstanceTaskGraphNodeDependencyFromTag(
-    context: CreateInstanceTaskGraphExpandOperationContext,
+    context: CreateInstanceTaskNodeExpandOperationContext,
     tag: BindingTag,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {
     const createTagInstancesTaskGraphNode: cuaktask.Node<
@@ -147,11 +144,11 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
       }),
     };
 
-    const createTagInstancesTaskGraphExpandCommand: CreateTagInstancesTaskGraphExpandCommand =
+    const createTagInstancesTaskGraphExpandCommand: CreateTagInstancesTaskNodeExpandCommand =
       {
         context,
         node: createTagInstancesTaskGraphNode,
-        taskKindType: TaskGraphExpandCommandType.createTagInstances,
+        taskKindType: TaskNodeExpandCommandType.createTagInstances,
       };
 
     const result: void | Promise<void> = this.#bus.handle(
@@ -166,10 +163,10 @@ export class GetInstanceDependenciesTaskGraphExpandCommandHandler
   }
 
   #createCreateInstanceTaskGraphNodeDependencyFromTaskKind(
-    context: CreateInstanceTaskGraphExpandOperationContext,
+    context: CreateInstanceTaskNodeExpandOperationContext,
     createInstanceTaskKind: CreateInstanceTaskKind,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {
-    const createCreateInstanceTaskGraphNodeCommand: CreateCreateInstanceTaskGraphNodeCommand =
+    const createCreateInstanceTaskGraphNodeCommand: CreateCreateInstanceTaskNodeCommand =
       {
         context: {
           ...context,

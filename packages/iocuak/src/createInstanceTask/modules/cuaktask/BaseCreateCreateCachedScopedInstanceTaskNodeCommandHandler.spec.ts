@@ -6,27 +6,27 @@ import { ContainerRequestService } from '../../../container/services/domain/Cont
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
 import { ReadOnlyLinkedList } from '../../../list/models/domain/ReadOnlyLinkedList';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
-import { CreateCreateTypeBindingInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommand';
-import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
+import { CreateCreateTypeBindingInstanceTaskNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskNodeCommand';
+import { CreateInstanceTaskNodeExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskNodeExpandOperationContext';
 import { DestructureOneTask } from '../../models/cuaktask/DestructureOneTask';
 import { GetCachedInstanceTask } from '../../models/cuaktask/GetCachedInstanceTask';
-import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskNodeExpandCommand } from '../../models/cuaktask/TaskNodeExpandCommand';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
-import { BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandler } from './BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandler';
+import { BaseCreateCreateCachedScopedInstanceTaskNodeCommandHandler } from './BaseCreateCreateCachedScopedInstanceTaskNodeCommandHandler';
 import { CreateInstanceTaskLazyNode } from './CreateInstanceTaskLazyNode';
 
-class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock extends BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandler {
+class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock extends BaseCreateCreateCachedScopedInstanceTaskNodeCommandHandler {
   #getServiceIdToNodeDependencyMapMock: jest.Mock<
     Map<
       ServiceId,
       cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>>
     >,
-    [CreateInstanceTaskGraphExpandOperationContext]
+    [CreateInstanceTaskNodeExpandOperationContext]
   >;
 
   constructor(
-    bus: Handler<TaskGraphExpandCommand, void | Promise<void>>,
+    bus: Handler<TaskNodeExpandCommand, void | Promise<void>>,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
     getServiceIdToCreateInstanceTaskKindNodeMapMock: jest.Mock<
@@ -34,7 +34,7 @@ class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock extend
         ServiceId,
         cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>>
       >,
-      [CreateInstanceTaskGraphExpandOperationContext]
+      [CreateInstanceTaskNodeExpandOperationContext]
     >,
   ) {
     super(bus, containerRequestService, containerSingletonService);
@@ -44,7 +44,7 @@ class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock extend
   }
 
   protected _getServiceIdToNodeDependencyMap(
-    context: CreateInstanceTaskGraphExpandOperationContext,
+    context: CreateInstanceTaskNodeExpandOperationContext,
   ): Map<
     ServiceId,
     cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>>
@@ -54,10 +54,10 @@ class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock extend
 }
 
 describe(
-  BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandler.name,
+  BaseCreateCreateCachedScopedInstanceTaskNodeCommandHandler.name,
   () => {
     let busMock: jest.Mocked<
-      Handler<TaskGraphExpandCommand, void | Promise<void>>
+      Handler<TaskNodeExpandCommand, void | Promise<void>>
     >;
     let containerRequestServiceFixture: ContainerRequestService;
     let containerSingletonServiceFixture: ContainerSingletonService;
@@ -66,7 +66,7 @@ describe(
         ServiceId,
         cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>>
       >,
-      [CreateInstanceTaskGraphExpandOperationContext]
+      [CreateInstanceTaskNodeExpandOperationContext]
     >;
 
     let baseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock: BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock;
@@ -86,7 +86,7 @@ describe(
           ServiceId,
           cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>>
         >,
-        [CreateInstanceTaskGraphExpandOperationContext]
+        [CreateInstanceTaskNodeExpandOperationContext]
       >();
 
       baseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandlerMock =
@@ -105,16 +105,13 @@ describe(
           cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
         >;
 
-        let createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand: CreateCreateTypeBindingInstanceTaskGraphNodeCommand;
+        let createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand: CreateCreateTypeBindingInstanceTaskNodeCommand;
 
         let result: unknown;
 
         beforeAll(() => {
           createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand = {
             context: {
-              graph: {
-                nodes: new Set(),
-              },
               requestId:
                 CreateInstanceTaskKindFixtures.withBindingType.requestId,
               serviceIdAncestorList: {

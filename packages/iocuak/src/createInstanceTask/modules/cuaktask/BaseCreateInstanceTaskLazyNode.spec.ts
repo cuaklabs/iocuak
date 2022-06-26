@@ -1,25 +1,25 @@
 import { Handler } from '../../../common/modules/domain/Handler';
-import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskNodeExpandCommand } from '../../models/cuaktask/TaskNodeExpandCommand';
 import { BaseCreateInstanceTaskLazyNode } from './BaseCreateInstanceTaskLazyNode';
 
 class BaseCreateInstanceTaskLazyNodeMock extends BaseCreateInstanceTaskLazyNode {
   constructor(
-    bus: Handler<TaskGraphExpandCommand, void | Promise<void>>,
-    public taskGraphExpandCommandFixture: TaskGraphExpandCommand,
+    bus: Handler<TaskNodeExpandCommand, void | Promise<void>>,
+    public taskGraphExpandCommandFixture: TaskNodeExpandCommand,
   ) {
     super(bus);
   }
 
-  protected buildTaskGraphExpandCommand(): TaskGraphExpandCommand {
+  protected buildTaskGraphExpandCommand(): TaskNodeExpandCommand {
     return this.taskGraphExpandCommandFixture;
   }
 }
 
 describe(BaseCreateInstanceTaskLazyNode.name, () => {
   let busMock: jest.Mocked<
-    Handler<TaskGraphExpandCommand, void | Promise<void>>
+    Handler<TaskNodeExpandCommand, void | Promise<void>>
   >;
-  let taskGraphExpandCommandFixture: TaskGraphExpandCommand;
+  let taskGraphExpandCommandFixture: TaskNodeExpandCommand;
 
   beforeAll(() => {
     busMock = {
@@ -27,7 +27,7 @@ describe(BaseCreateInstanceTaskLazyNode.name, () => {
     };
     taskGraphExpandCommandFixture = {
       _type: Symbol(),
-    } as unknown as TaskGraphExpandCommand;
+    } as unknown as TaskNodeExpandCommand;
   });
 
   describe('.dependencies', () => {
