@@ -1,9 +1,9 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
 
 import { Handler } from '../../../common/modules/domain/Handler';
-import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
-import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
-import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
+import { CreateInstanceTaskNodeExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskNodeExpandOperationContext';
+import { TaskNodeExpandCommand } from '../../models/cuaktask/TaskNodeExpandCommand';
+import { TaskNodeExpandCommandType } from '../../models/cuaktask/TaskNodeExpandCommandType';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { BaseCreateInstanceTaskLazyNode } from './BaseCreateInstanceTaskLazyNode';
 
@@ -15,11 +15,11 @@ export class CreateInstanceTaskLazyNode
       cuaktask.Task<unknown>
     >
 {
-  readonly #createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskGraphExpandOperationContext;
+  readonly #createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskNodeExpandOperationContext;
 
   constructor(
-    bus: Handler<TaskGraphExpandCommand, void | Promise<void>>,
-    createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskGraphExpandOperationContext,
+    bus: Handler<TaskNodeExpandCommand, void | Promise<void>>,
+    createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskNodeExpandOperationContext,
     public readonly element: cuaktask.Task<CreateInstanceTaskKind>,
   ) {
     super(bus);
@@ -28,11 +28,11 @@ export class CreateInstanceTaskLazyNode
       createInstanceTaskGraphExpandOperationContext;
   }
 
-  protected buildTaskGraphExpandCommand(): TaskGraphExpandCommand {
+  protected buildTaskGraphExpandCommand(): TaskNodeExpandCommand {
     return {
       context: this.#createInstanceTaskGraphExpandOperationContext,
       node: this,
-      taskKindType: TaskGraphExpandCommandType.createInstance,
+      taskKindType: TaskNodeExpandCommandType.createInstance,
     };
   }
 }

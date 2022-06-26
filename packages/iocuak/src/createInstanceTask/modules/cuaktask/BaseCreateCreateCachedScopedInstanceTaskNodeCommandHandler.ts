@@ -5,32 +5,32 @@ import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
-import { CreateCreateTypeBindingInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommand';
+import { CreateCreateTypeBindingInstanceTaskNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskNodeCommand';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
-import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
-import { CreateInstanceTaskGraphFromTaskKindExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphFromTaskKindExpandOperationContext';
+import { CreateInstanceTaskNodeExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskNodeExpandOperationContext';
+import { CreateInstanceTaskNodeFromTaskKindExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskNodeFromTaskKindExpandOperationContext';
 import { DestructureOneTask } from '../../models/cuaktask/DestructureOneTask';
 import { GetCachedInstanceTask } from '../../models/cuaktask/GetCachedInstanceTask';
-import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
+import { TaskNodeExpandCommand } from '../../models/cuaktask/TaskNodeExpandCommand';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { GetCachedInstanceTaskKind } from '../../models/domain/GetCachedInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
 import { CreateInstanceTaskLazyNode } from './CreateInstanceTaskLazyNode';
 
-export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHandler
+export abstract class BaseCreateCreateCachedScopedInstanceTaskNodeCommandHandler
   implements
     Handler<
-      CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+      CreateCreateTypeBindingInstanceTaskNodeCommand,
       cuaktask.NodeDependency<cuaktask.Task<TaskKind>>
     >
 {
-  readonly #bus: Handler<TaskGraphExpandCommand, void | Promise<void>>;
+  readonly #bus: Handler<TaskNodeExpandCommand, void | Promise<void>>;
   readonly #containerRequestService: ContainerRequestService;
   readonly #containerSingletonService: ContainerSingletonService;
 
   constructor(
-    bus: Handler<TaskGraphExpandCommand, void | Promise<void>>,
+    bus: Handler<TaskNodeExpandCommand, void | Promise<void>>,
     containerRequestService: ContainerRequestService,
     containerSingletonService: ContainerSingletonService,
   ) {
@@ -40,7 +40,7 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
   }
 
   public handle(
-    createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand: CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+    createInstanceTaskGraphFromTypeBindingTaskKindExpandCommand: CreateCreateTypeBindingInstanceTaskNodeCommand,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {
     const createInstanceTaskKindGraphNode: cuaktask.NodeDependency<
       cuaktask.Task<TaskKind>
@@ -52,12 +52,12 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
   }
 
   protected abstract _getServiceIdToNodeDependencyMap(
-    context: CreateInstanceTaskGraphExpandOperationContext,
+    context: CreateInstanceTaskNodeExpandOperationContext,
   ): Map<ServiceId, cuaktask.NodeDependency<cuaktask.Task<TaskKind>>>;
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   #createNewCreateCachedScopedInstanceTaskKindGraphDependency(
-    context: CreateInstanceTaskGraphFromTaskKindExpandOperationContext<
+    context: CreateInstanceTaskNodeFromTaskKindExpandOperationContext<
       CreateInstanceTaskKind<TypeBinding>
     >,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {
@@ -88,7 +88,7 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   #createCreateInstanceTaskLazyNode(
-    context: CreateInstanceTaskGraphFromTaskKindExpandOperationContext<
+    context: CreateInstanceTaskNodeFromTaskKindExpandOperationContext<
       CreateInstanceTaskKind<TypeBinding>
     >,
   ): cuaktask.Node<cuaktask.Task<TaskKind>> {
@@ -100,9 +100,8 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
       this.#containerSingletonService,
     );
 
-    const createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskGraphExpandOperationContext =
+    const createInstanceTaskGraphExpandOperationContext: CreateInstanceTaskNodeExpandOperationContext =
       {
-        graph: context.graph,
         requestId: context.requestId,
         serviceIdAncestorList: context.serviceIdAncestorList,
         serviceIdToRequestCreateInstanceTaskKindNode:
@@ -148,7 +147,7 @@ export abstract class BaseCreateCreateCachedScopedInstanceTaskGraphNodeCommandHa
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   #getCreateInstanceTaskKindGraphNodeDependency(
-    context: CreateInstanceTaskGraphFromTaskKindExpandOperationContext<
+    context: CreateInstanceTaskNodeFromTaskKindExpandOperationContext<
       CreateInstanceTaskKind<TypeBinding>
     >,
   ): cuaktask.NodeDependency<cuaktask.Task<TaskKind>> {

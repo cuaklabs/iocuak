@@ -6,27 +6,27 @@ import { ClassMetadataFixtures } from '../../../classMetadata/fixtures/domain/Cl
 import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { Handler } from '../../../common/modules/domain/Handler';
-import { CreateInstanceTaskGraphExpandCommand } from '../../../createInstanceTask/models/cuaktask/CreateInstanceTaskGraphExpandCommand';
 import { ReadOnlyLinkedList } from '../../../list/models/domain/ReadOnlyLinkedList';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
-import { CreateInstanceTaskGraphExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphExpandOperationContext';
+import { CreateInstanceTaskNodeExpandCommand } from '../../models/cuaktask/CreateInstanceTaskNodeExpandCommand';
+import { CreateInstanceTaskNodeExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskNodeExpandOperationContext';
 import { GetInstanceDependenciesTask } from '../../models/cuaktask/GetInstanceDependenciesTask';
-import { GetInstanceDependenciesTaskGraphExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskGraphExpandCommand';
-import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
-import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
+import { GetInstanceDependenciesTaskNodeExpandCommand } from '../../models/cuaktask/GetInstanceDependenciesTaskNodeExpandCommand';
+import { TaskNodeExpandCommand } from '../../models/cuaktask/TaskNodeExpandCommand';
+import { TaskNodeExpandCommandType } from '../../models/cuaktask/TaskNodeExpandCommandType';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
-import { CreateInstanceTaskGraphExpandCommandHandler } from './CreateInstanceTaskGraphExpandCommandHandler';
+import { CreateInstanceTaskNodeExpandCommandHandler } from './CreateInstanceTaskNodeExpandCommandHandler';
 
-describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
+describe(CreateInstanceTaskNodeExpandCommandHandler.name, () => {
   let busMock: jest.Mocked<
-    Handler<TaskGraphExpandCommand, void | Promise<void>>
+    Handler<TaskNodeExpandCommand, void | Promise<void>>
   >;
   let metadataService: jest.Mocked<MetadataService>;
 
-  let createInstanceTaskGraphExpandCommandHandler: CreateInstanceTaskGraphExpandCommandHandler;
+  let createInstanceTaskGraphExpandCommandHandler: CreateInstanceTaskNodeExpandCommandHandler;
 
   beforeAll(() => {
     busMock = {
@@ -38,18 +38,17 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
     } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
 
     createInstanceTaskGraphExpandCommandHandler =
-      new CreateInstanceTaskGraphExpandCommandHandler(busMock, metadataService);
+      new CreateInstanceTaskNodeExpandCommandHandler(busMock, metadataService);
   });
 
   describe('having a CreateInstanceTaskGraphExpandCommand with node with create instance task with type binging', () => {
     let classMetadataFixture: ClassMetadata;
     let serviceIdAncestorListMock: jest.Mocked<ReadOnlyLinkedList<ServiceId>>;
-    let createInstanceTaskGraphExpandCommand: CreateInstanceTaskGraphExpandCommand;
+    let createInstanceTaskGraphExpandCommand: CreateInstanceTaskNodeExpandCommand;
     let expectedGetInstanteDependenciesNode: cuaktask.Node<
       GetInstanceDependenciesTask,
       cuaktask.Task<TaskKind>
     >;
-    let graphFixture: cuaktask.Graph<cuaktask.Task<unknown>>;
     let nodeFixture: cuaktask.Node<
       cuaktask.Task<CreateInstanceTaskKind<TypeBinding>>
     >;
@@ -65,10 +64,6 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
           result: undefined,
           status: cuaktask.TaskStatus.NotStarted,
         },
-      };
-
-      graphFixture = {
-        nodes: new Set([nodeFixture]),
       };
 
       expectedGetInstanteDependenciesNode = {
@@ -88,11 +83,10 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
 
       createInstanceTaskGraphExpandCommand = {
         context: {
-          graph: graphFixture,
           serviceIdAncestorList: serviceIdAncestorListMock,
-        } as Partial<CreateInstanceTaskGraphExpandOperationContext> as CreateInstanceTaskGraphExpandOperationContext,
+        } as Partial<CreateInstanceTaskNodeExpandOperationContext> as CreateInstanceTaskNodeExpandOperationContext,
         node: nodeFixture,
-        taskKindType: TaskGraphExpandCommandType.createInstance,
+        taskKindType: TaskNodeExpandCommandType.createInstance,
       };
     });
 
@@ -139,28 +133,20 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
       });
 
       it('should call bus', () => {
-        const getInstanceDependenciesTraphGraphExpandCommand: GetInstanceDependenciesTaskGraphExpandCommand =
+        const getInstanceDependenciesTraphGraphExpandCommand: GetInstanceDependenciesTaskNodeExpandCommand =
           {
             context: {
               ...createInstanceTaskGraphExpandCommand.context,
               serviceIdAncestorList: serviceIdAncestorListConcatFixture,
             },
             node: expectedGetInstanteDependenciesNode,
-            taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
+            taskKindType: TaskNodeExpandCommandType.getInstanceDependencies,
           };
 
         expect(busMock.handle).toHaveBeenCalledTimes(1);
         expect(busMock.handle).toHaveBeenCalledWith(
           getInstanceDependenciesTraphGraphExpandCommand,
         );
-      });
-
-      it('should expand graph', () => {
-        expect(graphFixture).toStrictEqual<
-          cuaktask.Graph<cuaktask.Task<unknown>>
-        >({
-          nodes: new Set([nodeFixture, expectedGetInstanteDependenciesNode]),
-        });
       });
 
       it('should return undefined', () => {
@@ -217,14 +203,14 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
       });
 
       it('should call bus', () => {
-        const getInstanceDependenciesTraphGraphExpandCommand: GetInstanceDependenciesTaskGraphExpandCommand =
+        const getInstanceDependenciesTraphGraphExpandCommand: GetInstanceDependenciesTaskNodeExpandCommand =
           {
             context: {
               ...createInstanceTaskGraphExpandCommand.context,
               serviceIdAncestorList: serviceIdAncestorListConcatFixture,
             },
             node: expectedGetInstanteDependenciesNode,
-            taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
+            taskKindType: TaskNodeExpandCommandType.getInstanceDependencies,
           };
 
         expect(busMock.handle).toHaveBeenCalledTimes(1);
@@ -299,8 +285,7 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
 
   describe('having a CreateInstanceTaskGraphExpandCommand with node with create instance task with value binging', () => {
     let classMetadataFixture: ClassMetadata;
-    let createInstanceTaskGraphExpandCommand: CreateInstanceTaskGraphExpandCommand;
-    let graphFixture: cuaktask.Graph<cuaktask.Task<unknown>>;
+    let createInstanceTaskGraphExpandCommand: CreateInstanceTaskNodeExpandCommand;
     let nodeFixture: cuaktask.Node<
       cuaktask.Task<CreateInstanceTaskKind<ValueBinding>>
     >;
@@ -318,16 +303,11 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
         },
       };
 
-      graphFixture = {
-        nodes: new Set([nodeFixture]),
-      };
-
       createInstanceTaskGraphExpandCommand = {
-        context: {
-          graph: graphFixture,
-        } as Partial<CreateInstanceTaskGraphExpandOperationContext> as CreateInstanceTaskGraphExpandOperationContext,
+        context:
+          {} as Partial<CreateInstanceTaskNodeExpandOperationContext> as CreateInstanceTaskNodeExpandOperationContext,
         node: nodeFixture,
-        taskKindType: TaskGraphExpandCommandType.createInstance,
+        taskKindType: TaskNodeExpandCommandType.createInstance,
       };
     });
 
@@ -350,14 +330,6 @@ describe(CreateInstanceTaskGraphExpandCommandHandler.name, () => {
 
       it('should not call bus', () => {
         expect(busMock.handle).not.toHaveBeenCalled();
-      });
-
-      it('should not expand graph', () => {
-        expect(graphFixture).toStrictEqual<
-          cuaktask.Graph<cuaktask.Task<unknown>>
-        >({
-          nodes: new Set([nodeFixture]),
-        });
       });
 
       it('should return undefined', () => {

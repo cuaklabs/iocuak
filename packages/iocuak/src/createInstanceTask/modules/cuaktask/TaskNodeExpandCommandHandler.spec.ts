@@ -1,16 +1,16 @@
 import { Handler } from '../../../common/modules/domain/Handler';
-import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
-import { TaskGraphExpandCommand } from '../../models/cuaktask/TaskGraphExpandCommand';
-import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
-import { TaskGraphExpandCommandHandler } from './TaskGraphExpandCommandHandler';
+import { CreateInstanceTaskNodeExpandCommand } from '../../models/cuaktask/CreateInstanceTaskNodeExpandCommand';
+import { TaskNodeExpandCommand } from '../../models/cuaktask/TaskNodeExpandCommand';
+import { TaskNodeExpandCommandType } from '../../models/cuaktask/TaskNodeExpandCommandType';
+import { TaskNodeExpandCommandHandler } from './TaskNodeExpandCommandHandler';
 
-describe(TaskGraphExpandCommandHandler.name, () => {
+describe(TaskNodeExpandCommandHandler.name, () => {
   describe('.handle', () => {
     describe('having a task graph expand command and a registered handler', () => {
       let handlerMock: jest.Mocked<
-        Handler<CreateInstanceTaskGraphExpandCommand, void>
+        Handler<CreateInstanceTaskNodeExpandCommand, void>
       >;
-      let taskGraphExpandCommandFixture: TaskGraphExpandCommand;
+      let taskGraphExpandCommandFixture: TaskNodeExpandCommand;
 
       beforeAll(() => {
         handlerMock = {
@@ -18,8 +18,8 @@ describe(TaskGraphExpandCommandHandler.name, () => {
         };
 
         taskGraphExpandCommandFixture = {
-          taskKindType: TaskGraphExpandCommandType.createInstance,
-        } as Partial<TaskGraphExpandCommand> as TaskGraphExpandCommand;
+          taskKindType: TaskNodeExpandCommandType.createInstance,
+        } as Partial<TaskNodeExpandCommand> as TaskNodeExpandCommand;
       });
 
       afterAll(() => {
@@ -27,12 +27,12 @@ describe(TaskGraphExpandCommandHandler.name, () => {
       });
 
       describe('when called', () => {
-        let taskGraphExpandCommandHandler: TaskGraphExpandCommandHandler;
+        let taskGraphExpandCommandHandler: TaskNodeExpandCommandHandler;
 
         let result: unknown;
 
         beforeAll(() => {
-          taskGraphExpandCommandHandler = new TaskGraphExpandCommandHandler();
+          taskGraphExpandCommandHandler = new TaskNodeExpandCommandHandler();
 
           taskGraphExpandCommandHandler.register(
             taskGraphExpandCommandFixture.taskKindType,
@@ -58,21 +58,21 @@ describe(TaskGraphExpandCommandHandler.name, () => {
     });
 
     describe('having a task graph expand command', () => {
-      let taskGraphExpandCommandFixture: TaskGraphExpandCommand;
+      let taskGraphExpandCommandFixture: TaskNodeExpandCommand;
 
       beforeAll(() => {
         taskGraphExpandCommandFixture = {
-          taskKindType: TaskGraphExpandCommandType.getInstanceDependencies,
-        } as Partial<TaskGraphExpandCommand> as TaskGraphExpandCommand;
+          taskKindType: TaskNodeExpandCommandType.getInstanceDependencies,
+        } as Partial<TaskNodeExpandCommand> as TaskNodeExpandCommand;
       });
 
       describe('when called', () => {
-        let taskGraphExpandCommandHandler: TaskGraphExpandCommandHandler;
+        let taskGraphExpandCommandHandler: TaskNodeExpandCommandHandler;
 
         let result: unknown;
 
         beforeAll(() => {
-          taskGraphExpandCommandHandler = new TaskGraphExpandCommandHandler();
+          taskGraphExpandCommandHandler = new TaskNodeExpandCommandHandler();
 
           try {
             taskGraphExpandCommandHandler.handle(taskGraphExpandCommandFixture);

@@ -7,23 +7,23 @@ import { Handler } from '../../../common/modules/domain/Handler';
 import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
-import { CreateCreateTypeBindingInstanceTaskGraphNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskGraphNodeCommand';
-import { CreateInstanceTaskGraphFromTaskKindExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskGraphFromTaskKindExpandOperationContext';
+import { CreateCreateTypeBindingInstanceTaskNodeCommand } from '../../models/cuaktask/CreateCreateTypeBindingInstanceTaskNodeCommand';
+import { CreateInstanceTaskNodeFromTaskKindExpandOperationContext } from '../../models/cuaktask/CreateInstanceTaskNodeFromTaskKindExpandOperationContext';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
-import { CreateCreateInstanceTaskGraphNodeCommandHandler } from './CreateCreateInstanceTaskGraphNodeCommandHandler';
+import { CreateCreateInstanceTaskNodeCommandHandler } from './CreateCreateInstanceTaskNodeCommandHandler';
 
-describe(CreateCreateInstanceTaskGraphNodeCommandHandler.name, () => {
+describe(CreateCreateInstanceTaskNodeCommandHandler.name, () => {
   let containerRequestServiceFixture: ContainerRequestService;
   let containerSingletonServiceFixture: ContainerSingletonService;
   let createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerMock: jestMock.Mocked<
     Handler<
-      CreateCreateTypeBindingInstanceTaskGraphNodeCommand,
+      CreateCreateTypeBindingInstanceTaskNodeCommand,
       cuaktask.NodeDependency<cuaktask.Task<TaskKind, unknown[], unknown>>
     >
   >;
 
-  let createCreateInstanceTaskGraphNodeCommandHandler: CreateCreateInstanceTaskGraphNodeCommandHandler;
+  let createCreateInstanceTaskGraphNodeCommandHandler: CreateCreateInstanceTaskNodeCommandHandler;
 
   beforeAll(() => {
     containerRequestServiceFixture = {
@@ -37,7 +37,7 @@ describe(CreateCreateInstanceTaskGraphNodeCommandHandler.name, () => {
     };
 
     createCreateInstanceTaskGraphNodeCommandHandler =
-      new CreateCreateInstanceTaskGraphNodeCommandHandler(
+      new CreateCreateInstanceTaskNodeCommandHandler(
         containerRequestServiceFixture,
         containerSingletonServiceFixture,
         createCreateTypeBindingInstanceTaskGraphNodeCommandHandlerMock,
@@ -46,17 +46,17 @@ describe(CreateCreateInstanceTaskGraphNodeCommandHandler.name, () => {
 
   describe('.handle', () => {
     describe('having a CreateCreateTypeBindingInstanceTaskGraphNodeCommand', () => {
-      let createCreateTypeBindingInstanceTaskGraphNodeCommandFixture: CreateCreateTypeBindingInstanceTaskGraphNodeCommand;
+      let createCreateTypeBindingInstanceTaskGraphNodeCommandFixture: CreateCreateTypeBindingInstanceTaskNodeCommand;
 
       beforeAll(() => {
         createCreateTypeBindingInstanceTaskGraphNodeCommandFixture = {
           context: {
             taskKind: CreateInstanceTaskKindFixtures.withBindingType,
           } as Partial<
-            CreateInstanceTaskGraphFromTaskKindExpandOperationContext<
+            CreateInstanceTaskNodeFromTaskKindExpandOperationContext<
               CreateInstanceTaskKind<TypeBinding>
             >
-          > as CreateInstanceTaskGraphFromTaskKindExpandOperationContext<
+          > as CreateInstanceTaskNodeFromTaskKindExpandOperationContext<
             CreateInstanceTaskKind<TypeBinding>
           >,
         };

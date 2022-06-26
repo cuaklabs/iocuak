@@ -10,12 +10,13 @@ import { ContainerSingletonService } from '../../../container/services/domain/Co
 import { ReadOnlyLinkedListImplementation } from '../../../list/models/domain/ReadOnlyLinkedListImplementation';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
-import { CreateInstanceTaskGraphExpandCommand } from '../../models/cuaktask/CreateInstanceTaskGraphExpandCommand';
-import { TaskGraphExpandCommandType } from '../../models/cuaktask/TaskGraphExpandCommandType';
+import { CreateInstanceTaskNodeExpandCommand } from '../../models/cuaktask/CreateInstanceTaskNodeExpandCommand';
+import { TaskNodeExpandCommandType } from '../../models/cuaktask/TaskNodeExpandCommandType';
 import { CreateInstanceRootTaskKind } from '../../models/domain/CreateInstanceRootTaskKind';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
+import { addNodesToGraph } from '../../utils/addNodesToGraph';
 
 export class CreateInstanceTaskGraphEngine
   implements cuaktask.TaskGraphEngine<TaskKind>
@@ -25,7 +26,7 @@ export class CreateInstanceTaskGraphEngine
   readonly #containerSingletonService: ContainerSingletonService;
   readonly #metadataService: MetadataService;
   readonly #taskGraphExpandCommandHandler: Handler<
-    CreateInstanceTaskGraphExpandCommand,
+    CreateInstanceTaskNodeExpandCommand,
     void | Promise<void>
   >;
 
@@ -35,7 +36,7 @@ export class CreateInstanceTaskGraphEngine
     containerSingletonService: ContainerSingletonService,
     metadataService: MetadataService,
     taskGraphExpandCommandHandler: Handler<
-      CreateInstanceTaskGraphExpandCommand,
+      CreateInstanceTaskNodeExpandCommand,
       void | Promise<void>
     >,
   ) {
@@ -87,21 +88,20 @@ export class CreateInstanceTaskGraphEngine
     };
 
     const rootedTaskGraph: cuaktask.RootedGraph<cuaktask.Task<TaskKind>> = {
-      nodes: new Set([createInstanceTaskNode]),
+      nodes: new Set(),
       root: createInstanceTaskNode,
     };
 
-    const createInstanceTaskGraphExpandCommand: CreateInstanceTaskGraphExpandCommand =
+    const createInstanceTaskGraphExpandCommand: CreateInstanceTaskNodeExpandCommand =
       {
         context: {
-          graph: rootedTaskGraph,
           requestId: taskKind.requestId,
           serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
           serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
           serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
         },
         node: createInstanceTaskNode,
-        taskKindType: TaskGraphExpandCommandType.createInstance,
+        taskKindType: TaskNodeExpandCommandType.createInstance,
       };
 
     const result: void | Promise<void> =
@@ -112,6 +112,8 @@ export class CreateInstanceTaskGraphEngine
     if (cuaktask.isPromiseLike(result)) {
       throw new Error('Expecting a syncronous result');
     }
+
+    addNodesToGraph(rootedTaskGraph, createInstanceTaskNode);
 
     return rootedTaskGraph;
   }

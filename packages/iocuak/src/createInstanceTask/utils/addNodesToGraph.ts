@@ -5,10 +5,12 @@ export function addNodesToGraph<T>(
   nodeDependency: cuaktask.NodeDependency<cuaktask.Task<T>>,
 ): void {
   if (isNode(nodeDependency)) {
-    graph.nodes.add(nodeDependency);
+    if (!graph.nodes.has(nodeDependency)) {
+      graph.nodes.add(nodeDependency);
 
-    if (nodeDependency.dependencies !== undefined) {
-      addNodesToGraph(graph, nodeDependency.dependencies);
+      if (nodeDependency.dependencies !== undefined) {
+        addNodesToGraph(graph, nodeDependency.dependencies);
+      }
     }
   } else {
     for (const nodeDependencyNode of nodeDependency.nodes) {
