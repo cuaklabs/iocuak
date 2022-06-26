@@ -3,8 +3,11 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
+import { injectable } from '../../../binding/decorators/injectable';
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
+import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
+import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { ClassElementMetadataApi } from '../../../classMetadata/models/api/ClassElementMetadataApi';
 import { ClassElementMetadatApiType } from '../../../classMetadata/models/api/ClassElementMetadatApiType';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
@@ -15,6 +18,7 @@ import { ContainerModuleClassMetadataApi } from '../../../containerModuleMetadat
 import { ContainerModuleFactoryMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleFactoryMetadataApi';
 import { MetadataProviderApi } from '../../../metadata/modules/api/MetadataProviderApi';
 import { ResultWorld } from '../common/models/worlds/ResultWorld';
+import { TagWorld } from '../common/models/worlds/TagWorld';
 import { TwoResultsWorld } from '../common/models/worlds/TwoResultsWorld';
 import { TypeServiceWorld } from '../common/models/worlds/TypeServiceWorld';
 import { ValueServiceWorld } from '../common/models/worlds/ValueServiceWorld';
@@ -108,6 +112,23 @@ function bindingToSinonMatcher(
   }
 
   return match;
+}
+
+function bindTypeServiceToTag(serviceType: Newable, tag: BindingTag): void {
+  const metadataProvider: MetadataProviderApi = MetadataProviderApi.build();
+
+  const typeBindingApi: TypeBindingApi | undefined =
+    metadataProvider.getBindingMetadata(serviceType);
+
+  if (typeBindingApi === undefined) {
+    throw new Error('Unable to update metadata. No metadata found!');
+  }
+
+  injectable({
+    id: typeBindingApi.id,
+    scope: typeBindingApi.scope,
+    tags: [...typeBindingApi.tags, tag],
+  })(serviceType);
 }
 
 function getBinding(
@@ -352,6 +373,17 @@ When<ContainerWorld & ResultWorld & ValueServiceWorld>(
   },
 );
 
+When<ContainerWorld & ResultWorld & TagWorld>(
+  'instaces by tag are requested',
+  function (): void {
+    try {
+      this.result = this.container.getByTag(this.tag);
+    } catch (error: unknown) {
+      this.error = error;
+    }
+  },
+);
+
 When<ContainerWorld & ContainerModuleMetadataWorld>(
   'the container module metadata is loaded',
   async function (): Promise<void> {
@@ -372,6 +404,15 @@ When<ContainerWorld & TypeServiceWorld>(
   'the type service dependencies are bound',
   function () {
     bindServiceDependencies.bind(this)(this.typeServiceParameter);
+  },
+);
+
+When<ResultWorld & TagWorld & TypeServiceWorld>(
+  'the type binding is updated to include the tag',
+  function (): void {
+    const service: Newable = this.typeServiceParameter.service;
+
+    bindTypeServiceToTag(service, this.tag);
   },
 );
 
@@ -414,6 +455,19 @@ When<ContainerWorld & ResultWorld>(
   'container metadata is requested',
   function (): void {
     this.result = this.container.getAllBindinds();
+  },
+);
+
+Then<ResultWorld & TypeServiceWorld>(
+  'an array with an instance from the type service is returned',
+  function (): void {
+    if (Array.isArray(this.result)) {
+      const [instance]: unknown[] = this.result as unknown[];
+
+      chai.expect(instance).to.be.instanceOf(this.typeServiceParameter.service);
+    } else {
+      throw new Error('Expected an array result');
+    }
   },
 );
 
