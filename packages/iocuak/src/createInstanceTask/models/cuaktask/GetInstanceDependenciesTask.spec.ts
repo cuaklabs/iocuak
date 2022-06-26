@@ -1,3 +1,5 @@
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { GetInstanceDependenciesTaskKindFixtures } from '../../fixtures/domain/GetInstanceDependenciesTaskKindFixtures';
 import { ServiceDependencies } from '../domain/ServiceDependencies';
 import { GetInstanceDependenciesTask } from './GetInstanceDependenciesTask';
@@ -22,14 +24,14 @@ describe(GetInstanceDependenciesTask.name, () => {
       });
 
       it('should throw an Error', () => {
+        const expectedError: Partial<Error> = {
+          message: expect.stringContaining(
+            'Invalid dependencies for service',
+          ) as unknown as string,
+        };
+
         expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message: expect.stringContaining(
-              'Invalid dependencies for service',
-            ) as string,
-          }),
-        );
+        expect(result).toStrictEqual(expect.objectContaining(expectedError));
       });
     });
 

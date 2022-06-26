@@ -1,3 +1,6 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
+
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ContainerInstanceService } from '../../../container/services/domain/ContainerInstanceService';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
@@ -14,10 +17,10 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
       let taskKindMock: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleClassMetadata>;
 
       let containerBindingServiceFixture: BindingService;
-      let containerInstanceServiceMock: jest.Mocked<ContainerInstanceService>;
+      let containerInstanceServiceMock: jestMock.Mocked<ContainerInstanceService>;
       let metadataServiceFixture: MetadataService;
 
-      let containerModuleMock: jest.Mocked<ContainerModule>;
+      let containerModuleMock: jestMock.Mocked<ContainerModule>;
 
       beforeAll(() => {
         taskKindMock =
@@ -30,7 +33,9 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
         } as unknown as BindingService;
         containerInstanceServiceMock = {
           create: jest.fn(),
-        };
+        } as Partial<
+          jestMock.Mocked<ContainerInstanceService>
+        > as jestMock.Mocked<ContainerInstanceService>;
         metadataServiceFixture = {
           _tag: Symbol('MetadataService'),
         } as unknown as MetadataService;
@@ -82,9 +87,11 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
         });
 
         it('should return a ContainerModule', () => {
-          expect(result).toStrictEqual<ContainerModule>({
-            load: expect.any(Function) as ContainerModule['load'],
-          });
+          const expected: ContainerModule = {
+            load: expect.any(Function) as unknown as ContainerModule['load'],
+          };
+
+          expect(result).toStrictEqual(expected);
         });
       });
     });
@@ -93,10 +100,10 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
       let taskKindMock: ContainerModuleLoadFromMetadataTaskKind<ContainerModuleFactoryMetadata>;
 
       let containerBindingServiceFixture: BindingService;
-      let containerInstanceServiceMock: jest.Mocked<ContainerInstanceService>;
+      let containerInstanceServiceMock: jestMock.Mocked<ContainerInstanceService>;
       let metadataServiceFixture: MetadataService;
 
-      let containerModuleMock: jest.Mocked<ContainerModule>;
+      let containerModuleMock: jestMock.Mocked<ContainerModule>;
 
       beforeAll(() => {
         taskKindMock =
@@ -107,7 +114,9 @@ describe(ContainerModuleLoadFromMetadataTask.name, () => {
         } as unknown as BindingService;
         containerInstanceServiceMock = {
           create: jest.fn(),
-        };
+        } as Partial<
+          jestMock.Mocked<ContainerInstanceService>
+        > as jestMock.Mocked<ContainerInstanceService>;
         metadataServiceFixture = {
           _tag: Symbol('MetadataService'),
         } as unknown as MetadataService;

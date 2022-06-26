@@ -1,4 +1,6 @@
 import * as cuaktask from '@cuaklabs/cuaktask';
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
 
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
@@ -21,10 +23,10 @@ import { TaskKindType } from '../../models/domain/TaskKindType';
 import { CreateInstanceTaskNodeExpandCommandHandler } from './CreateInstanceTaskNodeExpandCommandHandler';
 
 describe(CreateInstanceTaskNodeExpandCommandHandler.name, () => {
-  let busMock: jest.Mocked<
+  let busMock: jestMock.Mocked<
     Handler<TaskNodeExpandCommand, void | Promise<void>>
   >;
-  let metadataService: jest.Mocked<MetadataService>;
+  let metadataService: jestMock.Mocked<MetadataService>;
 
   let createInstanceTaskGraphExpandCommandHandler: CreateInstanceTaskNodeExpandCommandHandler;
 
@@ -35,7 +37,9 @@ describe(CreateInstanceTaskNodeExpandCommandHandler.name, () => {
 
     metadataService = {
       getClassMetadata: jest.fn(),
-    } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
+    } as Partial<
+      jestMock.Mocked<MetadataService>
+    > as jestMock.Mocked<MetadataService>;
 
     createInstanceTaskGraphExpandCommandHandler =
       new CreateInstanceTaskNodeExpandCommandHandler(busMock, metadataService);
@@ -43,7 +47,9 @@ describe(CreateInstanceTaskNodeExpandCommandHandler.name, () => {
 
   describe('having a CreateInstanceTaskGraphExpandCommand with node with create instance task with type binging', () => {
     let classMetadataFixture: ClassMetadata;
-    let serviceIdAncestorListMock: jest.Mocked<ReadOnlyLinkedList<ServiceId>>;
+    let serviceIdAncestorListMock: jestMock.Mocked<
+      ReadOnlyLinkedList<ServiceId>
+    >;
     let createInstanceTaskGraphExpandCommand: CreateInstanceTaskNodeExpandCommand;
     let expectedGetInstanteDependenciesNode: cuaktask.Node<
       GetInstanceDependenciesTask,
@@ -173,7 +179,11 @@ describe(CreateInstanceTaskNodeExpandCommandHandler.name, () => {
         );
         serviceIdAncestorListMock.includes.mockReturnValueOnce(false);
 
-        busMock.handle.mockResolvedValueOnce(undefined);
+        (
+          busMock.handle as jestMock.Mock<
+            (params: TaskNodeExpandCommand) => Promise<void>
+          >
+        ).mockResolvedValueOnce(undefined);
 
         try {
           createInstanceTaskGraphExpandCommandHandler.handle(
@@ -220,12 +230,12 @@ describe(CreateInstanceTaskNodeExpandCommandHandler.name, () => {
       });
 
       it('should throw an Error', () => {
+        const expectedError: Partial<Error> = {
+          message: 'Expecting a syncronous result',
+        };
+
         expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message: 'Expecting a syncronous result',
-          }),
-        );
+        expect(result).toStrictEqual(expect.objectContaining(expectedError));
       });
     });
 
@@ -271,14 +281,14 @@ describe(CreateInstanceTaskNodeExpandCommandHandler.name, () => {
       });
 
       it('should throw an error', () => {
+        const expectedError: Partial<Error> = {
+          message: expect.stringContaining(
+            'Circular dependency found related to',
+          ) as unknown as string,
+        };
+
         expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message: expect.stringContaining(
-              'Circular dependency found related to',
-            ) as string,
-          }),
-        );
+        expect(result).toStrictEqual(expect.objectContaining(expectedError));
       });
     });
   });

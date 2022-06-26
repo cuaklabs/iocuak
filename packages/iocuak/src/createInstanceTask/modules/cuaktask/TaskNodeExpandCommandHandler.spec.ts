@@ -1,3 +1,6 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
+
 import { Handler } from '../../../common/modules/domain/Handler';
 import { CreateInstanceTaskNodeExpandCommand } from '../../models/cuaktask/CreateInstanceTaskNodeExpandCommand';
 import { TaskNodeExpandCommand } from '../../models/cuaktask/TaskNodeExpandCommand';
@@ -7,7 +10,7 @@ import { TaskNodeExpandCommandHandler } from './TaskNodeExpandCommandHandler';
 describe(TaskNodeExpandCommandHandler.name, () => {
   describe('.handle', () => {
     describe('having a task graph expand command and a registered handler', () => {
-      let handlerMock: jest.Mocked<
+      let handlerMock: jestMock.Mocked<
         Handler<CreateInstanceTaskNodeExpandCommand, void>
       >;
       let taskGraphExpandCommandFixture: TaskNodeExpandCommand;
@@ -86,12 +89,12 @@ describe(TaskNodeExpandCommandHandler.name, () => {
         });
 
         it('should throw an Error', () => {
+          const expectedError: Partial<Error> = {
+            message: 'Unexpected task graph expand command',
+          };
+
           expect(result).toBeInstanceOf(Error);
-          expect(result).toStrictEqual(
-            expect.objectContaining<Partial<Error>>({
-              message: 'Unexpected task graph expand command',
-            }),
-          );
+          expect(result).toStrictEqual(expect.objectContaining(expectedError));
         });
       });
     });
