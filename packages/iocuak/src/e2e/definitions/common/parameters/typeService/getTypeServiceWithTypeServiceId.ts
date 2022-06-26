@@ -20,6 +20,7 @@ export function getTypeServiceWithTypeServiceId(): TypeServiceParameter {
     bindingType: BindingTypeApi.type,
     id: TypeServiceWithTypeServiceId,
     scope: BindingScopeApi.singleton,
+    tags: [],
     type: TypeServiceWithTypeServiceId,
   };
 

@@ -20,6 +20,7 @@ export function getTypeServiceWithBindingWithTransientScope(): TypeServiceParame
     bindingType: BindingTypeApi.type,
     id: Symbol(TypeServiceWithBindingWithTransientScope.name),
     scope: BindingScopeApi.transient,
+    tags: [],
     type: TypeServiceWithBindingWithTransientScope,
   };
 

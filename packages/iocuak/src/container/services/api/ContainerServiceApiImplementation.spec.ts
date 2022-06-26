@@ -225,6 +225,7 @@ describe(ContainerServiceApiImplementation.name, () => {
         bindingApiFixture = {
           bindingType: BindingTypeApi.value,
           id: bindingFixture.id,
+          tags: [...bindingFixture.tags],
           value: bindingFixture.value,
         };
 

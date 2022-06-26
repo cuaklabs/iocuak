@@ -76,6 +76,7 @@ describe(MetadataServiceApiImplementation.name, () => {
           bindingType: BindingTypeApi.type,
           id: bindingFixture.id,
           scope: BindingScopeApi.singleton,
+          tags: [...bindingFixture.tags],
           type: bindingFixture.type,
         };
 

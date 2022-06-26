@@ -20,6 +20,7 @@ export function getTypeServiceWithBindingWithRequestScope(): TypeServiceParamete
     bindingType: BindingTypeApi.type,
     id: Symbol(TypeServiceWithBindingWithRequestScope.name),
     scope: BindingScopeApi.request,
+    tags: [],
     type: TypeServiceWithBindingWithRequestScope,
   };
 

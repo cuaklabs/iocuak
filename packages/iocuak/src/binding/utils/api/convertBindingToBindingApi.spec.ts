@@ -1,3 +1,5 @@
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../fixtures/domain/ValueBindingFixtures';
 import { BindingApi } from '../../models/api/BindingApi';
@@ -31,6 +33,7 @@ describe(convertBindingToBindingApi.name, () => {
           bindingType: BindingTypeApi.type,
           id: bindingFixture.id,
           scope: expectedScope,
+          tags: [...bindingFixture.tags],
           type: bindingFixture.type,
         };
 
@@ -57,6 +60,7 @@ describe(convertBindingToBindingApi.name, () => {
         const expected: BindingApi = {
           bindingType: BindingTypeApi.value,
           id: bindingFixture.id,
+          tags: [...bindingFixture.tags],
           value: bindingFixture.value,
         };
 
