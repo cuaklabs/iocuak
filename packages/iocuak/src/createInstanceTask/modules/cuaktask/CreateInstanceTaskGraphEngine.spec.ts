@@ -15,11 +15,16 @@ import { ReadOnlyLinkedListImplementation } from '../../../list/models/domain/Re
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { CreateInstanceRootTaskKindFixtures } from '../../fixtures/domain/CreateInstanceRootTaskKindFixtures';
 import { CreateInstanceTaskKindFixtures } from '../../fixtures/domain/CreateInstanceTaskKindFixtures';
+import { CreateTagInstancesRootTaskKindFixtures } from '../../fixtures/domain/CreateTagInstancesRootTaskKindFixtures';
 import { CreateInstanceTask } from '../../models/cuaktask/CreateInstanceTask';
 import { CreateInstanceTaskNodeExpandCommand } from '../../models/cuaktask/CreateInstanceTaskNodeExpandCommand';
+import { CreateTagInstancesTask } from '../../models/cuaktask/CreateTagInstancesTask';
+import { CreateTagInstancesTaskNodeExpandCommand } from '../../models/cuaktask/CreateTagInstancesTaskNodeExpandCommand';
 import { TaskNodeExpandCommandType } from '../../models/cuaktask/TaskNodeExpandCommandType';
 import { CreateInstanceRootTaskKind } from '../../models/domain/CreateInstanceRootTaskKind';
 import { CreateInstanceTaskKind } from '../../models/domain/CreateInstanceTaskKind';
+import { CreateTagInstancesRootTaskKind } from '../../models/domain/CreateTagInstancesRootTaskKind';
+import { CreateTagInstancesTaskKind } from '../../models/domain/CreateTagInstancesTaskKind';
 import { TaskKind } from '../../models/domain/TaskKind';
 import { TaskKindType } from '../../models/domain/TaskKindType';
 import { addNodesToGraph } from '../../utils/addNodesToGraph';
@@ -233,7 +238,76 @@ describe(CreateInstanceTaskGraphEngine.name, () => {
       });
     });
 
-    describe('having a taskKind of type different than createInstanceRoot', () => {
+    describe('having a taskKind of type createTagInstancesRoot', () => {
+      let taskKindFixture: CreateTagInstancesRootTaskKind;
+
+      beforeAll(() => {
+        taskKindFixture = CreateTagInstancesRootTaskKindFixtures.any;
+      });
+
+      describe('when called', () => {
+        let expectedCreateTagInstancesTaskNode: cuaktask.Node<
+          cuaktask.Task<CreateTagInstancesTaskKind>
+        >;
+        let expectedRootedTaskGraph: cuaktask.RootedGraph<
+          cuaktask.Task<TaskKind>
+        >;
+        let result: unknown;
+
+        beforeAll(() => {
+          expectedCreateTagInstancesTaskNode = {
+            dependencies: undefined,
+            element: new CreateTagInstancesTask({
+              tag: taskKindFixture.tag,
+              type: TaskKindType.createTagInstances,
+            }),
+          };
+
+          expectedRootedTaskGraph = {
+            nodes: new Set(),
+            root: expectedCreateTagInstancesTaskNode,
+          };
+
+          result = createInstancesTaskGraphEngine.create(taskKindFixture);
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call taskGraphExpandCommandHandler.handle()', () => {
+          expect(
+            taskGraphExpandCommandHandlerMock.handle,
+          ).toHaveBeenCalledTimes(1);
+          expect(taskGraphExpandCommandHandlerMock.handle).toHaveBeenCalledWith<
+            [CreateTagInstancesTaskNodeExpandCommand]
+          >({
+            context: {
+              requestId: taskKindFixture.requestId,
+              serviceIdAncestorList: ReadOnlyLinkedListImplementation.build(),
+              serviceIdToRequestCreateInstanceTaskKindNode: new Map(),
+              serviceIdToSingletonCreateInstanceTaskKindNode: new Map(),
+            },
+            node: expectedCreateTagInstancesTaskNode,
+            taskKindType: TaskNodeExpandCommandType.createTagInstances,
+          });
+        });
+
+        it('should call addNodesToGraph()', () => {
+          expect(addNodesToGraph).toHaveBeenCalledTimes(1);
+          expect(addNodesToGraph).toHaveBeenCalledWith(
+            expectedRootedTaskGraph,
+            expectedCreateTagInstancesTaskNode,
+          );
+        });
+
+        it('should return a graph', () => {
+          expect(result).toStrictEqual(expectedRootedTaskGraph);
+        });
+      });
+    });
+
+    describe('having a taskKind of different type', () => {
       let taskKindFixture: TaskKind;
 
       beforeAll(() => {
