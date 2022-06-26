@@ -1,4 +1,6 @@
 import { TaskStatus } from '@cuaklabs/cuaktask';
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
@@ -9,21 +11,21 @@ import { GetCachedInstanceTaskKind } from '../domain/GetCachedInstanceTaskKind';
 import { GetCachedInstanceTask } from './GetCachedInstanceTask';
 
 describe(GetCachedInstanceTask.name, () => {
-  let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
-  let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
+  let containerRequestServiceMock: jestMock.Mocked<ContainerRequestService>;
+  let containerSingletonServiceMock: jestMock.Mocked<ContainerSingletonService>;
 
   beforeAll(() => {
     containerRequestServiceMock = {
       get: jest.fn(),
     } as Partial<
-      jest.Mocked<ContainerRequestService>
-    > as jest.Mocked<ContainerRequestService>;
+      jestMock.Mocked<ContainerRequestService>
+    > as jestMock.Mocked<ContainerRequestService>;
 
     containerSingletonServiceMock = {
       get: jest.fn(),
     } as Partial<
-      jest.Mocked<ContainerSingletonService>
-    > as jest.Mocked<ContainerSingletonService>;
+      jestMock.Mocked<ContainerSingletonService>
+    > as jestMock.Mocked<ContainerSingletonService>;
   });
 
   describe('.perform', () => {
@@ -32,9 +34,9 @@ describe(GetCachedInstanceTask.name, () => {
       let taskKindFixture: GetCachedInstanceTaskKind;
 
       beforeAll(() => {
-        const instanceConstructorCallMock: jest.Mock<unknown> = jest
-          .fn()
-          .mockImplementation(() => ({ foo: 'bar' }));
+        const instanceConstructorCallMock: jestMock.Mock<
+          (...params: unknown[]) => unknown
+        > = jest.fn().mockImplementation(() => ({ foo: 'bar' }));
 
         bindingFixture = {
           ...TypeBindingFixtures.withScopeRequest,
@@ -160,9 +162,9 @@ describe(GetCachedInstanceTask.name, () => {
       let taskKindFixture: GetCachedInstanceTaskKind;
 
       beforeAll(() => {
-        const instanceConstructorCallMock: jest.Mock<unknown> = jest
-          .fn()
-          .mockImplementation(() => ({ foo: 'bar' }));
+        const instanceConstructorCallMock: jestMock.Mock<
+          (...params: unknown[]) => unknown
+        > = jest.fn().mockImplementation(() => ({ foo: 'bar' }));
 
         bindingFixture = {
           ...TypeBindingFixtures.withScopeSingleton,
