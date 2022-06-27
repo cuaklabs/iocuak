@@ -104,10 +104,11 @@ describe(TypeOrmDeleteContainerModule.name, () => {
 
         containerApi = Container.build();
 
-        containerApi.bindToValue(
-          crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
-          {},
-        );
+        containerApi.bindToValue({
+          serviceId:
+            crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
+          value: {},
+        });
         containerApi.bind(findQueryToFindQueryTypeOrmConverterType);
       });
 

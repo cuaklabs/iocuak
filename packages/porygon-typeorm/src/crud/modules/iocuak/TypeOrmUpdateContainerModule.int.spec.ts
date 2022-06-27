@@ -111,10 +111,11 @@ describe(TypeOrmUpdateContainerModule.name, () => {
 
         containerApi = Container.build();
 
-        containerApi.bindToValue(
-          crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
-          {},
-        );
+        containerApi.bindToValue({
+          serviceId:
+            crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
+          value: {},
+        });
         containerApi.bind(updateQueryToFindQueryTypeOrmConverterType);
         containerApi.bind(updateQueryToSetQueryTypeOrmQueryConverterType);
       });

@@ -237,7 +237,10 @@ describe(ContainerApi.name, () => {
 
         containerApi = ContainerApi.build();
 
-        containerApi.bindToValue(serviceIdFixture, valueFixture);
+        containerApi.bindToValue({
+          serviceId: serviceIdFixture,
+          value: valueFixture,
+        });
       });
 
       describe('when called .get()', () => {
@@ -388,10 +391,10 @@ describe(ContainerApi.name, () => {
             load: (
               containerModuleBindingService: ContainerModuleBindingServiceApi,
             ) => {
-              containerModuleBindingService.bindToValue(
-                serviceIdFixture,
+              containerModuleBindingService.bindToValue({
+                serviceId: serviceIdFixture,
                 value,
-              );
+              });
             },
           }),
           imports: [
@@ -400,10 +403,10 @@ describe(ContainerApi.name, () => {
                 load: (
                   containerModuleBindingService: ContainerModuleBindingServiceApi,
                 ) => {
-                  containerModuleBindingService.bindToValue(
-                    dependentServiceIdFixture,
-                    valueFixture,
-                  );
+                  containerModuleBindingService.bindToValue({
+                    serviceId: dependentServiceIdFixture,
+                    value: valueFixture,
+                  });
                 },
               }),
               imports: [],

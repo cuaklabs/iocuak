@@ -12,6 +12,7 @@ import { injectFromBase } from './classMetadata/decorators/injectFromBase';
 import { ClassMetadataApi } from './classMetadata/models/api/ClassMetadataApi';
 import { Newable } from './common/models/domain/Newable';
 import { ServiceId } from './common/models/domain/ServiceId';
+import { BindValueOptionsApi } from './container/models/api/BindValueOptionsApi';
 import { ContainerApi } from './container/modules/api/ContainerApi';
 import { ContainerModuleBindingServiceApi } from './container/services/api/ContainerModuleBindingServiceApi';
 import { ContainerServiceApi } from './container/services/api/ContainerServiceApi';
@@ -24,6 +25,7 @@ export type {
   BindingApi as Binding,
   BindingTag,
   BindingTypeApi as BindingType,
+  BindValueOptionsApi as BindValueOptions,
   ClassMetadataApi as ClassMetadata,
   ContainerModuleMetadataApi as ContainerModuleMetadata,
   ContainerModuleApi as ContainerModule,

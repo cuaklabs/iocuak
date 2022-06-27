@@ -24,10 +24,10 @@ export function getContainerModuleWithTypeServiceAndValueServiceParameter(): Con
       loadSpy(containerModuleBindingServiceApi);
 
       containerModuleBindingServiceApi.bind(typeServiceParameter.service);
-      containerModuleBindingServiceApi.bindToValue(
-        valueServiceParameter.binding.id,
-        valueServiceParameter.binding.value,
-      );
+      containerModuleBindingServiceApi.bindToValue({
+        serviceId: valueServiceParameter.binding.id,
+        value: valueServiceParameter.binding.value,
+      });
     },
   };
 

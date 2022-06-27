@@ -78,10 +78,10 @@ function bindServiceDependencies(
 
           break;
         case BindingTypeApi.value:
-          this.container.bindToValue(
-            dependency.binding.id,
-            (dependency as ValueServiceParameter).binding.value,
-          );
+          this.container.bindToValue({
+            serviceId: dependency.binding.id,
+            value: (dependency as ValueServiceParameter).binding.value,
+          });
           break;
       }
     }
@@ -437,10 +437,10 @@ When<ContainerWorld & ResultWorld & TypeServiceWorld>(
 When<ContainerWorld & ValueServiceWorld>(
   'the value service is bound',
   function (): void {
-    this.container.bindToValue(
-      this.valueServiceParameter.binding.id,
-      this.valueServiceParameter.service,
-    );
+    this.container.bindToValue({
+      serviceId: this.valueServiceParameter.binding.id,
+      value: this.valueServiceParameter.service,
+    });
   },
 );
 
