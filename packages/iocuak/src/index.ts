@@ -9,6 +9,10 @@ import { BindingTag } from './binding/models/domain/BindingTag';
 import { inject } from './classMetadata/decorators/inject';
 import { injectFrom } from './classMetadata/decorators/injectFrom';
 import { injectFromBase } from './classMetadata/decorators/injectFromBase';
+import { injectTag } from './classMetadata/decorators/injectTag';
+import { ClassElementMetadataApi } from './classMetadata/models/api/ClassElementMetadataApi';
+import { ClassElementServiceIdMetadataApi } from './classMetadata/models/api/ClassElementServiceIdMetadataApi';
+import { ClassElementTagMetadataApi } from './classMetadata/models/api/ClassElementTagMetadataApi';
 import { ClassMetadataApi } from './classMetadata/models/api/ClassMetadataApi';
 import { Newable } from './common/models/domain/Newable';
 import { ServiceId } from './common/models/domain/ServiceId';
@@ -26,6 +30,9 @@ export type {
   BindingTag,
   BindingTypeApi as BindingType,
   BindValueOptionsApi as BindValueOptions,
+  ClassElementMetadataApi as ClassElementMetadata,
+  ClassElementServiceIdMetadataApi as ClassElementServiceIdMetadata,
+  ClassElementTagMetadataApi as ClassElementTagMetadata,
   ClassMetadataApi as ClassMetadata,
   ContainerModuleMetadataApi as ContainerModuleMetadata,
   ContainerModuleApi as ContainerModule,
@@ -45,6 +52,7 @@ export {
   injectable,
   injectFrom,
   injectFromBase,
+  injectTag,
   MetadataProviderApi as MetadataProvider,
   BindingScopeApi as BindingScope,
 };
