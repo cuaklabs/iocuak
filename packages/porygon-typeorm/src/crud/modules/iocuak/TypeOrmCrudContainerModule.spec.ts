@@ -148,12 +148,13 @@ describe(TypeOrmCrudContainerModule.name, () => {
 
         it('should call container.bindToValue()', () => {
           expect(containerApiMock.bindToValue).toHaveBeenCalledTimes(1);
-          expect(containerApiMock.bindToValue).toHaveBeenCalledWith(
-            crudTypeOrmModuleTypeToSymbolMapFixture[
-              CrudTypeOrmModuleType.repository
-            ],
-            repositoryMock,
-          );
+          expect(containerApiMock.bindToValue).toHaveBeenCalledWith({
+            serviceId:
+              crudTypeOrmModuleTypeToSymbolMapFixture[
+                CrudTypeOrmModuleType.repository
+              ],
+            value: repositoryMock,
+          });
         });
 
         it('should call TypeOrmCreateContainerModule.load()', () => {

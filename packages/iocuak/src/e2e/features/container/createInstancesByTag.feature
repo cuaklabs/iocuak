@@ -8,7 +8,13 @@ Feature: Create instances by tag
 
   Rule: Any bound type service is instantiated
 
-    Scenario Outline: Bound value service request
+    Scenario: Bound value service request
+      Given a "value service"
+      When the value service is bound to the tag
+      And instaces by tag are requested
+      Then an array with the value service is returned
+
+    Scenario Outline: Bound type service request
       Given a <type_service>
       When the type binding is updated to include the tag
       And the type service dependencies are bound

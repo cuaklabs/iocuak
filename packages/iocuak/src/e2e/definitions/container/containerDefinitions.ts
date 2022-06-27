@@ -78,10 +78,10 @@ function bindServiceDependencies(
 
           break;
         case BindingTypeApi.value:
-          this.container.bindToValue(
-            dependency.binding.id,
-            (dependency as ValueServiceParameter).binding.value,
-          );
+          this.container.bindToValue({
+            serviceId: dependency.binding.id,
+            value: (dependency as ValueServiceParameter).binding.value,
+          });
           break;
       }
     }
@@ -407,7 +407,7 @@ When<ContainerWorld & TypeServiceWorld>(
   },
 );
 
-When<ResultWorld & TagWorld & TypeServiceWorld>(
+When<TagWorld & TypeServiceWorld>(
   'the type binding is updated to include the tag',
   function (): void {
     const service: Newable = this.typeServiceParameter.service;
@@ -437,10 +437,11 @@ When<ContainerWorld & ResultWorld & TypeServiceWorld>(
 When<ContainerWorld & ValueServiceWorld>(
   'the value service is bound',
   function (): void {
-    this.container.bindToValue(
-      this.valueServiceParameter.binding.id,
-      this.valueServiceParameter.service,
-    );
+    this.container.bindToValue({
+      serviceId: this.valueServiceParameter.binding.id,
+      tags: [...this.valueServiceParameter.binding.tags],
+      value: this.valueServiceParameter.service,
+    });
   },
 );
 
@@ -448,6 +449,17 @@ When<ContainerWorld & ValueServiceWorld>(
   'the value service is unbound',
   function (): void {
     this.container.unbind(this.valueServiceParameter.binding.id);
+  },
+);
+
+When<ContainerWorld & TagWorld & ValueServiceWorld>(
+  'the value service is bound to the tag',
+  function (): void {
+    this.container.bindToValue({
+      serviceId: this.valueServiceParameter.binding.id,
+      tags: [...this.valueServiceParameter.binding.tags, this.tag],
+      value: this.valueServiceParameter.service,
+    });
   },
 );
 
@@ -465,6 +477,21 @@ Then<ResultWorld & TypeServiceWorld>(
       const [instance]: unknown[] = this.result as unknown[];
 
       chai.expect(instance).to.be.instanceOf(this.typeServiceParameter.service);
+    } else {
+      throw new Error('Expected an array result');
+    }
+  },
+);
+
+Then<ResultWorld & ValueServiceWorld>(
+  'an array with the value service is returned',
+  function (): void {
+    if (Array.isArray(this.result)) {
+      const [instance]: unknown[] = this.result as unknown[];
+
+      chai
+        .expect(instance)
+        .to.be.equal(this.valueServiceParameter.binding.value);
     } else {
       throw new Error('Expected an array result');
     }

@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Added `BindingTag`.
+- Added `BindValueOptions`.
 - Added `ClassElementMetadata`.
 - Added `ClassElementMetadatType`.
 - Added `ClassElementServiceIdMetadata`.
@@ -34,6 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Updated `ContainerModuleMetadata` to allow module classes and modules.
 - Updated `InjectableOptions` with tags.
 - [BC]: Updated `ClassMetadata` to contain `ClassElementMetadata` based properties and constructor arguments.
+- [BC]: Updated `Container.bindToValue` to require `BindValueOptions`.
 
 
 

@@ -106,33 +106,116 @@ describe(ContainerServiceApiImplementation.name, () => {
   });
 
   describe('.bindToValue', () => {
-    describe('when called', () => {
-      let serviceIdFixture: ServiceId;
-      let instanceFixture: unknown;
+    describe('having a tag array', () => {
+      let tagsFixture: BindingTag[];
 
       beforeAll(() => {
-        serviceIdFixture = 'service-id';
-        instanceFixture = {
-          foo: 'bar',
-        };
-
-        containerServiceApiImplementation.bindToValue(
-          serviceIdFixture,
-          instanceFixture,
-        );
+        tagsFixture = [Symbol()];
       });
 
-      afterAll(() => {
-        jest.clearAllMocks();
+      describe('when called', () => {
+        let serviceIdFixture: ServiceId;
+        let instanceFixture: unknown;
+
+        beforeAll(() => {
+          serviceIdFixture = 'service-id';
+          instanceFixture = {
+            foo: 'bar',
+          };
+
+          containerServiceApiImplementation.bindToValue({
+            serviceId: serviceIdFixture,
+            tags: tagsFixture,
+            value: instanceFixture,
+          });
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call bindToValue()', () => {
+          expect(bindToValue).toHaveBeenCalledTimes(1);
+          expect(bindToValue).toHaveBeenCalledWith(
+            serviceIdFixture,
+            tagsFixture,
+            instanceFixture,
+            containerServiceMock.binding,
+          );
+        });
+      });
+    });
+
+    describe('having a tag symbol', () => {
+      let tagsFixture: BindingTag;
+
+      beforeAll(() => {
+        tagsFixture = Symbol();
       });
 
-      it('should call bindToValue()', () => {
-        expect(bindToValue).toHaveBeenCalledTimes(1);
-        expect(bindToValue).toHaveBeenCalledWith(
-          serviceIdFixture,
-          instanceFixture,
-          containerServiceMock.binding,
-        );
+      describe('when called', () => {
+        let serviceIdFixture: ServiceId;
+        let instanceFixture: unknown;
+
+        beforeAll(() => {
+          serviceIdFixture = 'service-id';
+          instanceFixture = {
+            foo: 'bar',
+          };
+
+          containerServiceApiImplementation.bindToValue({
+            serviceId: serviceIdFixture,
+            tags: tagsFixture,
+            value: instanceFixture,
+          });
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call bindToValue()', () => {
+          expect(bindToValue).toHaveBeenCalledTimes(1);
+          expect(bindToValue).toHaveBeenCalledWith(
+            serviceIdFixture,
+            [tagsFixture],
+            instanceFixture,
+            containerServiceMock.binding,
+          );
+        });
+      });
+    });
+
+    describe('having no tags', () => {
+      describe('when called', () => {
+        let serviceIdFixture: ServiceId;
+        let instanceFixture: unknown;
+
+        beforeAll(() => {
+          serviceIdFixture = 'service-id';
+          instanceFixture = {
+            foo: 'bar',
+          };
+
+          containerServiceApiImplementation.bindToValue({
+            serviceId: serviceIdFixture,
+            value: instanceFixture,
+          });
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+        });
+
+        it('should call bindToValue()', () => {
+          expect(bindToValue).toHaveBeenCalledTimes(1);
+          expect(bindToValue).toHaveBeenCalledWith(
+            serviceIdFixture,
+            [],
+            instanceFixture,
+            containerServiceMock.binding,
+          );
+        });
       });
     });
   });

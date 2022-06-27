@@ -66,10 +66,13 @@ export class TypeOrmCrudContainerModule<TModelDb>
   public load(
     containerModuleBindingService: iocuak.ContainerModuleBindingService,
   ): void {
-    containerModuleBindingService.bindToValue(
-      this.#crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
-      this.#repository,
-    );
+    containerModuleBindingService.bindToValue({
+      serviceId:
+        this.#crudTypeOrmModuleTypeToSymbolMap[
+          CrudTypeOrmModuleType.repository
+        ],
+      value: this.#repository,
+    });
 
     this.#typeOrmCreationContainerModule.load(containerModuleBindingService);
     this.#typeOrmDeleteContainerModule.load(containerModuleBindingService);

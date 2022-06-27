@@ -8,6 +8,7 @@ import { ContainerModuleApi } from '../../../containerModule/models/api/Containe
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/utils/api/convertToContainerModuleMetadata';
+import { BindValueOptionsApi } from '../../models/api/BindValueOptionsApi';
 import { bind } from '../../utils/bind';
 import { bindToValue } from '../../utils/bindToValue';
 import { ContainerService } from '../domain/ContainerService';
@@ -26,8 +27,13 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
     bind(type, this._containerService.binding, this._containerService.metadata);
   }
 
-  public bindToValue<TInstance>(serviceId: ServiceId, value: TInstance): void {
-    bindToValue(serviceId, value, this._containerService.binding);
+  public bindToValue(options: BindValueOptionsApi): void {
+    bindToValue(
+      options.serviceId,
+      this.#getTags(options),
+      options.value,
+      this._containerService.binding,
+    );
   }
 
   public get<TInstance>(serviceId: ServiceId): TInstance {
@@ -73,5 +79,19 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
   public unbind(serviceId: ServiceId): void {
     this._containerService.singleton.remove(serviceId);
     this._containerService.binding.remove(serviceId);
+  }
+
+  #getTags(options: BindValueOptionsApi): BindingTag[] {
+    const tagOrTags: BindingTag | BindingTag[] = options?.tags ?? [];
+
+    let tags: BindingTag[];
+
+    if (Array.isArray(tagOrTags)) {
+      tags = tagOrTags;
+    } else {
+      tags = [tagOrTags];
+    }
+
+    return tags;
   }
 }

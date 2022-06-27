@@ -1,6 +1,7 @@
+import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { Newable } from '../../../common/models/domain/Newable';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { BindValueOptionsApi } from '../../../container/models/api/BindValueOptionsApi';
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
 import { bind } from '../../../container/utils/bind';
 import { bindToValue } from '../../../container/utils/bindToValue';
@@ -21,10 +22,13 @@ export function convertToContainerModule(
           bind: <TInstance, TArgs extends unknown[]>(
             type: Newable<TInstance, TArgs>,
           ) => bind(type, containerBindingService, metadataService),
-          bindToValue: <TInstance>(
-            serviceId: ServiceId,
-            value: TInstance,
-          ): void => bindToValue(serviceId, value, containerBindingService),
+          bindToValue: (options: BindValueOptionsApi): void =>
+            bindToValue(
+              options.serviceId,
+              getTags(options),
+              options.value,
+              containerBindingService,
+            ),
         };
 
       containerModuleApi.load(containerModuleBindingServiceApi);
@@ -32,4 +36,18 @@ export function convertToContainerModule(
   };
 
   return containerModule;
+}
+
+function getTags(options: BindValueOptionsApi): BindingTag[] {
+  const tagOrTags: BindingTag | BindingTag[] = options?.tags ?? [];
+
+  let tags: BindingTag[];
+
+  if (Array.isArray(tagOrTags)) {
+    tags = tagOrTags;
+  } else {
+    tags = [tagOrTags];
+  }
+
+  return tags;
 }

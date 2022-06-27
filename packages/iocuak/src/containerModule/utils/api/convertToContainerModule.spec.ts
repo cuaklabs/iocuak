@@ -1,6 +1,10 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import * as jestMock from 'jest-mock';
+
 jest.mock('../../../container/utils/bind');
 jest.mock('../../../container/utils/bindToValue');
 
+import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
@@ -13,7 +17,7 @@ import { ContainerModule } from '../../models/domain/ContainerModule';
 import { convertToContainerModule } from './convertToContainerModule';
 
 describe(convertToContainerModule.name, () => {
-  let containerModuleApiMock: jest.Mocked<ContainerModuleApi>;
+  let containerModuleApiMock: jestMock.Mocked<ContainerModuleApi>;
 
   beforeAll(() => {
     containerModuleApiMock = {
@@ -63,10 +67,10 @@ describe(convertToContainerModule.name, () => {
         const expected: ContainerModuleBindingServiceApi = {
           bind: expect.any(
             Function,
-          ) as ContainerModuleBindingServiceApi['bind'],
+          ) as unknown as ContainerModuleBindingServiceApi['bind'],
           bindToValue: expect.any(
             Function,
-          ) as ContainerModuleBindingServiceApi['bindToValue'],
+          ) as unknown as ContainerModuleBindingServiceApi['bindToValue'],
         };
 
         expect(containerModuleApiMock.load).toHaveBeenCalledTimes(1);
@@ -111,10 +115,10 @@ describe(convertToContainerModule.name, () => {
         const expected: ContainerModuleBindingServiceApi = {
           bind: expect.any(
             Function,
-          ) as ContainerModuleBindingServiceApi['bind'],
+          ) as unknown as ContainerModuleBindingServiceApi['bind'],
           bindToValue: expect.any(
             Function,
-          ) as ContainerModuleBindingServiceApi['bindToValue'],
+          ) as unknown as ContainerModuleBindingServiceApi['bindToValue'],
         };
 
         expect(containerModuleApiMock.load).toHaveBeenCalledTimes(1);
@@ -133,22 +137,25 @@ describe(convertToContainerModule.name, () => {
 
     describe('when result.load() is called and containerModuleApi.load() calls containerModuleBindingServiceApi.bindToValue()', () => {
       let serviceIdFixture: ServiceId;
+      let tagsFixture: BindingTag[];
       let valueFixture: unknown;
       let containerBindingServiceFixture: BindingService;
       let metadataServiceFixture: MetadataService;
 
       beforeAll(() => {
         serviceIdFixture = Symbol();
+        tagsFixture = [Symbol()];
         valueFixture = Symbol();
 
         containerModuleApiMock.load.mockImplementationOnce(
           (
             containerModuleBindingService: ContainerModuleBindingServiceApi,
           ): void => {
-            containerModuleBindingService.bindToValue(
-              serviceIdFixture,
-              valueFixture,
-            );
+            containerModuleBindingService.bindToValue({
+              serviceId: serviceIdFixture,
+              tags: tagsFixture,
+              value: valueFixture,
+            });
           },
         );
 
@@ -174,10 +181,10 @@ describe(convertToContainerModule.name, () => {
         const expected: ContainerModuleBindingServiceApi = {
           bind: expect.any(
             Function,
-          ) as ContainerModuleBindingServiceApi['bind'],
+          ) as unknown as ContainerModuleBindingServiceApi['bind'],
           bindToValue: expect.any(
             Function,
-          ) as ContainerModuleBindingServiceApi['bindToValue'],
+          ) as unknown as ContainerModuleBindingServiceApi['bindToValue'],
         };
 
         expect(containerModuleApiMock.load).toHaveBeenCalledTimes(1);
@@ -188,6 +195,7 @@ describe(convertToContainerModule.name, () => {
         expect(bindToValue).toHaveBeenCalledTimes(1);
         expect(bindToValue).toHaveBeenCalledWith(
           serviceIdFixture,
+          tagsFixture,
           valueFixture,
           containerBindingServiceFixture,
         );

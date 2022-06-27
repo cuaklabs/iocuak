@@ -112,10 +112,11 @@ describe(TypeOrmReadContainerModule.name, () => {
 
         containerApi = Container.build();
 
-        containerApi.bindToValue(
-          crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
-          {},
-        );
+        containerApi.bindToValue({
+          serviceId:
+            crudTypeOrmModuleTypeToSymbolMap[CrudTypeOrmModuleType.repository],
+          value: {},
+        });
         containerApi.bind(modelDbToModelConverterType);
         containerApi.bind(findQueryToFindQueryTypeOrmConverterType);
       });
