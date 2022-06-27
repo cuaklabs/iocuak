@@ -15,7 +15,7 @@
     "prebuild": "pnpm run build:clean",
     "prebuild:diagnostics": "pnpm run prebuild",
     "prepare": "husky install",
-    "prepublish:packages": "pnpm run build && pnpm run test",
+    "prepublish:packages": "pnpm run build && pnpm run test:js && pnpm run test:e2e:js",
     "test:coverage": "pnpm run test --coverage",
     "test:e2e": "cucumber-js --config=config/cucumber/cucumber.ts.config.mjs",
     "test:e2e:js": "cucumber-js --config=config/cucumber/cucumber.js.config.mjs",
