@@ -26,4 +26,6 @@ npm login
 pnpm run prepublish:packages
 ```
 
+**Note**: Remember to check the package contents. You can use `pnpm pack` for this purpose.
+
 Then, for each package, navigate to the package folder and run `pnpm publish`
