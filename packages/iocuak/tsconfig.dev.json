@@ -3,6 +3,6 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "incremental": true,
-    "tsBuildInfoFile": "./lib/tsconfig.dev.tsbuildinfo"
+    "tsBuildInfoFile": "./lib/tsconfig.tsbuildinfo"
   }
 }

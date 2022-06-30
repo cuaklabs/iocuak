@@ -1,0 +1,27 @@
+{
+  "name": "@cuaklabs/iocuak-benchmark",
+  "version": "0.0.1",
+  "description": "TypeORM adapters for porygon",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/cuaktask.git"
+  },
+  "keywords": [
+    "benchmark"
+  ],
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/cuaktask/issues"
+  },
+  "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/iocuak-benchmark#readme",
+  "dependencies": {
+    "@cuaklabs/iocuak": "workspace:../iocuak",
+    "tsyringe": "^4.7.0"
+  },
+  "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
+  "publishConfig": {
+    "access": "public"
+  }
+}
