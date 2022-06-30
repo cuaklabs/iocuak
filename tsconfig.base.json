@@ -1,7 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "composite": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "exactOptionalPropertyTypes": true,
@@ -17,6 +16,7 @@
     "paths": {
       "@cuaklabs/cuaktask": ["./packages/cuaktask"],
       "@cuaklabs/iocuak": ["./packages/iocuak"],
+      "@cuaklabs/iocuak-benchmark": ["./packages/iocuak-benchmark"],
       "@cuaklabs/porygon": ["./packages/porygon"],
       "@cuaklabs/porygon-typeorm": ["./packages/porygon-typeorm"]
     },
