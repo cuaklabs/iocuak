@@ -1,0 +1,29 @@
+import { ClassElementMetadata } from '../../../classMetadata/models/domain/ClassElementMetadata';
+import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
+import { mapIterable } from '../../../common/utils/mapIterable';
+import { ServiceDependencies } from '../../../createInstanceTask/models/domain/ServiceDependencies';
+import { TaskContext } from '../../models/domain/TaskContext';
+import { getDependency } from './getDependency';
+
+export function getDependencies(
+  classMetadata: ClassMetadata,
+  context: TaskContext,
+): ServiceDependencies {
+  const serviceDependencies: ServiceDependencies = {
+    constructorArguments: classMetadata.constructorArguments.map(
+      (classElementMetadata: ClassElementMetadata) =>
+        getDependency(classElementMetadata, context),
+    ),
+    properties: new Map(
+      mapIterable(
+        classMetadata.properties.entries(),
+        ([propertyName, property]: [string | symbol, ClassElementMetadata]): [
+          string | symbol,
+          unknown,
+        ] => [propertyName, getDependency(property, context)],
+      ),
+    ),
+  };
+
+  return serviceDependencies;
+}
