@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "description": "Minimal abstract task manager",
-  "packageManager": "pnpm@7.4.1",
+  "packageManager": "pnpm@7.5.0",
   "scripts": {
     "build": "tsc --build tsconfig.packages.json",
     "build:dev": "tsc --build tsconfig.packages.dev.json",
