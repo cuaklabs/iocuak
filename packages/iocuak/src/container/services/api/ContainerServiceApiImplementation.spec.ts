@@ -5,6 +5,8 @@ jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock(
   '../../../containerModuleMetadata/utils/api/convertToContainerModuleMetadata',
 );
+jest.mock('../../../task/actions/domain/createInstance');
+jest.mock('../../../task/actions/domain/createInstancesByTag');
 jest.mock('../../utils/bind');
 jest.mock('../../utils/bindToValue');
 
@@ -22,10 +24,16 @@ import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/mod
 import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/utils/api/convertToContainerModuleMetadata';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
+import { createInstance } from '../../../task/actions/domain/createInstance';
+import { createInstanceFromBinding } from '../../../task/actions/domain/createInstanceFromBinding';
+import { createInstancesByTag } from '../../../task/actions/domain/createInstancesByTag';
+import { getDependencies } from '../../../task/actions/domain/getDependencies';
+import { TaskContext } from '../../../task/models/domain/TaskContext';
 import { bind } from '../../utils/bind';
 import { bindToValue } from '../../utils/bindToValue';
 import { ContainerInstanceService } from '../domain/ContainerInstanceService';
 import { ContainerModuleService } from '../domain/ContainerModuleService';
+import { ContainerRequestService } from '../domain/ContainerRequestService';
 import { ContainerService } from '../domain/ContainerService';
 import { ContainerSingletonService } from '../domain/ContainerSingletonService';
 import { ContainerServiceApiImplementation } from './ContainerServiceApiImplementation';
@@ -34,6 +42,7 @@ describe(ContainerServiceApiImplementation.name, () => {
   let containerBindingServiceMock: jestMock.Mocked<BindingService>;
   let containerInstanceServiceMock: jestMock.Mocked<ContainerInstanceService>;
   let containerModuleServiceMock: jestMock.Mocked<ContainerModuleService>;
+  let containerRequestServiceMock: jestMock.Mocked<ContainerRequestService>;
   let containerSingletonServiceMock: jestMock.Mocked<ContainerSingletonService>;
   let metadataServiceMock: jestMock.Mocked<MetadataService>;
   let containerServiceMock: ContainerService;
@@ -56,6 +65,12 @@ describe(ContainerServiceApiImplementation.name, () => {
     containerModuleServiceMock = {
       loadMetadata: jest.fn(),
     };
+    containerRequestServiceMock = {
+      end: jest.fn(),
+      start: jest.fn(),
+    } as Partial<
+      jestMock.Mocked<ContainerRequestService>
+    > as jestMock.Mocked<ContainerRequestService>;
     containerSingletonServiceMock = {
       remove: jest.fn(),
     } as Partial<
@@ -72,6 +87,7 @@ describe(ContainerServiceApiImplementation.name, () => {
       instance: containerInstanceServiceMock,
       metadata: metadataServiceMock,
       module: containerModuleServiceMock,
+      request: containerRequestServiceMock,
       singleton: containerSingletonServiceMock,
     } as Partial<ContainerService> as ContainerService;
 
@@ -223,18 +239,25 @@ describe(ContainerServiceApiImplementation.name, () => {
   describe('.get', () => {
     describe('when called', () => {
       let serviceIdFixture: ServiceId;
+
       let instanceFixture: unknown;
+      let requestIdFixture: symbol;
+
       let result: unknown;
 
       beforeAll(() => {
         serviceIdFixture = 'service-id';
+
         instanceFixture = {
           foo: 'bar',
         };
+        requestIdFixture = Symbol();
 
-        containerInstanceServiceMock.create.mockReturnValueOnce(
-          instanceFixture,
-        );
+        containerRequestServiceMock.start.mockReturnValueOnce(requestIdFixture);
+
+        (
+          createInstance as jestMock.Mock<typeof createInstance>
+        ).mockReturnValueOnce(instanceFixture);
 
         result = containerServiceApiImplementation.get(serviceIdFixture);
       });
@@ -243,10 +266,26 @@ describe(ContainerServiceApiImplementation.name, () => {
         jest.clearAllMocks();
       });
 
-      it('should call containerService.instance.create()', () => {
-        expect(containerServiceMock.instance.create).toHaveBeenCalledTimes(1);
-        expect(containerServiceMock.instance.create).toHaveBeenCalledWith(
+      it('should call createInstance()', () => {
+        const expectedTaskContext: TaskContext = {
+          actions: {
+            createInstanceFromBinding,
+            getDependencies,
+          },
+          requestId: requestIdFixture,
+          services: {
+            bindingService: containerBindingServiceMock,
+            containerRequestService: containerRequestServiceMock,
+            containerSingletonService: containerSingletonServiceMock,
+            metadataService: metadataServiceMock,
+          },
+          servicesInstantiatedSet: new Set(),
+        };
+
+        expect(createInstance).toHaveBeenCalledTimes(1);
+        expect(createInstance).toHaveBeenCalledWith(
           serviceIdFixture,
+          expectedTaskContext,
         );
       });
 
@@ -259,20 +298,27 @@ describe(ContainerServiceApiImplementation.name, () => {
   describe('.getByTag', () => {
     describe('when called', () => {
       let bindingTagFixture: BindingTag;
+
       let instancesFixture: unknown[];
+      let requestIdFixture: symbol;
+
       let result: unknown;
 
       beforeAll(() => {
         bindingTagFixture = 'tag-id';
+
         instancesFixture = [
           {
             foo: 'bar',
           },
         ];
+        requestIdFixture = Symbol();
 
-        containerInstanceServiceMock.createByTag.mockReturnValueOnce(
-          instancesFixture,
-        );
+        containerRequestServiceMock.start.mockReturnValueOnce(requestIdFixture);
+
+        (
+          createInstancesByTag as jestMock.Mock<typeof createInstancesByTag>
+        ).mockReturnValueOnce(instancesFixture);
 
         result = containerServiceApiImplementation.getByTag(bindingTagFixture);
       });
@@ -281,12 +327,26 @@ describe(ContainerServiceApiImplementation.name, () => {
         jest.clearAllMocks();
       });
 
-      it('should call containerService.instance.createByTag()', () => {
-        expect(containerServiceMock.instance.createByTag).toHaveBeenCalledTimes(
-          1,
-        );
-        expect(containerServiceMock.instance.createByTag).toHaveBeenCalledWith(
+      it('should call createInstancesByTag()', () => {
+        const expectedTaskContext: TaskContext = {
+          actions: {
+            createInstanceFromBinding,
+            getDependencies,
+          },
+          requestId: requestIdFixture,
+          services: {
+            bindingService: containerBindingServiceMock,
+            containerRequestService: containerRequestServiceMock,
+            containerSingletonService: containerSingletonServiceMock,
+            metadataService: metadataServiceMock,
+          },
+          servicesInstantiatedSet: new Set(),
+        };
+
+        expect(createInstancesByTag).toHaveBeenCalledTimes(1);
+        expect(createInstancesByTag).toHaveBeenCalledWith(
           bindingTagFixture,
+          expectedTaskContext,
         );
       });
 
