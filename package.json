@@ -10,7 +10,7 @@
     "build:clean": "node ./scripts/removeTypescriptCompiledFiles.mjs",
     "commit": "commit",
     "format": "prettier --write ./packages",
-    "iocuak-benchmarck:createInstances:js": "clinic flame -- node ./packages/iocuak-benchmark/lib/benchmarks/createInstances/index.js",
+    "iocuak-benchmarck:createInstance:js": "clinic flame -- node ./packages/iocuak-benchmark/lib/benchmarks/createInstance/index.js",
     "lint": "eslint --ext ts --ignore-path .gitignore .",
     "packages:ts-config:generate": "node ./scripts/generateTypescriptConfig.mjs",
     "prebuild": "pnpm run build:clean",
