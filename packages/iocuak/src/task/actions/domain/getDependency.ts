@@ -1,8 +1,8 @@
 import { Binding } from '../../../binding/models/domain/Binding';
 import { ClassElementMetadata } from '../../../classMetadata/models/domain/ClassElementMetadata';
 import { ClassElementMetadataType } from '../../../classMetadata/models/domain/ClassElementMetadataType';
-import { mapIterable } from '../../../common/utils/mapIterable';
 import { TaskContext } from '../../models/domain/TaskContext';
+import { createInstancesByTag } from './createInstancesByTag';
 import { getBinding } from './getBinding';
 
 export function getDependency(
@@ -22,19 +22,10 @@ export function getDependency(
       break;
     }
     case ClassElementMetadataType.tag: {
-      const bindings: Iterable<Binding> =
-        context.services.bindingService.getByTag(
-          classElementMetadata.value,
-          true,
-        );
-
-      const instances: Iterable<unknown> = mapIterable(
-        bindings,
-        (binding: Binding) =>
-          context.actions.createInstanceFromBinding(binding, context),
+      instanceDependency = createInstancesByTag(
+        classElementMetadata.value,
+        context,
       );
-
-      instanceDependency = [...instances];
       break;
     }
   }
