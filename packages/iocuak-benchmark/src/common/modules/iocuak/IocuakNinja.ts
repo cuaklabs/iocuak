@@ -12,23 +12,23 @@ import { Weapon } from '../domain/Weapon';
 })
 export class IocuakNinja implements Warrior {
   public static instanceCounter: number = 0;
-  #katana: Weapon;
-  #shuriken: ThrowableWeapon;
+  #weapon: Weapon;
+  #throwableWeapon: ThrowableWeapon;
 
   constructor(
-    @inject(serviceTypeToSymbolMap[ServiceType.weapon]) katana: Weapon,
+    @inject(serviceTypeToSymbolMap[ServiceType.weapon]) weapon: Weapon,
     @inject(serviceTypeToSymbolMap[ServiceType.throwableWeapon])
-    shuriken: ThrowableWeapon,
+    throwableWeapon: ThrowableWeapon,
   ) {
-    this.#katana = katana;
-    this.#shuriken = shuriken;
+    this.#weapon = weapon;
+    this.#throwableWeapon = throwableWeapon;
     IocuakNinja.instanceCounter++;
   }
 
   public fight() {
-    return this.#katana.hit();
+    return this.#weapon.hit();
   }
   public sneak() {
-    return this.#shuriken.throw();
+    return this.#throwableWeapon.throw();
   }
 }
