@@ -77,7 +77,6 @@ export class ContainerApi extends ContainerServiceApiImplementation {
 
     const containerService: ContainerService = {
       binding: containerBindingService,
-      instance: containerInstanceService,
       metadata: metadataService,
       module: containerModuleService,
       request: containerRequestService,
