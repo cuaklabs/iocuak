@@ -9,12 +9,12 @@ function runTest(): void {
 
   const runners: ((instances: number) => number)[] = [iocuakRun, tsyringeRun];
 
-  for (const instancesRun of instancesRuns) {
+  for (const iterations of instancesRuns) {
     for (const runner of runners) {
-      const runMilliseconds: number = runner(instancesRun);
+      const runMilliseconds: number = runner(iterations);
 
       console.log(
-        `[${runner.name} with ${instancesRun} instances]: ${runMilliseconds} milliseconds.`,
+        `[${runner.name} with ${iterations} iterations]: ${runMilliseconds} milliseconds.`,
       );
     }
   }

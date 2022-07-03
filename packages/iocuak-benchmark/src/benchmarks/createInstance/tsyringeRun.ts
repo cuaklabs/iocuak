@@ -5,15 +5,16 @@ import { serviceTypeToSymbolMap } from '../../common/models/domain/serviceTypeTo
 import { Warrior } from '../../common/modules/domain/Warrior';
 import { tsyringeContainer } from '../../common/modules/tsyringe/tsyringeContainer';
 
-export function tsyringeRun(numInstances: number): number {
+export function tsyringeRun(iterations: number): number {
   const startTime: number = performance.now();
 
-  for (let i: number = 0; i < numInstances; i++) {
+  for (let i: number = 0; i < iterations; ++i) {
     tsyringeContainer.resolve<Warrior>(
       serviceTypeToSymbolMap[ServiceType.warrior],
     );
   }
-  const iocuakTime: number = performance.now() - startTime;
 
-  return iocuakTime;
+  const tsyringeTime: number = performance.now() - startTime;
+
+  return tsyringeTime;
 }
