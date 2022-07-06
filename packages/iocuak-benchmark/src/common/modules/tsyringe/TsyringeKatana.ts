@@ -1,4 +1,4 @@
-import { injectable, inject } from 'tsyringe';
+import { injectable, inject, Lifecycle, scoped } from 'tsyringe';
 
 import { ServiceType } from '../../models/domain/ServiceType';
 import { serviceTypeToSymbolMap } from '../../models/domain/serviceTypeToSymbolMap';
@@ -6,6 +6,7 @@ import { Handle } from '../domain/Handle';
 import { Weapon } from '../domain/Weapon';
 
 @injectable()
+@scoped(Lifecycle.ContainerScoped)
 export class TsyringeKatana implements Weapon {
   public static instanceCounter: number = 0;
 

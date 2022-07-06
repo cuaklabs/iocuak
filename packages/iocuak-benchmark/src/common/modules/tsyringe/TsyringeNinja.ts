@@ -1,4 +1,4 @@
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable, Lifecycle, scoped } from 'tsyringe';
 
 import { ServiceType } from '../../models/domain/ServiceType';
 import { serviceTypeToSymbolMap } from '../../models/domain/serviceTypeToSymbolMap';
@@ -7,6 +7,7 @@ import { Warrior } from '../domain/Warrior';
 import { Weapon } from '../domain/Weapon';
 
 @injectable()
+@scoped(Lifecycle.ContainerScoped)
 export class TsyringeNinja implements Warrior {
   public static instanceCounter: number = 0;
 

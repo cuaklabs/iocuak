@@ -1,8 +1,9 @@
-import { injectable } from 'tsyringe';
+import { injectable, Lifecycle, scoped } from 'tsyringe';
 
 import { Handle } from '../domain/Handle';
 
 @injectable()
+@scoped(Lifecycle.ContainerScoped)
 export class TsyringeHandle implements Handle {
   public static instanceCounter: number = 0;
 
