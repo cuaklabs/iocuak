@@ -12,6 +12,7 @@ import { createInstance } from '../../../task/actions/domain/createInstance';
 import { createInstanceFromBinding } from '../../../task/actions/domain/createInstanceFromBinding';
 import { createInstancesByTag } from '../../../task/actions/domain/createInstancesByTag';
 import { getDependencies } from '../../../task/actions/domain/getDependencies';
+import { loadContainerModule } from '../../../task/actions/domain/loadContainerModule';
 import { TaskContext } from '../../../task/models/domain/TaskContext';
 import { BindValueOptionsApi } from '../../models/api/BindValueOptionsApi';
 import { bind } from '../../utils/bind';
@@ -88,10 +89,16 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
   public async loadMetadata(
     containerModuleMetadataApi: ContainerModuleMetadataApi,
   ): Promise<void> {
+    const requestId: symbol = this._containerService.request.start();
+
     const containerModuleMetadata: ContainerModuleMetadata =
       convertToContainerModuleMetadata(containerModuleMetadataApi);
 
-    await this._containerService.module.loadMetadata(containerModuleMetadata);
+    const context: TaskContext = this.#createTaskContext(requestId);
+
+    await loadContainerModule(containerModuleMetadata, context);
+
+    this._containerService.request.end(context.requestId);
   }
 
   public unbind(serviceId: ServiceId): void {
