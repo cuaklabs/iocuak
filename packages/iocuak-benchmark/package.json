@@ -18,7 +18,11 @@
   "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/iocuak-benchmark#readme",
   "dependencies": {
     "@cuaklabs/iocuak": "workspace:../iocuak",
-    "tsyringe": "^4.7.0"
+    "@nestjs/common": "8.4.7",
+    "@nestjs/core": "8.4.7",
+    "reflect-metadata": "0.1.13",
+    "rxjs": "7.5.5",
+    "tsyringe": "4.7.0"
   },
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
   "publishConfig": {

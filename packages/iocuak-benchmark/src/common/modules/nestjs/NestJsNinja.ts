@@ -1,4 +1,4 @@
-import { inject, injectable, Lifecycle, scoped } from 'tsyringe';
+import { Inject, Injectable, Scope } from '@nestjs/common';
 
 import { ServiceType } from '../../models/domain/ServiceType';
 import { serviceTypeToSymbolMap } from '../../models/domain/serviceTypeToSymbolMap';
@@ -6,22 +6,24 @@ import { ThrowableWeapon } from '../domain/ThrowableWeapon';
 import { Warrior } from '../domain/Warrior';
 import { Weapon } from '../domain/Weapon';
 
-@injectable()
-@scoped(Lifecycle.ContainerScoped)
-export class TsyringeNinja implements Warrior {
+@Injectable({
+  scope: Scope.DEFAULT,
+})
+export class NestJsNinja implements Warrior {
   public static instanceCounter: number = 0;
 
   readonly #weapon: Weapon;
   readonly #throwableWeapon: ThrowableWeapon;
 
   constructor(
-    @inject(serviceTypeToSymbolMap[ServiceType.weapon]) weapon: Weapon,
-    @inject(serviceTypeToSymbolMap[ServiceType.throwableWeapon])
+    @Inject(serviceTypeToSymbolMap[ServiceType.weapon]) weapon: Weapon,
+    @Inject(serviceTypeToSymbolMap[ServiceType.throwableWeapon])
     throwableWeapon: ThrowableWeapon,
   ) {
     this.#weapon = weapon;
     this.#throwableWeapon = throwableWeapon;
-    TsyringeNinja.instanceCounter++;
+
+    NestJsNinja.instanceCounter++;
   }
 
   public fight() {
