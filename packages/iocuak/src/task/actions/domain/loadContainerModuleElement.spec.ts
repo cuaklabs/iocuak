@@ -3,8 +3,8 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 jest.mock('./loadFromContainerModuleClassMetadata');
 jest.mock('./loadFromContainerModuleFactoryMetadata');
 
+import { ContainerModuleMetadataMocks } from '../../../containerModuleMetadata/mocks/models/domain/ContainerModuleMetadataMocks';
 import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
-import { ContainerModuleMetadataMocks } from '../../../containerModuleTask/mocks/models/domain/ContainerModuleMetadataMocks';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { loadContainerModuleElement } from './loadContainerModuleElement';
 import { loadFromContainerModuleClassMetadata } from './loadFromContainerModuleClassMetadata';
