@@ -10,6 +10,7 @@ export function iocuakRun(iterations: number): number {
   for (let i: number = 0; i < iterations; ++i) {
     iocuakContainer.get(serviceTypeToSymbolMap[ServiceType.warrior]);
   }
+
   const iocuakTime: number = performance.now() - startTime;
 
   return iocuakTime;
