@@ -33,7 +33,6 @@ import { loadContainerModule } from '../../../task/actions/domain/loadContainerM
 import { TaskContext } from '../../../task/models/domain/TaskContext';
 import { bind } from '../../utils/bind';
 import { bindToValue } from '../../utils/bindToValue';
-import { ContainerModuleService } from '../domain/ContainerModuleService';
 import { ContainerRequestService } from '../domain/ContainerRequestService';
 import { ContainerService } from '../domain/ContainerService';
 import { ContainerSingletonService } from '../domain/ContainerSingletonService';
@@ -41,7 +40,6 @@ import { ContainerServiceApiImplementation } from './ContainerServiceApiImplemen
 
 describe(ContainerServiceApiImplementation.name, () => {
   let containerBindingServiceMock: jestMock.Mocked<BindingService>;
-  let containerModuleServiceMock: jestMock.Mocked<ContainerModuleService>;
   let containerRequestServiceMock: jestMock.Mocked<ContainerRequestService>;
   let containerSingletonServiceMock: jestMock.Mocked<ContainerSingletonService>;
   let metadataServiceMock: jestMock.Mocked<MetadataService>;
@@ -56,9 +54,6 @@ describe(ContainerServiceApiImplementation.name, () => {
     } as Partial<
       jestMock.Mocked<BindingService>
     > as jestMock.Mocked<BindingService>;
-    containerModuleServiceMock = {
-      loadMetadata: jest.fn(),
-    };
     containerRequestServiceMock = {
       end: jest.fn(),
       start: jest.fn(),
@@ -79,7 +74,6 @@ describe(ContainerServiceApiImplementation.name, () => {
     containerServiceMock = {
       binding: containerBindingServiceMock,
       metadata: metadataServiceMock,
-      module: containerModuleServiceMock,
       request: containerRequestServiceMock,
       singleton: containerSingletonServiceMock,
     } as Partial<ContainerService> as ContainerService;
