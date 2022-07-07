@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { Node } from '../../graph/models/domain/Node';
 import { NodeDependencies } from '../../graph/models/domain/NodeDependencies';
 import { NodeDependenciesType } from '../../graph/models/domain/NodeDependenciesType';
@@ -34,7 +38,7 @@ describe(RootedTaskGraphRunner.name, () => {
 
         let taskResult: unknown;
 
-        let taskMock: jest.Mocked<Task<unknown>>;
+        let taskMock: jestMock.Mocked<Task<unknown>>;
         let taskMockStatus: TaskStatus;
 
         beforeAll(() => {
@@ -145,11 +149,13 @@ describe(RootedTaskGraphRunner.name, () => {
           });
 
           it('should throw an error', () => {
+            const expectedError: Partial<Error> = {
+              message: 'Unable to recover from at least one task failure',
+            };
+
             expect(result).toBeInstanceOf(Error);
             expect(result).toStrictEqual(
-              expect.objectContaining<Partial<Error>>({
-                message: 'Unable to recover from at least one task failure',
-              }),
+              expect.objectContaining(expectedError),
             );
           });
         });
@@ -181,11 +187,13 @@ describe(RootedTaskGraphRunner.name, () => {
           });
 
           it('should throw an error', () => {
+            const expectedError: Partial<Error> = {
+              message: 'Unable to recover from at least one task failure',
+            };
+
             expect(result).toBeInstanceOf(Error);
             expect(result).toStrictEqual(
-              expect.objectContaining<Partial<Error>>({
-                message: 'Unable to recover from at least one task failure',
-              }),
+              expect.objectContaining(expectedError),
             );
           });
         });
@@ -217,11 +225,13 @@ describe(RootedTaskGraphRunner.name, () => {
           });
 
           it('should throw an error', () => {
+            const expectedError: Partial<Error> = {
+              message: 'Unable to recover from at least one task failure',
+            };
+
             expect(result).toBeInstanceOf(Error);
             expect(result).toStrictEqual(
-              expect.objectContaining<Partial<Error>>({
-                message: 'Unable to recover from at least one task failure',
-              }),
+              expect.objectContaining(expectedError),
             );
           });
         });
@@ -234,7 +244,7 @@ describe(RootedTaskGraphRunner.name, () => {
 
       let taskResult: unknown;
 
-      let taskMock: jest.Mocked<Task<unknown>>;
+      let taskMock: jestMock.Mocked<Task<unknown>>;
       let taskMockStatus: TaskStatus;
 
       beforeAll(() => {
@@ -291,12 +301,12 @@ describe(RootedTaskGraphRunner.name, () => {
         });
 
         it('should throw an error', () => {
+          const expectedError: Partial<Error> = {
+            message: 'Unable to recover from at least one task failure',
+          };
+
           expect(result).toBeInstanceOf(Error);
-          expect(result).toStrictEqual(
-            expect.objectContaining<Partial<Error>>({
-              message: 'Unable to recover from at least one task failure',
-            }),
-          );
+          expect(result).toStrictEqual(expect.objectContaining(expectedError));
         });
       });
     });
@@ -307,7 +317,7 @@ describe(RootedTaskGraphRunner.name, () => {
 
       let taskResult: unknown;
 
-      let taskMock: jest.Mocked<Task<unknown>>;
+      let taskMock: jestMock.Mocked<Task<unknown>>;
       let taskMockStatus: TaskStatus;
 
       beforeAll(() => {
@@ -375,7 +385,7 @@ describe(RootedTaskGraphRunner.name, () => {
       let dependencyNodeFixture: Node<Task<unknown>>;
 
       let dependencyTaskResult: unknown;
-      let dependencyTaskMock: jest.Mocked<Task<unknown>>;
+      let dependencyTaskMock: jestMock.Mocked<Task<unknown>>;
       let dependencyTaskMockStatus: TaskStatus;
 
       beforeAll(() => {
@@ -406,7 +416,7 @@ describe(RootedTaskGraphRunner.name, () => {
           let nodeFixture: Node<Task<unknown>>;
 
           let taskResult: unknown;
-          let taskMock: jest.Mocked<Task<unknown>>;
+          let taskMock: jestMock.Mocked<Task<unknown>>;
           let taskMockStatus: TaskStatus;
 
           beforeAll(() => {
@@ -554,11 +564,13 @@ describe(RootedTaskGraphRunner.name, () => {
             });
 
             it('should throw an error', () => {
+              const expectedError: Partial<Error> = {
+                message: 'Unable to recover from at least one task failure',
+              };
+
               expect(result).toBeInstanceOf(Error);
               expect(result).toStrictEqual(
-                expect.objectContaining<Partial<Error>>({
-                  message: 'Unable to recover from at least one task failure',
-                }),
+                expect.objectContaining(expectedError),
               );
             });
           });
@@ -594,11 +606,13 @@ describe(RootedTaskGraphRunner.name, () => {
             });
 
             it('should throw an error', () => {
+              const expectedError: Partial<Error> = {
+                message: 'Unable to recover from at least one task failure',
+              };
+
               expect(result).toBeInstanceOf(Error);
               expect(result).toStrictEqual(
-                expect.objectContaining<Partial<Error>>({
-                  message: 'Unable to recover from at least one task failure',
-                }),
+                expect.objectContaining(expectedError),
               );
             });
           });
@@ -609,7 +623,7 @@ describe(RootedTaskGraphRunner.name, () => {
         let secondDependencyNodeFixture: Node<Task<unknown>>;
 
         let secondDependencyTaskResult: unknown;
-        let secondDependencyTaskMock: jest.Mocked<Task<unknown>>;
+        let secondDependencyTaskMock: jestMock.Mocked<Task<unknown>>;
         let secondDependencyTaskMockStatus: TaskStatus;
 
         beforeAll(() => {
@@ -635,7 +649,7 @@ describe(RootedTaskGraphRunner.name, () => {
           let nodeFixture: Node<Task<unknown>>;
 
           let taskResult: unknown;
-          let taskMock: jest.Mocked<Task<unknown>>;
+          let taskMock: jestMock.Mocked<Task<unknown>>;
           let taskMockStatus: TaskStatus;
 
           beforeAll(() => {
@@ -765,11 +779,13 @@ describe(RootedTaskGraphRunner.name, () => {
             });
 
             it('should throw an error', () => {
+              const expectedError: Partial<Error> = {
+                message: 'Unable to recover from at least one task failure',
+              };
+
               expect(result).toBeInstanceOf(Error);
               expect(result).toStrictEqual(
-                expect.objectContaining<Partial<Error>>({
-                  message: 'Unable to recover from at least one task failure',
-                }),
+                expect.objectContaining(expectedError),
               );
             });
           });
@@ -780,7 +796,7 @@ describe(RootedTaskGraphRunner.name, () => {
           let nodeFixture: Node<Task<unknown>>;
 
           let taskResult: unknown;
-          let taskMock: jest.Mocked<Task<unknown>>;
+          let taskMock: jestMock.Mocked<Task<unknown>>;
           let taskMockStatus: TaskStatus;
 
           beforeAll(() => {

@@ -1,5 +1,9 @@
 import 'reflect-metadata';
 
+import { beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { Container, injectable } from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
@@ -71,13 +75,15 @@ describe(DomainReadContainerModule.name, () => {
           });
 
           it('should throw an Error', () => {
+            const expectedError: Partial<Error> = {
+              message: expect.stringContaining(
+                'No registered bindings found for type',
+              ) as unknown as string,
+            };
+
             expect(result).toBeInstanceOf(Error);
             expect(result).toStrictEqual(
-              expect.objectContaining<Partial<Error>>({
-                message: expect.stringContaining(
-                  'No registered bindings found for type',
-                ) as string,
-              }),
+              expect.objectContaining(expectedError),
             );
           });
         });
@@ -98,13 +104,15 @@ describe(DomainReadContainerModule.name, () => {
           });
 
           it('should throw an Error', () => {
+            const expectedError: Partial<Error> = {
+              message: expect.stringContaining(
+                'No registered bindings found for type',
+              ) as unknown as string,
+            };
+
             expect(result).toBeInstanceOf(Error);
             expect(result).toStrictEqual(
-              expect.objectContaining<Partial<Error>>({
-                message: expect.stringContaining(
-                  'No registered bindings found for type',
-                ) as string,
-              }),
+              expect.objectContaining(expectedError),
             );
           });
         });
@@ -113,12 +121,16 @@ describe(DomainReadContainerModule.name, () => {
 
     describe('having a containerApi with read adapter bound', () => {
       class FindAdapterMock implements FindEntityPort<ModelTest, QueryTest> {
-        public readonly findMock: jest.Mock<Promise<ModelTest[]>, [QueryTest]>;
-        public readonly findOneMock: jest.Mock<Promise<ModelTest>, [QueryTest]>;
+        public readonly findMock: jestMock.Mock<
+          (query: QueryTest) => Promise<ModelTest[]>
+        >;
+        public readonly findOneMock: jestMock.Mock<
+          (query: QueryTest) => Promise<ModelTest>
+        >;
 
         constructor() {
-          this.findMock = jest.fn<Promise<ModelTest[]>, [QueryTest]>();
-          this.findOneMock = jest.fn<Promise<ModelTest>, [QueryTest]>();
+          this.findMock = jest.fn();
+          this.findOneMock = jest.fn();
         }
 
         public async find(query: QueryTest): Promise<ModelTest[]> {

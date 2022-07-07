@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 jest.mock('./TypeOrmCreateContainerModule');
 jest.mock('./TypeOrmDeleteContainerModule');
 jest.mock('./TypeOrmReadContainerModule');
@@ -22,35 +26,43 @@ interface ModelTest {
 }
 
 describe(TypeOrmCrudContainerModule.name, () => {
-  let typeOrmCreationContainerModuleMock: jest.Mocked<ContainerModule>;
-  let typeOrmDeleteContainerModuleMock: jest.Mocked<ContainerModule>;
-  let typeOrmReadContainerModuleMock: jest.Mocked<ContainerModule>;
-  let typeOrmUpdateContainerModuleMock: jest.Mocked<ContainerModule>;
+  let typeOrmCreationContainerModuleMock: jestMock.Mocked<ContainerModule>;
+  let typeOrmDeleteContainerModuleMock: jestMock.Mocked<ContainerModule>;
+  let typeOrmReadContainerModuleMock: jestMock.Mocked<ContainerModule>;
+  let typeOrmUpdateContainerModuleMock: jestMock.Mocked<ContainerModule>;
 
   beforeAll(() => {
     typeOrmCreationContainerModuleMock = {
       load: jest.fn(),
-    } as Partial<jest.Mocked<ContainerModule>> as jest.Mocked<ContainerModule>;
+    } as Partial<
+      jestMock.Mocked<ContainerModule>
+    > as jestMock.Mocked<ContainerModule>;
     typeOrmDeleteContainerModuleMock = {
       load: jest.fn(),
-    } as Partial<jest.Mocked<ContainerModule>> as jest.Mocked<ContainerModule>;
+    } as Partial<
+      jestMock.Mocked<ContainerModule>
+    > as jestMock.Mocked<ContainerModule>;
     typeOrmReadContainerModuleMock = {
       load: jest.fn(),
-    } as Partial<jest.Mocked<ContainerModule>> as jest.Mocked<ContainerModule>;
+    } as Partial<
+      jestMock.Mocked<ContainerModule>
+    > as jestMock.Mocked<ContainerModule>;
     typeOrmUpdateContainerModuleMock = {
       load: jest.fn(),
-    } as Partial<jest.Mocked<ContainerModule>> as jest.Mocked<ContainerModule>;
+    } as Partial<
+      jestMock.Mocked<ContainerModule>
+    > as jestMock.Mocked<ContainerModule>;
 
-    (TypeOrmCreateContainerModule as jest.Mock).mockReturnValue(
+    (TypeOrmCreateContainerModule as jestMock.Mock).mockReturnValue(
       typeOrmCreationContainerModuleMock,
     );
-    (TypeOrmDeleteContainerModule as jest.Mock).mockReturnValue(
+    (TypeOrmDeleteContainerModule as jestMock.Mock).mockReturnValue(
       typeOrmDeleteContainerModuleMock,
     );
-    (TypeOrmReadContainerModule as jest.Mock).mockReturnValue(
+    (TypeOrmReadContainerModule as jestMock.Mock).mockReturnValue(
       typeOrmReadContainerModuleMock,
     );
-    (TypeOrmUpdateContainerModule as jest.Mock).mockReturnValue(
+    (TypeOrmUpdateContainerModule as jestMock.Mock).mockReturnValue(
       typeOrmUpdateContainerModuleMock,
     );
   });
@@ -58,7 +70,7 @@ describe(TypeOrmCrudContainerModule.name, () => {
   describe('when instantiated', () => {
     let crudModuleTypeToSymbolMapFixture: ModuleTypeToSymbolMap<CrudModuleType>;
     let crudTypeOrmModuleTypeToSymbolMapFixture: ModuleTypeToSymbolMap<CrudTypeOrmModuleType>;
-    let repositoryMock: jest.Mocked<Repository<ModelTest>>;
+    let repositoryMock: jestMock.Mocked<Repository<ModelTest>>;
     let typeOrmCrudContainerModule: TypeOrmCrudContainerModule<ModelTest>;
 
     beforeAll(() => {
@@ -85,8 +97,8 @@ describe(TypeOrmCrudContainerModule.name, () => {
       });
 
       repositoryMock = {} as Partial<
-        jest.Mocked<Repository<ModelTest>>
-      > as jest.Mocked<Repository<ModelTest>>;
+        jestMock.Mocked<Repository<ModelTest>>
+      > as jestMock.Mocked<Repository<ModelTest>>;
 
       typeOrmCrudContainerModule = new TypeOrmCrudContainerModule(
         crudModuleTypeToSymbolMapFixture,
@@ -129,15 +141,15 @@ describe(TypeOrmCrudContainerModule.name, () => {
 
     describe('.load()', () => {
       describe('when called', () => {
-        let containerApiMock: jest.Mocked<ContainerModuleBindingService>;
+        let containerApiMock: jestMock.Mocked<ContainerModuleBindingService>;
 
         beforeAll(() => {
           containerApiMock = {
             bind: jest.fn(),
             bindToValue: jest.fn(),
           } as Partial<
-            jest.Mocked<ContainerModuleBindingService>
-          > as jest.Mocked<ContainerModuleBindingService>;
+            jestMock.Mocked<ContainerModuleBindingService>
+          > as jestMock.Mocked<ContainerModuleBindingService>;
 
           typeOrmCrudContainerModule.load(containerApiMock);
         });

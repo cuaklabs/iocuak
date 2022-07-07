@@ -1,3 +1,5 @@
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { FindManyOptions, FindOptionsWhere } from 'typeorm';
 
 import { findManyOptionsToFindOptionsWhere } from './findManyOptionsToFindOptionsWhere';
@@ -100,13 +102,13 @@ describe(findManyOptionsToFindOptionsWhere.name, () => {
       });
 
       it('should throw an Error', () => {
+        const expectedError: Partial<Error> = {
+          message:
+            'Unexpected multiple FindOptionsWhere inside FindManyOptions: operation not allowed',
+        };
+
         expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message:
-              'Unexpected multiple FindOptionsWhere inside FindManyOptions: operation not allowed',
-          }),
-        );
+        expect(result).toStrictEqual(expect.objectContaining(expectedError));
       });
     });
   });

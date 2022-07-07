@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { Newable } from '../../../common/models/domain/Newable';
 import { getReflectMetadata } from './getReflectMetadata';
 

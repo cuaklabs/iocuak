@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { ConverterAsync } from '@cuaklabs/porygon';
 import { FindManyOptions, InsertResult, Repository } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
@@ -13,11 +17,11 @@ interface QueryTest {
 }
 
 describe(InsertTypeOrmAdapter.name, () => {
-  let repositoryMock: jest.Mocked<Repository<ModelTest>>;
-  let modelDbToModelConverterMock: jest.Mocked<
+  let repositoryMock: jestMock.Mocked<Repository<ModelTest>>;
+  let modelDbToModelConverterMock: jestMock.Mocked<
     ConverterAsync<ModelTest, ModelTest>
   >;
-  let insertQueryToInsertQueryTypeOrmConverterMock: jest.Mocked<
+  let insertQueryToInsertQueryTypeOrmConverterMock: jestMock.Mocked<
     ConverterAsync<
       QueryTest,
       QueryDeepPartialEntity<ModelTest> | QueryDeepPartialEntity<ModelTest>[]
@@ -34,7 +38,7 @@ describe(InsertTypeOrmAdapter.name, () => {
     repositoryMock = {
       find: jest.fn(),
       insert: jest.fn(),
-    } as Partial<jest.Mocked<Repository<ModelTest>>> as jest.Mocked<
+    } as Partial<jestMock.Mocked<Repository<ModelTest>>> as jestMock.Mocked<
       Repository<ModelTest>
     >;
 
@@ -205,13 +209,13 @@ describe(InsertTypeOrmAdapter.name, () => {
       });
 
       it('should throw an error', () => {
+        const expectedError: Partial<Error> = {
+          message:
+            'Expected a single TypeORM insert query when called .insertOne()',
+        };
+
         expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message:
-              'Expected a single TypeORM insert query when called .insertOne()',
-          }),
-        );
+        expect(result).toStrictEqual(expect.objectContaining(expectedError));
       });
     });
   });

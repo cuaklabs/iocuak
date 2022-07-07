@@ -1,4 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
 import * as jestMock from 'jest-mock';
 
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
@@ -364,7 +365,9 @@ describe(ContainerServiceApiImplementation.name, () => {
         );
 
         (
-          convertBindingToBindingApi as jest.Mock<BindingApi, [Binding]>
+          convertBindingToBindingApi as jestMock.Mock<
+            typeof convertBindingToBindingApi
+          >
         ).mockReturnValueOnce(bindingApiFixture);
 
         result = containerServiceApiImplementation.getAllBindinds();

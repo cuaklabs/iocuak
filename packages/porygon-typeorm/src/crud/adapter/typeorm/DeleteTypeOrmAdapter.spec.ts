@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import {
   FindManyOptions,
   FindOptionsWhere,
@@ -21,11 +25,11 @@ interface QueryTest {
 }
 
 describe(DeleteTypeOrmAdapter.name, () => {
-  let queryBuilderMock: jest.Mocked<
+  let queryBuilderMock: jestMock.Mocked<
     QueryBuilder<ModelTest> & WhereExpressionBuilder
   >;
-  let repositoryMock: jest.Mocked<Repository<ModelTest>>;
-  let queryToQueryTypeOrmConverterMock: jest.Mocked<
+  let repositoryMock: jestMock.Mocked<Repository<ModelTest>>;
+  let queryToQueryTypeOrmConverterMock: jestMock.Mocked<
     QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
   >;
   let deleteTypeOrmAdapter: DeleteTypeOrmAdapter<ModelTest, QueryTest>;
@@ -37,20 +41,24 @@ describe(DeleteTypeOrmAdapter.name, () => {
         delete: jest.fn().mockReturnThis(),
         execute: jest.fn(),
       } as Partial<
-        jest.Mocked<QueryBuilder<ModelTest> & WhereExpressionBuilder>
-      > as jest.Mocked<QueryBuilder<ModelTest> & WhereExpressionBuilder>,
+        jestMock.Mocked<QueryBuilder<ModelTest> & WhereExpressionBuilder>
+      > as jestMock.Mocked<QueryBuilder<ModelTest> & WhereExpressionBuilder>,
     );
 
     repositoryMock = {
       createQueryBuilder: jest.fn().mockReturnValue(queryBuilderMock),
       delete: jest.fn(),
-    } as Partial<jest.Mocked<Repository<ModelTest>>> as jest.Mocked<
+    } as Partial<jestMock.Mocked<Repository<ModelTest>>> as jestMock.Mocked<
       Repository<ModelTest>
     >;
 
     queryToQueryTypeOrmConverterMock = {
       convert: jest.fn(),
-    };
+    } as Partial<
+      jestMock.Mocked<QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>>
+    > as jestMock.Mocked<
+      QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
+    >;
 
     deleteTypeOrmAdapter = new DeleteTypeOrmAdapter(
       repositoryMock,
@@ -75,15 +83,15 @@ describe(DeleteTypeOrmAdapter.name, () => {
           where: findOptionsWhereFixture,
         };
 
-        (
-          queryToQueryTypeOrmConverterMock.convert as jest.Mock<
-            Promise<FindManyOptions<ModelTest>>
-          >
-        ).mockResolvedValueOnce(queryTypeOrmFixture);
+        queryToQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+          queryTypeOrmFixture as FindManyOptions<ModelTest> &
+            QueryBuilder<ModelTest> &
+            WhereExpressionBuilder,
+        );
 
         (
-          findManyOptionsToFindOptionsWhere as jest.Mock<
-            FindOptionsWhere<ModelTest>
+          findManyOptionsToFindOptionsWhere as jestMock.Mock<
+            typeof findManyOptionsToFindOptionsWhere
           >
         ).mockReturnValueOnce(findOptionsWhereFixture);
 
@@ -137,11 +145,13 @@ describe(DeleteTypeOrmAdapter.name, () => {
           fooValue: 'foo-value',
         };
 
-        (
-          queryToQueryTypeOrmConverterMock.convert as jest.Mock<
-            Promise<QueryBuilder<ModelTest> & WhereExpressionBuilder>
-          >
-        ).mockResolvedValueOnce(queryBuilderMock);
+        queryToQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+          queryBuilderMock as jestMock.Mocked<
+            FindManyOptions<ModelTest> &
+              QueryBuilder<ModelTest> &
+              WhereExpressionBuilder
+          >,
+        );
 
         await deleteTypeOrmAdapter.delete(queryFixture);
       });

@@ -2,6 +2,10 @@ import 'reflect-metadata';
 
 import path from 'path';
 
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { ConverterAsync } from '@cuaklabs/porygon';
 import {
   Column,
@@ -12,10 +16,12 @@ import {
   FindManyOptions,
   Not,
   PrimaryColumn,
+  QueryBuilder,
   QueryRunner,
   Repository,
   Table,
   TableColumn,
+  WhereExpressionBuilder,
 } from 'typeorm';
 
 import { QueryToFindQueryTypeOrmConverter } from '../../converter/typeorm/QueryToFindQueryTypeOrmConverter';
@@ -105,10 +111,10 @@ describe(FindTypeOrmAdapter.name, () => {
   let queryRunner: QueryRunner;
 
   let modelTestRepository: Repository<ModelTest>;
-  let findQueryToFindQueryTypeOrmConverterMock: jest.Mocked<
+  let findQueryToFindQueryTypeOrmConverterMock: jestMock.Mocked<
     QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
   >;
-  let modelDbToModelConverter: jest.Mocked<
+  let modelDbToModelConverter: jestMock.Mocked<
     ConverterAsync<ModelTest, ModelTest>
   >;
 
@@ -151,7 +157,11 @@ describe(FindTypeOrmAdapter.name, () => {
     modelTestRepository = datasource.getRepository(ModelTest);
     findQueryToFindQueryTypeOrmConverterMock = {
       convert: jest.fn(),
-    };
+    } as Partial<
+      jestMock.Mocked<QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>>
+    > as jestMock.Mocked<
+      QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
+    >;
     modelDbToModelConverter = {
       convert: jest.fn(),
     };
@@ -199,11 +209,11 @@ describe(FindTypeOrmAdapter.name, () => {
             },
           };
 
-          (
-            findQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-              Promise<FindManyOptions<ModelTest>>
-            >
-          ).mockResolvedValueOnce(queryTypeOrmFixture);
+          findQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+            queryTypeOrmFixture as FindManyOptions<ModelTest> &
+              QueryBuilder<ModelTest> &
+              WhereExpressionBuilder,
+          );
 
           modelDbToModelConverter.convert.mockImplementationOnce(
             async (modelTest: ModelTest) => modelTest,
@@ -235,11 +245,11 @@ describe(FindTypeOrmAdapter.name, () => {
             },
           };
 
-          (
-            findQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-              Promise<FindManyOptions<ModelTest>>
-            >
-          ).mockResolvedValueOnce(queryTypeOrmFixture);
+          findQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+            queryTypeOrmFixture as FindManyOptions<ModelTest> &
+              QueryBuilder<ModelTest> &
+              WhereExpressionBuilder,
+          );
 
           result = await findTypeOrmAdapter.findOne(queryTest);
         });
@@ -269,11 +279,11 @@ describe(FindTypeOrmAdapter.name, () => {
             },
           };
 
-          (
-            findQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-              Promise<FindManyOptions<ModelTest>>
-            >
-          ).mockResolvedValueOnce(queryTypeOrmFixture);
+          findQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+            queryTypeOrmFixture as FindManyOptions<ModelTest> &
+              QueryBuilder<ModelTest> &
+              WhereExpressionBuilder,
+          );
 
           modelDbToModelConverter.convert.mockImplementationOnce(
             async (modelTest: ModelTest) => modelTest,
@@ -305,11 +315,11 @@ describe(FindTypeOrmAdapter.name, () => {
             },
           };
 
-          (
-            findQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-              Promise<FindManyOptions<ModelTest>>
-            >
-          ).mockResolvedValueOnce(queryTypeOrmFixture);
+          findQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+            queryTypeOrmFixture as FindManyOptions<ModelTest> &
+              QueryBuilder<ModelTest> &
+              WhereExpressionBuilder,
+          );
 
           result = await findTypeOrmAdapter.find(queryTest);
         });

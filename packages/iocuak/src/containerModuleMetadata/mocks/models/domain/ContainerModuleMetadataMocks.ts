@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 import { Newable } from '../../../../common/models/domain/Newable';
 import { ContainerModule } from '../../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleClassMetadata } from '../../../models/domain/ContainerModuleClassMetadata';
@@ -16,7 +18,7 @@ export class ContainerModuleMetadataMocks {
 
   public static get any(): ContainerModuleMetadata {
     const fixture: ContainerModuleMetadata = {
-      factory: jest.fn(),
+      factory: jest.fn<ContainerModuleFactoryMetadata['factory']>(),
       imports: [],
       injects: [],
       type: ContainerModuleMetadataType.factory,
@@ -58,7 +60,7 @@ export class ContainerModuleMetadataMocks {
 
   public static get withTypeFactory(): ContainerModuleFactoryMetadata {
     const fixture: ContainerModuleMetadata = {
-      factory: jest.fn(),
+      factory: jest.fn<ContainerModuleFactoryMetadata['factory']>(),
       imports: [],
       injects: [],
       type: ContainerModuleMetadataType.factory,

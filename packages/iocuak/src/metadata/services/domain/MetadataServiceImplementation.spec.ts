@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 jest.mock('../../../classMetadata/utils/domain/getDefaultClassMetadata');
 jest.mock('../../../reflectMetadata/utils/domain/getReflectMetadata');
 
@@ -55,11 +59,13 @@ describe(MetadataServiceImplementation.name, () => {
         };
 
         (
-          getReflectMetadata as jest.Mock<ClassMetadata | undefined>
+          getReflectMetadata as jestMock.Mock<typeof getReflectMetadata>
         ).mockReturnValueOnce(undefined);
 
         (
-          getDefaultClassMetadata as jest.Mock<ClassMetadata | undefined>
+          getDefaultClassMetadata as jestMock.Mock<
+            typeof getDefaultClassMetadata
+          >
         ).mockReturnValueOnce(classMetadataFixture);
 
         result = metadataServiceImplementation.getClassMetadata(typeFixture);
@@ -97,9 +103,9 @@ describe(MetadataServiceImplementation.name, () => {
         classMetadataFixture =
           ClassMetadataFixtures.withConstructorArgumentsServiceAndPropertiesService;
 
-        (getReflectMetadata as jest.Mock<ClassMetadata>).mockReturnValueOnce(
-          classMetadataFixture,
-        );
+        (
+          getReflectMetadata as jestMock.Mock<typeof getReflectMetadata>
+        ).mockReturnValueOnce(classMetadataFixture);
 
         result = metadataServiceImplementation.getClassMetadata(typeFixture);
       });

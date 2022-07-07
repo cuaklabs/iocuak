@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { inject } from '../../classMetadata/decorators/inject';
 import { injectFrom } from '../../classMetadata/decorators/injectFrom';
 import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
@@ -88,7 +90,7 @@ describe(injectFrom.name, () => {
         });
 
         it('should return metadata', () => {
-          expect(result).toStrictEqual<ClassMetadata>({
+          const expected: ClassMetadata = {
             constructorArguments: [
               {
                 type: ClassElementMetadataType.serviceId,
@@ -104,7 +106,9 @@ describe(injectFrom.name, () => {
                 },
               ],
             ]),
-          });
+          };
+
+          expect(result).toStrictEqual(expected);
         });
       });
     });
@@ -143,9 +147,7 @@ describe(injectFrom.name, () => {
         });
 
         it('should return metadata', () => {
-          expect(result).toStrictEqual<ClassMetadata>(
-            getDefaultClassMetadata(),
-          );
+          expect(result).toStrictEqual(getDefaultClassMetadata());
         });
       });
 
@@ -224,13 +226,15 @@ describe(injectFrom.name, () => {
               value: 'baz-property-child',
             };
 
-            expect(result).toStrictEqual<ClassMetadata>({
+            const expectedClassMetadata: ClassMetadata = {
               constructorArguments: expectedConstructorArguments,
               properties: new Map([
                 ['bar', expectedBarPropertyMetadata],
                 ['baz', expectedBazPropertyMetadata],
               ]),
-            });
+            };
+
+            expect(result).toStrictEqual(expectedClassMetadata);
           });
         });
       });
@@ -307,7 +311,7 @@ describe(injectFrom.name, () => {
         });
 
         it('should return metadata', () => {
-          expect(result).toStrictEqual<ClassMetadata>({
+          const expectedClassMetadata: ClassMetadata = {
             constructorArguments: [
               {
                 type: ClassElementMetadataType.serviceId,
@@ -323,7 +327,9 @@ describe(injectFrom.name, () => {
                 },
               ],
             ]),
-          });
+          };
+
+          expect(result).toStrictEqual(expectedClassMetadata);
         });
       });
     });
@@ -362,7 +368,7 @@ describe(injectFrom.name, () => {
         });
 
         it('should return metadata', () => {
-          expect(result).toStrictEqual<ClassMetadata>({
+          const expectedClassMetadata: ClassMetadata = {
             constructorArguments: [
               {
                 type: ClassElementMetadataType.serviceId,
@@ -378,7 +384,8 @@ describe(injectFrom.name, () => {
                 },
               ],
             ]),
-          });
+          };
+          expect(result).toStrictEqual(expectedClassMetadata);
         });
       });
     });
@@ -436,7 +443,7 @@ describe(injectFrom.name, () => {
         });
 
         it('should return metadata', () => {
-          expect(result).toStrictEqual<ClassMetadata>({
+          const expectedClassMetadata: ClassMetadata = {
             constructorArguments: [
               {
                 type: ClassElementMetadataType.serviceId,
@@ -474,7 +481,9 @@ describe(injectFrom.name, () => {
                 },
               ],
             ]),
-          });
+          };
+
+          expect(result).toStrictEqual(expectedClassMetadata);
         });
       });
     });

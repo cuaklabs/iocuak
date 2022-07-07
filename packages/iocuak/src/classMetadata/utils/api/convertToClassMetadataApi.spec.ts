@@ -1,3 +1,5 @@
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { ClassElementMetadatApiType } from '../../models/api/ClassElementMetadatApiType';
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { ClassElementMetadataType } from '../../models/domain/ClassElementMetadataType';

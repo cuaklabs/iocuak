@@ -1,5 +1,9 @@
 import 'reflect-metadata';
 
+import { beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { Container, injectable } from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
@@ -70,13 +74,15 @@ describe(DomainCreateContainerModule.name, () => {
           });
 
           it('should throw an Error', () => {
+            const expectedError: Partial<Error> = {
+              message: expect.stringContaining(
+                'No registered bindings found for type',
+              ) as unknown as string,
+            };
+
             expect(result).toBeInstanceOf(Error);
             expect(result).toStrictEqual(
-              expect.objectContaining<Partial<Error>>({
-                message: expect.stringContaining(
-                  'No registered bindings found for type',
-                ) as string,
-              }),
+              expect.objectContaining(expectedError),
             );
           });
         });
@@ -87,13 +93,13 @@ describe(DomainCreateContainerModule.name, () => {
       class CreateAdapterMock
         implements CreateEntityPort<ModelTest, QueryTest>
       {
-        public readonly insertOneMock: jest.Mock<
-          Promise<ModelTest>,
-          [QueryTest]
+        public readonly insertOneMock: jestMock.Mock<
+          (query: QueryTest) => Promise<ModelTest>
         >;
 
         constructor() {
-          this.insertOneMock = jest.fn<Promise<ModelTest>, [QueryTest]>();
+          this.insertOneMock =
+            jest.fn<(query: QueryTest) => Promise<ModelTest>>();
         }
 
         public async insertOne(query: QueryTest): Promise<ModelTest> {

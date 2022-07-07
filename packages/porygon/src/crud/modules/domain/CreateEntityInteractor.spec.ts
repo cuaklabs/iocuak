@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { CreateEntityPort } from '../../port/application/CreateEntityPort';
 import { CreateEntityInteractor } from './CreateEntityInteractor';
 
@@ -10,15 +14,17 @@ interface QueryTest {
 }
 
 describe(CreateEntityInteractor.name, () => {
-  let createAdapterMock: jest.Mocked<CreateEntityPort<ModelTest, QueryTest>>;
+  let createAdapterMock: jestMock.Mocked<
+    CreateEntityPort<ModelTest, QueryTest>
+  >;
   let insertOneManager: CreateEntityInteractor<ModelTest, QueryTest>;
 
   beforeAll(() => {
     createAdapterMock = {
       insertOne: jest.fn(),
     } as Partial<
-      jest.Mocked<CreateEntityPort<ModelTest, QueryTest>>
-    > as jest.Mocked<CreateEntityPort<ModelTest, QueryTest>>;
+      jestMock.Mocked<CreateEntityPort<ModelTest, QueryTest>>
+    > as jestMock.Mocked<CreateEntityPort<ModelTest, QueryTest>>;
 
     insertOneManager = new CreateEntityInteractor(createAdapterMock);
   });

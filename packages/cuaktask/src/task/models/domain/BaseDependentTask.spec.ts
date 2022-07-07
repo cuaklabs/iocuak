@@ -1,4 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
 import * as jestMock from 'jest-mock';
 
 import { NonThenableProperties } from '../../../common/models/NonThenableProperties';

@@ -2,6 +2,10 @@ import 'reflect-metadata';
 
 import path from 'path';
 
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { ConverterAsync } from '@cuaklabs/porygon';
 import {
   Column,
@@ -103,13 +107,13 @@ describe(InsertTypeOrmAdapter.name, () => {
   let queryRunner: QueryRunner;
 
   let modelTestRepository: Repository<ModelTest>;
-  let insertQueryToInsertQueryTypeOrmConverterMock: jest.Mocked<
+  let insertQueryToInsertQueryTypeOrmConverterMock: jestMock.Mocked<
     ConverterAsync<
       QueryTest,
       QueryDeepPartialEntity<ModelTest> | QueryDeepPartialEntity<ModelTest>[]
     >
   >;
-  let modelDbToModelConverter: jest.Mocked<
+  let modelDbToModelConverter: jestMock.Mocked<
     ConverterAsync<ModelTest, ModelTest>
   >;
 

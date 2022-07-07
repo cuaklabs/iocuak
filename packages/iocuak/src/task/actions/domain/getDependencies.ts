@@ -1,7 +1,7 @@
 import { ClassElementMetadata } from '../../../classMetadata/models/domain/ClassElementMetadata';
 import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
 import { mapIterable } from '../../../common/utils/mapIterable';
-import { ServiceDependencies } from '../../../createInstanceTask/models/domain/ServiceDependencies';
+import { ServiceDependencies } from '../../models/domain/ServiceDependencies';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { getDependency } from './getDependency';
 

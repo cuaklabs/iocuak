@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 jest.mock('../../../binding/services/domain/BindingServiceImplementation');
 jest.mock('../../../metadata/services/domain/MetadataServiceImplementation');
 jest.mock('../../services/domain/ContainerRequestServiceImplementation');
@@ -22,7 +26,9 @@ function bindFixtureToConstructor<T>(
   constructor: Newable<T>,
   fixture: T,
 ): void {
-  (constructor as jest.Mock<T>).mockReturnValue(fixture);
+  (
+    constructor as unknown as jestMock.Mock<Newable<T> & jestMock.FunctionLike>
+  ).mockReturnValue(fixture);
 }
 
 describe(ContainerApi.name, () => {
