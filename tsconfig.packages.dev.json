@@ -2,9 +2,6 @@
   "files": [],
   "references": [
     {
-      "path": "./packages/cuaktask/tsconfig.dev.json"
-    },
-    {
       "path": "./packages/iocuak/tsconfig.dev.json"
     },
     {
