@@ -1,4 +1,6 @@
 import { BindingService } from '../../../binding/services/domain/BindingService';
+import { ClassElementMetadata } from '../../../classMetadata/models/domain/ClassElementMetadata';
+import { ClassElementMetadataType } from '../../../classMetadata/models/domain/ClassElementMetadataType';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { isFunction } from '../../../common/utils/isFunction';
 import { isPromiseLike } from '../../../common/utils/isPromiseLike';
@@ -104,7 +106,12 @@ function convertToContainerModuleFactoryMetadata<TArgs extends unknown[]>(
       imports: convertToContainerModuleMetadataArray(
         containerModuleFactoryMetadataApi.imports,
       ),
-      injects: containerModuleFactoryMetadataInjects,
+      injects: containerModuleFactoryMetadataInjects.map(
+        (serviceId: ServiceId): ClassElementMetadata => ({
+          type: ClassElementMetadataType.serviceId,
+          value: serviceId,
+        }),
+      ),
       type: ContainerModuleMetadataType.factory,
     };
 
