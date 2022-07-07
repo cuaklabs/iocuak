@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 jest.mock('./DomainCreateContainerModule');
 jest.mock('./DomainDeleteContainerModule');
 jest.mock('./DomainReadContainerModule');
@@ -17,35 +21,43 @@ import { DomainReadContainerModule } from './DomainReadContainerModule';
 import { DomainUpdateContainerModule } from './DomainUpdateContainerModule';
 
 describe(DomainCrudContainerModule.name, () => {
-  let domainCreationContainerModuleMock: jest.Mocked<ContainerModule>;
-  let domainDeleteContainerModuleMock: jest.Mocked<ContainerModule>;
-  let domainReadContainerModuleMock: jest.Mocked<ContainerModule>;
-  let domainUpdateContainerModuleMock: jest.Mocked<ContainerModule>;
+  let domainCreationContainerModuleMock: jestMock.Mocked<ContainerModule>;
+  let domainDeleteContainerModuleMock: jestMock.Mocked<ContainerModule>;
+  let domainReadContainerModuleMock: jestMock.Mocked<ContainerModule>;
+  let domainUpdateContainerModuleMock: jestMock.Mocked<ContainerModule>;
 
   beforeAll(() => {
     domainCreationContainerModuleMock = {
       load: jest.fn(),
-    } as Partial<jest.Mocked<ContainerModule>> as jest.Mocked<ContainerModule>;
+    } as Partial<
+      jestMock.Mocked<ContainerModule>
+    > as jestMock.Mocked<ContainerModule>;
     domainDeleteContainerModuleMock = {
       load: jest.fn(),
-    } as Partial<jest.Mocked<ContainerModule>> as jest.Mocked<ContainerModule>;
+    } as Partial<
+      jestMock.Mocked<ContainerModule>
+    > as jestMock.Mocked<ContainerModule>;
     domainReadContainerModuleMock = {
       load: jest.fn(),
-    } as Partial<jest.Mocked<ContainerModule>> as jest.Mocked<ContainerModule>;
+    } as Partial<
+      jestMock.Mocked<ContainerModule>
+    > as jestMock.Mocked<ContainerModule>;
     domainUpdateContainerModuleMock = {
       load: jest.fn(),
-    } as Partial<jest.Mocked<ContainerModule>> as jest.Mocked<ContainerModule>;
+    } as Partial<
+      jestMock.Mocked<ContainerModule>
+    > as jestMock.Mocked<ContainerModule>;
 
-    (DomainCreateContainerModule as jest.Mock).mockReturnValue(
+    (DomainCreateContainerModule as jestMock.Mock).mockReturnValue(
       domainCreationContainerModuleMock,
     );
-    (DomainDeleteContainerModule as jest.Mock).mockReturnValue(
+    (DomainDeleteContainerModule as jestMock.Mock).mockReturnValue(
       domainDeleteContainerModuleMock,
     );
-    (DomainReadContainerModule as jest.Mock).mockReturnValue(
+    (DomainReadContainerModule as jestMock.Mock).mockReturnValue(
       domainReadContainerModuleMock,
     );
-    (DomainUpdateContainerModule as jest.Mock).mockReturnValue(
+    (DomainUpdateContainerModule as jestMock.Mock).mockReturnValue(
       domainUpdateContainerModuleMock,
     );
   });
@@ -102,14 +114,14 @@ describe(DomainCrudContainerModule.name, () => {
 
     describe('.load()', () => {
       describe('when called', () => {
-        let containerModuleBindingServiceMock: jest.Mocked<ContainerModuleBindingService>;
+        let containerModuleBindingServiceMock: jestMock.Mocked<ContainerModuleBindingService>;
 
         beforeAll(() => {
           containerModuleBindingServiceMock = {
             bind: jest.fn(),
           } as Partial<
-            jest.Mocked<ContainerModuleBindingService>
-          > as jest.Mocked<ContainerModuleBindingService>;
+            jestMock.Mocked<ContainerModuleBindingService>
+          > as jestMock.Mocked<ContainerModuleBindingService>;
 
           domainCrudContainerModule.load(containerModuleBindingServiceMock);
         });

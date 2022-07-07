@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { FindEntityPort } from '../../port/application/FindEntityPort';
 import { ReadOneEntityInteractor } from './ReadOneEntityInteractor';
 
@@ -10,15 +14,15 @@ interface QueryTest {
 }
 
 describe(ReadOneEntityInteractor.name, () => {
-  let findAdapterMock: jest.Mocked<FindEntityPort<ModelTest, QueryTest>>;
+  let findAdapterMock: jestMock.Mocked<FindEntityPort<ModelTest, QueryTest>>;
   let readOneInteractor: ReadOneEntityInteractor<ModelTest, QueryTest>;
 
   beforeAll(() => {
     findAdapterMock = {
       findOne: jest.fn(),
     } as Partial<
-      jest.Mocked<FindEntityPort<ModelTest, QueryTest>>
-    > as jest.Mocked<FindEntityPort<ModelTest, QueryTest>>;
+      jestMock.Mocked<FindEntityPort<ModelTest, QueryTest>>
+    > as jestMock.Mocked<FindEntityPort<ModelTest, QueryTest>>;
 
     readOneInteractor = new ReadOneEntityInteractor(findAdapterMock);
   });

@@ -1,5 +1,9 @@
 import 'reflect-metadata';
 
+import { beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { Container, injectable } from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
@@ -63,13 +67,15 @@ describe(DomainUpdateContainerModule.name, () => {
           });
 
           it('should throw an Error', () => {
+            const expectedError: Partial<Error> = {
+              message: expect.stringContaining(
+                'No registered bindings found for type',
+              ) as unknown as string,
+            };
+
             expect(result).toBeInstanceOf(Error);
             expect(result).toStrictEqual(
-              expect.objectContaining<Partial<Error>>({
-                message: expect.stringContaining(
-                  'No registered bindings found for type',
-                ) as string,
-              }),
+              expect.objectContaining(expectedError),
             );
           });
         });
@@ -78,10 +84,12 @@ describe(DomainUpdateContainerModule.name, () => {
 
     describe('having a containerApi with update adapter bound', () => {
       class UpdateAdapterMock implements UpdateEntityPort<QueryTest> {
-        public readonly updateMock: jest.Mock<Promise<void>, [QueryTest]>;
+        public readonly updateMock: jestMock.Mock<
+          (query: QueryTest) => Promise<void>
+        >;
 
         constructor() {
-          this.updateMock = jest.fn<Promise<void>, [QueryTest]>();
+          this.updateMock = jest.fn();
         }
 
         public async update(query: QueryTest): Promise<void> {

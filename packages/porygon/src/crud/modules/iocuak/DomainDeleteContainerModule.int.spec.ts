@@ -1,5 +1,9 @@
 import 'reflect-metadata';
 
+import { beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { Container, injectable } from '@cuaklabs/iocuak';
 
 import { CrudModuleType } from '../../models/domain/CrudModuleType';
@@ -63,13 +67,15 @@ describe(DomainDeleteContainerModule.name, () => {
           });
 
           it('should throw an Error', () => {
+            const expectedError: Partial<Error> = {
+              message: expect.stringContaining(
+                'No registered bindings found for type',
+              ) as unknown as string,
+            };
+
             expect(result).toBeInstanceOf(Error);
             expect(result).toStrictEqual(
-              expect.objectContaining<Partial<Error>>({
-                message: expect.stringContaining(
-                  'No registered bindings found for type',
-                ) as string,
-              }),
+              expect.objectContaining(expectedError),
             );
           });
         });
@@ -78,10 +84,12 @@ describe(DomainDeleteContainerModule.name, () => {
 
     describe('having a containerApi with delete adapter bound', () => {
       class DeleteAdapterMock implements DeleteEntityPort<QueryTest> {
-        public readonly deleteMock: jest.Mock<Promise<void>, [QueryTest]>;
+        public readonly deleteMock: jestMock.Mock<
+          (query: QueryTest) => Promise<void>
+        >;
 
         constructor() {
-          this.deleteMock = jest.fn<Promise<void>, [QueryTest]>();
+          this.deleteMock = jest.fn();
         }
 
         public async delete(query: QueryTest): Promise<void> {
