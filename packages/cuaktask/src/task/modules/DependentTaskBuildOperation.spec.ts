@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { Builder } from '../../common/modules/Builder';
 import { DependentTaskMocks } from '../mocks/models/domain/DependentTaskMocks';
 import { DependentTask } from '../models/domain/DependentTask';
@@ -7,16 +11,16 @@ import { DependentTaskBuildOperation } from './DependentTaskBuildOperation';
 import { TaskDependencyEngine } from './TaskDependencyEngine';
 
 describe(DependentTaskBuildOperation.name, () => {
-  let taskWithNoDependenciesBuilderMock: jest.Mocked<
+  let taskWithNoDependenciesBuilderMock: jestMock.Mocked<
     Builder<DependentTask<unknown>, [unknown]>
   >;
-  let taskDependencyEngine: jest.Mocked<TaskDependencyEngine<unknown>>;
+  let taskDependencyEngine: jestMock.Mocked<TaskDependencyEngine<unknown>>;
 
   let dependentTaskBuildOperation: DependentTaskBuildOperation;
 
   beforeAll(() => {
     taskWithNoDependenciesBuilderMock = {
-      build: jest.fn<DependentTask<unknown>, [unknown]>(),
+      build: jest.fn(),
     };
     taskDependencyEngine = {
       getDependencies: jest.fn(),

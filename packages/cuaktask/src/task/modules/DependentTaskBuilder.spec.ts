@@ -1,4 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
 import * as jestMock from 'jest-mock';
 
 jest.mock('./DependentTaskBuildOperation');
@@ -79,7 +80,9 @@ describe(DependentTaskBuilder.name, () => {
         > as jestMock.Mocked<DependentTaskBuildOperation>;
 
         (
-          DependentTaskBuildOperation as jest.Mock<DependentTaskBuildOperation>
+          DependentTaskBuildOperation as jestMock.Mock<
+            typeof DependentTaskBuildOperation & jestMock.FunctionLike
+          >
         ).mockReturnValueOnce(dependentTaskBuildOperationMock);
 
         result = dependentTaskBuilder.build(taskFixture.kind);
