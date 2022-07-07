@@ -122,6 +122,19 @@ module.exports = {
         },
         groups: ['builtin', 'external'],
         'newlines-between': 'always',
+        pathGroups: [
+          {
+            pattern: '@jest/globals',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: 'jest-mock',
+            group: 'external',
+            position: 'before',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['@jest/globals', 'jest-mock'],
       },
     ],
     '@typescript-eslint/strict-boolean-expressions': 'error',
