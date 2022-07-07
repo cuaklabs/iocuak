@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cuaklabs/cuaktask.git"
+    "url": "git+https://github.com/cuaklabs/iocuak.git"
   },
   "keywords": [
     "benchmark"
@@ -13,9 +13,9 @@
   "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cuaklabs/cuaktask/issues"
+    "url": "https://github.com/cuaklabs/iocuak/issues"
   },
-  "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/iocuak-benchmark#readme",
+  "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak-benchmark#readme",
   "dependencies": {
     "@cuaklabs/iocuak": "workspace:../iocuak",
     "@nestjs/common": "8.4.7",
