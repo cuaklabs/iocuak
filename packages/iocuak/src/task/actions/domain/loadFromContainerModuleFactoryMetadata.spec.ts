@@ -2,16 +2,17 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-jest.mock('./createInstance');
+jest.mock('./getDependency');
 
 import { BindingService } from '../../../binding/services/domain/BindingService';
+import { ClassElementMetadataType } from '../../../classMetadata/models/domain/ClassElementMetadataType';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleFactoryMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadataType } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadataType';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { TaskContextServices } from '../../models/domain/TaskContextServices';
-import { createInstance } from './createInstance';
+import { getDependency } from './getDependency';
 import { loadFromContainerModuleFactoryMetadata } from './loadFromContainerModuleFactoryMetadata';
 
 describe(loadFromContainerModuleFactoryMetadata.name, () => {
@@ -28,7 +29,12 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
       containerModuleFactoryMetadataMock = {
         factory: containerModuleFactoryMetadataFactoryMock,
         imports: [],
-        injects: [Symbol()],
+        injects: [
+          {
+            type: ClassElementMetadataType.serviceId,
+            value: Symbol(),
+          },
+        ],
         type: ContainerModuleMetadataType.factory,
       };
     });
@@ -59,7 +65,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
         factoryParameterFixture = Symbol();
 
         (
-          createInstance as jestMock.Mock<typeof createInstance>
+          getDependency as jestMock.Mock<typeof getDependency>
         ).mockReturnValueOnce(factoryParameterFixture);
 
         containerModuleFactoryMetadataFactoryMock.mockResolvedValueOnce(
@@ -82,8 +88,8 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
           servicesInstantiatedSet: new Set(),
         };
 
-        expect(createInstance).toHaveBeenCalledTimes(1);
-        expect(createInstance).toHaveBeenCalledWith(
+        expect(getDependency).toHaveBeenCalledTimes(1);
+        expect(getDependency).toHaveBeenCalledWith(
           containerModuleFactoryMetadataMock.injects[0],
           expectedTaskContext,
         );
@@ -125,7 +131,12 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
       containerModuleFactoryMetadataMock = {
         factory: containerModuleFactoryMetadataFactoryMock,
         imports: [],
-        injects: [Symbol()],
+        injects: [
+          {
+            type: ClassElementMetadataType.serviceId,
+            value: Symbol(),
+          },
+        ],
         type: ContainerModuleMetadataType.factory,
       };
     });
@@ -156,7 +167,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
         factoryParameterFixture = Symbol();
 
         (
-          createInstance as jestMock.Mock<typeof createInstance>
+          getDependency as jestMock.Mock<typeof getDependency>
         ).mockReturnValueOnce(factoryParameterFixture);
 
         containerModuleFactoryMetadataFactoryMock.mockReturnValueOnce(
@@ -179,8 +190,8 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
           servicesInstantiatedSet: new Set(),
         };
 
-        expect(createInstance).toHaveBeenCalledTimes(1);
-        expect(createInstance).toHaveBeenCalledWith(
+        expect(getDependency).toHaveBeenCalledTimes(1);
+        expect(getDependency).toHaveBeenCalledWith(
           containerModuleFactoryMetadataMock.injects[0],
           expectedTaskContext,
         );

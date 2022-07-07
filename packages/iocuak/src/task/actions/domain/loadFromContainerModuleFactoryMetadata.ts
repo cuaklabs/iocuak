@@ -1,19 +1,20 @@
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ClassElementMetadata } from '../../../classMetadata/models/domain/ClassElementMetadata';
 import { isPromiseLike } from '../../../common/utils/isPromiseLike';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleFactoryMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleFactoryMetadata';
 import { TaskContext } from '../../models/domain/TaskContext';
-import { createInstance } from './createInstance';
+import { getDependency } from './getDependency';
 
 export function loadFromContainerModuleFactoryMetadata(
   metadata: ContainerModuleFactoryMetadata,
   context: TaskContext,
 ): void | Promise<void> {
-  const instances: unknown[] = metadata.injects.map((inject: ServiceId) =>
-    createInstance(inject, {
-      ...context,
-      servicesInstantiatedSet: new Set(),
-    }),
+  const instances: unknown[] = metadata.injects.map(
+    (inject: ClassElementMetadata) =>
+      getDependency(inject, {
+        ...context,
+        servicesInstantiatedSet: new Set(),
+      }),
   );
 
   const containerModule: ContainerModule | Promise<ContainerModule> =

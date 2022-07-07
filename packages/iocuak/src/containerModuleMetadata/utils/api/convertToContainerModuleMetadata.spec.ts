@@ -6,6 +6,8 @@ jest.mock('../../../containerModule/utils/api/convertToContainerModule');
 jest.mock('../../../containerModule/utils/api/convertToContainerModuleAsync');
 
 import { BindingService } from '../../../binding/services/domain/BindingService';
+import { ClassElementMetadata } from '../../../classMetadata/models/domain/ClassElementMetadata';
+import { ClassElementMetadataType } from '../../../classMetadata/models/domain/ClassElementMetadataType';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
@@ -354,7 +356,7 @@ describe(convertToContainerModuleMetadata.name, () => {
             Function,
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
-          injects: expect.any(Array) as unknown as ServiceId[],
+          injects: expect.any(Array) as unknown as ClassElementMetadata[],
           type: ContainerModuleMetadataType.factory,
         };
 
@@ -497,12 +499,21 @@ describe(convertToContainerModuleMetadata.name, () => {
       });
 
       it('should return a ContainerModuleMetadata', () => {
+        const expectedInjects: ClassElementMetadata[] = (
+          containerModuleFactoryMetadataApiMock.injects as ServiceId[]
+        ).map(
+          (serviceId: ServiceId): ClassElementMetadata => ({
+            type: ClassElementMetadataType.serviceId,
+            value: serviceId,
+          }),
+        );
+
         const expected: ContainerModuleMetadata = {
           factory: expect.any(
             Function,
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
-          injects: containerModuleFactoryMetadataApiMock.injects as ServiceId[],
+          injects: expectedInjects,
           type: ContainerModuleMetadataType.factory,
         };
 
@@ -586,11 +597,11 @@ describe(convertToContainerModuleMetadata.name, () => {
               imports: expect.any(
                 Array,
               ) as unknown as ContainerModuleMetadata[],
-              injects: expect.any(Array) as unknown as ServiceId[],
+              injects: expect.any(Array) as unknown as ClassElementMetadata[],
               type: ContainerModuleMetadataType.factory,
             },
           ],
-          injects: expect.any(Array) as unknown as ServiceId[],
+          injects: expect.any(Array) as unknown as ClassElementMetadata[],
           type: ContainerModuleMetadataType.factory,
         };
 
