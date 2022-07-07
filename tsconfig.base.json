@@ -14,7 +14,6 @@
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
     "paths": {
-      "@cuaklabs/cuaktask": ["./packages/cuaktask"],
       "@cuaklabs/iocuak": ["./packages/iocuak"],
       "@cuaklabs/iocuak-benchmark": ["./packages/iocuak-benchmark"],
       "@cuaklabs/porygon": ["./packages/porygon"],

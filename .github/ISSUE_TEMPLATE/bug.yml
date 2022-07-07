@@ -87,7 +87,6 @@ body:
           Yarn: 1.22.5 - /usr/local/bin/yarn
           npm: 6.14.13 - /usr/local/bin/npm
         npmPackages:
-          @cuaklabs/cuaktask: 0.3.0 => 0.3.0
           @cuaklabs/iocuak: 0.3.0 => 0.3.0
       render: shell
     validations:
