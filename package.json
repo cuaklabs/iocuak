@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cuaklabs/cuaktask.git"
+    "url": "git+https://github.com/cuaklabs/iocuak.git"
   },
   "keywords": [
     "task",
@@ -47,9 +47,9 @@
   "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cuaklabs/cuaktask/issues"
+    "url": "https://github.com/cuaklabs/iocuak/issues"
   },
-  "homepage": "https://github.com/cuaklabs/cuaktask#readme",
+  "homepage": "https://github.com/cuaklabs/iocuak#readme",
   "devDependencies": {
     "@commitlint/cli": "17.0.3",
     "@commitlint/config-conventional": "17.0.3",
