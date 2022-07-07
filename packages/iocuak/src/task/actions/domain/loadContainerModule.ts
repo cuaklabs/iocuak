@@ -1,5 +1,4 @@
-import * as cuaktask from '@cuaklabs/cuaktask';
-
+import { isPromiseLike } from '../../../common/utils/isPromiseLike';
 import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { loadContainerModuleElement } from './loadContainerModuleElement';
@@ -14,7 +13,7 @@ export function loadContainerModule(
 
   let loadContainerModuleResult: void | Promise<void>;
 
-  if (cuaktask.isPromiseLike(loadModuleDependenciesResult)) {
+  if (isPromiseLike(loadModuleDependenciesResult)) {
     loadContainerModuleResult = loadContainerModuleElementAsync(
       containerModuleMetadata,
       context,
@@ -42,7 +41,7 @@ function loadContainerModuleDependencies(
       context,
     );
 
-    if (cuaktask.isPromiseLike(loadContainerModuleResult)) {
+    if (isPromiseLike(loadContainerModuleResult)) {
       asyncResults.push(loadContainerModuleResult);
     }
   }
