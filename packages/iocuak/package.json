@@ -19,9 +19,6 @@
     "url": "https://github.com/cuaklabs/cuaktask/issues"
   },
   "homepage": "https://github.com/cuaklabs/cuaktask/tree/master/packages/iocuak#readme",
-  "dependencies": {
-    "@cuaklabs/cuaktask": "workspace:../cuaktask"
-  },
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
   "publishConfig": {
     "access": "public"
