@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { injectable } from '../../../binding/decorators/injectable';
 import { inject } from '../../../classMetadata/decorators/inject';
 import { Newable } from '../../../common/models/domain/Newable';

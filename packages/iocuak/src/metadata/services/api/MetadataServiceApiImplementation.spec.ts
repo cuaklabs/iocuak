@@ -1,12 +1,14 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock('../../../classMetadata/utils/api/convertToClassMetadataApi');
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
-import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { BindingScopeApi } from '../../../binding/models/api/BindingScopeApi';
 import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
 import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
-import { Binding } from '../../../binding/models/domain/Binding';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
@@ -17,14 +19,16 @@ import { MetadataService } from '../domain/MetadataService';
 import { MetadataServiceApiImplementation } from './MetadataServiceApiImplementation';
 
 describe(MetadataServiceApiImplementation.name, () => {
-  let metadataServiceMock: jest.Mocked<MetadataService>;
+  let metadataServiceMock: jestMock.Mocked<MetadataService>;
   let metadataApiServiceImplementation: MetadataServiceApiImplementation;
 
   beforeAll(() => {
     metadataServiceMock = {
       getBindingMetadata: jest.fn(),
       getClassMetadata: jest.fn(),
-    };
+    } as Partial<
+      jestMock.Mocked<MetadataService>
+    > as jestMock.Mocked<MetadataService>;
 
     metadataApiServiceImplementation = new MetadataServiceApiImplementation(
       metadataServiceMock,
@@ -85,7 +89,9 @@ describe(MetadataServiceApiImplementation.name, () => {
         );
 
         (
-          convertBindingToBindingApi as jest.Mock<BindingApi, [Binding]>
+          convertBindingToBindingApi as jestMock.Mock<
+            typeof convertBindingToBindingApi
+          >
         ).mockReturnValueOnce(bindingApiFixture);
 
         result =
@@ -142,9 +148,8 @@ describe(MetadataServiceApiImplementation.name, () => {
         );
 
         (
-          convertToClassMetadataApi as jest.Mock<
-            ClassMetadataApi,
-            [ClassMetadata]
+          convertToClassMetadataApi as jestMock.Mock<
+            typeof convertToClassMetadataApi
           >
         ).mockReturnValueOnce(classMetadataApiFixture);
 

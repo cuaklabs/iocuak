@@ -1,3 +1,5 @@
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerRequestServiceImplementation } from './ContainerRequestServiceImplementation';
 
@@ -20,13 +22,13 @@ describe(ContainerRequestServiceImplementation.name, () => {
       });
 
       it('should throw an Error', () => {
+        const expectedError: Partial<Error> = {
+          message:
+            'Error trying to end request. No request with the id provided was found',
+        };
+
         expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message:
-              'Error trying to end request. No request with the id provided was found',
-          }),
-        );
+        expect(result).toStrictEqual(expect.objectContaining(expectedError));
       });
     });
 
@@ -75,13 +77,13 @@ describe(ContainerRequestServiceImplementation.name, () => {
       });
 
       it('should throw an Error', () => {
+        const expectedError: Partial<Error> = {
+          message:
+            'Error trying to get service. No request with the id provided was found',
+        };
+
         expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message:
-              'Error trying to get service. No request with the id provided was found',
-          }),
-        );
+        expect(result).toStrictEqual(expect.objectContaining(expectedError));
       });
     });
 
@@ -106,13 +108,13 @@ describe(ContainerRequestServiceImplementation.name, () => {
       });
 
       it('should throw an Error', () => {
+        const expectedError: Partial<Error> = {
+          message:
+            'Error trying to get service. No request with the id provided was found',
+        };
+
         expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message:
-              'Error trying to get service. No request with the id provided was found',
-          }),
-        );
+        expect(result).toStrictEqual(expect.objectContaining(expectedError));
       });
     });
 
@@ -177,13 +179,13 @@ describe(ContainerRequestServiceImplementation.name, () => {
       });
 
       it('should throw an Error', () => {
+        const expectedError: Partial<Error> = {
+          message:
+            'Error trying to get service. No request with the id provided was found',
+        };
+
         expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message:
-              'Error trying to get service. No request with the id provided was found',
-          }),
-        );
+        expect(result).toStrictEqual(expect.objectContaining(expectedError));
       });
     });
 

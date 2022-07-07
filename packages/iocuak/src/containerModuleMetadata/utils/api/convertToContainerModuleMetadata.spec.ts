@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 jest.mock('../../../containerModule/utils/api/convertToContainerModule');
 jest.mock('../../../containerModule/utils/api/convertToContainerModuleAsync');
 
@@ -20,7 +24,7 @@ import { convertToContainerModuleMetadata } from './convertToContainerModuleMeta
 
 describe(convertToContainerModuleMetadata.name, () => {
   describe('having a ContainerModuleApi', () => {
-    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleApi>;
+    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleApi>;
 
     beforeAll(() => {
       containerModuleFactoryMetadataApiMock = {
@@ -48,7 +52,7 @@ describe(convertToContainerModuleMetadata.name, () => {
         const expected: ContainerModuleFactoryMetadata = {
           factory: expect.any(
             Function,
-          ) as ContainerModuleFactoryMetadata['factory'],
+          ) as unknown as ContainerModuleFactoryMetadata['factory'],
           imports: [],
           injects: [],
           type: ContainerModuleMetadataType.factory,
@@ -68,7 +72,9 @@ describe(convertToContainerModuleMetadata.name, () => {
           } as unknown as ContainerModule;
 
           (
-            convertToContainerModule as jest.Mock<ContainerModule>
+            convertToContainerModule as jestMock.Mock<
+              typeof convertToContainerModule
+            >
           ).mockReturnValueOnce(containerModuleFixture);
 
           argumentsFixture = [Symbol()];
@@ -95,12 +101,14 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleApi Newable', () => {
-    let containerModuleClassMetadataApiMock: jest.Mocked<
-      Newable<ContainerModuleApi>
+    let containerModuleClassMetadataApiMock: jestMock.Mocked<
+      Newable<ContainerModuleApi> & jestMock.FunctionLike
     >;
 
     beforeAll(() => {
-      containerModuleClassMetadataApiMock = jest.fn();
+      containerModuleClassMetadataApiMock = jest.fn() as jestMock.Mocked<
+        Newable<ContainerModuleApi> & jestMock.FunctionLike
+      >;
     });
 
     describe('when called', () => {
@@ -121,7 +129,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           imports: [],
           loader: expect.any(
             Function,
-          ) as ContainerModuleClassMetadata['loader'],
+          ) as unknown as ContainerModuleClassMetadata['loader'],
           moduleType: containerModuleClassMetadataApiMock,
           type: ContainerModuleMetadataType.clazz,
         };
@@ -132,7 +140,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleClassMetadataApi', () => {
-    let containerModuleClassMetadataApiMock: jest.Mocked<ContainerModuleClassMetadataApi>;
+    let containerModuleClassMetadataApiMock: jestMock.Mocked<ContainerModuleClassMetadataApi>;
 
     beforeAll(() => {
       containerModuleClassMetadataApiMock =
@@ -157,10 +165,10 @@ describe(convertToContainerModuleMetadata.name, () => {
 
       it('should return a ContainerModuleMetadata', () => {
         const expected: ContainerModuleClassMetadata = {
-          imports: expect.any(Array) as ContainerModuleMetadata[],
+          imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           loader: expect.any(
             Function,
-          ) as ContainerModuleClassMetadata['loader'],
+          ) as unknown as ContainerModuleClassMetadata['loader'],
           moduleType: containerModuleClassMetadataApiMock.module,
           type: ContainerModuleMetadataType.clazz,
         };
@@ -169,7 +177,7 @@ describe(convertToContainerModuleMetadata.name, () => {
       });
 
       describe('when loader is called', () => {
-        let containerModuleMock: jest.Mocked<ContainerModule>;
+        let containerModuleMock: jestMock.Mocked<ContainerModule>;
         let containerModuleApiFixture: ContainerModuleApi;
         let containerBindingServiceFixture: BindingService;
         let metadataServiceFixture: MetadataService;
@@ -192,7 +200,9 @@ describe(convertToContainerModuleMetadata.name, () => {
           } as Partial<MetadataService> as MetadataService;
 
           (
-            convertToContainerModule as jest.Mock<ContainerModule>
+            convertToContainerModule as jestMock.Mock<
+              typeof convertToContainerModule
+            >
           ).mockReturnValueOnce(containerModuleMock);
 
           containerModuleMetadata.loader(
@@ -225,8 +235,8 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleClassMetadataApi with imports', () => {
-    let dependencyContainerModuleClassMetadataApiMock: jest.Mocked<ContainerModuleClassMetadataApi>;
-    let containerModuleClassMetadataApiMock: jest.Mocked<ContainerModuleClassMetadataApi>;
+    let dependencyContainerModuleClassMetadataApiMock: jestMock.Mocked<ContainerModuleClassMetadataApi>;
+    let containerModuleClassMetadataApiMock: jestMock.Mocked<ContainerModuleClassMetadataApi>;
 
     beforeAll(() => {
       dependencyContainerModuleClassMetadataApiMock =
@@ -254,17 +264,19 @@ describe(convertToContainerModuleMetadata.name, () => {
         const expected: ContainerModuleClassMetadata = {
           imports: [
             {
-              imports: expect.any(Array) as ContainerModuleMetadata[],
+              imports: expect.any(
+                Array,
+              ) as unknown as ContainerModuleMetadata[],
               loader: expect.any(
                 Function,
-              ) as ContainerModuleClassMetadata['loader'],
+              ) as unknown as ContainerModuleClassMetadata['loader'],
               moduleType: dependencyContainerModuleClassMetadataApiMock.module,
               type: ContainerModuleMetadataType.clazz,
             },
           ],
           loader: expect.any(
             Function,
-          ) as ContainerModuleClassMetadata['loader'],
+          ) as unknown as ContainerModuleClassMetadata['loader'],
           moduleType: containerModuleClassMetadataApiMock.module,
           type: ContainerModuleMetadataType.clazz,
         };
@@ -275,7 +287,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleClassMetadataApi with no imports', () => {
-    let containerModuleClassMetadataApiMock: jest.Mocked<ContainerModuleClassMetadataApi>;
+    let containerModuleClassMetadataApiMock: jestMock.Mocked<ContainerModuleClassMetadataApi>;
 
     beforeAll(() => {
       containerModuleClassMetadataApiMock =
@@ -302,7 +314,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           imports: [],
           loader: expect.any(
             Function,
-          ) as ContainerModuleClassMetadata['loader'],
+          ) as unknown as ContainerModuleClassMetadata['loader'],
           moduleType: containerModuleClassMetadataApiMock.module,
           type: ContainerModuleMetadataType.clazz,
         };
@@ -313,7 +325,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleFactoryMetadataApi', () => {
-    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
+    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
 
     beforeAll(() => {
       containerModuleFactoryMetadataApiMock =
@@ -340,9 +352,9 @@ describe(convertToContainerModuleMetadata.name, () => {
         const expected: ContainerModuleMetadata = {
           factory: expect.any(
             Function,
-          ) as ContainerModuleFactoryMetadata['factory'],
-          imports: expect.any(Array) as ContainerModuleMetadata[],
-          injects: expect.any(Array) as ServiceId[],
+          ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
+          injects: expect.any(Array) as unknown as ServiceId[],
           type: ContainerModuleMetadataType.factory,
         };
 
@@ -365,12 +377,16 @@ describe(convertToContainerModuleMetadata.name, () => {
           } as unknown as ContainerModule;
 
           (
-            convertToContainerModuleAsync as jest.Mock<Promise<ContainerModule>>
+            convertToContainerModuleAsync as jestMock.Mock<
+              typeof convertToContainerModuleAsync
+            >
           ).mockResolvedValueOnce(containerModuleFixture);
 
-          containerModuleFactoryMetadataApiMock.factory.mockResolvedValueOnce(
-            containerModuleApiFixture,
-          );
+          (
+            containerModuleFactoryMetadataApiMock.factory as jestMock.Mock<
+              () => Promise<ContainerModuleApi>
+            >
+          ).mockResolvedValueOnce(containerModuleApiFixture);
 
           argumentsFixture = [Symbol()];
 
@@ -418,7 +434,9 @@ describe(convertToContainerModuleMetadata.name, () => {
           } as unknown as ContainerModule;
 
           (
-            convertToContainerModule as jest.Mock<ContainerModule>
+            convertToContainerModule as jestMock.Mock<
+              typeof convertToContainerModule
+            >
           ).mockReturnValueOnce(containerModuleFixture);
 
           containerModuleFactoryMetadataApiMock.factory.mockReturnValueOnce(
@@ -458,7 +476,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleFactoryMetadataApi with injects', () => {
-    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
+    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
 
     beforeAll(() => {
       containerModuleFactoryMetadataApiMock =
@@ -482,8 +500,8 @@ describe(convertToContainerModuleMetadata.name, () => {
         const expected: ContainerModuleMetadata = {
           factory: expect.any(
             Function,
-          ) as ContainerModuleFactoryMetadata['factory'],
-          imports: expect.any(Array) as ContainerModuleMetadata[],
+          ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: containerModuleFactoryMetadataApiMock.injects as ServiceId[],
           type: ContainerModuleMetadataType.factory,
         };
@@ -494,7 +512,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleFactoryMetadataApi with no injects', () => {
-    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
+    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
 
     beforeAll(() => {
       containerModuleFactoryMetadataApiMock =
@@ -518,8 +536,8 @@ describe(convertToContainerModuleMetadata.name, () => {
         const expected: ContainerModuleMetadata = {
           factory: expect.any(
             Function,
-          ) as ContainerModuleFactoryMetadata['factory'],
-          imports: expect.any(Array) as ContainerModuleMetadata[],
+          ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: [],
           type: ContainerModuleMetadataType.factory,
         };
@@ -530,8 +548,8 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleFactoryMetadataApi with imports', () => {
-    let dependencyContainerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
-    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
+    let dependencyContainerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
+    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
 
     beforeAll(() => {
       dependencyContainerModuleFactoryMetadataApiMock =
@@ -559,18 +577,20 @@ describe(convertToContainerModuleMetadata.name, () => {
         const expected: ContainerModuleMetadata = {
           factory: expect.any(
             Function,
-          ) as ContainerModuleFactoryMetadata['factory'],
+          ) as unknown as ContainerModuleFactoryMetadata['factory'],
           imports: [
             {
               factory: expect.any(
                 Function,
-              ) as ContainerModuleFactoryMetadata['factory'],
-              imports: expect.any(Array) as ContainerModuleMetadata[],
-              injects: expect.any(Array) as ServiceId[],
+              ) as unknown as ContainerModuleFactoryMetadata['factory'],
+              imports: expect.any(
+                Array,
+              ) as unknown as ContainerModuleMetadata[],
+              injects: expect.any(Array) as unknown as ServiceId[],
               type: ContainerModuleMetadataType.factory,
             },
           ],
-          injects: expect.any(Array) as ServiceId[],
+          injects: expect.any(Array) as unknown as ServiceId[],
           type: ContainerModuleMetadataType.factory,
         };
 

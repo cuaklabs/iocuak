@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 jest.mock('../../binding/utils/domain/getBindingOrThrow');
 
 import { TypeBindingFixtures } from '../../binding/fixtures/domain/TypeBindingFixtures';
@@ -10,19 +14,23 @@ import { MetadataService } from '../../metadata/services/domain/MetadataService'
 
 describe(bind.name, () => {
   let typeFixture: Newable;
-  let containerBindingServiceMock: jest.Mocked<BindingService>;
-  let metadataServiceMock: jest.Mocked<MetadataService>;
+  let containerBindingServiceMock: jestMock.Mocked<BindingService>;
+  let metadataServiceMock: jestMock.Mocked<MetadataService>;
 
   beforeAll(() => {
     typeFixture = class {};
 
     containerBindingServiceMock = {
       set: jest.fn(),
-    } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
+    } as Partial<
+      jestMock.Mocked<BindingService>
+    > as jestMock.Mocked<BindingService>;
 
     metadataServiceMock = {
       getBindingMetadata: jest.fn(),
-    } as Partial<jest.Mocked<MetadataService>> as jest.Mocked<MetadataService>;
+    } as Partial<
+      jestMock.Mocked<MetadataService>
+    > as jestMock.Mocked<MetadataService>;
   });
 
   describe('when called', () => {
@@ -31,9 +39,9 @@ describe(bind.name, () => {
     beforeAll(() => {
       bindingFixture = TypeBindingFixtures.any;
 
-      (getBindingOrThrow as jest.Mock<TypeBinding>).mockReturnValueOnce(
-        bindingFixture,
-      );
+      (
+        getBindingOrThrow as jestMock.Mock<typeof getBindingOrThrow>
+      ).mockReturnValueOnce(bindingFixture);
 
       bind(typeFixture, containerBindingServiceMock, metadataServiceMock);
     });

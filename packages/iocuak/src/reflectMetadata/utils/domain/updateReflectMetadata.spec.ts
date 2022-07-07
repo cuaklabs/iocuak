@@ -1,5 +1,9 @@
 import 'reflect-metadata';
 
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 jest.mock('./getReflectMetadata');
 
 import { Newable } from '../../../common/models/domain/Newable';
@@ -11,7 +15,7 @@ describe(updateReflectMetadata.name, () => {
     let targetFixture: Newable;
     let metadataKeyFixture: unknown;
     let defaultValueFixture: unknown;
-    let callbackMock: jest.Mock<void, [unknown]>;
+    let callbackMock: jestMock.Mock<(value: unknown) => unknown>;
     let reflectMetadata: unknown;
 
     beforeAll(() => {
@@ -19,10 +23,12 @@ describe(updateReflectMetadata.name, () => {
       metadataKeyFixture = 'sample-key';
       defaultValueFixture = 'default-value';
       callbackMock = jest
-        .fn<void, [unknown]>()
+        .fn<(value: unknown) => unknown>()
         .mockImplementationOnce((value: unknown) => value);
 
-      (getReflectMetadata as jest.Mock).mockReturnValueOnce(undefined);
+      (
+        getReflectMetadata as jestMock.Mock<typeof getReflectMetadata>
+      ).mockReturnValueOnce(undefined);
 
       updateReflectMetadata(
         targetFixture,
@@ -64,7 +70,7 @@ describe(updateReflectMetadata.name, () => {
     let metadataFixture: unknown;
     let metadataKeyFixture: unknown;
     let defaultValueFixture: unknown;
-    let callbackMock: jest.Mock<void, [unknown]>;
+    let callbackMock: jestMock.Mock<(value: unknown) => unknown>;
     let reflectMetadata: unknown;
 
     beforeAll(() => {
@@ -73,10 +79,12 @@ describe(updateReflectMetadata.name, () => {
       metadataKeyFixture = 'sample-key';
       defaultValueFixture = 'default-value';
       callbackMock = jest
-        .fn<void, [unknown]>()
+        .fn<(value: unknown) => unknown>()
         .mockImplementationOnce((value: unknown) => value);
 
-      (getReflectMetadata as jest.Mock).mockReturnValueOnce(metadataFixture);
+      (
+        getReflectMetadata as jestMock.Mock<typeof getReflectMetadata>
+      ).mockReturnValueOnce(metadataFixture);
 
       updateReflectMetadata(
         targetFixture,

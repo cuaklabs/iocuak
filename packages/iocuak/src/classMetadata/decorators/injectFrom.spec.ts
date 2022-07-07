@@ -1,9 +1,12 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 jest.mock('../../reflectMetadata/utils/domain/getReflectMetadata');
 jest.mock('../../reflectMetadata/utils/domain/updateReflectMetadata');
 
 import { injectFrom } from '../../classMetadata/decorators/injectFrom';
 import { ClassMetadataExtensionApi } from '../../classMetadata/models/api/ClassMetadataExtensionApi';
-import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
 import { getDefaultClassMetadata } from '../../classMetadata/utils/domain/getDefaultClassMetadata';
 import { Newable } from '../../common/models/domain/Newable';
 import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
@@ -49,9 +52,9 @@ describe(injectFrom.name, () => {
         type: class {},
       };
 
-      (getReflectMetadata as jest.Mock<ClassMetadata>).mockReturnValueOnce(
-        ClassMetadataFixtures.any,
-      );
+      (
+        getReflectMetadata as jestMock.Mock<typeof getReflectMetadata>
+      ).mockReturnValueOnce(ClassMetadataFixtures.any);
 
       typeFixture = class {};
 

@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 jest.mock('./getBindingOrThrow');
 
 import { Newable } from '../../../common/models/domain/Newable';
@@ -36,9 +40,9 @@ describe(lazyGetBindingOrThrow.name, () => {
           type: serviceIdFixture,
         };
 
-        (getBindingOrThrow as jest.Mock<TypeBinding>).mockReturnValueOnce(
-          bindingFixture,
-        );
+        (
+          getBindingOrThrow as jestMock.Mock<typeof getBindingOrThrow>
+        ).mockReturnValueOnce(bindingFixture);
 
         result = lazyGetBindingOrThrow(
           serviceIdFixture,
@@ -87,14 +91,14 @@ describe(lazyGetBindingOrThrow.name, () => {
       });
 
       it('should throw an Error', () => {
+        const expectedError: Partial<Error> = {
+          message: expect.stringContaining(
+            'No registered bindings found for type',
+          ) as unknown as string,
+        };
+
         expect(result).toBeInstanceOf(Error);
-        expect(result).toStrictEqual(
-          expect.objectContaining<Partial<Error>>({
-            message: expect.stringContaining(
-              'No registered bindings found for type',
-            ) as string,
-          }),
-        );
+        expect(result).toStrictEqual(expect.objectContaining(expectedError));
       });
     });
   });

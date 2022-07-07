@@ -1,3 +1,5 @@
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { Newable } from '../common/models/domain/Newable';
 import { ServiceId } from '../common/models/domain/ServiceId';
 import { stringifyServiceId } from './stringifyServiceId';
@@ -63,12 +65,12 @@ describe(stringifyServiceId.name, () => {
     });
 
     it('should return a string', () => {
+      const expectedError: Partial<Error> = {
+        message: 'Unexpected number service id type',
+      };
+
       expect(result).toBeInstanceOf(Error);
-      expect(result).toStrictEqual(
-        expect.objectContaining<Partial<Error>>({
-          message: 'Unexpected number service id type',
-        }),
-      );
+      expect(result).toStrictEqual(expect.objectContaining(expectedError));
     });
   });
 });
