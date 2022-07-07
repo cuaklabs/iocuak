@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { ConverterAsync } from '@cuaklabs/porygon';
 import {
   FindManyOptions,
@@ -24,12 +28,12 @@ interface QueryTest {
 }
 
 describe(UpdateTypeOrmAdapter.name, () => {
-  let queryBuilderMock: jest.Mocked<UpdateQueryBuilder<ModelTest>>;
-  let repositoryMock: jest.Mocked<Repository<ModelTest>>;
-  let updateQueryToFindQueryTypeOrmConverterMock: jest.Mocked<
+  let queryBuilderMock: jestMock.Mocked<UpdateQueryBuilder<ModelTest>>;
+  let repositoryMock: jestMock.Mocked<Repository<ModelTest>>;
+  let updateQueryToFindQueryTypeOrmConverterMock: jestMock.Mocked<
     QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
   >;
-  let updateQueryToSetQueryTypeOrmConverterMock: jest.Mocked<
+  let updateQueryToSetQueryTypeOrmConverterMock: jestMock.Mocked<
     ConverterAsync<QueryTest, QueryDeepPartialEntity<ModelTest>>
   >;
 
@@ -42,19 +46,23 @@ describe(UpdateTypeOrmAdapter.name, () => {
         execute: jest.fn(),
         set: jest.fn().mockReturnThis(),
         update: jest.fn().mockReturnThis(),
-      } as Partial<jest.Mocked<UpdateQueryBuilder<ModelTest>>> as jest.Mocked<
-        UpdateQueryBuilder<ModelTest>
-      >,
+      } as Partial<
+        jestMock.Mocked<UpdateQueryBuilder<ModelTest>>
+      > as jestMock.Mocked<UpdateQueryBuilder<ModelTest>>,
     );
     repositoryMock = {
       createQueryBuilder: jest.fn().mockReturnValue(queryBuilderMock),
       update: jest.fn(),
-    } as Partial<jest.Mocked<Repository<ModelTest>>> as jest.Mocked<
+    } as Partial<jestMock.Mocked<Repository<ModelTest>>> as jestMock.Mocked<
       Repository<ModelTest>
     >;
     updateQueryToFindQueryTypeOrmConverterMock = {
       convert: jest.fn(),
-    };
+    } as Partial<
+      jestMock.Mocked<QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>>
+    > as jestMock.Mocked<
+      QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
+    >;
     updateQueryToSetQueryTypeOrmConverterMock = {
       convert: jest.fn(),
     };
@@ -90,18 +98,18 @@ describe(UpdateTypeOrmAdapter.name, () => {
           foo: 'sample-string-modified',
         };
 
-        (
-          updateQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-            Promise<FindManyOptions<ModelTest>>
-          >
-        ).mockResolvedValueOnce(findQueryTypeOrmFixture);
+        updateQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+          findQueryTypeOrmFixture as FindManyOptions<ModelTest> &
+            QueryBuilder<ModelTest> &
+            WhereExpressionBuilder,
+        );
         updateQueryToSetQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
           setQueryTypeOrmFixture,
         );
 
         (
-          findManyOptionsToFindOptionsWhere as jest.Mock<
-            FindOptionsWhere<ModelTest>
+          findManyOptionsToFindOptionsWhere as jestMock.Mock<
+            typeof findManyOptionsToFindOptionsWhere
           >
         ).mockReturnValueOnce(findOptionsWhereFixture);
 
@@ -159,11 +167,13 @@ describe(UpdateTypeOrmAdapter.name, () => {
           foo: 'sample-string-modified',
         };
 
-        (
-          updateQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-            Promise<QueryBuilder<ModelTest> & WhereExpressionBuilder>
-          >
-        ).mockResolvedValueOnce(queryBuilderMock);
+        updateQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+          queryBuilderMock as jestMock.Mocked<
+            FindManyOptions<ModelTest> &
+              UpdateQueryBuilder<ModelTest> &
+              WhereExpressionBuilder
+          >,
+        );
         updateQueryToSetQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
           setQueryTypeOrmFixture,
         );

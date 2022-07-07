@@ -2,6 +2,10 @@ import 'reflect-metadata';
 
 import path from 'path';
 
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { ConverterAsync } from '@cuaklabs/porygon';
 import {
   Column,
@@ -12,10 +16,12 @@ import {
   FindManyOptions,
   Not,
   PrimaryColumn,
+  QueryBuilder,
   QueryRunner,
   Repository,
   Table,
   TableColumn,
+  WhereExpressionBuilder,
 } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
@@ -106,10 +112,10 @@ describe(UpdateTypeOrmAdapter.name, () => {
   let queryRunner: QueryRunner;
 
   let modelTestRepository: Repository<ModelTest>;
-  let updateQueryToFindQueryTypeOrmConverter: jest.Mocked<
+  let updateQueryToFindQueryTypeOrmConverter: jestMock.Mocked<
     QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
   >;
-  let updateQueryToSetQueryTypeOrmConverter: jest.Mocked<
+  let updateQueryToSetQueryTypeOrmConverter: jestMock.Mocked<
     ConverterAsync<QueryTest, QueryDeepPartialEntity<ModelTest>>
   >;
 
@@ -152,7 +158,11 @@ describe(UpdateTypeOrmAdapter.name, () => {
     modelTestRepository = datasource.getRepository(ModelTest);
     updateQueryToFindQueryTypeOrmConverter = {
       convert: jest.fn(),
-    };
+    } as Partial<
+      jestMock.Mocked<QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>>
+    > as jestMock.Mocked<
+      QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
+    >;
     updateQueryToSetQueryTypeOrmConverter = {
       convert: jest.fn(),
     };
@@ -194,11 +204,11 @@ describe(UpdateTypeOrmAdapter.name, () => {
             foo: 'another foo value',
           };
 
-          (
-            updateQueryToFindQueryTypeOrmConverter.convert as jest.Mock<
-              Promise<FindManyOptions<ModelTest>>
-            >
-          ).mockResolvedValueOnce(findQueryTypeOrmFixture);
+          updateQueryToFindQueryTypeOrmConverter.convert.mockResolvedValueOnce(
+            findQueryTypeOrmFixture as FindManyOptions<ModelTest> &
+              QueryBuilder<ModelTest> &
+              WhereExpressionBuilder,
+          );
 
           updateQueryToSetQueryTypeOrmConverter.convert.mockResolvedValueOnce(
             setQueryTypeOrmFixture,
@@ -262,11 +272,11 @@ describe(UpdateTypeOrmAdapter.name, () => {
             foo: 'another foo value',
           };
 
-          (
-            updateQueryToFindQueryTypeOrmConverter.convert as jest.Mock<
-              Promise<FindManyOptions<ModelTest>>
-            >
-          ).mockResolvedValueOnce(findQueryTypeOrmFixture);
+          updateQueryToFindQueryTypeOrmConverter.convert.mockResolvedValueOnce(
+            findQueryTypeOrmFixture as FindManyOptions<ModelTest> &
+              QueryBuilder<ModelTest> &
+              WhereExpressionBuilder,
+          );
 
           updateQueryToSetQueryTypeOrmConverter.convert.mockResolvedValueOnce(
             setQueryTypeOrmFixture,

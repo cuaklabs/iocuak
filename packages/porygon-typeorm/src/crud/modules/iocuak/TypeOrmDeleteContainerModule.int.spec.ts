@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import { beforeAll, describe, expect, it } from '@jest/globals';
+
 import { Container, injectable, Newable } from '@cuaklabs/iocuak';
 import { CrudModuleType, ModuleTypeToSymbolMap } from '@cuaklabs/porygon';
 
@@ -78,13 +80,15 @@ describe(TypeOrmDeleteContainerModule.name, () => {
           });
 
           it('should throw an Error', () => {
+            const expectedError: Partial<Error> = {
+              message: expect.stringContaining(
+                'No registered bindings found for type',
+              ) as unknown as string,
+            };
+
             expect(result).toBeInstanceOf(Error);
             expect(result).toStrictEqual(
-              expect.objectContaining<Partial<Error>>({
-                message: expect.stringContaining(
-                  'No registered bindings found for type',
-                ) as string,
-              }),
+              expect.objectContaining(expectedError),
             );
           });
         });

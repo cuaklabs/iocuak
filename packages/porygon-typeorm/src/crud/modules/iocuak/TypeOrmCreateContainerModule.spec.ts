@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 jest.mock('@cuaklabs/iocuak');
 
 import {
@@ -23,11 +27,11 @@ interface QueryTest {
 // eslint-disable-next-line @typescript-eslint/ban-types
 function expectClassExtending(superclass: Function): Function {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  return expect.objectContaining<Partial<Function>>({
+  return expect.objectContaining({
     // eslint-disable-next-line @typescript-eslint/ban-types
-    prototype: expect.any(superclass) as Function,
+    prototype: expect.any(superclass) as unknown as Function,
     // eslint-disable-next-line @typescript-eslint/ban-types
-  }) as Function;
+  }) as unknown as Function;
 }
 
 describe(TypeOrmCreateContainerModule.name, () => {
@@ -68,41 +72,36 @@ describe(TypeOrmCreateContainerModule.name, () => {
   });
 
   describe('.load()', () => {
-    let containerModuleBindingServiceMock: jest.Mocked<ContainerModuleBindingService>;
+    let containerModuleBindingServiceMock: jestMock.Mocked<ContainerModuleBindingService>;
 
     beforeAll(() => {
       containerModuleBindingServiceMock = {
         bind: jest.fn(),
       } as Partial<
-        jest.Mocked<ContainerModuleBindingService>
-      > as jest.Mocked<ContainerModuleBindingService>;
+        jestMock.Mocked<ContainerModuleBindingService>
+      > as jestMock.Mocked<ContainerModuleBindingService>;
     });
 
     describe('when called', () => {
-      let injectDecoratorMock: jest.Mock<
-        void,
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        [Object, string | symbol, number | void]
+      let injectDecoratorMock: jestMock.Mock<
+        ParameterDecorator & PropertyDecorator
       >;
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      let injectableDecoratorMock: jest.Mock<void, [Function]>;
+      let injectableDecoratorMock: jestMock.Mock<ClassDecorator> &
+        ClassDecorator;
 
       beforeAll(() => {
-        injectDecoratorMock = jest.fn<
-          void,
-          // eslint-disable-next-line @typescript-eslint/ban-types
-          [Object, string | symbol, number | void]
-        >();
+        injectDecoratorMock = jest.fn();
 
-        (inject as jest.Mock<PropertyDecorator & ParameterDecorator>)
+        (inject as jestMock.Mock<typeof inject>)
           .mockReturnValueOnce(injectDecoratorMock)
           .mockReturnValueOnce(injectDecoratorMock)
           .mockReturnValueOnce(injectDecoratorMock);
 
         // eslint-disable-next-line @typescript-eslint/ban-types
-        injectableDecoratorMock = jest.fn<void, [Function]>();
+        injectableDecoratorMock = jest.fn() as jestMock.Mock<ClassDecorator> &
+          ClassDecorator;
 
-        (injectable as jest.Mock<ClassDecorator>).mockReturnValueOnce(
+        (injectable as jestMock.Mock<typeof injectable>).mockReturnValueOnce(
           injectableDecoratorMock,
         );
 

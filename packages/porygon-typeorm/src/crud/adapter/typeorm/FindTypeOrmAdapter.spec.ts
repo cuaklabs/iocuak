@@ -1,3 +1,7 @@
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import { ConverterAsync } from '@cuaklabs/porygon';
 import {
   FindManyOptions,
@@ -19,12 +23,12 @@ interface QueryTest {
 }
 
 describe(FindTypeOrmAdapter.name, () => {
-  let queryBuilderMock: jest.Mocked<SelectQueryBuilder<ModelTest>>;
-  let repositoryMock: jest.Mocked<Repository<ModelTest>>;
-  let findQueryToFindQueryTypeOrmConverterMock: jest.Mocked<
+  let queryBuilderMock: jestMock.Mocked<SelectQueryBuilder<ModelTest>>;
+  let repositoryMock: jestMock.Mocked<Repository<ModelTest>>;
+  let findQueryToFindQueryTypeOrmConverterMock: jestMock.Mocked<
     QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
   >;
-  let modelDbToModelConverter: jest.Mocked<
+  let modelDbToModelConverter: jestMock.Mocked<
     ConverterAsync<ModelTest, ModelTest>
   >;
 
@@ -39,22 +43,26 @@ describe(FindTypeOrmAdapter.name, () => {
         getMany: jest.fn(),
         getOne: jest.fn(),
         select: jest.fn().mockReturnThis(),
-      } as Partial<jest.Mocked<SelectQueryBuilder<ModelTest>>> as jest.Mocked<
-        SelectQueryBuilder<ModelTest>
-      >,
+      } as Partial<
+        jestMock.Mocked<SelectQueryBuilder<ModelTest>>
+      > as jestMock.Mocked<SelectQueryBuilder<ModelTest>>,
     );
 
     repositoryMock = {
       createQueryBuilder: jest.fn().mockReturnValue(queryBuilderMock),
       find: jest.fn(),
       findOne: jest.fn(),
-    } as Partial<jest.Mocked<Repository<ModelTest>>> as jest.Mocked<
+    } as Partial<jestMock.Mocked<Repository<ModelTest>>> as jestMock.Mocked<
       Repository<ModelTest>
     >;
 
     findQueryToFindQueryTypeOrmConverterMock = {
       convert: jest.fn(),
-    };
+    } as Partial<
+      jestMock.Mocked<QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>>
+    > as jestMock.Mocked<
+      QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
+    >;
 
     modelDbToModelConverter = {
       convert: jest.fn(),
@@ -86,11 +94,11 @@ describe(FindTypeOrmAdapter.name, () => {
         queryTypeOrmFixture = {};
 
         modelDbToModelConverter.convert.mockResolvedValueOnce(modelTestFixture);
-        (
-          findQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-            Promise<FindManyOptions<ModelTest>>
-          >
-        ).mockResolvedValueOnce(queryTypeOrmFixture);
+        findQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+          queryTypeOrmFixture as FindManyOptions<ModelTest> &
+            QueryBuilder<ModelTest> &
+            WhereExpressionBuilder,
+        );
         repositoryMock.find.mockResolvedValueOnce(modelTestFixtures);
 
         result = await findTypeOrmAdapter.find(queryTestFixture);
@@ -138,11 +146,11 @@ describe(FindTypeOrmAdapter.name, () => {
         queryTypeOrmFixture = {};
 
         modelDbToModelConverter.convert.mockResolvedValueOnce(modelTestFixture);
-        (
-          findQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-            Promise<FindManyOptions<ModelTest>>
-          >
-        ).mockResolvedValueOnce(queryTypeOrmFixture);
+        findQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+          queryTypeOrmFixture as FindManyOptions<ModelTest> &
+            QueryBuilder<ModelTest> &
+            WhereExpressionBuilder,
+        );
         repositoryMock.find.mockResolvedValueOnce(modelTestFixtures);
 
         await findTypeOrmAdapter.find(queryTestFixture);
@@ -173,11 +181,13 @@ describe(FindTypeOrmAdapter.name, () => {
         };
 
         modelDbToModelConverter.convert.mockResolvedValueOnce(modelTestFixture);
-        (
-          findQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-            Promise<QueryBuilder<ModelTest> & WhereExpressionBuilder>
-          >
-        ).mockResolvedValueOnce(queryBuilderMock);
+        findQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+          queryBuilderMock as jestMock.Mocked<
+            FindManyOptions<ModelTest> &
+              SelectQueryBuilder<ModelTest> &
+              WhereExpressionBuilder
+          >,
+        );
         queryBuilderMock.getMany.mockResolvedValueOnce(modelTestFixtures);
 
         await findTypeOrmAdapter.find(queryTestFixture);
@@ -208,11 +218,11 @@ describe(FindTypeOrmAdapter.name, () => {
         };
         queryTypeOrmFixture = {};
 
-        (
-          findQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-            Promise<FindManyOptions<ModelTest>>
-          >
-        ).mockResolvedValueOnce(queryTypeOrmFixture);
+        findQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+          queryTypeOrmFixture as FindManyOptions<ModelTest> &
+            QueryBuilder<ModelTest> &
+            WhereExpressionBuilder,
+        );
         repositoryMock.findOne.mockResolvedValueOnce(modelTestFixture);
 
         result = await findTypeOrmAdapter.findOne(queryTestFixture);
@@ -263,11 +273,11 @@ describe(FindTypeOrmAdapter.name, () => {
         queryTypeOrmFixture = {};
 
         modelDbToModelConverter.convert.mockResolvedValueOnce(modelTestFixture);
-        (
-          findQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-            Promise<FindManyOptions<ModelTest>>
-          >
-        ).mockResolvedValueOnce(queryTypeOrmFixture);
+        findQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+          queryTypeOrmFixture as FindManyOptions<ModelTest> &
+            QueryBuilder<ModelTest> &
+            WhereExpressionBuilder,
+        );
         repositoryMock.findOne.mockResolvedValueOnce(modelTestFixture);
 
         result = await findTypeOrmAdapter.findOne(queryTestFixture);
@@ -316,11 +326,13 @@ describe(FindTypeOrmAdapter.name, () => {
           fooValue: 'bar',
         };
 
-        (
-          findQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-            Promise<QueryBuilder<ModelTest> & WhereExpressionBuilder>
-          >
-        ).mockResolvedValueOnce(queryBuilderMock);
+        findQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+          queryBuilderMock as jestMock.Mocked<
+            FindManyOptions<ModelTest> &
+              SelectQueryBuilder<ModelTest> &
+              WhereExpressionBuilder
+          >,
+        );
         queryBuilderMock.getOne.mockResolvedValueOnce(modelTestFixture);
 
         result = await findTypeOrmAdapter.findOne(queryTestFixture);
@@ -366,11 +378,13 @@ describe(FindTypeOrmAdapter.name, () => {
           fooValue: 'bar',
         };
 
-        (
-          findQueryToFindQueryTypeOrmConverterMock.convert as jest.Mock<
-            Promise<QueryBuilder<ModelTest> & WhereExpressionBuilder>
-          >
-        ).mockResolvedValueOnce(queryBuilderMock);
+        findQueryToFindQueryTypeOrmConverterMock.convert.mockResolvedValueOnce(
+          queryBuilderMock as jestMock.Mocked<
+            FindManyOptions<ModelTest> &
+              SelectQueryBuilder<ModelTest> &
+              WhereExpressionBuilder
+          >,
+        );
         queryBuilderMock.getOne.mockResolvedValueOnce(modelTestFixture);
         modelDbToModelConverter.convert.mockResolvedValueOnce(modelTestFixture);
 

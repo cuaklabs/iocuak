@@ -2,6 +2,10 @@ import 'reflect-metadata';
 
 import path from 'path';
 
+import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import * as jestMock from 'jest-mock';
+
 import {
   Column,
   ColumnType,
@@ -11,10 +15,12 @@ import {
   FindManyOptions,
   Not,
   PrimaryColumn,
+  QueryBuilder,
   QueryRunner,
   Repository,
   Table,
   TableColumn,
+  WhereExpressionBuilder,
 } from 'typeorm';
 
 import { QueryToFindQueryTypeOrmConverter } from '../../converter/typeorm/QueryToFindQueryTypeOrmConverter';
@@ -104,9 +110,8 @@ describe(DeleteTypeOrmAdapter.name, () => {
   let queryRunner: QueryRunner;
 
   let modelTestRepository: Repository<ModelTest>;
-  let queryToQueryTypeOrmConverter: QueryToFindQueryTypeOrmConverter<
-    ModelTest,
-    QueryTest
+  let queryToQueryTypeOrmConverter: jestMock.Mocked<
+    QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
   >;
 
   let deleteTypeOrmAdapter: DeleteTypeOrmAdapter<ModelTest, QueryTest>;
@@ -148,7 +153,11 @@ describe(DeleteTypeOrmAdapter.name, () => {
     modelTestRepository = datasource.getRepository(ModelTest);
     queryToQueryTypeOrmConverter = {
       convert: jest.fn(),
-    };
+    } as Partial<
+      jestMock.Mocked<QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>>
+    > as jestMock.Mocked<
+      QueryToFindQueryTypeOrmConverter<ModelTest, QueryTest>
+    >;
 
     deleteTypeOrmAdapter = new DeleteTypeOrmAdapter<ModelTest, QueryTest>(
       modelTestRepository,
@@ -180,11 +189,11 @@ describe(DeleteTypeOrmAdapter.name, () => {
             },
           };
 
-          (
-            queryToQueryTypeOrmConverter.convert as jest.Mock<
-              Promise<FindManyOptions<ModelTest>>
-            >
-          ).mockResolvedValueOnce(queryTypeOrmFixture);
+          queryToQueryTypeOrmConverter.convert.mockResolvedValueOnce(
+            queryTypeOrmFixture as FindManyOptions<ModelTest> &
+              QueryBuilder<ModelTest> &
+              WhereExpressionBuilder,
+          );
 
           await deleteTypeOrmAdapter.delete(queryTest);
         });
@@ -230,11 +239,11 @@ describe(DeleteTypeOrmAdapter.name, () => {
             },
           };
 
-          (
-            queryToQueryTypeOrmConverter.convert as jest.Mock<
-              Promise<FindManyOptions<ModelTest>>
-            >
-          ).mockResolvedValueOnce(queryTypeOrmFixture);
+          queryToQueryTypeOrmConverter.convert.mockResolvedValueOnce(
+            queryTypeOrmFixture as FindManyOptions<ModelTest> &
+              QueryBuilder<ModelTest> &
+              WhereExpressionBuilder,
+          );
 
           await deleteTypeOrmAdapter.delete(queryTest);
         });
