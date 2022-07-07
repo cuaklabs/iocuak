@@ -1,8 +1,7 @@
-import { isPromiseLike } from '@cuaklabs/cuaktask';
-
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { isFunction } from '../../../common/utils/isFunction';
+import { isPromiseLike } from '../../../common/utils/isPromiseLike';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';

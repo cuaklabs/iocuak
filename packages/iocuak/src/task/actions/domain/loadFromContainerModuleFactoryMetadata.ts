@@ -1,6 +1,5 @@
-import * as cuaktask from '@cuaklabs/cuaktask';
-
 import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { isPromiseLike } from '../../../common/utils/isPromiseLike';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleFactoryMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleFactoryMetadata';
 import { TaskContext } from '../../models/domain/TaskContext';
@@ -20,7 +19,7 @@ export function loadFromContainerModuleFactoryMetadata(
   const containerModule: ContainerModule | Promise<ContainerModule> =
     metadata.factory(...instances);
 
-  if (cuaktask.isPromiseLike(containerModule)) {
+  if (isPromiseLike(containerModule)) {
     return loadModuleAsync(containerModule, context);
   } else {
     containerModule.load(
