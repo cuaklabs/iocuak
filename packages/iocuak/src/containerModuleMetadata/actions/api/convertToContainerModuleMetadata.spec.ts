@@ -6,6 +6,8 @@ jest.mock('../../../containerModule/utils/api/convertToContainerModule');
 jest.mock('../../../containerModule/utils/api/convertToContainerModuleAsync');
 
 import { BindingService } from '../../../binding/services/domain/BindingService';
+import { ClassElementServiceIdMetadataApi } from '../../../classMetadata/models/api/ClassElementServiceIdMetadataApi';
+import { ClassElementTagMetadataApi } from '../../../classMetadata/models/api/ClassElementTagMetadataApi';
 import { ClassElementMetadata } from '../../../classMetadata/models/domain/ClassElementMetadata';
 import { ClassElementMetadataType } from '../../../classMetadata/models/domain/ClassElementMetadataType';
 import { Newable } from '../../../common/models/domain/Newable';
@@ -477,12 +479,12 @@ describe(convertToContainerModuleMetadata.name, () => {
     });
   });
 
-  describe('having a ContainerModuleFactoryMetadataApi with injects', () => {
+  describe('having a ContainerModuleFactoryMetadataApi with ServiceId injects', () => {
     let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
 
     beforeAll(() => {
       containerModuleFactoryMetadataApiMock =
-        ContainerModuleMetadataApiMocks.withInjects;
+        ContainerModuleMetadataApiMocks.withInjectsServiceId;
     });
 
     describe('when called', () => {
@@ -505,6 +507,100 @@ describe(convertToContainerModuleMetadata.name, () => {
           (serviceId: ServiceId): ClassElementMetadata => ({
             type: ClassElementMetadataType.serviceId,
             value: serviceId,
+          }),
+        );
+
+        const expected: ContainerModuleMetadata = {
+          factory: expect.any(
+            Function,
+          ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
+          injects: expectedInjects,
+          type: ContainerModuleMetadataType.factory,
+        };
+
+        expect(result).toStrictEqual(expected);
+      });
+    });
+  });
+
+  describe('having a ContainerModuleFactoryMetadataApi with ClassElementServiceIdMetadata injects', () => {
+    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
+
+    beforeAll(() => {
+      containerModuleFactoryMetadataApiMock =
+        ContainerModuleMetadataApiMocks.withInjectsClassElementServiceIdMetadata;
+    });
+
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        result = convertToContainerModuleMetadata(
+          containerModuleFactoryMetadataApiMock,
+        );
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should return a ContainerModuleMetadata', () => {
+        const expectedInjects: ClassElementMetadata[] = (
+          containerModuleFactoryMetadataApiMock.injects as ClassElementServiceIdMetadataApi[]
+        ).map(
+          (
+            classElementMetadataApi: ClassElementServiceIdMetadataApi,
+          ): ClassElementMetadata => ({
+            type: ClassElementMetadataType.serviceId,
+            value: classElementMetadataApi.value,
+          }),
+        );
+
+        const expected: ContainerModuleMetadata = {
+          factory: expect.any(
+            Function,
+          ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
+          injects: expectedInjects,
+          type: ContainerModuleMetadataType.factory,
+        };
+
+        expect(result).toStrictEqual(expected);
+      });
+    });
+  });
+
+  describe('having a ContainerModuleFactoryMetadataApi with ClassElementTagMetadata injects', () => {
+    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
+
+    beforeAll(() => {
+      containerModuleFactoryMetadataApiMock =
+        ContainerModuleMetadataApiMocks.withInjectsClassElementTagMetadata;
+    });
+
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        result = convertToContainerModuleMetadata(
+          containerModuleFactoryMetadataApiMock,
+        );
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should return a ContainerModuleMetadata', () => {
+        const expectedInjects: ClassElementMetadata[] = (
+          containerModuleFactoryMetadataApiMock.injects as ClassElementTagMetadataApi[]
+        ).map(
+          (
+            classElementMetadataApi: ClassElementTagMetadataApi,
+          ): ClassElementMetadata => ({
+            type: ClassElementMetadataType.tag,
+            value: classElementMetadataApi.value,
           }),
         );
 

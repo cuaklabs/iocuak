@@ -5,9 +5,9 @@ import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBi
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
+import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
-import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/utils/api/convertToContainerModuleMetadata';
 import { createInstance } from '../../../task/actions/domain/createInstance';
 import { createInstanceFromBinding } from '../../../task/actions/domain/createInstanceFromBinding';
 import { createInstancesByTag } from '../../../task/actions/domain/createInstancesByTag';
