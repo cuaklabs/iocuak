@@ -1,6 +1,9 @@
 import { BindingService } from '../../../binding/services/domain/BindingService';
+import { ClassElementMetadataApi } from '../../../classMetadata/models/api/ClassElementMetadataApi';
 import { ClassElementMetadata } from '../../../classMetadata/models/domain/ClassElementMetadata';
 import { ClassElementMetadataType } from '../../../classMetadata/models/domain/ClassElementMetadataType';
+import { convertToClassElementMetadata } from '../../../classMetadata/utils/api/convertToClassElementMetadata';
+import { isClassElementMetadataApi } from '../../../classMetadata/utils/api/isClassElementMetadataApi';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { isFunction } from '../../../common/utils/isFunction';
 import { isPromiseLike } from '../../../common/utils/isPromiseLike';
@@ -94,10 +97,6 @@ function convertToContainerModuleMetadataArray(
 function convertToContainerModuleFactoryMetadata<TArgs extends unknown[]>(
   containerModuleFactoryMetadataApi: ContainerModuleFactoryMetadataApi<TArgs>,
 ): ContainerModuleFactoryMetadata<TArgs> {
-  const containerModuleFactoryMetadataInjects: ServiceId[] = [
-    ...(containerModuleFactoryMetadataApi.injects ?? []),
-  ];
-
   const containerModuleFactoryMetadata: ContainerModuleFactoryMetadata<TArgs> =
     {
       factory: convertToContainerModuleMetadataFactory(
@@ -106,16 +105,40 @@ function convertToContainerModuleFactoryMetadata<TArgs extends unknown[]>(
       imports: convertToContainerModuleMetadataArray(
         containerModuleFactoryMetadataApi.imports,
       ),
-      injects: containerModuleFactoryMetadataInjects.map(
-        (serviceId: ServiceId): ClassElementMetadata => ({
-          type: ClassElementMetadataType.serviceId,
-          value: serviceId,
-        }),
+      injects: convertInjectsToClassElementMetadata(
+        containerModuleFactoryMetadataApi,
       ),
       type: ContainerModuleMetadataType.factory,
     };
 
   return containerModuleFactoryMetadata;
+}
+
+function convertInjectsToClassElementMetadata<TArgs extends unknown[]>(
+  containerModuleFactoryMetadataApi: ContainerModuleFactoryMetadataApi<TArgs>,
+): ClassElementMetadata[] {
+  const containerModuleFactoryMetadataInjects: (
+    | ServiceId
+    | ClassElementMetadataApi
+  )[] = [...(containerModuleFactoryMetadataApi.injects ?? [])];
+
+  const classElementMetadataArray: ClassElementMetadata[] =
+    containerModuleFactoryMetadataInjects.map(
+      (
+        serviceIdOrClassElementMetadata: ServiceId | ClassElementMetadataApi,
+      ): ClassElementMetadata => {
+        if (isClassElementMetadataApi(serviceIdOrClassElementMetadata)) {
+          return convertToClassElementMetadata(serviceIdOrClassElementMetadata);
+        } else {
+          return {
+            type: ClassElementMetadataType.serviceId,
+            value: serviceIdOrClassElementMetadata,
+          };
+        }
+      },
+    );
+
+  return classElementMetadataArray;
 }
 
 function convertToContainerModuleMetadataFactory<TArgs extends unknown[]>(

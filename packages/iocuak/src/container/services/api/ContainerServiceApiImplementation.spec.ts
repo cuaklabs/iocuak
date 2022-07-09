@@ -4,7 +4,7 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock(
-  '../../../containerModuleMetadata/utils/api/convertToContainerModuleMetadata',
+  '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata',
 );
 jest.mock('../../../task/actions/domain/createInstance');
 jest.mock('../../../task/actions/domain/createInstancesByTag');
@@ -22,9 +22,9 @@ import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBi
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
+import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
-import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/utils/api/convertToContainerModuleMetadata';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { createInstance } from '../../../task/actions/domain/createInstance';
 import { createInstanceFromBinding } from '../../../task/actions/domain/createInstanceFromBinding';
