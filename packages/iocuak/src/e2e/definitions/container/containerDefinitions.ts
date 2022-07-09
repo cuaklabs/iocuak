@@ -182,6 +182,14 @@ function isCalledOnceWith(
   chai.expect(spy).to.have.been.calledOnceWith(...constructorArgumentMatchers);
 }
 
+function isClassElementMetadataApi(
+  value: unknown,
+): value is ClassElementMetadataApi {
+  return Object.values(ClassElementMetadatApiType).includes(
+    (value as ClassElementMetadataApi).type,
+  );
+}
+
 function isContainerModuleMetadataInitialized(
   container: ContainerApi,
   containerModuleMetadataParameter: ContainerModuleMetadataParameter,
@@ -203,7 +211,15 @@ function isContainerModuleMetadataInitialized(
 
     const constructorMetadataBindings: (BindingApi | undefined)[] = (
       containerModuleMetadata.injects ?? []
-    ).map((serviceId: ServiceId) => getBinding(container, serviceId));
+    ).map(
+      (serviceIdOrClassElementMetadata: ServiceId | ClassElementMetadataApi) =>
+        isClassElementMetadataApi(serviceIdOrClassElementMetadata)
+          ? getBindingFromClassElementMetadata(
+              container,
+              serviceIdOrClassElementMetadata,
+            )
+          : getBinding(container, serviceIdOrClassElementMetadata),
+    );
 
     isCalledOnceWith(
       constructorMetadataBindings,
