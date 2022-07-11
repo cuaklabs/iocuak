@@ -1,4 +1,4 @@
-export enum ClassElementMetadatApiType {
+export enum ClassElementMetadataApiType {
   serviceId = 'serviceId',
   tag = 'tag',
 }

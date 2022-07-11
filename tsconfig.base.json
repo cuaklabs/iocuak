@@ -1,13 +1,15 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["ES2022"],
     "module": "CommonJS",
-    "moduleResolution": "Node16",
+    "moduleResolution": "nodenext",
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -16,6 +18,7 @@
     "paths": {
       "@cuaklabs/iocuak": ["./packages/iocuak"],
       "@cuaklabs/iocuak-benchmark": ["./packages/iocuak-benchmark"],
+      "@cuaklabs/iocuak-e2e": ["./packages/iocuak-e2e"],
       "@cuaklabs/porygon": ["./packages/porygon"],
       "@cuaklabs/porygon-typeorm": ["./packages/porygon-typeorm"]
     },

@@ -2,7 +2,7 @@ import { jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-import { ClassElementMetadatApiType } from '../../../../classMetadata/models/api/ClassElementMetadatApiType';
+import { ClassElementMetadataApiType } from '../../../../classMetadata/models/api/ClassElementMetadatApiType';
 import { ContainerModuleClassMetadataApi } from '../../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../../models/api/ContainerModuleFactoryMetadataApi';
 import { ContainerModuleMetadataApi } from '../../../models/api/ContainerModuleMetadataApi';
@@ -46,7 +46,7 @@ export class ContainerModuleMetadataApiMocks {
       ...ContainerModuleMetadataApiMocks.anyContainerModuleFactoryMetadataApi,
       injects: [
         {
-          type: ClassElementMetadatApiType.serviceId,
+          type: ClassElementMetadataApiType.serviceId,
           value: 'service-id',
         },
       ],
@@ -60,7 +60,7 @@ export class ContainerModuleMetadataApiMocks {
       ...ContainerModuleMetadataApiMocks.anyContainerModuleFactoryMetadataApi,
       injects: [
         {
-          type: ClassElementMetadatApiType.tag,
+          type: ClassElementMetadataApiType.tag,
           value: 'tag',
         },
       ],

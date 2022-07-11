@@ -1,10 +1,10 @@
 import { ClassElementMetadataApi } from '../../models/api/ClassElementMetadataApi';
-import { ClassElementMetadatApiType } from '../../models/api/ClassElementMetadatApiType';
+import { ClassElementMetadataApiType } from '../../models/api/ClassElementMetadatApiType';
 
 export function isClassElementMetadataApi(
   value: unknown,
 ): value is ClassElementMetadataApi {
-  return Object.values(ClassElementMetadatApiType).includes(
+  return Object.values(ClassElementMetadataApiType).includes(
     (value as ClassElementMetadataApi).type,
   );
 }

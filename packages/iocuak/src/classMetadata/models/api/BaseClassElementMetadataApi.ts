@@ -1,7 +1,7 @@
-import { ClassElementMetadatApiType } from './ClassElementMetadatApiType';
+import { ClassElementMetadataApiType } from './ClassElementMetadatApiType';
 
 export interface BaseClassElementMetadataApi<
-  TType extends ClassElementMetadatApiType,
+  TType extends ClassElementMetadataApiType,
 > {
   type: TType;
 }

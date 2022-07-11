@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ClassElementMetadatApiType } from '../../models/api/ClassElementMetadatApiType';
+import { ClassElementMetadataApiType } from '../../models/api/ClassElementMetadatApiType';
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { ClassElementMetadataType } from '../../models/domain/ClassElementMetadataType';
 import { ClassMetadata } from '../../models/domain/ClassMetadata';
@@ -34,7 +34,7 @@ describe(convertToClassMetadataApi.name, () => {
       classMetadataApiFixture = {
         constructorArguments: [
           {
-            type: ClassElementMetadatApiType.serviceId,
+            type: ClassElementMetadataApiType.serviceId,
             value: 'ctor-first-service-id',
           },
         ],
@@ -42,7 +42,7 @@ describe(convertToClassMetadataApi.name, () => {
           [
             'foo',
             {
-              type: ClassElementMetadatApiType.serviceId,
+              type: ClassElementMetadataApiType.serviceId,
               value: Symbol.for('bar'),
             },
           ],

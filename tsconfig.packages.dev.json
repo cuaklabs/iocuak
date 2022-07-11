@@ -8,6 +8,9 @@
       "path": "./packages/iocuak-benchmark/tsconfig.dev.json"
     },
     {
+      "path": "./packages/iocuak-e2e/tsconfig.dev.json"
+    },
+    {
       "path": "./packages/porygon/tsconfig.dev.json"
     },
     {
