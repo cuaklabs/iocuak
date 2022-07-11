@@ -9,7 +9,7 @@ import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
 import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
 import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { ClassElementMetadataApi } from '../../../classMetadata/models/api/ClassElementMetadataApi';
-import { ClassElementMetadatApiType } from '../../../classMetadata/models/api/ClassElementMetadatApiType';
+import { ClassElementMetadataApiType } from '../../../classMetadata/models/api/ClassElementMetadatApiType';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
@@ -150,7 +150,7 @@ function getBindingFromClassElementMetadata(
   container: ContainerApi,
   classElementMetadataApi: ClassElementMetadataApi,
 ): BindingApi | undefined {
-  if (classElementMetadataApi.type === ClassElementMetadatApiType.serviceId) {
+  if (classElementMetadataApi.type === ClassElementMetadataApiType.serviceId) {
     return getBinding(container, classElementMetadataApi.value);
   } else {
     throw new Error('Unexpected non service metadata');
@@ -185,7 +185,7 @@ function isCalledOnceWith(
 function isClassElementMetadataApi(
   value: unknown,
 ): value is ClassElementMetadataApi {
-  return Object.values(ClassElementMetadatApiType).includes(
+  return Object.values(ClassElementMetadataApiType).includes(
     (value as ClassElementMetadataApi).type,
   );
 }

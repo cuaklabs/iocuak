@@ -1,5 +1,5 @@
 import { ClassElementMetadataApi } from '../../models/api/ClassElementMetadataApi';
-import { ClassElementMetadatApiType } from '../../models/api/ClassElementMetadatApiType';
+import { ClassElementMetadataApiType } from '../../models/api/ClassElementMetadatApiType';
 import { ClassElementMetadata } from '../../models/domain/ClassElementMetadata';
 import { ClassElementMetadataType } from '../../models/domain/ClassElementMetadataType';
 
@@ -9,13 +9,13 @@ export function convertToClassElementMetadata(
   let classElementMetadata: ClassElementMetadata;
 
   switch (classElementMetadataApi.type) {
-    case ClassElementMetadatApiType.serviceId:
+    case ClassElementMetadataApiType.serviceId:
       classElementMetadata = {
         type: ClassElementMetadataType.serviceId,
         value: classElementMetadataApi.value,
       };
       break;
-    case ClassElementMetadatApiType.tag:
+    case ClassElementMetadataApiType.tag:
       classElementMetadata = {
         type: ClassElementMetadataType.tag,
         value: classElementMetadataApi.value,

@@ -1,6 +1,6 @@
 import { mapIterable } from '../../../common/utils/mapIterable';
 import { ClassElementMetadataApi } from '../../models/api/ClassElementMetadataApi';
-import { ClassElementMetadatApiType } from '../../models/api/ClassElementMetadatApiType';
+import { ClassElementMetadataApiType } from '../../models/api/ClassElementMetadatApiType';
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { ClassElementMetadata } from '../../models/domain/ClassElementMetadata';
 import { ClassElementMetadataType } from '../../models/domain/ClassElementMetadataType';
@@ -41,12 +41,12 @@ function classElementMetadataToClassElementMetadataApi(
   switch (classElementMetadata.type) {
     case ClassElementMetadataType.serviceId:
       return {
-        type: ClassElementMetadatApiType.serviceId,
+        type: ClassElementMetadataApiType.serviceId,
         value: classElementMetadata.value,
       };
     case ClassElementMetadataType.tag:
       return {
-        type: ClassElementMetadatApiType.tag,
+        type: ClassElementMetadataApiType.tag,
         value: classElementMetadata.value,
       };
   }
