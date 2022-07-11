@@ -18,6 +18,7 @@
     "paths": {
       "@cuaklabs/iocuak": ["./packages/iocuak"],
       "@cuaklabs/iocuak-benchmark": ["./packages/iocuak-benchmark"],
+      "@cuaklabs/iocuak-e2e": ["./packages/iocuak-e2e"],
       "@cuaklabs/porygon": ["./packages/porygon"],
       "@cuaklabs/porygon-typeorm": ["./packages/porygon-typeorm"]
     },

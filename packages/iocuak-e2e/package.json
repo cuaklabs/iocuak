@@ -1,0 +1,25 @@
+{
+  "name": "@cuaklabs/iocuak-e2e",
+  "version": "0.0.1",
+  "description": "e2e test for iocuak",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/iocuak.git"
+  },
+  "keywords": [],
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/iocuak/issues"
+  },
+  "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak-e2e#readme",
+  "dependencies": {
+    "@cuaklabs/iocuak": "workspace:../iocuak",
+    "reflect-metadata": "0.1.13"
+  },
+  "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
+  "publishConfig": {
+    "access": "public"
+  }
+}
