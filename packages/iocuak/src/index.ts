@@ -43,10 +43,8 @@ export type {
   BindingApi as Binding,
   BindingServiceApi as BindingService,
   BindingTag,
-  BindingTypeApi as BindingType,
   BindValueOptionsApi as BindValueOptions,
   ClassElementMetadataApi as ClassElementMetadata,
-  ClassElementMetadataApiType as ClassElementMetadataType,
   ClassElementServiceIdMetadataApi as ClassElementServiceIdMetadata,
   ClassElementTagMetadataApi as ClassElementTagMetadata,
   ClassMetadataApi as ClassMetadata,
@@ -70,6 +68,8 @@ export type {
 
 export {
   BindingScopeApi as BindingScope,
+  BindingTypeApi as BindingType,
+  ClassElementMetadataApiType as ClassElementMetadataType,
   ContainerApi as Container,
   inject,
   injectable,
