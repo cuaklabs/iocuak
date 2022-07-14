@@ -1,0 +1,31 @@
+{
+  "root": "packages/porygon",
+  "sourceRoot": "packages/porygon/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "dependsOn": ["^build"],
+      "executor": "nx:run-commands",
+      "inputs": ["{projectRoot}/src/**/*.ts"],
+      "outputs": ["{projectRoot}/lib"],
+      "options": {
+        "commands": [
+          "pnpm run build:clean",
+          "pnpm run build"
+        ],
+        "cwd": "packages/porygon"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "inputs": ["{projectRoot}/src/**/*.ts"],
+      "outputs": [],
+      "options": {
+        "commands": [
+          "pnpm run lint ./packages/porygon"
+        ],
+        "cwd": "."
+      }
+    }
+  }
+}

@@ -25,10 +25,17 @@
     "typeorm": "^0.3.6"
   },
   "devDependencies": {
-    "sqlite3": "5.0.8"
+    "rimraf": "3.0.2",
+    "sqlite3": "5.0.8",
+    "typescript": "4.7.4"
   },
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "build:dev": "tsc --build tsconfig.dev.json",
+    "build:clean": "rimraf lib"
   }
 }
