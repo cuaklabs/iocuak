@@ -1,0 +1,19 @@
+{
+  "name": "@cuaklabs/eslint-config-iocuak",
+  "private": true,
+  "description": "common eslint config for iocuak monorepo packages",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/iocuak.git"
+  },
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/iocuak/issues"
+  },
+  "homepage": "https://github.com/cuaklabs/iocuak#readme",
+  "devDependencies": {
+    "eslint": "8.19.0"
+  }
+}
