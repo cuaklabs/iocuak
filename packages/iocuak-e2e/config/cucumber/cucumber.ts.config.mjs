@@ -1,23 +1,14 @@
 import { getBaseConfiguration } from './cucumber.config.base.mjs';
 
 /**
- * @param {string | undefined} packageName
- * @returns { string }
- */
-function getRequiredModulesPaths(packageName) {
-  return `packages/${packageName ?? '*'}/src/e2e/definitions/**/*.ts`;
-}
-
-/**
- * @param {string | undefined} packageName
  * @param {boolean} parallel
  * @returns {!import("@cucumber/cucumber/lib/configuration").IConfiguration}
  */
-function getConfiguration(packageName, parallel) {
+function getConfiguration(parallel) {
   /** @type {!import("@cucumber/cucumber/lib/configuration").IConfiguration} */
   const config = {
-    ...getBaseConfiguration(packageName, parallel),
-    require: [getRequiredModulesPaths(packageName)],
+    ...getBaseConfiguration(parallel),
+    require: ['src/definitions/**/*.ts'],
     requireModule: ['ts-node/register'],
   };
 
@@ -25,10 +16,10 @@ function getConfiguration(packageName, parallel) {
 }
 
 /** @type {import("@cucumber/cucumber/lib/configuration").IConfiguration} */
-const ci = getConfiguration(undefined, false);
+const ci = getConfiguration(false);
 
 /** @type {import("@cucumber/cucumber/lib/configuration").IConfiguration} */
-const defaultCucumberConfig = getConfiguration(undefined, true);
+const defaultCucumberConfig = getConfiguration(true);
 
 export default defaultCucumberConfig;
 
