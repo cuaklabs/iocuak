@@ -15,14 +15,6 @@
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
-    "paths": {
-      "@cuaklabs/eslint-config-iocuak": ["./packages/eslint-config-iocuak"],
-      "@cuaklabs/iocuak-benchmark": ["./packages/iocuak-benchmark"],
-      "@cuaklabs/iocuak-e2e": ["./packages/iocuak-e2e"],
-      "@cuaklabs/iocuak": ["./packages/iocuak"],
-      "@cuaklabs/porygon-typeorm": ["./packages/porygon-typeorm"],
-      "@cuaklabs/porygon": ["./packages/porygon"]
-    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
