@@ -9,7 +9,7 @@ const cpuCores = os.cpus().length;
 function getBaseConfiguration(parallel) {
   /** @type {!import("@cucumber/cucumber/lib/configuration").IConfiguration} */
   const config = {
-    paths: ['src/e2e/features/**/*.feature'],
+    paths: ['features/**/*.feature'],
     publishQuiet: true,
   };
 
