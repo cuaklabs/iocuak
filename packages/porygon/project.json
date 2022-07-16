@@ -17,14 +17,11 @@
       }
     },
     "lint": {
-      "executor": "nx:run-commands",
+      "executor": "@nrwl/linter:eslint",
       "inputs": ["{projectRoot}/src/**/*.ts"],
       "outputs": [],
       "options": {
-        "commands": [
-          "pnpm run lint ./packages/porygon"
-        ],
-        "cwd": "."
+        "lintFilePatterns": ["packages/porygon/src/**/*.ts"]
       }
     }
   }
