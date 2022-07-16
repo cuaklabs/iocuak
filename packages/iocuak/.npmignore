@@ -2,5 +2,3 @@
 **/*.spec.js.map
 **/*.ts
 !lib/**/*.d.ts
-lib/e2e/**/*
-src/e2e/**/*
