@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["ES2022"],
+    "module": "CommonJS",
+    "moduleResolution": "nodenext",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "paths": {
+      "@cuaklabs/eslint-config-iocuak": ["../eslint-config-iocuak"],
+      "@cuaklabs/iocuak-benchmark": ["../iocuak-benchmark"],
+      "@cuaklabs/iocuak-e2e": ["../iocuak-e2e"],
+      "@cuaklabs/iocuak": ["../iocuak"],
+      "@cuaklabs/porygon-typeorm": ["../porygon-typeorm"],
+      "@cuaklabs/porygon": ["../porygon"]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES2022"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@cuaklabs/typescript-config-iocuak",
+  "private": true,
+  "description": "common typescript config for iocuak monorepo packages",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/iocuak.git"
+  },
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/iocuak/issues"
+  },
+  "homepage": "https://github.com/cuaklabs/iocuak#readme"
+}
