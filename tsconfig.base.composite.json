@@ -1,7 +1,0 @@
-{
-  "$schema": "http://json.schemastore.org/tsconfig",
-  "extends": "@cuaklabs/typescript-config-iocuak/tsconfig.base.json",
-  "compilerOptions": {
-    "composite": true
-  }
-}
