@@ -1,13 +1,12 @@
 {
   "name": "@cuaklabs/iocuak-e2e",
-  "version": "0.0.1",
+  "private": true,
   "description": "e2e test for iocuak",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cuaklabs/iocuak.git"
   },
-  "keywords": [],
   "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
   "license": "MIT",
   "bugs": {
@@ -21,10 +20,6 @@
   "devDependencies": {
     "rimraf": "3.0.2",
     "typescript": "4.7.4"
-  },
-  "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
-  "publishConfig": {
-    "access": "public"
   },
   "scripts": {
     "build": "tsc --build tsconfig.json",

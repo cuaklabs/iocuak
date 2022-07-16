@@ -17,14 +17,11 @@
       }
     },
     "lint": {
-      "executor": "nx:run-commands",
+      "executor": "@nrwl/linter:eslint",
       "inputs": ["{projectRoot}/src/**/*.ts"],
       "outputs": [],
       "options": {
-        "commands": [
-          "pnpm run lint ./packages/iocuak-e2e"
-        ],
-        "cwd": "."
+        "lintFilePatterns": ["packages/iocuak-e2e/src/**/*.ts"]
       }
     }
   }
