@@ -25,6 +25,8 @@
   "scripts": {
     "build": "tsc --build tsconfig.json",
     "build:dev": "tsc --build tsconfig.dev.json",
-    "build:clean": "rimraf lib"
+    "build:clean": "rimraf lib",
+    "test:e2e": "cucumber-js --config=config/cucumber/cucumber.ts.config.mjs",
+    "test:e2e:js": "cucumber-js --config=config/cucumber/cucumber.js.config.mjs"
   }
 }
