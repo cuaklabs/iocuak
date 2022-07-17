@@ -28,7 +28,6 @@ describe(MetadataServiceApiImplementation.name, () => {
   beforeAll(() => {
     metadataServiceMock = {
       getBindingMetadata: jest.fn(),
-      getClassMetadata: jest.fn(),
     } as Partial<
       jestMock.Mocked<MetadataService>
     > as jestMock.Mocked<MetadataService>;
