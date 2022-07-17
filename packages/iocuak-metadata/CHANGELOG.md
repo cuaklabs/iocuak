@@ -23,7 +23,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Added `ClassMetadata`.
-- Added `getDEfaultClassMetadata`.
+- Added `getClassMetadata`.
+- Added `getDefaultClassMetadata`.
 - Added `getReflectMetadata`
 - Added `MetadataKey`.
 - Added `updateReflectMetadata`.
