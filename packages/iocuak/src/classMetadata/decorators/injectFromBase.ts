@@ -1,4 +1,5 @@
-import { Newable } from '../../common/models/domain/Newable';
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { getBaseType } from '../../utils/getBaseType';
 import { BaseClassMetadataExtensionApi } from '../models/api/BaseClassMetadataExtensionApi';
 import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionApi';

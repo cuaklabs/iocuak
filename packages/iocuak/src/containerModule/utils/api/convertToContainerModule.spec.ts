@@ -5,10 +5,9 @@ import * as jestMock from 'jest-mock';
 jest.mock('../../../container/utils/bind');
 jest.mock('../../../container/utils/bindToValue');
 
-import { BindingTag } from '../../../binding/models/domain/BindingTag';
+import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+
 import { BindingService } from '../../../binding/services/domain/BindingService';
-import { Newable } from '../../../common/models/domain/Newable';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
 import { bind } from '../../../container/utils/bind';
 import { bindToValue } from '../../../container/utils/bindToValue';
@@ -138,7 +137,7 @@ describe(convertToContainerModule.name, () => {
 
     describe('when result.load() is called and containerModuleApi.load() calls containerModuleBindingServiceApi.bindToValue()', () => {
       let serviceIdFixture: ServiceId;
-      let tagsFixture: BindingTag[];
+      let tagsFixture: Tag[];
       let valueFixture: unknown;
       let containerBindingServiceFixture: BindingService;
       let metadataServiceFixture: MetadataService;

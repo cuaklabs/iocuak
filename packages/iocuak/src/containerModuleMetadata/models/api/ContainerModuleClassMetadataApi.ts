@@ -1,4 +1,5 @@
-import { Newable } from '../../../common/models/domain/Newable';
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModuleMetadataBaseApi } from './ContainerModuleMetadataBaseApi';
 

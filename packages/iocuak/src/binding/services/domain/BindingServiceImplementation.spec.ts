@@ -2,10 +2,10 @@ import { beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
+
 import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
 import { Binding } from '../../models/domain/Binding';
-import { BindingTag } from '../../models/domain/BindingTag';
 import { BindingService } from './BindingService';
 import { BindingServiceImplementation } from './BindingServiceImplementation';
 
@@ -119,7 +119,7 @@ describe(BindingServiceImplementation.name, () => {
 
         beforeAll(() => {
           bindingFixture = TypeBindingFixtures.withTagsOne;
-          const [tag]: BindingTag[] = TypeBindingFixtures.withTagsOne.tags;
+          const [tag]: Tag[] = TypeBindingFixtures.withTagsOne.tags;
 
           parent = {
             getByTag: jest.fn().mockReturnValueOnce([bindingFixture]),
@@ -162,7 +162,7 @@ describe(BindingServiceImplementation.name, () => {
 
         beforeAll(() => {
           bindingFixture = TypeBindingFixtures.withTagsOne;
-          const [tag]: BindingTag[] = TypeBindingFixtures.withTagsOne.tags;
+          const [tag]: Tag[] = TypeBindingFixtures.withTagsOne.tags;
 
           parent = {
             getByTag: jest.fn().mockReturnValueOnce([bindingFixture]),
@@ -281,7 +281,7 @@ describe(BindingServiceImplementation.name, () => {
           new BindingServiceImplementation(parent);
 
         bindingFixture = TypeBindingFixtures.withTagsOne;
-        const [tag]: BindingTag[] = TypeBindingFixtures.withTagsOne.tags;
+        const [tag]: Tag[] = TypeBindingFixtures.withTagsOne.tags;
 
         containerBindingServiceImplementation.set(bindingFixture);
 
@@ -420,7 +420,7 @@ describe(BindingServiceImplementation.name, () => {
   describe('.set', () => {
     describe('having a bindingFixture with a tag', () => {
       let bindingFixture: Binding;
-      let tag: BindingTag;
+      let tag: Tag;
 
       beforeAll(() => {
         bindingFixture = TypeBindingFixtures.withTagsOne;

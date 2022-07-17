@@ -2,15 +2,14 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { Newable } from '../../common/models/domain/Newable';
-import { ServiceId } from '../../common/models/domain/ServiceId';
-import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
+import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import { MetadataKey } from '@cuaklabs/iocuak-metadata';
+
 import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
 import { TypeBindingFixtures } from '../fixtures/domain/TypeBindingFixtures';
 import { BindingScopeApi } from '../models/api/BindingScopeApi';
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { BindingScope } from '../models/domain/BindingScope';
-import { BindingTag } from '../models/domain/BindingTag';
 import { TypeBinding } from '../models/domain/TypeBinding';
 import { injectable } from './injectable';
 
@@ -150,7 +149,7 @@ describe(injectable.name, () => {
         ...TypeBindingFixtures.any,
         id: targetFixture,
         scope: BindingScope.transient,
-        tags: InjectableOptionsApiFixtures.withTags.tags as BindingTag[],
+        tags: InjectableOptionsApiFixtures.withTags.tags as Tag[],
         type: targetFixture,
       };
 
@@ -179,7 +178,7 @@ describe(injectable.name, () => {
         ...TypeBindingFixtures.any,
         id: targetFixture,
         scope: BindingScope.transient,
-        tags: [InjectableOptionsApiFixtures.withTag.tags as BindingTag],
+        tags: [InjectableOptionsApiFixtures.withTag.tags as Tag],
         type: targetFixture,
       };
 

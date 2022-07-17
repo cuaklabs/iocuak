@@ -1,10 +1,9 @@
-import { Newable } from '../../common/models/domain/Newable';
-import { ServiceId } from '../../common/models/domain/ServiceId';
-import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
+import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import { MetadataKey } from '@cuaklabs/iocuak-metadata';
+
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { InjectableOptionsApi } from '../models/api/InjectableOptionsApi';
 import { BindingScope } from '../models/domain/BindingScope';
-import { BindingTag } from '../models/domain/BindingTag';
 import { BindingType } from '../models/domain/BindingType';
 import { TypeBinding } from '../models/domain/TypeBinding';
 import { getDefaultBindingScope } from '../utils/domain/getDefaultBindingScope';
@@ -39,10 +38,10 @@ function getBindingScope(options?: InjectableOptionsApi): BindingScope {
   return bindingScope;
 }
 
-function getTags(options?: InjectableOptionsApi): BindingTag[] {
-  const tagOrTags: BindingTag | BindingTag[] = options?.tags ?? [];
+function getTags(options?: InjectableOptionsApi): Tag[] {
+  const tagOrTags: Tag | Tag[] = options?.tags ?? [];
 
-  let tags: BindingTag[];
+  let tags: Tag[];
 
   if (Array.isArray(tagOrTags)) {
     tags = tagOrTags;

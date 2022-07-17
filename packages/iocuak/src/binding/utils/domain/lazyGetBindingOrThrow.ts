@@ -1,5 +1,5 @@
-import { Newable } from '../../../common/models/domain/Newable';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+
 import { isFunction } from '../../../common/utils/isFunction';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { stringifyServiceId } from '../../../utils/stringifyServiceId';

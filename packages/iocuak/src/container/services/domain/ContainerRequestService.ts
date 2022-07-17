@@ -1,4 +1,4 @@
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ServiceId } from '@cuaklabs/iocuak-common';
 
 export interface ContainerRequestService {
   end(requestId: symbol): void;

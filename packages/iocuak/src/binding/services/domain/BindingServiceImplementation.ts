@@ -1,14 +1,14 @@
+import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
+
 import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingService } from '../../../binding/services/domain/BindingService';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { chain } from '../../../common/utils/chain';
-import { BindingTag } from '../../models/domain/BindingTag';
 import { removeBindingDuplicates } from '../../utils/domain/removeBindingDuplicates';
 
 export class BindingServiceImplementation implements BindingService {
   readonly #parent: BindingService | undefined;
   readonly #serviceIdToBindingMap: Map<ServiceId, Binding>;
-  readonly #tagToBindingsMap: Map<BindingTag, Map<ServiceId, Binding>>;
+  readonly #tagToBindingsMap: Map<Tag, Map<ServiceId, Binding>>;
 
   constructor(parent?: BindingService) {
     this.#parent = parent;
@@ -30,10 +30,7 @@ export class BindingServiceImplementation implements BindingService {
     return binding;
   }
 
-  public getByTag(
-    tag: BindingTag,
-    removeDuplicates: boolean,
-  ): Iterable<Binding> {
+  public getByTag(tag: Tag, removeDuplicates: boolean): Iterable<Binding> {
     if (removeDuplicates) {
       const duplicatedServices: Iterable<Binding<unknown, unknown[]>> =
         this.getByTag(tag, false);
@@ -76,10 +73,10 @@ export class BindingServiceImplementation implements BindingService {
   ): void {
     this.#serviceIdToBindingMap.set(binding.id, binding as Binding);
 
-    this.#setBindingTags(binding as Binding);
+    this.#setTags(binding as Binding);
   }
 
-  #setBindingTags(binding: Binding): void {
+  #setTags(binding: Binding): void {
     for (const tag of binding.tags) {
       let tagBindings: Map<ServiceId, Binding> | undefined =
         this.#tagToBindingsMap.get(tag);

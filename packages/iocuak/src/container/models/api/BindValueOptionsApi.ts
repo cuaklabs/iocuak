@@ -1,8 +1,7 @@
-import { BindingTag } from '../../../binding/models/domain/BindingTag';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
 
 export interface BindValueOptionsApi {
   serviceId: ServiceId;
-  tags?: BindingTag | BindingTag[];
+  tags?: Tag | Tag[];
   value: unknown;
 }

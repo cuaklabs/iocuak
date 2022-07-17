@@ -1,4 +1,4 @@
-import { Newable } from '../../../common/models/domain/Newable';
+import { Newable } from '@cuaklabs/iocuak-common';
 
 export interface ClassMetadataExtensionApi {
   extendConstructorArguments?: boolean;

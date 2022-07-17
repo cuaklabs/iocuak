@@ -1,4 +1,5 @@
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ServiceId } from '@cuaklabs/iocuak-common';
+
 import { ContainerRequestService } from './ContainerRequestService';
 
 export class ContainerRequestServiceImplementation

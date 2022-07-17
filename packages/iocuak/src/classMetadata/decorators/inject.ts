@@ -1,6 +1,9 @@
-import { ServiceId } from '../../common/models/domain/ServiceId';
-import { ClassElementMetadataType } from '../models/domain/ClassElementMetadataType';
-import { ClassElementServiceIdMetadata } from '../models/domain/ClassElementServiceIdMetadata';
+import { ServiceId } from '@cuaklabs/iocuak-common';
+import {
+  ClassElementMetadataType,
+  ClassElementServiceIdMetadata,
+} from '@cuaklabs/iocuak-metadata';
+
 import { injectBase } from './injectBase';
 
 export function inject(

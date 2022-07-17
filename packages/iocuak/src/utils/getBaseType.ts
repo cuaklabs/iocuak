@@ -1,4 +1,5 @@
-import { Newable } from '../common/models/domain/Newable';
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { Prototype } from '../common/models/domain/Prototype';
 
 export function getBaseType<TInstance, TArgs extends unknown[]>(

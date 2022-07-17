@@ -6,13 +6,13 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./getReflectMetadata');
 
-import { Newable } from '../../../common/models/domain/Newable';
 import { getReflectMetadata } from './getReflectMetadata';
 import { updateReflectMetadata } from './updateReflectMetadata';
 
 describe(updateReflectMetadata.name, () => {
   describe('when called, and getReflectMetadata returns undefined', () => {
-    let targetFixture: Newable;
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    let targetFixture: Function;
     let metadataKeyFixture: unknown;
     let defaultValueFixture: unknown;
     let callbackMock: jestMock.Mock<(value: unknown) => unknown>;
@@ -66,7 +66,8 @@ describe(updateReflectMetadata.name, () => {
   });
 
   describe('when called, and getReflectMetadata returns metadata', () => {
-    let targetFixture: Newable;
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    let targetFixture: Function;
     let metadataFixture: unknown;
     let metadataKeyFixture: unknown;
     let defaultValueFixture: unknown;

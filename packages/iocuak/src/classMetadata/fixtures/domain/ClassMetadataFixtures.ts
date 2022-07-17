@@ -1,5 +1,7 @@
-import { ClassElementMetadataType } from '../../models/domain/ClassElementMetadataType';
-import { ClassMetadata } from '../../models/domain/ClassMetadata';
+import {
+  ClassElementMetadataType,
+  ClassMetadata,
+} from '@cuaklabs/iocuak-metadata';
 
 export class ClassMetadataFixtures {
   public static get any(): ClassMetadata {

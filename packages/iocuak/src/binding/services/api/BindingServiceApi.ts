@@ -1,5 +1,5 @@
-import { Newable } from '../../../common/models/domain/Newable';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+
 import { BindValueOptionsApi } from '../../../container/models/api/BindValueOptionsApi';
 import { BindingApi } from '../../models/api/BindingApi';
 

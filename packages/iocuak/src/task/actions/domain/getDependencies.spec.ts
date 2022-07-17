@@ -4,8 +4,9 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./getDependency');
 
+import { ClassMetadata } from '@cuaklabs/iocuak-metadata';
+
 import { ClassMetadataFixtures } from '../../../classMetadata/fixtures/domain/ClassMetadataFixtures';
-import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
 import { ServiceDependencies } from '../../models/domain/ServiceDependencies';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { getDependencies } from './getDependencies';

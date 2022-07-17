@@ -4,7 +4,8 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./injectBase');
 
-import { ServiceId } from '../../common/models/domain/ServiceId';
+import { ServiceId } from '@cuaklabs/iocuak-common';
+
 import { inject } from './inject';
 import { injectBase } from './injectBase';
 

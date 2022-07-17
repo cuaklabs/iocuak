@@ -1,10 +1,13 @@
+import { ServiceId } from '@cuaklabs/iocuak-common';
+import {
+  ClassElementMetadata,
+  ClassElementMetadataType,
+} from '@cuaklabs/iocuak-metadata';
+
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ClassElementMetadataApi } from '../../../classMetadata/models/api/ClassElementMetadataApi';
-import { ClassElementMetadata } from '../../../classMetadata/models/domain/ClassElementMetadata';
-import { ClassElementMetadataType } from '../../../classMetadata/models/domain/ClassElementMetadataType';
 import { convertToClassElementMetadata } from '../../../classMetadata/utils/api/convertToClassElementMetadata';
 import { isClassElementMetadataApi } from '../../../classMetadata/utils/api/isClassElementMetadataApi';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { isFunction } from '../../../common/utils/isFunction';
 import { isPromiseLike } from '../../../common/utils/isPromiseLike';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';

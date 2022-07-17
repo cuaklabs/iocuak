@@ -2,16 +2,18 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import {
+  ClassElementMetadata,
+  ClassElementMetadataType,
+  ClassMetadata,
+  getDefaultClassMetadata,
+  getReflectMetadata,
+  MetadataKey,
+} from '@cuaklabs/iocuak-metadata';
+
 import { inject } from '../../classMetadata/decorators/inject';
 import { injectFrom } from '../../classMetadata/decorators/injectFrom';
-import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
-import { getDefaultClassMetadata } from '../../classMetadata/utils/domain/getDefaultClassMetadata';
-import { Newable } from '../../common/models/domain/Newable';
-import { ServiceId } from '../../common/models/domain/ServiceId';
-import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
-import { getReflectMetadata } from '../../reflectMetadata/utils/domain/getReflectMetadata';
-import { ClassElementMetadata } from '../models/domain/ClassElementMetadata';
-import { ClassElementMetadataType } from '../models/domain/ClassElementMetadataType';
 
 describe(injectFrom.name, () => {
   describe('having a ClassMetadataExtensionApi with extendConstructorArguments false and extendProperties false', () => {

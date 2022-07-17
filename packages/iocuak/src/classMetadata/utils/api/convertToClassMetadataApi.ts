@@ -1,10 +1,13 @@
+import {
+  ClassElementMetadata,
+  ClassElementMetadataType,
+  ClassMetadata,
+} from '@cuaklabs/iocuak-metadata';
+
 import { mapIterable } from '../../../common/utils/mapIterable';
 import { ClassElementMetadataApi } from '../../models/api/ClassElementMetadataApi';
 import { ClassElementMetadataApiType } from '../../models/api/ClassElementMetadatApiType';
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
-import { ClassElementMetadata } from '../../models/domain/ClassElementMetadata';
-import { ClassElementMetadataType } from '../../models/domain/ClassElementMetadataType';
-import { ClassMetadata } from '../../models/domain/ClassMetadata';
 
 export function convertToClassMetadataApi(
   classMetadata: ClassMetadata,

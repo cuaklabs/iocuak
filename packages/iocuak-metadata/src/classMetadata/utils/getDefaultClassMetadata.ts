@@ -1,4 +1,4 @@
-import { ClassMetadata } from '../../models/domain/ClassMetadata';
+import { ClassMetadata } from '../models/ClassMetadata';
 
 export function getDefaultClassMetadata(): ClassMetadata {
   return {

@@ -2,18 +2,19 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
+jest.mock('@cuaklabs/iocuak-metadata');
+
+import { ServiceId } from '@cuaklabs/iocuak-common';
+import { ClassMetadata, getClassMetadata } from '@cuaklabs/iocuak-metadata';
+
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { BindingScope } from '../../../binding/models/domain/BindingScope';
 import { BindingType } from '../../../binding/models/domain/BindingType';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { ClassMetadataFixtures } from '../../../classMetadata/fixtures/domain/ClassMetadataFixtures';
-import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ServiceDependencies } from '../../models/domain/ServiceDependencies';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { TaskContextActions } from '../../models/domain/TaskContextActions';
-import { TaskContextServices } from '../../models/domain/TaskContextServices';
 import { createInstanceInTransientScope } from './createInstanceInTransientScope';
 
 describe(createInstanceInTransientScope.name, () => {
@@ -73,7 +74,6 @@ describe(createInstanceInTransientScope.name, () => {
         context: TaskContext,
       ) => ServiceDependencies
     >;
-    let metadataServiceMock: jestMock.Mocked<MetadataService>;
     let servicesInstantiatedSetMock: jestMock.Mocked<Set<ServiceId>>;
     let taskContextFixture: TaskContext;
 
@@ -97,6 +97,10 @@ describe(createInstanceInTransientScope.name, () => {
       classMetadataFixture =
         ClassMetadataFixtures.withConstructorArgumentsServiceAndPropertiesService;
 
+      (
+        getClassMetadata as jestMock.Mock<typeof getClassMetadata>
+      ).mockReturnValueOnce(classMetadataFixture);
+
       serviceDependenciesFixture = {
         constructorArguments: classMetadataFixture.constructorArguments.map(
           () => Symbol(),
@@ -107,12 +111,6 @@ describe(createInstanceInTransientScope.name, () => {
       getDependenciesMock = jest
         .fn<TaskContextActions['getDependencies']>()
         .mockReturnValueOnce(serviceDependenciesFixture);
-
-      metadataServiceMock = {
-        getClassMetadata: jest.fn().mockReturnValueOnce(classMetadataFixture),
-      } as Partial<
-        jestMock.Mocked<MetadataService>
-      > as jestMock.Mocked<MetadataService>;
 
       servicesInstantiatedSetMock = {
         add: jest.fn().mockReturnThis(),
@@ -126,9 +124,6 @@ describe(createInstanceInTransientScope.name, () => {
         actions: {
           getDependencies: getDependenciesMock,
         } as Partial<TaskContextActions> as TaskContextActions,
-        services: {
-          metadataService: metadataServiceMock,
-        } as Partial<TaskContextServices> as TaskContextServices,
         servicesInstantiatedSet: servicesInstantiatedSetMock,
       } as Partial<TaskContext> as TaskContext;
 
@@ -156,11 +151,9 @@ describe(createInstanceInTransientScope.name, () => {
       );
     });
 
-    it('should call context.services.metadataService.getClassMetadata()', () => {
-      expect(metadataServiceMock.getClassMetadata).toHaveBeenCalledTimes(1);
-      expect(metadataServiceMock.getClassMetadata).toHaveBeenCalledWith(
-        typeBindingFixture.type,
-      );
+    it('should call getClassMetadata()', () => {
+      expect(getClassMetadata).toHaveBeenCalledTimes(1);
+      expect(getClassMetadata).toHaveBeenCalledWith(typeBindingFixture.type);
     });
 
     it('should call context.actions.getDependencies()', () => {

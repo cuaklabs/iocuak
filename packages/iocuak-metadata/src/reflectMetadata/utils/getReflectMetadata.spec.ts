@@ -2,7 +2,6 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { Newable } from '../../../common/models/domain/Newable';
 import { getReflectMetadata } from './getReflectMetadata';
 
 describe(getReflectMetadata.name, () => {
@@ -26,7 +25,8 @@ describe(getReflectMetadata.name, () => {
     beforeAll(() => {
       metadataFixture = 'sample-metadata';
 
-      const targetFixture: Newable = class {};
+      // eslint-disable-next-line @typescript-eslint/ban-types
+      const targetFixture: Function = class {};
       const metadataKeyFixture: unknown = 'sample-key';
 
       Reflect.defineMetadata(

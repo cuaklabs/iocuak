@@ -1,4 +1,4 @@
-import { ServiceId } from '../common/models/domain/ServiceId';
+import { ServiceId } from '@cuaklabs/iocuak-common';
 
 export function stringifyServiceId(serviceId: ServiceId): string {
   switch (typeof serviceId) {

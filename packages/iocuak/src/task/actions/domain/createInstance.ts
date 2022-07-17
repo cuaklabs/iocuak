@@ -1,5 +1,6 @@
+import { ServiceId } from '@cuaklabs/iocuak-common';
+
 import { Binding } from '../../../binding/models/domain/Binding';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { createInstanceFromBinding } from './createInstanceFromBinding';
 import { getBinding } from './getBinding';

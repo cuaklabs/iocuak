@@ -1,4 +1,5 @@
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ServiceId } from '@cuaklabs/iocuak-common';
+
 import { BaseClassElementMetadataApi } from './BaseClassElementMetadataApi';
 import { ClassElementMetadataApiType } from './ClassElementMetadatApiType';
 

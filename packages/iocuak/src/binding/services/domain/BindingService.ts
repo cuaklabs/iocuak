@@ -1,13 +1,13 @@
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
+
 import { Binding } from '../../models/domain/Binding';
-import { BindingTag } from '../../models/domain/BindingTag';
 
 export interface BindingService {
   get<TInstance, TArgs extends unknown[]>(
     serviceId: ServiceId,
   ): Binding<TInstance, TArgs> | undefined;
 
-  getByTag(tag: BindingTag, removeDuplicates: boolean): Iterable<Binding>;
+  getByTag(tag: Tag, removeDuplicates: boolean): Iterable<Binding>;
 
   getAll(): Map<ServiceId, Binding>;
 

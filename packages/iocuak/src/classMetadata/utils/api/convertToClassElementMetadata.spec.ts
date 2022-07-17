@@ -1,11 +1,14 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
+import {
+  ClassElementMetadataType,
+  ClassElementServiceIdMetadata,
+  ClassElementTagMetadata,
+} from '@cuaklabs/iocuak-metadata';
+
 import { ClassElementMetadataApiFixtures } from '../../fixtures/api/ClassElementMetadataApiFixtures';
 import { ClassElementServiceIdMetadataApi } from '../../models/api/ClassElementServiceIdMetadataApi';
 import { ClassElementTagMetadataApi } from '../../models/api/ClassElementTagMetadataApi';
-import { ClassElementMetadataType } from '../../models/domain/ClassElementMetadataType';
-import { ClassElementServiceIdMetadata } from '../../models/domain/ClassElementServiceIdMetadata';
-import { ClassElementTagMetadata } from '../../models/domain/ClassElementTagMetadata';
 import { convertToClassElementMetadata } from './convertToClassElementMetadata';
 
 describe(convertToClassElementMetadata.name, () => {

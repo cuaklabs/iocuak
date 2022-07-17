@@ -1,6 +1,6 @@
 import {
   Binding,
-  BindingTag,
+  Tag,
   BindingType,
   ClassMetadata,
   ClassElementMetadata,
@@ -116,7 +116,7 @@ function bindingToSinonMatcher(
   return match;
 }
 
-function bindTypeServiceToTag(serviceType: Newable, tag: BindingTag): void {
+function bindTypeServiceToTag(serviceType: Newable, tag: Tag): void {
   const metadataProvider: MetadataProvider = MetadataProvider.build();
 
   const typeBinding: TypeBinding | undefined =

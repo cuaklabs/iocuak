@@ -1,6 +1,6 @@
 {
   "cucumberautocomplete.steps": [
-    "packages/*/lib/e2e/definitions/**/*.js"
+    "packages/*/lib/definitions/**/*.js"
   ],
   "cucumberautocomplete.strictGherkinCompletion": true
 }

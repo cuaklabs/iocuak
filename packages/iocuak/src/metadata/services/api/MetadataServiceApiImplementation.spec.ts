@@ -2,8 +2,13 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
+jest.mock('@cuaklabs/iocuak-metadata');
+
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock('../../../classMetadata/utils/api/convertToClassMetadataApi');
+
+import { Newable } from '@cuaklabs/iocuak-common';
+import { ClassMetadata, getClassMetadata } from '@cuaklabs/iocuak-metadata';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { BindingScopeApi } from '../../../binding/models/api/BindingScopeApi';
@@ -12,9 +17,7 @@ import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
-import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
 import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';
-import { Newable } from '../../../common/models/domain/Newable';
 import { MetadataService } from '../domain/MetadataService';
 import { MetadataServiceApiImplementation } from './MetadataServiceApiImplementation';
 
@@ -25,7 +28,6 @@ describe(MetadataServiceApiImplementation.name, () => {
   beforeAll(() => {
     metadataServiceMock = {
       getBindingMetadata: jest.fn(),
-      getClassMetadata: jest.fn(),
     } as Partial<
       jestMock.Mocked<MetadataService>
     > as jestMock.Mocked<MetadataService>;
@@ -143,9 +145,9 @@ describe(MetadataServiceApiImplementation.name, () => {
           properties: new Map(),
         };
 
-        metadataServiceMock.getClassMetadata.mockReturnValueOnce(
-          classMetadataFixture,
-        );
+        (
+          getClassMetadata as jestMock.Mock<typeof getClassMetadata>
+        ).mockReturnValueOnce(classMetadataFixture);
 
         (
           convertToClassMetadataApi as jestMock.Mock<
@@ -160,11 +162,9 @@ describe(MetadataServiceApiImplementation.name, () => {
         jest.clearAllMocks();
       });
 
-      it('should call metadataService.getClassMetadata()', () => {
-        expect(metadataServiceMock.getClassMetadata).toHaveBeenCalledTimes(1);
-        expect(metadataServiceMock.getClassMetadata).toHaveBeenCalledWith(
-          typeFixture,
-        );
+      it('should call getClassMetadata()', () => {
+        expect(getClassMetadata).toHaveBeenCalledTimes(1);
+        expect(getClassMetadata).toHaveBeenCalledWith(typeFixture);
       });
 
       it('should call convertClassMetadataToClassMetadataApi()', () => {

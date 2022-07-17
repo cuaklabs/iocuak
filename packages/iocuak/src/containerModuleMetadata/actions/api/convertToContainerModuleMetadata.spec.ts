@@ -5,13 +5,15 @@ import * as jestMock from 'jest-mock';
 jest.mock('../../../containerModule/utils/api/convertToContainerModule');
 jest.mock('../../../containerModule/utils/api/convertToContainerModuleAsync');
 
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import {
+  ClassElementMetadata,
+  ClassElementMetadataType,
+} from '@cuaklabs/iocuak-metadata';
+
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ClassElementServiceIdMetadataApi } from '../../../classMetadata/models/api/ClassElementServiceIdMetadataApi';
 import { ClassElementTagMetadataApi } from '../../../classMetadata/models/api/ClassElementTagMetadataApi';
-import { ClassElementMetadata } from '../../../classMetadata/models/domain/ClassElementMetadata';
-import { ClassElementMetadataType } from '../../../classMetadata/models/domain/ClassElementMetadataType';
-import { Newable } from '../../../common/models/domain/Newable';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';

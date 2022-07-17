@@ -2,10 +2,10 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+
 import { injectable } from '../../../binding/decorators/injectable';
 import { inject } from '../../../classMetadata/decorators/inject';
-import { Newable } from '../../../common/models/domain/Newable';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { ContainerModuleBindingServiceApi } from '../../services/api/ContainerModuleBindingServiceApi';
 import { ContainerApi } from './ContainerApi';

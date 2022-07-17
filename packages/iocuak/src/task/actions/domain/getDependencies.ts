@@ -1,5 +1,5 @@
-import { ClassElementMetadata } from '../../../classMetadata/models/domain/ClassElementMetadata';
-import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
+import { ClassElementMetadata, ClassMetadata } from '@cuaklabs/iocuak-metadata';
+
 import { mapIterable } from '../../../common/utils/mapIterable';
 import { ServiceDependencies } from '../../models/domain/ServiceDependencies';
 import { TaskContext } from '../../models/domain/TaskContext';

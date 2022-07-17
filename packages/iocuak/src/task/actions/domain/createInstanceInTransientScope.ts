@@ -1,5 +1,6 @@
+import { ClassMetadata, getClassMetadata } from '@cuaklabs/iocuak-metadata';
+
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
-import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
 import { ServiceDependencies } from '../../models/domain/ServiceDependencies';
 import { TaskContext } from '../../models/domain/TaskContext';
 
@@ -12,8 +13,7 @@ export function createInstanceInTransientScope(
   } else {
     context.servicesInstantiatedSet.add(binding.id);
 
-    const classMetadata: ClassMetadata =
-      context.services.metadataService.getClassMetadata(binding.type);
+    const classMetadata: ClassMetadata = getClassMetadata(binding.type);
 
     const serviceDependencies: ServiceDependencies =
       context.actions.getDependencies(classMetadata, context);

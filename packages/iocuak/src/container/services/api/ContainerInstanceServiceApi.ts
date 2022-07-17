@@ -1,9 +1,6 @@
-import { BindingTag } from '../../../binding/models/domain/BindingTag';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
 
 export interface ContainerInstanceServiceApi {
   get<TInstance>(serviceId: ServiceId): TInstance;
-  getByTag<TInstances extends unknown[] = unknown[]>(
-    tag: BindingTag,
-  ): TInstances;
+  getByTag<TInstances extends unknown[] = unknown[]>(tag: Tag): TInstances;
 }

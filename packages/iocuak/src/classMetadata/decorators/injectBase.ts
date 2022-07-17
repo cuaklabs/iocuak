@@ -1,8 +1,10 @@
-import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
-import { updateReflectMetadata } from '../../reflectMetadata/utils/domain/updateReflectMetadata';
-import { ClassElementMetadata } from '../models/domain/ClassElementMetadata';
-import { ClassMetadata } from '../models/domain/ClassMetadata';
-import { getDefaultClassMetadata } from '../utils/domain/getDefaultClassMetadata';
+import {
+  ClassElementMetadata,
+  ClassMetadata,
+  getDefaultClassMetadata,
+  MetadataKey,
+  updateReflectMetadata,
+} from '@cuaklabs/iocuak-metadata';
 
 export function injectBase<TInput>(
   input: TInput,
