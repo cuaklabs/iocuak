@@ -1,8 +1,7 @@
-import { Newable } from '@cuaklabs/iocuak-common';
+import { Newable, Tag } from '@cuaklabs/iocuak-common';
 
 import { PickKeys } from '../../../common/models/domain/PickKeys';
 import { BindingScope } from '../../models/domain/BindingScope';
-import { BindingTag } from '../../models/domain/BindingTag';
 import { BindingType } from '../../models/domain/BindingType';
 import { TypeBinding } from '../../models/domain/TypeBinding';
 
@@ -22,10 +21,10 @@ export class TypeBindingFixtures {
   }
 
   public static get withTagsOne(): TypeBinding & {
-    [T in PickKeys<TypeBinding, 'tags'>]: [BindingTag] & BindingTag[];
+    [T in PickKeys<TypeBinding, 'tags'>]: [Tag] & Tag[];
   } {
     const fixture: TypeBinding & {
-      [T in PickKeys<TypeBinding, 'tags'>]: [BindingTag] & BindingTag[];
+      [T in PickKeys<TypeBinding, 'tags'>]: [Tag] & Tag[];
     } = {
       ...TypeBindingFixtures.any,
       tags: ['tag'],

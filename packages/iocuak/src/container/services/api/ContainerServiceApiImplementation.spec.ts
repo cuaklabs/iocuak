@@ -12,13 +12,12 @@ jest.mock('../../../task/actions/domain/loadContainerModule');
 jest.mock('../../utils/bind');
 jest.mock('../../utils/bindToValue');
 
-import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
 import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
@@ -111,7 +110,7 @@ describe(ContainerServiceApiImplementation.name, () => {
 
   describe('.bindToValue', () => {
     describe('having a tag array', () => {
-      let tagsFixture: BindingTag[];
+      let tagsFixture: Tag[];
 
       beforeAll(() => {
         tagsFixture = [Symbol()];
@@ -151,7 +150,7 @@ describe(ContainerServiceApiImplementation.name, () => {
     });
 
     describe('having a tag symbol', () => {
-      let tagsFixture: BindingTag;
+      let tagsFixture: Tag;
 
       beforeAll(() => {
         tagsFixture = Symbol();
@@ -285,7 +284,7 @@ describe(ContainerServiceApiImplementation.name, () => {
 
   describe('.getByTag', () => {
     describe('when called', () => {
-      let bindingTagFixture: BindingTag;
+      let tagFixture: Tag;
 
       let instancesFixture: unknown[];
       let requestIdFixture: symbol;
@@ -293,7 +292,7 @@ describe(ContainerServiceApiImplementation.name, () => {
       let result: unknown;
 
       beforeAll(() => {
-        bindingTagFixture = 'tag-id';
+        tagFixture = 'tag-id';
 
         instancesFixture = [
           {
@@ -308,7 +307,7 @@ describe(ContainerServiceApiImplementation.name, () => {
           createInstancesByTag as jestMock.Mock<typeof createInstancesByTag>
         ).mockReturnValueOnce(instancesFixture);
 
-        result = containerServiceApiImplementation.getByTag(bindingTagFixture);
+        result = containerServiceApiImplementation.getByTag(tagFixture);
       });
 
       afterAll(() => {
@@ -333,7 +332,7 @@ describe(ContainerServiceApiImplementation.name, () => {
 
         expect(createInstancesByTag).toHaveBeenCalledTimes(1);
         expect(createInstancesByTag).toHaveBeenCalledWith(
-          bindingTagFixture,
+          tagFixture,
           expectedTaskContext,
         );
       });

@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 0.3.0 - 2022-06-28
 
 ### Added
-- Added `BindingTag`.
+- Added `Tag`.
 - Added `BindValueOptions`.
 - Added `ClassElementMetadata`.
 - Added `ClassElementMetadatType`.

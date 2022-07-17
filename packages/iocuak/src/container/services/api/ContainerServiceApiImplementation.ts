@@ -1,8 +1,7 @@
-import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
@@ -55,7 +54,7 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
   }
 
   public getByTag<TInstances extends unknown[] = unknown[]>(
-    tag: BindingTag,
+    tag: Tag,
   ): TInstances {
     const requestId: symbol = this._containerService.request.start();
 
@@ -125,10 +124,10 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
     return context;
   }
 
-  #getTags(options: BindValueOptionsApi): BindingTag[] {
-    const tagOrTags: BindingTag | BindingTag[] = options?.tags ?? [];
+  #getTags(options: BindValueOptionsApi): Tag[] {
+    const tagOrTags: Tag | Tag[] = options?.tags ?? [];
 
-    let tags: BindingTag[];
+    let tags: Tag[];
 
     if (Array.isArray(tagOrTags)) {
       tags = tagOrTags;

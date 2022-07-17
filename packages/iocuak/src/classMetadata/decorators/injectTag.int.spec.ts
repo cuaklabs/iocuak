@@ -13,16 +13,16 @@ import { injectTag } from './injectTag';
 
 describe(injectTag.name, () => {
   describe('when called, as property decorator', () => {
-    let bindingTagFixture: Tag;
+    let tagFixture: Tag;
     let targetFixture: Newable;
 
     let reflectMetadata: unknown;
 
     beforeAll(() => {
-      bindingTagFixture = 'service-id';
+      tagFixture = 'service-id';
 
       class TargetFixture {
-        @injectTag(bindingTagFixture)
+        @injectTag(tagFixture)
         public foo: string | undefined;
       }
 
@@ -42,7 +42,7 @@ describe(injectTag.name, () => {
             'foo',
             {
               type: ClassElementMetadataType.tag,
-              value: bindingTagFixture,
+              value: tagFixture,
             },
           ],
         ]),
@@ -53,18 +53,16 @@ describe(injectTag.name, () => {
   });
 
   describe('when called, as a constructor parameter decorator', () => {
-    let bindingTagFixture: Tag;
+    let tagFixture: Tag;
     let targetFixture: Newable;
 
     let reflectMetadata: unknown;
 
     beforeAll(() => {
-      bindingTagFixture = 'service-id';
+      tagFixture = 'service-id';
 
       class TargetFixture {
-        constructor(
-          @injectTag(bindingTagFixture) public foo: string | undefined,
-        ) {}
+        constructor(@injectTag(tagFixture) public foo: string | undefined) {}
       }
 
       targetFixture = TargetFixture;
@@ -80,7 +78,7 @@ describe(injectTag.name, () => {
         constructorArguments: [
           {
             type: ClassElementMetadataType.tag,
-            value: bindingTagFixture,
+            value: tagFixture,
           },
         ],
         properties: new Map(),
@@ -94,16 +92,14 @@ describe(injectTag.name, () => {
     let result: unknown;
 
     beforeAll(() => {
-      const bindingTagFixture: Tag = 'service-id';
+      const tagFixture: Tag = 'service-id';
 
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         class TypeFixture {
           constructor(public foo: string | undefined) {}
 
-          public someMethod(
-            @injectTag(bindingTagFixture) foo: unknown,
-          ): unknown {
+          public someMethod(@injectTag(tagFixture) foo: unknown): unknown {
             return foo;
           }
         }

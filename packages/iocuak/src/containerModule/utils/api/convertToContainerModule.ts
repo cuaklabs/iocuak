@@ -1,6 +1,5 @@
-import { Newable } from '@cuaklabs/iocuak-common';
+import { Newable, Tag } from '@cuaklabs/iocuak-common';
 
-import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { BindValueOptionsApi } from '../../../container/models/api/BindValueOptionsApi';
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
@@ -39,10 +38,10 @@ export function convertToContainerModule(
   return containerModule;
 }
 
-function getTags(options: BindValueOptionsApi): BindingTag[] {
-  const tagOrTags: BindingTag | BindingTag[] = options?.tags ?? [];
+function getTags(options: BindValueOptionsApi): Tag[] {
+  const tagOrTags: Tag | Tag[] = options?.tags ?? [];
 
-  let tags: BindingTag[];
+  let tags: Tag[];
 
   if (Array.isArray(tagOrTags)) {
     tags = tagOrTags;
