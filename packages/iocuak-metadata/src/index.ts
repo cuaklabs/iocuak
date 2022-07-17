@@ -3,6 +3,7 @@ import { ClassElementMetadataType } from './classMetadata/models/ClassElementMet
 import { ClassElementServiceIdMetadata } from './classMetadata/models/ClassElementServiceIdMetadata';
 import { ClassElementTagMetadata } from './classMetadata/models/ClassElementTagMetadata';
 import { ClassMetadata } from './classMetadata/models/ClassMetadata';
+import { getDefaultClassMetadata } from './classMetadata/utils/getDefaultClassMetadata';
 import { MetadataKey } from './reflectMetadata/models/MetadataKey';
 import { getReflectMetadata } from './reflectMetadata/utils/getReflectMetadata';
 import { updateReflectMetadata } from './reflectMetadata/utils/updateReflectMetadata';
@@ -16,4 +17,4 @@ export type {
   MetadataKey,
 };
 
-export { getReflectMetadata, updateReflectMetadata };
+export { getDefaultClassMetadata, getReflectMetadata, updateReflectMetadata };
