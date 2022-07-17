@@ -3,9 +3,9 @@ import { ClassElementMetadataType } from './classMetadata/models/ClassElementMet
 import { ClassElementServiceIdMetadata } from './classMetadata/models/ClassElementServiceIdMetadata';
 import { ClassElementTagMetadata } from './classMetadata/models/ClassElementTagMetadata';
 import { ClassMetadata } from './classMetadata/models/ClassMetadata';
-import { MetadataKey } from './reflectMetadata/models/domain/MetadataKey';
-import { getReflectMetadata } from './reflectMetadata/utils/domain/getReflectMetadata';
-import { updateReflectMetadata } from './reflectMetadata/utils/domain/updateReflectMetadata';
+import { MetadataKey } from './reflectMetadata/models/MetadataKey';
+import { getReflectMetadata } from './reflectMetadata/utils/getReflectMetadata';
+import { updateReflectMetadata } from './reflectMetadata/utils/updateReflectMetadata';
 
 export type {
   ClassElementMetadata,
