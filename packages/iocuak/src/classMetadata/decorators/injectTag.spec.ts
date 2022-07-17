@@ -4,15 +4,16 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./injectBase');
 
-import { BindingTag } from '../../binding/models/domain/BindingTag';
+import { Tag } from '@cuaklabs/iocuak-common';
+
 import { injectBase } from './injectBase';
 import { injectTag } from './injectTag';
 
 describe(injectTag.name, () => {
-  let bindingTagFixture: BindingTag;
+  let tagFixture: Tag;
 
   beforeAll(() => {
-    bindingTagFixture = Symbol();
+    tagFixture = Symbol();
   });
 
   describe('when called', () => {
@@ -29,7 +30,7 @@ describe(injectTag.name, () => {
         decoratorFixture,
       );
 
-      result = injectTag(bindingTagFixture);
+      result = injectTag(tagFixture);
     });
 
     afterAll(() => {
@@ -38,10 +39,7 @@ describe(injectTag.name, () => {
 
     it('should call injectBase', () => {
       expect(injectBase).toHaveBeenCalledTimes(1);
-      expect(injectBase).toHaveBeenCalledWith(
-        bindingTagFixture,
-        expect.any(Function),
-      );
+      expect(injectBase).toHaveBeenCalledWith(tagFixture, expect.any(Function));
     });
 
     it('should return a decorator', () => {

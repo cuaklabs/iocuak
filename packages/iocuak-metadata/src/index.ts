@@ -11,16 +11,16 @@ import { updateReflectMetadata } from './reflectMetadata/utils/updateReflectMeta
 
 export type {
   ClassElementMetadata,
-  ClassElementMetadataType,
   ClassElementServiceIdMetadata,
   ClassElementTagMetadata,
   ClassMetadata,
-  MetadataKey,
 };
 
 export {
+  ClassElementMetadataType,
   getDefaultClassMetadata,
   getClassMetadata,
   getReflectMetadata,
+  MetadataKey,
   updateReflectMetadata,
 };

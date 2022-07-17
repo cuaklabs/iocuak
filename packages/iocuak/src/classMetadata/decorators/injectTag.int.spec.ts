@@ -2,16 +2,18 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { BindingTag } from '../../binding/models/domain/BindingTag';
-import { Newable } from '../../common/models/domain/Newable';
-import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
-import { ClassElementMetadataType } from '../models/domain/ClassElementMetadataType';
-import { ClassMetadata } from '../models/domain/ClassMetadata';
+import { Newable, Tag } from '@cuaklabs/iocuak-common';
+import {
+  ClassElementMetadataType,
+  ClassMetadata,
+  MetadataKey,
+} from '@cuaklabs/iocuak-metadata';
+
 import { injectTag } from './injectTag';
 
 describe(injectTag.name, () => {
   describe('when called, as property decorator', () => {
-    let bindingTagFixture: BindingTag;
+    let bindingTagFixture: Tag;
     let targetFixture: Newable;
 
     let reflectMetadata: unknown;
@@ -51,7 +53,7 @@ describe(injectTag.name, () => {
   });
 
   describe('when called, as a constructor parameter decorator', () => {
-    let bindingTagFixture: BindingTag;
+    let bindingTagFixture: Tag;
     let targetFixture: Newable;
 
     let reflectMetadata: unknown;
@@ -92,7 +94,7 @@ describe(injectTag.name, () => {
     let result: unknown;
 
     beforeAll(() => {
-      const bindingTagFixture: BindingTag = 'service-id';
+      const bindingTagFixture: Tag = 'service-id';
 
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

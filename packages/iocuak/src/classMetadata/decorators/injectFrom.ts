@@ -1,11 +1,14 @@
+import {
+  ClassElementMetadata,
+  ClassMetadata,
+  getDefaultClassMetadata,
+  getReflectMetadata,
+  MetadataKey,
+  updateReflectMetadata,
+} from '@cuaklabs/iocuak-metadata';
+
 import { chain } from '../../common/utils/chain';
-import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
-import { getReflectMetadata } from '../../reflectMetadata/utils/domain/getReflectMetadata';
-import { updateReflectMetadata } from '../../reflectMetadata/utils/domain/updateReflectMetadata';
 import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionApi';
-import { ClassElementMetadata } from '../models/domain/ClassElementMetadata';
-import { ClassMetadata } from '../models/domain/ClassMetadata';
-import { getDefaultClassMetadata } from '../utils/domain/getDefaultClassMetadata';
 
 export function injectFrom(
   classMetadataExtensionApi: ClassMetadataExtensionApi,

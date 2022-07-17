@@ -2,9 +2,9 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { Newable } from '../../common/models/domain/Newable';
-import { ServiceId } from '../../common/models/domain/ServiceId';
-import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import { MetadataKey } from '@cuaklabs/iocuak-metadata';
+
 import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
 import { TypeBindingFixtures } from '../fixtures/domain/TypeBindingFixtures';
 import { BindingScopeApi } from '../models/api/BindingScopeApi';

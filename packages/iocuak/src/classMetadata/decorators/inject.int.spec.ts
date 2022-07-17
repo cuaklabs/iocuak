@@ -2,11 +2,13 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ClassMetadata } from '../../classMetadata/models/domain/ClassMetadata';
-import { Newable } from '../../common/models/domain/Newable';
-import { ServiceId } from '../../common/models/domain/ServiceId';
-import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
-import { ClassElementMetadataType } from '../models/domain/ClassElementMetadataType';
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import {
+  ClassElementMetadataType,
+  ClassMetadata,
+  MetadataKey,
+} from '@cuaklabs/iocuak-metadata';
+
 import { inject } from './inject';
 
 describe(inject.name, () => {

@@ -1,15 +1,16 @@
-import { BindingTag } from '../../binding/models/domain/BindingTag';
-import { ClassElementMetadataType } from '../models/domain/ClassElementMetadataType';
-import { ClassElementTagMetadata } from '../models/domain/ClassElementTagMetadata';
+import { Tag } from '@cuaklabs/iocuak-common';
+import {
+  ClassElementMetadataType,
+  ClassElementTagMetadata,
+} from '@cuaklabs/iocuak-metadata';
+
 import { injectBase } from './injectBase';
 
-export function injectTag(
-  tag: BindingTag,
-): ParameterDecorator & PropertyDecorator {
+export function injectTag(tag: Tag): ParameterDecorator & PropertyDecorator {
   return injectBase(tag, tagToClassElementMatadata);
 }
 
-function tagToClassElementMatadata(tag: BindingTag): ClassElementTagMetadata {
+function tagToClassElementMatadata(tag: Tag): ClassElementTagMetadata {
   return {
     type: ClassElementMetadataType.tag,
     value: tag,

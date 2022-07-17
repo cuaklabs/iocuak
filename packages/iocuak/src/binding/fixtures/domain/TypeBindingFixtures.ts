@@ -1,4 +1,5 @@
-import { Newable } from '../../../common/models/domain/Newable';
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { PickKeys } from '../../../common/models/domain/PickKeys';
 import { BindingScope } from '../../models/domain/BindingScope';
 import { BindingTag } from '../../models/domain/BindingTag';

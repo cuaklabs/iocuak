@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 
-import { ClassElementMetadataType } from '../../../../classMetadata/models/domain/ClassElementMetadataType';
+import { ClassElementMetadataType } from '@cuaklabs/iocuak-metadata';
+
 import { Newable } from '../../../../common/models/domain/Newable';
 import { ContainerModule } from '../../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleClassMetadata } from '../../../models/domain/ContainerModuleClassMetadata';

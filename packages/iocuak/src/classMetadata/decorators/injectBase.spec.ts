@@ -4,13 +4,17 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-jest.mock('../../reflectMetadata/utils/domain/updateReflectMetadata');
+jest.mock('@cuaklabs/iocuak-metadata');
 
-import { Newable } from '../../common/models/domain/Newable';
-import { ServiceId } from '../../common/models/domain/ServiceId';
-import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
-import { updateReflectMetadata } from '../../reflectMetadata/utils/domain/updateReflectMetadata';
-import { ClassElementMetadata } from '../models/domain/ClassElementMetadata';
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import {
+  ClassElementMetadata,
+  ClassMetadata,
+  getDefaultClassMetadata,
+  MetadataKey,
+  updateReflectMetadata,
+} from '@cuaklabs/iocuak-metadata';
+
 import { injectBase } from './injectBase';
 
 describe(injectBase.name, () => {
@@ -24,11 +28,19 @@ describe(injectBase.name, () => {
   });
 
   describe('when called, as property decorator', () => {
+    let defaultClassMetadataFixture: ClassMetadata;
     let serviceIdFixture: ServiceId;
     let targetFixture: Newable;
 
     beforeAll(() => {
+      defaultClassMetadataFixture = {
+        [Symbol()]: Symbol(),
+      } as unknown as ClassMetadata;
       serviceIdFixture = 'service-id';
+
+      (
+        getDefaultClassMetadata as jestMock.Mock<typeof getDefaultClassMetadata>
+      ).mockReturnValueOnce(defaultClassMetadataFixture);
 
       class TargetFixture {
         @injectBase(serviceIdFixture, inputToClassElementMetadataMock)
@@ -47,18 +59,26 @@ describe(injectBase.name, () => {
       expect(updateReflectMetadata).toHaveBeenCalledWith(
         targetFixture,
         MetadataKey.inject,
-        expect.anything(),
+        defaultClassMetadataFixture,
         expect.any(Function),
       );
     });
   });
 
   describe('when called, as constructor parameter decorator', () => {
+    let defaultClassMetadataFixture: ClassMetadata;
     let serviceIdFixture: ServiceId;
     let targetFixture: Newable;
 
     beforeAll(() => {
+      defaultClassMetadataFixture = {
+        [Symbol()]: Symbol(),
+      } as unknown as ClassMetadata;
       serviceIdFixture = 'service-id';
+
+      (
+        getDefaultClassMetadata as jestMock.Mock<typeof getDefaultClassMetadata>
+      ).mockReturnValueOnce(defaultClassMetadataFixture);
 
       class TargetFixture {
         constructor(

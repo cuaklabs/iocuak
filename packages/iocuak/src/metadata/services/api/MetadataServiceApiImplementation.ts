@@ -1,8 +1,9 @@
+import { ClassMetadata } from '@cuaklabs/iocuak-metadata';
+
 import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
 import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
-import { ClassMetadata } from '../../../classMetadata/models/domain/ClassMetadata';
 import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';
 import { Newable } from '../../../common/models/domain/Newable';
 import { MetadataService } from '../domain/MetadataService';

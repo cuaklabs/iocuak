@@ -2,16 +2,18 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-jest.mock('../../reflectMetadata/utils/domain/getReflectMetadata');
-jest.mock('../../reflectMetadata/utils/domain/updateReflectMetadata');
+jest.mock('@cuaklabs/iocuak-metadata');
+
+import { Newable } from '@cuaklabs/iocuak-common';
+import {
+  getDefaultClassMetadata,
+  getReflectMetadata,
+  MetadataKey,
+  updateReflectMetadata,
+} from '@cuaklabs/iocuak-metadata';
 
 import { injectFrom } from '../../classMetadata/decorators/injectFrom';
 import { ClassMetadataExtensionApi } from '../../classMetadata/models/api/ClassMetadataExtensionApi';
-import { getDefaultClassMetadata } from '../../classMetadata/utils/domain/getDefaultClassMetadata';
-import { Newable } from '../../common/models/domain/Newable';
-import { MetadataKey } from '../../reflectMetadata/models/domain/MetadataKey';
-import { getReflectMetadata } from '../../reflectMetadata/utils/domain/getReflectMetadata';
-import { updateReflectMetadata } from '../../reflectMetadata/utils/domain/updateReflectMetadata';
 import { ClassMetadataFixtures } from '../fixtures/domain/ClassMetadataFixtures';
 
 describe(injectFrom.name, () => {

@@ -1,10 +1,11 @@
+import { Tag } from '@cuaklabs/iocuak-common';
+
 import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { mapIterable } from '../../../common/utils/mapIterable';
 import { TaskContext } from '../../models/domain/TaskContext';
 
 export function createInstancesByTag(
-  tag: BindingTag,
+  tag: Tag,
   context: TaskContext,
 ): unknown[] {
   const bindings: Iterable<Binding> = context.services.bindingService.getByTag(
