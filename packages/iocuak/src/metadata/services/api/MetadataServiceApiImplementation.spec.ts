@@ -7,6 +7,7 @@ jest.mock('@cuaklabs/iocuak-metadata');
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock('../../../classMetadata/utils/api/convertToClassMetadataApi');
 
+import { Newable } from '@cuaklabs/iocuak-common';
 import { ClassMetadata, getClassMetadata } from '@cuaklabs/iocuak-metadata';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
@@ -17,7 +18,6 @@ import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';
-import { Newable } from '../../../common/models/domain/Newable';
 import { MetadataService } from '../domain/MetadataService';
 import { MetadataServiceApiImplementation } from './MetadataServiceApiImplementation';
 

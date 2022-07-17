@@ -4,7 +4,8 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./getBindingOrThrow');
 
-import { Newable } from '../../../common/models/domain/Newable';
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';

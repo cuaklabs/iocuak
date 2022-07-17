@@ -7,8 +7,9 @@ jest.mock('../../../metadata/services/domain/MetadataServiceImplementation');
 jest.mock('../../services/domain/ContainerRequestServiceImplementation');
 jest.mock('../../services/domain/ContainerSingletonServiceImplementation');
 
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { BindingServiceImplementation } from '../../../binding/services/domain/BindingServiceImplementation';
-import { Newable } from '../../../common/models/domain/Newable';
 import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
 import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
 import { ContainerSingletonServiceImplementation } from '../../services/domain/ContainerSingletonServiceImplementation';

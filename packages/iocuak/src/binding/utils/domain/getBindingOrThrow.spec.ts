@@ -2,7 +2,8 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-import { Newable } from '../../../common/models/domain/Newable';
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
 import { TypeBinding } from '../../models/domain/TypeBinding';

@@ -1,6 +1,7 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { Newable } from '../common/models/domain/Newable';
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { ServiceId } from '../common/models/domain/ServiceId';
 import { stringifyServiceId } from './stringifyServiceId';
 

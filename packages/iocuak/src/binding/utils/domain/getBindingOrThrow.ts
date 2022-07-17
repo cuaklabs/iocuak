@@ -1,4 +1,5 @@
-import { Newable } from '../../../common/models/domain/Newable';
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TypeBinding } from '../../models/domain/TypeBinding';
 

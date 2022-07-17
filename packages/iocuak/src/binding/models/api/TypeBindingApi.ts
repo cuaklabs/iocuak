@@ -1,4 +1,5 @@
-import { Newable } from '../../../common/models/domain/Newable';
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { BaseBindingApi } from './BaseBindingApi';
 import { BindingScopeApi } from './BindingScopeApi';
 import { BindingTypeApi } from './BindingTypeApi';

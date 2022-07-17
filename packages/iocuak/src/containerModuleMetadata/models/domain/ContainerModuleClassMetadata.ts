@@ -1,5 +1,6 @@
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { BindingService } from '../../../binding/services/domain/BindingService';
-import { Newable } from '../../../common/models/domain/Newable';
 import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleMetadataBase } from './ContainerModuleMetadataBase';
 import { ContainerModuleMetadataType } from './ContainerModuleMetadataType';

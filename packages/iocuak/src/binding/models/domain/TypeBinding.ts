@@ -1,4 +1,5 @@
-import { Newable } from '../../../common/models/domain/Newable';
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { BaseBinding } from './BaseBinding';
 import { BindingScope } from './BindingScope';
 import { BindingType } from './BindingType';

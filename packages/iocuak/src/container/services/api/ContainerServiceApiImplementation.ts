@@ -1,8 +1,9 @@
+import { Newable } from '@cuaklabs/iocuak-common';
+
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
-import { Newable } from '../../../common/models/domain/Newable';
 import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
