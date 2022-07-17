@@ -5,11 +5,10 @@ import * as jestMock from 'jest-mock';
 jest.mock('../../../container/utils/bind');
 jest.mock('../../../container/utils/bindToValue');
 
-import { Newable } from '@cuaklabs/iocuak-common';
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
 
 import { BindingTag } from '../../../binding/models/domain/BindingTag';
 import { BindingService } from '../../../binding/services/domain/BindingService';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
 import { bind } from '../../../container/utils/bind';
 import { bindToValue } from '../../../container/utils/bindToValue';

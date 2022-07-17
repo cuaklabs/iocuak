@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { Newable } from '@cuaklabs/iocuak-common';
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
 import {
   ClassElementMetadata,
   ClassElementMetadataType,
@@ -14,7 +14,6 @@ import {
 
 import { inject } from '../../classMetadata/decorators/inject';
 import { injectFrom } from '../../classMetadata/decorators/injectFrom';
-import { ServiceId } from '../../common/models/domain/ServiceId';
 
 describe(injectFrom.name, () => {
   describe('having a ClassMetadataExtensionApi with extendConstructorArguments false and extendProperties false', () => {

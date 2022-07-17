@@ -1,6 +1,7 @@
+import { ServiceId } from '@cuaklabs/iocuak-common';
+
 import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingService } from '../../../binding/services/domain/BindingService';
-import { ServiceId } from '../../../common/models/domain/ServiceId';
 import { chain } from '../../../common/utils/chain';
 import { BindingTag } from '../../models/domain/BindingTag';
 import { removeBindingDuplicates } from '../../utils/domain/removeBindingDuplicates';

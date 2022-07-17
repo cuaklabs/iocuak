@@ -1,6 +1,7 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { ServiceId } from '../../../common/models/domain/ServiceId';
+import { ServiceId } from '@cuaklabs/iocuak-common';
+
 import { ContainerRequestServiceImplementation } from './ContainerRequestServiceImplementation';
 
 describe(ContainerRequestServiceImplementation.name, () => {
