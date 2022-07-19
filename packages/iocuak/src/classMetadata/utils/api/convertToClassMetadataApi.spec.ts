@@ -3,7 +3,7 @@ import { beforeAll, describe, expect, it } from '@jest/globals';
 import {
   ClassElementMetadataType,
   ClassMetadata,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { ClassElementMetadataApiType } from '../../models/api/ClassElementMetadatApiType';
 import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';

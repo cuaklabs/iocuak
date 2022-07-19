@@ -4,7 +4,7 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-jest.mock('@cuaklabs/iocuak-metadata');
+jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');
 
 import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
 import {
@@ -13,7 +13,7 @@ import {
   getDefaultClassMetadata,
   MetadataKey,
   updateReflectMetadata,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { injectBase } from './injectBase';
 

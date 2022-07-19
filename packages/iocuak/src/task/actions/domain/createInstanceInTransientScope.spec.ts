@@ -2,10 +2,13 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-jest.mock('@cuaklabs/iocuak-metadata');
+jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');
 
 import { ServiceId } from '@cuaklabs/iocuak-common';
-import { ClassMetadata, getClassMetadata } from '@cuaklabs/iocuak-metadata';
+import {
+  ClassMetadata,
+  getClassMetadata,
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { BindingScope } from '../../../binding/models/domain/BindingScope';

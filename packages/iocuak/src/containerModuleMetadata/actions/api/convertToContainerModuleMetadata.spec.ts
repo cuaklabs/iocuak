@@ -9,7 +9,7 @@ import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
 import {
   ClassElementMetadata,
   ClassElementMetadataType,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ClassElementServiceIdMetadataApi } from '../../../classMetadata/models/api/ClassElementServiceIdMetadataApi';

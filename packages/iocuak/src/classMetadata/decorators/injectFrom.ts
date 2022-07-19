@@ -5,7 +5,7 @@ import {
   getReflectMetadata,
   MetadataKey,
   updateReflectMetadata,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { chain } from '../../common/utils/chain';
 import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionApi';

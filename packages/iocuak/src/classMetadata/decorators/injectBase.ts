@@ -4,7 +4,7 @@ import {
   getDefaultClassMetadata,
   MetadataKey,
   updateReflectMetadata,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 export function injectBase<TInput>(
   input: TInput,

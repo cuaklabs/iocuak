@@ -10,7 +10,7 @@ import {
   getDefaultClassMetadata,
   getReflectMetadata,
   MetadataKey,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { inject } from '../../classMetadata/decorators/inject';
 import { injectFrom } from '../../classMetadata/decorators/injectFrom';

@@ -7,7 +7,7 @@ import {
   ClassElementMetadataType,
   ClassMetadata,
   MetadataKey,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { injectTag } from './injectTag';
 

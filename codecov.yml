@@ -5,9 +5,9 @@ coverage:
       iocuak:
         flags: 
           - iocuak
-      iocuak-metadata:
+      iocuak-reflect-metadata-utils:
         flags: 
-          - iocuak-metadata
+          - iocuak-reflect-metadata-utils
       porygon:
         flags:
           - porygon
@@ -19,9 +19,9 @@ flags:
   iocuak:
     paths:
       - packages/iocuak/
-  iocuak-metadata:
+  iocuak-reflect-metadata-utils:
     paths:
-      - packages/iocuak-metadata/
+      - packages/iocuak-reflect-metadata-utils/
   porygon:
     paths:
       - packages/porygon/

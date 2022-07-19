@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-jest.mock('@cuaklabs/iocuak-metadata');
+jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');
 
 import { Newable } from '@cuaklabs/iocuak-common';
 import {
@@ -10,7 +10,7 @@ import {
   getReflectMetadata,
   MetadataKey,
   updateReflectMetadata,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { injectFrom } from '../../classMetadata/decorators/injectFrom';
 import { ClassMetadataExtensionApi } from '../../classMetadata/models/api/ClassMetadataExtensionApi';

@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@cuaklabs/iocuak-common": "workspace:../iocuak-common",
-    "@cuaklabs/iocuak-metadata": "workspace:../iocuak-metadata"
+    "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:../iocuak-reflect-metadata-utils"
   },
   "devDependencies": {
     "rimraf": "3.0.2",

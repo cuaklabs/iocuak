@@ -2,7 +2,7 @@ import { ServiceId } from '@cuaklabs/iocuak-common';
 import {
   ClassElementMetadataType,
   ClassElementServiceIdMetadata,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { injectBase } from './injectBase';
 
