@@ -1,6 +1,6 @@
 {
-  "root": "packages/iocuak-metadata",
-  "sourceRoot": "packages/iocuak-metadata/src",
+  "root": "packages/iocuak-class-metadata",
+  "sourceRoot": "packages/iocuak-class-metadata/src",
   "projectType": "library",
   "targets": {
     "build": {
@@ -13,7 +13,7 @@
           "pnpm run build:clean",
           "pnpm run build"
         ],
-        "cwd": "packages/iocuak-metadata"
+        "cwd": "packages/iocuak-class-metadata"
       }
     },
     "lint": {
@@ -21,7 +21,7 @@
       "inputs": ["{projectRoot}/src/**/*.ts"],
       "outputs": [],
       "options": {
-        "lintFilePatterns": ["packages/iocuak-metadata/src/**/*.ts"]
+        "lintFilePatterns": ["packages/iocuak-class-metadata/src/**/*.ts"]
       }
     }
   }

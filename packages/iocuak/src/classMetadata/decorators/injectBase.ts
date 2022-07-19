@@ -1,10 +1,10 @@
 import {
+  classMetadataReflectKey,
   ClassElementMetadata,
   ClassMetadata,
   getDefaultClassMetadata,
-  MetadataKey,
-  updateReflectMetadata,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-class-metadata';
+import { updateReflectMetadata } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 export function injectBase<TInput>(
   input: TInput,
@@ -46,7 +46,7 @@ function injectParameter<TInput>(
     if (isConstructorParameter(target, propertyKey)) {
       updateReflectMetadata(
         target,
-        MetadataKey.inject,
+        classMetadataReflectKey,
         getDefaultClassMetadata(),
         (classMetadata: ClassMetadata): ClassMetadata => {
           classMetadata.constructorArguments[parameterIndex] =
@@ -74,7 +74,7 @@ function injectProperty<TInput>(
   return (target: Object, propertyKey: string | symbol): void => {
     updateReflectMetadata(
       target.constructor,
-      MetadataKey.inject,
+      classMetadataReflectKey,
       getDefaultClassMetadata(),
       (classMetadata: ClassMetadata): ClassMetadata => {
         classMetadata.properties.set(

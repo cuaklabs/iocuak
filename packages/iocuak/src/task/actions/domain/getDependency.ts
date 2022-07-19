@@ -1,7 +1,7 @@
 import {
   ClassElementMetadata,
   ClassElementMetadataType,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-class-metadata';
 
 import { Binding } from '../../../binding/models/domain/Binding';
 import { TaskContext } from '../../models/domain/TaskContext';

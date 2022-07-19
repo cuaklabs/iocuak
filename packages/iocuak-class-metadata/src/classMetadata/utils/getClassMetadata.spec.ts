@@ -3,12 +3,12 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 import * as jestMock from 'jest-mock';
 
 jest.mock('./getDefaultClassMetadata');
-jest.mock('../../reflectMetadata/utils/getReflectMetadata');
+jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');
 
 import { Newable } from '@cuaklabs/iocuak-common';
+import { getReflectMetadata } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
-import { MetadataKey } from '../../reflectMetadata/models/MetadataKey';
-import { getReflectMetadata } from '../../reflectMetadata/utils/getReflectMetadata';
+import { classMetadataReflectKey } from '../../reflectMetadata/models/classMetadataReflectKey';
 import { ClassMetadataFixtures } from '../fixtures/ClassMetadataFixtures';
 import { ClassMetadata } from '../models/ClassMetadata';
 import { getClassMetadata } from './getClassMetadata';
@@ -47,7 +47,7 @@ describe('.getClassMetadata()', () => {
       expect(getReflectMetadata).toHaveBeenCalledTimes(1);
       expect(getReflectMetadata).toHaveBeenCalledWith(
         typeFixture,
-        MetadataKey.inject,
+        classMetadataReflectKey,
       );
     });
 
@@ -86,7 +86,7 @@ describe('.getClassMetadata()', () => {
       expect(getReflectMetadata).toHaveBeenCalledTimes(1);
       expect(getReflectMetadata).toHaveBeenCalledWith(
         typeFixture,
-        MetadataKey.inject,
+        classMetadataReflectKey,
       );
     });
 

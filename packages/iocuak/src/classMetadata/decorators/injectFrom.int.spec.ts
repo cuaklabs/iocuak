@@ -2,15 +2,15 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
 import {
   ClassElementMetadata,
   ClassElementMetadataType,
   ClassMetadata,
+  classMetadataReflectKey,
   getDefaultClassMetadata,
-  getReflectMetadata,
-  MetadataKey,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-class-metadata';
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import { getReflectMetadata } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { inject } from '../../classMetadata/decorators/inject';
 import { injectFrom } from '../../classMetadata/decorators/injectFrom';
@@ -45,7 +45,7 @@ describe(injectFrom.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = getReflectMetadata(destinationType, MetadataKey.inject);
+          result = getReflectMetadata(destinationType, classMetadataReflectKey);
         });
 
         it('should return undefined', () => {
@@ -88,7 +88,7 @@ describe(injectFrom.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = getReflectMetadata(destinationType, MetadataKey.inject);
+          result = getReflectMetadata(destinationType, classMetadataReflectKey);
         });
 
         it('should return metadata', () => {
@@ -145,7 +145,7 @@ describe(injectFrom.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = getReflectMetadata(destinationType, MetadataKey.inject);
+          result = getReflectMetadata(destinationType, classMetadataReflectKey);
         });
 
         it('should return metadata', () => {
@@ -202,7 +202,10 @@ describe(injectFrom.name, () => {
           let result: unknown;
 
           beforeAll(() => {
-            result = getReflectMetadata(destinationType, MetadataKey.inject);
+            result = getReflectMetadata(
+              destinationType,
+              classMetadataReflectKey,
+            );
           });
 
           it('should return metadata', () => {
@@ -272,7 +275,7 @@ describe(injectFrom.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = getReflectMetadata(destinationType, MetadataKey.inject);
+          result = getReflectMetadata(destinationType, classMetadataReflectKey);
         });
 
         it('should return undefined', () => {
@@ -309,7 +312,7 @@ describe(injectFrom.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = getReflectMetadata(destinationType, MetadataKey.inject);
+          result = getReflectMetadata(destinationType, classMetadataReflectKey);
         });
 
         it('should return metadata', () => {
@@ -366,7 +369,7 @@ describe(injectFrom.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = getReflectMetadata(destinationType, MetadataKey.inject);
+          result = getReflectMetadata(destinationType, classMetadataReflectKey);
         });
 
         it('should return metadata', () => {
@@ -441,7 +444,7 @@ describe(injectFrom.name, () => {
         let result: unknown;
 
         beforeAll(() => {
-          result = getReflectMetadata(destinationType, MetadataKey.inject);
+          result = getReflectMetadata(destinationType, classMetadataReflectKey);
         });
 
         it('should return metadata', () => {

@@ -1,7 +1,7 @@
 import { Newable } from '@cuaklabs/iocuak-common';
+import { getReflectMetadata } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
-import { MetadataKey } from '../../reflectMetadata/models/MetadataKey';
-import { getReflectMetadata } from '../../reflectMetadata/utils/getReflectMetadata';
+import { classMetadataReflectKey } from '../../reflectMetadata/models/classMetadataReflectKey';
 import { ClassMetadata } from '../models/ClassMetadata';
 import { getDefaultClassMetadata } from './getDefaultClassMetadata';
 
@@ -10,7 +10,7 @@ export function getClassMetadata<TInstance, TArgs extends unknown[]>(
 ): ClassMetadata {
   const classMetadata: ClassMetadata | undefined = getReflectMetadata(
     type,
-    MetadataKey.inject,
+    classMetadataReflectKey,
   );
 
   let classMetadataClone: ClassMetadata;

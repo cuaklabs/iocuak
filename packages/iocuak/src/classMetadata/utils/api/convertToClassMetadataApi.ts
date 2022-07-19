@@ -2,7 +2,7 @@ import {
   ClassElementMetadata,
   ClassElementMetadataType,
   ClassMetadata,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-class-metadata';
 
 import { mapIterable } from '../../../common/utils/mapIterable';
 import { ClassElementMetadataApi } from '../../models/api/ClassElementMetadataApi';

@@ -1,7 +1,7 @@
 {
-  "name": "@cuaklabs/iocuak",
-  "version": "0.3.1",
-  "description": "Minimal inversion of control container inspired by InversifyJS (https://inversify.io/)",
+  "name": "@cuaklabs/iocuak-reflect-metadata-utils",
+  "version": "0.1.0",
+  "description": "Metadata models for iocuak",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
@@ -19,16 +19,17 @@
     "url": "https://github.com/cuaklabs/iocuak/issues"
   },
   "dependencies": {
-    "@cuaklabs/iocuak-class-metadata": "workspace:../iocuak-class-metadata",
-    "@cuaklabs/iocuak-common": "workspace:../iocuak-common",
-    "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:../iocuak-reflect-metadata-utils"
+    "@cuaklabs/iocuak-common": "workspace:../iocuak-common"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
     "typescript": "4.7.4"
   },
-  "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak#readme",
+  "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-reflect-metadata-utils#readme",
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
+  "peerDependencies": {
+    "reflect-metadata": "0.1.13"
+  },
   "publishConfig": {
     "access": "public"
   },

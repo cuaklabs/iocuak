@@ -1,9 +1,12 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-jest.mock('@cuaklabs/iocuak-metadata');
+jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');
 
 import { Newable } from '@cuaklabs/iocuak-common';
-import { getReflectMetadata, MetadataKey } from '@cuaklabs/iocuak-metadata';
+import {
+  getReflectMetadata,
+  MetadataKey,
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { MetadataServiceImplementation } from './MetadataServiceImplementation';
 

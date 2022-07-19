@@ -2,12 +2,12 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
 import {
+  classMetadataReflectKey,
   ClassElementMetadataType,
   ClassMetadata,
-  MetadataKey,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-class-metadata';
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
 
 import { inject } from './inject';
 
@@ -29,7 +29,7 @@ describe(inject.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.inject,
+        classMetadataReflectKey,
         targetFixture,
       );
     });
@@ -68,7 +68,7 @@ describe(inject.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.inject,
+        classMetadataReflectKey,
         targetFixture,
       );
     });

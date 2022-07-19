@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
-import { MetadataKey } from '@cuaklabs/iocuak-metadata';
+import { MetadataKey } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
 import { TypeBindingFixtures } from '../fixtures/domain/TypeBindingFixtures';

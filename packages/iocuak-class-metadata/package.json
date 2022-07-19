@@ -1,5 +1,5 @@
 {
-  "name": "@cuaklabs/iocuak-metadata",
+  "name": "@cuaklabs/iocuak-class-metadata",
   "version": "0.1.0",
   "description": "Metadata models for iocuak",
   "main": "lib/index.js",
@@ -19,13 +19,14 @@
     "url": "https://github.com/cuaklabs/iocuak/issues"
   },
   "dependencies": {
-    "@cuaklabs/iocuak-common": "workspace:../iocuak-common"
+    "@cuaklabs/iocuak-common": "workspace:../iocuak-common",
+    "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:../iocuak-reflect-metadata-utils"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
     "typescript": "4.7.4"
   },
-  "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-metadata#readme",
+  "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-class-metadata#readme",
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
   "peerDependencies": {
     "reflect-metadata": "0.1.13"

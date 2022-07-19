@@ -4,7 +4,7 @@ import {
   ClassElementMetadataType,
   ClassElementServiceIdMetadata,
   ClassElementTagMetadata,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-class-metadata';
 
 import { ClassElementMetadataApiFixtures } from '../../fixtures/api/ClassElementMetadataApiFixtures';
 import { ClassElementServiceIdMetadataApi } from '../../models/api/ClassElementServiceIdMetadataApi';

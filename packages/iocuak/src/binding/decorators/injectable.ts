@@ -1,5 +1,5 @@
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
-import { MetadataKey } from '@cuaklabs/iocuak-metadata';
+import { MetadataKey } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { InjectableOptionsApi } from '../models/api/InjectableOptionsApi';

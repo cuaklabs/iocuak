@@ -74,7 +74,7 @@ jobs:
       matrix:
         package:
           - iocuak
-          - iocuak-metadata
+          - iocuak-reflect-metadata-utils
           - porygon
           - porygon-typeorm
     steps:

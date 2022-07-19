@@ -5,9 +5,7 @@ import { ClassElementTagMetadata } from './classMetadata/models/ClassElementTagM
 import { ClassMetadata } from './classMetadata/models/ClassMetadata';
 import { getClassMetadata } from './classMetadata/utils/getClassMetadata';
 import { getDefaultClassMetadata } from './classMetadata/utils/getDefaultClassMetadata';
-import { MetadataKey } from './reflectMetadata/models/MetadataKey';
-import { getReflectMetadata } from './reflectMetadata/utils/getReflectMetadata';
-import { updateReflectMetadata } from './reflectMetadata/utils/updateReflectMetadata';
+import { classMetadataReflectKey } from './reflectMetadata/models/classMetadataReflectKey';
 
 export type {
   ClassElementMetadata,
@@ -17,10 +15,8 @@ export type {
 };
 
 export {
+  classMetadataReflectKey,
   ClassElementMetadataType,
   getDefaultClassMetadata,
   getClassMetadata,
-  getReflectMetadata,
-  MetadataKey,
-  updateReflectMetadata,
 };

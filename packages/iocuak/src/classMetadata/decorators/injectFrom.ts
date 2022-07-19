@@ -1,11 +1,13 @@
 import {
   ClassElementMetadata,
   ClassMetadata,
+  classMetadataReflectKey,
   getDefaultClassMetadata,
+} from '@cuaklabs/iocuak-class-metadata';
+import {
   getReflectMetadata,
-  MetadataKey,
   updateReflectMetadata,
-} from '@cuaklabs/iocuak-metadata';
+} from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { chain } from '../../common/utils/chain';
 import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionApi';
@@ -19,13 +21,13 @@ export function injectFrom(
   ): TFunction | void => {
     const baseTypeClassMetadata: ClassMetadata | undefined = getReflectMetadata(
       classMetadataExtensionApi.type,
-      MetadataKey.inject,
+      classMetadataReflectKey,
     );
 
     if (baseTypeClassMetadata !== undefined) {
       updateReflectMetadata(
         target,
-        MetadataKey.inject,
+        classMetadataReflectKey,
         getDefaultClassMetadata(),
         composeUpdateReflectMetadataCallback(
           classMetadataExtensionApi,
