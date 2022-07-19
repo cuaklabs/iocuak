@@ -1,7 +1,7 @@
 import {
   ClassElementMetadataType,
   ClassMetadata,
-} from '@cuaklabs/iocuak-reflect-metadata-utils';
+} from '@cuaklabs/iocuak-class-metadata';
 
 export class ClassMetadataFixtures {
   public static get any(): ClassMetadata {

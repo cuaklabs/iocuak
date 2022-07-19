@@ -2,16 +2,16 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');
+jest.mock('@cuaklabs/iocuak-class-metadata');
 
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock('../../../classMetadata/utils/api/convertToClassMetadataApi');
 
-import { Newable } from '@cuaklabs/iocuak-common';
 import {
   ClassMetadata,
   getClassMetadata,
-} from '@cuaklabs/iocuak-reflect-metadata-utils';
+} from '@cuaklabs/iocuak-class-metadata';
+import { Newable } from '@cuaklabs/iocuak-common';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { BindingScopeApi } from '../../../binding/models/api/BindingScopeApi';

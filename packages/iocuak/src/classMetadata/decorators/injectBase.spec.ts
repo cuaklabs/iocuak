@@ -4,16 +4,17 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
+jest.mock('@cuaklabs/iocuak-class-metadata');
 jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');
 
-import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
 import {
   ClassElementMetadata,
   ClassMetadata,
+  classMetadataReflectKey,
   getDefaultClassMetadata,
-  MetadataKey,
-  updateReflectMetadata,
-} from '@cuaklabs/iocuak-reflect-metadata-utils';
+} from '@cuaklabs/iocuak-class-metadata';
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import { updateReflectMetadata } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { injectBase } from './injectBase';
 
@@ -58,7 +59,7 @@ describe(injectBase.name, () => {
       expect(updateReflectMetadata).toHaveBeenCalledTimes(1);
       expect(updateReflectMetadata).toHaveBeenCalledWith(
         targetFixture,
-        MetadataKey.inject,
+        classMetadataReflectKey,
         defaultClassMetadataFixture,
         expect.any(Function),
       );
@@ -98,7 +99,7 @@ describe(injectBase.name, () => {
       expect(updateReflectMetadata).toHaveBeenCalledTimes(1);
       expect(updateReflectMetadata).toHaveBeenCalledWith(
         targetFixture,
-        MetadataKey.inject,
+        classMetadataReflectKey,
         expect.anything(),
         expect.any(Function),
       );

@@ -1,8 +1,8 @@
-import { Tag } from '@cuaklabs/iocuak-common';
 import {
   ClassElementMetadataType,
   ClassElementTagMetadata,
-} from '@cuaklabs/iocuak-reflect-metadata-utils';
+} from '@cuaklabs/iocuak-class-metadata';
+import { Tag } from '@cuaklabs/iocuak-common';
 
 import { injectBase } from './injectBase';
 

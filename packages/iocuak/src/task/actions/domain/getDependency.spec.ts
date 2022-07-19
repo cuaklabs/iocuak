@@ -9,7 +9,7 @@ import {
   ClassElementMetadataType,
   ClassElementServiceIdMetadata,
   ClassElementTagMetadata,
-} from '@cuaklabs/iocuak-reflect-metadata-utils';
+} from '@cuaklabs/iocuak-class-metadata';
 
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { Binding } from '../../../binding/models/domain/Binding';

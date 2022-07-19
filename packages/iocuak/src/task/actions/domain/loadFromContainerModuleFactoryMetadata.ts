@@ -1,4 +1,4 @@
-import { ClassElementMetadata } from '@cuaklabs/iocuak-reflect-metadata-utils';
+import { ClassElementMetadata } from '@cuaklabs/iocuak-class-metadata';
 
 import { isPromiseLike } from '../../../common/utils/isPromiseLike';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
