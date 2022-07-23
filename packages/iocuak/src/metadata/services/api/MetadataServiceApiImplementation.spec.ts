@@ -2,11 +2,13 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
+jest.mock('@cuaklabs/iocuak-binding');
 jest.mock('@cuaklabs/iocuak-class-metadata');
 
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock('../../../classMetadata/utils/api/convertToClassMetadataApi');
 
+import { getBindingMetadata } from '@cuaklabs/iocuak-binding';
 import {
   ClassMetadata,
   getClassMetadata,
@@ -21,23 +23,13 @@ import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';
-import { MetadataService } from '../domain/MetadataService';
 import { MetadataServiceApiImplementation } from './MetadataServiceApiImplementation';
 
 describe(MetadataServiceApiImplementation.name, () => {
-  let metadataServiceMock: jestMock.Mocked<MetadataService>;
   let metadataApiServiceImplementation: MetadataServiceApiImplementation;
 
   beforeAll(() => {
-    metadataServiceMock = {
-      getBindingMetadata: jest.fn(),
-    } as Partial<
-      jestMock.Mocked<MetadataService>
-    > as jestMock.Mocked<MetadataService>;
-
-    metadataApiServiceImplementation = new MetadataServiceApiImplementation(
-      metadataServiceMock,
-    );
+    metadataApiServiceImplementation = new MetadataServiceApiImplementation();
   });
 
   describe('.getBindingMetadata', () => {
@@ -51,7 +43,9 @@ describe(MetadataServiceApiImplementation.name, () => {
       let result: unknown;
 
       beforeAll(() => {
-        metadataServiceMock.getBindingMetadata.mockReturnValueOnce(undefined);
+        (
+          getBindingMetadata as jestMock.Mock<typeof getBindingMetadata>
+        ).mockReturnValueOnce(undefined);
 
         result =
           metadataApiServiceImplementation.getBindingMetadata(typeFixture);
@@ -62,10 +56,8 @@ describe(MetadataServiceApiImplementation.name, () => {
       });
 
       it('should call metadataApiService.getBindingMetadata()', () => {
-        expect(metadataServiceMock.getBindingMetadata).toHaveBeenCalledTimes(1);
-        expect(metadataServiceMock.getBindingMetadata).toHaveBeenCalledWith(
-          typeFixture,
-        );
+        expect(getBindingMetadata).toHaveBeenCalledTimes(1);
+        expect(getBindingMetadata).toHaveBeenCalledWith(typeFixture);
       });
 
       it('should return undefined', () => {
@@ -89,9 +81,9 @@ describe(MetadataServiceApiImplementation.name, () => {
           type: bindingFixture.type,
         };
 
-        metadataServiceMock.getBindingMetadata.mockReturnValueOnce(
-          bindingFixture,
-        );
+        (
+          getBindingMetadata as jestMock.Mock<typeof getBindingMetadata>
+        ).mockReturnValueOnce(bindingFixture);
 
         (
           convertBindingToBindingApi as jestMock.Mock<
@@ -108,10 +100,8 @@ describe(MetadataServiceApiImplementation.name, () => {
       });
 
       it('should call metadataApiService.getBindingMetadata()', () => {
-        expect(metadataServiceMock.getBindingMetadata).toHaveBeenCalledTimes(1);
-        expect(metadataServiceMock.getBindingMetadata).toHaveBeenCalledWith(
-          typeFixture,
-        );
+        expect(getBindingMetadata).toHaveBeenCalledTimes(1);
+        expect(getBindingMetadata).toHaveBeenCalledWith(typeFixture);
       });
 
       it('should call convertBindingToBindingApi()', () => {
