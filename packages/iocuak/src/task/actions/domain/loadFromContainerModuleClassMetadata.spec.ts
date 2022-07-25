@@ -6,7 +6,6 @@ jest.mock('./createInstance');
 
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ContainerModuleClassMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleClassMetadata';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { TaskContextServices } from '../../models/domain/TaskContextServices';
 import { createInstance } from './createInstance';
@@ -25,7 +24,6 @@ describe(loadFromContainerModuleClassMetadata.name, () => {
     taskContextMock = {
       services: {
         bindingService: { [Symbol()]: Symbol() } as unknown as BindingService,
-        metadataService: { [Symbol()]: Symbol() } as unknown as MetadataService,
       } as Partial<TaskContextServices> as TaskContextServices,
     } as Partial<TaskContext> as TaskContext;
   });
@@ -65,7 +63,6 @@ describe(loadFromContainerModuleClassMetadata.name, () => {
       expect(containerModuleClassMetadataMock.loader).toHaveBeenCalledWith(
         containerModuleInstanceFixture,
         taskContextMock.services.bindingService,
-        taskContextMock.services.metadataService,
       );
     });
 

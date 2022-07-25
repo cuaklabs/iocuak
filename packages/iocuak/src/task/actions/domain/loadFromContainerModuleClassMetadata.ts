@@ -1,7 +1,6 @@
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleClassMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleClassMetadata';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { createInstance } from './createInstance';
 
@@ -15,20 +14,10 @@ export function loadFromContainerModuleClassMetadata(
   );
 
   const containerModule: ContainerModule = {
-    load: (
-      containerBindingService: BindingService,
-      metadataService: MetadataService,
-    ): void => {
-      metadata.loader(
-        containerModuleFromMetadata,
-        containerBindingService,
-        metadataService,
-      );
+    load: (containerBindingService: BindingService): void => {
+      metadata.loader(containerModuleFromMetadata, containerBindingService);
     },
   };
 
-  containerModule.load(
-    context.services.bindingService,
-    context.services.metadataService,
-  );
+  containerModule.load(context.services.bindingService);
 }

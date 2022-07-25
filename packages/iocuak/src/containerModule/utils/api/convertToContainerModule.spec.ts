@@ -11,7 +11,6 @@ import { BindingService } from '../../../binding/services/domain/BindingService'
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
 import { bind } from '../../../container/utils/bind';
 import { bindToValue } from '../../../container/utils/bindToValue';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleApi } from '../../models/api/ContainerModuleApi';
 import { ContainerModule } from '../../models/domain/ContainerModule';
 import { convertToContainerModule } from './convertToContainerModule';
@@ -42,21 +41,13 @@ describe(convertToContainerModule.name, () => {
 
     describe('when result.load() is called', () => {
       let containerBindingServiceFixture: BindingService;
-      let metadataServiceFixture: MetadataService;
 
       beforeAll(() => {
         containerBindingServiceFixture = {
           _tag: 'containerBindingService',
         } as unknown as BindingService;
 
-        metadataServiceFixture = {
-          _tag: 'metadataServiceFixture',
-        } as unknown as MetadataService;
-
-        (result as ContainerModule).load(
-          containerBindingServiceFixture,
-          metadataServiceFixture,
-        );
+        (result as ContainerModule).load(containerBindingServiceFixture);
       });
 
       afterAll(() => {
@@ -81,7 +72,6 @@ describe(convertToContainerModule.name, () => {
     describe('when result.load() is called and containerModuleApi.load() calls containerModuleBindingServiceApi.bind()', () => {
       let typeFixture: Newable;
       let containerBindingServiceFixture: BindingService;
-      let metadataServiceFixture: MetadataService;
 
       beforeAll(() => {
         typeFixture = class {};
@@ -97,14 +87,7 @@ describe(convertToContainerModule.name, () => {
           _tag: 'containerBindingService',
         } as Partial<BindingService> as BindingService;
 
-        metadataServiceFixture = {
-          _tag: 'metadataServiceFixture',
-        } as unknown as MetadataService;
-
-        (result as ContainerModule).load(
-          containerBindingServiceFixture,
-          metadataServiceFixture,
-        );
+        (result as ContainerModule).load(containerBindingServiceFixture);
       });
 
       afterAll(() => {
@@ -130,7 +113,6 @@ describe(convertToContainerModule.name, () => {
         expect(bind).toHaveBeenCalledWith(
           typeFixture,
           containerBindingServiceFixture,
-          metadataServiceFixture,
         );
       });
     });
@@ -140,7 +122,6 @@ describe(convertToContainerModule.name, () => {
       let tagsFixture: Tag[];
       let valueFixture: unknown;
       let containerBindingServiceFixture: BindingService;
-      let metadataServiceFixture: MetadataService;
 
       beforeAll(() => {
         serviceIdFixture = Symbol();
@@ -163,14 +144,7 @@ describe(convertToContainerModule.name, () => {
           _tag: 'containerBindingService',
         } as Partial<BindingService> as BindingService;
 
-        metadataServiceFixture = {
-          _tag: 'metadataServiceFixture',
-        } as unknown as MetadataService;
-
-        (result as ContainerModule).load(
-          containerBindingServiceFixture,
-          metadataServiceFixture,
-        );
+        (result as ContainerModule).load(containerBindingServiceFixture);
       });
 
       afterAll(() => {

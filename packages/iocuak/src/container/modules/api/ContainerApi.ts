@@ -1,7 +1,5 @@
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { BindingServiceImplementation } from '../../../binding/services/domain/BindingServiceImplementation';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
-import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
 import { ContainerServiceApiImplementation } from '../../services/api/ContainerServiceApiImplementation';
 import { ContainerRequestService } from '../../services/domain/ContainerRequestService';
 import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
@@ -25,8 +23,6 @@ export class ContainerApi extends ContainerServiceApiImplementation {
   ): ContainerService {
     const containerBindingService: BindingService =
       new BindingServiceImplementation(parentContainerBindingService);
-    const metadataService: MetadataService =
-      new MetadataServiceImplementation();
     const containerRequestService: ContainerRequestService =
       new ContainerRequestServiceImplementation();
     const containerSingletonService: ContainerSingletonService =
@@ -34,7 +30,6 @@ export class ContainerApi extends ContainerServiceApiImplementation {
 
     const containerService: ContainerService = {
       binding: containerBindingService,
-      metadata: metadataService,
       request: containerRequestService,
       singleton: containerSingletonService,
     };

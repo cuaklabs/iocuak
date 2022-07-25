@@ -2,8 +2,8 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
+import { bindingReflectKey } from '@cuaklabs/iocuak-binding';
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
-import { MetadataKey } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
 import { TypeBindingFixtures } from '../fixtures/domain/TypeBindingFixtures';
@@ -25,7 +25,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });
@@ -52,7 +52,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });
@@ -79,7 +79,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });
@@ -106,7 +106,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });
@@ -139,7 +139,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });
@@ -168,7 +168,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });

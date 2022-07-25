@@ -1,14 +1,13 @@
+import { getBindingMetadata } from '@cuaklabs/iocuak-binding';
 import { Newable } from '@cuaklabs/iocuak-common';
 
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TypeBinding } from '../../models/domain/TypeBinding';
 
 export function getBindingOrThrow<TInstance, TArgs extends unknown[]>(
   type: Newable<TInstance, TArgs>,
-  metadataService: MetadataService,
 ): TypeBinding<TInstance, TArgs> {
   const bindingFromType: TypeBinding<TInstance, TArgs> | undefined =
-    metadataService.getBindingMetadata(type);
+    getBindingMetadata(type);
 
   if (bindingFromType === undefined) {
     throw new Error(

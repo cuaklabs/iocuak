@@ -11,12 +11,10 @@ import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { BindingService } from '../../binding/services/domain/BindingService';
 import { getBindingOrThrow } from '../../binding/utils/domain/getBindingOrThrow';
 import { bind } from '../../container/utils/bind';
-import { MetadataService } from '../../metadata/services/domain/MetadataService';
 
 describe(bind.name, () => {
   let typeFixture: Newable;
   let containerBindingServiceMock: jestMock.Mocked<BindingService>;
-  let metadataServiceMock: jestMock.Mocked<MetadataService>;
 
   beforeAll(() => {
     typeFixture = class {};
@@ -26,12 +24,6 @@ describe(bind.name, () => {
     } as Partial<
       jestMock.Mocked<BindingService>
     > as jestMock.Mocked<BindingService>;
-
-    metadataServiceMock = {
-      getBindingMetadata: jest.fn(),
-    } as Partial<
-      jestMock.Mocked<MetadataService>
-    > as jestMock.Mocked<MetadataService>;
   });
 
   describe('when called', () => {
@@ -44,7 +36,7 @@ describe(bind.name, () => {
         getBindingOrThrow as jestMock.Mock<typeof getBindingOrThrow>
       ).mockReturnValueOnce(bindingFixture);
 
-      bind(typeFixture, containerBindingServiceMock, metadataServiceMock);
+      bind(typeFixture, containerBindingServiceMock);
     });
 
     afterAll(() => {
@@ -53,10 +45,7 @@ describe(bind.name, () => {
 
     it('should call getBindingOrThrow()', () => {
       expect(getBindingOrThrow).toHaveBeenCalledTimes(1);
-      expect(getBindingOrThrow).toHaveBeenCalledWith(
-        typeFixture,
-        metadataServiceMock,
-      );
+      expect(getBindingOrThrow).toHaveBeenCalledWith(typeFixture);
     });
 
     it('should call containerService.binding.set()', () => {

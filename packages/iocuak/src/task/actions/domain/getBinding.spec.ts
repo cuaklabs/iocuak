@@ -10,14 +10,12 @@ import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindin
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { lazyGetBindingOrThrow } from '../../../binding/utils/domain/lazyGetBindingOrThrow';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { TaskContextServices } from '../../models/domain/TaskContextServices';
 import { getBinding } from './getBinding';
 
 describe(getBinding.name, () => {
   let bindingServiceMock: jestMock.Mocked<BindingService>;
-  let metadataServiceFixture: MetadataService;
   let contextMock: TaskContext;
 
   beforeAll(() => {
@@ -27,14 +25,9 @@ describe(getBinding.name, () => {
       jestMock.Mocked<BindingService>
     > as jestMock.Mocked<BindingService>;
 
-    metadataServiceFixture = {
-      _type: Symbol(),
-    } as unknown as MetadataService;
-
     contextMock = {
       services: {
         bindingService: bindingServiceMock,
-        metadataService: metadataServiceFixture,
       } as Partial<TaskContextServices> as TaskContextServices,
     } as Partial<TaskContext> as TaskContext;
   });
@@ -67,10 +60,7 @@ describe(getBinding.name, () => {
 
     it('should call lazyGetBindingOrThrow()', () => {
       expect(lazyGetBindingOrThrow).toHaveBeenCalledTimes(1);
-      expect(lazyGetBindingOrThrow).toHaveBeenCalledWith(
-        serviceIdFixture,
-        metadataServiceFixture,
-      );
+      expect(lazyGetBindingOrThrow).toHaveBeenCalledWith(serviceIdFixture);
     });
 
     it('should return a binding', () => {

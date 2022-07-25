@@ -29,7 +29,7 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
   public bind<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): void {
-    bind(type, this._containerService.binding, this._containerService.metadata);
+    bind(type, this._containerService.binding);
   }
 
   public bindToValue(options: BindValueOptionsApi): void {
@@ -116,7 +116,6 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
         bindingService: this._containerService.binding,
         containerRequestService: this._containerService.request,
         containerSingletonService: this._containerService.singleton,
-        metadataService: this._containerService.metadata,
       },
       servicesInstantiatedSet: new Set(),
     };

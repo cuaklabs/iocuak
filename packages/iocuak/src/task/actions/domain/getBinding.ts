@@ -10,7 +10,7 @@ export function getBinding(
 ): Binding {
   const binding: Binding =
     context.services.bindingService.get(serviceId) ??
-    lazyGetBindingOrThrow(serviceId, context.services.metadataService);
+    lazyGetBindingOrThrow(serviceId);
 
   return binding;
 }

@@ -3,14 +3,12 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 import * as jestMock from 'jest-mock';
 
 jest.mock('../../../binding/services/domain/BindingServiceImplementation');
-jest.mock('../../../metadata/services/domain/MetadataServiceImplementation');
 jest.mock('../../services/domain/ContainerRequestServiceImplementation');
 jest.mock('../../services/domain/ContainerSingletonServiceImplementation');
 
 import { Newable } from '@cuaklabs/iocuak-common';
 
 import { BindingServiceImplementation } from '../../../binding/services/domain/BindingServiceImplementation';
-import { MetadataServiceImplementation } from '../../../metadata/services/domain/MetadataServiceImplementation';
 import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
 import { ContainerSingletonServiceImplementation } from '../../services/domain/ContainerSingletonServiceImplementation';
 import { ContainerApi } from './ContainerApi';
@@ -36,7 +34,6 @@ describe(ContainerApi.name, () => {
   describe('.build', () => {
     describe('when called', () => {
       let containerBindingServiceImplementationFixture: BindingServiceImplementation;
-      let metadataServiceImplementationFixture: MetadataServiceImplementation;
       let containerRequestServiceImplementationFixture: ContainerRequestServiceImplementation;
       let containerSingletonServiceImplementationFixture: ContainerSingletonServiceImplementation;
 
@@ -47,12 +44,6 @@ describe(ContainerApi.name, () => {
         bindFixtureToConstructor(
           BindingServiceImplementation,
           containerBindingServiceImplementationFixture,
-        );
-
-        metadataServiceImplementationFixture = buildEmptyFixture();
-        bindFixtureToConstructor(
-          MetadataServiceImplementation,
-          metadataServiceImplementationFixture,
         );
 
         containerRequestServiceImplementationFixture = buildEmptyFixture();
@@ -77,11 +68,6 @@ describe(ContainerApi.name, () => {
       it('should call new ContainerBindingServiceImplementation()', () => {
         expect(BindingServiceImplementation).toHaveBeenCalledTimes(1);
         expect(BindingServiceImplementation).toHaveBeenCalledWith(undefined);
-      });
-
-      it('should call new MetadataServiceImplementation()', () => {
-        expect(MetadataServiceImplementation).toHaveBeenCalledTimes(1);
-        expect(MetadataServiceImplementation).toHaveBeenCalledWith();
       });
 
       it('should call new ContainerRequestServiceImplementation()', () => {

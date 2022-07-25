@@ -10,7 +10,6 @@ import { BindingService } from '../../../binding/services/domain/BindingService'
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleFactoryMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadataType } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadataType';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { TaskContextServices } from '../../models/domain/TaskContextServices';
 import { getDependency } from './getDependency';
@@ -53,9 +52,6 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
             bindingService: {
               [Symbol()]: Symbol(),
             } as unknown as BindingService,
-            metadataService: {
-              [Symbol()]: Symbol(),
-            } as unknown as MetadataService,
           } as Partial<TaskContextServices> as TaskContextServices,
         } as Partial<TaskContext> as TaskContext;
 
@@ -109,7 +105,6 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
         expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
         expect(containerModuleMock.load).toHaveBeenCalledWith(
           taskContextMock.services.bindingService,
-          taskContextMock.services.metadataService,
         );
       });
 
@@ -155,9 +150,6 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
             bindingService: {
               [Symbol()]: Symbol(),
             } as unknown as BindingService,
-            metadataService: {
-              [Symbol()]: Symbol(),
-            } as unknown as MetadataService,
           } as Partial<TaskContextServices> as TaskContextServices,
         } as Partial<TaskContext> as TaskContext;
 
@@ -211,7 +203,6 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
         expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
         expect(containerModuleMock.load).toHaveBeenCalledWith(
           taskContextMock.services.bindingService,
-          taskContextMock.services.metadataService,
         );
       });
 

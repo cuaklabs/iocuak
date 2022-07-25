@@ -24,10 +24,7 @@ export function loadFromContainerModuleFactoryMetadata(
   if (isPromiseLike(containerModule)) {
     return loadModuleAsync(containerModule, context);
   } else {
-    containerModule.load(
-      context.services.bindingService,
-      context.services.metadataService,
-    );
+    containerModule.load(context.services.bindingService);
   }
 }
 
@@ -37,8 +34,5 @@ async function loadModuleAsync(
 ): Promise<void> {
   const containerModule: ContainerModule = await containerModulePromise;
 
-  containerModule.load(
-    context.services.bindingService,
-    context.services.metadataService,
-  );
+  containerModule.load(context.services.bindingService);
 }
