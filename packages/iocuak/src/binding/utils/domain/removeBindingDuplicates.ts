@@ -1,6 +1,5 @@
+import { Binding } from '@cuaklabs/iocuak-binding';
 import { ServiceId } from '@cuaklabs/iocuak-common';
-
-import { Binding } from '../../models/domain/Binding';
 
 export function removeBindingDuplicates(
   bindings: Iterable<Binding>,

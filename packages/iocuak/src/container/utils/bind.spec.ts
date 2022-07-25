@@ -4,10 +4,10 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('../../binding/utils/domain/getBindingOrThrow');
 
+import { TypeBinding } from '@cuaklabs/iocuak-binding';
 import { Newable } from '@cuaklabs/iocuak-common';
 
 import { TypeBindingFixtures } from '../../binding/fixtures/domain/TypeBindingFixtures';
-import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { BindingService } from '../../binding/services/domain/BindingService';
 import { getBindingOrThrow } from '../../binding/utils/domain/getBindingOrThrow';
 import { bind } from '../../container/utils/bind';

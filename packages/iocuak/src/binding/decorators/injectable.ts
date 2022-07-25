@@ -1,11 +1,13 @@
-import { bindingReflectKey } from '@cuaklabs/iocuak-binding';
+import {
+  bindingReflectKey,
+  TypeBinding,
+  BindingScope,
+  BindingType,
+} from '@cuaklabs/iocuak-binding';
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { InjectableOptionsApi } from '../models/api/InjectableOptionsApi';
-import { BindingScope } from '../models/domain/BindingScope';
-import { BindingType } from '../models/domain/BindingType';
-import { TypeBinding } from '../models/domain/TypeBinding';
 import { getDefaultBindingScope } from '../utils/domain/getDefaultBindingScope';
 
 export function injectable(options?: InjectableOptionsApi): ClassDecorator {

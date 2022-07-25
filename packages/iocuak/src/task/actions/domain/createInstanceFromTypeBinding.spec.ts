@@ -6,8 +6,9 @@ jest.mock('./createInstanceInRequestScope');
 jest.mock('./createInstanceInSingletonScope');
 jest.mock('./createInstanceInTransientScope');
 
+import { TypeBinding } from '@cuaklabs/iocuak-binding';
+
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { createInstanceFromTypeBinding } from './createInstanceFromTypeBinding';
 import { createInstanceInRequestScope } from './createInstanceInRequestScope';

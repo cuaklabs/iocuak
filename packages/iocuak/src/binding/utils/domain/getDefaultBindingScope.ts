@@ -1,4 +1,4 @@
-import { BindingScope } from '../../models/domain/BindingScope';
+import { BindingScope } from '@cuaklabs/iocuak-binding';
 
 export function getDefaultBindingScope(): BindingScope {
   return BindingScope.transient;

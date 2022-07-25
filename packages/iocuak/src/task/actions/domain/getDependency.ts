@@ -1,9 +1,9 @@
+import { Binding } from '@cuaklabs/iocuak-binding';
 import {
   ClassElementMetadata,
   ClassElementMetadataType,
 } from '@cuaklabs/iocuak-class-metadata';
 
-import { Binding } from '../../../binding/models/domain/Binding';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { createInstancesByTag } from './createInstancesByTag';
 import { getBinding } from './getBinding';

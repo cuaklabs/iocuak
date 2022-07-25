@@ -1,6 +1,6 @@
+import { TypeBinding } from '@cuaklabs/iocuak-binding';
 import { Newable } from '@cuaklabs/iocuak-common';
 
-import { TypeBinding } from '../../binding/models/domain/TypeBinding';
 import { BindingService } from '../../binding/services/domain/BindingService';
 import { getBindingOrThrow } from '../../binding/utils/domain/getBindingOrThrow';
 

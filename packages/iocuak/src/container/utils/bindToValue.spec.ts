@@ -2,8 +2,9 @@ import { beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
+import { ValueBinding } from '@cuaklabs/iocuak-binding';
+
 import { ValueBindingFixtures } from '../../binding/fixtures/domain/ValueBindingFixtures';
-import { ValueBinding } from '../../binding/models/domain/ValueBinding';
 import { BindingService } from '../../binding/services/domain/BindingService';
 import { bindToValue } from '../../container/utils/bindToValue';
 

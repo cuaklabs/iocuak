@@ -1,5 +1,5 @@
-import { BindingScope } from '../../../binding/models/domain/BindingScope';
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
+import { TypeBinding, BindingScope } from '@cuaklabs/iocuak-binding';
+
 import { TaskContext } from '../../models/domain/TaskContext';
 import { createInstanceInRequestScope } from './createInstanceInRequestScope';
 import { createInstanceInSingletonScope } from './createInstanceInSingletonScope';
