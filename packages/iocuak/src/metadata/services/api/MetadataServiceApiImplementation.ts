@@ -1,3 +1,4 @@
+import { getBindingMetadata, TypeBinding } from '@cuaklabs/iocuak-binding';
 import {
   ClassMetadata,
   getClassMetadata,
@@ -5,25 +6,17 @@ import {
 import { Newable } from '@cuaklabs/iocuak-common';
 
 import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';
-import { MetadataService } from '../domain/MetadataService';
 import { MetadataServiceApi } from './MetadataServiceApi';
 
 export class MetadataServiceApiImplementation implements MetadataServiceApi {
-  readonly #metadataService: MetadataService;
-
-  constructor(metadataService: MetadataService) {
-    this.#metadataService = metadataService;
-  }
-
   public getBindingMetadata<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): TypeBindingApi<TInstance, TArgs> | undefined {
     const typeBinding: TypeBinding<TInstance, TArgs> | undefined =
-      this.#metadataService.getBindingMetadata(type);
+      getBindingMetadata(type);
 
     return typeBinding === undefined
       ? undefined

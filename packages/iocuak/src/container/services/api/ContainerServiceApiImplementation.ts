@@ -1,7 +1,7 @@
+import { Binding } from '@cuaklabs/iocuak-binding';
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 
 import { BindingApi } from '../../../binding/models/api/BindingApi';
-import { Binding } from '../../../binding/models/domain/Binding';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
@@ -29,7 +29,7 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
   public bind<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): void {
-    bind(type, this._containerService.binding, this._containerService.metadata);
+    bind(type, this._containerService.binding);
   }
 
   public bindToValue(options: BindValueOptionsApi): void {
@@ -116,7 +116,6 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
         bindingService: this._containerService.binding,
         containerRequestService: this._containerService.request,
         containerSingletonService: this._containerService.singleton,
-        metadataService: this._containerService.metadata,
       },
       servicesInstantiatedSet: new Set(),
     };

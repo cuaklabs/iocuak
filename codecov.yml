@@ -5,6 +5,9 @@ coverage:
       iocuak:
         flags: 
           - iocuak
+      iocuak-binding:
+        flags:
+          - iocuak-binding
       iocuak-class-metadata:
         flags:
           - iocuak-class-metadata
@@ -22,6 +25,8 @@ flags:
   iocuak:
     paths:
       - packages/iocuak/
+  iocuak-binding:
+    paths: packages/iocuak-binding/
   iocuak-class-metadata:
     paths: packages/iocuak-class-metadata/
   iocuak-reflect-metadata-utils:

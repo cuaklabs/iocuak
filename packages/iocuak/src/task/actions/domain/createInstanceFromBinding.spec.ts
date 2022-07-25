@@ -4,10 +4,10 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./createInstanceFromTypeBinding');
 
+import { TypeBinding, ValueBinding } from '@cuaklabs/iocuak-binding';
+
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
-import { ValueBinding } from '../../../binding/models/domain/ValueBinding';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { createInstanceFromBinding } from './createInstanceFromBinding';
 import { createInstanceFromTypeBinding } from './createInstanceFromTypeBinding';

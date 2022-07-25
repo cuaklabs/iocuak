@@ -1,6 +1,6 @@
+import { TypeBinding } from '@cuaklabs/iocuak-binding';
 import { ServiceId } from '@cuaklabs/iocuak-common';
 
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { createInstanceInTransientScope } from './createInstanceInTransientScope';
 

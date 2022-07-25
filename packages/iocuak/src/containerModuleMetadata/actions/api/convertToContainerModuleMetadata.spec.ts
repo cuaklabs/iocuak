@@ -18,7 +18,6 @@ import { ContainerModuleApi } from '../../../containerModule/models/api/Containe
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';
 import { convertToContainerModuleAsync } from '../../../containerModule/utils/api/convertToContainerModuleAsync';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleMetadataApiMocks } from '../../mocks/models/api/ContainerModuleMetadataApiMocks';
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
@@ -186,7 +185,6 @@ describe(convertToContainerModuleMetadata.name, () => {
         let containerModuleMock: jestMock.Mocked<ContainerModule>;
         let containerModuleApiFixture: ContainerModuleApi;
         let containerBindingServiceFixture: BindingService;
-        let metadataServiceFixture: MetadataService;
 
         beforeAll(() => {
           containerModuleMock = {
@@ -201,10 +199,6 @@ describe(convertToContainerModuleMetadata.name, () => {
             _tag: Symbol('ContainerBindingService'),
           } as Partial<BindingService> as BindingService;
 
-          metadataServiceFixture = {
-            _tag: Symbol('MetadataService'),
-          } as Partial<MetadataService> as MetadataService;
-
           (
             convertToContainerModule as jestMock.Mock<
               typeof convertToContainerModule
@@ -214,7 +208,6 @@ describe(convertToContainerModuleMetadata.name, () => {
           containerModuleMetadata.loader(
             containerModuleApiFixture,
             containerBindingServiceFixture,
-            metadataServiceFixture,
           );
         });
 
@@ -233,7 +226,6 @@ describe(convertToContainerModuleMetadata.name, () => {
           expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
           expect(containerModuleMock.load).toHaveBeenCalledWith(
             containerBindingServiceFixture,
-            metadataServiceFixture,
           );
         });
       });

@@ -1,11 +1,13 @@
+import {
+  bindingReflectKey,
+  TypeBinding,
+  BindingScope,
+  BindingType,
+} from '@cuaklabs/iocuak-binding';
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
-import { MetadataKey } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { InjectableOptionsApi } from '../models/api/InjectableOptionsApi';
-import { BindingScope } from '../models/domain/BindingScope';
-import { BindingType } from '../models/domain/BindingType';
-import { TypeBinding } from '../models/domain/TypeBinding';
 import { getDefaultBindingScope } from '../utils/domain/getDefaultBindingScope';
 
 export function injectable(options?: InjectableOptionsApi): ClassDecorator {
@@ -23,7 +25,7 @@ export function injectable(options?: InjectableOptionsApi): ClassDecorator {
       type: target as unknown as Newable,
     };
 
-    Reflect.defineMetadata(MetadataKey.injectable, binding, target);
+    Reflect.defineMetadata(bindingReflectKey, binding, target);
   };
 
   return decorator;

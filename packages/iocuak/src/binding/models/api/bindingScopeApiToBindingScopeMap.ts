@@ -1,4 +1,5 @@
-import { BindingScope } from '../domain/BindingScope';
+import { BindingScope } from '@cuaklabs/iocuak-binding';
+
 import { BindingScopeApi } from './BindingScopeApi';
 
 export const bindingScopeApiToBindingScopeMap: {

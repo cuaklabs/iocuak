@@ -15,7 +15,6 @@ import { ContainerModule } from '../../../containerModule/models/domain/Containe
 import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';
 import { convertToContainerModuleAsync } from '../../../containerModule/utils/api/convertToContainerModuleAsync';
 import { isContainerModuleApi } from '../../../containerModule/utils/api/isContainerModuleApi';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
 import { ContainerModuleMetadataApi } from '../../models/api/ContainerModuleMetadataApi';
@@ -66,12 +65,11 @@ function convertToContainerModuleClassMetadata(
       loader: (
         containerModuleApi: ContainerModuleApi,
         containerBindingService: BindingService,
-        metadataService: MetadataService,
       ) => {
         const containerModule: ContainerModule =
           convertToContainerModule(containerModuleApi);
 
-        containerModule.load(containerBindingService, metadataService);
+        containerModule.load(containerBindingService);
       },
       moduleType: containerModuleClassMetadataApi.module,
       type: ContainerModuleMetadataType.clazz,

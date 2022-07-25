@@ -2,35 +2,31 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
+jest.mock('@cuaklabs/iocuak-binding');
+
+import { getBindingMetadata, TypeBinding } from '@cuaklabs/iocuak-binding';
 import { Newable } from '@cuaklabs/iocuak-common';
 
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
-import { TypeBinding } from '../../models/domain/TypeBinding';
 import { getBindingOrThrow } from './getBindingOrThrow';
 
 describe(getBindingOrThrow.name, () => {
   let typeFixture: Newable;
-  let metadataServiceMock: jestMock.Mocked<MetadataService>;
 
   beforeAll(() => {
     typeFixture = class {};
-
-    metadataServiceMock = {
-      getBindingMetadata: jest.fn(),
-    } as Partial<
-      jestMock.Mocked<MetadataService>
-    > as jestMock.Mocked<MetadataService>;
   });
 
   describe('when called, and metadataService.getBindingMetadata() returns undefined', () => {
     let result: unknown;
 
     beforeAll(() => {
-      metadataServiceMock.getBindingMetadata.mockReturnValueOnce(undefined);
+      (
+        getBindingMetadata as jestMock.Mock<typeof getBindingMetadata>
+      ).mockReturnValueOnce(undefined);
 
       try {
-        getBindingOrThrow(typeFixture, metadataServiceMock);
+        getBindingOrThrow(typeFixture);
       } catch (error: unknown) {
         result = error;
       }
@@ -40,11 +36,9 @@ describe(getBindingOrThrow.name, () => {
       jest.clearAllMocks();
     });
 
-    it('should call metadataSErvice.getBindingMetadata()', () => {
-      expect(metadataServiceMock.getBindingMetadata).toHaveBeenCalledTimes(1);
-      expect(metadataServiceMock.getBindingMetadata).toHaveBeenCalledWith(
-        typeFixture,
-      );
+    it('should call metadataService.getBindingMetadata()', () => {
+      expect(getBindingMetadata).toHaveBeenCalledTimes(1);
+      expect(getBindingMetadata).toHaveBeenCalledWith(typeFixture);
     });
 
     it('should throw an Error', () => {
@@ -67,22 +61,20 @@ describe(getBindingOrThrow.name, () => {
     beforeAll(() => {
       bindingFixture = TypeBindingFixtures.any;
 
-      metadataServiceMock.getBindingMetadata.mockReturnValueOnce(
-        bindingFixture,
-      );
+      (
+        getBindingMetadata as jestMock.Mock<typeof getBindingMetadata>
+      ).mockReturnValueOnce(bindingFixture);
 
-      result = getBindingOrThrow(typeFixture, metadataServiceMock);
+      result = getBindingOrThrow(typeFixture);
     });
 
     afterAll(() => {
       jest.clearAllMocks();
     });
 
-    it('should call metadataSErvice.getBindingMetadata()', () => {
-      expect(metadataServiceMock.getBindingMetadata).toHaveBeenCalledTimes(1);
-      expect(metadataServiceMock.getBindingMetadata).toHaveBeenCalledWith(
-        typeFixture,
-      );
+    it('should call getBindingMetadata()', () => {
+      expect(getBindingMetadata).toHaveBeenCalledTimes(1);
+      expect(getBindingMetadata).toHaveBeenCalledWith(typeFixture);
     });
 
     it('should return a TypeBinding', () => {

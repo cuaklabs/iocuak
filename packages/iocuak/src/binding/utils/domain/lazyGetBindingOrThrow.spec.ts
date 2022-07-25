@@ -4,23 +4,14 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./getBindingOrThrow');
 
+import { TypeBinding } from '@cuaklabs/iocuak-binding';
 import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
 
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
-import { TypeBinding } from '../../models/domain/TypeBinding';
 import { getBindingOrThrow } from './getBindingOrThrow';
 import { lazyGetBindingOrThrow } from './lazyGetBindingOrThrow';
 
 describe(lazyGetBindingOrThrow.name, () => {
-  let metadataServiceFixture: MetadataService;
-
-  beforeAll(() => {
-    metadataServiceFixture = {
-      _tag: Symbol('MetadataService'),
-    } as Partial<MetadataService> as MetadataService;
-  });
-
   describe('having a newable serviceId', () => {
     let serviceIdFixture: Newable;
 
@@ -44,10 +35,7 @@ describe(lazyGetBindingOrThrow.name, () => {
           getBindingOrThrow as jestMock.Mock<typeof getBindingOrThrow>
         ).mockReturnValueOnce(bindingFixture);
 
-        result = lazyGetBindingOrThrow(
-          serviceIdFixture,
-          metadataServiceFixture,
-        );
+        result = lazyGetBindingOrThrow(serviceIdFixture);
       });
 
       afterAll(() => {
@@ -56,10 +44,7 @@ describe(lazyGetBindingOrThrow.name, () => {
 
       it('should call getBindingOrThrow()', () => {
         expect(getBindingOrThrow).toHaveBeenCalledTimes(1);
-        expect(getBindingOrThrow).toHaveBeenCalledWith(
-          serviceIdFixture,
-          metadataServiceFixture,
-        );
+        expect(getBindingOrThrow).toHaveBeenCalledWith(serviceIdFixture);
       });
 
       it('should return a type binding', () => {
@@ -84,7 +69,7 @@ describe(lazyGetBindingOrThrow.name, () => {
 
       beforeAll(() => {
         try {
-          lazyGetBindingOrThrow(serviceIdFixture, metadataServiceFixture);
+          lazyGetBindingOrThrow(serviceIdFixture);
         } catch (error: unknown) {
           result = error;
         }

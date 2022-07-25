@@ -1,5 +1,5 @@
-import { Binding } from '../../../binding/models/domain/Binding';
-import { BindingType } from '../../../binding/models/domain/BindingType';
+import { Binding, BindingType } from '@cuaklabs/iocuak-binding';
+
 import { TaskContext } from '../../models/domain/TaskContext';
 import { createInstanceFromTypeBinding } from './createInstanceFromTypeBinding';
 

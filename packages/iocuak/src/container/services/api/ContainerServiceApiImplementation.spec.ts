@@ -12,19 +12,18 @@ jest.mock('../../../task/actions/domain/loadContainerModule');
 jest.mock('../../utils/bind');
 jest.mock('../../utils/bindToValue');
 
+import { Binding } from '@cuaklabs/iocuak-binding';
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
-import { Binding } from '../../../binding/models/domain/Binding';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { createInstance } from '../../../task/actions/domain/createInstance';
 import { createInstanceFromBinding } from '../../../task/actions/domain/createInstanceFromBinding';
 import { createInstancesByTag } from '../../../task/actions/domain/createInstancesByTag';
@@ -42,7 +41,6 @@ describe(ContainerServiceApiImplementation.name, () => {
   let containerBindingServiceMock: jestMock.Mocked<BindingService>;
   let containerRequestServiceMock: jestMock.Mocked<ContainerRequestService>;
   let containerSingletonServiceMock: jestMock.Mocked<ContainerSingletonService>;
-  let metadataServiceMock: jestMock.Mocked<MetadataService>;
   let containerServiceMock: ContainerService;
   let containerServiceApiImplementation: ContainerServiceApiImplementation;
 
@@ -65,15 +63,9 @@ describe(ContainerServiceApiImplementation.name, () => {
     } as Partial<
       jestMock.Mocked<ContainerSingletonService>
     > as jestMock.Mocked<ContainerSingletonService>;
-    metadataServiceMock = {
-      getBindingMetadata: jest.fn(),
-    } as Partial<
-      jestMock.Mocked<MetadataService>
-    > as jestMock.Mocked<MetadataService>;
 
     containerServiceMock = {
       binding: containerBindingServiceMock,
-      metadata: metadataServiceMock,
       request: containerRequestServiceMock,
       singleton: containerSingletonServiceMock,
     } as Partial<ContainerService> as ContainerService;
@@ -102,7 +94,6 @@ describe(ContainerServiceApiImplementation.name, () => {
         expect(bind).toHaveBeenCalledWith(
           typeFixture,
           containerServiceMock.binding,
-          containerServiceMock.metadata,
         );
       });
     });
@@ -264,7 +255,6 @@ describe(ContainerServiceApiImplementation.name, () => {
             bindingService: containerBindingServiceMock,
             containerRequestService: containerRequestServiceMock,
             containerSingletonService: containerSingletonServiceMock,
-            metadataService: metadataServiceMock,
           },
           servicesInstantiatedSet: new Set(),
         };
@@ -325,7 +315,6 @@ describe(ContainerServiceApiImplementation.name, () => {
             bindingService: containerBindingServiceMock,
             containerRequestService: containerRequestServiceMock,
             containerSingletonService: containerSingletonServiceMock,
-            metadataService: metadataServiceMock,
           },
           servicesInstantiatedSet: new Set(),
         };
@@ -467,7 +456,6 @@ describe(ContainerServiceApiImplementation.name, () => {
             bindingService: containerBindingServiceMock,
             containerRequestService: containerRequestServiceMock,
             containerSingletonService: containerSingletonServiceMock,
-            metadataService: metadataServiceMock,
           },
           servicesInstantiatedSet: new Set(),
         };

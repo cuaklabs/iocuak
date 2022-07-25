@@ -1,0 +1,28 @@
+{
+  "root": "packages/iocuak-binding",
+  "sourceRoot": "packages/iocuak-binding/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "dependsOn": ["^build"],
+      "executor": "nx:run-commands",
+      "inputs": ["{projectRoot}/src/**/*.ts"],
+      "outputs": ["{projectRoot}/lib"],
+      "options": {
+        "commands": [
+          "pnpm run build:clean",
+          "pnpm run build"
+        ],
+        "cwd": "packages/iocuak-binding"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "inputs": ["{projectRoot}/src/**/*.ts"],
+      "outputs": [],
+      "options": {
+        "lintFilePatterns": ["packages/iocuak-binding/src/**/*.ts"]
+      }
+    }
+  }
+}

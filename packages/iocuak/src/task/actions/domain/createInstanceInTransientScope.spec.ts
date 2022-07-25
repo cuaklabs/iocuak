@@ -5,15 +5,17 @@ import * as jestMock from 'jest-mock';
 jest.mock('@cuaklabs/iocuak-class-metadata');
 
 import {
+  TypeBinding,
+  BindingScope,
+  BindingType,
+} from '@cuaklabs/iocuak-binding';
+import {
   ClassMetadata,
   getClassMetadata,
 } from '@cuaklabs/iocuak-class-metadata';
 import { ServiceId } from '@cuaklabs/iocuak-common';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
-import { BindingScope } from '../../../binding/models/domain/BindingScope';
-import { BindingType } from '../../../binding/models/domain/BindingType';
-import { TypeBinding } from '../../../binding/models/domain/TypeBinding';
 import { ClassMetadataFixtures } from '../../../classMetadata/fixtures/domain/ClassMetadataFixtures';
 import { ServiceDependencies } from '../../models/domain/ServiceDependencies';
 import { TaskContext } from '../../models/domain/TaskContext';

@@ -5,6 +5,7 @@ import * as jestMock from 'jest-mock';
 jest.mock('./createInstancesByTag');
 jest.mock('./getBinding');
 
+import { Binding } from '@cuaklabs/iocuak-binding';
 import {
   ClassElementMetadataType,
   ClassElementServiceIdMetadata,
@@ -12,7 +13,6 @@ import {
 } from '@cuaklabs/iocuak-class-metadata';
 
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
-import { Binding } from '../../../binding/models/domain/Binding';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { TaskContextActions } from '../../models/domain/TaskContextActions';
 import { createInstancesByTag } from './createInstancesByTag';

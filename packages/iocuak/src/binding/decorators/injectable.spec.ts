@@ -2,15 +2,17 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
+import {
+  bindingReflectKey,
+  TypeBinding,
+  BindingScope,
+} from '@cuaklabs/iocuak-binding';
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
-import { MetadataKey } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
 import { TypeBindingFixtures } from '../fixtures/domain/TypeBindingFixtures';
 import { BindingScopeApi } from '../models/api/BindingScopeApi';
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
-import { BindingScope } from '../models/domain/BindingScope';
-import { TypeBinding } from '../models/domain/TypeBinding';
 import { injectable } from './injectable';
 
 describe(injectable.name, () => {
@@ -25,7 +27,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });
@@ -52,7 +54,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });
@@ -79,7 +81,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });
@@ -106,7 +108,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });
@@ -139,7 +141,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });
@@ -168,7 +170,7 @@ describe(injectable.name, () => {
       targetFixture = TargetFixture;
 
       reflectMetadata = Reflect.getOwnMetadata(
-        MetadataKey.injectable,
+        bindingReflectKey,
         targetFixture,
       );
     });

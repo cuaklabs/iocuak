@@ -1,9 +1,11 @@
+import {
+  TypeBinding,
+  BindingScope,
+  BindingType,
+} from '@cuaklabs/iocuak-binding';
 import { Newable, Tag } from '@cuaklabs/iocuak-common';
 
 import { PickKeys } from '../../../common/models/domain/PickKeys';
-import { BindingScope } from '../../models/domain/BindingScope';
-import { BindingType } from '../../models/domain/BindingType';
-import { TypeBinding } from '../../models/domain/TypeBinding';
 
 export class TypeBindingFixtures {
   static readonly #type: Newable = class {};

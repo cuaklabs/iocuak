@@ -5,7 +5,6 @@ import { BindValueOptionsApi } from '../../../container/models/api/BindValueOpti
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
 import { bind } from '../../../container/utils/bind';
 import { bindToValue } from '../../../container/utils/bindToValue';
-import { MetadataService } from '../../../metadata/services/domain/MetadataService';
 import { ContainerModuleApi } from '../../models/api/ContainerModuleApi';
 import { ContainerModule } from '../../models/domain/ContainerModule';
 
@@ -13,15 +12,12 @@ export function convertToContainerModule(
   containerModuleApi: ContainerModuleApi,
 ): ContainerModule {
   const containerModule: ContainerModule = {
-    load: (
-      containerBindingService: BindingService,
-      metadataService: MetadataService,
-    ): void => {
+    load: (containerBindingService: BindingService): void => {
       const containerModuleBindingServiceApi: ContainerModuleBindingServiceApi =
         {
           bind: <TInstance, TArgs extends unknown[]>(
             type: Newable<TInstance, TArgs>,
-          ) => bind(type, containerBindingService, metadataService),
+          ) => bind(type, containerBindingService),
           bindToValue: (options: BindValueOptionsApi): void =>
             bindToValue(
               options.serviceId,
