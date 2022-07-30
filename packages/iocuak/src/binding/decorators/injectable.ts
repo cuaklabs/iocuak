@@ -4,11 +4,11 @@ import {
   TypeBinding,
   BindingScope,
   BindingType,
+  getDefaultBindingScope,
 } from '@cuaklabs/iocuak-models';
 
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { InjectableOptionsApi } from '../models/api/InjectableOptionsApi';
-import { getDefaultBindingScope } from '../utils/domain/getDefaultBindingScope';
 
 export function injectable(options?: InjectableOptionsApi): ClassDecorator {
   // eslint-disable-next-line @typescript-eslint/ban-types
