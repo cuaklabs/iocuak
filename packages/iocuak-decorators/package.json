@@ -1,0 +1,43 @@
+{
+  "name": "@cuaklabs/iocuak-decorators",
+  "version": "0.1.0",
+  "description": "Binding modules for iocuak",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/iocuak.git"
+  },
+  "keywords": [
+    "ioc",
+    "dependency",
+    "injection",
+    "typescript"
+  ],
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/iocuak/issues"
+  },
+  "dependencies": {
+    "@cuaklabs/iocuak-common": "workspace:../iocuak-common",
+    "@cuaklabs/iocuak-models": "workspace:../iocuak-models",
+    "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:../iocuak-reflect-metadata-utils"
+  },
+  "devDependencies": {
+    "rimraf": "3.0.2",
+    "typescript": "4.7.4"
+  },
+  "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-decorators#readme",
+  "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
+  "peerDependencies": {
+    "reflect-metadata": "0.1.13"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "build:dev": "tsc --build tsconfig.dev.json",
+    "build:clean": "rimraf lib"
+  }
+}

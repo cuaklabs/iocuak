@@ -1,0 +1,4 @@
+**/*.spec.js
+**/*.spec.js.map
+**/*.ts
+!lib/**/*.d.ts
