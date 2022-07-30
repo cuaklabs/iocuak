@@ -5,6 +5,12 @@ coverage:
       iocuak:
         flags: 
           - iocuak
+      iocuak-common:
+        flags:
+          - iocuak-common
+      iocuak-decorators:
+        flags:
+          - iocuak-decorators
       iocuak-models:
         flags:
           - iocuak-models
@@ -22,6 +28,12 @@ flags:
   iocuak:
     paths:
       - packages/iocuak/
+  iocuak-common:
+    paths:
+      - packages/iocuak-common/
+  iocuak-decorators:
+    paths:
+      - packages/iocuak-decorators/
   iocuak-models:
     paths: packages/iocuak-models/
   iocuak-reflect-metadata-utils:
