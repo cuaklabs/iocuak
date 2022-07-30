@@ -1,5 +1,5 @@
-import { TypeBinding } from '@cuaklabs/iocuak-binding';
 import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import { TypeBinding } from '@cuaklabs/iocuak-models';
 
 import { isFunction } from '../../../common/utils/isFunction';
 import { stringifyServiceId } from '../../../utils/stringifyServiceId';

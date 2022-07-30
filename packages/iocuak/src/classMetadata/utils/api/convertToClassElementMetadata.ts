@@ -1,7 +1,7 @@
 import {
   ClassElementMetadata,
   ClassElementMetadataType,
-} from '@cuaklabs/iocuak-class-metadata';
+} from '@cuaklabs/iocuak-models';
 
 import { ClassElementMetadataApi } from '../../models/api/ClassElementMetadataApi';
 import { ClassElementMetadataApiType } from '../../models/api/ClassElementMetadatApiType';

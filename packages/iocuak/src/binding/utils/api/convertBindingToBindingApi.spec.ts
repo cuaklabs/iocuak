@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { TypeBinding, ValueBinding } from '@cuaklabs/iocuak-binding';
+import { TypeBinding, ValueBinding } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../fixtures/domain/ValueBindingFixtures';

@@ -3,7 +3,7 @@ import {
   ClassMetadata,
   classMetadataReflectKey,
   getDefaultClassMetadata,
-} from '@cuaklabs/iocuak-class-metadata';
+} from '@cuaklabs/iocuak-models';
 import {
   getReflectMetadata,
   updateReflectMetadata,

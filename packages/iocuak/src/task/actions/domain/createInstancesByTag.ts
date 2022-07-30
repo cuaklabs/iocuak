@@ -1,5 +1,5 @@
-import { Binding } from '@cuaklabs/iocuak-binding';
 import { Tag } from '@cuaklabs/iocuak-common';
+import { Binding } from '@cuaklabs/iocuak-models';
 
 import { mapIterable } from '../../../common/utils/mapIterable';
 import { TaskContext } from '../../models/domain/TaskContext';

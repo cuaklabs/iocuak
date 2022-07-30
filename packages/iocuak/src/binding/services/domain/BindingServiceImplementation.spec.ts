@@ -2,8 +2,8 @@ import { beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-import { Binding } from '@cuaklabs/iocuak-binding';
 import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import { Binding } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
 import { BindingService } from './BindingService';

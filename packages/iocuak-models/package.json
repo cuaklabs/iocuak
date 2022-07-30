@@ -1,7 +1,7 @@
 {
-  "name": "@cuaklabs/iocuak-class-metadata",
+  "name": "@cuaklabs/iocuak-models",
   "version": "0.1.0",
-  "description": "Metadata models for iocuak",
+  "description": "Binding modules for iocuak",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "rimraf": "3.0.2",
     "typescript": "4.7.4"
   },
-  "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-class-metadata#readme",
+  "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-models#readme",
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
   "peerDependencies": {
     "reflect-metadata": "0.1.13"

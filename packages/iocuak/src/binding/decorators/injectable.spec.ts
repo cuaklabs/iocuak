@@ -2,12 +2,12 @@ import 'reflect-metadata';
 
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
+import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import {
   bindingReflectKey,
   TypeBinding,
   BindingScope,
-} from '@cuaklabs/iocuak-binding';
-import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+} from '@cuaklabs/iocuak-models';
 
 import { InjectableOptionsApiFixtures } from '../fixtures/api/InjectableOptionsApiFixtures';
 import { TypeBindingFixtures } from '../fixtures/domain/TypeBindingFixtures';

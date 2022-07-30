@@ -1,8 +1,8 @@
+import { ServiceId } from '@cuaklabs/iocuak-common';
 import {
   ClassElementMetadata,
   ClassElementMetadataType,
-} from '@cuaklabs/iocuak-class-metadata';
-import { ServiceId } from '@cuaklabs/iocuak-common';
+} from '@cuaklabs/iocuak-models';
 
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ClassElementMetadataApi } from '../../../classMetadata/models/api/ClassElementMetadataApi';

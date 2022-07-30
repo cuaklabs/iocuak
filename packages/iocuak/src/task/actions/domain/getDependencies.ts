@@ -1,7 +1,4 @@
-import {
-  ClassElementMetadata,
-  ClassMetadata,
-} from '@cuaklabs/iocuak-class-metadata';
+import { ClassElementMetadata, ClassMetadata } from '@cuaklabs/iocuak-models';
 
 import { mapIterable } from '../../../common/utils/mapIterable';
 import { ServiceDependencies } from '../../models/domain/ServiceDependencies';

@@ -1,9 +1,9 @@
+import { Newable, Tag } from '@cuaklabs/iocuak-common';
 import {
   TypeBinding,
   BindingScope,
   BindingType,
-} from '@cuaklabs/iocuak-binding';
-import { Newable, Tag } from '@cuaklabs/iocuak-common';
+} from '@cuaklabs/iocuak-models';
 
 import { PickKeys } from '../../../common/models/domain/PickKeys';
 

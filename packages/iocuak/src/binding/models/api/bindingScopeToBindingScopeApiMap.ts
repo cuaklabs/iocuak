@@ -1,4 +1,4 @@
-import { BindingScope } from '@cuaklabs/iocuak-binding';
+import { BindingScope } from '@cuaklabs/iocuak-models';
 
 import { BindingScopeApi } from './BindingScopeApi';
 

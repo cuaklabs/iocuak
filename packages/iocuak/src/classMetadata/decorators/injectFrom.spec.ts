@@ -2,14 +2,14 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-jest.mock('@cuaklabs/iocuak-class-metadata');
+jest.mock('@cuaklabs/iocuak-models');
 jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');
 
+import { Newable } from '@cuaklabs/iocuak-common';
 import {
   classMetadataReflectKey,
   getDefaultClassMetadata,
-} from '@cuaklabs/iocuak-class-metadata';
-import { Newable } from '@cuaklabs/iocuak-common';
+} from '@cuaklabs/iocuak-models';
 import {
   getReflectMetadata,
   updateReflectMetadata,

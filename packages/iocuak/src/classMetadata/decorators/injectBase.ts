@@ -3,7 +3,7 @@ import {
   ClassElementMetadata,
   ClassMetadata,
   getDefaultClassMetadata,
-} from '@cuaklabs/iocuak-class-metadata';
+} from '@cuaklabs/iocuak-models';
 import { updateReflectMetadata } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
 export function injectBase<TInput>(

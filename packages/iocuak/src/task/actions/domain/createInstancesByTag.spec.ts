@@ -4,8 +4,8 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./getBinding');
 
-import { Binding } from '@cuaklabs/iocuak-binding';
 import { Tag } from '@cuaklabs/iocuak-common';
+import { Binding } from '@cuaklabs/iocuak-models';
 
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { BindingService } from '../../../binding/services/domain/BindingService';

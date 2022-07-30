@@ -1,10 +1,10 @@
+import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import {
   bindingReflectKey,
   TypeBinding,
   BindingScope,
   BindingType,
-} from '@cuaklabs/iocuak-binding';
-import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+} from '@cuaklabs/iocuak-models';
 
 import { bindingScopeApiToBindingScopeMap } from '../models/api/bindingScopeApiToBindingScopeMap';
 import { InjectableOptionsApi } from '../models/api/InjectableOptionsApi';
