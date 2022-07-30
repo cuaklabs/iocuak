@@ -5,7 +5,7 @@ import {
   BindingType,
 } from '@cuaklabs/iocuak-models';
 
-import { PickKeys } from '../../../common/models/domain/PickKeys';
+import { PickKeys } from '../../../common/models/PickKeys';
 
 export class TypeBindingFixtures {
   static readonly #type: Newable = class {};
