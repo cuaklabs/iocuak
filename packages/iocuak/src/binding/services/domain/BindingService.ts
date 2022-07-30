@@ -1,5 +1,5 @@
-import { Binding } from '@cuaklabs/iocuak-binding';
 import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import { Binding } from '@cuaklabs/iocuak-models';
 
 export interface BindingService {
   get<TInstance, TArgs extends unknown[]>(

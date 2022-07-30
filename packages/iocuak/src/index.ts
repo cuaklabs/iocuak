@@ -1,6 +1,12 @@
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import {
+  inject,
+  injectable,
+  injectFrom,
+  injectFromBase,
+  injectTag,
+} from '@cuaklabs/iocuak-decorators';
 
-import { injectable } from './binding/decorators/injectable';
 import { BaseBindingApi } from './binding/models/api/BaseBindingApi';
 import { BindingApi } from './binding/models/api/BindingApi';
 import { BindingScopeApi } from './binding/models/api/BindingScopeApi';
@@ -9,10 +15,6 @@ import { InjectableOptionsApi } from './binding/models/api/InjectableOptionsApi'
 import { TypeBindingApi } from './binding/models/api/TypeBindingApi';
 import { ValueBindingApi } from './binding/models/api/ValueBindingApi';
 import { BindingServiceApi } from './binding/services/api/BindingServiceApi';
-import { inject } from './classMetadata/decorators/inject';
-import { injectFrom } from './classMetadata/decorators/injectFrom';
-import { injectFromBase } from './classMetadata/decorators/injectFromBase';
-import { injectTag } from './classMetadata/decorators/injectTag';
 import { BaseClassElementMetadataApi } from './classMetadata/models/api/BaseClassElementMetadataApi';
 import { BaseClassMetadataExtensionApi } from './classMetadata/models/api/BaseClassMetadataExtensionApi';
 import { ClassElementMetadataApi } from './classMetadata/models/api/ClassElementMetadataApi';

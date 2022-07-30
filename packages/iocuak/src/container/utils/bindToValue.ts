@@ -1,5 +1,5 @@
-import { ValueBinding, BindingType } from '@cuaklabs/iocuak-binding';
 import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import { ValueBinding, BindingType } from '@cuaklabs/iocuak-models';
 
 import { BindingService } from '../../binding/services/domain/BindingService';
 

@@ -5,11 +5,11 @@ import * as jestMock from 'jest-mock';
 jest.mock('../../../containerModule/utils/api/convertToContainerModule');
 jest.mock('../../../containerModule/utils/api/convertToContainerModuleAsync');
 
+import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
 import {
   ClassElementMetadata,
   ClassElementMetadataType,
-} from '@cuaklabs/iocuak-class-metadata';
-import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+} from '@cuaklabs/iocuak-models';
 
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ClassElementServiceIdMetadataApi } from '../../../classMetadata/models/api/ClassElementServiceIdMetadataApi';

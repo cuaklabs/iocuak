@@ -1,5 +1,5 @@
-import { getBindingMetadata, TypeBinding } from '@cuaklabs/iocuak-binding';
 import { Newable } from '@cuaklabs/iocuak-common';
+import { getBindingMetadata, TypeBinding } from '@cuaklabs/iocuak-models';
 
 export function getBindingOrThrow<TInstance, TArgs extends unknown[]>(
   type: Newable<TInstance, TArgs>,

@@ -1,5 +1,5 @@
-import { Binding } from '@cuaklabs/iocuak-binding';
 import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import { Binding } from '@cuaklabs/iocuak-models';
 
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { chain } from '../../../common/utils/chain';

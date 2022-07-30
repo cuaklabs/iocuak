@@ -3,7 +3,7 @@ import {
   BindingType,
   TypeBinding,
   ValueBinding,
-} from '@cuaklabs/iocuak-binding';
+} from '@cuaklabs/iocuak-models';
 
 import { BindingApi } from '../../models/api/BindingApi';
 import { bindingScopeToBindingScopeApiMap } from '../../models/api/bindingScopeToBindingScopeApiMap';

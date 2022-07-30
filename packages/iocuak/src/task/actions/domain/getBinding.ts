@@ -1,5 +1,5 @@
-import { Binding } from '@cuaklabs/iocuak-binding';
 import { ServiceId } from '@cuaklabs/iocuak-common';
+import { Binding } from '@cuaklabs/iocuak-models';
 
 import { lazyGetBindingOrThrow } from '../../../binding/utils/domain/lazyGetBindingOrThrow';
 import { TaskContext } from '../../models/domain/TaskContext';

@@ -1,4 +1,4 @@
-import { TypeBinding, BindingScope } from '@cuaklabs/iocuak-binding';
+import { TypeBinding, BindingScope } from '@cuaklabs/iocuak-models';
 
 import { TaskContext } from '../../models/domain/TaskContext';
 import { createInstanceInRequestScope } from './createInstanceInRequestScope';

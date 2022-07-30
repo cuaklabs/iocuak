@@ -4,7 +4,7 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./createInstanceInTransientScope');
 
-import { TypeBinding } from '@cuaklabs/iocuak-binding';
+import { TypeBinding } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { ContainerSingletonService } from '../../../container/services/domain/ContainerSingletonService';

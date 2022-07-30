@@ -4,7 +4,7 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./createInstanceFromTypeBinding');
 
-import { TypeBinding, ValueBinding } from '@cuaklabs/iocuak-binding';
+import { TypeBinding, ValueBinding } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';

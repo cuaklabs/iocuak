@@ -1,5 +1,5 @@
-import { Binding } from '@cuaklabs/iocuak-binding';
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import { Binding } from '@cuaklabs/iocuak-models';
 
 import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';

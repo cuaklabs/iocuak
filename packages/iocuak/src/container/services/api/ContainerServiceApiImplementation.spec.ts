@@ -12,8 +12,8 @@ jest.mock('../../../task/actions/domain/loadContainerModule');
 jest.mock('../../utils/bind');
 jest.mock('../../utils/bindToValue');
 
-import { Binding } from '@cuaklabs/iocuak-binding';
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import { Binding } from '@cuaklabs/iocuak-models';
 
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { BindingApi } from '../../../binding/models/api/BindingApi';

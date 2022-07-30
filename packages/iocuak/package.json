@@ -19,9 +19,9 @@
     "url": "https://github.com/cuaklabs/iocuak/issues"
   },
   "dependencies": {
-    "@cuaklabs/iocuak-binding": "workspace:../iocuak-binding",
-    "@cuaklabs/iocuak-class-metadata": "workspace:../iocuak-class-metadata",
     "@cuaklabs/iocuak-common": "workspace:../iocuak-common",
+    "@cuaklabs/iocuak-decorators": "workspace:../iocuak-decorators",
+    "@cuaklabs/iocuak-models": "workspace:../iocuak-models",
     "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:../iocuak-reflect-metadata-utils"
   },
   "devDependencies": {

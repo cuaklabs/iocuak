@@ -3,9 +3,8 @@ import 'reflect-metadata';
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
 import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import { inject, injectable } from '@cuaklabs/iocuak-decorators';
 
-import { injectable } from '../../../binding/decorators/injectable';
-import { inject } from '../../../classMetadata/decorators/inject';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { ContainerModuleBindingServiceApi } from '../../services/api/ContainerModuleBindingServiceApi';
 import { ContainerApi } from './ContainerApi';

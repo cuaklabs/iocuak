@@ -1,4 +1,4 @@
-import { ClassElementMetadata } from '@cuaklabs/iocuak-class-metadata';
+import { ClassElementMetadata } from '@cuaklabs/iocuak-models';
 
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleMetadataBase } from './ContainerModuleMetadataBase';
