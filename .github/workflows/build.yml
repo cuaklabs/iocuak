@@ -13,10 +13,14 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    outputs:
+      affectedPackages: ${{ steps.get-affected-packages.outputs.packages }}
     if: "!(github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == false)"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -46,6 +50,13 @@ jobs:
       - name: Install dependencies
         run: pnpm --recursive install
 
+      - name: Get affected packages
+        id: get-affected-packages
+        run: echo "::set-output name=packages::$(node ./scripts/getAffectedProjects.mjs origin/${{github.base_ref}})"
+
+      - name: Show affected packages
+        run: echo "${{ steps.get-affected-packages.outputs.packages }}"
+
       - name: Compile source files
         run: pnpm run build:all
 
@@ -71,15 +82,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        package:
-          - iocuak
-          - iocuak-common
-          - iocuak-decorators
-          - iocuak-models
-          - iocuak-reflect-metadata-utils
-          - porygon
-          - porygon-typeorm
+      matrix: ${{fromJSON(needs.build.outputs.affectedPackages)}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
