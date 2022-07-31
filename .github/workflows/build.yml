@@ -60,8 +60,8 @@ jobs:
       - name: Compile source files
         run: pnpm run build:all
 
-      - name: Lint source files
-        run: pnpm run lint:all
+      - name: Lint affected source files
+        run: pnpm run lint:affected
 
       - name: Get current git commit hash
         id: get-git-commit-hash

@@ -11,6 +11,7 @@
     "iocuak-benchmarck:createInstance:js": "clinic flame -- node ./packages/iocuak-benchmark/lib/benchmarks/createInstance/index.js",
     "iocuak-benchmarck:createInstancesByTag:js": "clinic flame -- node ./packages/iocuak-benchmark/lib/benchmarks/createInstancesByTag/index.js",
     "lint:all": "nx run-many --target=lint --all",
+    "lint:affected": "nx affected --target=lint",
     "prepare": "husky install",
     "prepublish:packages": "pnpm run build && pnpm run test:js && pnpm run test:e2e:js",
     "test:coverage": "pnpm run test --coverage",
