@@ -5,8 +5,8 @@ import {
   ClassMetadata,
   getClassMetadata,
 } from '@cuaklabs/iocuak-models';
+import { TypeBindingApi } from '@cuaklabs/iocuak-models-api';
 
-import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';

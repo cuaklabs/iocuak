@@ -4,12 +4,14 @@ import {
   TypeBinding,
   ValueBinding,
 } from '@cuaklabs/iocuak-models';
+import {
+  BindingApi,
+  BindingTypeApi,
+  TypeBindingApi,
+  ValueBindingApi,
+} from '@cuaklabs/iocuak-models-api';
 
-import { BindingApi } from '../../models/api/BindingApi';
 import { bindingScopeToBindingScopeApiMap } from '../../models/api/bindingScopeToBindingScopeApiMap';
-import { BindingTypeApi } from '../../models/api/BindingTypeApi';
-import { TypeBindingApi } from '../../models/api/TypeBindingApi';
-import { ValueBindingApi } from '../../models/api/ValueBindingApi';
 
 export function convertBindingToBindingApi<TInstance, TArgs extends unknown[]>(
   binding: TypeBinding<TInstance, TArgs>,

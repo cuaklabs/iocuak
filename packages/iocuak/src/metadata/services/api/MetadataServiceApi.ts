@@ -1,6 +1,6 @@
 import { Newable } from '@cuaklabs/iocuak-common';
+import { TypeBindingApi } from '@cuaklabs/iocuak-models-api';
 
-import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 
 export interface MetadataServiceApi {
