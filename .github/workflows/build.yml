@@ -54,9 +54,6 @@ jobs:
         id: get-affected-packages
         run: echo "::set-output name=packages::$(node ./scripts/getAffectedProjects.mjs origin/${{github.base_ref}})"
 
-      - name: Show affected packages
-        run: echo "${{ steps.get-affected-packages.outputs.packages }}"
-
       - name: Compile source files
         run: pnpm run build:all
 
