@@ -14,10 +14,9 @@ jest.mock('../../utils/bindToValue');
 
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import { Binding } from '@cuaklabs/iocuak-models';
+import { BindingApi, BindingTypeApi } from '@cuaklabs/iocuak-models-api';
 
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
-import { BindingApi } from '../../../binding/models/api/BindingApi';
-import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
 import { BindingService } from '../../../binding/services/domain/BindingService';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';

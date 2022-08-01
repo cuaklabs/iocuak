@@ -1,7 +1,7 @@
 import { Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import { BindingApi } from '@cuaklabs/iocuak-models-api';
 
 import { BindValueOptionsApi } from '../../../container/models/api/BindValueOptionsApi';
-import { BindingApi } from '../../models/api/BindingApi';
 
 export interface BindingServiceApi {
   bind<TInstance, TArgs extends unknown[]>(
