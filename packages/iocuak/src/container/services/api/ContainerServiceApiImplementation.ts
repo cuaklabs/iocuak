@@ -1,7 +1,7 @@
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import { Binding } from '@cuaklabs/iocuak-models';
+import { BindingApi } from '@cuaklabs/iocuak-models-api';
 
-import { BindingApi } from '../../../binding/models/api/BindingApi';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';

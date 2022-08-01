@@ -22,6 +22,7 @@
     "@cuaklabs/iocuak-common": "workspace:../iocuak-common",
     "@cuaklabs/iocuak-decorators": "workspace:../iocuak-decorators",
     "@cuaklabs/iocuak-models": "workspace:../iocuak-models",
+    "@cuaklabs/iocuak-models-api": "workspace:../iocuak-models-api",
     "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:../iocuak-reflect-metadata-utils"
   },
   "devDependencies": {

@@ -1,13 +1,15 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
 import { TypeBinding, ValueBinding } from '@cuaklabs/iocuak-models';
+import {
+  BindingApi,
+  BindingScopeApi,
+  BindingTypeApi,
+} from '@cuaklabs/iocuak-models-api';
 
 import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../fixtures/domain/ValueBindingFixtures';
-import { BindingApi } from '../../models/api/BindingApi';
-import { BindingScopeApi } from '../../models/api/BindingScopeApi';
 import { bindingScopeToBindingScopeApiMap } from '../../models/api/bindingScopeToBindingScopeApiMap';
-import { BindingTypeApi } from '../../models/api/BindingTypeApi';
 import { convertBindingToBindingApi } from './convertBindingToBindingApi';
 
 describe(convertBindingToBindingApi.name, () => {

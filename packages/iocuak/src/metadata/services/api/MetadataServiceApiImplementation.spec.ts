@@ -14,11 +14,13 @@ import {
   ClassMetadata,
   getClassMetadata,
 } from '@cuaklabs/iocuak-models';
+import {
+  BindingScopeApi,
+  BindingTypeApi,
+  TypeBindingApi,
+} from '@cuaklabs/iocuak-models-api';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
-import { BindingScopeApi } from '../../../binding/models/api/BindingScopeApi';
-import { BindingTypeApi } from '../../../binding/models/api/BindingTypeApi';
-import { TypeBindingApi } from '../../../binding/models/api/TypeBindingApi';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';
