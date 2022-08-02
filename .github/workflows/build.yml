@@ -111,12 +111,8 @@ jobs:
           restore-keys: |
             pnpm-store-
         
-      - name: Install dependencies (root package)
-        run: pnpm install
-
-      - name: Install dependencies (package)
-        run: pnpm install
-        working-directory: ./packages/${{ matrix.package }}
+      - name: Install dependencies
+        run: pnpm --recursive install
 
       - name: Get current git commit hash
         id: get-git-commit-hash
