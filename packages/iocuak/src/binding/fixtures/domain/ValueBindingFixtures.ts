@@ -11,13 +11,4 @@ export class ValueBindingFixtures {
 
     return fixture;
   }
-
-  public static get withNoTags(): ValueBinding {
-    const fixture: ValueBinding = {
-      ...ValueBindingFixtures.any,
-      tags: [],
-    };
-
-    return fixture;
-  }
 }
