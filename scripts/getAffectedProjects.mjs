@@ -36,4 +36,4 @@ if (stringifiedPackages.length === 0) {
     .map((packageName) => packageName.trim());
 }
 
-console.log(JSON.stringify({ package: packageNames }));
+console.log(JSON.stringify(packageNames));
