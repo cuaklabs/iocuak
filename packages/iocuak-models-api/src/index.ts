@@ -6,8 +6,25 @@ import { bindingScopeToBindingScopeApiMap } from './binding/models/api/bindingSc
 import { BindingTypeApi } from './binding/models/api/BindingTypeApi';
 import { TypeBindingApi } from './binding/models/api/TypeBindingApi';
 import { ValueBindingApi } from './binding/models/api/ValueBindingApi';
+import { BaseClassElementMetadataApi } from './classMetadata/models/api/BaseClassElementMetadataApi';
+import { ClassElementMetadataApi } from './classMetadata/models/api/ClassElementMetadataApi';
+import { ClassElementMetadataApiType } from './classMetadata/models/api/ClassElementMetadatApiType';
+import { ClassElementServiceIdMetadataApi } from './classMetadata/models/api/ClassElementServiceIdMetadataApi';
+import { ClassElementTagMetadataApi } from './classMetadata/models/api/ClassElementTagMetadataApi';
+import { ClassMetadataApi } from './classMetadata/models/api/ClassMetadataApi';
 
-export type { BaseBindingApi, BindingApi, TypeBindingApi, ValueBindingApi };
+export type {
+  BaseBindingApi,
+  BaseClassElementMetadataApi,
+  BindingApi,
+  ClassElementMetadataApi,
+  ClassElementMetadataApiType,
+  ClassElementServiceIdMetadataApi,
+  ClassElementTagMetadataApi,
+  ClassMetadataApi,
+  TypeBindingApi,
+  ValueBindingApi,
+};
 
 export {
   BindingScopeApi,
