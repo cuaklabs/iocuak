@@ -81,3 +81,5 @@ export {
   injectTag,
   MetadataProviderApi as MetadataProvider,
 };
+
+export const a: number = 2;
