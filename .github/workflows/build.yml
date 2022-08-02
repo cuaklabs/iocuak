@@ -78,7 +78,7 @@ jobs:
     name: Test with coverage
     needs: build
     runs-on: ubuntu-latest
-    if: fromJSON(needs.build.outputs.affectedPackages).length != 0
+    if: ${{ needs.build.outputs.affectedPackages != '[]' }}
     strategy:
       matrix:
         packages: ${{fromJSON(needs.build.outputs.affectedPackages)}}
