@@ -81,7 +81,7 @@ jobs:
     if: ${{ needs.build.outputs.affectedPackages != '[]' }}
     strategy:
       matrix:
-        packages: ${{fromJSON(needs.build.outputs.affectedPackages)}}
+        package: ${{fromJSON(needs.build.outputs.affectedPackages)}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
