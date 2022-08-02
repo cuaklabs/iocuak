@@ -61,22 +61,4 @@ export class TypeBindingFixtures {
 
     return fixture;
   }
-
-  public static get withScopeTransientAndTagsEmpty(): TypeBinding {
-    const fixture: TypeBinding = {
-      ...TypeBindingFixtures.withScopeTransient,
-      tags: [],
-    };
-
-    return fixture;
-  }
-
-  public static get withTagsEmpty(): TypeBinding {
-    const fixture: TypeBinding = {
-      ...TypeBindingFixtures.any,
-      tags: [],
-    };
-
-    return fixture;
-  }
 }
