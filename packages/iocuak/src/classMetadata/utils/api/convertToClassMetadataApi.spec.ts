@@ -4,9 +4,11 @@ import {
   ClassElementMetadataType,
   ClassMetadata,
 } from '@cuaklabs/iocuak-models';
+import {
+  ClassElementMetadataApiType,
+  ClassMetadataApi,
+} from '@cuaklabs/iocuak-models-api';
 
-import { ClassElementMetadataApiType } from '../../models/api/ClassElementMetadatApiType';
-import { ClassMetadataApi } from '../../models/api/ClassMetadataApi';
 import { convertToClassMetadataApi } from './convertToClassMetadataApi';
 
 describe(convertToClassMetadataApi.name, () => {

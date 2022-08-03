@@ -3,9 +3,9 @@ import {
   ClassElementMetadata,
   ClassElementMetadataType,
 } from '@cuaklabs/iocuak-models';
+import { ClassElementMetadataApi } from '@cuaklabs/iocuak-models-api';
 
 import { BindingService } from '../../../binding/services/domain/BindingService';
-import { ClassElementMetadataApi } from '../../../classMetadata/models/api/ClassElementMetadataApi';
 import { convertToClassElementMetadata } from '../../../classMetadata/utils/api/convertToClassElementMetadata';
 import { isClassElementMetadataApi } from '../../../classMetadata/utils/api/isClassElementMetadataApi';
 import { isFunction } from '../../../common/utils/isFunction';

@@ -1,6 +1,8 @@
-import { ClassElementMetadataApiType } from '../../models/api/ClassElementMetadatApiType';
-import { ClassElementServiceIdMetadataApi } from '../../models/api/ClassElementServiceIdMetadataApi';
-import { ClassElementTagMetadataApi } from '../../models/api/ClassElementTagMetadataApi';
+import {
+  ClassElementMetadataApiType,
+  ClassElementServiceIdMetadataApi,
+  ClassElementTagMetadataApi,
+} from '@cuaklabs/iocuak-models-api';
 
 export class ClassElementMetadataApiFixtures {
   public static get withTypeServiceId(): ClassElementServiceIdMetadataApi {

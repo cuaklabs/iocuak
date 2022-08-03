@@ -5,10 +5,12 @@ import {
   ClassElementServiceIdMetadata,
   ClassElementTagMetadata,
 } from '@cuaklabs/iocuak-models';
+import {
+  ClassElementServiceIdMetadataApi,
+  ClassElementTagMetadataApi,
+} from '@cuaklabs/iocuak-models-api';
 
 import { ClassElementMetadataApiFixtures } from '../../fixtures/api/ClassElementMetadataApiFixtures';
-import { ClassElementServiceIdMetadataApi } from '../../models/api/ClassElementServiceIdMetadataApi';
-import { ClassElementTagMetadataApi } from '../../models/api/ClassElementTagMetadataApi';
 import { convertToClassElementMetadata } from './convertToClassElementMetadata';
 
 describe(convertToClassElementMetadata.name, () => {

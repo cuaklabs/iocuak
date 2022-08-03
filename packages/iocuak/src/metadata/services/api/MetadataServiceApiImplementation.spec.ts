@@ -18,11 +18,11 @@ import {
   BindingScopeApi,
   BindingTypeApi,
   TypeBindingApi,
+  ClassMetadataApi,
 } from '@cuaklabs/iocuak-models-api';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
-import { ClassMetadataApi } from '../../../classMetadata/models/api/ClassMetadataApi';
 import { convertToClassMetadataApi } from '../../../classMetadata/utils/api/convertToClassMetadataApi';
 import { MetadataServiceApiImplementation } from './MetadataServiceApiImplementation';
 

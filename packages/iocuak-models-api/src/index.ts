@@ -18,7 +18,6 @@ export type {
   BaseClassElementMetadataApi,
   BindingApi,
   ClassElementMetadataApi,
-  ClassElementMetadataApiType,
   ClassElementServiceIdMetadataApi,
   ClassElementTagMetadataApi,
   ClassMetadataApi,
@@ -31,4 +30,5 @@ export {
   bindingScopeApiToBindingScopeMap,
   bindingScopeToBindingScopeApiMap,
   BindingTypeApi,
+  ClassElementMetadataApiType,
 };
