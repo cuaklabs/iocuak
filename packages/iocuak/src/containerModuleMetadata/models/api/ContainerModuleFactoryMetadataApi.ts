@@ -1,6 +1,6 @@
 import { ServiceId } from '@cuaklabs/iocuak-common';
+import { ClassElementMetadataApi } from '@cuaklabs/iocuak-models-api';
 
-import { ClassElementMetadataApi } from '../../../classMetadata/models/api/ClassElementMetadataApi';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModuleMetadataBaseApi } from './ContainerModuleMetadataBaseApi';
 

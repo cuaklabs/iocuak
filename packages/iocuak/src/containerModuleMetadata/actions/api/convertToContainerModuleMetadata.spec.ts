@@ -10,10 +10,12 @@ import {
   ClassElementMetadata,
   ClassElementMetadataType,
 } from '@cuaklabs/iocuak-models';
+import {
+  ClassElementServiceIdMetadataApi,
+  ClassElementTagMetadataApi,
+} from '@cuaklabs/iocuak-models-api';
 
 import { BindingService } from '../../../binding/services/domain/BindingService';
-import { ClassElementServiceIdMetadataApi } from '../../../classMetadata/models/api/ClassElementServiceIdMetadataApi';
-import { ClassElementTagMetadataApi } from '../../../classMetadata/models/api/ClassElementTagMetadataApi';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';

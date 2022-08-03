@@ -1,5 +1,7 @@
-import { ClassElementMetadataApi } from '../../models/api/ClassElementMetadataApi';
-import { ClassElementMetadataApiType } from '../../models/api/ClassElementMetadatApiType';
+import {
+  ClassElementMetadataApi,
+  ClassElementMetadataApiType,
+} from '@cuaklabs/iocuak-models-api';
 
 export function isClassElementMetadataApi(
   value: unknown,

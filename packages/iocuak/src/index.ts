@@ -16,15 +16,15 @@ import {
   BindingTypeApi,
   TypeBindingApi,
   ValueBindingApi,
+  BaseClassElementMetadataApi,
+  ClassElementMetadataApi,
+  ClassElementMetadataApiType,
+  ClassElementServiceIdMetadataApi,
+  ClassElementTagMetadataApi,
+  ClassMetadataApi,
 } from '@cuaklabs/iocuak-models-api';
 
 import { BindingServiceApi } from './binding/services/api/BindingServiceApi';
-import { BaseClassElementMetadataApi } from './classMetadata/models/api/BaseClassElementMetadataApi';
-import { ClassElementMetadataApi } from './classMetadata/models/api/ClassElementMetadataApi';
-import { ClassElementMetadataApiType } from './classMetadata/models/api/ClassElementMetadatApiType';
-import { ClassElementServiceIdMetadataApi } from './classMetadata/models/api/ClassElementServiceIdMetadataApi';
-import { ClassElementTagMetadataApi } from './classMetadata/models/api/ClassElementTagMetadataApi';
-import { ClassMetadataApi } from './classMetadata/models/api/ClassMetadataApi';
 import { BindValueOptionsApi } from './container/models/api/BindValueOptionsApi';
 import { ContainerApi } from './container/modules/api/ContainerApi';
 import { ContainerInstanceServiceApi } from './container/services/api/ContainerInstanceServiceApi';

@@ -2,7 +2,8 @@ import { jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-import { ClassElementMetadataApiType } from '../../../../classMetadata/models/api/ClassElementMetadatApiType';
+import { ClassElementMetadataApiType } from '@cuaklabs/iocuak-models-api';
+
 import { ContainerModuleClassMetadataApi } from '../../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../../models/api/ContainerModuleFactoryMetadataApi';
 import { ContainerModuleMetadataApi } from '../../../models/api/ContainerModuleMetadataApi';
