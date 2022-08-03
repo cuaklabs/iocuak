@@ -19,12 +19,21 @@ async function promisifyExec(command) {
 
 const baseRef = argv[2];
 
-const stringifiedPackages = await promisifyExec(
-  `pnpm exec nx print-affected --base=${baseRef} --head=HEAD --select=projects`,
-);
+const stringifiedPackages = (
+  await promisifyExec(
+    `pnpm exec nx print-affected --base=${baseRef} --head=HEAD --select=projects`,
+  )
+).trim();
 
-const packageNames = stringifiedPackages
-  .split(',')
-  .map((packageName) => packageName.trim());
+/** @type {Array.<string>} */
+let packageNames;
 
-console.log(JSON.stringify({ package: packageNames }));
+if (stringifiedPackages.length === 0) {
+  packageNames = [];
+} else {
+  packageNames = stringifiedPackages
+    .split(',')
+    .map((packageName) => packageName.trim());
+}
+
+console.log(JSON.stringify(packageNames));
