@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Added `chain`.
+- Added `isFunction`.
 - Added `isPromiseLike`.
 - Added `Newable`.
 - Added `ServiceId`.
