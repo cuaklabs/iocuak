@@ -4,7 +4,9 @@ import { Tag } from './models/Tag';
 import { chain } from './utils/chain';
 import { isFunction } from './utils/isFunction';
 import { isPromiseLike } from './utils/isPromiseLike';
+import { mapIterable } from './utils/mapIterable';
+import { mapIterator } from './utils/mapIterator';
 
 export type { Newable, Tag, ServiceId };
 
-export { chain, isFunction, isPromiseLike };
+export { chain, isFunction, isPromiseLike, mapIterable, mapIterator };
