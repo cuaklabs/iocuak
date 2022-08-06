@@ -1,9 +1,11 @@
-import { Newable } from '@cuaklabs/iocuak-common';
+import { Newable, Tag } from '@cuaklabs/iocuak-common';
 import {
   TypeBinding,
   BindingScope,
   BindingType,
 } from '@cuaklabs/iocuak-models';
+
+import { PickKeys } from '../../../common/models/domain/PickKeys';
 
 export class TypeBindingFixtures {
   static readonly #type: Newable = class {};
@@ -42,6 +44,19 @@ export class TypeBindingFixtures {
     const fixture: TypeBinding = {
       ...TypeBindingFixtures.any,
       scope: BindingScope.transient,
+    };
+
+    return fixture;
+  }
+
+  public static get withTagsOne(): TypeBinding & {
+    [T in PickKeys<TypeBinding, 'tags'>]: [Tag] & Tag[];
+  } {
+    const fixture: TypeBinding & {
+      [T in PickKeys<TypeBinding, 'tags'>]: [Tag] & Tag[];
+    } = {
+      ...TypeBindingFixtures.any,
+      tags: ['tag'],
     };
 
     return fixture;
