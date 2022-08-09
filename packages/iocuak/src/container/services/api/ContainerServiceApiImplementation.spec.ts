@@ -2,13 +2,12 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
+jest.mock('@cuaklabs/iocuak-core');
+
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock(
   '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata',
 );
-jest.mock('../../../task/actions/domain/createInstance');
-jest.mock('../../../task/actions/domain/createInstancesByTag');
-jest.mock('../../../task/actions/domain/loadContainerModule');
 jest.mock('../../utils/bind');
 jest.mock('../../utils/bindToValue');
 
@@ -17,6 +16,11 @@ import {
   BindingService,
   ContainerRequestService,
   ContainerSingletonService,
+  createInstancesByTag,
+  createInstance,
+  createInstanceFromBinding,
+  getDependencies,
+  loadContainerModule,
 } from '@cuaklabs/iocuak-core';
 import { Binding } from '@cuaklabs/iocuak-models';
 import { BindingApi, BindingTypeApi } from '@cuaklabs/iocuak-models-api';
@@ -27,11 +31,6 @@ import { ContainerModuleApi } from '../../../containerModule/models/api/Containe
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
-import { createInstance } from '../../../task/actions/domain/createInstance';
-import { createInstanceFromBinding } from '../../../task/actions/domain/createInstanceFromBinding';
-import { createInstancesByTag } from '../../../task/actions/domain/createInstancesByTag';
-import { getDependencies } from '../../../task/actions/domain/getDependencies';
-import { loadContainerModule } from '../../../task/actions/domain/loadContainerModule';
 import { TaskContext } from '../../../task/models/domain/TaskContext';
 import { bind } from '../../utils/bind';
 import { bindToValue } from '../../utils/bindToValue';
