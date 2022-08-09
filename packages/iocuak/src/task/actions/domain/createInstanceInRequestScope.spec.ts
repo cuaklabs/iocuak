@@ -4,10 +4,10 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./createInstanceInTransientScope');
 
+import { ContainerRequestService } from '@cuaklabs/iocuak-core';
 import { TypeBinding } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';
-import { ContainerRequestService } from '../../../container/services/domain/ContainerRequestService';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { TaskContextServices } from '../../models/domain/TaskContextServices';
 import { createInstanceInRequestScope } from './createInstanceInRequestScope';

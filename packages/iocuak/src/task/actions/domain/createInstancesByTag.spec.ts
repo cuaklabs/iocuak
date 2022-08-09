@@ -5,10 +5,10 @@ import * as jestMock from 'jest-mock';
 jest.mock('./getBinding');
 
 import { Tag } from '@cuaklabs/iocuak-common';
+import { BindingService } from '@cuaklabs/iocuak-core';
 import { Binding } from '@cuaklabs/iocuak-models';
 
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
-import { BindingService } from '../../../binding/services/domain/BindingService';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { TaskContextActions } from '../../models/domain/TaskContextActions';
 import { TaskContextServices } from '../../models/domain/TaskContextServices';

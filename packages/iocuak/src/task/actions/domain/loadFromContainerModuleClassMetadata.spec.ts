@@ -4,7 +4,8 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./createInstance');
 
-import { BindingService } from '../../../binding/services/domain/BindingService';
+import { BindingService } from '@cuaklabs/iocuak-core';
+
 import { ContainerModuleClassMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleClassMetadata';
 import { TaskContext } from '../../models/domain/TaskContext';
 import { TaskContextServices } from '../../models/domain/TaskContextServices';

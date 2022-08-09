@@ -4,9 +4,9 @@ import * as jestMock from 'jest-mock';
 
 jest.mock('./getDependency');
 
+import { BindingService } from '@cuaklabs/iocuak-core';
 import { ClassElementMetadataType } from '@cuaklabs/iocuak-models';
 
-import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleFactoryMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadataType } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadataType';

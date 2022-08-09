@@ -1,11 +1,14 @@
-import { BindingService } from '../../../binding/services/domain/BindingService';
-import { BindingServiceImplementation } from '../../../binding/services/domain/BindingServiceImplementation';
+import {
+  BindingService,
+  BindingServiceImplementation,
+  ContainerRequestService,
+  ContainerRequestServiceImplementation,
+  ContainerSingletonService,
+  ContainerSingletonServiceImplementation,
+} from '@cuaklabs/iocuak-core';
+
 import { ContainerServiceApiImplementation } from '../../services/api/ContainerServiceApiImplementation';
-import { ContainerRequestService } from '../../services/domain/ContainerRequestService';
-import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
 import { ContainerService } from '../../services/domain/ContainerService';
-import { ContainerSingletonService } from '../../services/domain/ContainerSingletonService';
-import { ContainerSingletonServiceImplementation } from '../../services/domain/ContainerSingletonServiceImplementation';
 
 export class ContainerApi extends ContainerServiceApiImplementation {
   private constructor(containerService?: ContainerService) {
