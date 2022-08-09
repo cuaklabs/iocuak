@@ -13,11 +13,15 @@ jest.mock('../../utils/bind');
 jest.mock('../../utils/bindToValue');
 
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import {
+  BindingService,
+  ContainerRequestService,
+  ContainerSingletonService,
+} from '@cuaklabs/iocuak-core';
 import { Binding } from '@cuaklabs/iocuak-models';
 import { BindingApi, BindingTypeApi } from '@cuaklabs/iocuak-models-api';
 
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
-import { BindingService } from '../../../binding/services/domain/BindingService';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
@@ -31,9 +35,7 @@ import { loadContainerModule } from '../../../task/actions/domain/loadContainerM
 import { TaskContext } from '../../../task/models/domain/TaskContext';
 import { bind } from '../../utils/bind';
 import { bindToValue } from '../../utils/bindToValue';
-import { ContainerRequestService } from '../domain/ContainerRequestService';
 import { ContainerService } from '../domain/ContainerService';
-import { ContainerSingletonService } from '../domain/ContainerSingletonService';
 import { ContainerServiceApiImplementation } from './ContainerServiceApiImplementation';
 
 describe(ContainerServiceApiImplementation.name, () => {

@@ -1,7 +1,6 @@
 import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import { BindingService } from '@cuaklabs/iocuak-core';
 import { ValueBinding, BindingType } from '@cuaklabs/iocuak-models';
-
-import { BindingService } from '../../binding/services/domain/BindingService';
 
 export function bindToValue<TInstance>(
   serviceId: ServiceId,

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@cuaklabs/iocuak-common": "workspace:../iocuak-common",
+    "@cuaklabs/iocuak-core": "workspace:../iocuak-core",
     "@cuaklabs/iocuak-decorators": "workspace:../iocuak-decorators",
     "@cuaklabs/iocuak-models": "workspace:../iocuak-models",
     "@cuaklabs/iocuak-models-api": "workspace:../iocuak-models-api",

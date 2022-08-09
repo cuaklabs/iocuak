@@ -6,8 +6,8 @@ jest.mock('../../../container/utils/bind');
 jest.mock('../../../container/utils/bindToValue');
 
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import { BindingService } from '@cuaklabs/iocuak-core';
 
-import { BindingService } from '../../../binding/services/domain/BindingService';
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
 import { bind } from '../../../container/utils/bind';
 import { bindToValue } from '../../../container/utils/bindToValue';

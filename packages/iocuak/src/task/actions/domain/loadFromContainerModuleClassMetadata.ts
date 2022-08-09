@@ -1,4 +1,5 @@
-import { BindingService } from '../../../binding/services/domain/BindingService';
+import { BindingService } from '@cuaklabs/iocuak-core';
+
 import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { ContainerModuleClassMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleClassMetadata';
 import { TaskContext } from '../../models/domain/TaskContext';

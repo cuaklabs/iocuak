@@ -1,6 +1,6 @@
 import { Newable, Tag } from '@cuaklabs/iocuak-common';
+import { BindingService } from '@cuaklabs/iocuak-core';
 
-import { BindingService } from '../../../binding/services/domain/BindingService';
 import { BindValueOptionsApi } from '../../../container/models/api/BindValueOptionsApi';
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
 import { bind } from '../../../container/utils/bind';

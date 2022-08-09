@@ -1,6 +1,8 @@
-import { BindingService } from '../../../binding/services/domain/BindingService';
-import { ContainerRequestService } from './ContainerRequestService';
-import { ContainerSingletonService } from './ContainerSingletonService';
+import {
+  BindingService,
+  ContainerRequestService,
+  ContainerSingletonService,
+} from '@cuaklabs/iocuak-core';
 
 export interface ContainerService {
   binding: BindingService;

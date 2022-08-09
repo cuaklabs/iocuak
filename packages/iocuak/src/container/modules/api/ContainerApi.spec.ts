@@ -2,15 +2,15 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-jest.mock('../../../binding/services/domain/BindingServiceImplementation');
-jest.mock('../../services/domain/ContainerRequestServiceImplementation');
-jest.mock('../../services/domain/ContainerSingletonServiceImplementation');
+jest.mock('@cuaklabs/iocuak-core');
 
 import { Newable } from '@cuaklabs/iocuak-common';
+import {
+  BindingServiceImplementation,
+  ContainerRequestServiceImplementation,
+  ContainerSingletonServiceImplementation,
+} from '@cuaklabs/iocuak-core';
 
-import { BindingServiceImplementation } from '../../../binding/services/domain/BindingServiceImplementation';
-import { ContainerRequestServiceImplementation } from '../../services/domain/ContainerRequestServiceImplementation';
-import { ContainerSingletonServiceImplementation } from '../../services/domain/ContainerSingletonServiceImplementation';
 import { ContainerApi } from './ContainerApi';
 
 let currentLabel: number = 0;

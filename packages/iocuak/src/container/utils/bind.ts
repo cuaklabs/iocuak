@@ -1,7 +1,7 @@
 import { Newable } from '@cuaklabs/iocuak-common';
+import { BindingService } from '@cuaklabs/iocuak-core';
 import { TypeBinding } from '@cuaklabs/iocuak-models';
 
-import { BindingService } from '../../binding/services/domain/BindingService';
 import { getBindingOrThrow } from '../../binding/utils/domain/getBindingOrThrow';
 
 export function bind<TInstance, TArgs extends unknown[]>(
