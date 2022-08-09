@@ -23,9 +23,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Added `BindingService`.
+- Added `BindingServiceImplementation`.
 - Added `ContainerRequestService`.
+- Added `ContainerRequestServiceImplementation`.
 - Added `ContainerSingletonService`.
-- Added `ServiceDependencies`.
+- Added `ContainerSingletonServiceImplementation`.
 - Added `TaskContext`.
 - Added `TaskContextActions`.
 - Added `TaskContextServices`.
