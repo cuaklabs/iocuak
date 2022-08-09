@@ -1,4 +1,11 @@
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import {
+  createInstance,
+  createInstanceFromBinding,
+  createInstancesByTag,
+  getDependencies,
+  loadContainerModule,
+} from '@cuaklabs/iocuak-core';
 import { Binding } from '@cuaklabs/iocuak-models';
 import { BindingApi } from '@cuaklabs/iocuak-models-api';
 
@@ -7,11 +14,6 @@ import { ContainerModuleApi } from '../../../containerModule/models/api/Containe
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
-import { createInstance } from '../../../task/actions/domain/createInstance';
-import { createInstanceFromBinding } from '../../../task/actions/domain/createInstanceFromBinding';
-import { createInstancesByTag } from '../../../task/actions/domain/createInstancesByTag';
-import { getDependencies } from '../../../task/actions/domain/getDependencies';
-import { loadContainerModule } from '../../../task/actions/domain/loadContainerModule';
 import { TaskContext } from '../../../task/models/domain/TaskContext';
 import { BindValueOptionsApi } from '../../models/api/BindValueOptionsApi';
 import { bind } from '../../utils/bind';
