@@ -4,14 +4,12 @@ import { BindingScope } from './binding/models/BindingScope';
 import { BindingType } from './binding/models/BindingType';
 import { TypeBinding } from './binding/models/TypeBinding';
 import { ValueBinding } from './binding/models/ValueBinding';
-import { getBindingMetadata } from './binding/utils/getBindingMetadata';
 import { getDefaultBindingScope } from './binding/utils/getDefaultBindingScope';
 import { ClassElementMetadata } from './classMetadata/models/ClassElementMetadata';
 import { ClassElementMetadataType } from './classMetadata/models/ClassElementMetadataType';
 import { ClassElementServiceIdMetadata } from './classMetadata/models/ClassElementServiceIdMetadata';
 import { ClassElementTagMetadata } from './classMetadata/models/ClassElementTagMetadata';
 import { ClassMetadata } from './classMetadata/models/ClassMetadata';
-import { getClassMetadata } from './classMetadata/utils/getClassMetadata';
 import { getDefaultClassMetadata } from './classMetadata/utils/getDefaultClassMetadata';
 import { bindingReflectKey } from './reflectMetadata/models/bindingReflectKey';
 import { classMetadataReflectKey } from './reflectMetadata/models/classMetadataReflectKey';
@@ -33,8 +31,6 @@ export {
   BindingType,
   classMetadataReflectKey,
   ClassElementMetadataType,
-  getBindingMetadata,
-  getClassMetadata,
   getDefaultBindingScope,
   getDefaultClassMetadata,
 };
