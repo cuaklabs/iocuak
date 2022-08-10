@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Added `BindingService`.
 - Added `BindingServiceImplementation`.
+- Added `ContainerModule`.
+- Added `ContainerModuleClassMetadata`.
+- Added `ContainerModuleFactoryMetadata`.
+- Added `ContainerModuleMetadata`.
 - Added `ContainerRequestService`.
 - Added `ContainerRequestServiceImplementation`.
 - Added `ContainerSingletonService`.
@@ -31,6 +35,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `createInstance`.
 - Added `createInstanceFromBinding`.
 - Added `createInstancesByTag`.
+- Added `getBindingMetadata`.
+- Added `getBindingOrThrow`.
+- Added `getClassMetadata`.
 - Added `getDependencies`.
 - Added `loadContainerModule`.
 - Added `TaskContext`.

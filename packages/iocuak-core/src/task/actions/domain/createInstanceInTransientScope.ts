@@ -1,9 +1,6 @@
-import {
-  TypeBinding,
-  ClassMetadata,
-  getClassMetadata,
-} from '@cuaklabs/iocuak-models';
+import { TypeBinding, ClassMetadata } from '@cuaklabs/iocuak-models';
 
+import { getClassMetadata } from '../../../classMetadata/utils/getClassMetadata';
 import { ServiceDependencies } from '../../models/domain/ServiceDependencies';
 import { TaskContext } from '../../models/domain/TaskContext';
 
