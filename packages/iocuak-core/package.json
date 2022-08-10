@@ -20,7 +20,8 @@
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak-core#readme",
   "dependencies": {
     "@cuaklabs/iocuak-common": "workspace:../iocuak-common",
-    "@cuaklabs/iocuak-models": "workspace:../iocuak-models"
+    "@cuaklabs/iocuak-models": "workspace:../iocuak-models",
+    "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:../iocuak-reflect-metadata-utils"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
