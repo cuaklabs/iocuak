@@ -1,5 +1,9 @@
 import { ServiceId } from '@cuaklabs/iocuak-common';
-import { BindingService } from '@cuaklabs/iocuak-core';
+import {
+  BindingService,
+  ContainerModule,
+  ContainerModuleClassMetadata,
+} from '@cuaklabs/iocuak-core';
 import {
   ClassElementMetadata,
   ClassElementMetadataType,
@@ -11,14 +15,12 @@ import { isClassElementMetadataApi } from '../../../classMetadata/utils/api/isCl
 import { isFunction } from '../../../common/utils/isFunction';
 import { isPromiseLike } from '../../../common/utils/isPromiseLike';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
-import { ContainerModule } from '../../../containerModule/models/domain/ContainerModule';
 import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';
 import { convertToContainerModuleAsync } from '../../../containerModule/utils/api/convertToContainerModuleAsync';
 import { isContainerModuleApi } from '../../../containerModule/utils/api/isContainerModuleApi';
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
 import { ContainerModuleMetadataApi } from '../../models/api/ContainerModuleMetadataApi';
-import { ContainerModuleClassMetadata } from '../../models/domain/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from '../../models/domain/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from '../../models/domain/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from '../../models/domain/ContainerModuleMetadataType';

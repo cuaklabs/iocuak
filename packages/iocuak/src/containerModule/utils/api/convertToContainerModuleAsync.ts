@@ -1,5 +1,6 @@
+import { ContainerModule } from '@cuaklabs/iocuak-core';
+
 import { ContainerModuleApi } from '../../models/api/ContainerModuleApi';
-import { ContainerModule } from '../../models/domain/ContainerModule';
 import { convertToContainerModule } from './convertToContainerModule';
 
 export async function convertToContainerModuleAsync(
