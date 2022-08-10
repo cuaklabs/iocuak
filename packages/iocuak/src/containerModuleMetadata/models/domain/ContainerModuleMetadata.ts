@@ -1,4 +1,5 @@
-import { ContainerModuleClassMetadata } from './ContainerModuleClassMetadata';
+import { ContainerModuleClassMetadata } from '@cuaklabs/iocuak-core';
+
 import { ContainerModuleFactoryMetadata } from './ContainerModuleFactoryMetadata';
 
 export type ContainerModuleMetadata<TArgs extends unknown[] = unknown[]> =
