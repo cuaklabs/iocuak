@@ -26,8 +26,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `bindingReflectKey`.
 - Added `ClassMetadata`.
 - Added `classMetadataReflectKey`.
-- Added `getBindingMetadata`.
-- Added `getClassMetadata`.
 - Added `getDefaultBindingScope`.
 - Added `getDefaultClassMetadata`.
 
