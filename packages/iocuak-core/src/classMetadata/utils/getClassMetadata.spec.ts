@@ -13,7 +13,7 @@ import {
 } from '@cuaklabs/iocuak-models';
 import { getReflectMetadata } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
-import { ClassMetadataFixtures } from '../fixtures/domain/ClassMetadataFixtures';
+import { ClassMetadataFixtures } from '../fixtures/ClassMetadataFixtures';
 import { getClassMetadata } from './getClassMetadata';
 
 describe('.getClassMetadata()', () => {
