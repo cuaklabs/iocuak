@@ -2,14 +2,13 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-jest.mock('../../binding/utils/domain/getBindingOrThrow');
+jest.mock('@cuaklabs/iocuak-core');
 
 import { Newable } from '@cuaklabs/iocuak-common';
-import { BindingService } from '@cuaklabs/iocuak-core';
+import { BindingService, getBindingOrThrow } from '@cuaklabs/iocuak-core';
 import { TypeBinding } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../../binding/fixtures/domain/TypeBindingFixtures';
-import { getBindingOrThrow } from '../../binding/utils/domain/getBindingOrThrow';
 import { bind } from '../../container/utils/bind';
 
 describe(bind.name, () => {
