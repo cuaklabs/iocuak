@@ -10,6 +10,9 @@ import {
   BindingService,
   ContainerModule,
   ContainerModuleClassMetadata,
+  ContainerModuleFactoryMetadata,
+  ContainerModuleMetadata,
+  ContainerModuleMetadataType,
 } from '@cuaklabs/iocuak-core';
 import {
   ClassElementMetadata,
@@ -26,9 +29,6 @@ import { convertToContainerModuleAsync } from '../../../containerModule/utils/ap
 import { ContainerModuleMetadataApiMocks } from '../../mocks/models/api/ContainerModuleMetadataApiMocks';
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
-import { ContainerModuleFactoryMetadata } from '../../models/domain/ContainerModuleFactoryMetadata';
-import { ContainerModuleMetadata } from '../../models/domain/ContainerModuleMetadata';
-import { ContainerModuleMetadataType } from '../../models/domain/ContainerModuleMetadataType';
 import { convertToContainerModuleMetadata } from './convertToContainerModuleMetadata';
 
 describe(convertToContainerModuleMetadata.name, () => {
