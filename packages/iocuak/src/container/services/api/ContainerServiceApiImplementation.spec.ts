@@ -22,6 +22,7 @@ import {
   getDependencies,
   loadContainerModule,
   TaskContext,
+  ContainerModuleMetadata,
 } from '@cuaklabs/iocuak-core';
 import { Binding } from '@cuaklabs/iocuak-models';
 import { BindingApi, BindingTypeApi } from '@cuaklabs/iocuak-models-api';
@@ -31,7 +32,6 @@ import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBi
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
-import { ContainerModuleMetadata } from '../../../containerModuleMetadata/models/domain/ContainerModuleMetadata';
 import { bind } from '../../utils/bind';
 import { bindToValue } from '../../utils/bindToValue';
 import { ContainerService } from '../domain/ContainerService';

@@ -3,6 +3,9 @@ import {
   BindingService,
   ContainerModule,
   ContainerModuleClassMetadata,
+  ContainerModuleFactoryMetadata,
+  ContainerModuleMetadata,
+  ContainerModuleMetadataType,
 } from '@cuaklabs/iocuak-core';
 import {
   ClassElementMetadata,
@@ -21,9 +24,6 @@ import { isContainerModuleApi } from '../../../containerModule/utils/api/isConta
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
 import { ContainerModuleMetadataApi } from '../../models/api/ContainerModuleMetadataApi';
-import { ContainerModuleFactoryMetadata } from '../../models/domain/ContainerModuleFactoryMetadata';
-import { ContainerModuleMetadata } from '../../models/domain/ContainerModuleMetadata';
-import { ContainerModuleMetadataType } from '../../models/domain/ContainerModuleMetadataType';
 import { isContainerModuleClassMetadataApi } from './isContainerModuleClassMetadataApi';
 
 export function convertToContainerModuleMetadata<TArgs extends unknown[]>(

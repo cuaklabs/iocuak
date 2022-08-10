@@ -11,6 +11,7 @@ import { ContainerModule } from './containerModule/models/ContainerModule';
 import { ContainerModuleClassMetadata } from './containerModuleMetadata/models/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from './containerModuleMetadata/models/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from './containerModuleMetadata/models/ContainerModuleMetadata';
+import { ContainerModuleMetadataType } from './containerModuleMetadata/models/ContainerModuleMetadataType';
 import { createInstance } from './task/actions/createInstance';
 import { createInstanceFromBinding } from './task/actions/createInstanceFromBinding';
 import { createInstancesByTag } from './task/actions/createInstancesByTag';
@@ -35,6 +36,7 @@ export type {
 
 export {
   BindingServiceImplementation,
+  ContainerModuleMetadataType,
   ContainerRequestServiceImplementation,
   ContainerSingletonServiceImplementation,
   createInstance,

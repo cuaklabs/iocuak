@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `ContainerModuleClassMetadata`.
 - Added `ContainerModuleFactoryMetadata`.
 - Added `ContainerModuleMetadata`.
+- Added `ContainerModuleMetadataType`.
 - Added `ContainerRequestService`.
 - Added `ContainerRequestServiceImplementation`.
 - Added `ContainerSingletonService`.
