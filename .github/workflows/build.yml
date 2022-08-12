@@ -52,7 +52,7 @@ jobs:
 
       - name: Get affected packages
         id: get-affected-packages
-        run: echo "::set-output name=packages::$(node ./scripts/getAffectedProjects.mjs origin/${{github.base_ref}})"
+        run: echo "::set-output name=packages::$(pnpm exec iocuak-get-affected-projects origin/${{github.base_ref}})"
 
       - name: Compile source files
         run: pnpm run build:all
