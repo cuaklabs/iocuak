@@ -1,26 +1,12 @@
-import { exec } from 'node:child_process';
-import { argv } from 'node:process';
+#!/usr/bin/env node
 
-/**
- * @param {string} command command
- * @returns {Promise<string>}
- */
-async function promisifyExec(command) {
-  return new Promise((resolve, reject) => {
-    exec(command, (error, stdout) => {
-      if (error === null) {
-        resolve(stdout);
-      } else {
-        reject(error);
-      }
-    });
-  });
-}
+import { argv } from 'node:process';
+import { promisifiedExec } from '../src/promisifiedExec.js';
 
 const baseRef = argv[2];
 
 const stringifiedPackages = (
-  await promisifyExec(
+  await promisifiedExec(
     `pnpm exec nx print-affected --base=${baseRef} --head=HEAD --select=projects`,
   )
 ).trim();
