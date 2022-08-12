@@ -1,0 +1,23 @@
+{
+  "name": "@cuaklabs/iocuak-scripts",
+  "private": true,
+  "description": "common scripts for iocuak monorepo packages",
+  "exports": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/iocuak.git"
+  },
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/iocuak/issues"
+  },
+  "type": "module",
+  "homepage": "https://github.com/cuaklabs/iocuak#readme",
+  "bin": {
+    "iocuak-get-affected-projects": "./bin/getAffectedProjects.js"
+  },
+  "dependencies": {
+    "nx": "14.5.4"
+  }
+}
