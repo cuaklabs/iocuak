@@ -2,3 +2,9 @@
 **/*.spec.js.map
 **/*.ts
 !lib/**/*.d.ts
+
+.eslintrc.js
+pnpm-lock.yaml
+project.json
+tsconfig.dev.json
+tsconfig.json
