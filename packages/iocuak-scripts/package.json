@@ -15,7 +15,8 @@
   "type": "module",
   "homepage": "https://github.com/cuaklabs/iocuak#readme",
   "bin": {
-    "iocuak-get-affected-projects": "./bin/getAffectedProjects.js"
+    "iocuak-get-affected-projects": "./bin/getAffectedProjects.js",
+    "iocuak-publish": "./bin/publish.js"
   },
   "dependencies": {
     "nx": "14.5.6"
