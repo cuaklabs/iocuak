@@ -18,6 +18,6 @@
     "iocuak-get-affected-projects": "./bin/getAffectedProjects.js"
   },
   "dependencies": {
-    "nx": "14.5.5"
+    "nx": "14.5.6"
   }
 }
