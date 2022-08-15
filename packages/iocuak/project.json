@@ -23,6 +23,17 @@
       "options": {
         "lintFilePatterns": ["packages/iocuak/src/**/*.ts"]
       }
+    },
+    "publish": {
+      "dependsOn": ["build", "^publish"],
+      "executor": "nx:run-commands",
+      "inputs": ["{projectRoot}/**"],
+      "outputs": [],
+      "options": {
+        "commands": [
+          "pnpm exec iocuak-publish ./packages/iocuak"
+        ]
+      }
     }
   }
 }
