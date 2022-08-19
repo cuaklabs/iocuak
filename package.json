@@ -13,7 +13,7 @@
     "lint:all": "nx run-many --target=lint --all",
     "lint:affected": "nx affected --target=lint",
     "prepare": "husky install",
-    "prepublish:packages": "pnpm run build && pnpm run test:js && pnpm run test:e2e:js",
+    "prepublish:packages": "pnpm run build:all && pnpm run test:js && pnpm run test:e2e:js",
     "test:coverage": "pnpm run test --coverage",
     "test:e2e": "nx run-many --target=test:e2e --projects=iocuak-e2e",
     "test:e2e:js": "nx run-many --target=test:e2e:js --projects=iocuak-e2e",
