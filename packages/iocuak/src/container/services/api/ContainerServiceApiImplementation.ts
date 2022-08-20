@@ -12,12 +12,12 @@ import { Binding } from '@cuaklabs/iocuak-models';
 import { BindingApi } from '@cuaklabs/iocuak-models-api';
 
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
+import { bind } from '../../../binding/utils/domain/bind';
+import { bindToValue } from '../../../binding/utils/domain/bindToValue';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { BindValueOptionsApi } from '../../models/api/BindValueOptionsApi';
-import { bind } from '../../utils/bind';
-import { bindToValue } from '../../utils/bindToValue';
 import { ContainerService } from '../domain/ContainerService';
 import { ContainerServiceApi } from './ContainerServiceApi';
 

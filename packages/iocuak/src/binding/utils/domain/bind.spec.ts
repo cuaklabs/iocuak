@@ -8,8 +8,8 @@ import { Newable } from '@cuaklabs/iocuak-common';
 import { BindingService, getBindingOrThrow } from '@cuaklabs/iocuak-core';
 import { TypeBinding } from '@cuaklabs/iocuak-models';
 
-import { TypeBindingFixtures } from '../../binding/fixtures/domain/TypeBindingFixtures';
-import { bind } from '../../container/utils/bind';
+import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
+import { bind } from './bind';
 
 describe(bind.name, () => {
   let typeFixture: Newable;
