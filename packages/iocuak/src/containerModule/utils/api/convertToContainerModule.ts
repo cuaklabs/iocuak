@@ -1,10 +1,10 @@
 import { Newable, Tag } from '@cuaklabs/iocuak-common';
 import { BindingService, ContainerModule } from '@cuaklabs/iocuak-core';
 
+import { bind } from '../../../binding/utils/domain/bind';
+import { bindToValue } from '../../../binding/utils/domain/bindToValue';
 import { BindValueOptionsApi } from '../../../container/models/api/BindValueOptionsApi';
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
-import { bind } from '../../../container/utils/bind';
-import { bindToValue } from '../../../container/utils/bindToValue';
 import { ContainerModuleApi } from '../../models/api/ContainerModuleApi';
 
 export function convertToContainerModule(

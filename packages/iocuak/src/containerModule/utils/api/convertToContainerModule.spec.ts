@@ -2,15 +2,15 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import * as jestMock from 'jest-mock';
 
-jest.mock('../../../container/utils/bind');
-jest.mock('../../../container/utils/bindToValue');
+jest.mock('../../../binding/utils/domain/bind');
+jest.mock('../../../binding/utils/domain/bindToValue');
 
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import { BindingService, ContainerModule } from '@cuaklabs/iocuak-core';
 
+import { bind } from '../../../binding/utils/domain/bind';
+import { bindToValue } from '../../../binding/utils/domain/bindToValue';
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
-import { bind } from '../../../container/utils/bind';
-import { bindToValue } from '../../../container/utils/bindToValue';
 import { ContainerModuleApi } from '../../models/api/ContainerModuleApi';
 import { convertToContainerModule } from './convertToContainerModule';
 

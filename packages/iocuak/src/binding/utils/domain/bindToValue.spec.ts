@@ -5,8 +5,8 @@ import * as jestMock from 'jest-mock';
 import { BindingService } from '@cuaklabs/iocuak-core';
 import { ValueBinding } from '@cuaklabs/iocuak-models';
 
-import { ValueBindingFixtures } from '../../binding/fixtures/domain/ValueBindingFixtures';
-import { bindToValue } from '../../container/utils/bindToValue';
+import { ValueBindingFixtures } from '../../fixtures/domain/ValueBindingFixtures';
+import { bindToValue } from './bindToValue';
 
 describe(bindToValue.name, () => {
   describe('when called', () => {
