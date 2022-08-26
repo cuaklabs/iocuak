@@ -47,8 +47,9 @@ function getPackageJsonFileName(packageJsonObject) {
 async function publishPackage(packageDirectory) {
   const packageJsonObject = await getPackageJsonFileObject(packageDirectory);
   const packageName = getPackageJsonFileName(packageJsonObject);
+  const isPublishPackage = await shouldPublishPackage(packageDirectory);
 
-  if (shouldPublishPackage(packageDirectory)) {
+  if (isPublishPackage) {
     try {
       await promisifiedExec(`pnpm --dir ${packageDirectory} publish`, true);
     } catch (error) {
