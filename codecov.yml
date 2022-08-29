@@ -1,9 +1,9 @@
 coverage:
   status:
     project:
-      default: off
+      default: false
       iocuak:
-        flags: 
+        flags:
           - iocuak
       iocuak-common:
         flags:
@@ -15,7 +15,7 @@ coverage:
         flags:
           - iocuak-models
       iocuak-reflect-metadata-utils:
-        flags: 
+        flags:
           - iocuak-reflect-metadata-utils
 
 flags:
