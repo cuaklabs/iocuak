@@ -15,7 +15,7 @@ import { loadContainerModuleElementAsync } from './loadContainerModuleElementAsy
 
 describe(loadContainerModule.name, () => {
   describe('having a sync ContainerModuleMetadata with no dependencies', () => {
-    let containerModuleMock: jestMock.Mocked<ContainerModule>;
+    let containerModuleMock: jest.Mocked<ContainerModule>;
     let containerModuleMetadataFixture: ContainerModuleMetadata;
 
     beforeAll(() => {
@@ -66,7 +66,7 @@ describe(loadContainerModule.name, () => {
   });
 
   describe('having a ContainerModuleMetadata with async dependencies', () => {
-    let containerModuleMock: jestMock.Mocked<ContainerModule>;
+    let containerModuleMock: jest.Mocked<ContainerModule>;
     let containerModuleMetadataFixture: ContainerModuleMetadata;
 
     beforeAll(() => {

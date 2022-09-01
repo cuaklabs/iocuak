@@ -15,7 +15,7 @@ import { ContainerModuleApi } from '../../models/api/ContainerModuleApi';
 import { convertToContainerModule } from './convertToContainerModule';
 
 describe(convertToContainerModule.name, () => {
-  let containerModuleApiMock: jestMock.Mocked<ContainerModuleApi>;
+  let containerModuleApiMock: jest.Mocked<ContainerModuleApi>;
 
   beforeAll(() => {
     containerModuleApiMock = {
