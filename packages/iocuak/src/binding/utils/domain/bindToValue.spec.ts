@@ -11,15 +11,13 @@ import { bindToValue } from './bindToValue';
 describe(bindToValue.name, () => {
   describe('when called', () => {
     let valueBindingFixture: ValueBinding;
-    let containerBindingServiceMock: jestMock.Mocked<BindingService>;
+    let containerBindingServiceMock: jest.Mocked<BindingService>;
 
     beforeAll(() => {
       valueBindingFixture = ValueBindingFixtures.any;
       containerBindingServiceMock = {
         set: jest.fn(),
-      } as Partial<
-        jestMock.Mocked<BindingService>
-      > as jestMock.Mocked<BindingService>;
+      } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
 
       bindToValue(
         valueBindingFixture.id,

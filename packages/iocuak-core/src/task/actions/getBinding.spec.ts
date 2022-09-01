@@ -15,15 +15,13 @@ import { TaskContextServices } from '../models/TaskContextServices';
 import { getBinding } from './getBinding';
 
 describe(getBinding.name, () => {
-  let bindingServiceMock: jestMock.Mocked<BindingService>;
+  let bindingServiceMock: jest.Mocked<BindingService>;
   let contextMock: TaskContext;
 
   beforeAll(() => {
     bindingServiceMock = {
       get: jest.fn(),
-    } as Partial<
-      jestMock.Mocked<BindingService>
-    > as jestMock.Mocked<BindingService>;
+    } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
 
     contextMock = {
       services: {

@@ -33,7 +33,7 @@ import { convertToContainerModuleMetadata } from './convertToContainerModuleMeta
 
 describe(convertToContainerModuleMetadata.name, () => {
   describe('having a ContainerModuleApi', () => {
-    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleApi>;
+    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleApi>;
 
     beforeAll(() => {
       containerModuleFactoryMetadataApiMock = {
@@ -110,12 +110,12 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleApi Newable', () => {
-    let containerModuleClassMetadataApiMock: jestMock.Mocked<
+    let containerModuleClassMetadataApiMock: jest.Mocked<
       Newable<ContainerModuleApi> & jestMock.FunctionLike
     >;
 
     beforeAll(() => {
-      containerModuleClassMetadataApiMock = jest.fn() as jestMock.Mocked<
+      containerModuleClassMetadataApiMock = jest.fn() as jest.Mocked<
         Newable<ContainerModuleApi> & jestMock.FunctionLike
       >;
     });
@@ -149,7 +149,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleClassMetadataApi', () => {
-    let containerModuleClassMetadataApiMock: jestMock.Mocked<ContainerModuleClassMetadataApi>;
+    let containerModuleClassMetadataApiMock: jest.Mocked<ContainerModuleClassMetadataApi>;
 
     beforeAll(() => {
       containerModuleClassMetadataApiMock =
@@ -186,7 +186,7 @@ describe(convertToContainerModuleMetadata.name, () => {
       });
 
       describe('when loader is called', () => {
-        let containerModuleMock: jestMock.Mocked<ContainerModule>;
+        let containerModuleMock: jest.Mocked<ContainerModule>;
         let containerModuleApiFixture: ContainerModuleApi;
         let containerBindingServiceFixture: BindingService;
 
@@ -237,8 +237,8 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleClassMetadataApi with imports', () => {
-    let dependencyContainerModuleClassMetadataApiMock: jestMock.Mocked<ContainerModuleClassMetadataApi>;
-    let containerModuleClassMetadataApiMock: jestMock.Mocked<ContainerModuleClassMetadataApi>;
+    let dependencyContainerModuleClassMetadataApiMock: jest.Mocked<ContainerModuleClassMetadataApi>;
+    let containerModuleClassMetadataApiMock: jest.Mocked<ContainerModuleClassMetadataApi>;
 
     beforeAll(() => {
       dependencyContainerModuleClassMetadataApiMock =
@@ -289,7 +289,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleClassMetadataApi with no imports', () => {
-    let containerModuleClassMetadataApiMock: jestMock.Mocked<ContainerModuleClassMetadataApi>;
+    let containerModuleClassMetadataApiMock: jest.Mocked<ContainerModuleClassMetadataApi>;
 
     beforeAll(() => {
       containerModuleClassMetadataApiMock =
@@ -327,7 +327,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleFactoryMetadataApi', () => {
-    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
+    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
 
     beforeAll(() => {
       containerModuleFactoryMetadataApiMock =
@@ -478,7 +478,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleFactoryMetadataApi with ServiceId injects', () => {
-    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
+    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
 
     beforeAll(() => {
       containerModuleFactoryMetadataApiMock =
@@ -523,7 +523,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleFactoryMetadataApi with ClassElementServiceIdMetadata injects', () => {
-    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
+    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
 
     beforeAll(() => {
       containerModuleFactoryMetadataApiMock =
@@ -570,7 +570,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleFactoryMetadataApi with ClassElementTagMetadata injects', () => {
-    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
+    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
 
     beforeAll(() => {
       containerModuleFactoryMetadataApiMock =
@@ -617,7 +617,7 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleFactoryMetadataApi with no injects', () => {
-    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
+    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
 
     beforeAll(() => {
       containerModuleFactoryMetadataApiMock =
@@ -653,8 +653,8 @@ describe(convertToContainerModuleMetadata.name, () => {
   });
 
   describe('having a ContainerModuleFactoryMetadataApi with imports', () => {
-    let dependencyContainerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
-    let containerModuleFactoryMetadataApiMock: jestMock.Mocked<ContainerModuleFactoryMetadataApi>;
+    let dependencyContainerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
+    let containerModuleFactoryMetadataApiMock: jest.Mocked<ContainerModuleFactoryMetadataApi>;
 
     beforeAll(() => {
       dependencyContainerModuleFactoryMetadataApiMock =

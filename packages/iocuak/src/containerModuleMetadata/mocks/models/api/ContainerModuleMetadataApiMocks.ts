@@ -1,7 +1,5 @@
 import { jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 import { ClassElementMetadataApiType } from '@cuaklabs/iocuak-models-api';
 
 import { ContainerModuleClassMetadataApi } from '../../../models/api/ContainerModuleClassMetadataApi';
@@ -9,32 +7,32 @@ import { ContainerModuleFactoryMetadataApi } from '../../../models/api/Container
 import { ContainerModuleMetadataApi } from '../../../models/api/ContainerModuleMetadataApi';
 
 export class ContainerModuleMetadataApiMocks {
-  public static get any(): jestMock.Mocked<ContainerModuleMetadataApi> {
-    const fixture: jestMock.Mocked<ContainerModuleMetadataApi> = {
+  public static get any(): jest.Mocked<ContainerModuleMetadataApi> {
+    const fixture: jest.Mocked<ContainerModuleMetadataApi> = {
       factory: jest.fn(),
     };
 
     return fixture;
   }
 
-  public static get anyContainerModuleClassMetadataApi(): jestMock.Mocked<ContainerModuleClassMetadataApi> {
-    const fixture: jestMock.Mocked<ContainerModuleClassMetadataApi> = {
+  public static get anyContainerModuleClassMetadataApi(): jest.Mocked<ContainerModuleClassMetadataApi> {
+    const fixture: jest.Mocked<ContainerModuleClassMetadataApi> = {
       module: jest.fn(),
     };
 
     return fixture;
   }
 
-  public static get anyContainerModuleFactoryMetadataApi(): jestMock.Mocked<ContainerModuleFactoryMetadataApi> {
-    const fixture: jestMock.Mocked<ContainerModuleFactoryMetadataApi> = {
+  public static get anyContainerModuleFactoryMetadataApi(): jest.Mocked<ContainerModuleFactoryMetadataApi> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadataApi> = {
       factory: jest.fn(),
     };
 
     return fixture;
   }
 
-  public static get withInjectsServiceId(): jestMock.Mocked<ContainerModuleFactoryMetadataApi> {
-    const fixture: jestMock.Mocked<ContainerModuleFactoryMetadataApi> = {
+  public static get withInjectsServiceId(): jest.Mocked<ContainerModuleFactoryMetadataApi> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadataApi> = {
       ...ContainerModuleMetadataApiMocks.anyContainerModuleFactoryMetadataApi,
       injects: ['service-id'],
     };
@@ -42,8 +40,8 @@ export class ContainerModuleMetadataApiMocks {
     return fixture;
   }
 
-  public static get withInjectsClassElementServiceIdMetadata(): jestMock.Mocked<ContainerModuleFactoryMetadataApi> {
-    const fixture: jestMock.Mocked<ContainerModuleFactoryMetadataApi> = {
+  public static get withInjectsClassElementServiceIdMetadata(): jest.Mocked<ContainerModuleFactoryMetadataApi> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadataApi> = {
       ...ContainerModuleMetadataApiMocks.anyContainerModuleFactoryMetadataApi,
       injects: [
         {
@@ -56,8 +54,8 @@ export class ContainerModuleMetadataApiMocks {
     return fixture;
   }
 
-  public static get withInjectsClassElementTagMetadata(): jestMock.Mocked<ContainerModuleFactoryMetadataApi> {
-    const fixture: jestMock.Mocked<ContainerModuleFactoryMetadataApi> = {
+  public static get withInjectsClassElementTagMetadata(): jest.Mocked<ContainerModuleFactoryMetadataApi> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadataApi> = {
       ...ContainerModuleMetadataApiMocks.anyContainerModuleFactoryMetadataApi,
       injects: [
         {
@@ -70,8 +68,8 @@ export class ContainerModuleMetadataApiMocks {
     return fixture;
   }
 
-  public static get withNoInjects(): jestMock.Mocked<ContainerModuleFactoryMetadataApi> {
-    const fixture: jestMock.Mocked<ContainerModuleFactoryMetadataApi> = {
+  public static get withNoInjects(): jest.Mocked<ContainerModuleFactoryMetadataApi> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadataApi> = {
       ...ContainerModuleMetadataApiMocks.anyContainerModuleFactoryMetadataApi,
     };
 

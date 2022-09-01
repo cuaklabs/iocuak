@@ -15,7 +15,7 @@ import { createInstanceInTransientScope } from './createInstanceInTransientScope
 
 describe(createInstanceInSingletonScope.name, () => {
   let typeBindingFixture: TypeBinding;
-  let containerSingletonServiceMock: jestMock.Mocked<ContainerSingletonService>;
+  let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
   let taskContextFixture: TaskContext;
 
   beforeAll(() => {
@@ -24,8 +24,8 @@ describe(createInstanceInSingletonScope.name, () => {
       get: jest.fn(),
       set: jest.fn(),
     } as Partial<
-      jestMock.Mocked<ContainerSingletonService>
-    > as jestMock.Mocked<ContainerSingletonService>;
+      jest.Mocked<ContainerSingletonService>
+    > as jest.Mocked<ContainerSingletonService>;
 
     taskContextFixture = {
       requestId: Symbol(),

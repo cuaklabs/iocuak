@@ -13,16 +13,14 @@ import { bind } from './bind';
 
 describe(bind.name, () => {
   let typeFixture: Newable;
-  let containerBindingServiceMock: jestMock.Mocked<BindingService>;
+  let containerBindingServiceMock: jest.Mocked<BindingService>;
 
   beforeAll(() => {
     typeFixture = class {};
 
     containerBindingServiceMock = {
       set: jest.fn(),
-    } as Partial<
-      jestMock.Mocked<BindingService>
-    > as jestMock.Mocked<BindingService>;
+    } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
   });
 
   describe('when called', () => {

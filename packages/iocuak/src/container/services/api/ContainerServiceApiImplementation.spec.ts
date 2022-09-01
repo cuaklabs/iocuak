@@ -38,9 +38,9 @@ import { ContainerService } from '../domain/ContainerService';
 import { ContainerServiceApiImplementation } from './ContainerServiceApiImplementation';
 
 describe(ContainerServiceApiImplementation.name, () => {
-  let containerBindingServiceMock: jestMock.Mocked<BindingService>;
-  let containerRequestServiceMock: jestMock.Mocked<ContainerRequestService>;
-  let containerSingletonServiceMock: jestMock.Mocked<ContainerSingletonService>;
+  let containerBindingServiceMock: jest.Mocked<BindingService>;
+  let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
+  let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
   let containerServiceMock: ContainerService;
   let containerServiceApiImplementation: ContainerServiceApiImplementation;
 
@@ -49,20 +49,18 @@ describe(ContainerServiceApiImplementation.name, () => {
       getAll: jest.fn(),
       remove: jest.fn(),
       set: jest.fn(),
-    } as Partial<
-      jestMock.Mocked<BindingService>
-    > as jestMock.Mocked<BindingService>;
+    } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
     containerRequestServiceMock = {
       end: jest.fn(),
       start: jest.fn(),
     } as Partial<
-      jestMock.Mocked<ContainerRequestService>
-    > as jestMock.Mocked<ContainerRequestService>;
+      jest.Mocked<ContainerRequestService>
+    > as jest.Mocked<ContainerRequestService>;
     containerSingletonServiceMock = {
       remove: jest.fn(),
     } as Partial<
-      jestMock.Mocked<ContainerSingletonService>
-    > as jestMock.Mocked<ContainerSingletonService>;
+      jest.Mocked<ContainerSingletonService>
+    > as jest.Mocked<ContainerSingletonService>;
 
     containerServiceMock = {
       binding: containerBindingServiceMock,
@@ -383,7 +381,7 @@ describe(ContainerServiceApiImplementation.name, () => {
 
   describe('.load', () => {
     describe('when called', () => {
-      let containerModuleApiMock: jestMock.Mocked<ContainerModuleApi>;
+      let containerModuleApiMock: jest.Mocked<ContainerModuleApi>;
 
       beforeAll(() => {
         containerModuleApiMock = {
