@@ -41,7 +41,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
 
     describe('when called', () => {
       let taskContextMock: TaskContext;
-      let containerModuleMock: jestMock.Mocked<ContainerModule>;
+      let containerModuleMock: jest.Mocked<ContainerModule>;
       let factoryParameterFixture: unknown;
 
       let result: unknown;
@@ -139,7 +139,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
 
     describe('when called', () => {
       let taskContextMock: TaskContext;
-      let containerModuleMock: jestMock.Mocked<ContainerModule>;
+      let containerModuleMock: jest.Mocked<ContainerModule>;
       let factoryParameterFixture: unknown;
 
       let result: unknown;

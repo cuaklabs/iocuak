@@ -15,7 +15,7 @@ import { createInstanceInTransientScope } from './createInstanceInTransientScope
 
 describe(createInstanceInRequestScope.name, () => {
   let typeBindingFixture: TypeBinding;
-  let containerRequestServiceMock: jestMock.Mocked<ContainerRequestService>;
+  let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
   let taskContextFixture: TaskContext;
 
   beforeAll(() => {
@@ -24,8 +24,8 @@ describe(createInstanceInRequestScope.name, () => {
       get: jest.fn(),
       set: jest.fn(),
     } as Partial<
-      jestMock.Mocked<ContainerRequestService>
-    > as jestMock.Mocked<ContainerRequestService>;
+      jest.Mocked<ContainerRequestService>
+    > as jest.Mocked<ContainerRequestService>;
 
     taskContextFixture = {
       requestId: Symbol(),
