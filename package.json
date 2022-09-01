@@ -41,7 +41,7 @@
     "typescript"
   ],
   "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
-  "license": "MIT",
+  "license": "See license in \"LICENSE\" file",
   "bugs": {
     "url": "https://github.com/cuaklabs/iocuak/issues"
   },
