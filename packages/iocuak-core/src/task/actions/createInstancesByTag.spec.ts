@@ -24,7 +24,7 @@ describe(createInstancesByTag.name, () => {
     let createInstanceFromBindingMock: jestMock.Mock<
       (binding: Binding, context: TaskContext) => unknown
     >;
-    let bindingServiceMock: jestMock.Mocked<BindingService>;
+    let bindingServiceMock: jest.Mocked<BindingService>;
 
     let taskContextFixture: TaskContext;
 
@@ -44,9 +44,7 @@ describe(createInstancesByTag.name, () => {
         getByTag: jest
           .fn<BindingService['getByTag']>()
           .mockReturnValueOnce([bindingFixture]),
-      } as Partial<
-        jestMock.Mocked<BindingService>
-      > as jestMock.Mocked<BindingService>;
+      } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
 
       taskContextFixture = {
         actions: {

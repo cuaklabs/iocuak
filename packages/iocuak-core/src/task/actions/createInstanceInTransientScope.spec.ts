@@ -23,7 +23,7 @@ import { createInstanceInTransientScope } from './createInstanceInTransientScope
 describe(createInstanceInTransientScope.name, () => {
   describe('when called, and context.servicesInstantiatedSet.has returns true', () => {
     let typeBindingFixture: TypeBinding;
-    let servicesInstantiatedSetMock: jestMock.Mocked<Set<ServiceId>>;
+    let servicesInstantiatedSetMock: jest.Mocked<Set<ServiceId>>;
     let taskContextFixture: TaskContext;
 
     let result: unknown;
@@ -34,7 +34,7 @@ describe(createInstanceInTransientScope.name, () => {
 
         servicesInstantiatedSetMock = {
           has: jest.fn().mockReturnValueOnce(true),
-        } as Partial<jestMock.Mocked<Set<ServiceId>>> as jestMock.Mocked<
+        } as Partial<jest.Mocked<Set<ServiceId>>> as jest.Mocked<
           Set<ServiceId>
         >;
 
@@ -77,7 +77,7 @@ describe(createInstanceInTransientScope.name, () => {
         context: TaskContext,
       ) => ServiceDependencies
     >;
-    let servicesInstantiatedSetMock: jestMock.Mocked<Set<ServiceId>>;
+    let servicesInstantiatedSetMock: jest.Mocked<Set<ServiceId>>;
     let taskContextFixture: TaskContext;
 
     let classMetadataFixture: ClassMetadata;
@@ -119,9 +119,7 @@ describe(createInstanceInTransientScope.name, () => {
         add: jest.fn().mockReturnThis(),
         delete: jest.fn(),
         has: jest.fn().mockReturnValueOnce(false),
-      } as Partial<jestMock.Mocked<Set<ServiceId>>> as jestMock.Mocked<
-        Set<ServiceId>
-      >;
+      } as Partial<jest.Mocked<Set<ServiceId>>> as jest.Mocked<Set<ServiceId>>;
 
       taskContextFixture = {
         actions: {

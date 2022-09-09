@@ -29,7 +29,7 @@ describe(BindingServiceImplementation.name, () => {
     });
 
     describe('when called, and serviceIdToInstanceMap has no entries and parent has no entries', () => {
-      let parent: jestMock.Mocked<BindingService>;
+      let parent: jest.Mocked<BindingService>;
       let containerBindingServiceImplementation: BindingServiceImplementation;
 
       let result: unknown;
@@ -38,8 +38,8 @@ describe(BindingServiceImplementation.name, () => {
         parent = {
           get: jest.fn().mockReturnValueOnce(undefined),
         } as Partial<
-          jestMock.Mocked<BindingService>
-        > as jestMock.Mocked<BindingService>;
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
         containerBindingServiceImplementation =
           new BindingServiceImplementation(parent);
@@ -53,7 +53,7 @@ describe(BindingServiceImplementation.name, () => {
     });
 
     describe('when called, and serviceIdToInstanceMap has no entries and parent has an entry with the same service id', () => {
-      let parent: jestMock.Mocked<BindingService>;
+      let parent: jest.Mocked<BindingService>;
       let containerBindingServiceImplementation: BindingServiceImplementation;
       let bindingFixture: Binding;
 
@@ -65,8 +65,8 @@ describe(BindingServiceImplementation.name, () => {
         parent = {
           get: jest.fn().mockReturnValueOnce(bindingFixture),
         } as Partial<
-          jestMock.Mocked<BindingService>
-        > as jestMock.Mocked<BindingService>;
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
         containerBindingServiceImplementation =
           new BindingServiceImplementation(parent);
@@ -111,7 +111,7 @@ describe(BindingServiceImplementation.name, () => {
       });
 
       describe('when called, and tagToBindingsMap has an entry with the same tag and parent has the same entry', () => {
-        let parent: jestMock.Mocked<BindingService>;
+        let parent: jest.Mocked<BindingService>;
         let containerBindingServiceImplementation: BindingServiceImplementation;
         let bindingFixture: Binding;
 
@@ -124,8 +124,8 @@ describe(BindingServiceImplementation.name, () => {
           parent = {
             getByTag: jest.fn().mockReturnValueOnce([bindingFixture]),
           } as Partial<
-            jestMock.Mocked<BindingService>
-          > as jestMock.Mocked<BindingService>;
+            jest.Mocked<BindingService>
+          > as jest.Mocked<BindingService>;
 
           containerBindingServiceImplementation =
             new BindingServiceImplementation(parent);
@@ -154,7 +154,7 @@ describe(BindingServiceImplementation.name, () => {
       });
 
       describe('when called, and tagToBindingsMap has an entry with the same tag and parent has the same entry', () => {
-        let parent: jestMock.Mocked<BindingService>;
+        let parent: jest.Mocked<BindingService>;
         let containerBindingServiceImplementation: BindingServiceImplementation;
         let bindingFixture: Binding;
 
@@ -167,8 +167,8 @@ describe(BindingServiceImplementation.name, () => {
           parent = {
             getByTag: jest.fn().mockReturnValueOnce([bindingFixture]),
           } as Partial<
-            jestMock.Mocked<BindingService>
-          > as jestMock.Mocked<BindingService>;
+            jest.Mocked<BindingService>
+          > as jest.Mocked<BindingService>;
 
           containerBindingServiceImplementation =
             new BindingServiceImplementation(parent);
@@ -209,7 +209,7 @@ describe(BindingServiceImplementation.name, () => {
     });
 
     describe('when called, and tagToBindingsMap has no entries and parent has no entries', () => {
-      let parent: jestMock.Mocked<BindingService>;
+      let parent: jest.Mocked<BindingService>;
       let containerBindingServiceImplementation: BindingServiceImplementation;
 
       let result: unknown;
@@ -218,8 +218,8 @@ describe(BindingServiceImplementation.name, () => {
         parent = {
           getByTag: jest.fn().mockReturnValueOnce([]),
         } as Partial<
-          jestMock.Mocked<BindingService>
-        > as jestMock.Mocked<BindingService>;
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
         containerBindingServiceImplementation =
           new BindingServiceImplementation(parent);
@@ -235,7 +235,7 @@ describe(BindingServiceImplementation.name, () => {
     });
 
     describe('when called, and tagToBindingsMap has no entries and parent has an entry with the same tag', () => {
-      let parent: jestMock.Mocked<BindingService>;
+      let parent: jest.Mocked<BindingService>;
       let containerBindingServiceImplementation: BindingServiceImplementation;
       let bindingFixture: Binding;
 
@@ -247,8 +247,8 @@ describe(BindingServiceImplementation.name, () => {
         parent = {
           getByTag: jest.fn().mockReturnValueOnce([bindingFixture]),
         } as Partial<
-          jestMock.Mocked<BindingService>
-        > as jestMock.Mocked<BindingService>;
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
         containerBindingServiceImplementation =
           new BindingServiceImplementation(parent);
@@ -264,7 +264,7 @@ describe(BindingServiceImplementation.name, () => {
     });
 
     describe('when called, and tagToBindingsMap has an entry with the same tag and parent has no entries', () => {
-      let parent: jestMock.Mocked<BindingService>;
+      let parent: jest.Mocked<BindingService>;
       let containerBindingServiceImplementation: BindingServiceImplementation;
       let bindingFixture: Binding;
 
@@ -274,8 +274,8 @@ describe(BindingServiceImplementation.name, () => {
         parent = {
           getByTag: jest.fn().mockReturnValueOnce([]),
         } as Partial<
-          jestMock.Mocked<BindingService>
-        > as jestMock.Mocked<BindingService>;
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
         containerBindingServiceImplementation =
           new BindingServiceImplementation(parent);
@@ -322,7 +322,7 @@ describe(BindingServiceImplementation.name, () => {
     });
 
     describe('when called, and serviceIdToInstanceMap has an entry and parent has an entry with different id', () => {
-      let parentMock: jestMock.Mocked<BindingService>;
+      let parentMock: jest.Mocked<BindingService>;
       let containerBindingServiceImplementation: BindingServiceImplementation;
       let parentBindingFixture: Binding;
       let bindingFixture: Binding;
@@ -344,8 +344,8 @@ describe(BindingServiceImplementation.name, () => {
               ]),
             ),
         } as Partial<
-          jestMock.Mocked<BindingService>
-        > as jestMock.Mocked<BindingService>;
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
         containerBindingServiceImplementation =
           new BindingServiceImplementation(parentMock);
@@ -371,7 +371,7 @@ describe(BindingServiceImplementation.name, () => {
     });
 
     describe('when called, and serviceIdToInstanceMap has an entry and parent has an entry with same id', () => {
-      let parentMock: jestMock.Mocked<BindingService>;
+      let parentMock: jest.Mocked<BindingService>;
       let containerBindingServiceImplementation: BindingServiceImplementation;
       let parentBindingFixture: Binding;
       let bindingFixture: Binding;
@@ -393,8 +393,8 @@ describe(BindingServiceImplementation.name, () => {
               ]),
             ),
         } as Partial<
-          jestMock.Mocked<BindingService>
-        > as jestMock.Mocked<BindingService>;
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
         containerBindingServiceImplementation =
           new BindingServiceImplementation(parentMock);

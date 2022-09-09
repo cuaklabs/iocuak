@@ -14,13 +14,13 @@
     "typescript"
   ],
   "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
-  "license": "MIT",
+  "license": "See license in \"LICENSE\" file",
   "bugs": {
     "url": "https://github.com/cuaklabs/iocuak/issues"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
-    "typescript": "4.7.4"
+    "typescript": "4.8.3"
   },
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-common#readme",
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",

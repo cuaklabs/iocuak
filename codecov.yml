@@ -1,9 +1,9 @@
 coverage:
   status:
     project:
-      default: off
+      default: false
       iocuak:
-        flags: 
+        flags:
           - iocuak
       iocuak-common:
         flags:
@@ -15,14 +15,8 @@ coverage:
         flags:
           - iocuak-models
       iocuak-reflect-metadata-utils:
-        flags: 
+        flags:
           - iocuak-reflect-metadata-utils
-      porygon:
-        flags:
-          - porygon
-      porygon-typeorm:
-        flags:
-          - porygon-typeorm
 
 flags:
   iocuak:
@@ -35,13 +29,8 @@ flags:
     paths:
       - packages/iocuak-decorators/
   iocuak-models:
-    paths: packages/iocuak-models/
+    paths: 
+      - packages/iocuak-models/
   iocuak-reflect-metadata-utils:
     paths:
       - packages/iocuak-reflect-metadata-utils/
-  porygon:
-    paths:
-      - packages/porygon/
-  porygon-typeorm:
-    paths:
-      - packages/porygon-typeorm/
