@@ -1,0 +1,6 @@
+{
+  "root": "packages/iocuak-scripts",
+  "sourceRoot": "packages/iocuak-scripts",
+  "projectType": "library",
+  "targets": {}
+}
