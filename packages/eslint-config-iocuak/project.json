@@ -1,0 +1,6 @@
+{
+  "root": "packages/eslint-config-iocuak",
+  "sourceRoot": "packages/eslint-config-iocuak",
+  "projectType": "library",
+  "targets": {}
+}
