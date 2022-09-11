@@ -51,7 +51,10 @@ async function publishPackage(packageDirectory) {
 
   if (isPublishPackage) {
     try {
-      await promisifiedExec(`pnpm --dir ${packageDirectory} publish`, true);
+      await promisifiedExec(`pnpm publish`, {
+        cwd: packageDirectory,
+        interactive: true,
+      });
     } catch (error) {
       throw new Error(
         `Publish command failed. The error thrown is:
