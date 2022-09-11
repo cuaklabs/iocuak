@@ -23,8 +23,7 @@
     "@cuaklabs/iocuak-core": "workspace:../iocuak-core",
     "@cuaklabs/iocuak-decorators": "workspace:../iocuak-decorators",
     "@cuaklabs/iocuak-models": "workspace:../iocuak-models",
-    "@cuaklabs/iocuak-models-api": "workspace:../iocuak-models-api",
-    "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:../iocuak-reflect-metadata-utils"
+    "@cuaklabs/iocuak-models-api": "workspace:../iocuak-models-api"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
