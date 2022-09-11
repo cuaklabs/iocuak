@@ -44,27 +44,39 @@ function getPackageJsonFileName(packageJsonObject) {
   return packageJsonObject.name;
 }
 
-const packageDirectory = resolve(argv[2]);
+async function publishPackage(packageDirectory) {
+  const packageJsonObject = await getPackageJsonFileObject(packageDirectory);
+  const packageName = getPackageJsonFileName(packageJsonObject);
+  const isPublishPackage = await shouldPublishPackage(packageDirectory);
 
-const packageJsonObject = await getPackageJsonFileObject(packageDirectory);
-
-const localVersion = getPackageJsonFileVersion(packageJsonObject);
-
-const packageName = getPackageJsonFileName(packageJsonObject);
-
-const latestRemoteVersion = await getPackageRemoteVersion(packageName);
-
-if (localVersion === latestRemoteVersion) {
-  console.log(
-    `Package ${packageName} is already published. Avoiding a publish operation attempt`,
-  );
-} else {
-  try {
-    await promisifiedExec(`pnpm --dir ${packageDirectory} publish`, true);
-  } catch (error) {
-    console.error(
-      `Publish command failed. The error thrown is:
-${error}`,
+  if (isPublishPackage) {
+    try {
+      await promisifiedExec(`pnpm publish`, {
+        cwd: packageDirectory,
+        interactive: true,
+      });
+    } catch (error) {
+      throw new Error(
+        `Publish command failed. The error thrown is:
+  ${error}`,
+      );
+    }
+  } else {
+    console.log(
+      `Package ${packageName} is already published. Avoiding a publish operation attempt`,
     );
   }
 }
+
+async function shouldPublishPackage(packageDirectory) {
+  const packageJsonObject = await getPackageJsonFileObject(packageDirectory);
+  const localVersion = getPackageJsonFileVersion(packageJsonObject);
+  const packageName = getPackageJsonFileName(packageJsonObject);
+  const latestRemoteVersion = await getPackageRemoteVersion(packageName);
+
+  return localVersion !== latestRemoteVersion;
+}
+
+const packageDirectory = resolve(argv[2]);
+
+await publishPackage(packageDirectory);
