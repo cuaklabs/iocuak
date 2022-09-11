@@ -7,8 +7,8 @@ import { exec } from 'node:child_process';
  */
 export async function promisifiedExec(command, options) {
   options = {
-    cwd: options.cwd,
-    interactive: options.interactive ?? false,
+    cwd: options?.cwd,
+    interactive: options?.interactive ?? false,
   };
 
   return new Promise((resolve, reject) => {
