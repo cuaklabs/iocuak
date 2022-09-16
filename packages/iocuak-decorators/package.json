@@ -25,14 +25,12 @@
     "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:../iocuak-reflect-metadata-utils"
   },
   "devDependencies": {
+    "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "typescript": "4.8.3"
   },
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-decorators#readme",
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
-  "peerDependencies": {
-    "reflect-metadata": "0.1.13"
-  },
   "publishConfig": {
     "access": "public"
   },

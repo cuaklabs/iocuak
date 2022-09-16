@@ -28,9 +28,6 @@
   },
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-models-api#readme",
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
-  "peerDependencies": {
-    "reflect-metadata": "0.1.13"
-  },
   "publishConfig": {
     "access": "public"
   },
