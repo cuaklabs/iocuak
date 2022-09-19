@@ -19,6 +19,6 @@
     "iocuak-publish": "./bin/publish.js"
   },
   "dependencies": {
-    "nx": "14.7.5"
+    "nx": "14.7.6"
   }
 }
