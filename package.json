@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "description": "Minimal abstract task manager",
-  "packageManager": "pnpm@7.13.5",
+  "packageManager": "pnpm@7.13.6",
   "scripts": {
     "bench:createInstance:run": "NX_THIS_IS_A_DISGUSTING_WORKAROUND=true NX_STREAM_OUTPUT=true nx run-many --target=\"bench:createInstance:js\" --projects=\"iocuak-benchmark\"",
     "bench:createInstancesByTag:run": "NX_THIS_IS_A_DISGUSTING_WORKAROUND=true NX_STREAM_OUTPUT=true nx run-many --target=\"bench:createInstancesByTag:js\" --projects=\"iocuak-benchmark\"",
@@ -60,7 +60,7 @@
     "@typescript-eslint/eslint-plugin": "5.40.1",
     "@typescript-eslint/parser": "5.40.1",
     "eslint": "8.25.0",
-    "eslint-import-resolver-typescript": "3.5.1",
+    "eslint-import-resolver-typescript": "3.5.2",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jest": "27.1.3",
     "eslint-plugin-prettier": "4.2.1",
