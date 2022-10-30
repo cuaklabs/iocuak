@@ -56,7 +56,7 @@
     "@cuaklabs/typescript-config-iocuak": "workspace:./packages/typescript-config-iocuak",
     "@jest/globals": "29.2.2",
     "@nrwl/linter": "15.0.4",
-    "@types/node": "18.11.7",
+    "@types/node": "18.11.8",
     "@typescript-eslint/eslint-plugin": "5.41.0",
     "@typescript-eslint/parser": "5.41.0",
     "eslint": "8.26.0",
