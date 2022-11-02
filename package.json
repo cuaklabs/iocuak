@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "description": "Minimal abstract task manager",
-  "packageManager": "pnpm@7.14.1",
+  "packageManager": "pnpm@7.14.2",
   "scripts": {
     "bench:createInstance:run": "NX_THIS_IS_A_DISGUSTING_WORKAROUND=true NX_STREAM_OUTPUT=true nx run-many --target=\"bench:createInstance:js\" --projects=\"iocuak-benchmark\"",
     "bench:createInstancesByTag:run": "NX_THIS_IS_A_DISGUSTING_WORKAROUND=true NX_STREAM_OUTPUT=true nx run-many --target=\"bench:createInstancesByTag:js\" --projects=\"iocuak-benchmark\"",
