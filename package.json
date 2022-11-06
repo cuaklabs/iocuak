@@ -20,6 +20,7 @@
     "test:integration": "jest --config=config/jest/jest.config.mjs --selectProjects Integration",
     "test:integration:js": "jest --config=config/jest/jest.js.config.mjs --selectProjects Integration",
     "test:master": "pnpm run test --changedSince=origin/master",
+    "test:mutation": "stryker run",
     "test:js": "jest --config=config/jest/jest.js.config.mjs --selectProjects Unit Integration",
     "test:js:ci": "pnpm run test:js --ci",
     "test:js:coverage": "pnpm run test:js --coverage",
