@@ -34,7 +34,7 @@ export function convertToContainerModule(
 }
 
 function getTags(options: BindValueOptionsApi): Tag[] {
-  const tagOrTags: Tag | Tag[] = options?.tags ?? [];
+  const tagOrTags: Tag | Tag[] = options.tags ?? [];
 
   let tags: Tag[];
 
