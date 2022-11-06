@@ -10,6 +10,9 @@ packages/*/lib/**
 # TypeScript cache
 *.tsbuildinfo
 
+/reports
+/stryker-tmp
+
 /tmp
 
 ### Visual Studio Code ###
