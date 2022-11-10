@@ -48,7 +48,7 @@ jobs:
             pnpm-store-
         
       - name: Install dependencies
-        run: pnpm --recursive install
+        run: pnpm install
 
       - name: Get affected packages
         id: get-affected-packages
@@ -112,7 +112,7 @@ jobs:
             pnpm-store-
         
       - name: Install dependencies
-        run: pnpm --recursive install
+        run: pnpm install
 
       - name: Get current git commit hash
         id: get-git-commit-hash
@@ -199,7 +199,7 @@ jobs:
             pnpm-store-
         
       - name: Install dependencies
-        run: pnpm --recursive install
+        run: pnpm install
 
       - name: Get current git commit hash
         id: get-git-commit-hash
