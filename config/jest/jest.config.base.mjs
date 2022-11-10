@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 /**
  * Builds a unit test and an integration test jest projects for a given package
  * @param {!string} packageName package name
- * @returns {!Array<import("@jest/types/build/Config").GlobalConfig>}
+ * @returns {!Array<import("jest").Config>}
  */
 function buildPackageJsProjects(packageName) {
   return [
@@ -22,7 +22,7 @@ function buildPackageJsProjects(packageName) {
 /**
  * Builds a unit test and an integration test jest projects for a given package
  * @param {!string} packageName package name
- * @returns {!Array<import("@jest/types/build/Config").GlobalConfig>}
+ * @returns {!Array<import("jest").Config>}
  */
 function buildPackageTsProjects(packageName) {
   return [
@@ -34,7 +34,7 @@ function buildPackageTsProjects(packageName) {
 /**
  * Builds an integration test jest projects for a given package
  * @param {!string} packageName package name
- * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ * @returns { !import("jest").Config } Jest config
  */
 function buildIntegrationPackageJsProject(packageName) {
   return getJestJsProjectConfig(
@@ -48,7 +48,7 @@ function buildIntegrationPackageJsProject(packageName) {
 /**
  * Builds an integration test jest projects for a given package
  * @param {!string} packageName package name
- * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ * @returns { !import("jest").Config } Jest config
  */
 function buildIntegrationPackageTsProject(packageName) {
   return getJestTsProjectConfig(
@@ -62,7 +62,7 @@ function buildIntegrationPackageTsProject(packageName) {
 /**
  * Builds a unit test jest projects for a given package
  * @param {!string} packageName package name
- * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ * @returns { !import("jest").Config } Jest config
  */
 function buildUnitPackageJsProject(packageName) {
   return getJestJsProjectConfig(
@@ -76,7 +76,7 @@ function buildUnitPackageJsProject(packageName) {
 /**
  * Builds a unit test jest projects for a given package
  * @param {!string} packageName package name
- * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ * @returns { !import("jest").Config } Jest config
  */
 function buildUnitPackageTsProject(packageName) {
   return getJestTsProjectConfig(
@@ -94,7 +94,7 @@ function buildUnitPackageTsProject(packageName) {
  * @param { !Array<string> } roots Jest roots
  * @param { !Array<string> } testMatch Expressions to match to test file paths
  * @param { !Array<string> } testPathIgnorePatterns Expressions to match to ignored file paths by jest
- * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ * @returns { !import("jest").Config } Jest config
  */
 function getJestProjectConfig(
   packageName,
@@ -103,10 +103,9 @@ function getJestProjectConfig(
   testMatch,
   testPathIgnorePatterns,
 ) {
-  /** @type { !import("@jest/types/build/Config").GlobalConfig } */
+  /** @type { !import("jest").Config } */
   const projectConfig = {
     displayName: projectName,
-    collectCoverageFrom: [],
     coveragePathIgnorePatterns: [
       ...getPackagesUnlessPackageIgnorePatterns(packageName),
       '/e2e/definitions/',
@@ -139,7 +138,7 @@ function getJestProjectConfig(
  * @param { !Array<string> } testPathIgnorePatterns Expressions to match to ignored file paths by jest
  * @param { ?string } packageName Project package
  * @param { ?string } extension Test extension to match
- * @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ * @returns { !import("jest").Config } Jest config
  */
 function getJestJsProjectConfig(
   projectName,
@@ -188,7 +187,7 @@ function getJestProjectRoot(root, submodule) {
  * @param { !Array<string> } testPathIgnorePatterns Expressions to match to ignored file paths by jest
  * @param { ?string } package Project package
  * @param { ?string } extension Test extension to match
- * @returns @returns { !import("@jest/types/build/Config").GlobalConfig } Jest config
+ * @returns @returns { !import("jest").Config } Jest config
  */
 function getJestTsProjectConfig(
   projectName,

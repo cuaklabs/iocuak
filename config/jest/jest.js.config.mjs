@@ -20,7 +20,7 @@ const jsIntegrationProject = getJestJsProjectConfig(
   '.int.spec.js',
 );
 
-/** @type {!import("@jest/types/build/Config").GlobalConfig} */
+/** @type {!import("jest").Config} */
 const globalConfig = {
   collectCoverageFrom: [
     'packages/*/lib/**/*.js',
