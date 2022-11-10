@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('../../../binding/utils/domain/bind');
 jest.mock('../../../binding/utils/domain/bindToValue');
 
