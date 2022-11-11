@@ -1,0 +1,16 @@
+{
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "name": "@cuaklabs/iocuak-prettier-config",
+  "description": "common prettier config for iocuak",
+  "main": "index.js",
+  "license": "See license in \"LICENSE\" file",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/iocuak/issues"
+  },
+  "homepage": "https://github.com/cuaklabs/iocuak#readme",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/iocuak.git"
+  }
+}
