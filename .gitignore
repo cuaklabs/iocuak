@@ -1,14 +1,8 @@
 # npm installed packages
-node_modules/
+/node_modules/
 
 # Jest coverage report
 coverage/
-
-# Typescript compiled files
-packages/*/lib/**
-
-# TypeScript cache
-*.tsbuildinfo
 
 /reports
 /stryker-tmp
@@ -24,6 +18,6 @@ packages/*/lib/**
 !.vscode/*.code-snippets
 
 ### npm lock files (consider https://github.com/yarnpkg/yarn/issues/838#issuecomment-253362537 as reference)
-package-lock.json
-pnpm-lock.yaml
-yarn.lock
+/package-lock.json
+/pnpm-lock.yaml
+/yarn.lock
