@@ -2,5 +2,8 @@
   "cucumberautocomplete.steps": [
     "packages/*/lib/definitions/**/*.js"
   ],
-  "cucumberautocomplete.strictGherkinCompletion": true
+  "cucumberautocomplete.strictGherkinCompletion": true,
+  "eslint.workingDirectories": [
+    { "pattern": "./packages/*" }
+  ]
 }
