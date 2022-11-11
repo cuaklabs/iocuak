@@ -1,0 +1,58 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "bench:createInstance:js": {
+      "cache": false
+    },
+    "bench:createInstancesByTag:js": {
+      "cache": false
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "src/**/*.ts"
+      ],
+      "outputs": [
+        "dist/**",
+        "lib/**"
+      ]
+    },
+    "format": {
+      "inputs": [
+        "src/**/*.ts"
+      ],
+      "outputs": [
+        "src/**/*.ts"
+      ]
+    },
+    "lint": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "src/**/*.ts"
+      ],
+      "outputs": [
+        "src/**/*.ts"
+      ]
+    },
+    "test:e2e": {
+      "inputs": [
+        "src/**/*.ts"
+      ],
+      "outputs": []
+    },
+    "test:e2e:js": {
+      "dependsOn": [
+        "build"
+      ],
+      "inputs": [
+        "dist/**",
+        "lib/**"
+      ],
+      "outputs": []
+    }
+  }
+}
