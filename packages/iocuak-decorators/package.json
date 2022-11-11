@@ -25,6 +25,14 @@
     "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:../iocuak-reflect-metadata-utils"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.42.1",
+    "@typescript-eslint/parser": "5.42.1",
+    "eslint": "8.27.0",
+    "eslint-import-resolver-typescript": "3.5.2",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jest": "27.1.5",
+    "eslint-plugin-prettier": "4.2.1",
+    "prettier": "2.7.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "typescript": "4.8.4"
@@ -37,6 +45,9 @@
   "scripts": {
     "build": "tsc --build tsconfig.json",
     "build:dev": "tsc --build tsconfig.dev.json",
-    "build:clean": "rimraf lib"
+    "build:clean": "rimraf lib",
+    "format": "prettier --write ./src/**/*.ts",
+    "lint": "eslint --ext ts --ignore-path .gitignore ./src",
+    "prebuild": "pnpm run build:clean"
   }
 }
