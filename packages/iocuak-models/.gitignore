@@ -1,0 +1,8 @@
+# Typescript compiled files
+/lib/**
+
+# npm installed packages
+/node_modules/
+
+# Turborepo files
+.turbo/
