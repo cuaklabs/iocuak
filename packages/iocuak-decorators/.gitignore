@@ -4,5 +4,8 @@
 # npm installed packages
 /node_modules/
 
+# Jest coverage report
+/coverage/
+
 # Turborepo files
 .turbo/
