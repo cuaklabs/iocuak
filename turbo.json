@@ -80,6 +80,18 @@
       ],
       "outputs": []
     },
+    "test:js:coverage": {
+      "dependsOn": [
+        "build"
+      ],
+      "inputs": [
+        "dist/**",
+        "lib/**"
+      ],
+      "outputs": [
+        "coverage/**"
+      ]
+    },
     "test:uncommitted": {
       "inputs": [
         "src/**/*.ts"
