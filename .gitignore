@@ -2,7 +2,7 @@
 /node_modules/
 
 # Jest coverage report
-coverage/
+/coverage/
 
 /reports
 /stryker-tmp
