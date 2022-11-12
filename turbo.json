@@ -53,6 +53,14 @@
         "lib/**"
       ],
       "outputs": []
+    },
+    "iocuak-jest-config#format": {
+      "inputs": [
+        "./lib/**/*.js"
+      ],
+      "outputs": [
+        "./lib/**/*.js"
+      ]
     }
   }
 }
