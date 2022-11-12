@@ -45,6 +45,11 @@
     "build:clean": "rimraf lib",
     "format": "prettier --write ./src/**/*.ts",
     "lint": "eslint --ext ts --ignore-path .gitignore ./src",
-    "prebuild": "pnpm run build:clean"
+    "prebuild": "pnpm run build:clean",
+    "test": "jest --config=jest.config.mjs --runInBand --selectProjects Unit Integration",
+    "test:integration:js": "jest --config=jest.js.config.mjs --runInBand --selectProjects Integration",
+    "test:js": "jest --config=jest.js.config.mjs --runInBand --selectProjects Unit Integration",
+    "test:uncommitted": "pnpm run test --changedSince=HEAD",
+    "test:unit:js": "jest --config=jest.js.config.mjs --runInBand --selectProjects Unit"
   }
 }
