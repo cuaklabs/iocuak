@@ -9,8 +9,7 @@ const TURBOREPO_TASK_NOT_FOUND_MAGIC_STRING = "\u003cNONEXISTENT\u003e";
 const PACKAGES_DIRECTORY_PREFIX = "packages/";
 
 const baseRef = argv[2];
-
-const taskToDryRun = "build";
+const taskToDryRun = argv[3];
 
 const stringifiedDryRun = (
   await promisifiedExec(

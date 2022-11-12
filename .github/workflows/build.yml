@@ -52,7 +52,7 @@ jobs:
 
       - name: Get affected packages
         id: get-affected-packages
-        run: echo "packages=$(pnpm exec iocuak-get-affected-projects origin/${{github.base_ref}})" >> $GITHUB_OUTPUT
+        run: echo "packages=$(pnpm exec iocuak-get-affected-projects origin/${{github.base_ref}}) test:js" >> $GITHUB_OUTPUT
 
       - name: Compile source files
         run: pnpm run build:all
@@ -129,11 +129,11 @@ jobs:
             ts-build-${{ steps.get-git-commit-hash.outputs.gitCommitHash }}
 
       - name: Build on cache miss
-        run: pnpm run build:all
+        run: pnpm run build:all --filter ${{ matrix.package }}
         if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
 
       - name: Launch Unit Tests and generate coverage report
-        run: pnpm run test:js:coverage --filter ${{ matrix.package }} -- --selectProjects Unit
+        run: pnpm run test:js:coverage --filter ${{ matrix.package }} --only -- --selectProjects Unit
 
       - name: Upload coverage to Codecov (base branch)
         uses: codecov/codecov-action@v3
@@ -151,7 +151,7 @@ jobs:
         if: ${{ !(github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true) }}
 
       - name: Launch Integration Tests
-        run: pnpm run test:integration:js --filter ${{ matrix.package }}
+        run: pnpm run test:integration:js --filter ${{ matrix.package }} --only
 
       - name: Start SSH session on failure
         if: ${{ failure() && contains(github.event.head_commit.message, '[ci-open-ssh]') }}
