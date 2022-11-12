@@ -22,6 +22,14 @@
     "@cuaklabs/iocuak-common": "workspace:../iocuak-common"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.42.1",
+    "@typescript-eslint/parser": "5.42.1",
+    "eslint": "8.27.0",
+    "eslint-import-resolver-typescript": "3.5.2",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jest": "27.1.5",
+    "eslint-plugin-prettier": "4.2.1",
+    "prettier": "2.7.1",
     "rimraf": "3.0.2",
     "typescript": "4.8.4"
   },
@@ -36,6 +44,15 @@
   "scripts": {
     "build": "tsc --build tsconfig.json",
     "build:dev": "tsc --build tsconfig.dev.json",
-    "build:clean": "rimraf lib"
+    "build:clean": "rimraf lib",
+    "format": "prettier --write ./src/**/*.ts",
+    "lint": "eslint --ext ts --ignore-path .gitignore ./src",
+    "prebuild": "pnpm run build:clean",
+    "test": "jest --config=jest.config.mjs --runInBand",
+    "test:integration:js": "pnpm run test:js --selectProjects Integration",
+    "test:js": "jest --config=jest.js.config.mjs --runInBand",
+    "test:js:coverage": "pnpm run test:js --coverage",
+    "test:uncommitted": "pnpm run test --changedSince=HEAD",
+    "test:unit:js": "pnpm run test:js --selectProjects Unit"
   }
 }

@@ -1,6 +1,0 @@
-{
-  "root": "packages/typescript-config-iocuak",
-  "sourceRoot": "packages/typescript-config-iocuak",
-  "projectType": "library",
-  "targets": {}
-}

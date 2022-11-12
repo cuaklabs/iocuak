@@ -1,7 +1,0 @@
-*.json
-*.md
-*.yaml
-*.yml
-
-# Typescript compiled files
-packages/*/lib/**
