@@ -38,6 +38,12 @@
         "src/**/*.ts"
       ]
     },
+    "test": {
+      "inputs": [
+        "src/**/*.ts"
+      ],
+      "outputs": []
+    },
     "test:e2e": {
       "inputs": [
         "src/**/*.ts"
@@ -45,6 +51,42 @@
       "outputs": []
     },
     "test:e2e:js": {
+      "dependsOn": [
+        "build"
+      ],
+      "inputs": [
+        "dist/**",
+        "lib/**"
+      ],
+      "outputs": []
+    },
+    "test:integration:js": {
+      "dependsOn": [
+        "build"
+      ],
+      "inputs": [
+        "dist/**",
+        "lib/**"
+      ],
+      "outputs": []
+    },
+    "test:js": {
+      "dependsOn": [
+        "build"
+      ],
+      "inputs": [
+        "dist/**",
+        "lib/**"
+      ],
+      "outputs": []
+    },
+    "test:uncommitted": {
+      "inputs": [
+        "src/**/*.ts"
+      ],
+      "outputs": []
+    },
+    "test:unit:js": {
       "dependsOn": [
         "build"
       ],
