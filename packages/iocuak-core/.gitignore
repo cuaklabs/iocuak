@@ -4,6 +4,12 @@
 # npm installed packages
 /node_modules/
 
+# Stryker reports
+/reports
+
+# Stryker temp files
+/stryker-tmp
+
 # Jest coverage report
 /coverage/
 

@@ -38,7 +38,6 @@
     "bench:createInstance:js": "clinic flame -- node ./lib/benchmarks/createInstance/index.js",
     "bench:createInstancesByTag:js": "clinic flame -- node ./lib/benchmarks/createInstancesByTag/index.js",
     "build": "tsc --build tsconfig.json",
-    "build:dev": "tsc --build tsconfig.dev.json",
     "build:clean": "rimraf lib",
     "format": "prettier --write ./src/**/*.ts",
     "lint": "eslint --ext ts --ignore-path .gitignore ./src",

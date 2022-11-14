@@ -7,5 +7,11 @@
 # Jest coverage report
 /coverage/
 
+# Stryker reports
+/reports
+
+# Stryker temp files
+/stryker-tmp
+
 # Turborepo files
 .turbo/

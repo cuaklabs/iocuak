@@ -37,4 +37,9 @@ const tsGlobalConfig = {
   projects: [tsIntegrationProject, tsUnitProject],
 };
 
-export { jsGlobalConfig, tsGlobalConfig };
+export {
+  getJestJsProjectConfig,
+  getJestTsProjectConfig,
+  jsGlobalConfig,
+  tsGlobalConfig,
+};

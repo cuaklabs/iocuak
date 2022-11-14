@@ -1,17 +1,16 @@
 {
   "checkers": ["typescript"],
   "coverageAnalysis": "perTest",
-  "disableTypeChecks": "packages/*/src/**/*.ts",
+  "disableTypeChecks": "src/**/*.ts",
   "jest": {
-    "configFile": "./config/jest/jest.config.striker.mjs",
+    "configFile": "./jest.config.stryker.mjs",
     "enableFindRelatedTests": true,
     "projectType": "custom"
   },
   "mutate": [
-    "packages/*/src/**/*.ts",
-    "!packages/*/src/**/*.spec.ts",
-    "!packages/*/src/**/*{Fixtures,Mocks}.ts",
-    "!packages/{iocuak-benchmark,iocuak-e2e}/src/**/*.ts"
+    "src/**/*.ts",
+    "!src/**/*.spec.ts",
+    "!src/**/*{Fixtures,Mocks}.ts"
   ],
   "packageManager": "pnpm",
   "plugins": [
@@ -20,5 +19,5 @@
   ],
   "tempDirName": "stryker-tmp",
   "testRunner": "jest",
-  "tsconfigFile": "tsconfig.json"
+  "tsconfigFile": "./tsconfig.json"
 }
