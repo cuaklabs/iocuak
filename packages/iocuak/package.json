@@ -27,6 +27,9 @@
   },
   "devDependencies": {
     "@jest/globals": "29.3.1",
+    "@stryker-mutator/core": "6.3.0",
+    "@stryker-mutator/jest-runner": "6.3.0",
+    "@stryker-mutator/typescript-checker": "6.3.0",
     "@types/node": "18.11.9",
     "@typescript-eslint/eslint-plugin": "5.42.1",
     "@typescript-eslint/parser": "5.42.1",
@@ -51,7 +54,6 @@
   },
   "scripts": {
     "build": "tsc --build tsconfig.json",
-    "build:dev": "tsc --build tsconfig.dev.json",
     "build:clean": "rimraf lib",
     "format": "prettier --write ./src/**/*.ts",
     "lint": "eslint --ext ts --ignore-path .gitignore ./src",
@@ -60,6 +62,7 @@
     "test:integration:js": "pnpm run test:js --selectProjects Integration",
     "test:js": "jest --config=jest.js.config.mjs --runInBand",
     "test:js:coverage": "pnpm run test:js --coverage",
+    "test:mutation": "stryker run",
     "test:uncommitted": "pnpm run test --changedSince=HEAD",
     "test:unit:js": "pnpm run test:js --selectProjects Unit"
   }
