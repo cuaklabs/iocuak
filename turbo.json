@@ -92,6 +92,14 @@
         "coverage/**"
       ]
     },
+    "test:mutation": {
+      "inputs": [
+        "src/**/*.ts"
+      ],
+      "outputs": [
+        "reports/mutation/mutation.html"
+      ]
+    },
     "test:uncommitted": {
       "inputs": [
         "src/**/*.ts"
