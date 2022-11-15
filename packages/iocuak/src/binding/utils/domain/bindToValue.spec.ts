@@ -7,29 +7,34 @@ import { ValueBindingFixtures } from '../../fixtures/domain/ValueBindingFixtures
 import { bindToValue } from './bindToValue';
 
 describe(bindToValue.name, () => {
-  describe('when called', () => {
-    let valueBindingFixture: ValueBinding;
-    let containerBindingServiceMock: jest.Mocked<BindingService>;
+  describe.each<[string, ValueBinding]>([
+    ['value binding', ValueBindingFixtures.any],
+    ['value binding with tags', ValueBindingFixtures.withTagsOne],
+  ])('having a %s', (_: string, valueBindingFixture: ValueBinding) => {
+    describe('when called', () => {
+      let containerBindingServiceMock: jest.Mocked<BindingService>;
 
-    beforeAll(() => {
-      valueBindingFixture = ValueBindingFixtures.any;
-      containerBindingServiceMock = {
-        set: jest.fn(),
-      } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
+      beforeAll(() => {
+        containerBindingServiceMock = {
+          set: jest.fn(),
+        } as Partial<
+          jest.Mocked<BindingService>
+        > as jest.Mocked<BindingService>;
 
-      bindToValue(
-        valueBindingFixture.id,
-        valueBindingFixture.tags,
-        valueBindingFixture.value,
-        containerBindingServiceMock,
-      );
-    });
+        bindToValue(
+          valueBindingFixture.id,
+          valueBindingFixture.tags,
+          valueBindingFixture.value,
+          containerBindingServiceMock,
+        );
+      });
 
-    it('should call containerBindingService.set()', () => {
-      expect(containerBindingServiceMock.set).toHaveBeenCalledTimes(1);
-      expect(containerBindingServiceMock.set).toHaveBeenCalledWith(
-        valueBindingFixture,
-      );
+      it('should call containerBindingService.set()', () => {
+        expect(containerBindingServiceMock.set).toHaveBeenCalledTimes(1);
+        expect(containerBindingServiceMock.set).toHaveBeenCalledWith(
+          valueBindingFixture,
+        );
+      });
     });
   });
 });

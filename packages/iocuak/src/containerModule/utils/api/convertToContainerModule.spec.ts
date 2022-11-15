@@ -3,11 +3,12 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 jest.mock('../../../binding/utils/domain/bind');
 jest.mock('../../../binding/utils/domain/bindToValue');
 
-import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
+import { Newable, Tag } from '@cuaklabs/iocuak-common';
 import { BindingService, ContainerModule } from '@cuaklabs/iocuak-core';
 
 import { bind } from '../../../binding/utils/domain/bind';
 import { bindToValue } from '../../../binding/utils/domain/bindToValue';
+import { BindValueOptionsApi } from '../../../container/models/api/BindValueOptionsApi';
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
 import { ContainerModuleApi } from '../../models/api/ContainerModuleApi';
 import { convertToContainerModule } from './convertToContainerModule';
@@ -114,63 +115,99 @@ describe(convertToContainerModule.name, () => {
       });
     });
 
-    describe('when result.load() is called and containerModuleApi.load() calls containerModuleBindingServiceApi.bindToValue()', () => {
-      let serviceIdFixture: ServiceId;
-      let tagsFixture: Tag[];
-      let valueFixture: unknown;
-      let containerBindingServiceFixture: BindingService;
+    describe.each<[string, BindValueOptionsApi, Tag[]]>([
+      [
+        'BindValueOptionsApi with no tags',
+        {
+          serviceId: Symbol(),
+          value: Symbol(),
+        },
+        [],
+      ],
+      [
+        'BindValueOptionsApi with tag empty array',
+        {
+          serviceId: Symbol(),
+          tags: [],
+          value: Symbol(),
+        },
+        [],
+      ],
+      [
+        'BindValueOptionsApi with tag array with elements',
+        {
+          serviceId: Symbol(),
+          tags: ['tag-sample'],
+          value: Symbol(),
+        },
+        ['tag-sample'],
+      ],
+      [
+        'BindValueOptionsApi with tag element',
+        {
+          serviceId: Symbol(),
+          tags: 'tag-sample',
+          value: Symbol(),
+        },
+        ['tag-sample'],
+      ],
+    ])(
+      'having a %s',
+      (
+        _: string,
+        bindValueOptionsApiFixture: BindValueOptionsApi,
+        expectedTagsFixture: Tag[],
+      ) => {
+        describe('when result.load() is called and containerModuleApi.load() calls containerModuleBindingServiceApi.bindToValue()', () => {
+          let containerBindingServiceFixture: BindingService;
 
-      beforeAll(() => {
-        serviceIdFixture = Symbol();
-        tagsFixture = [Symbol()];
-        valueFixture = Symbol();
+          beforeAll(() => {
+            containerModuleApiMock.load.mockImplementationOnce(
+              (
+                containerModuleBindingService: ContainerModuleBindingServiceApi,
+              ): void => {
+                containerModuleBindingService.bindToValue(
+                  bindValueOptionsApiFixture,
+                );
+              },
+            );
 
-        containerModuleApiMock.load.mockImplementationOnce(
-          (
-            containerModuleBindingService: ContainerModuleBindingServiceApi,
-          ): void => {
-            containerModuleBindingService.bindToValue({
-              serviceId: serviceIdFixture,
-              tags: tagsFixture,
-              value: valueFixture,
-            });
-          },
-        );
+            containerBindingServiceFixture = {
+              _tag: 'containerBindingService',
+            } as Partial<BindingService> as BindingService;
 
-        containerBindingServiceFixture = {
-          _tag: 'containerBindingService',
-        } as Partial<BindingService> as BindingService;
+            (result as ContainerModule).load(containerBindingServiceFixture);
+          });
 
-        (result as ContainerModule).load(containerBindingServiceFixture);
-      });
+          afterAll(() => {
+            jest.clearAllMocks();
+          });
 
-      afterAll(() => {
-        jest.clearAllMocks();
-      });
+          it('should call containerModuleApi.load()', () => {
+            const expected: ContainerModuleBindingServiceApi = {
+              bind: expect.any(
+                Function,
+              ) as unknown as ContainerModuleBindingServiceApi['bind'],
+              bindToValue: expect.any(
+                Function,
+              ) as unknown as ContainerModuleBindingServiceApi['bindToValue'],
+            };
 
-      it('should call containerModuleApi.load()', () => {
-        const expected: ContainerModuleBindingServiceApi = {
-          bind: expect.any(
-            Function,
-          ) as unknown as ContainerModuleBindingServiceApi['bind'],
-          bindToValue: expect.any(
-            Function,
-          ) as unknown as ContainerModuleBindingServiceApi['bindToValue'],
-        };
+            expect(containerModuleApiMock.load).toHaveBeenCalledTimes(1);
+            expect(containerModuleApiMock.load).toHaveBeenCalledWith(expected);
+          });
 
-        expect(containerModuleApiMock.load).toHaveBeenCalledTimes(1);
-        expect(containerModuleApiMock.load).toHaveBeenCalledWith(expected);
-      });
-
-      it('should call bindToValue', () => {
-        expect(bindToValue).toHaveBeenCalledTimes(1);
-        expect(bindToValue).toHaveBeenCalledWith(
-          serviceIdFixture,
-          tagsFixture,
-          valueFixture,
-          containerBindingServiceFixture,
-        );
-      });
-    });
+          it('should call bindToValue', () => {
+            expect(bindToValue).toHaveBeenCalledTimes(1);
+            expect(bindToValue).toHaveBeenCalledWith(
+              bindValueOptionsApiFixture.serviceId,
+              expectedTagsFixture,
+              bindValueOptionsApiFixture.value,
+              containerBindingServiceFixture,
+            );
+          });
+        });
+      },
+    );
   });
 });

@@ -13,30 +13,27 @@ import { bindingScopeToBindingScopeApiMap } from '../../models/api/bindingScopeT
 import { convertBindingToBindingApi } from './convertBindingToBindingApi';
 
 describe(convertBindingToBindingApi.name, () => {
-  describe('having a type binding', () => {
-    let bindingFixture: TypeBinding;
-
-    beforeAll(() => {
-      bindingFixture = TypeBindingFixtures.any;
-    });
-
+  describe.each<[string, TypeBinding]>([
+    ['type binding', TypeBindingFixtures.any],
+    ['type binding with tags', TypeBindingFixtures.withTagsOne],
+  ])('having a %s', (_: string, typeBindingFixture: TypeBinding) => {
     describe('when called', () => {
       let result: unknown;
 
       beforeAll(() => {
-        result = convertBindingToBindingApi(bindingFixture);
+        result = convertBindingToBindingApi(typeBindingFixture);
       });
 
       it('should return a bindingApi', () => {
         const expectedScope: BindingScopeApi =
-          bindingScopeToBindingScopeApiMap[bindingFixture.scope];
+          bindingScopeToBindingScopeApiMap[typeBindingFixture.scope];
 
         const expected: BindingApi = {
           bindingType: BindingTypeApi.type,
-          id: bindingFixture.id,
+          id: typeBindingFixture.id,
           scope: expectedScope,
-          tags: [...bindingFixture.tags],
-          type: bindingFixture.type,
+          tags: [...typeBindingFixture.tags],
+          type: typeBindingFixture.type,
         };
 
         expect(result).toStrictEqual(expected);
@@ -44,26 +41,23 @@ describe(convertBindingToBindingApi.name, () => {
     });
   });
 
-  describe('having a value binding', () => {
-    let bindingFixture: ValueBinding;
-
-    beforeAll(() => {
-      bindingFixture = ValueBindingFixtures.any;
-    });
-
+  describe.each<[string, ValueBinding]>([
+    ['value binding', ValueBindingFixtures.any],
+    ['value binding with tags', ValueBindingFixtures.withTagsOne],
+  ])('having a %s', (_: string, valueBindingFixture: ValueBinding) => {
     describe('when called', () => {
       let result: unknown;
 
       beforeAll(() => {
-        result = convertBindingToBindingApi(bindingFixture);
+        result = convertBindingToBindingApi(valueBindingFixture);
       });
 
       it('should return a bindingApi', () => {
         const expected: BindingApi = {
           bindingType: BindingTypeApi.value,
-          id: bindingFixture.id,
-          tags: [...bindingFixture.tags],
-          value: bindingFixture.value,
+          id: valueBindingFixture.id,
+          tags: [...valueBindingFixture.tags],
+          value: valueBindingFixture.value,
         };
 
         expect(result).toStrictEqual(expected);
