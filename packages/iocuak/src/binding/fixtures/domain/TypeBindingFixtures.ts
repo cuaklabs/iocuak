@@ -19,4 +19,13 @@ export class TypeBindingFixtures {
 
     return fixture;
   }
+
+  public static get withTagsOne(): TypeBinding {
+    const fixture: TypeBinding = {
+      ...TypeBindingFixtures.any,
+      tags: ['tag-sample'],
+    };
+
+    return fixture;
+  }
 }
