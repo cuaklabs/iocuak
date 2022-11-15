@@ -1,4 +1,4 @@
-import { ServiceId } from '@cuaklabs/iocuak-common';
+import { isPromiseLike, ServiceId } from '@cuaklabs/iocuak-common';
 import {
   BindingService,
   ContainerModule,
@@ -16,7 +16,6 @@ import { ClassElementMetadataApi } from '@cuaklabs/iocuak-models-api';
 import { convertToClassElementMetadata } from '../../../classMetadata/utils/api/convertToClassElementMetadata';
 import { isClassElementMetadataApi } from '../../../classMetadata/utils/api/isClassElementMetadataApi';
 import { isFunction } from '../../../common/utils/isFunction';
-import { isPromiseLike } from '../../../common/utils/isPromiseLike';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';
 import { convertToContainerModuleAsync } from '../../../containerModule/utils/api/convertToContainerModuleAsync';
