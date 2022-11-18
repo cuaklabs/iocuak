@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('@cuaklabs/iocuak-models');
 jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');
 
@@ -31,11 +29,11 @@ describe('.getClassMetadata()', () => {
       };
 
       (
-        getReflectMetadata as jestMock.Mock<typeof getReflectMetadata>
+        getReflectMetadata as jest.Mock<typeof getReflectMetadata>
       ).mockReturnValueOnce(undefined);
 
       (
-        getDefaultClassMetadata as jestMock.Mock<typeof getDefaultClassMetadata>
+        getDefaultClassMetadata as jest.Mock<typeof getDefaultClassMetadata>
       ).mockReturnValueOnce(classMetadataFixture);
 
       result = getClassMetadata(typeFixture);
@@ -74,7 +72,7 @@ describe('.getClassMetadata()', () => {
         ClassMetadataFixtures.withConstructorArgumentsServiceAndPropertiesService;
 
       (
-        getReflectMetadata as jestMock.Mock<typeof getReflectMetadata>
+        getReflectMetadata as jest.Mock<typeof getReflectMetadata>
       ).mockReturnValueOnce(classMetadataFixture);
 
       result = getClassMetadata(typeFixture);

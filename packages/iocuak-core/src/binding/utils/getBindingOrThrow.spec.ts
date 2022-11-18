@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./getBindingMetadata');
 
 import { Newable } from '@cuaklabs/iocuak-common';
@@ -23,7 +21,7 @@ describe(getBindingOrThrow.name, () => {
 
     beforeAll(() => {
       (
-        getBindingMetadata as jestMock.Mock<typeof getBindingMetadata>
+        getBindingMetadata as jest.Mock<typeof getBindingMetadata>
       ).mockReturnValueOnce(undefined);
 
       try {
@@ -63,7 +61,7 @@ describe(getBindingOrThrow.name, () => {
       bindingFixture = TypeBindingFixtures.any;
 
       (
-        getBindingMetadata as jestMock.Mock<typeof getBindingMetadata>
+        getBindingMetadata as jest.Mock<typeof getBindingMetadata>
       ).mockReturnValueOnce(bindingFixture);
 
       result = getBindingOrThrow(typeFixture);

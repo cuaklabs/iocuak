@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./loadContainerModuleElement');
 jest.mock('./loadContainerModuleElementAsync');
 
@@ -100,7 +98,7 @@ describe(loadContainerModule.name, () => {
         } as unknown as TaskContext;
 
         (
-          loadContainerModuleElement as jestMock.Mock<() => Promise<void>>
+          loadContainerModuleElement as jest.Mock<() => Promise<void>>
         ).mockResolvedValueOnce(undefined);
 
         result = loadContainerModule(

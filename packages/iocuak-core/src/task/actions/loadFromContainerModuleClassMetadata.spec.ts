@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./createInstance');
 
 import { BindingService } from '../../binding/services/BindingService';
@@ -36,9 +34,9 @@ describe(loadFromContainerModuleClassMetadata.name, () => {
     beforeAll(() => {
       containerModuleInstanceFixture = Symbol();
 
-      (
-        createInstance as jestMock.Mock<typeof createInstance>
-      ).mockReturnValueOnce(containerModuleInstanceFixture);
+      (createInstance as jest.Mock<typeof createInstance>).mockReturnValueOnce(
+        containerModuleInstanceFixture,
+      );
 
       result = loadFromContainerModuleClassMetadata(
         containerModuleClassMetadataMock,

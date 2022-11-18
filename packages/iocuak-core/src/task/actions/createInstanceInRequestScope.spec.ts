@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./createInstanceInTransientScope');
 
 import { TypeBinding } from '@cuaklabs/iocuak-models';
@@ -46,7 +44,7 @@ describe(createInstanceInRequestScope.name, () => {
       containerRequestServiceMock.get.mockReturnValueOnce(undefined);
 
       (
-        createInstanceInTransientScope as jestMock.Mock<
+        createInstanceInTransientScope as jest.Mock<
           typeof createInstanceInTransientScope
         >
       ).mockReturnValueOnce(instanceFixture);

@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./getDependency');
 
 import { ClassMetadata } from '@cuaklabs/iocuak-models';
@@ -35,7 +33,7 @@ describe(getDependencies.name, () => {
       constructorArgumentFixture = Symbol();
       propertyFixture = Symbol();
 
-      (getDependency as jestMock.Mock<typeof getDependency>)
+      (getDependency as jest.Mock<typeof getDependency>)
         .mockReturnValueOnce(constructorArgumentFixture)
         .mockReturnValueOnce(propertyFixture);
 
