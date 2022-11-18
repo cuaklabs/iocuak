@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('../../binding/utils/lazyGetBindingOrThrow');
 
 import { ServiceId } from '@cuaklabs/iocuak-common';
@@ -41,7 +39,7 @@ describe(getBinding.name, () => {
       bindingServiceMock.get.mockReturnValueOnce(undefined);
 
       (
-        lazyGetBindingOrThrow as jestMock.Mock<typeof lazyGetBindingOrThrow>
+        lazyGetBindingOrThrow as jest.Mock<typeof lazyGetBindingOrThrow>
       ).mockReturnValueOnce(TypeBindingFixtures.any);
 
       result = getBinding(serviceIdFixture, contextMock);

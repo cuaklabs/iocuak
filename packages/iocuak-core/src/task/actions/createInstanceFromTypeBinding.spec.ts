@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./createInstanceInRequestScope');
 jest.mock('./createInstanceInSingletonScope');
 jest.mock('./createInstanceInTransientScope');
@@ -20,27 +18,27 @@ describe(createInstanceFromTypeBinding.name, () => {
     [
       string,
       TypeBinding,
-      jestMock.Mock<(binding: TypeBinding, context: TaskContext) => unknown>,
+      jest.Mock<(binding: TypeBinding, context: TaskContext) => unknown>,
     ]
   >([
     [
       'request',
       TypeBindingFixtures.withScopeRequest,
-      createInstanceInRequestScope as jestMock.Mock<
+      createInstanceInRequestScope as jest.Mock<
         typeof createInstanceInRequestScope
       >,
     ],
     [
       'singleton',
       TypeBindingFixtures.withScopeSingleton,
-      createInstanceInSingletonScope as jestMock.Mock<
+      createInstanceInSingletonScope as jest.Mock<
         typeof createInstanceInSingletonScope
       >,
     ],
     [
       'transient',
       TypeBindingFixtures.withScopeTransient,
-      createInstanceInTransientScope as jestMock.Mock<
+      createInstanceInTransientScope as jest.Mock<
         typeof createInstanceInTransientScope
       >,
     ],
@@ -49,7 +47,7 @@ describe(createInstanceFromTypeBinding.name, () => {
     (
       _: string,
       typeBindingFixture: TypeBinding,
-      functionMock: jestMock.Mock<
+      functionMock: jest.Mock<
         (binding: TypeBinding, context: TaskContext) => unknown
       >,
     ) => {

@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./createInstancesByTag');
 jest.mock('./getBinding');
 
@@ -34,7 +32,7 @@ describe(getDependency.name, () => {
       let bindingFixture: Binding;
       let instanceFixture: unknown;
 
-      let createInstanceFromBindingMock: jestMock.Mock<
+      let createInstanceFromBindingMock: jest.Mock<
         (binding: Binding, context: TaskContext) => unknown
       >;
 
@@ -46,7 +44,7 @@ describe(getDependency.name, () => {
         bindingFixture = ValueBindingFixtures.any;
         instanceFixture = Symbol();
 
-        (getBinding as jestMock.Mock<typeof getBinding>).mockReturnValueOnce(
+        (getBinding as jest.Mock<typeof getBinding>).mockReturnValueOnce(
           bindingFixture,
         );
 
@@ -117,7 +115,7 @@ describe(getDependency.name, () => {
         } as Partial<TaskContext> as TaskContext;
 
         (
-          createInstancesByTag as jestMock.Mock<typeof createInstancesByTag>
+          createInstancesByTag as jest.Mock<typeof createInstancesByTag>
         ).mockReturnValueOnce(instancesFixture);
 
         result = getDependency(

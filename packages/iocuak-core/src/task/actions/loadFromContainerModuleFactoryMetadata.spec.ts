@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./getDependency');
 
 import { ClassElementMetadataType } from '@cuaklabs/iocuak-models';
@@ -17,7 +15,7 @@ import { loadFromContainerModuleFactoryMetadata } from './loadFromContainerModul
 
 describe(loadFromContainerModuleFactoryMetadata.name, () => {
   describe('having a ContainerModuleFactoryMetadata with an async factory', () => {
-    let containerModuleFactoryMetadataFactoryMock: jestMock.Mock<
+    let containerModuleFactoryMetadataFactoryMock: jest.Mock<
       () => Promise<ContainerModule>
     >;
     let containerModuleFactoryMetadataMock: ContainerModuleFactoryMetadata;
@@ -61,9 +59,9 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
 
         factoryParameterFixture = Symbol();
 
-        (
-          getDependency as jestMock.Mock<typeof getDependency>
-        ).mockReturnValueOnce(factoryParameterFixture);
+        (getDependency as jest.Mock<typeof getDependency>).mockReturnValueOnce(
+          factoryParameterFixture,
+        );
 
         containerModuleFactoryMetadataFactoryMock.mockResolvedValueOnce(
           containerModuleMock,
@@ -115,7 +113,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
   });
 
   describe('having a ContainerModuleFactoryMetadata with a sync factory', () => {
-    let containerModuleFactoryMetadataFactoryMock: jestMock.Mock<
+    let containerModuleFactoryMetadataFactoryMock: jest.Mock<
       () => ContainerModule
     >;
     let containerModuleFactoryMetadataMock: ContainerModuleFactoryMetadata;
@@ -159,9 +157,9 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
 
         factoryParameterFixture = Symbol();
 
-        (
-          getDependency as jestMock.Mock<typeof getDependency>
-        ).mockReturnValueOnce(factoryParameterFixture);
+        (getDependency as jest.Mock<typeof getDependency>).mockReturnValueOnce(
+          factoryParameterFixture,
+        );
 
         containerModuleFactoryMetadataFactoryMock.mockReturnValueOnce(
           containerModuleMock,

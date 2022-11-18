@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./createInstanceFromTypeBinding');
 
 import { TypeBinding, ValueBinding } from '@cuaklabs/iocuak-models';
@@ -31,7 +29,7 @@ describe(createInstanceFromBinding.name, () => {
         instanceFixture = Symbol();
 
         (
-          createInstanceFromTypeBinding as jestMock.Mock<
+          createInstanceFromTypeBinding as jest.Mock<
             typeof createInstanceFromTypeBinding
           >
         ).mockReturnValueOnce(instanceFixture);

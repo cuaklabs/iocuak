@@ -26,7 +26,7 @@ function bindFixtureToConstructor<T>(
   fixture: T,
 ): void {
   (
-    constructor as unknown as jestMock.Mock<Newable<T> & jestMock.FunctionLike>
+    constructor as unknown as jest.Mock<Newable<T> & jestMock.FunctionLike>
   ).mockReturnValue(fixture);
 }
 

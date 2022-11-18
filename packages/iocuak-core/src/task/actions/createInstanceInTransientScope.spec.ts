@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('../../classMetadata/utils/getClassMetadata');
 
 import { ServiceId } from '@cuaklabs/iocuak-common';
@@ -71,7 +69,7 @@ describe(createInstanceInTransientScope.name, () => {
 
   describe('when called, and context.servicesInstantiatedSet.has returns false', () => {
     let typeBindingFixture: TypeBinding;
-    let getDependenciesMock: jestMock.Mock<
+    let getDependenciesMock: jest.Mock<
       (
         classMetadata: ClassMetadata,
         context: TaskContext,
@@ -101,7 +99,7 @@ describe(createInstanceInTransientScope.name, () => {
         ClassMetadataFixtures.withConstructorArgumentsServiceAndPropertiesService;
 
       (
-        getClassMetadata as jestMock.Mock<typeof getClassMetadata>
+        getClassMetadata as jest.Mock<typeof getClassMetadata>
       ).mockReturnValueOnce(classMetadataFixture);
 
       serviceDependenciesFixture = {

@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('../../common/utils/getBaseType');
 jest.mock('./injectFrom');
 
@@ -17,7 +15,7 @@ describe(injectFromBase.name, () => {
     let typeFixture: Newable;
 
     beforeAll(() => {
-      (getBaseType as jestMock.Mock<typeof getBaseType>).mockReturnValueOnce(
+      (getBaseType as jest.Mock<typeof getBaseType>).mockReturnValueOnce(
         undefined,
       );
 
@@ -45,19 +43,19 @@ describe(injectFromBase.name, () => {
     let baseTypeFixture: Newable;
     let typeFixture: Newable;
     // eslint-disable-next-line @typescript-eslint/ban-types
-    let injectFromDecoratorMock: jestMock.Mock<ClassDecorator>;
+    let injectFromDecoratorMock: jest.Mock<ClassDecorator>;
 
     beforeAll(() => {
       baseTypeFixture = class {};
 
-      (getBaseType as jestMock.Mock<typeof getBaseType>).mockReturnValueOnce(
+      (getBaseType as jest.Mock<typeof getBaseType>).mockReturnValueOnce(
         baseTypeFixture,
       );
 
       // eslint-disable-next-line @typescript-eslint/ban-types
       injectFromDecoratorMock = jest.fn<ClassDecorator>();
 
-      (injectFrom as jestMock.Mock<typeof injectFrom>).mockReturnValueOnce(
+      (injectFrom as jest.Mock<typeof injectFrom>).mockReturnValueOnce(
         injectFromDecoratorMock as ClassDecorator,
       );
 

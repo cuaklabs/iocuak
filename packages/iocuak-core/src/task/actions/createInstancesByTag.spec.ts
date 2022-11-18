@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./getBinding');
 
 import { Tag } from '@cuaklabs/iocuak-common';
@@ -21,7 +19,7 @@ describe(createInstancesByTag.name, () => {
     let bindingFixture: Binding;
     let instanceFixture: unknown;
 
-    let createInstanceFromBindingMock: jestMock.Mock<
+    let createInstanceFromBindingMock: jest.Mock<
       (binding: Binding, context: TaskContext) => unknown
     >;
     let bindingServiceMock: jest.Mocked<BindingService>;

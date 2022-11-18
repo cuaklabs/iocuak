@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('@cuaklabs/iocuak-core');
 
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
@@ -41,7 +39,7 @@ describe(MetadataServiceApiImplementation.name, () => {
 
       beforeAll(() => {
         (
-          getBindingMetadata as jestMock.Mock<typeof getBindingMetadata>
+          getBindingMetadata as jest.Mock<typeof getBindingMetadata>
         ).mockReturnValueOnce(undefined);
 
         result =
@@ -79,11 +77,11 @@ describe(MetadataServiceApiImplementation.name, () => {
         };
 
         (
-          getBindingMetadata as jestMock.Mock<typeof getBindingMetadata>
+          getBindingMetadata as jest.Mock<typeof getBindingMetadata>
         ).mockReturnValueOnce(bindingFixture);
 
         (
-          convertBindingToBindingApi as jestMock.Mock<
+          convertBindingToBindingApi as jest.Mock<
             typeof convertBindingToBindingApi
           >
         ).mockReturnValueOnce(bindingApiFixture);
@@ -136,11 +134,11 @@ describe(MetadataServiceApiImplementation.name, () => {
         };
 
         (
-          getClassMetadata as jestMock.Mock<typeof getClassMetadata>
+          getClassMetadata as jest.Mock<typeof getClassMetadata>
         ).mockReturnValueOnce(classMetadataFixture);
 
         (
-          convertToClassMetadataApi as jestMock.Mock<
+          convertToClassMetadataApi as jest.Mock<
             typeof convertToClassMetadataApi
           >
         ).mockReturnValueOnce(classMetadataApiFixture);

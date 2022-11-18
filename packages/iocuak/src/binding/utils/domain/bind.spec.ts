@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('@cuaklabs/iocuak-core');
 
 import { Newable } from '@cuaklabs/iocuak-common';
@@ -30,7 +28,7 @@ describe(bind.name, () => {
       bindingFixture = TypeBindingFixtures.any;
 
       (
-        getBindingOrThrow as jestMock.Mock<typeof getBindingOrThrow>
+        getBindingOrThrow as jest.Mock<typeof getBindingOrThrow>
       ).mockReturnValueOnce(bindingFixture);
 
       bind(typeFixture, containerBindingServiceMock);

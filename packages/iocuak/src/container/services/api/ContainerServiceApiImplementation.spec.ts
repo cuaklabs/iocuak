@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('@cuaklabs/iocuak-core');
 
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
@@ -232,7 +230,7 @@ describe(ContainerServiceApiImplementation.name, () => {
         containerRequestServiceMock.start.mockReturnValueOnce(requestIdFixture);
 
         (
-          createInstance as jestMock.Mock<typeof createInstance>
+          createInstance as jest.Mock<typeof createInstance>
         ).mockReturnValueOnce(instanceFixture);
 
         result = containerServiceApiImplementation.get(serviceIdFixture);
@@ -292,7 +290,7 @@ describe(ContainerServiceApiImplementation.name, () => {
         containerRequestServiceMock.start.mockReturnValueOnce(requestIdFixture);
 
         (
-          createInstancesByTag as jestMock.Mock<typeof createInstancesByTag>
+          createInstancesByTag as jest.Mock<typeof createInstancesByTag>
         ).mockReturnValueOnce(instancesFixture);
 
         result = containerServiceApiImplementation.getByTag(tagFixture);
@@ -351,7 +349,7 @@ describe(ContainerServiceApiImplementation.name, () => {
         );
 
         (
-          convertBindingToBindingApi as jestMock.Mock<
+          convertBindingToBindingApi as jest.Mock<
             typeof convertBindingToBindingApi
           >
         ).mockReturnValueOnce(bindingApiFixture);
@@ -422,7 +420,7 @@ describe(ContainerServiceApiImplementation.name, () => {
         containerRequestServiceMock.start.mockReturnValueOnce(requestIdFixture);
 
         (
-          convertToContainerModuleMetadata as jestMock.Mock<
+          convertToContainerModuleMetadata as jest.Mock<
             typeof convertToContainerModuleMetadata
           >
         ).mockReturnValueOnce(containerModuleMetadataFixture);

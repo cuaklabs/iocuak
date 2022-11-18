@@ -81,7 +81,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           } as unknown as ContainerModule;
 
           (
-            convertToContainerModule as jestMock.Mock<
+            convertToContainerModule as jest.Mock<
               typeof convertToContainerModule
             >
           ).mockReturnValueOnce(containerModuleFixture);
@@ -204,7 +204,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           } as Partial<BindingService> as BindingService;
 
           (
-            convertToContainerModule as jestMock.Mock<
+            convertToContainerModule as jest.Mock<
               typeof convertToContainerModule
             >
           ).mockReturnValueOnce(containerModuleMock);
@@ -379,13 +379,13 @@ describe(convertToContainerModuleMetadata.name, () => {
           } as unknown as ContainerModule;
 
           (
-            convertToContainerModuleAsync as jestMock.Mock<
+            convertToContainerModuleAsync as jest.Mock<
               typeof convertToContainerModuleAsync
             >
           ).mockResolvedValueOnce(containerModuleFixture);
 
           (
-            containerModuleFactoryMetadataApiMock.factory as jestMock.Mock<
+            containerModuleFactoryMetadataApiMock.factory as jest.Mock<
               () => Promise<ContainerModuleApi>
             >
           ).mockResolvedValueOnce(containerModuleApiFixture);
@@ -436,7 +436,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           } as unknown as ContainerModule;
 
           (
-            convertToContainerModule as jestMock.Mock<
+            convertToContainerModule as jest.Mock<
               typeof convertToContainerModule
             >
           ).mockReturnValueOnce(containerModuleFixture);
