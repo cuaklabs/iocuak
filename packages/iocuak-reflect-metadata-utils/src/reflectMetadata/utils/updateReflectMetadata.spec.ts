@@ -2,8 +2,6 @@ import 'reflect-metadata';
 
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./getReflectMetadata');
 
 import { getReflectMetadata } from './getReflectMetadata';
@@ -15,7 +13,7 @@ describe(updateReflectMetadata.name, () => {
     let targetFixture: Function;
     let metadataKeyFixture: unknown;
     let defaultValueFixture: unknown;
-    let callbackMock: jestMock.Mock<(value: unknown) => unknown>;
+    let callbackMock: jest.Mock<(value: unknown) => unknown>;
     let reflectMetadata: unknown;
 
     beforeAll(() => {
@@ -27,7 +25,7 @@ describe(updateReflectMetadata.name, () => {
         .mockImplementationOnce((value: unknown) => value);
 
       (
-        getReflectMetadata as jestMock.Mock<typeof getReflectMetadata>
+        getReflectMetadata as jest.Mock<typeof getReflectMetadata>
       ).mockReturnValueOnce(undefined);
 
       updateReflectMetadata(
@@ -71,7 +69,7 @@ describe(updateReflectMetadata.name, () => {
     let metadataFixture: unknown;
     let metadataKeyFixture: unknown;
     let defaultValueFixture: unknown;
-    let callbackMock: jestMock.Mock<(value: unknown) => unknown>;
+    let callbackMock: jest.Mock<(value: unknown) => unknown>;
     let reflectMetadata: unknown;
 
     beforeAll(() => {
@@ -84,7 +82,7 @@ describe(updateReflectMetadata.name, () => {
         .mockImplementationOnce((value: unknown) => value);
 
       (
-        getReflectMetadata as jestMock.Mock<typeof getReflectMetadata>
+        getReflectMetadata as jest.Mock<typeof getReflectMetadata>
       ).mockReturnValueOnce(metadataFixture);
 
       updateReflectMetadata(
