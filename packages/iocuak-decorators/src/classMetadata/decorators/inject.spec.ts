@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('./injectBase');
 
 import { ServiceId } from '@cuaklabs/iocuak-common';
@@ -26,7 +24,7 @@ describe(inject.name, () => {
         _type: Symbol(),
       } as unknown as ParameterDecorator & PropertyDecorator;
 
-      (injectBase as jestMock.Mock<typeof injectBase>).mockReturnValueOnce(
+      (injectBase as jest.Mock<typeof injectBase>).mockReturnValueOnce(
         decoratorFixture,
       );
 

@@ -1,7 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('@cuaklabs/iocuak-models');
 jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');
 
@@ -58,7 +56,7 @@ describe(injectFrom.name, () => {
       };
 
       (
-        getReflectMetadata as jestMock.Mock<typeof getReflectMetadata>
+        getReflectMetadata as jest.Mock<typeof getReflectMetadata>
       ).mockReturnValueOnce(ClassMetadataFixtures.any);
 
       typeFixture = class {};

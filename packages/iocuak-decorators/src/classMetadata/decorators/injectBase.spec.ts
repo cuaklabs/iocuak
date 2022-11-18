@@ -2,8 +2,6 @@ import 'reflect-metadata';
 
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import * as jestMock from 'jest-mock';
-
 jest.mock('@cuaklabs/iocuak-models');
 jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');
 
@@ -19,7 +17,7 @@ import { updateReflectMetadata } from '@cuaklabs/iocuak-reflect-metadata-utils';
 import { injectBase } from './injectBase';
 
 describe(injectBase.name, () => {
-  let inputToClassElementMetadataMock: jestMock.Mock<
+  let inputToClassElementMetadataMock: jest.Mock<
     (input: ServiceId) => ClassElementMetadata
   >;
 
@@ -40,7 +38,7 @@ describe(injectBase.name, () => {
       serviceIdFixture = 'service-id';
 
       (
-        getDefaultClassMetadata as jestMock.Mock<typeof getDefaultClassMetadata>
+        getDefaultClassMetadata as jest.Mock<typeof getDefaultClassMetadata>
       ).mockReturnValueOnce(defaultClassMetadataFixture);
 
       class TargetFixture {
@@ -78,7 +76,7 @@ describe(injectBase.name, () => {
       serviceIdFixture = 'service-id';
 
       (
-        getDefaultClassMetadata as jestMock.Mock<typeof getDefaultClassMetadata>
+        getDefaultClassMetadata as jest.Mock<typeof getDefaultClassMetadata>
       ).mockReturnValueOnce(defaultClassMetadataFixture);
 
       class TargetFixture {
