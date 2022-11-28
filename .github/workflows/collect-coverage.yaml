@@ -1,26 +1,23 @@
-name: build
+name: collect-coverage
 concurrency: 
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 on:
-  pull_request:
-    types:
-      - closed
-      - opened
-      - reopened
-      - synchronize
+  schedule:
+    - cron: 0 0 * * 0
+  workflow_dispatch:
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     outputs:
       affectedPackages: ${{ steps.get-affected-packages.outputs.packages }}
-    if: "!(github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == false)"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          ref: 'origin/master'
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -52,7 +49,7 @@ jobs:
 
       - name: Get affected packages
         id: get-affected-packages
-        run: echo "packages=$(pnpm exec iocuak-get-affected-projects test:js origin/${{github.base_ref}})" >> $GITHUB_OUTPUT
+        run: echo "packages=$(pnpm exec iocuak-get-affected-projects test:js)" >> $GITHUB_OUTPUT
 
       - name: Compile source files
         run: pnpm run build:all
@@ -74,8 +71,8 @@ jobs:
           restore-keys: |
             ts-build-${{ steps.get-git-commit-hash.outputs.gitCommitHash }}
 
-  test-package:
-    name: Test package
+  test-coverage-package:
+    name: Test with coverage
     needs: build
     runs-on: ubuntu-latest
     if: ${{ needs.build.outputs.affectedPackages != '[]' }}
@@ -132,86 +129,20 @@ jobs:
         run: pnpm run build:all --filter ${{ matrix.package }}
         if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
 
-      - name: Launch Unit Tests
-        run: pnpm run test:unit:js --filter ${{ matrix.package }} --only
+      - name: Launch Unit Tests and generate coverage report
+        run: pnpm run test:js:coverage --filter ${{ matrix.package }} --only -- --selectProjects Unit
 
-      - name: Launch Integration Tests
-        run: pnpm run test:integration:js --filter ${{ matrix.package }} --only
-
-      - name: Start SSH session on failure
-        if: ${{ failure() && contains(github.event.head_commit.message, '[ci-open-ssh]') }}
-        uses: luchihoratiu/debug-via-ssh@main
+      - name: Upload coverage to Codecov (branch)
+        uses: codecov/codecov-action@v3
         with:
-          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
-          SSH_PASS: ${{ secrets.SSH_PASS }}
+          flags: ${{ matrix.package }}
+          override_branch: origin/master
+          token: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: Don't kill instace on failure
-        if: ${{ failure() && contains(github.event.head_commit.message, '[ci-open-ssh]') }}
-        run: sleep 1h
-
-  test-e2e:
-    name: e2e tests
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: pnpm-store-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            pnpm-store-
-        
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Get current git commit hash
-        id: get-git-commit-hash
-        run: |
-          echo "gitCommitHash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v3
-        id: ts-build-cache
-        with:
-          path: |
-            ./packages
-          key: ts-build-${{ steps.get-git-commit-hash.outputs.gitCommitHash }}
-          restore-keys: |
-            ts-build-${{ steps.get-git-commit-hash.outputs.gitCommitHash }}
-
-      - name: Build on cache miss
-        run: pnpm run build:all
-        if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
-
-      - name: Launch E2E tests
-        run: pnpm run test:e2e:js --profile ci
-
-  done:
-    name: Done
+  test-coverage:
+    name: Test with coverage
     needs:
-      - test-package
-      - test-e2e
+      - test-coverage-package
     runs-on: ubuntu-latest
     steps:
       - run: 'echo "Done!"'

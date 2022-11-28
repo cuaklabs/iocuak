@@ -8,14 +8,16 @@ const TURBOREPO_TASK_NOT_FOUND_MAGIC_STRING = "\u003cNONEXISTENT\u003e";
 
 const PACKAGES_DIRECTORY_PREFIX = "packages/";
 
-const baseRef = argv[2];
-const taskToDryRun = argv[3];
+const taskToDryRun = argv[2];
+const baseRef = argv[3];
 
-const stringifiedDryRun = (
-  await promisifiedExec(
-    `pnpm exec turbo run ${taskToDryRun} --filter ...[${baseRef}] --dry=json`
-  )
-).trim();
+let execCommand = `pnpm exec turbo run ${taskToDryRun} --dry=json`;
+
+if (baseRef !== undefined) {
+  execCommand += ` --filter ...[${baseRef}]`;
+}
+
+const stringifiedDryRun = (await promisifiedExec(execCommand)).trim();
 
 const dryRunResult = JSON.parse(stringifiedDryRun);
 
