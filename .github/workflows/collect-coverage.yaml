@@ -49,7 +49,7 @@ jobs:
 
       - name: Get affected packages
         id: get-affected-packages
-        run: echo "packages=$(pnpm exec iocuak-get-affected-projects test:js)" >> $GITHUB_OUTPUT
+        run: echo "packages=$(pnpm exec iocuak-get-affected-projects test:unit:js:coverage)" >> $GITHUB_OUTPUT
 
       - name: Compile source files
         run: pnpm run build:all
