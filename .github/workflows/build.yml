@@ -52,7 +52,7 @@ jobs:
 
       - name: Get affected packages
         id: get-affected-packages
-        run: echo "packages=$(pnpm exec iocuak-get-affected-projects origin/${{github.base_ref}} test:js)" >> $GITHUB_OUTPUT
+        run: echo "packages=$(pnpm exec iocuak-get-affected-projects test:js origin/${{github.base_ref}})" >> $GITHUB_OUTPUT
 
       - name: Compile source files
         run: pnpm run build:all
@@ -74,8 +74,8 @@ jobs:
           restore-keys: |
             ts-build-${{ steps.get-git-commit-hash.outputs.gitCommitHash }}
 
-  test-coverage-package:
-    name: Test with coverage
+  test-package:
+    name: Test package
     needs: build
     runs-on: ubuntu-latest
     if: ${{ needs.build.outputs.affectedPackages != '[]' }}
@@ -132,23 +132,8 @@ jobs:
         run: pnpm run build:all --filter ${{ matrix.package }}
         if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
 
-      - name: Launch Unit Tests and generate coverage report
-        run: pnpm run test:js:coverage --filter ${{ matrix.package }} --only -- --selectProjects Unit
-
-      - name: Upload coverage to Codecov (base branch)
-        uses: codecov/codecov-action@v3
-        with:
-          flags: ${{ matrix.package }}
-          override_branch: ${{ github.base_ref }}
-          token: ${{ secrets.CODECOV_TOKEN }}
-        if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true }}
-
-      - name: Upload coverage to Codecov (branch)
-        uses: codecov/codecov-action@v3
-        with:
-          flags: ${{ matrix.package }}
-          token: ${{ secrets.CODECOV_TOKEN }}
-        if: ${{ !(github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true) }}
+      - name: Launch Unit Tests
+        run: pnpm run test:unit:js --filter ${{ matrix.package }} --only
 
       - name: Launch Integration Tests
         run: pnpm run test:integration:js --filter ${{ matrix.package }} --only
@@ -222,10 +207,10 @@ jobs:
       - name: Launch E2E tests
         run: pnpm run test:e2e:js --profile ci
 
-  test-coverage:
-    name: Test with coverage
+  done:
+    name: Done
     needs:
-      - test-coverage-package
+      - test-package
       - test-e2e
     runs-on: ubuntu-latest
     steps:
