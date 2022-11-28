@@ -54,9 +54,6 @@ jobs:
       - name: Compile source files
         run: pnpm run build:all
 
-      - name: Lint affected source files
-        run: pnpm run lint:all --filter=[origin/${{github.base_ref}}]
-
       - name: Get current git commit hash
         id: get-git-commit-hash
         run: |
