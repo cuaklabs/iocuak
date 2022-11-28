@@ -80,7 +80,7 @@
       ],
       "outputs": []
     },
-    "test:js:coverage": {
+    "test:unit:js:coverage": {
       "dependsOn": [
         "build"
       ],

@@ -17,6 +17,13 @@
     "@cuaklabs/iocuak": "workspace:../iocuak",
     "@nestjs/common": "9.2.0",
     "@nestjs/core": "9.2.0",
+    "clinic": "12.0.0",
+    "reflect-metadata": "0.1.13",
+    "rxjs": "7.5.7",
+    "tsyringe": "4.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.11.9",
     "@typescript-eslint/eslint-plugin": "5.45.0",
     "@typescript-eslint/parser": "5.45.0",
     "eslint": "8.28.0",
@@ -24,13 +31,7 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jest": "27.1.6",
     "eslint-plugin-prettier": "4.2.1",
-    "clinic": "12.0.0",
     "prettier": "2.8.0",
-    "reflect-metadata": "0.1.13",
-    "rxjs": "7.5.7",
-    "tsyringe": "4.7.0"
-  },
-  "devDependencies": {
     "rimraf": "3.0.2",
     "typescript": "4.9.3"
   },
