@@ -127,7 +127,7 @@ jobs:
         if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
 
       - name: Launch Unit Tests and generate coverage report
-        run: pnpm run test:js:coverage --filter ${{ matrix.package }} --only -- --selectProjects Unit
+        run: pnpm run test:unit:js:coverage --filter ${{ matrix.package }} --only -- --selectProjects Unit
 
       - name: Upload coverage to Codecov (branch)
         uses: codecov/codecov-action@v3

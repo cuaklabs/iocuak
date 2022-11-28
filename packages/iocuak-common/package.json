@@ -52,9 +52,9 @@
     "test": "jest --config=jest.config.mjs --runInBand",
     "test:integration:js": "pnpm run test:js --selectProjects Integration",
     "test:js": "jest --config=jest.js.config.mjs --runInBand",
-    "test:js:coverage": "pnpm run test:js --coverage",
     "test:mutation": "stryker run",
     "test:uncommitted": "pnpm run test --changedSince=HEAD",
-    "test:unit:js": "pnpm run test:js --selectProjects Unit"
+    "test:unit:js": "pnpm run test:js --selectProjects Unit",
+    "test:unit:js:coverage": "pnpm run test:unit:js --coverage"
   }
 }

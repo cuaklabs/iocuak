@@ -15,6 +15,7 @@ const jsIntegrationProject = getJestJsProjectConfig(
 
 /** @type {!import("@jest/types").Config.InitialOptions} */
 const jsGlobalConfig = {
+  passWithNoTests: true,
   projects: [jsIntegrationProject, jsUnitProject],
 };
 
@@ -32,6 +33,7 @@ const tsIntegrationProject = getJestTsProjectConfig(
 
 /** @type {!import("@jest/types").Config.InitialOptions} */
 const tsGlobalConfig = {
+  passWithNoTests: true,
   projects: [tsIntegrationProject, tsUnitProject],
 };
 
