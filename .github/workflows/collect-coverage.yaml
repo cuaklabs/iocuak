@@ -133,7 +133,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           flags: ${{ matrix.package }}
-          override_branch: refs/remotes/origin/master
+          override_branch: master
           token: ${{ secrets.CODECOV_TOKEN }}
 
   test-coverage:
