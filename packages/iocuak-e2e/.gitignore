@@ -4,5 +4,8 @@
 # npm installed packages
 /node_modules/
 
+# pnpm lock files
+/pnpm-lock.yaml
+
 # Turborepo files
 .turbo/
