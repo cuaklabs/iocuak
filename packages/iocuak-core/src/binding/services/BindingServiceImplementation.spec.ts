@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
-import { Binding } from '@cuaklabs/iocuak-models';
+import { Binding, BindingType } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../fixtures/TypeBindingFixtures';
 import { BindingService } from './BindingService';
@@ -418,12 +418,12 @@ describe(BindingServiceImplementation.name, () => {
   describe('.set', () => {
     describe('having a bindingFixture with a tag', () => {
       let bindingFixture: Binding;
-      let tag: Tag;
+      let tagFixture: Tag;
 
       beforeAll(() => {
         bindingFixture = TypeBindingFixtures.withTagsOne;
         // eslint-disable-next-line @typescript-eslint/typedef
-        [tag] = TypeBindingFixtures.withTagsOne.tags;
+        [tagFixture] = TypeBindingFixtures.withTagsOne.tags;
       });
 
       describe('when called', () => {
@@ -441,12 +441,57 @@ describe(BindingServiceImplementation.name, () => {
 
           beforeAll(() => {
             result = [
-              ...containerBindingServiceImplementation.getByTag(tag, true),
+              ...containerBindingServiceImplementation.getByTag(
+                tagFixture,
+                true,
+              ),
             ];
           });
 
           it('should return an instance', () => {
             expect(result).toStrictEqual([bindingFixture]);
+          });
+        });
+      });
+
+      describe('when called, and a binding is already associated to the same tag', () => {
+        let existingBindingFixture: Binding;
+
+        let containerBindingServiceImplementation: BindingServiceImplementation;
+
+        beforeAll(() => {
+          existingBindingFixture = {
+            bindingType: BindingType.value,
+            id: Symbol(),
+            tags: [tagFixture],
+            value: Symbol(),
+          };
+
+          containerBindingServiceImplementation =
+            new BindingServiceImplementation();
+
+          containerBindingServiceImplementation.set(existingBindingFixture);
+
+          containerBindingServiceImplementation.set(bindingFixture);
+        });
+
+        describe('when .getByTag() is called with the same tag', () => {
+          let result: unknown;
+
+          beforeAll(() => {
+            result = [
+              ...containerBindingServiceImplementation.getByTag(
+                tagFixture,
+                true,
+              ),
+            ];
+          });
+
+          it('should return two instances', () => {
+            expect(result).toBeInstanceOf(Array);
+            expect(result as unknown[]).toHaveLength(2);
+            expect(result).toContain(bindingFixture);
+            expect(result).toContain(existingBindingFixture);
           });
         });
       });
