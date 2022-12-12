@@ -13,7 +13,7 @@ export function injectBase<TInput>(
   const decorator: ParameterDecorator & PropertyDecorator = (
     // eslint-disable-next-line @typescript-eslint/ban-types
     target: Object,
-    propertyKey: string | symbol, // It may be undefined!!
+    propertyKey: string | symbol, // It might be undefined!!
     parameterIndex?: number,
   ): void => {
     if (parameterIndex === undefined) {
