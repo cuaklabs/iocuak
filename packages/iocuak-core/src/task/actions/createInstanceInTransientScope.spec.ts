@@ -80,7 +80,7 @@ describe(createInstanceInTransientScope.name, () => {
 
     let classMetadataFixture: ClassMetadata;
     let serviceDependenciesFixture: ServiceDependencies;
-    let instanceFixture: unknown;
+    let instanceFixture: Record<string | symbol, unknown>;
 
     let result: unknown;
 
@@ -92,7 +92,7 @@ describe(createInstanceInTransientScope.name, () => {
         id: Symbol(),
         scope: BindingScope.transient,
         tags: [],
-        type: jest.fn().mockReturnValueOnce(instanceFixture),
+        type: jest.fn().mockReturnValueOnce({ ...instanceFixture }),
       };
 
       classMetadataFixture =
@@ -178,20 +178,18 @@ describe(createInstanceInTransientScope.name, () => {
     });
 
     it('should set instance properties', () => {
+      expect(result).toStrictEqual(
+        expect.objectContaining({ ...instanceFixture }),
+      );
+
       for (const [
         propertyKey,
         propertyValue,
       ] of serviceDependenciesFixture.properties.entries()) {
-        expect(instanceFixture).toStrictEqual(
-          expect.objectContaining({
-            [propertyKey]: propertyValue,
-          }),
+        expect((result as Record<string | symbol, unknown>)[propertyKey]).toBe(
+          propertyValue,
         );
       }
-    });
-
-    it('should return an instance', () => {
-      expect(result).toBe(instanceFixture);
     });
   });
 });
