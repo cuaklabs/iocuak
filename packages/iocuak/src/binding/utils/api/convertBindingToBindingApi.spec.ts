@@ -4,12 +4,12 @@ import { TypeBinding, ValueBinding } from '@cuaklabs/iocuak-models';
 import {
   BindingApi,
   BindingScopeApi,
+  bindingScopeToBindingScopeApiMap,
   BindingTypeApi,
 } from '@cuaklabs/iocuak-models-api';
 
 import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../fixtures/domain/ValueBindingFixtures';
-import { bindingScopeToBindingScopeApiMap } from '../../models/api/bindingScopeToBindingScopeApiMap';
 import { convertBindingToBindingApi } from './convertBindingToBindingApi';
 
 describe(convertBindingToBindingApi.name, () => {
