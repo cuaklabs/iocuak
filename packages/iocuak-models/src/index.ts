@@ -2,6 +2,7 @@ import { BaseBinding } from './binding/models/BaseBinding';
 import { Binding } from './binding/models/Binding';
 import { BindingScope } from './binding/models/BindingScope';
 import { BindingType } from './binding/models/BindingType';
+import { BindOptions } from './binding/models/BindOptions';
 import { TypeBinding } from './binding/models/TypeBinding';
 import { ValueBinding } from './binding/models/ValueBinding';
 import { getDefaultBindingScope } from './binding/utils/getDefaultBindingScope';
@@ -17,6 +18,7 @@ import { classMetadataReflectKey } from './reflectMetadata/models/classMetadataR
 export type {
   BaseBinding,
   Binding,
+  BindOptions,
   ClassElementMetadata,
   ClassElementServiceIdMetadata,
   ClassElementTagMetadata,
