@@ -31,7 +31,13 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
   public bind<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
   ): void {
-    bind(type, this._containerService.binding);
+    bind(
+      type,
+      {
+        scope: undefined,
+      },
+      this._containerService.binding,
+    );
   }
 
   public bindToValue(options: BindValueOptionsApi): void {

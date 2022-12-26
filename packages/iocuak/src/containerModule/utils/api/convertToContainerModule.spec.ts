@@ -6,6 +6,7 @@ jest.mock('../../../binding/utils/domain/bindToValue');
 import { Newable, Tag } from '@cuaklabs/iocuak-common';
 import { BindingService, ContainerModule } from '@cuaklabs/iocuak-core';
 
+import { BindOptionsFixtures } from '../../../binding/fixtures/domain/BindOptionsFixtures';
 import { bind } from '../../../binding/utils/domain/bind';
 import { bindToValue } from '../../../binding/utils/domain/bindToValue';
 import { BindValueOptionsApi } from '../../../container/models/api/BindValueOptionsApi';
@@ -110,6 +111,7 @@ describe(convertToContainerModule.name, () => {
         expect(bind).toHaveBeenCalledTimes(1);
         expect(bind).toHaveBeenCalledWith(
           typeFixture,
+          BindOptionsFixtures.withScopeUndefined,
           containerBindingServiceFixture,
         );
       });
