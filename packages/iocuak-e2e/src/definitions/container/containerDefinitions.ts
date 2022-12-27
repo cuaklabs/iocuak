@@ -19,6 +19,7 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
+import { BindingScopeWorld } from '../common/models/worlds/BindingScopeWorld';
 import { ResultWorld } from '../common/models/worlds/ResultWorld';
 import { TagWorld } from '../common/models/worlds/TagWorld';
 import { TwoResultsWorld } from '../common/models/worlds/TwoResultsWorld';
@@ -441,6 +442,19 @@ When<ContainerWorld & ResultWorld & TypeServiceWorld>(
   },
 );
 
+When<BindingScopeWorld & ContainerWorld & ResultWorld & TypeServiceWorld>(
+  'the type service is bound with the binding scope',
+  function (): void {
+    try {
+      this.container.bind(this.typeServiceParameter.service, {
+        scope: this.bindingScopeParameter.scope,
+      });
+    } catch (error: unknown) {
+      this.error = error;
+    }
+  },
+);
+
 When<ContainerWorld & ResultWorld & TypeServiceWorld>(
   'the type service is unbound',
   function (): void {
@@ -631,6 +645,18 @@ Then<TypeServiceWorld & ResultWorld>(
   'type service metadata is included in the result',
   function (): void {
     chai.expect(this.result).to.deep.include(this.typeServiceParameter.binding);
+  },
+);
+
+Then<BindingScopeWorld & TypeServiceWorld & ResultWorld>(
+  'type service metadata is included in the result with the binding scope',
+  function (): void {
+    const expectedBinding: TypeBinding = {
+      ...this.typeServiceParameter.binding,
+      scope: this.bindingScopeParameter.scope,
+    };
+
+    chai.expect(this.result).to.deep.include(expectedBinding);
   },
 );
 

@@ -1,17 +1,26 @@
 import { Given, Then } from '@cucumber/cucumber';
 import chai from 'chai';
 
+import { BindingScopeWorld } from '../models/worlds/BindingScopeWorld';
 import { ResultWorld } from '../models/worlds/ResultWorld';
 import { TagWorld } from '../models/worlds/TagWorld';
 import { TwoResultsWorld } from '../models/worlds/TwoResultsWorld';
 import { TypeServiceWorld } from '../models/worlds/TypeServiceWorld';
 import { ValueServiceWorld } from '../models/worlds/ValueServiceWorld';
+import { BindingScopeParameter } from '../parameters/bindingScope/BindingScopeParameter';
 import { TypeServiceParameter } from '../parameters/typeService/TypeServiceParameter';
 import { ValueServiceParameter } from '../parameters/valueService/ValueServiceParameter';
 
 Given<TagWorld>('a tag', function (): void {
   this.tag = Symbol();
 });
+
+Given<BindingScopeWorld>(
+  'a {bindingScope}',
+  function (bindingScopeParameter: BindingScopeParameter): void {
+    this.bindingScopeParameter = bindingScopeParameter;
+  },
+);
 
 Given<TypeServiceWorld>(
   'a {typeService}',
