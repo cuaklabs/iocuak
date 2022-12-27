@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from '@jest/globals';
 
 import { BindOptionsApi } from '@cuaklabs/iocuak-models-api';
 
-import { BindingOptionsApiFixtures } from '../../fixtures/api/BindingOptionsApiFixtures';
+import { BindOptionsApiFixtures } from '../../fixtures/api/BindOptionsApiFixtures';
 import { BindOptionsFixtures } from '../../fixtures/domain/BindOptionsFixtures';
 import { convertToBindOptions } from './convertToBindOptions';
 
@@ -11,7 +11,7 @@ describe(convertToBindOptions.name, () => {
     let bindingOptionsApiFixture: BindOptionsApi;
 
     beforeAll(() => {
-      bindingOptionsApiFixture = BindingOptionsApiFixtures.any;
+      bindingOptionsApiFixture = BindOptionsApiFixtures.any;
     });
 
     describe('when called', () => {
@@ -51,7 +51,7 @@ describe(convertToBindOptions.name, () => {
     let bindingOptionsApiFixture: BindOptionsApi;
 
     beforeAll(() => {
-      bindingOptionsApiFixture = BindingOptionsApiFixtures.withNoScope;
+      bindingOptionsApiFixture = BindOptionsApiFixtures.withNoScope;
     });
 
     describe('when called', () => {

@@ -9,7 +9,7 @@ import { BindingService, ContainerModule } from '@cuaklabs/iocuak-core';
 import { BindOptions } from '@cuaklabs/iocuak-models';
 import { BindOptionsApi } from '@cuaklabs/iocuak-models-api';
 
-import { BindingOptionsApiFixtures } from '../../../binding/fixtures/api/BindingOptionsApiFixtures';
+import { BindOptionsApiFixtures } from '../../../binding/fixtures/api/BindOptionsApiFixtures';
 import { BindOptionsFixtures } from '../../../binding/fixtures/domain/BindOptionsFixtures';
 import { convertToBindOptions } from '../../../binding/utils/api/convertToBindOptions';
 import { bind } from '../../../binding/utils/domain/bind';
@@ -81,7 +81,7 @@ describe(convertToContainerModule.name, () => {
 
       beforeAll(() => {
         typeFixture = class {};
-        bindOptionsApiFixture = BindingOptionsApiFixtures.any;
+        bindOptionsApiFixture = BindOptionsApiFixtures.any;
         bindOptionsFixture = BindOptionsFixtures.any;
 
         (
