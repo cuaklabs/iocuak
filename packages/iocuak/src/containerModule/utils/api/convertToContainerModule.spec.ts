@@ -1,12 +1,17 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
+jest.mock('../../../binding/utils/api/convertToBindOptions');
 jest.mock('../../../binding/utils/domain/bind');
 jest.mock('../../../binding/utils/domain/bindToValue');
 
 import { Newable, Tag } from '@cuaklabs/iocuak-common';
 import { BindingService, ContainerModule } from '@cuaklabs/iocuak-core';
+import { BindOptions } from '@cuaklabs/iocuak-models';
+import { BindOptionsApi } from '@cuaklabs/iocuak-models-api';
 
+import { BindOptionsApiFixtures } from '../../../binding/fixtures/api/BindOptionsApiFixtures';
 import { BindOptionsFixtures } from '../../../binding/fixtures/domain/BindOptionsFixtures';
+import { convertToBindOptions } from '../../../binding/utils/api/convertToBindOptions';
 import { bind } from '../../../binding/utils/domain/bind';
 import { bindToValue } from '../../../binding/utils/domain/bindToValue';
 import { BindValueOptionsApi } from '../../../container/models/api/BindValueOptionsApi';
@@ -70,15 +75,27 @@ describe(convertToContainerModule.name, () => {
 
     describe('when result.load() is called and containerModuleApi.load() calls containerModuleBindingServiceApi.bind()', () => {
       let typeFixture: Newable;
+      let bindOptionsApiFixture: BindOptionsApi;
+      let bindOptionsFixture: BindOptions;
       let containerBindingServiceFixture: BindingService;
 
       beforeAll(() => {
         typeFixture = class {};
+        bindOptionsApiFixture = BindOptionsApiFixtures.any;
+        bindOptionsFixture = BindOptionsFixtures.any;
+
+        (
+          convertToBindOptions as jest.Mock<typeof convertToBindOptions>
+        ).mockReturnValueOnce(bindOptionsFixture);
+
         containerModuleApiMock.load.mockImplementationOnce(
           (
             containerModuleBindingService: ContainerModuleBindingServiceApi,
           ): void => {
-            containerModuleBindingService.bind(typeFixture);
+            containerModuleBindingService.bind(
+              typeFixture,
+              bindOptionsApiFixture,
+            );
           },
         );
 
@@ -107,11 +124,18 @@ describe(convertToContainerModule.name, () => {
         expect(containerModuleApiMock.load).toHaveBeenCalledWith(expected);
       });
 
+      it('should call convertToBindOptions()', () => {
+        expect(convertToBindOptions).toHaveBeenCalledTimes(1);
+        expect(convertToBindOptions).toHaveBeenCalledWith(
+          bindOptionsApiFixture,
+        );
+      });
+
       it('should call bind', () => {
         expect(bind).toHaveBeenCalledTimes(1);
         expect(bind).toHaveBeenCalledWith(
           typeFixture,
-          BindOptionsFixtures.withScopeUndefined,
+          bindOptionsFixture,
           containerBindingServiceFixture,
         );
       });

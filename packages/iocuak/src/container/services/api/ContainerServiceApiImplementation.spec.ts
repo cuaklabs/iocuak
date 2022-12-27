@@ -30,7 +30,7 @@ import {
   BindOptionsApi,
 } from '@cuaklabs/iocuak-models-api';
 
-import { BindingOptionsApiFixtures } from '../../../binding/fixtures/api/BindingOptionsApiFixtures';
+import { BindOptionsApiFixtures } from '../../../binding/fixtures/api/BindOptionsApiFixtures';
 import { BindOptionsFixtures } from '../../../binding/fixtures/domain/BindOptionsFixtures';
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
@@ -87,7 +87,7 @@ describe(ContainerServiceApiImplementation.name, () => {
 
       beforeAll(() => {
         typeFixture = class {};
-        bindOptionsApiFixture = BindingOptionsApiFixtures.any;
+        bindOptionsApiFixture = BindOptionsApiFixtures.any;
         bindOptionsFixture = BindOptionsFixtures.any;
 
         (
