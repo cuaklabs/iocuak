@@ -3,7 +3,7 @@ import { beforeAll, describe, expect, it } from '@jest/globals';
 import { BindOptionsApi } from '@cuaklabs/iocuak-models-api';
 
 import { BindingOptionsApiFixtures } from '../../fixtures/api/BindingOptionsApiFixtures';
-import { BindingOptionsFixtures } from '../../fixtures/domain/BindingOptionsFixtures';
+import { BindOptionsFixtures } from '../../fixtures/domain/BindOptionsFixtures';
 import { convertToBindOptions } from './convertToBindOptions';
 
 describe(convertToBindOptions.name, () => {
@@ -22,7 +22,7 @@ describe(convertToBindOptions.name, () => {
       });
 
       it('should resturn BindingOptions', () => {
-        expect(result).toStrictEqual(BindingOptionsFixtures.any);
+        expect(result).toStrictEqual(BindOptionsFixtures.any);
       });
     });
   });
@@ -42,7 +42,7 @@ describe(convertToBindOptions.name, () => {
       });
 
       it('should resturn BindingOptions', () => {
-        expect(result).toStrictEqual(BindingOptionsFixtures.withScopeUndefined);
+        expect(result).toStrictEqual(BindOptionsFixtures.withScopeUndefined);
       });
     });
   });

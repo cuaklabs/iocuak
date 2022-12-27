@@ -16,7 +16,14 @@ export function convertToContainerModule(
         {
           bind: <TInstance, TArgs extends unknown[]>(
             type: Newable<TInstance, TArgs>,
-          ) => bind(type, containerBindingService),
+          ) =>
+            bind(
+              type,
+              {
+                scope: undefined,
+              },
+              containerBindingService,
+            ),
           bindToValue: (options: BindValueOptionsApi): void =>
             bindToValue(
               options.serviceId,

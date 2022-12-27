@@ -25,6 +25,7 @@ import {
 import { Binding } from '@cuaklabs/iocuak-models';
 import { BindingApi, BindingTypeApi } from '@cuaklabs/iocuak-models-api';
 
+import { BindOptionsFixtures } from '../../../binding/fixtures/domain/BindOptionsFixtures';
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { bind } from '../../../binding/utils/domain/bind';
@@ -89,6 +90,7 @@ describe(ContainerServiceApiImplementation.name, () => {
         expect(bind).toHaveBeenCalledTimes(1);
         expect(bind).toHaveBeenCalledWith(
           typeFixture,
+          BindOptionsFixtures.withScopeUndefined,
           containerServiceMock.binding,
         );
       });
