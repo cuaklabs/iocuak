@@ -1,6 +1,8 @@
 import { Newable, Tag } from '@cuaklabs/iocuak-common';
 import { BindingService, ContainerModule } from '@cuaklabs/iocuak-core';
+import { BindOptionsApi } from '@cuaklabs/iocuak-models-api';
 
+import { convertToBindOptions } from '../../../binding/utils/api/convertToBindOptions';
 import { bind } from '../../../binding/utils/domain/bind';
 import { bindToValue } from '../../../binding/utils/domain/bindToValue';
 import { BindValueOptionsApi } from '../../../container/models/api/BindValueOptionsApi';
@@ -16,14 +18,9 @@ export function convertToContainerModule(
         {
           bind: <TInstance, TArgs extends unknown[]>(
             type: Newable<TInstance, TArgs>,
+            options?: BindOptionsApi,
           ) =>
-            bind(
-              type,
-              {
-                scope: undefined,
-              },
-              containerBindingService,
-            ),
+            bind(type, convertToBindOptions(options), containerBindingService),
           bindToValue: (options: BindValueOptionsApi): void =>
             bindToValue(
               options.serviceId,
