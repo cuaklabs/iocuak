@@ -6,6 +6,7 @@ jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
 jest.mock(
   '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata',
 );
+jest.mock('../../../binding/utils/api/convertToBindOptions');
 jest.mock('../../../binding/utils/domain/bind');
 jest.mock('../../../binding/utils/domain/bindToValue');
 
@@ -22,12 +23,18 @@ import {
   TaskContext,
   ContainerModuleMetadata,
 } from '@cuaklabs/iocuak-core';
-import { Binding } from '@cuaklabs/iocuak-models';
-import { BindingApi, BindingTypeApi } from '@cuaklabs/iocuak-models-api';
+import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
+import {
+  BindingApi,
+  BindingTypeApi,
+  BindOptionsApi,
+} from '@cuaklabs/iocuak-models-api';
 
+import { BindingOptionsApiFixtures } from '../../../binding/fixtures/api/BindingOptionsApiFixtures';
 import { BindOptionsFixtures } from '../../../binding/fixtures/domain/BindOptionsFixtures';
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
+import { convertToBindOptions } from '../../../binding/utils/api/convertToBindOptions';
 import { bind } from '../../../binding/utils/domain/bind';
 import { bindToValue } from '../../../binding/utils/domain/bindToValue';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
@@ -75,22 +82,40 @@ describe(ContainerServiceApiImplementation.name, () => {
   describe('.bind', () => {
     describe('when called', () => {
       let typeFixture: Newable;
+      let bindOptionsApiFixture: BindOptionsApi;
+      let bindOptionsFixture: BindOptions;
 
       beforeAll(() => {
         typeFixture = class {};
+        bindOptionsApiFixture = BindingOptionsApiFixtures.any;
+        bindOptionsFixture = BindOptionsFixtures.any;
 
-        containerServiceApiImplementation.bind(typeFixture);
+        (
+          convertToBindOptions as jest.Mock<typeof convertToBindOptions>
+        ).mockReturnValueOnce(bindOptionsFixture);
+
+        containerServiceApiImplementation.bind(
+          typeFixture,
+          bindOptionsApiFixture,
+        );
       });
 
       afterAll(() => {
         jest.clearAllMocks();
       });
 
+      it('should call convertToBindOptions()', () => {
+        expect(convertToBindOptions).toHaveBeenCalledTimes(1);
+        expect(convertToBindOptions).toHaveBeenCalledWith(
+          bindOptionsApiFixture,
+        );
+      });
+
       it('should call bind()', () => {
         expect(bind).toHaveBeenCalledTimes(1);
         expect(bind).toHaveBeenCalledWith(
           typeFixture,
-          BindOptionsFixtures.withScopeUndefined,
+          bindOptionsFixture,
           containerServiceMock.binding,
         );
       });

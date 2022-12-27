@@ -27,6 +27,26 @@ describe(convertToBindOptions.name, () => {
     });
   });
 
+  describe('having BindingOptionsApi undefined', () => {
+    let bindingOptionsApiFixture: undefined;
+
+    beforeAll(() => {
+      bindingOptionsApiFixture = undefined;
+    });
+
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        result = convertToBindOptions(bindingOptionsApiFixture);
+      });
+
+      it('should resturn BindingOptions', () => {
+        expect(result).toStrictEqual(BindOptionsFixtures.withScopeUndefined);
+      });
+    });
+  });
+
   describe('having BindingOptionsApi with no scope', () => {
     let bindingOptionsApiFixture: BindOptionsApi;
 

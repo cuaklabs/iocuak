@@ -21,9 +21,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [UNRELEASED]
 
+### Added
+- Added `BindOptions`.
+
 ### Changed
 - Updated dependencies require `reflect-metadata` as dev dependency.
-- Update dependencies with `@cuaklabs/iocuak-` internal libraries.
+- Updated dependencies with `@cuaklabs/iocuak-` internal libraries.
+- Updated `BindService.bind` with options.
 
 
 

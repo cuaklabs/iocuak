@@ -22,6 +22,7 @@ import {
   ClassElementServiceIdMetadataApi,
   ClassElementTagMetadataApi,
   ClassMetadataApi,
+  BindOptionsApi,
 } from '@cuaklabs/iocuak-models-api';
 
 import { BindingServiceApi } from './binding/services/api/BindingServiceApi';
@@ -44,6 +45,7 @@ export type {
   BaseClassElementMetadataApi as BaseClassElementMetadata,
   BaseClassMetadataExtensionApi as BaseClassMetadataExtension,
   BindingApi as Binding,
+  BindOptionsApi as BindOptions,
   BindingServiceApi as BindingService,
   Tag,
   BindValueOptionsApi as BindValueOptions,
