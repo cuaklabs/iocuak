@@ -8,10 +8,11 @@ import {
   TaskContext,
   ContainerModuleMetadata,
 } from '@cuaklabs/iocuak-core';
-import { Binding } from '@cuaklabs/iocuak-models';
-import { BindingApi } from '@cuaklabs/iocuak-models-api';
+import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
+import { BindingApi, BindOptionsApi } from '@cuaklabs/iocuak-models-api';
 
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
+import { convertToBindOptions } from '../../../binding/utils/api/convertToBindOptions';
 import { bind } from '../../../binding/utils/domain/bind';
 import { bindToValue } from '../../../binding/utils/domain/bindToValue';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
@@ -30,14 +31,11 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
 
   public bind<TInstance, TArgs extends unknown[]>(
     type: Newable<TInstance, TArgs>,
+    options?: BindOptionsApi,
   ): void {
-    bind(
-      type,
-      {
-        scope: undefined,
-      },
-      this._containerService.binding,
-    );
+    const bindOptions: BindOptions = convertToBindOptions(options);
+
+    bind(type, bindOptions, this._containerService.binding);
   }
 
   public bindToValue(options: BindValueOptionsApi): void {

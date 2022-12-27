@@ -4,10 +4,12 @@ import {
   BindOptionsApi,
 } from '@cuaklabs/iocuak-models-api';
 
-export function convertToBindOptions(options: BindOptionsApi): BindOptions {
+export function convertToBindOptions(
+  options: BindOptionsApi | undefined,
+): BindOptions {
   let bindingScope: BindingScope | undefined;
 
-  if (options.scope === undefined) {
+  if (options?.scope === undefined) {
     bindingScope = undefined;
   } else {
     bindingScope = bindingScopeApiToBindingScopeMap[options.scope];
