@@ -1,5 +1,8 @@
 # Jest coverage report
-/coverage/
+/coverage
+
+# Stryker reports
+/reports
 
 # Turborepo files
 .turbo/
@@ -9,8 +12,14 @@
 **/*.ts
 !lib/**/*.d.ts
 
+.eslintignore
 .eslintrc.js
+.lintstagedrc.json
+.prettierignore
+jest.config.mjs
+jest.config.stryker.mjs
+jest.js.config.mjs
 pnpm-lock.yaml
-project.json
-tsconfig.dev.json
+stryker.conf.json
+prettier.config.js
 tsconfig.json
