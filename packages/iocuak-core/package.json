@@ -1,6 +1,6 @@
 {
   "name": "@cuaklabs/iocuak-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The hexagonal architecture framework",
   "main": "lib/index.js",
   "repository": {
