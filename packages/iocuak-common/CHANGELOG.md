@@ -21,13 +21,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [UNRELEASED]
 
+
+
+
+## 0.1.1 - 2022-12-28
+
 ### Changed
 - Updated dependencies to no longer require `reflect-metadata`.
 
 
 
 
-### 0.1.0 - 2022-08-19
+## 0.1.0 - 2022-08-19
 
 ### Added
 - Added `chain`.
