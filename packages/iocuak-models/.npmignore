@@ -9,8 +9,10 @@
 **/*.ts
 !lib/**/*.d.ts
 
+.eslintignore
 .eslintrc.js
+.lintstagedrc.json
+.prettierignore
 pnpm-lock.yaml
-project.json
-tsconfig.dev.json
+prettier.config.js
 tsconfig.json
