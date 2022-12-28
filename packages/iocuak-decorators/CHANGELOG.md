@@ -21,13 +21,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [UNRELEASED]
 
+
+
+
+## 0.1.1 - 2022-12-28
+
 ### Changed
 - Updated `reflect-metadata` dependency to be dev dependency.
 
 
 
 
-### 0.1.0 - 2022-11-09
+## 0.1.0 - 2022-11-09
 
 ### Added
 - Added `inject`.
