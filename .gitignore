@@ -1,14 +1,6 @@
 # npm installed packages
 /node_modules/
 
-# Jest coverage report
-/coverage/
-
-/reports
-/stryker-tmp
-
-/tmp
-
 ### Visual Studio Code ###
 .vscode/*
 !.vscode/settings.json
