@@ -47,7 +47,7 @@
     "@cuaklabs/iocuak-prettier-config": "workspace:./packages/iocuak-prettier-config",
     "@cuaklabs/iocuak-scripts": "workspace:./packages/iocuak-scripts",
     "@cuaklabs/typescript-config-iocuak": "workspace:./packages/typescript-config-iocuak",
-    "husky": "8.0.2",
+    "husky": "8.0.3",
     "lint-staged": "13.1.0",
     "reflect-metadata": "0.1.13",
     "turbo": "1.6.3"
