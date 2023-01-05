@@ -1,3 +1,4 @@
+import { ContainerModuleMetadataId } from './models/ContainerModuleMetadataId';
 import { Newable } from './models/Newable';
 import { ServiceId } from './models/ServiceId';
 import { Tag } from './models/Tag';
@@ -7,6 +8,6 @@ import { isPromiseLike } from './utils/isPromiseLike';
 import { mapIterable } from './utils/mapIterable';
 import { mapIterator } from './utils/mapIterator';
 
-export type { Newable, Tag, ServiceId };
+export type { ContainerModuleMetadataId, Newable, Tag, ServiceId };
 
 export { chain, isFunction, isPromiseLike, mapIterable, mapIterator };
