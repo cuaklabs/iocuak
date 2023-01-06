@@ -1,16 +1,16 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-jest.mock('../../binding/utils/lazyGetBindingOrThrow');
+jest.mock('./lazyGetBindingOrThrow');
 
 import { ServiceId } from '@cuaklabs/iocuak-common';
 
-import { TypeBindingFixtures } from '../../binding/fixtures/TypeBindingFixtures';
-import { ValueBindingFixtures } from '../../binding/fixtures/ValueBindingFixtures';
-import { BindingService } from '../../binding/services/BindingService';
-import { lazyGetBindingOrThrow } from '../../binding/utils/lazyGetBindingOrThrow';
-import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
-import { TaskContextServices } from '../models/TaskContextServices';
+import { CreateInstanceTaskContext } from '../../task/models/CreateInstanceTaskContext';
+import { TaskContextServices } from '../../task/models/TaskContextServices';
+import { TypeBindingFixtures } from '../fixtures/TypeBindingFixtures';
+import { ValueBindingFixtures } from '../fixtures/ValueBindingFixtures';
+import { BindingService } from '../services/BindingService';
 import { getBinding } from './getBinding';
+import { lazyGetBindingOrThrow } from './lazyGetBindingOrThrow';
 
 describe(getBinding.name, () => {
   let bindingServiceMock: jest.Mocked<BindingService>;

@@ -1,7 +1,7 @@
+import { getBindingMetadata } from './binding/actions/getBindingMetadata';
+import { getBindingOrThrow } from './binding/actions/getBindingOrThrow';
 import { BindingService } from './binding/services/BindingService';
 import { BindingServiceImplementation } from './binding/services/BindingServiceImplementation';
-import { getBindingMetadata } from './binding/utils/getBindingMetadata';
-import { getBindingOrThrow } from './binding/utils/getBindingOrThrow';
 import { getClassMetadata } from './classMetadata/utils/getClassMetadata';
 import { ContainerRequestService } from './container/services/ContainerRequestService';
 import { ContainerRequestServiceImplementation } from './container/services/ContainerRequestServiceImplementation';

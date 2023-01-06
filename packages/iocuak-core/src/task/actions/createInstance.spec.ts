@@ -1,16 +1,16 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 jest.mock('./createInstanceFromBinding');
-jest.mock('./getBinding');
+jest.mock('../../binding/actions/getBinding');
 
 import { ServiceId } from '@cuaklabs/iocuak-common';
 import { Binding } from '@cuaklabs/iocuak-models';
 
+import { getBinding } from '../../binding/actions/getBinding';
 import { ValueBindingFixtures } from '../../binding/fixtures/ValueBindingFixtures';
 import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { createInstance } from './createInstance';
 import { createInstanceFromBinding } from './createInstanceFromBinding';
-import { getBinding } from './getBinding';
 
 describe(createInstance.name, () => {
   let serviceIdFixture: ServiceId;

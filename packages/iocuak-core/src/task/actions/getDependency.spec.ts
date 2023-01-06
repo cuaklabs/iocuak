@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
+jest.mock('../../binding/actions/getBinding');
 jest.mock('./createInstancesByTag');
-jest.mock('./getBinding');
 
 import {
   Binding,
@@ -10,11 +10,11 @@ import {
   ClassElementTagMetadata,
 } from '@cuaklabs/iocuak-models';
 
+import { getBinding } from '../../binding/actions/getBinding';
 import { ValueBindingFixtures } from '../../binding/fixtures/ValueBindingFixtures';
 import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { TaskContextActions } from '../models/TaskContextActions';
 import { createInstancesByTag } from './createInstancesByTag';
-import { getBinding } from './getBinding';
 import { getDependency } from './getDependency';
 
 describe(getDependency.name, () => {

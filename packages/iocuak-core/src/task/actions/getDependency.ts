@@ -4,9 +4,9 @@ import {
   ClassElementMetadataType,
 } from '@cuaklabs/iocuak-models';
 
+import { getBinding } from '../../binding/actions/getBinding';
 import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { createInstancesByTag } from './createInstancesByTag';
-import { getBinding } from './getBinding';
 
 export function getDependency(
   classElementMetadata: ClassElementMetadata,
