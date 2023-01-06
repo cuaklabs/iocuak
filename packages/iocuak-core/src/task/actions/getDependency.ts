@@ -4,13 +4,13 @@ import {
   ClassElementMetadataType,
 } from '@cuaklabs/iocuak-models';
 
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { createInstancesByTag } from './createInstancesByTag';
 import { getBinding } from './getBinding';
 
 export function getDependency(
   classElementMetadata: ClassElementMetadata,
-  context: TaskContext,
+  context: CreateInstanceTaskContext,
 ): unknown {
   let instanceDependency: unknown;
 

@@ -1,12 +1,12 @@
 import { TypeBinding, ClassMetadata } from '@cuaklabs/iocuak-models';
 
 import { getClassMetadata } from '../../classMetadata/utils/getClassMetadata';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { ServiceDependencies } from '../models/ServiceDependencies';
-import { TaskContext } from '../models/TaskContext';
 
 export function createInstanceInTransientScope(
   binding: TypeBinding,
-  context: TaskContext,
+  context: CreateInstanceTaskContext,
 ): unknown {
   if (context.servicesInstantiatedSet.has(binding.id)) {
     throw new Error('Circular dependency found!');

@@ -5,14 +5,14 @@ jest.mock('./getDependency');
 import { ClassMetadata } from '@cuaklabs/iocuak-models';
 
 import { ClassMetadataFixtures } from '../../classMetadata/fixtures/ClassMetadataFixtures';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { ServiceDependencies } from '../models/ServiceDependencies';
-import { TaskContext } from '../models/TaskContext';
 import { getDependencies } from './getDependencies';
 import { getDependency } from './getDependency';
 
 describe(getDependencies.name, () => {
   let classMetadataFixture: ClassMetadata;
-  let taskContextFixture: TaskContext;
+  let taskContextFixture: CreateInstanceTaskContext;
 
   beforeAll(() => {
     classMetadataFixture =
@@ -20,7 +20,7 @@ describe(getDependencies.name, () => {
 
     taskContextFixture = {
       [Symbol()]: Symbol(),
-    } as unknown as TaskContext;
+    } as unknown as CreateInstanceTaskContext;
   });
 
   describe('when called', () => {

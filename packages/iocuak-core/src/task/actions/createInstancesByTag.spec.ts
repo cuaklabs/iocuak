@@ -7,7 +7,7 @@ import { Binding } from '@cuaklabs/iocuak-models';
 
 import { ValueBindingFixtures } from '../../binding/fixtures/ValueBindingFixtures';
 import { BindingService } from '../../binding/services/BindingService';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { TaskContextActions } from '../models/TaskContextActions';
 import { TaskContextServices } from '../models/TaskContextServices';
 import { createInstancesByTag } from './createInstancesByTag';
@@ -20,11 +20,11 @@ describe(createInstancesByTag.name, () => {
     let instanceFixture: unknown;
 
     let createInstanceFromBindingMock: jest.Mock<
-      (binding: Binding, context: TaskContext) => unknown
+      (binding: Binding, context: CreateInstanceTaskContext) => unknown
     >;
     let bindingServiceMock: jest.Mocked<BindingService>;
 
-    let taskContextFixture: TaskContext;
+    let taskContextFixture: CreateInstanceTaskContext;
 
     let result: unknown;
 
@@ -51,7 +51,7 @@ describe(createInstancesByTag.name, () => {
         services: {
           bindingService: bindingServiceMock,
         } as Partial<TaskContextServices> as TaskContextServices,
-      } as Partial<TaskContext> as TaskContext;
+      } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
 
       result = createInstancesByTag(tagFixture, taskContextFixture);
     });

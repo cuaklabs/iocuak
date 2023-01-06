@@ -6,7 +6,7 @@ import { TypeBinding, ValueBinding } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../../binding/fixtures/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../../binding/fixtures/ValueBindingFixtures';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { createInstanceFromBinding } from './createInstanceFromBinding';
 import { createInstanceFromTypeBinding } from './createInstanceFromTypeBinding';
 
@@ -19,13 +19,15 @@ describe(createInstanceFromBinding.name, () => {
     });
 
     describe('when called', () => {
-      let taskContextFixture: TaskContext;
+      let taskContextFixture: CreateInstanceTaskContext;
       let instanceFixture: unknown;
 
       let result: unknown;
 
       beforeAll(() => {
-        taskContextFixture = { _type: Symbol() } as unknown as TaskContext;
+        taskContextFixture = {
+          _type: Symbol(),
+        } as unknown as CreateInstanceTaskContext;
         instanceFixture = Symbol();
 
         (
@@ -66,12 +68,14 @@ describe(createInstanceFromBinding.name, () => {
     });
 
     describe('when called', () => {
-      let taskContextFixture: TaskContext;
+      let taskContextFixture: CreateInstanceTaskContext;
 
       let result: unknown;
 
       beforeAll(() => {
-        taskContextFixture = { _type: Symbol() } as unknown as TaskContext;
+        taskContextFixture = {
+          _type: Symbol(),
+        } as unknown as CreateInstanceTaskContext;
 
         result = createInstanceFromBinding(
           valueBindingFixture,

@@ -1,13 +1,13 @@
 import { ServiceId } from '@cuaklabs/iocuak-common';
 import { Binding } from '@cuaklabs/iocuak-models';
 
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { createInstanceFromBinding } from './createInstanceFromBinding';
 import { getBinding } from './getBinding';
 
 export function createInstance(
   serviceId: ServiceId,
-  context: TaskContext,
+  context: CreateInstanceTaskContext,
 ): unknown {
   const binding: Binding = getBinding(serviceId, context);
 

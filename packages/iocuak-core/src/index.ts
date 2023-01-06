@@ -17,7 +17,7 @@ import { createInstanceFromBinding } from './task/actions/createInstanceFromBind
 import { createInstancesByTag } from './task/actions/createInstancesByTag';
 import { getDependencies } from './task/actions/getDependencies';
 import { loadContainerModule } from './task/actions/loadContainerModule';
-import { TaskContext } from './task/models/TaskContext';
+import { CreateInstanceTaskContext } from './task/models/CreateInstanceTaskContext';
 import { TaskContextActions } from './task/models/TaskContextActions';
 import { TaskContextServices } from './task/models/TaskContextServices';
 
@@ -29,7 +29,7 @@ export type {
   ContainerModuleMetadata,
   ContainerRequestService,
   ContainerSingletonService,
-  TaskContext,
+  CreateInstanceTaskContext,
   TaskContextActions,
   TaskContextServices,
 };

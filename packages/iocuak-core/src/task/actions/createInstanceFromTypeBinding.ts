@@ -1,13 +1,13 @@
 import { TypeBinding, BindingScope } from '@cuaklabs/iocuak-models';
 
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { createInstanceInRequestScope } from './createInstanceInRequestScope';
 import { createInstanceInSingletonScope } from './createInstanceInSingletonScope';
 import { createInstanceInTransientScope } from './createInstanceInTransientScope';
 
 export function createInstanceFromTypeBinding(
   binding: TypeBinding,
-  context: TaskContext,
+  context: CreateInstanceTaskContext,
 ): unknown {
   let instance: unknown;
 

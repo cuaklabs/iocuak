@@ -1,13 +1,16 @@
 import { Binding, ClassMetadata } from '@cuaklabs/iocuak-models';
 
+import { CreateInstanceTaskContext } from './CreateInstanceTaskContext';
 import { ServiceDependencies } from './ServiceDependencies';
-import { TaskContext } from './TaskContext';
 
 export interface TaskContextActions {
-  createInstanceFromBinding(binding: Binding, context: TaskContext): unknown;
+  createInstanceFromBinding(
+    binding: Binding,
+    context: CreateInstanceTaskContext,
+  ): unknown;
 
   getDependencies(
     classMetadata: ClassMetadata,
-    context: TaskContext,
+    context: CreateInstanceTaskContext,
   ): ServiceDependencies;
 }

@@ -4,14 +4,14 @@ jest.mock('./createInstance');
 
 import { BindingService } from '../../binding/services/BindingService';
 import { ContainerModuleClassMetadata } from '../../containerModuleMetadata/models/ContainerModuleClassMetadata';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { TaskContextServices } from '../models/TaskContextServices';
 import { createInstance } from './createInstance';
 import { loadFromContainerModuleClassMetadata } from './loadFromContainerModuleClassMetadata';
 
 describe(loadFromContainerModuleClassMetadata.name, () => {
   let containerModuleClassMetadataMock: ContainerModuleClassMetadata;
-  let taskContextMock: TaskContext;
+  let taskContextMock: CreateInstanceTaskContext;
 
   beforeAll(() => {
     containerModuleClassMetadataMock = {
@@ -23,7 +23,7 @@ describe(loadFromContainerModuleClassMetadata.name, () => {
       services: {
         bindingService: { [Symbol()]: Symbol() } as unknown as BindingService,
       } as Partial<TaskContextServices> as TaskContextServices,
-    } as Partial<TaskContext> as TaskContext;
+    } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
   });
 
   describe('when called', () => {

@@ -7,18 +7,20 @@ import { ServiceId } from '@cuaklabs/iocuak-common';
 import { Binding } from '@cuaklabs/iocuak-models';
 
 import { ValueBindingFixtures } from '../../binding/fixtures/ValueBindingFixtures';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { createInstance } from './createInstance';
 import { createInstanceFromBinding } from './createInstanceFromBinding';
 import { getBinding } from './getBinding';
 
 describe(createInstance.name, () => {
   let serviceIdFixture: ServiceId;
-  let taskContextFixture: TaskContext;
+  let taskContextFixture: CreateInstanceTaskContext;
 
   beforeAll(() => {
     serviceIdFixture = Symbol();
-    taskContextFixture = { _type: Symbol() } as unknown as TaskContext;
+    taskContextFixture = {
+      _type: Symbol(),
+    } as unknown as CreateInstanceTaskContext;
   });
 
   describe('when called', () => {

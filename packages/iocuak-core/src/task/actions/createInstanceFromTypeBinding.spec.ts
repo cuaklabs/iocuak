@@ -7,7 +7,7 @@ jest.mock('./createInstanceInTransientScope');
 import { TypeBinding } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../../binding/fixtures/TypeBindingFixtures';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { createInstanceFromTypeBinding } from './createInstanceFromTypeBinding';
 import { createInstanceInRequestScope } from './createInstanceInRequestScope';
 import { createInstanceInSingletonScope } from './createInstanceInSingletonScope';
@@ -18,7 +18,9 @@ describe(createInstanceFromTypeBinding.name, () => {
     [
       string,
       TypeBinding,
-      jest.Mock<(binding: TypeBinding, context: TaskContext) => unknown>,
+      jest.Mock<
+        (binding: TypeBinding, context: CreateInstanceTaskContext) => unknown
+      >,
     ]
   >([
     [
@@ -48,17 +50,19 @@ describe(createInstanceFromTypeBinding.name, () => {
       _: string,
       typeBindingFixture: TypeBinding,
       functionMock: jest.Mock<
-        (binding: TypeBinding, context: TaskContext) => unknown
+        (binding: TypeBinding, context: CreateInstanceTaskContext) => unknown
       >,
     ) => {
       describe('when called', () => {
-        let taskContextFixture: TaskContext;
+        let taskContextFixture: CreateInstanceTaskContext;
         let instanceFixture: unknown;
 
         let result: unknown;
 
         beforeAll(() => {
-          taskContextFixture = { _type: Symbol() } as unknown as TaskContext;
+          taskContextFixture = {
+            _type: Symbol(),
+          } as unknown as CreateInstanceTaskContext;
           instanceFixture = Symbol();
 
           functionMock.mockReturnValueOnce(instanceFixture);

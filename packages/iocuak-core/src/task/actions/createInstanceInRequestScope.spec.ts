@@ -6,7 +6,7 @@ import { TypeBinding } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../../binding/fixtures/TypeBindingFixtures';
 import { ContainerRequestService } from '../../container/services/ContainerRequestService';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { TaskContextServices } from '../models/TaskContextServices';
 import { createInstanceInRequestScope } from './createInstanceInRequestScope';
 import { createInstanceInTransientScope } from './createInstanceInTransientScope';
@@ -14,7 +14,7 @@ import { createInstanceInTransientScope } from './createInstanceInTransientScope
 describe(createInstanceInRequestScope.name, () => {
   let typeBindingFixture: TypeBinding;
   let containerRequestServiceMock: jest.Mocked<ContainerRequestService>;
-  let taskContextFixture: TaskContext;
+  let taskContextFixture: CreateInstanceTaskContext;
 
   beforeAll(() => {
     typeBindingFixture = TypeBindingFixtures.any;
@@ -30,7 +30,7 @@ describe(createInstanceInRequestScope.name, () => {
       services: {
         containerRequestService: containerRequestServiceMock,
       } as Partial<TaskContextServices> as TaskContextServices,
-    } as Partial<TaskContext> as TaskContext;
+    } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
   });
 
   describe('when called, and context.services.containerRequestService.get() returns undefined', () => {

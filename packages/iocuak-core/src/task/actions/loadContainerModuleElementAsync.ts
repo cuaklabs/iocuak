@@ -1,10 +1,10 @@
 import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { loadContainerModuleElement } from './loadContainerModuleElement';
 
 export async function loadContainerModuleElementAsync(
   containerModuleMetadata: ContainerModuleMetadata,
-  context: TaskContext,
+  context: CreateInstanceTaskContext,
   loadModuleDependenciesResult: Promise<void>,
 ): Promise<void> {
   await loadModuleDependenciesResult;

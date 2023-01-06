@@ -6,7 +6,7 @@ jest.mock('./loadContainerModuleElementAsync');
 import { ContainerModule } from '../../containerModule/models/ContainerModule';
 import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from '../../containerModuleMetadata/models/ContainerModuleMetadataType';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { loadContainerModule } from './loadContainerModule';
 import { loadContainerModuleElement } from './loadContainerModuleElement';
 import { loadContainerModuleElementAsync } from './loadContainerModuleElementAsync';
@@ -31,14 +31,14 @@ describe(loadContainerModule.name, () => {
     });
 
     describe('when called', () => {
-      let taskContextFixture: TaskContext;
+      let taskContextFixture: CreateInstanceTaskContext;
 
       let result: unknown;
 
       beforeAll(() => {
         taskContextFixture = {
           [Symbol()]: Symbol(),
-        } as unknown as TaskContext;
+        } as unknown as CreateInstanceTaskContext;
 
         result = loadContainerModule(
           containerModuleMetadataFixture,
@@ -91,14 +91,14 @@ describe(loadContainerModule.name, () => {
     });
 
     describe('when called', () => {
-      let taskContextFixture: TaskContext;
+      let taskContextFixture: CreateInstanceTaskContext;
 
       let result: unknown;
 
       beforeAll(() => {
         taskContextFixture = {
           [Symbol()]: Symbol(),
-        } as unknown as TaskContext;
+        } as unknown as CreateInstanceTaskContext;
 
         (
           loadContainerModuleElement as jest.Mock<() => Promise<void>>

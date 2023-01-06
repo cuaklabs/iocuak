@@ -13,8 +13,8 @@ import {
 import { TypeBindingFixtures } from '../../binding/fixtures/TypeBindingFixtures';
 import { ClassMetadataFixtures } from '../../classMetadata/fixtures/ClassMetadataFixtures';
 import { getClassMetadata } from '../../classMetadata/utils/getClassMetadata';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { ServiceDependencies } from '../models/ServiceDependencies';
-import { TaskContext } from '../models/TaskContext';
 import { TaskContextActions } from '../models/TaskContextActions';
 import { createInstanceInTransientScope } from './createInstanceInTransientScope';
 
@@ -22,7 +22,7 @@ describe(createInstanceInTransientScope.name, () => {
   describe('when called, and context.servicesInstantiatedSet.has returns true', () => {
     let typeBindingFixture: TypeBinding;
     let servicesInstantiatedSetMock: jest.Mocked<Set<ServiceId>>;
-    let taskContextFixture: TaskContext;
+    let taskContextFixture: CreateInstanceTaskContext;
 
     let result: unknown;
 
@@ -38,7 +38,7 @@ describe(createInstanceInTransientScope.name, () => {
 
         taskContextFixture = {
           servicesInstantiatedSet: servicesInstantiatedSetMock,
-        } as Partial<TaskContext> as TaskContext;
+        } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
 
         createInstanceInTransientScope(typeBindingFixture, taskContextFixture);
       } catch (error: unknown) {
@@ -72,11 +72,11 @@ describe(createInstanceInTransientScope.name, () => {
     let getDependenciesMock: jest.Mock<
       (
         classMetadata: ClassMetadata,
-        context: TaskContext,
+        context: CreateInstanceTaskContext,
       ) => ServiceDependencies
     >;
     let servicesInstantiatedSetMock: jest.Mocked<Set<ServiceId>>;
-    let taskContextFixture: TaskContext;
+    let taskContextFixture: CreateInstanceTaskContext;
 
     let classMetadataFixture: ClassMetadata;
     let serviceDependenciesFixture: ServiceDependencies;
@@ -124,7 +124,7 @@ describe(createInstanceInTransientScope.name, () => {
           getDependencies: getDependenciesMock,
         } as Partial<TaskContextActions> as TaskContextActions,
         servicesInstantiatedSet: servicesInstantiatedSetMock,
-      } as Partial<TaskContext> as TaskContext;
+      } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
 
       result = createInstanceInTransientScope(
         typeBindingFixture,

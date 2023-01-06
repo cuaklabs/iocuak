@@ -1,11 +1,11 @@
 import { Binding, BindingType } from '@cuaklabs/iocuak-models';
 
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { createInstanceFromTypeBinding } from './createInstanceFromTypeBinding';
 
 export function createInstanceFromBinding(
   binding: Binding,
-  context: TaskContext,
+  context: CreateInstanceTaskContext,
 ): unknown {
   let instance: unknown;
 

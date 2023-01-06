@@ -1,12 +1,12 @@
 import { ServiceId } from '@cuaklabs/iocuak-common';
 import { TypeBinding } from '@cuaklabs/iocuak-models';
 
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { createInstanceInTransientScope } from './createInstanceInTransientScope';
 
 export function createInstanceInSingletonScope(
   binding: TypeBinding,
-  context: TaskContext,
+  context: CreateInstanceTaskContext,
 ): unknown {
   const serviceId: ServiceId = binding.id;
 

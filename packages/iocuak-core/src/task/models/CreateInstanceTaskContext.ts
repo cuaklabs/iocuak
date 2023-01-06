@@ -7,5 +7,5 @@ export interface CreateInstanceTaskContext {
   readonly actions: TaskContextActions;
   readonly requestId: symbol;
   readonly services: TaskContextServices;
-  readonly containerModulesLoadedSet: Set<ServiceId>;
+  readonly servicesInstantiatedSet: Set<ServiceId>;
 }

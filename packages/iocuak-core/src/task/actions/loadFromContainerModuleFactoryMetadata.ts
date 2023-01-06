@@ -3,12 +3,12 @@ import { ClassElementMetadata } from '@cuaklabs/iocuak-models';
 
 import { ContainerModule } from '../../containerModule/models/ContainerModule';
 import { ContainerModuleFactoryMetadata } from '../../containerModuleMetadata/models/ContainerModuleFactoryMetadata';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { getDependency } from './getDependency';
 
 export function loadFromContainerModuleFactoryMetadata(
   metadata: ContainerModuleFactoryMetadata,
-  context: TaskContext,
+  context: CreateInstanceTaskContext,
 ): void | Promise<void> {
   const instances: unknown[] = metadata.injects.map(
     (inject: ClassElementMetadata) =>
@@ -30,7 +30,7 @@ export function loadFromContainerModuleFactoryMetadata(
 
 async function loadModuleAsync(
   containerModulePromise: Promise<ContainerModule>,
-  context: TaskContext,
+  context: CreateInstanceTaskContext,
 ): Promise<void> {
   const containerModule: ContainerModule = await containerModulePromise;
 

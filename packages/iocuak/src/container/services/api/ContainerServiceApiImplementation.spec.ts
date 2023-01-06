@@ -20,7 +20,7 @@ import {
   createInstanceFromBinding,
   getDependencies,
   loadContainerModule,
-  TaskContext,
+  CreateInstanceTaskContext,
   ContainerModuleMetadata,
 } from '@cuaklabs/iocuak-core';
 import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
@@ -268,7 +268,7 @@ describe(ContainerServiceApiImplementation.name, () => {
       });
 
       it('should call createInstance()', () => {
-        const expectedTaskContext: TaskContext = {
+        const expectedTaskContext: CreateInstanceTaskContext = {
           actions: {
             createInstanceFromBinding,
             getDependencies,
@@ -328,7 +328,7 @@ describe(ContainerServiceApiImplementation.name, () => {
       });
 
       it('should call createInstancesByTag()', () => {
-        const expectedTaskContext: TaskContext = {
+        const expectedTaskContext: CreateInstanceTaskContext = {
           actions: {
             createInstanceFromBinding,
             getDependencies,
@@ -469,7 +469,7 @@ describe(ContainerServiceApiImplementation.name, () => {
       });
 
       it('should call loadContainerModule()', () => {
-        const expectedTaskContext: TaskContext = {
+        const expectedTaskContext: CreateInstanceTaskContext = {
           actions: {
             createInstanceFromBinding,
             getDependencies,

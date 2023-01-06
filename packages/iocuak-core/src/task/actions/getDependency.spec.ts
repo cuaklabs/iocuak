@@ -11,7 +11,7 @@ import {
 } from '@cuaklabs/iocuak-models';
 
 import { ValueBindingFixtures } from '../../binding/fixtures/ValueBindingFixtures';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { TaskContextActions } from '../models/TaskContextActions';
 import { createInstancesByTag } from './createInstancesByTag';
 import { getBinding } from './getBinding';
@@ -33,10 +33,10 @@ describe(getDependency.name, () => {
       let instanceFixture: unknown;
 
       let createInstanceFromBindingMock: jest.Mock<
-        (binding: Binding, context: TaskContext) => unknown
+        (binding: Binding, context: CreateInstanceTaskContext) => unknown
       >;
 
-      let taskContextFixture: TaskContext;
+      let taskContextFixture: CreateInstanceTaskContext;
 
       let result: unknown;
 
@@ -56,7 +56,7 @@ describe(getDependency.name, () => {
           actions: {
             createInstanceFromBinding: createInstanceFromBindingMock,
           } as Partial<TaskContextActions> as TaskContextActions,
-        } as Partial<TaskContext> as TaskContext;
+        } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
 
         result = getDependency(
           classElementServiceIdMetadataFixture,
@@ -103,7 +103,7 @@ describe(getDependency.name, () => {
     describe('when called', () => {
       let instancesFixture: unknown[];
 
-      let taskContextFixture: TaskContext;
+      let taskContextFixture: CreateInstanceTaskContext;
 
       let result: unknown;
 
@@ -112,7 +112,7 @@ describe(getDependency.name, () => {
 
         taskContextFixture = {
           [Symbol()]: Symbol(),
-        } as Partial<TaskContext> as TaskContext;
+        } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
 
         (
           createInstancesByTag as jest.Mock<typeof createInstancesByTag>

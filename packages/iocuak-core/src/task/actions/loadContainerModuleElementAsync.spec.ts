@@ -3,14 +3,14 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 jest.mock('./loadContainerModuleElement');
 
 import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { loadContainerModuleElement } from './loadContainerModuleElement';
 import { loadContainerModuleElementAsync } from './loadContainerModuleElementAsync';
 
 describe(loadContainerModuleElementAsync.name, () => {
   describe('when called', () => {
     let containerModuleMetadataFixture: ContainerModuleMetadata;
-    let taskContextFixture: TaskContext;
+    let taskContextFixture: CreateInstanceTaskContext;
     let loadModuleDependenciesResultFixture: Promise<void>;
 
     let result: unknown;
@@ -22,7 +22,7 @@ describe(loadContainerModuleElementAsync.name, () => {
 
       taskContextFixture = {
         [Symbol()]: Symbol(),
-      } as unknown as TaskContext;
+      } as unknown as CreateInstanceTaskContext;
 
       loadModuleDependenciesResultFixture = Promise.resolve();
 

@@ -8,13 +8,13 @@ import { TypeBindingFixtures } from '../../binding/fixtures/TypeBindingFixtures'
 import { ValueBindingFixtures } from '../../binding/fixtures/ValueBindingFixtures';
 import { BindingService } from '../../binding/services/BindingService';
 import { lazyGetBindingOrThrow } from '../../binding/utils/lazyGetBindingOrThrow';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { TaskContextServices } from '../models/TaskContextServices';
 import { getBinding } from './getBinding';
 
 describe(getBinding.name, () => {
   let bindingServiceMock: jest.Mocked<BindingService>;
-  let contextMock: TaskContext;
+  let contextMock: CreateInstanceTaskContext;
 
   beforeAll(() => {
     bindingServiceMock = {
@@ -25,7 +25,7 @@ describe(getBinding.name, () => {
       services: {
         bindingService: bindingServiceMock,
       } as Partial<TaskContextServices> as TaskContextServices,
-    } as Partial<TaskContext> as TaskContext;
+    } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
   });
 
   describe('when called, and context.services.bindingService.get() returns undefined', () => {

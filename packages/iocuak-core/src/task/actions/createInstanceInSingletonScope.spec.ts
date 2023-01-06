@@ -6,7 +6,7 @@ import { TypeBinding } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../../binding/fixtures/TypeBindingFixtures';
 import { ContainerSingletonService } from '../../container/services/ContainerSingletonService';
-import { TaskContext } from '../models/TaskContext';
+import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { TaskContextServices } from '../models/TaskContextServices';
 import { createInstanceInSingletonScope } from './createInstanceInSingletonScope';
 import { createInstanceInTransientScope } from './createInstanceInTransientScope';
@@ -14,7 +14,7 @@ import { createInstanceInTransientScope } from './createInstanceInTransientScope
 describe(createInstanceInSingletonScope.name, () => {
   let typeBindingFixture: TypeBinding;
   let containerSingletonServiceMock: jest.Mocked<ContainerSingletonService>;
-  let taskContextFixture: TaskContext;
+  let taskContextFixture: CreateInstanceTaskContext;
 
   beforeAll(() => {
     typeBindingFixture = TypeBindingFixtures.any;
@@ -30,7 +30,7 @@ describe(createInstanceInSingletonScope.name, () => {
       services: {
         containerSingletonService: containerSingletonServiceMock,
       } as Partial<TaskContextServices> as TaskContextServices,
-    } as Partial<TaskContext> as TaskContext;
+    } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
   });
 
   describe('when called, and context.services.containerSingletonService.get() returns undefined', () => {

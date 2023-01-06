@@ -5,7 +5,7 @@ import {
   createInstancesByTag,
   getDependencies,
   loadContainerModule,
-  TaskContext,
+  CreateInstanceTaskContext,
   ContainerModuleMetadata,
 } from '@cuaklabs/iocuak-core';
 import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
@@ -50,7 +50,8 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
   public get<TInstance>(serviceId: ServiceId): TInstance {
     const requestId: symbol = this._containerService.request.start();
 
-    const context: TaskContext = this.#createTaskContext(requestId);
+    const context: CreateInstanceTaskContext =
+      this.#createTaskContext(requestId);
 
     const instance: TInstance = createInstance(serviceId, context) as TInstance;
 
@@ -64,7 +65,8 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
   ): TInstances {
     const requestId: symbol = this._containerService.request.start();
 
-    const context: TaskContext = this.#createTaskContext(requestId);
+    const context: CreateInstanceTaskContext =
+      this.#createTaskContext(requestId);
 
     const instances: TInstances = createInstancesByTag(
       tag,
@@ -99,7 +101,8 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
     const containerModuleMetadata: ContainerModuleMetadata =
       convertToContainerModuleMetadata(containerModuleMetadataApi);
 
-    const context: TaskContext = this.#createTaskContext(requestId);
+    const context: CreateInstanceTaskContext =
+      this.#createTaskContext(requestId);
 
     await loadContainerModule(containerModuleMetadata, context);
 
@@ -111,8 +114,8 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
     this._containerService.binding.remove(serviceId);
   }
 
-  #createTaskContext(requestId: symbol): TaskContext {
-    const context: TaskContext = {
+  #createTaskContext(requestId: symbol): CreateInstanceTaskContext {
+    const context: CreateInstanceTaskContext = {
       actions: {
         createInstanceFromBinding,
         getDependencies,
