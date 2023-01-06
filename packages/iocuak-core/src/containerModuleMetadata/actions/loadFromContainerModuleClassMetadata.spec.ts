@@ -1,12 +1,12 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-jest.mock('./createInstance');
+jest.mock('../../createInstanceTask/actions/createInstance');
 
 import { BindingService } from '../../binding/services/BindingService';
 import { ContainerModuleClassMetadata } from '../../containerModuleMetadata/models/ContainerModuleClassMetadata';
-import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
-import { TaskContextServices } from '../models/TaskContextServices';
-import { createInstance } from './createInstance';
+import { createInstance } from '../../createInstanceTask/actions/createInstance';
+import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
+import { TaskContextServices } from '../../createInstanceTask/models/TaskContextServices';
 import { loadFromContainerModuleClassMetadata } from './loadFromContainerModuleClassMetadata';
 
 describe(loadFromContainerModuleClassMetadata.name, () => {

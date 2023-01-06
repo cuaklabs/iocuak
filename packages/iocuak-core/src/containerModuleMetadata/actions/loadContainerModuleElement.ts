@@ -1,6 +1,6 @@
 import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from '../../containerModuleMetadata/models/ContainerModuleMetadataType';
-import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
+import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
 import { loadFromContainerModuleClassMetadata } from './loadFromContainerModuleClassMetadata';
 import { loadFromContainerModuleFactoryMetadata } from './loadFromContainerModuleFactoryMetadata';
 

@@ -1,7 +1,7 @@
 import { isPromiseLike } from '@cuaklabs/iocuak-common';
 
 import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
-import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
+import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
 import { loadContainerModuleElement } from './loadContainerModuleElement';
 import { loadContainerModuleElementAsync } from './loadContainerModuleElementAsync';
 

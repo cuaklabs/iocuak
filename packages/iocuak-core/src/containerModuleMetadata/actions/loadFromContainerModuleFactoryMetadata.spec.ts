@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-jest.mock('./getDependency');
+jest.mock('../../createInstanceTask/actions/getDependency');
 
 import { ClassElementMetadataType } from '@cuaklabs/iocuak-models';
 
@@ -8,9 +8,9 @@ import { BindingService } from '../../binding/services/BindingService';
 import { ContainerModule } from '../../containerModule/models/ContainerModule';
 import { ContainerModuleFactoryMetadata } from '../../containerModuleMetadata/models/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadataType } from '../../containerModuleMetadata/models/ContainerModuleMetadataType';
-import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
-import { TaskContextServices } from '../models/TaskContextServices';
-import { getDependency } from './getDependency';
+import { getDependency } from '../../createInstanceTask/actions/getDependency';
+import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
+import { TaskContextServices } from '../../createInstanceTask/models/TaskContextServices';
 import { loadFromContainerModuleFactoryMetadata } from './loadFromContainerModuleFactoryMetadata';
 
 describe(loadFromContainerModuleFactoryMetadata.name, () => {

@@ -3,8 +3,8 @@ import { ClassElementMetadata } from '@cuaklabs/iocuak-models';
 
 import { ContainerModule } from '../../containerModule/models/ContainerModule';
 import { ContainerModuleFactoryMetadata } from '../../containerModuleMetadata/models/ContainerModuleFactoryMetadata';
-import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
-import { getDependency } from './getDependency';
+import { getDependency } from '../../createInstanceTask/actions/getDependency';
+import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
 
 export function loadFromContainerModuleFactoryMetadata(
   metadata: ContainerModuleFactoryMetadata,

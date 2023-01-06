@@ -5,7 +5,7 @@ jest.mock('./loadFromContainerModuleFactoryMetadata');
 
 import { ContainerModuleMetadataMocks } from '../../containerModuleMetadata/mocks/models/ContainerModuleMetadataMocks';
 import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
-import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
+import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
 import { loadContainerModuleElement } from './loadContainerModuleElement';
 import { loadFromContainerModuleClassMetadata } from './loadFromContainerModuleClassMetadata';
 import { loadFromContainerModuleFactoryMetadata } from './loadFromContainerModuleFactoryMetadata';

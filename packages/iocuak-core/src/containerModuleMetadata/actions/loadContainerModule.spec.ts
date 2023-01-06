@@ -4,9 +4,9 @@ jest.mock('./loadContainerModuleElement');
 jest.mock('./loadContainerModuleElementAsync');
 
 import { ContainerModule } from '../../containerModule/models/ContainerModule';
-import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
-import { ContainerModuleMetadataType } from '../../containerModuleMetadata/models/ContainerModuleMetadataType';
-import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
+import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
+import { ContainerModuleMetadata } from '../models/ContainerModuleMetadata';
+import { ContainerModuleMetadataType } from '../models/ContainerModuleMetadataType';
 import { loadContainerModule } from './loadContainerModule';
 import { loadContainerModuleElement } from './loadContainerModuleElement';
 import { loadContainerModuleElementAsync } from './loadContainerModuleElementAsync';

@@ -8,6 +8,7 @@ import { ContainerRequestServiceImplementation } from './container/services/Cont
 import { ContainerSingletonService } from './container/services/ContainerSingletonService';
 import { ContainerSingletonServiceImplementation } from './container/services/ContainerSingletonServiceImplementation';
 import { ContainerModule } from './containerModule/models/ContainerModule';
+import { loadContainerModule } from './containerModuleMetadata/actions/loadContainerModule';
 import { ContainerModuleClassMetadata } from './containerModuleMetadata/models/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from './containerModuleMetadata/models/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from './containerModuleMetadata/models/ContainerModuleMetadata';
@@ -16,7 +17,6 @@ import { createInstance } from './createInstanceTask/actions/createInstance';
 import { createInstanceFromBinding } from './createInstanceTask/actions/createInstanceFromBinding';
 import { createInstancesByTag } from './createInstanceTask/actions/createInstancesByTag';
 import { getDependencies } from './createInstanceTask/actions/getDependencies';
-import { loadContainerModule } from './createInstanceTask/actions/loadContainerModule';
 import { CreateInstanceTaskContext } from './createInstanceTask/models/CreateInstanceTaskContext';
 import { TaskContextActions } from './createInstanceTask/models/TaskContextActions';
 import { TaskContextServices } from './createInstanceTask/models/TaskContextServices';
