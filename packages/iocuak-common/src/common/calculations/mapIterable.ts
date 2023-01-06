@@ -1,4 +1,4 @@
-import { mapIterator } from './mapIterator';
+import { mapIterator } from '../actions/mapIterator';
 
 export function mapIterable<TIn, TOut>(
   iterable: Iterable<TIn>,
