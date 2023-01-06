@@ -22,6 +22,7 @@ export class ContainerModuleMetadataMocks {
       imports: [],
       loader: () => undefined,
       moduleType: ContainerModuleMetadataMocks.#classFixture,
+      requires: [],
       type: ContainerModuleMetadataType.clazz,
     };
 
@@ -33,6 +34,7 @@ export class ContainerModuleMetadataMocks {
       factory: jest.fn<ContainerModuleFactoryMetadata['factory']>(),
       imports: [],
       injects: [],
+      requires: [],
       type: ContainerModuleMetadataType.factory,
     };
 

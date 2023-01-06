@@ -33,6 +33,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
             value: Symbol(),
           },
         ],
+        requires: [],
         type: ContainerModuleMetadataType.factory,
       };
     });
@@ -131,6 +132,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
             value: Symbol(),
           },
         ],
+        requires: [],
         type: ContainerModuleMetadataType.factory,
       };
     });

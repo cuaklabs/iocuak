@@ -64,6 +64,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
           imports: [],
           injects: [],
+          requires: [],
           type: ContainerModuleMetadataType.factory,
         };
 
@@ -140,6 +141,7 @@ describe(convertToContainerModuleMetadata.name, () => {
             Function,
           ) as unknown as ContainerModuleClassMetadata['loader'],
           moduleType: containerModuleClassMetadataApiMock,
+          requires: [],
           type: ContainerModuleMetadataType.clazz,
         };
 
@@ -179,6 +181,7 @@ describe(convertToContainerModuleMetadata.name, () => {
             Function,
           ) as unknown as ContainerModuleClassMetadata['loader'],
           moduleType: containerModuleClassMetadataApiMock.module,
+          requires: [],
           type: ContainerModuleMetadataType.clazz,
         };
 
@@ -273,6 +276,7 @@ describe(convertToContainerModuleMetadata.name, () => {
                 Function,
               ) as unknown as ContainerModuleClassMetadata['loader'],
               moduleType: dependencyContainerModuleClassMetadataApiMock.module,
+              requires: [],
               type: ContainerModuleMetadataType.clazz,
             },
           ],
@@ -280,6 +284,7 @@ describe(convertToContainerModuleMetadata.name, () => {
             Function,
           ) as unknown as ContainerModuleClassMetadata['loader'],
           moduleType: containerModuleClassMetadataApiMock.module,
+          requires: [],
           type: ContainerModuleMetadataType.clazz,
         };
 
@@ -318,6 +323,7 @@ describe(convertToContainerModuleMetadata.name, () => {
             Function,
           ) as unknown as ContainerModuleClassMetadata['loader'],
           moduleType: containerModuleClassMetadataApiMock.module,
+          requires: [],
           type: ContainerModuleMetadataType.clazz,
         };
 
@@ -357,6 +363,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: expect.any(Array) as unknown as ClassElementMetadata[],
+          requires: [],
           type: ContainerModuleMetadataType.factory,
         };
 
@@ -514,6 +521,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: expectedInjects,
+          requires: [],
           type: ContainerModuleMetadataType.factory,
         };
 
@@ -561,6 +569,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: expectedInjects,
+          requires: [],
           type: ContainerModuleMetadataType.factory,
         };
 
@@ -608,6 +617,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: expectedInjects,
+          requires: [],
           type: ContainerModuleMetadataType.factory,
         };
 
@@ -644,6 +654,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: [],
+          requires: [],
           type: ContainerModuleMetadataType.factory,
         };
 
@@ -692,10 +703,12 @@ describe(convertToContainerModuleMetadata.name, () => {
                 Array,
               ) as unknown as ContainerModuleMetadata[],
               injects: expect.any(Array) as unknown as ClassElementMetadata[],
+              requires: [],
               type: ContainerModuleMetadataType.factory,
             },
           ],
           injects: expect.any(Array) as unknown as ClassElementMetadata[],
+          requires: [],
           type: ContainerModuleMetadataType.factory,
         };
 

@@ -73,6 +73,7 @@ function convertToContainerModuleClassMetadata(
         containerModule.load(containerBindingService);
       },
       moduleType: containerModuleClassMetadataApi.module,
+      requires: [],
       type: ContainerModuleMetadataType.clazz,
     };
 
@@ -110,6 +111,7 @@ function convertToContainerModuleFactoryMetadata<TArgs extends unknown[]>(
       injects: convertInjectsToClassElementMetadata(
         containerModuleFactoryMetadataApi,
       ),
+      requires: [],
       type: ContainerModuleMetadataType.factory,
     };
 

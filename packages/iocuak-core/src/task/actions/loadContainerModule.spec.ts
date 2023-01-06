@@ -25,6 +25,7 @@ describe(loadContainerModule.name, () => {
         factory: () => containerModuleMock,
         imports: [],
         injects: [],
+        requires: [],
         type: ContainerModuleMetadataType.factory,
       };
     });
@@ -79,10 +80,12 @@ describe(loadContainerModule.name, () => {
             factory: () => containerModuleMock,
             imports: [],
             injects: [],
+            requires: [],
             type: ContainerModuleMetadataType.factory,
           },
         ],
         injects: [],
+        requires: [],
         type: ContainerModuleMetadataType.factory,
       };
     });
