@@ -4,8 +4,8 @@ jest.mock('./lazyGetBindingOrThrow');
 
 import { ServiceId } from '@cuaklabs/iocuak-common';
 
-import { CreateInstanceTaskContext } from '../../task/models/CreateInstanceTaskContext';
-import { TaskContextServices } from '../../task/models/TaskContextServices';
+import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
+import { TaskContextServices } from '../../createInstanceTask/models/TaskContextServices';
 import { TypeBindingFixtures } from '../fixtures/TypeBindingFixtures';
 import { ValueBindingFixtures } from '../fixtures/ValueBindingFixtures';
 import { BindingService } from '../services/BindingService';

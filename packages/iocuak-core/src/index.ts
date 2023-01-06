@@ -12,14 +12,14 @@ import { ContainerModuleClassMetadata } from './containerModuleMetadata/models/C
 import { ContainerModuleFactoryMetadata } from './containerModuleMetadata/models/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from './containerModuleMetadata/models/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from './containerModuleMetadata/models/ContainerModuleMetadataType';
-import { createInstance } from './task/actions/createInstance';
-import { createInstanceFromBinding } from './task/actions/createInstanceFromBinding';
-import { createInstancesByTag } from './task/actions/createInstancesByTag';
-import { getDependencies } from './task/actions/getDependencies';
-import { loadContainerModule } from './task/actions/loadContainerModule';
-import { CreateInstanceTaskContext } from './task/models/CreateInstanceTaskContext';
-import { TaskContextActions } from './task/models/TaskContextActions';
-import { TaskContextServices } from './task/models/TaskContextServices';
+import { createInstance } from './createInstanceTask/actions/createInstance';
+import { createInstanceFromBinding } from './createInstanceTask/actions/createInstanceFromBinding';
+import { createInstancesByTag } from './createInstanceTask/actions/createInstancesByTag';
+import { getDependencies } from './createInstanceTask/actions/getDependencies';
+import { loadContainerModule } from './createInstanceTask/actions/loadContainerModule';
+import { CreateInstanceTaskContext } from './createInstanceTask/models/CreateInstanceTaskContext';
+import { TaskContextActions } from './createInstanceTask/models/TaskContextActions';
+import { TaskContextServices } from './createInstanceTask/models/TaskContextServices';
 
 export type {
   BindingService,

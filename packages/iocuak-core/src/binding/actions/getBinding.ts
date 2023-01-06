@@ -1,7 +1,7 @@
 import { ServiceId } from '@cuaklabs/iocuak-common';
 import { Binding } from '@cuaklabs/iocuak-models';
 
-import { CreateInstanceTaskContext } from '../../task/models/CreateInstanceTaskContext';
+import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
 import { lazyGetBindingOrThrow } from './lazyGetBindingOrThrow';
 
 export function getBinding(
