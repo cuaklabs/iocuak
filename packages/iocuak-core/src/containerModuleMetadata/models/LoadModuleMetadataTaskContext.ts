@@ -1,7 +1,7 @@
 import { ContainerModuleMetadataId } from '@cuaklabs/iocuak-common';
 
-import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
-import { CreateInstanceTaskContext } from './CreateInstanceTaskContext';
+import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
+import { ContainerModuleMetadata } from './ContainerModuleMetadata';
 
 export interface LoadModuleMetadataTaskContext
   extends CreateInstanceTaskContext {
