@@ -4,10 +4,18 @@ import { isFunction } from './common/calculations/isFunction';
 import { isPromiseLike } from './common/calculations/isPromiseLike';
 import { mapIterable } from './common/calculations/mapIterable';
 import { ContainerModuleMetadataId } from './containerModuleMetadata/models/ContainerModuleMetadataId';
+import { stringifyServiceId } from './service/calculations/stringifyServiceId';
 import { Newable } from './service/models/Newable';
 import { ServiceId } from './service/models/ServiceId';
 import { Tag } from './service/models/Tag';
 
 export type { ContainerModuleMetadataId, Newable, Tag, ServiceId };
 
-export { chain, isFunction, isPromiseLike, mapIterable, mapIterator };
+export {
+  chain,
+  isFunction,
+  isPromiseLike,
+  mapIterable,
+  mapIterator,
+  stringifyServiceId,
+};
