@@ -1,7 +1,11 @@
-import { isFunction, Newable, ServiceId } from '@cuaklabs/iocuak-common';
+import {
+  isFunction,
+  Newable,
+  ServiceId,
+  stringifyServiceId,
+} from '@cuaklabs/iocuak-common';
 import { TypeBinding } from '@cuaklabs/iocuak-models';
 
-import { stringifyServiceId } from '../../common/utils/stringifyServiceId';
 import { getBindingOrThrow } from './getBindingOrThrow';
 
 export function lazyGetBindingOrThrow<TInstance, TArgs extends unknown[]>(
