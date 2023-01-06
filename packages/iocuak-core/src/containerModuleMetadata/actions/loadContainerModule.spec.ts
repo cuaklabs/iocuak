@@ -3,31 +3,20 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 jest.mock('./loadContainerModuleElement');
 jest.mock('./loadContainerModuleElementAsync');
 
-import { ContainerModule } from '../../containerModule/models/ContainerModule';
 import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
+import { ContainerModuleMetadataMocks } from '../mocks/models/ContainerModuleMetadataMocks';
 import { ContainerModuleMetadata } from '../models/ContainerModuleMetadata';
-import { ContainerModuleMetadataType } from '../models/ContainerModuleMetadataType';
 import { loadContainerModule } from './loadContainerModule';
 import { loadContainerModuleElement } from './loadContainerModuleElement';
 import { loadContainerModuleElementAsync } from './loadContainerModuleElementAsync';
 
 describe(loadContainerModule.name, () => {
   describe('having a sync ContainerModuleMetadata with no dependencies', () => {
-    let containerModuleMock: jest.Mocked<ContainerModule>;
     let containerModuleMetadataFixture: ContainerModuleMetadata;
 
     beforeAll(() => {
-      containerModuleMock = {
-        load: jest.fn(),
-      };
-
-      containerModuleMetadataFixture = {
-        factory: () => containerModuleMock,
-        imports: [],
-        injects: [],
-        requires: [],
-        type: ContainerModuleMetadataType.factory,
-      };
+      containerModuleMetadataFixture =
+        ContainerModuleMetadataMocks.withTypeFactory;
     });
 
     describe('when called', () => {
@@ -65,28 +54,12 @@ describe(loadContainerModule.name, () => {
   });
 
   describe('having a ContainerModuleMetadata with async dependencies', () => {
-    let containerModuleMock: jest.Mocked<ContainerModule>;
     let containerModuleMetadataFixture: ContainerModuleMetadata;
 
     beforeAll(() => {
-      containerModuleMock = {
-        load: jest.fn(),
-      };
-
       containerModuleMetadataFixture = {
-        factory: () => containerModuleMock,
-        imports: [
-          {
-            factory: () => containerModuleMock,
-            imports: [],
-            injects: [],
-            requires: [],
-            type: ContainerModuleMetadataType.factory,
-          },
-        ],
-        injects: [],
-        requires: [],
-        type: ContainerModuleMetadataType.factory,
+        ...ContainerModuleMetadataMocks.withTypeFactory,
+        imports: [ContainerModuleMetadataMocks.withTypeFactory],
       };
     });
 

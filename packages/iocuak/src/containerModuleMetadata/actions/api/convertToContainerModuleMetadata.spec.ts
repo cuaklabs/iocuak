@@ -62,6 +62,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           factory: expect.any(
             Function,
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          id: undefined,
           imports: [],
           injects: [],
           requires: [],
@@ -136,6 +137,7 @@ describe(convertToContainerModuleMetadata.name, () => {
 
       it('should return a ContainerModuleMetadata', () => {
         const expected: ContainerModuleClassMetadata = {
+          id: undefined,
           imports: [],
           loader: expect.any(
             Function,
@@ -176,6 +178,7 @@ describe(convertToContainerModuleMetadata.name, () => {
 
       it('should return a ContainerModuleMetadata', () => {
         const expected: ContainerModuleClassMetadata = {
+          id: undefined,
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           loader: expect.any(
             Function,
@@ -267,8 +270,10 @@ describe(convertToContainerModuleMetadata.name, () => {
 
       it('should return a ContainerModuleMetadata', () => {
         const expected: ContainerModuleClassMetadata = {
+          id: undefined,
           imports: [
             {
+              id: undefined,
               imports: expect.any(
                 Array,
               ) as unknown as ContainerModuleMetadata[],
@@ -318,6 +323,7 @@ describe(convertToContainerModuleMetadata.name, () => {
 
       it('should return a ContainerModuleMetadata', () => {
         const expected: ContainerModuleClassMetadata = {
+          id: undefined,
           imports: [],
           loader: expect.any(
             Function,
@@ -361,6 +367,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           factory: expect.any(
             Function,
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          id: undefined,
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: expect.any(Array) as unknown as ClassElementMetadata[],
           requires: [],
@@ -519,6 +526,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           factory: expect.any(
             Function,
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          id: undefined,
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: expectedInjects,
           requires: [],
@@ -567,6 +575,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           factory: expect.any(
             Function,
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          id: undefined,
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: expectedInjects,
           requires: [],
@@ -615,6 +624,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           factory: expect.any(
             Function,
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          id: undefined,
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: expectedInjects,
           requires: [],
@@ -652,6 +662,7 @@ describe(convertToContainerModuleMetadata.name, () => {
           factory: expect.any(
             Function,
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          id: undefined,
           imports: expect.any(Array) as unknown as ContainerModuleMetadata[],
           injects: [],
           requires: [],
@@ -694,11 +705,13 @@ describe(convertToContainerModuleMetadata.name, () => {
           factory: expect.any(
             Function,
           ) as unknown as ContainerModuleFactoryMetadata['factory'],
+          id: undefined,
           imports: [
             {
               factory: expect.any(
                 Function,
               ) as unknown as ContainerModuleFactoryMetadata['factory'],
+              id: undefined,
               imports: expect.any(
                 Array,
               ) as unknown as ContainerModuleMetadata[],

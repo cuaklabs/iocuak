@@ -6,6 +6,7 @@ import { ContainerModuleMetadataType } from './ContainerModuleMetadataType';
 export interface ContainerModuleMetadataBase<
   TType extends ContainerModuleMetadataType,
 > {
+  id: ContainerModuleMetadata | undefined;
   imports: ContainerModuleMetadata[];
   requires: ContainerModuleMetadataId[];
   type: TType;

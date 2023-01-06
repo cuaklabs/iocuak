@@ -1,214 +1,178 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-jest.mock('../../createInstanceTask/actions/getDependency');
-
 import { ClassElementMetadataType } from '@cuaklabs/iocuak-models';
+
+jest.mock('../../createInstanceTask/actions/getDependency');
 
 import { BindingService } from '../../binding/services/BindingService';
 import { ContainerModule } from '../../containerModule/models/ContainerModule';
 import { ContainerModuleFactoryMetadata } from '../../containerModuleMetadata/models/ContainerModuleFactoryMetadata';
-import { ContainerModuleMetadataType } from '../../containerModuleMetadata/models/ContainerModuleMetadataType';
 import { getDependency } from '../../createInstanceTask/actions/getDependency';
 import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
 import { TaskContextServices } from '../../createInstanceTask/models/TaskContextServices';
+import { ContainerModuleMetadataMocks } from '../mocks/models/ContainerModuleMetadataMocks';
 import { loadFromContainerModuleFactoryMetadata } from './loadFromContainerModuleFactoryMetadata';
 
 describe(loadFromContainerModuleFactoryMetadata.name, () => {
-  describe('having a ContainerModuleFactoryMetadata with an async factory', () => {
-    let containerModuleFactoryMetadataFactoryMock: jest.Mock<
-      () => Promise<ContainerModule>
-    >;
-    let containerModuleFactoryMetadataMock: ContainerModuleFactoryMetadata;
+  let containerModuleFactoryMetadataMock: jest.Mocked<ContainerModuleFactoryMetadata>;
 
-    beforeAll(() => {
-      containerModuleFactoryMetadataFactoryMock =
-        jest.fn<() => Promise<ContainerModule>>();
+  beforeAll(() => {
+    containerModuleFactoryMetadataMock = {
+      ...ContainerModuleMetadataMocks.withTypeFactory,
+      injects: [
+        {
+          type: ClassElementMetadataType.serviceId,
+          value: Symbol(),
+        },
+      ],
+    };
+  });
 
-      containerModuleFactoryMetadataMock = {
-        factory: containerModuleFactoryMetadataFactoryMock,
-        imports: [],
-        injects: [
-          {
-            type: ClassElementMetadataType.serviceId,
-            value: Symbol(),
-          },
-        ],
-        requires: [],
-        type: ContainerModuleMetadataType.factory,
+  describe('when called, and containerModuleFactoryMetadataMock.factory() returns a Promise<ContainerModule>', () => {
+    let taskContextMock: CreateInstanceTaskContext;
+    let containerModuleMock: jest.Mocked<ContainerModule>;
+    let factoryParameterFixture: unknown;
+
+    let result: unknown;
+
+    beforeAll(async () => {
+      taskContextMock = {
+        services: {
+          bindingService: {
+            [Symbol()]: Symbol(),
+          } as unknown as BindingService,
+        } as Partial<TaskContextServices> as TaskContextServices,
+      } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
+
+      containerModuleMock = {
+        load: jest.fn(),
       };
+
+      factoryParameterFixture = Symbol();
+
+      (getDependency as jest.Mock<typeof getDependency>).mockReturnValueOnce(
+        factoryParameterFixture,
+      );
+
+      containerModuleFactoryMetadataMock.factory.mockReturnValueOnce(
+        Promise.resolve(containerModuleMock),
+      );
+
+      result = await loadFromContainerModuleFactoryMetadata(
+        containerModuleFactoryMetadataMock,
+        taskContextMock,
+      );
     });
 
-    describe('when called', () => {
-      let taskContextMock: CreateInstanceTaskContext;
-      let containerModuleMock: jest.Mocked<ContainerModule>;
-      let factoryParameterFixture: unknown;
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
 
-      let result: unknown;
+    it('should call createInstance()', () => {
+      const expectedTaskContext: CreateInstanceTaskContext = {
+        ...taskContextMock,
+        servicesInstantiatedSet: new Set(),
+      };
 
-      beforeAll(async () => {
-        taskContextMock = {
-          services: {
-            bindingService: {
-              [Symbol()]: Symbol(),
-            } as unknown as BindingService,
-          } as Partial<TaskContextServices> as TaskContextServices,
-        } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
+      expect(getDependency).toHaveBeenCalledTimes(1);
+      expect(getDependency).toHaveBeenCalledWith(
+        containerModuleFactoryMetadataMock.injects[0],
+        expectedTaskContext,
+      );
+    });
 
-        containerModuleMock = {
-          load: jest.fn(),
-        };
+    it('should call containerModuleFactoryMetadata.factory()', () => {
+      expect(containerModuleFactoryMetadataMock.factory).toHaveBeenCalledTimes(
+        1,
+      );
+      expect(containerModuleFactoryMetadataMock.factory).toHaveBeenCalledWith(
+        factoryParameterFixture,
+      );
+    });
 
-        factoryParameterFixture = Symbol();
+    it('should call containerModule.load()', () => {
+      expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
+      expect(containerModuleMock.load).toHaveBeenCalledWith(
+        taskContextMock.services.bindingService,
+      );
+    });
 
-        (getDependency as jest.Mock<typeof getDependency>).mockReturnValueOnce(
-          factoryParameterFixture,
-        );
-
-        containerModuleFactoryMetadataFactoryMock.mockResolvedValueOnce(
-          containerModuleMock,
-        );
-
-        result = await loadFromContainerModuleFactoryMetadata(
-          containerModuleFactoryMetadataMock,
-          taskContextMock,
-        );
-      });
-
-      afterAll(() => {
-        jest.clearAllMocks();
-      });
-
-      it('should call createInstance()', () => {
-        const expectedTaskContext: CreateInstanceTaskContext = {
-          ...taskContextMock,
-          servicesInstantiatedSet: new Set(),
-        };
-
-        expect(getDependency).toHaveBeenCalledTimes(1);
-        expect(getDependency).toHaveBeenCalledWith(
-          containerModuleFactoryMetadataMock.injects[0],
-          expectedTaskContext,
-        );
-      });
-
-      it('should call containerModuleFactoryMetadata.factory()', () => {
-        expect(
-          containerModuleFactoryMetadataMock.factory,
-        ).toHaveBeenCalledTimes(1);
-        expect(containerModuleFactoryMetadataMock.factory).toHaveBeenCalledWith(
-          factoryParameterFixture,
-        );
-      });
-
-      it('should call containerModule.load()', () => {
-        expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
-        expect(containerModuleMock.load).toHaveBeenCalledWith(
-          taskContextMock.services.bindingService,
-        );
-      });
-
-      it('should return undefined', () => {
-        expect(result).toBeUndefined();
-      });
+    it('should return undefined', () => {
+      expect(result).toBeUndefined();
     });
   });
 
-  describe('having a ContainerModuleFactoryMetadata with a sync factory', () => {
-    let containerModuleFactoryMetadataFactoryMock: jest.Mock<
-      () => ContainerModule
-    >;
-    let containerModuleFactoryMetadataMock: ContainerModuleFactoryMetadata;
+  describe('when called, and containerModuleFactoryMetadataMock.factory() returns a ContainerModule', () => {
+    let taskContextMock: CreateInstanceTaskContext;
+    let containerModuleMock: jest.Mocked<ContainerModule>;
+    let factoryParameterFixture: unknown;
 
-    beforeAll(() => {
-      containerModuleFactoryMetadataFactoryMock =
-        jest.fn<() => ContainerModule>();
+    let result: unknown;
 
-      containerModuleFactoryMetadataMock = {
-        factory: containerModuleFactoryMetadataFactoryMock,
-        imports: [],
-        injects: [
-          {
-            type: ClassElementMetadataType.serviceId,
-            value: Symbol(),
-          },
-        ],
-        requires: [],
-        type: ContainerModuleMetadataType.factory,
+    beforeAll(async () => {
+      taskContextMock = {
+        services: {
+          bindingService: {
+            [Symbol()]: Symbol(),
+          } as unknown as BindingService,
+        } as Partial<TaskContextServices> as TaskContextServices,
+      } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
+
+      containerModuleMock = {
+        load: jest.fn(),
       };
+
+      factoryParameterFixture = Symbol();
+
+      (getDependency as jest.Mock<typeof getDependency>).mockReturnValueOnce(
+        factoryParameterFixture,
+      );
+
+      containerModuleFactoryMetadataMock.factory.mockReturnValueOnce(
+        containerModuleMock,
+      );
+
+      result = await loadFromContainerModuleFactoryMetadata(
+        containerModuleFactoryMetadataMock,
+        taskContextMock,
+      );
     });
 
-    describe('when called', () => {
-      let taskContextMock: CreateInstanceTaskContext;
-      let containerModuleMock: jest.Mocked<ContainerModule>;
-      let factoryParameterFixture: unknown;
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
 
-      let result: unknown;
+    it('should call createInstance()', () => {
+      const expectedTaskContext: CreateInstanceTaskContext = {
+        ...taskContextMock,
+        servicesInstantiatedSet: new Set(),
+      };
 
-      beforeAll(async () => {
-        taskContextMock = {
-          services: {
-            bindingService: {
-              [Symbol()]: Symbol(),
-            } as unknown as BindingService,
-          } as Partial<TaskContextServices> as TaskContextServices,
-        } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
+      expect(getDependency).toHaveBeenCalledTimes(1);
+      expect(getDependency).toHaveBeenCalledWith(
+        containerModuleFactoryMetadataMock.injects[0],
+        expectedTaskContext,
+      );
+    });
 
-        containerModuleMock = {
-          load: jest.fn(),
-        };
+    it('should call containerModuleFactoryMetadata.factory()', () => {
+      expect(containerModuleFactoryMetadataMock.factory).toHaveBeenCalledTimes(
+        1,
+      );
+      expect(containerModuleFactoryMetadataMock.factory).toHaveBeenCalledWith(
+        factoryParameterFixture,
+      );
+    });
 
-        factoryParameterFixture = Symbol();
+    it('should call containerModule.load()', () => {
+      expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
+      expect(containerModuleMock.load).toHaveBeenCalledWith(
+        taskContextMock.services.bindingService,
+      );
+    });
 
-        (getDependency as jest.Mock<typeof getDependency>).mockReturnValueOnce(
-          factoryParameterFixture,
-        );
-
-        containerModuleFactoryMetadataFactoryMock.mockReturnValueOnce(
-          containerModuleMock,
-        );
-
-        result = await loadFromContainerModuleFactoryMetadata(
-          containerModuleFactoryMetadataMock,
-          taskContextMock,
-        );
-      });
-
-      afterAll(() => {
-        jest.clearAllMocks();
-      });
-
-      it('should call createInstance()', () => {
-        const expectedTaskContext: CreateInstanceTaskContext = {
-          ...taskContextMock,
-          servicesInstantiatedSet: new Set(),
-        };
-
-        expect(getDependency).toHaveBeenCalledTimes(1);
-        expect(getDependency).toHaveBeenCalledWith(
-          containerModuleFactoryMetadataMock.injects[0],
-          expectedTaskContext,
-        );
-      });
-
-      it('should call containerModuleFactoryMetadata.factory()', () => {
-        expect(
-          containerModuleFactoryMetadataMock.factory,
-        ).toHaveBeenCalledTimes(1);
-        expect(containerModuleFactoryMetadataMock.factory).toHaveBeenCalledWith(
-          factoryParameterFixture,
-        );
-      });
-
-      it('should call containerModule.load()', () => {
-        expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
-        expect(containerModuleMock.load).toHaveBeenCalledWith(
-          taskContextMock.services.bindingService,
-        );
-      });
-
-      it('should return undefined', () => {
-        expect(result).toBeUndefined();
-      });
+    it('should return undefined', () => {
+      expect(result).toBeUndefined();
     });
   });
 });
