@@ -1,4 +1,5 @@
-import { isFunction } from '../../../common/utils/isFunction';
+import { isFunction } from '@cuaklabs/iocuak-common';
+
 import { ContainerModuleApi } from '../../models/api/ContainerModuleApi';
 
 export function isContainerModuleApi(
