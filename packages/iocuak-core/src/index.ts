@@ -9,6 +9,7 @@ import { ContainerSingletonService } from './container/services/ContainerSinglet
 import { ContainerSingletonServiceImplementation } from './container/services/ContainerSingletonServiceImplementation';
 import { ContainerModule } from './containerModule/models/ContainerModule';
 import { loadContainerModule } from './containerModuleMetadata/actions/loadContainerModule';
+import { getContainerModuleMetadataId } from './containerModuleMetadata/calculations/getContainerModuleMetadataId';
 import { ContainerModuleClassMetadata } from './containerModuleMetadata/models/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from './containerModuleMetadata/models/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from './containerModuleMetadata/models/ContainerModuleMetadata';
@@ -47,6 +48,7 @@ export {
   getBindingMetadata,
   getBindingOrThrow,
   getClassMetadata,
+  getContainerModuleMetadataId,
   getDependencies,
   loadContainerModule,
 };

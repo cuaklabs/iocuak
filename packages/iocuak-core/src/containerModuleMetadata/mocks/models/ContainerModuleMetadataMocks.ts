@@ -22,8 +22,30 @@ export class ContainerModuleMetadataMocks {
     }
   };
 
-  public static get withTypeClazz(): jest.Mocked<ContainerModuleClassMetadata> {
+  public static get any(): jest.Mocked<ContainerModuleMetadata> {
     const fixture: jest.Mocked<ContainerModuleMetadata> = {
+      factory: jest.fn(),
+      id: undefined,
+      imports: [],
+      injects: [],
+      requires: [],
+      type: ContainerModuleMetadataType.factory,
+    };
+
+    return fixture;
+  }
+
+  public static get withId(): jest.Mocked<ContainerModuleMetadata> {
+    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+      ...ContainerModuleMetadataMocks.any,
+      id: 'container-module-metadata-id',
+    };
+
+    return fixture;
+  }
+
+  public static get withTypeClazz(): jest.Mocked<ContainerModuleClassMetadata> {
+    const fixture: jest.Mocked<ContainerModuleClassMetadata> = {
       id: undefined,
       imports: [],
       loader: jest.fn(),
@@ -40,7 +62,7 @@ export class ContainerModuleMetadataMocks {
   }
 
   public static get withTypeFactory(): jest.Mocked<ContainerModuleFactoryMetadata> {
-    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       factory: jest.fn(),
       id: undefined,
       imports: [],
