@@ -3,7 +3,7 @@ import { ContainerRequestService } from '../../container/services/ContainerReque
 import { ContainerSingletonService } from '../../container/services/ContainerSingletonService';
 
 export interface TaskContextServices {
-  bindingService: BindingService;
-  containerRequestService: ContainerRequestService;
-  containerSingletonService: ContainerSingletonService;
+  readonly bindingService: BindingService;
+  readonly containerRequestService: ContainerRequestService;
+  readonly containerSingletonService: ContainerSingletonService;
 }
