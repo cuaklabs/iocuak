@@ -19,6 +19,7 @@ import { createInstance } from './createInstanceTask/actions/createInstance';
 import { createInstanceFromBinding } from './createInstanceTask/actions/createInstanceFromBinding';
 import { createInstancesByTag } from './createInstanceTask/actions/createInstancesByTag';
 import { getDependencies } from './createInstanceTask/actions/getDependencies';
+import { createInstanceTaskContext } from './createInstanceTask/calculations/createInstanceTaskContext';
 import { CreateInstanceTaskContext } from './createInstanceTask/models/CreateInstanceTaskContext';
 import { TaskContextActions } from './createInstanceTask/models/TaskContextActions';
 import { TaskContextServices } from './createInstanceTask/models/TaskContextServices';
@@ -45,6 +46,7 @@ export {
   createInstance,
   createInstanceFromBinding,
   createInstancesByTag,
+  createInstanceTaskContext,
   getBindingMetadata,
   getBindingOrThrow,
   getClassMetadata,
