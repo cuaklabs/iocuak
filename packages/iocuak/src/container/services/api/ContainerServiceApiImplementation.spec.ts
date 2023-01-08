@@ -7,11 +7,11 @@ jest.mock(
   '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata',
 );
 jest.mock('../../../binding/utils/api/convertToBindOptions');
-jest.mock('../../../binding/utils/domain/bind');
-jest.mock('../../../binding/utils/domain/bindToValue');
 
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import {
+  bind,
+  bindToValue,
   BindingService,
   ContainerRequestService,
   ContainerSingletonService,
@@ -36,8 +36,6 @@ import { BindOptionsFixtures } from '../../../binding/fixtures/domain/BindOption
 import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBindingFixtures';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { convertToBindOptions } from '../../../binding/utils/api/convertToBindOptions';
-import { bind } from '../../../binding/utils/domain/bind';
-import { bindToValue } from '../../../binding/utils/domain/bindToValue';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
 import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
