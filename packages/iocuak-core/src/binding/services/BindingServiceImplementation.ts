@@ -2,7 +2,7 @@ import { chain, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import { Binding } from '@cuaklabs/iocuak-models';
 
 import { BindingService } from '../../binding/services/BindingService';
-import { removeBindingDuplicates } from '../utils/removeBindingDuplicates';
+import { removeBindingDuplicates } from '../actions/removeBindingDuplicates';
 
 export class BindingServiceImplementation implements BindingService {
   readonly #parent: BindingService | undefined;

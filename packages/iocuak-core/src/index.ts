@@ -1,25 +1,27 @@
+import { getBindingMetadata } from './binding/actions/getBindingMetadata';
+import { getBindingOrThrow } from './binding/actions/getBindingOrThrow';
 import { BindingService } from './binding/services/BindingService';
 import { BindingServiceImplementation } from './binding/services/BindingServiceImplementation';
-import { getBindingMetadata } from './binding/utils/getBindingMetadata';
-import { getBindingOrThrow } from './binding/utils/getBindingOrThrow';
 import { getClassMetadata } from './classMetadata/utils/getClassMetadata';
 import { ContainerRequestService } from './container/services/ContainerRequestService';
 import { ContainerRequestServiceImplementation } from './container/services/ContainerRequestServiceImplementation';
 import { ContainerSingletonService } from './container/services/ContainerSingletonService';
 import { ContainerSingletonServiceImplementation } from './container/services/ContainerSingletonServiceImplementation';
 import { ContainerModule } from './containerModule/models/ContainerModule';
+import { loadContainerModule } from './containerModuleMetadata/actions/loadContainerModule';
+import { createLoadModuleMetadataTaskContext } from './containerModuleMetadata/calculations/createLoadModuleMetadataTaskContext';
+import { getContainerModuleMetadataId } from './containerModuleMetadata/calculations/getContainerModuleMetadataId';
 import { ContainerModuleClassMetadata } from './containerModuleMetadata/models/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from './containerModuleMetadata/models/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from './containerModuleMetadata/models/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from './containerModuleMetadata/models/ContainerModuleMetadataType';
-import { createInstance } from './task/actions/createInstance';
-import { createInstanceFromBinding } from './task/actions/createInstanceFromBinding';
-import { createInstancesByTag } from './task/actions/createInstancesByTag';
-import { getDependencies } from './task/actions/getDependencies';
-import { loadContainerModule } from './task/actions/loadContainerModule';
-import { TaskContext } from './task/models/TaskContext';
-import { TaskContextActions } from './task/models/TaskContextActions';
-import { TaskContextServices } from './task/models/TaskContextServices';
+import { LoadModuleMetadataTaskContext } from './containerModuleMetadata/models/LoadModuleMetadataTaskContext';
+import { createInstance } from './createInstanceTask/actions/createInstance';
+import { createInstancesByTag } from './createInstanceTask/actions/createInstancesByTag';
+import { createCreateInstanceTaskContext } from './createInstanceTask/calculations/createCreateInstanceTaskContext';
+import { CreateInstanceTaskContext } from './createInstanceTask/models/CreateInstanceTaskContext';
+import { TaskContextActions } from './createInstanceTask/models/TaskContextActions';
+import { TaskContextServices } from './createInstanceTask/models/TaskContextServices';
 
 export type {
   BindingService,
@@ -29,7 +31,8 @@ export type {
   ContainerModuleMetadata,
   ContainerRequestService,
   ContainerSingletonService,
-  TaskContext,
+  CreateInstanceTaskContext,
+  LoadModuleMetadataTaskContext,
   TaskContextActions,
   TaskContextServices,
 };
@@ -40,11 +43,12 @@ export {
   ContainerRequestServiceImplementation,
   ContainerSingletonServiceImplementation,
   createInstance,
-  createInstanceFromBinding,
   createInstancesByTag,
+  createCreateInstanceTaskContext,
+  createLoadModuleMetadataTaskContext,
   getBindingMetadata,
   getBindingOrThrow,
   getClassMetadata,
-  getDependencies,
+  getContainerModuleMetadataId,
   loadContainerModule,
 };

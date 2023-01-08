@@ -2,6 +2,7 @@ import { jest } from '@jest/globals';
 
 import { Newable } from '@cuaklabs/iocuak-common';
 
+import { BindingService } from '../../../binding/services/BindingService';
 import { ContainerModule } from '../../../containerModule/models/ContainerModule';
 import { ContainerModuleClassMetadata } from '../../models/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from '../../models/ContainerModuleFactoryMetadata';
@@ -9,30 +10,64 @@ import { ContainerModuleMetadata } from '../../models/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from '../../models/ContainerModuleMetadataType';
 
 export class ContainerModuleMetadataMocks {
-  static #classFixture: Newable<ContainerModule> = class Foo
-    implements ContainerModule
+  static #classFixture: Newable<jest.Mocked<ContainerModule>> = class Foo
+    implements jest.Mocked<ContainerModule>
   {
-    public load(): void {
-      return undefined;
+    public readonly load: jest.Mock<
+      (containerBindingService: BindingService) => void
+    >;
+
+    constructor() {
+      this.load = jest.fn();
     }
   };
 
-  public static get withTypeClazz(): ContainerModuleClassMetadata {
-    const fixture: ContainerModuleMetadata = {
+  public static get any(): jest.Mocked<ContainerModuleMetadata> {
+    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+      factory: jest.fn(),
+      id: undefined,
       imports: [],
-      loader: () => undefined,
-      moduleType: ContainerModuleMetadataMocks.#classFixture,
+      injects: [],
+      requires: [],
+      type: ContainerModuleMetadataType.factory,
+    };
+
+    return fixture;
+  }
+
+  public static get withId(): jest.Mocked<ContainerModuleMetadata> {
+    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+      ...ContainerModuleMetadataMocks.any,
+      id: 'container-module-metadata-id',
+    };
+
+    return fixture;
+  }
+
+  public static get withTypeClazz(): jest.Mocked<ContainerModuleClassMetadata> {
+    const fixture: jest.Mocked<ContainerModuleClassMetadata> = {
+      id: undefined,
+      imports: [],
+      loader: jest.fn(),
+      moduleType: jest
+        .fn()
+        .mockImplementation(
+          () => new ContainerModuleMetadataMocks.#classFixture(),
+        ),
+      requires: [],
       type: ContainerModuleMetadataType.clazz,
     };
 
     return fixture;
   }
 
-  public static get withTypeFactory(): ContainerModuleFactoryMetadata {
-    const fixture: ContainerModuleMetadata = {
-      factory: jest.fn<ContainerModuleFactoryMetadata['factory']>(),
+  public static get withTypeFactory(): jest.Mocked<ContainerModuleFactoryMetadata> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
+      factory: jest.fn(),
+      id: undefined,
       imports: [],
       injects: [],
+      requires: [],
       type: ContainerModuleMetadataType.factory,
     };
 

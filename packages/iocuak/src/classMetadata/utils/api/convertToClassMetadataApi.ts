@@ -1,3 +1,4 @@
+import { mapIterable } from '@cuaklabs/iocuak-common';
 import {
   ClassElementMetadata,
   ClassElementMetadataType,
@@ -8,8 +9,6 @@ import {
   ClassElementMetadataApiType,
   ClassMetadataApi,
 } from '@cuaklabs/iocuak-models-api';
-
-import { mapIterable } from '../../../common/utils/mapIterable';
 
 export function convertToClassMetadataApi(
   classMetadata: ClassMetadata,
