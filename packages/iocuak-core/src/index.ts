@@ -1,3 +1,5 @@
+import { bind } from './binding/actions/bind';
+import { bindToValue } from './binding/actions/bindToValue';
 import { getBindingMetadata } from './binding/actions/getBindingMetadata';
 import { getBindingOrThrow } from './binding/actions/getBindingOrThrow';
 import { BindingService } from './binding/services/BindingService';
@@ -38,6 +40,8 @@ export type {
 };
 
 export {
+  bind,
+  bindToValue,
   BindingServiceImplementation,
   ContainerModuleMetadataType,
   ContainerRequestServiceImplementation,

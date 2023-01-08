@@ -11,4 +11,13 @@ export class ValueBindingFixtures {
 
     return fixture;
   }
+
+  public static get withTagsOne(): ValueBinding {
+    const fixture: ValueBinding = {
+      ...ValueBindingFixtures.any,
+      tags: ['tag-sample'],
+    };
+
+    return fixture;
+  }
 }
