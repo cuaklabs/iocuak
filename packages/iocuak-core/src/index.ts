@@ -17,9 +17,7 @@ import { ContainerModuleMetadata } from './containerModuleMetadata/models/Contai
 import { ContainerModuleMetadataType } from './containerModuleMetadata/models/ContainerModuleMetadataType';
 import { LoadModuleMetadataTaskContext } from './containerModuleMetadata/models/LoadModuleMetadataTaskContext';
 import { createInstance } from './createInstanceTask/actions/createInstance';
-import { createInstanceFromBinding } from './createInstanceTask/actions/createInstanceFromBinding';
 import { createInstancesByTag } from './createInstanceTask/actions/createInstancesByTag';
-import { getDependencies } from './createInstanceTask/actions/getDependencies';
 import { createCreateInstanceTaskContext } from './createInstanceTask/calculations/createCreateInstanceTaskContext';
 import { CreateInstanceTaskContext } from './createInstanceTask/models/CreateInstanceTaskContext';
 import { TaskContextActions } from './createInstanceTask/models/TaskContextActions';
@@ -45,7 +43,6 @@ export {
   ContainerRequestServiceImplementation,
   ContainerSingletonServiceImplementation,
   createInstance,
-  createInstanceFromBinding,
   createInstancesByTag,
   createCreateInstanceTaskContext,
   createLoadModuleMetadataTaskContext,
@@ -53,6 +50,5 @@ export {
   getBindingOrThrow,
   getClassMetadata,
   getContainerModuleMetadataId,
-  getDependencies,
   loadContainerModule,
 };
