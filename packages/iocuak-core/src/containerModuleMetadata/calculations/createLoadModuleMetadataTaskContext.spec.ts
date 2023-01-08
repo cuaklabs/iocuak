@@ -1,11 +1,13 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-jest.mock('../../createInstanceTask/calculations/createInstanceTaskContext');
+jest.mock(
+  '../../createInstanceTask/calculations/createCreateInstanceTaskContext',
+);
 jest.mock('./getContainerModuleMetadataId');
 
 import { ContainerModuleMetadataId } from '@cuaklabs/iocuak-common';
 
-import { createInstanceTaskContext } from '../../createInstanceTask/calculations/createInstanceTaskContext';
+import { createCreateInstanceTaskContext } from '../../createInstanceTask/calculations/createCreateInstanceTaskContext';
 import { CreateInstanceTaskContextMocks } from '../../createInstanceTask/mocks/models/CreateInstanceTaskContextMocks';
 import { TaskContextServices } from '../../createInstanceTask/models/TaskContextServices';
 import { ContainerModuleMetadataMocks } from '../mocks/models/ContainerModuleMetadataMocks';
@@ -41,8 +43,8 @@ describe(createLoadModuleMetadataTaskContext.name, () => {
         };
 
         (
-          createInstanceTaskContext as jest.Mock<
-            typeof createInstanceTaskContext
+          createCreateInstanceTaskContext as jest.Mock<
+            typeof createCreateInstanceTaskContext
           >
         ).mockReturnValueOnce(CreateInstanceTaskContextMocks.any);
 
@@ -64,8 +66,8 @@ describe(createLoadModuleMetadataTaskContext.name, () => {
       });
 
       it('should call createInstanceTaskContext()', () => {
-        expect(createInstanceTaskContext).toHaveBeenCalledTimes(1);
-        expect(createInstanceTaskContext).toHaveBeenCalledWith(
+        expect(createCreateInstanceTaskContext).toHaveBeenCalledTimes(1);
+        expect(createCreateInstanceTaskContext).toHaveBeenCalledWith(
           requestIdFixture,
           servicesFixture,
         );
@@ -107,8 +109,8 @@ describe(createLoadModuleMetadataTaskContext.name, () => {
         };
 
         (
-          createInstanceTaskContext as jest.Mock<
-            typeof createInstanceTaskContext
+          createCreateInstanceTaskContext as jest.Mock<
+            typeof createCreateInstanceTaskContext
           >
         ).mockReturnValueOnce(CreateInstanceTaskContextMocks.any);
 
@@ -130,8 +132,8 @@ describe(createLoadModuleMetadataTaskContext.name, () => {
       });
 
       it('should call createInstanceTaskContext()', () => {
-        expect(createInstanceTaskContext).toHaveBeenCalledTimes(1);
-        expect(createInstanceTaskContext).toHaveBeenCalledWith(
+        expect(createCreateInstanceTaskContext).toHaveBeenCalledTimes(1);
+        expect(createCreateInstanceTaskContext).toHaveBeenCalledWith(
           requestIdFixture,
           servicesFixture,
         );

@@ -1,6 +1,6 @@
 import { ContainerModuleMetadataId } from '@cuaklabs/iocuak-common';
 
-import { createInstanceTaskContext } from '../../createInstanceTask/calculations/createInstanceTaskContext';
+import { createCreateInstanceTaskContext } from '../../createInstanceTask/calculations/createCreateInstanceTaskContext';
 import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
 import { TaskContextServices } from '../../createInstanceTask/models/TaskContextServices';
 import { ContainerModuleMetadata } from '../models/ContainerModuleMetadata';
@@ -13,7 +13,7 @@ export function createLoadModuleMetadataTaskContext(
   containerModuleMetadataArray: ContainerModuleMetadata[],
 ): LoadModuleMetadataTaskContext {
   const createInstanceContext: CreateInstanceTaskContext =
-    createInstanceTaskContext(requestId, services);
+    createCreateInstanceTaskContext(requestId, services);
 
   const containerModuleIdAndMetadataPairArray: [
     ContainerModuleMetadataId,

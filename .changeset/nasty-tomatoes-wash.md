@@ -2,4 +2,4 @@
 "@cuaklabs/iocuak-core": minor
 ---
 
-Added `createInstanceTaskContext`
+Added `createCreateInstanceTaskContext`

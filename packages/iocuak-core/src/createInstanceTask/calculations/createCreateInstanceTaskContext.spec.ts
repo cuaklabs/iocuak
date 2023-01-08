@@ -4,9 +4,9 @@ import { createInstanceFromBinding } from '../actions/createInstanceFromBinding'
 import { getDependencies } from '../actions/getDependencies';
 import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
 import { TaskContextServices } from '../models/TaskContextServices';
-import { createInstanceTaskContext } from './createInstanceTaskContext';
+import { createCreateInstanceTaskContext } from './createCreateInstanceTaskContext';
 
-describe(createInstanceTaskContext.name, () => {
+describe(createCreateInstanceTaskContext.name, () => {
   let requestIdFixture: symbol;
   let servicesFixture: TaskContextServices;
 
@@ -19,7 +19,10 @@ describe(createInstanceTaskContext.name, () => {
     let result: unknown;
 
     beforeAll(() => {
-      result = createInstanceTaskContext(requestIdFixture, servicesFixture);
+      result = createCreateInstanceTaskContext(
+        requestIdFixture,
+        servicesFixture,
+      );
     });
 
     it('should return a CreateInstanceTaskContext', () => {

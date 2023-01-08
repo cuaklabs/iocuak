@@ -1,17 +1,20 @@
 import { createInstanceFromBinding } from '../actions/createInstanceFromBinding';
 import { getDependencies } from '../actions/getDependencies';
 import { CreateInstanceTaskContext } from '../models/CreateInstanceTaskContext';
+import { TaskContextActions } from '../models/TaskContextActions';
 import { TaskContextServices } from '../models/TaskContextServices';
 
-export function createInstanceTaskContext(
+const taskContextActions: TaskContextActions = {
+  createInstanceFromBinding,
+  getDependencies,
+};
+
+export function createCreateInstanceTaskContext(
   requestId: symbol,
   services: TaskContextServices,
 ): CreateInstanceTaskContext {
   const context: CreateInstanceTaskContext = {
-    actions: {
-      createInstanceFromBinding,
-      getDependencies,
-    },
+    actions: taskContextActions,
     requestId: requestId,
     services,
     servicesInstantiatedSet: new Set(),
