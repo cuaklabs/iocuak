@@ -1,7 +1,6 @@
 import { bind } from './binding/actions/bind';
 import { bindToValue } from './binding/actions/bindToValue';
 import { getBindingMetadata } from './binding/actions/getBindingMetadata';
-import { getBindingOrThrow } from './binding/actions/getBindingOrThrow';
 import { BindingService } from './binding/services/BindingService';
 import { BindingServiceImplementation } from './binding/services/BindingServiceImplementation';
 import { getClassMetadata } from './classMetadata/utils/getClassMetadata';
@@ -51,7 +50,6 @@ export {
   createCreateInstanceTaskContext,
   createLoadModuleMetadataTaskContext,
   getBindingMetadata,
-  getBindingOrThrow,
   getClassMetadata,
   getContainerModuleMetadataId,
   loadContainerModule,
