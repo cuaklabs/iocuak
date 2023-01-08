@@ -1,12 +1,12 @@
 import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from '../../containerModuleMetadata/models/ContainerModuleMetadataType';
-import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
+import { LoadModuleMetadataTaskContext } from '../models/LoadModuleMetadataTaskContext';
 import { loadFromContainerModuleClassMetadata } from './loadFromContainerModuleClassMetadata';
 import { loadFromContainerModuleFactoryMetadata } from './loadFromContainerModuleFactoryMetadata';
 
 export function loadContainerModuleElement(
   containerModuleMetadata: ContainerModuleMetadata,
-  context: CreateInstanceTaskContext,
+  context: LoadModuleMetadataTaskContext,
 ): void | Promise<void> {
   let loadContainerModuleResult: void | Promise<void>;
 

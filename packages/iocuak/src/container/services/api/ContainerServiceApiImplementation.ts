@@ -1,12 +1,14 @@
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import {
   createInstance,
-  createInstanceFromBinding,
   createInstancesByTag,
-  getDependencies,
   loadContainerModule,
   CreateInstanceTaskContext,
   ContainerModuleMetadata,
+  LoadModuleMetadataTaskContext,
+  createCreateInstanceTaskContext,
+  createLoadModuleMetadataTaskContext,
+  TaskContextServices,
 } from '@cuaklabs/iocuak-core';
 import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
 import { BindingApi, BindOptionsApi } from '@cuaklabs/iocuak-models-api';
@@ -25,8 +27,16 @@ import { ContainerServiceApi } from './ContainerServiceApi';
 export class ContainerServiceApiImplementation implements ContainerServiceApi {
   protected readonly _containerService: ContainerService;
 
+  readonly #taskContextServices: TaskContextServices;
+
   constructor(containerService: ContainerService) {
     this._containerService = containerService;
+
+    this.#taskContextServices = {
+      bindingService: this._containerService.binding,
+      containerRequestService: this._containerService.request,
+      containerSingletonService: this._containerService.singleton,
+    };
   }
 
   public bind<TInstance, TArgs extends unknown[]>(
@@ -51,7 +61,7 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
     const requestId: symbol = this._containerService.request.start();
 
     const context: CreateInstanceTaskContext =
-      this.#createTaskContext(requestId);
+      this.#createInstanceTaskContext(requestId);
 
     const instance: TInstance = createInstance(serviceId, context) as TInstance;
 
@@ -66,7 +76,7 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
     const requestId: symbol = this._containerService.request.start();
 
     const context: CreateInstanceTaskContext =
-      this.#createTaskContext(requestId);
+      this.#createInstanceTaskContext(requestId);
 
     const instances: TInstances = createInstancesByTag(
       tag,
@@ -101,8 +111,12 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
     const containerModuleMetadata: ContainerModuleMetadata =
       convertToContainerModuleMetadata(containerModuleMetadataApi);
 
-    const context: CreateInstanceTaskContext =
-      this.#createTaskContext(requestId);
+    const context: LoadModuleMetadataTaskContext =
+      createLoadModuleMetadataTaskContext(
+        requestId,
+        this.#taskContextServices,
+        [containerModuleMetadata],
+      );
 
     await loadContainerModule(containerModuleMetadata, context);
 
@@ -114,20 +128,11 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
     this._containerService.binding.remove(serviceId);
   }
 
-  #createTaskContext(requestId: symbol): CreateInstanceTaskContext {
-    const context: CreateInstanceTaskContext = {
-      actions: {
-        createInstanceFromBinding,
-        getDependencies,
-      },
-      requestId: requestId,
-      services: {
-        bindingService: this._containerService.binding,
-        containerRequestService: this._containerService.request,
-        containerSingletonService: this._containerService.singleton,
-      },
-      servicesInstantiatedSet: new Set(),
-    };
+  #createInstanceTaskContext(requestId: symbol): CreateInstanceTaskContext {
+    const context: CreateInstanceTaskContext = createCreateInstanceTaskContext(
+      requestId,
+      this.#taskContextServices,
+    );
 
     return context;
   }

@@ -2,11 +2,11 @@ import { BindingService } from '../../binding/services/BindingService';
 import { ContainerModule } from '../../containerModule/models/ContainerModule';
 import { ContainerModuleClassMetadata } from '../../containerModuleMetadata/models/ContainerModuleClassMetadata';
 import { createInstance } from '../../createInstanceTask/actions/createInstance';
-import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
+import { LoadModuleMetadataTaskContext } from '../models/LoadModuleMetadataTaskContext';
 
 export function loadFromContainerModuleClassMetadata(
   metadata: ContainerModuleClassMetadata,
-  context: CreateInstanceTaskContext,
+  context: LoadModuleMetadataTaskContext,
 ): void {
   const containerModuleFromMetadata: unknown = createInstance(
     metadata.moduleType,

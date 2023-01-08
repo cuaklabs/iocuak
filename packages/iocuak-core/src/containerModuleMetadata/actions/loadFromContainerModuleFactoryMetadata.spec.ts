@@ -8,9 +8,9 @@ import { BindingService } from '../../binding/services/BindingService';
 import { ContainerModule } from '../../containerModule/models/ContainerModule';
 import { ContainerModuleFactoryMetadata } from '../../containerModuleMetadata/models/ContainerModuleFactoryMetadata';
 import { getDependency } from '../../createInstanceTask/actions/getDependency';
-import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
 import { TaskContextServices } from '../../createInstanceTask/models/TaskContextServices';
 import { ContainerModuleMetadataMocks } from '../mocks/models/ContainerModuleMetadataMocks';
+import { LoadModuleMetadataTaskContext } from '../models/LoadModuleMetadataTaskContext';
 import { loadFromContainerModuleFactoryMetadata } from './loadFromContainerModuleFactoryMetadata';
 
 describe(loadFromContainerModuleFactoryMetadata.name, () => {
@@ -29,7 +29,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
   });
 
   describe('when called, and containerModuleFactoryMetadataMock.factory() returns a Promise<ContainerModule>', () => {
-    let taskContextMock: CreateInstanceTaskContext;
+    let taskContextMock: LoadModuleMetadataTaskContext;
     let containerModuleMock: jest.Mocked<ContainerModule>;
     let factoryParameterFixture: unknown;
 
@@ -42,7 +42,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
             [Symbol()]: Symbol(),
           } as unknown as BindingService,
         } as Partial<TaskContextServices> as TaskContextServices,
-      } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
+      } as Partial<LoadModuleMetadataTaskContext> as LoadModuleMetadataTaskContext;
 
       containerModuleMock = {
         load: jest.fn(),
@@ -69,7 +69,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
     });
 
     it('should call createInstance()', () => {
-      const expectedTaskContext: CreateInstanceTaskContext = {
+      const expectedTaskContext: LoadModuleMetadataTaskContext = {
         ...taskContextMock,
         servicesInstantiatedSet: new Set(),
       };
@@ -103,7 +103,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
   });
 
   describe('when called, and containerModuleFactoryMetadataMock.factory() returns a ContainerModule', () => {
-    let taskContextMock: CreateInstanceTaskContext;
+    let taskContextMock: LoadModuleMetadataTaskContext;
     let containerModuleMock: jest.Mocked<ContainerModule>;
     let factoryParameterFixture: unknown;
 
@@ -116,7 +116,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
             [Symbol()]: Symbol(),
           } as unknown as BindingService,
         } as Partial<TaskContextServices> as TaskContextServices,
-      } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
+      } as Partial<LoadModuleMetadataTaskContext> as LoadModuleMetadataTaskContext;
 
       containerModuleMock = {
         load: jest.fn(),
@@ -143,7 +143,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
     });
 
     it('should call createInstance()', () => {
-      const expectedTaskContext: CreateInstanceTaskContext = {
+      const expectedTaskContext: LoadModuleMetadataTaskContext = {
         ...taskContextMock,
         servicesInstantiatedSet: new Set(),
       };

@@ -17,11 +17,12 @@ import {
   ContainerSingletonService,
   createInstancesByTag,
   createInstance,
-  createInstanceFromBinding,
-  getDependencies,
   loadContainerModule,
   CreateInstanceTaskContext,
   ContainerModuleMetadata,
+  LoadModuleMetadataTaskContext,
+  createCreateInstanceTaskContext,
+  createLoadModuleMetadataTaskContext,
 } from '@cuaklabs/iocuak-core';
 import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
 import {
@@ -243,6 +244,7 @@ describe(ContainerServiceApiImplementation.name, () => {
 
       let instanceFixture: unknown;
       let requestIdFixture: symbol;
+      let createInstanceTaskContextFixture: CreateInstanceTaskContext;
 
       let result: unknown;
 
@@ -253,8 +255,17 @@ describe(ContainerServiceApiImplementation.name, () => {
           foo: 'bar',
         };
         requestIdFixture = Symbol();
+        createInstanceTaskContextFixture = {
+          requestId: Symbol(),
+        } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
 
         containerRequestServiceMock.start.mockReturnValueOnce(requestIdFixture);
+
+        (
+          createCreateInstanceTaskContext as jest.Mock<
+            typeof createCreateInstanceTaskContext
+          >
+        ).mockReturnValueOnce(createInstanceTaskContextFixture);
 
         (
           createInstance as jest.Mock<typeof createInstance>
@@ -267,25 +278,23 @@ describe(ContainerServiceApiImplementation.name, () => {
         jest.clearAllMocks();
       });
 
-      it('should call createInstance()', () => {
-        const expectedTaskContext: CreateInstanceTaskContext = {
-          actions: {
-            createInstanceFromBinding,
-            getDependencies,
-          },
-          requestId: requestIdFixture,
-          services: {
+      it('should call createCreateInstanceTaskContext()', () => {
+        expect(createCreateInstanceTaskContext).toHaveBeenCalledTimes(1);
+        expect(createCreateInstanceTaskContext).toHaveBeenCalledWith(
+          requestIdFixture,
+          {
             bindingService: containerBindingServiceMock,
             containerRequestService: containerRequestServiceMock,
             containerSingletonService: containerSingletonServiceMock,
           },
-          servicesInstantiatedSet: new Set(),
-        };
+        );
+      });
 
+      it('should call createInstance()', () => {
         expect(createInstance).toHaveBeenCalledTimes(1);
         expect(createInstance).toHaveBeenCalledWith(
           serviceIdFixture,
-          expectedTaskContext,
+          createInstanceTaskContextFixture,
         );
       });
 
@@ -301,6 +310,7 @@ describe(ContainerServiceApiImplementation.name, () => {
 
       let instancesFixture: unknown[];
       let requestIdFixture: symbol;
+      let createInstanceTaskContextFixture: CreateInstanceTaskContext;
 
       let result: unknown;
 
@@ -313,8 +323,17 @@ describe(ContainerServiceApiImplementation.name, () => {
           },
         ];
         requestIdFixture = Symbol();
+        createInstanceTaskContextFixture = {
+          requestId: Symbol(),
+        } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
 
         containerRequestServiceMock.start.mockReturnValueOnce(requestIdFixture);
+
+        (
+          createCreateInstanceTaskContext as jest.Mock<
+            typeof createCreateInstanceTaskContext
+          >
+        ).mockReturnValueOnce(createInstanceTaskContextFixture);
 
         (
           createInstancesByTag as jest.Mock<typeof createInstancesByTag>
@@ -327,25 +346,23 @@ describe(ContainerServiceApiImplementation.name, () => {
         jest.clearAllMocks();
       });
 
-      it('should call createInstancesByTag()', () => {
-        const expectedTaskContext: CreateInstanceTaskContext = {
-          actions: {
-            createInstanceFromBinding,
-            getDependencies,
-          },
-          requestId: requestIdFixture,
-          services: {
+      it('should call createCreateInstanceTaskContext()', () => {
+        expect(createCreateInstanceTaskContext).toHaveBeenCalledTimes(1);
+        expect(createCreateInstanceTaskContext).toHaveBeenCalledWith(
+          requestIdFixture,
+          {
             bindingService: containerBindingServiceMock,
             containerRequestService: containerRequestServiceMock,
             containerSingletonService: containerSingletonServiceMock,
           },
-          servicesInstantiatedSet: new Set(),
-        };
+        );
+      });
 
+      it('should call createInstancesByTag()', () => {
         expect(createInstancesByTag).toHaveBeenCalledTimes(1);
         expect(createInstancesByTag).toHaveBeenCalledWith(
           tagFixture,
-          expectedTaskContext,
+          createInstanceTaskContextFixture,
         );
       });
 
@@ -431,6 +448,7 @@ describe(ContainerServiceApiImplementation.name, () => {
       let containerModuleMetadataApiFixture: ContainerModuleMetadataApi;
       let containerModuleMetadataFixture: ContainerModuleMetadata;
       let requestIdFixture: symbol;
+      let loadModuleMetadataTaskContextFixture: LoadModuleMetadataTaskContext;
 
       let result: unknown;
 
@@ -443,8 +461,17 @@ describe(ContainerServiceApiImplementation.name, () => {
           _tag: Symbol('ContainerModule'),
         } as unknown as ContainerModuleMetadata;
         requestIdFixture = Symbol();
+        loadModuleMetadataTaskContextFixture = {
+          requestId: Symbol(),
+        } as Partial<LoadModuleMetadataTaskContext> as LoadModuleMetadataTaskContext;
 
         containerRequestServiceMock.start.mockReturnValueOnce(requestIdFixture);
+
+        (
+          createLoadModuleMetadataTaskContext as jest.Mock<
+            typeof createLoadModuleMetadataTaskContext
+          >
+        ).mockReturnValueOnce(loadModuleMetadataTaskContextFixture);
 
         (
           convertToContainerModuleMetadata as jest.Mock<
@@ -468,25 +495,24 @@ describe(ContainerServiceApiImplementation.name, () => {
         );
       });
 
-      it('should call loadContainerModule()', () => {
-        const expectedTaskContext: CreateInstanceTaskContext = {
-          actions: {
-            createInstanceFromBinding,
-            getDependencies,
-          },
-          requestId: requestIdFixture,
-          services: {
+      it('should call createLoadModuleMetadataTaskContext()', () => {
+        expect(createLoadModuleMetadataTaskContext).toHaveBeenCalledTimes(1);
+        expect(createLoadModuleMetadataTaskContext).toHaveBeenCalledWith(
+          requestIdFixture,
+          {
             bindingService: containerBindingServiceMock,
             containerRequestService: containerRequestServiceMock,
             containerSingletonService: containerSingletonServiceMock,
           },
-          servicesInstantiatedSet: new Set(),
-        };
+          [containerModuleMetadataFixture],
+        );
+      });
 
+      it('should call loadContainerModule()', () => {
         expect(loadContainerModule).toHaveBeenCalledTimes(1);
         expect(loadContainerModule).toHaveBeenCalledWith(
           containerModuleMetadataFixture,
-          expectedTaskContext,
+          loadModuleMetadataTaskContextFixture,
         );
       });
 
