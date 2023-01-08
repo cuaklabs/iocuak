@@ -1,27 +1,28 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-jest.mock('@cuaklabs/iocuak-core');
+jest.mock('./getBindingOrThrow');
 
 import { Newable } from '@cuaklabs/iocuak-common';
-import { BindingService, getBindingOrThrow } from '@cuaklabs/iocuak-core';
 import {
   BindingScope,
   BindOptions,
   TypeBinding,
 } from '@cuaklabs/iocuak-models';
 
-import { BindOptionsFixtures } from '../../fixtures/domain/BindOptionsFixtures';
-import { TypeBindingFixtures } from '../../fixtures/domain/TypeBindingFixtures';
+import { BindOptionsFixtures } from '../fixtures/BindOptionsFixtures';
+import { TypeBindingFixtures } from '../fixtures/TypeBindingFixtures';
+import { BindingService } from '../services/BindingService';
 import { bind } from './bind';
+import { getBindingOrThrow } from './getBindingOrThrow';
 
 describe(bind.name, () => {
   let typeFixture: Newable;
-  let containerBindingServiceMock: jest.Mocked<BindingService>;
+  let bindingServiceMock: jest.Mocked<BindingService>;
 
   beforeAll(() => {
     typeFixture = class {};
 
-    containerBindingServiceMock = {
+    bindingServiceMock = {
       set: jest.fn(),
     } as Partial<jest.Mocked<BindingService>> as jest.Mocked<BindingService>;
   });
@@ -43,7 +44,7 @@ describe(bind.name, () => {
           getBindingOrThrow as jest.Mock<typeof getBindingOrThrow>
         ).mockReturnValueOnce(bindingFixture);
 
-        bind(typeFixture, bindOptionsFixture, containerBindingServiceMock);
+        bind(typeFixture, bindOptionsFixture, bindingServiceMock);
       });
 
       afterAll(() => {
@@ -61,8 +62,8 @@ describe(bind.name, () => {
           scope: bindOptionsFixture.scope as BindingScope,
         };
 
-        expect(containerBindingServiceMock.set).toHaveBeenCalledTimes(1);
-        expect(containerBindingServiceMock.set).toHaveBeenCalledWith(
+        expect(bindingServiceMock.set).toHaveBeenCalledTimes(1);
+        expect(bindingServiceMock.set).toHaveBeenCalledWith(
           expectedBindingFixture,
         );
       });
@@ -86,7 +87,7 @@ describe(bind.name, () => {
           getBindingOrThrow as jest.Mock<typeof getBindingOrThrow>
         ).mockReturnValueOnce(bindingFixture);
 
-        bind(typeFixture, bindOptionsFixture, containerBindingServiceMock);
+        bind(typeFixture, bindOptionsFixture, bindingServiceMock);
       });
 
       afterAll(() => {
@@ -99,10 +100,8 @@ describe(bind.name, () => {
       });
 
       it('should call containerService.binding.set()', () => {
-        expect(containerBindingServiceMock.set).toHaveBeenCalledTimes(1);
-        expect(containerBindingServiceMock.set).toHaveBeenCalledWith(
-          bindingFixture,
-        );
+        expect(bindingServiceMock.set).toHaveBeenCalledTimes(1);
+        expect(bindingServiceMock.set).toHaveBeenCalledWith(bindingFixture);
       });
     });
   });

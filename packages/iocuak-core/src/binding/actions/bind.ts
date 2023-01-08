@@ -1,11 +1,13 @@
 import { Newable } from '@cuaklabs/iocuak-common';
-import { BindingService, getBindingOrThrow } from '@cuaklabs/iocuak-core';
 import { BindOptions, TypeBinding } from '@cuaklabs/iocuak-models';
+
+import { BindingService } from '../services/BindingService';
+import { getBindingOrThrow } from './getBindingOrThrow';
 
 export function bind<TInstance, TArgs extends unknown[]>(
   type: Newable<TInstance, TArgs>,
   options: BindOptions,
-  containerBindingService: BindingService,
+  bindingService: BindingService,
 ): void {
   const bindingFromType: TypeBinding<TInstance, TArgs> =
     getBindingOrThrow(type);
@@ -21,5 +23,5 @@ export function bind<TInstance, TArgs extends unknown[]>(
     };
   }
 
-  containerBindingService.set(serviceBinding);
+  bindingService.set(serviceBinding);
 }

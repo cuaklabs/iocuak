@@ -1,19 +1,22 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
+jest.mock('@cuaklabs/iocuak-core');
+
 jest.mock('../../../binding/utils/api/convertToBindOptions');
-jest.mock('../../../binding/utils/domain/bind');
-jest.mock('../../../binding/utils/domain/bindToValue');
 
 import { Newable, Tag } from '@cuaklabs/iocuak-common';
-import { BindingService, ContainerModule } from '@cuaklabs/iocuak-core';
+import {
+  bind,
+  BindingService,
+  bindToValue,
+  ContainerModule,
+} from '@cuaklabs/iocuak-core';
 import { BindOptions } from '@cuaklabs/iocuak-models';
 import { BindOptionsApi } from '@cuaklabs/iocuak-models-api';
 
 import { BindOptionsApiFixtures } from '../../../binding/fixtures/api/BindOptionsApiFixtures';
 import { BindOptionsFixtures } from '../../../binding/fixtures/domain/BindOptionsFixtures';
 import { convertToBindOptions } from '../../../binding/utils/api/convertToBindOptions';
-import { bind } from '../../../binding/utils/domain/bind';
-import { bindToValue } from '../../../binding/utils/domain/bindToValue';
 import { BindValueOptionsApi } from '../../../container/models/api/BindValueOptionsApi';
 import { ContainerModuleBindingServiceApi } from '../../../container/services/api/ContainerModuleBindingServiceApi';
 import { ContainerModuleApi } from '../../models/api/ContainerModuleApi';

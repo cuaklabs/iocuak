@@ -1,9 +1,9 @@
 import { beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-import { BindingService } from '@cuaklabs/iocuak-core';
 import { ValueBinding } from '@cuaklabs/iocuak-models';
 
-import { ValueBindingFixtures } from '../../fixtures/domain/ValueBindingFixtures';
+import { ValueBindingFixtures } from '../fixtures/ValueBindingFixtures';
+import { BindingService } from '../services/BindingService';
 import { bindToValue } from './bindToValue';
 
 describe(bindToValue.name, () => {
@@ -12,10 +12,10 @@ describe(bindToValue.name, () => {
     ['value binding with tags', ValueBindingFixtures.withTagsOne],
   ])('having a %s', (_: string, valueBindingFixture: ValueBinding) => {
     describe('when called', () => {
-      let containerBindingServiceMock: jest.Mocked<BindingService>;
+      let bindingServiceMock: jest.Mocked<BindingService>;
 
       beforeAll(() => {
-        containerBindingServiceMock = {
+        bindingServiceMock = {
           set: jest.fn(),
         } as Partial<
           jest.Mocked<BindingService>
@@ -25,13 +25,13 @@ describe(bindToValue.name, () => {
           valueBindingFixture.id,
           valueBindingFixture.tags,
           valueBindingFixture.value,
-          containerBindingServiceMock,
+          bindingServiceMock,
         );
       });
 
       it('should call containerBindingService.set()', () => {
-        expect(containerBindingServiceMock.set).toHaveBeenCalledTimes(1);
-        expect(containerBindingServiceMock.set).toHaveBeenCalledWith(
+        expect(bindingServiceMock.set).toHaveBeenCalledTimes(1);
+        expect(bindingServiceMock.set).toHaveBeenCalledWith(
           valueBindingFixture,
         );
       });
