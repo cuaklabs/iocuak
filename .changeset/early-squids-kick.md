@@ -2,4 +2,4 @@
 "@cuaklabs/iocuak-core": minor
 ---
 
-[BC] Updated `loadContainerModule` to receive a `LoadModuleMetadataTaskContext`
+[BC] Updated `loadContainerModuleMetadata` to receive a `LoadModuleMetadataTaskContext`

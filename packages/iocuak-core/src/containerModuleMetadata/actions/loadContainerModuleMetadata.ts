@@ -1,11 +1,11 @@
 import { isPromiseLike } from '@cuaklabs/iocuak-common';
 
-import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
+import { ContainerModuleMetadata } from '../models/ContainerModuleMetadata';
 import { LoadModuleMetadataTaskContext } from '../models/LoadModuleMetadataTaskContext';
 import { loadContainerModuleElement } from './loadContainerModuleElement';
 import { loadContainerModuleElementAsync } from './loadContainerModuleElementAsync';
 
-export function loadContainerModule(
+export function loadContainerModuleMetadata(
   containerModuleMetadata: ContainerModuleMetadata,
   context: LoadModuleMetadataTaskContext,
 ): void | Promise<void> {
@@ -37,10 +37,8 @@ function loadContainerModuleDependencies(
   const asyncResults: Promise<void>[] = [];
 
   for (const containerModuleMetadataDependency of containerModuleMetadata.imports) {
-    const loadContainerModuleResult: void | Promise<void> = loadContainerModule(
-      containerModuleMetadataDependency,
-      context,
-    );
+    const loadContainerModuleResult: void | Promise<void> =
+      loadContainerModuleMetadata(containerModuleMetadataDependency, context);
 
     if (isPromiseLike(loadContainerModuleResult)) {
       asyncResults.push(loadContainerModuleResult);

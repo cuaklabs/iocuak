@@ -4,12 +4,12 @@ import {
   bindToValue,
   createInstance,
   createInstancesByTag,
-  loadContainerModule,
   CreateInstanceTaskContext,
   ContainerModuleMetadata,
-  LoadModuleMetadataTaskContext,
   createCreateInstanceTaskContext,
   createLoadModuleMetadataTaskContext,
+  LoadModuleMetadataTaskContext,
+  loadContainerModuleMetadata,
   TaskContextServices,
 } from '@cuaklabs/iocuak-core';
 import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
@@ -118,7 +118,7 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
         [containerModuleMetadata],
       );
 
-    await loadContainerModule(containerModuleMetadata, context);
+    await loadContainerModuleMetadata(containerModuleMetadata, context);
 
     this._containerService.request.end(context.requestId);
   }

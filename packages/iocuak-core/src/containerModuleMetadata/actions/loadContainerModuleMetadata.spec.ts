@@ -6,11 +6,11 @@ jest.mock('./loadContainerModuleElementAsync');
 import { ContainerModuleMetadataMocks } from '../mocks/models/ContainerModuleMetadataMocks';
 import { ContainerModuleMetadata } from '../models/ContainerModuleMetadata';
 import { LoadModuleMetadataTaskContext } from '../models/LoadModuleMetadataTaskContext';
-import { loadContainerModule } from './loadContainerModule';
 import { loadContainerModuleElement } from './loadContainerModuleElement';
 import { loadContainerModuleElementAsync } from './loadContainerModuleElementAsync';
+import { loadContainerModuleMetadata } from './loadContainerModuleMetadata';
 
-describe(loadContainerModule.name, () => {
+describe(loadContainerModuleMetadata.name, () => {
   describe('having a sync ContainerModuleMetadata with no dependencies', () => {
     let containerModuleMetadataFixture: ContainerModuleMetadata;
 
@@ -29,7 +29,7 @@ describe(loadContainerModule.name, () => {
           [Symbol()]: Symbol(),
         } as unknown as LoadModuleMetadataTaskContext;
 
-        result = loadContainerModule(
+        result = loadContainerModuleMetadata(
           containerModuleMetadataFixture,
           taskContextFixture,
         );
@@ -77,7 +77,7 @@ describe(loadContainerModule.name, () => {
           loadContainerModuleElement as jest.Mock<() => Promise<void>>
         ).mockResolvedValueOnce(undefined);
 
-        result = loadContainerModule(
+        result = loadContainerModuleMetadata(
           containerModuleMetadataFixture,
           taskContextFixture,
         );
