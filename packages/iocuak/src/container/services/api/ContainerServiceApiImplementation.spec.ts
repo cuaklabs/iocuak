@@ -17,12 +17,12 @@ import {
   ContainerSingletonService,
   createInstancesByTag,
   createInstance,
-  loadContainerModule,
   CreateInstanceTaskContext,
   ContainerModuleMetadata,
-  LoadModuleMetadataTaskContext,
   createCreateInstanceTaskContext,
   createLoadModuleMetadataTaskContext,
+  LoadModuleMetadataTaskContext,
+  loadContainerModuleMetadata,
 } from '@cuaklabs/iocuak-core';
 import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
 import {
@@ -506,9 +506,9 @@ describe(ContainerServiceApiImplementation.name, () => {
         );
       });
 
-      it('should call loadContainerModule()', () => {
-        expect(loadContainerModule).toHaveBeenCalledTimes(1);
-        expect(loadContainerModule).toHaveBeenCalledWith(
+      it('should call loadContainerModuleMetadata()', () => {
+        expect(loadContainerModuleMetadata).toHaveBeenCalledTimes(1);
+        expect(loadContainerModuleMetadata).toHaveBeenCalledWith(
           containerModuleMetadataFixture,
           loadModuleMetadataTaskContextFixture,
         );
