@@ -44,6 +44,33 @@ export class ContainerModuleMetadataMocks {
     return fixture;
   }
 
+  public static get withIdAndRequiresEmptyArray(): jest.Mocked<ContainerModuleMetadata> {
+    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+      ...ContainerModuleMetadataMocks.withId,
+      requires: [],
+    };
+
+    return fixture;
+  }
+
+  public static get withNoId(): jest.Mocked<ContainerModuleMetadata> {
+    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+      ...ContainerModuleMetadataMocks.any,
+      id: undefined,
+    };
+
+    return fixture;
+  }
+
+  public static get withNoIdAndRequiresEmptyArray(): jest.Mocked<ContainerModuleMetadata> {
+    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+      ...ContainerModuleMetadataMocks.withNoId,
+      requires: [],
+    };
+
+    return fixture;
+  }
+
   public static get withTypeClazz(): jest.Mocked<ContainerModuleClassMetadata> {
     const fixture: jest.Mocked<ContainerModuleClassMetadata> = {
       id: undefined,
@@ -56,6 +83,15 @@ export class ContainerModuleMetadataMocks {
         ),
       requires: [],
       type: ContainerModuleMetadataType.clazz,
+    };
+
+    return fixture;
+  }
+
+  public static get withRequiresEmptyArray(): jest.Mocked<ContainerModuleMetadata> {
+    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+      ...ContainerModuleMetadataMocks.any,
+      requires: [],
     };
 
     return fixture;
