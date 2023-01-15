@@ -1,6 +1,9 @@
 import { ContainerModuleMetadataId } from '@cuaklabs/iocuak-common';
 
+import { decrementMetadataDependency } from '../actions/decrementMetadataDependency';
 import { ContainerModuleMetadata } from '../models/ContainerModuleMetadata';
+import { buildDependencyIdToDependentMetadataMap } from './buildDependencyIdToDependentMetadataMap';
+import { buildMetadataToDependenciesMap } from './buildMetadataToDependenciesMap';
 import { getContainerModuleMetadataId } from './getContainerModuleMetadataId';
 
 export function isMetadataArrayLoadable(
@@ -32,61 +35,6 @@ export function isMetadataArrayLoadable(
   }
 
   return solvedDependencies === metadataArray.length;
-}
-
-function buildMetadataToDependenciesMap(
-  metadataArray: ContainerModuleMetadata[],
-): Map<ContainerModuleMetadata, number> {
-  const metadataToDependenciesMap: Map<ContainerModuleMetadata, number> =
-    new Map();
-
-  for (const metadata of metadataArray) {
-    const dependencies: number = metadata.requires.length;
-
-    metadataToDependenciesMap.set(metadata, dependencies);
-  }
-
-  return metadataToDependenciesMap;
-}
-
-function buildDependencyIdToDependentMetadataMap(
-  metadataArray: ContainerModuleMetadata[],
-): Map<ContainerModuleMetadataId, ContainerModuleMetadata[]> {
-  const dependencyIdToDependentMetadataMap: Map<
-    ContainerModuleMetadataId,
-    ContainerModuleMetadata[]
-  > = new Map();
-
-  for (const metadata of metadataArray) {
-    for (const metadataId of metadata.requires) {
-      let metadataArrayEntry: ContainerModuleMetadata[] | undefined =
-        dependencyIdToDependentMetadataMap.get(metadataId);
-
-      if (metadataArrayEntry === undefined) {
-        metadataArrayEntry = [];
-        dependencyIdToDependentMetadataMap.set(metadataId, metadataArrayEntry);
-      }
-
-      metadataArrayEntry.push(metadata);
-    }
-  }
-
-  return dependencyIdToDependentMetadataMap;
-}
-
-function decrementMetadataDependency(
-  metadata: ContainerModuleMetadata,
-  metadataToDependenciesMap: Map<ContainerModuleMetadata, number>,
-): number {
-  let metadataDependencies: number = metadataToDependenciesMap.get(
-    metadata,
-  ) as number;
-
-  metadataDependencies -= 1;
-
-  metadataToDependenciesMap.set(metadata, metadataDependencies);
-
-  return metadataDependencies;
 }
 
 function simulateDependenciesLoaded(
