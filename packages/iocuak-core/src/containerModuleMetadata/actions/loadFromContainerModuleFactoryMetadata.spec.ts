@@ -8,6 +8,7 @@ import { BindingService } from '../../binding/services/BindingService';
 import { ContainerModule } from '../../containerModule/models/ContainerModule';
 import { ContainerModuleFactoryMetadata } from '../../containerModuleMetadata/models/ContainerModuleFactoryMetadata';
 import { getDependency } from '../../createInstanceTask/actions/getDependency';
+import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
 import { TaskContextServices } from '../../createInstanceTask/models/TaskContextServices';
 import { ContainerModuleMetadataMocks } from '../mocks/models/ContainerModuleMetadataMocks';
 import { LoadModuleMetadataTaskContext } from '../models/LoadModuleMetadataTaskContext';
@@ -37,11 +38,13 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
 
     beforeAll(async () => {
       taskContextMock = {
-        services: {
-          bindingService: {
-            [Symbol()]: Symbol(),
-          } as unknown as BindingService,
-        } as Partial<TaskContextServices> as TaskContextServices,
+        createInstanceTaskContext: {
+          services: {
+            bindingService: {
+              [Symbol()]: Symbol(),
+            } as unknown as BindingService,
+          } as Partial<TaskContextServices> as TaskContextServices,
+        } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext,
       } as Partial<LoadModuleMetadataTaskContext> as LoadModuleMetadataTaskContext;
 
       containerModuleMock = {
@@ -69,8 +72,8 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
     });
 
     it('should call createInstance()', () => {
-      const expectedTaskContext: LoadModuleMetadataTaskContext = {
-        ...taskContextMock,
+      const expectedTaskContext: CreateInstanceTaskContext = {
+        ...taskContextMock.createInstanceTaskContext,
         servicesInstantiatedSet: new Set(),
       };
 
@@ -93,7 +96,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
     it('should call containerModule.load()', () => {
       expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
       expect(containerModuleMock.load).toHaveBeenCalledWith(
-        taskContextMock.services.bindingService,
+        taskContextMock.createInstanceTaskContext.services.bindingService,
       );
     });
 
@@ -111,11 +114,13 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
 
     beforeAll(async () => {
       taskContextMock = {
-        services: {
-          bindingService: {
-            [Symbol()]: Symbol(),
-          } as unknown as BindingService,
-        } as Partial<TaskContextServices> as TaskContextServices,
+        createInstanceTaskContext: {
+          services: {
+            bindingService: {
+              [Symbol()]: Symbol(),
+            } as unknown as BindingService,
+          } as Partial<TaskContextServices> as TaskContextServices,
+        } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext,
       } as Partial<LoadModuleMetadataTaskContext> as LoadModuleMetadataTaskContext;
 
       containerModuleMock = {
@@ -142,9 +147,9 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
       jest.clearAllMocks();
     });
 
-    it('should call createInstance()', () => {
-      const expectedTaskContext: LoadModuleMetadataTaskContext = {
-        ...taskContextMock,
+    it('should call getDependency()', () => {
+      const expectedTaskContext: CreateInstanceTaskContext = {
+        ...taskContextMock.createInstanceTaskContext,
         servicesInstantiatedSet: new Set(),
       };
 
@@ -167,7 +172,7 @@ describe(loadFromContainerModuleFactoryMetadata.name, () => {
     it('should call containerModule.load()', () => {
       expect(containerModuleMock.load).toHaveBeenCalledTimes(1);
       expect(containerModuleMock.load).toHaveBeenCalledWith(
-        taskContextMock.services.bindingService,
+        taskContextMock.createInstanceTaskContext.services.bindingService,
       );
     });
 

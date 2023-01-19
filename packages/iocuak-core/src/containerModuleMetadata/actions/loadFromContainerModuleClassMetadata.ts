@@ -10,7 +10,7 @@ export function loadFromContainerModuleClassMetadata(
 ): void {
   const containerModuleFromMetadata: unknown = createInstance(
     metadata.moduleType,
-    context,
+    context.createInstanceTaskContext,
   );
 
   const containerModule: ContainerModule = {
@@ -19,5 +19,7 @@ export function loadFromContainerModuleClassMetadata(
     },
   };
 
-  containerModule.load(context.services.bindingService);
+  containerModule.load(
+    context.createInstanceTaskContext.services.bindingService,
+  );
 }

@@ -22,8 +22,8 @@ export class ContainerModuleMetadataMocks {
     }
   };
 
-  public static get any(): jest.Mocked<ContainerModuleMetadata> {
-    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+  public static get any(): jest.Mocked<ContainerModuleFactoryMetadata> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       factory: jest.fn(),
       id: undefined,
       imports: [],
@@ -35,8 +35,8 @@ export class ContainerModuleMetadataMocks {
     return fixture;
   }
 
-  public static get withId(): jest.Mocked<ContainerModuleMetadata> {
-    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+  public static get withId(): jest.Mocked<ContainerModuleFactoryMetadata> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       ...ContainerModuleMetadataMocks.any,
       id: 'container-module-metadata-id',
     };
@@ -44,8 +44,8 @@ export class ContainerModuleMetadataMocks {
     return fixture;
   }
 
-  public static get withIdAndRequiresEmptyArray(): jest.Mocked<ContainerModuleMetadata> {
-    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+  public static get withIdAndRequiresEmptyArray(): jest.Mocked<ContainerModuleFactoryMetadata> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       ...ContainerModuleMetadataMocks.withId,
       requires: [],
     };
@@ -53,8 +53,8 @@ export class ContainerModuleMetadataMocks {
     return fixture;
   }
 
-  public static get withNoId(): jest.Mocked<ContainerModuleMetadata> {
-    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+  public static get withNoId(): jest.Mocked<ContainerModuleFactoryMetadata> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       ...ContainerModuleMetadataMocks.any,
       id: undefined,
     };

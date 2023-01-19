@@ -20,7 +20,6 @@ import {
   CreateInstanceTaskContext,
   ContainerModuleMetadata,
   createCreateInstanceTaskContext,
-  createLoadModuleMetadataTaskContext,
   LoadModuleMetadataTaskContext,
   loadContainerModuleMetadata,
 } from '@cuaklabs/iocuak-core';
@@ -254,7 +253,7 @@ describe(ContainerServiceApiImplementation.name, () => {
         };
         requestIdFixture = Symbol();
         createInstanceTaskContextFixture = {
-          requestId: Symbol(),
+          requestId: requestIdFixture,
         } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
 
         containerRequestServiceMock.start.mockReturnValueOnce(requestIdFixture);
@@ -276,6 +275,11 @@ describe(ContainerServiceApiImplementation.name, () => {
         jest.clearAllMocks();
       });
 
+      it('should call containerRequestService.start()', () => {
+        expect(containerRequestServiceMock.start).toHaveBeenCalledTimes(1);
+        expect(containerRequestServiceMock.start).toHaveBeenCalledWith();
+      });
+
       it('should call createCreateInstanceTaskContext()', () => {
         expect(createCreateInstanceTaskContext).toHaveBeenCalledTimes(1);
         expect(createCreateInstanceTaskContext).toHaveBeenCalledWith(
@@ -293,6 +297,13 @@ describe(ContainerServiceApiImplementation.name, () => {
         expect(createInstance).toHaveBeenCalledWith(
           serviceIdFixture,
           createInstanceTaskContextFixture,
+        );
+      });
+
+      it('should call containerRequestService.end()', () => {
+        expect(containerRequestServiceMock.end).toHaveBeenCalledTimes(1);
+        expect(containerRequestServiceMock.end).toHaveBeenCalledWith(
+          requestIdFixture,
         );
       });
 
@@ -446,6 +457,7 @@ describe(ContainerServiceApiImplementation.name, () => {
       let containerModuleMetadataApiFixture: ContainerModuleMetadataApi;
       let containerModuleMetadataFixture: ContainerModuleMetadata;
       let requestIdFixture: symbol;
+      let createInstanceTaskContextFixture: CreateInstanceTaskContext;
       let loadModuleMetadataTaskContextFixture: LoadModuleMetadataTaskContext;
 
       let result: unknown;
@@ -459,15 +471,24 @@ describe(ContainerServiceApiImplementation.name, () => {
           _tag: Symbol('ContainerModule'),
         } as unknown as ContainerModuleMetadata;
         requestIdFixture = Symbol();
+        createInstanceTaskContextFixture = {
+          requestId: requestIdFixture,
+        } as Partial<CreateInstanceTaskContext> as CreateInstanceTaskContext;
         loadModuleMetadataTaskContextFixture = {
-          requestId: Symbol(),
+          createInstanceTaskContext: createInstanceTaskContextFixture,
         } as Partial<LoadModuleMetadataTaskContext> as LoadModuleMetadataTaskContext;
 
         containerRequestServiceMock.start.mockReturnValueOnce(requestIdFixture);
 
         (
-          createLoadModuleMetadataTaskContext as jest.Mock<
-            typeof createLoadModuleMetadataTaskContext
+          createCreateInstanceTaskContext as jest.Mock<
+            typeof createCreateInstanceTaskContext
+          >
+        ).mockReturnValueOnce(createInstanceTaskContextFixture);
+
+        (
+          LoadModuleMetadataTaskContext as jest.Mock<
+            () => LoadModuleMetadataTaskContext
           >
         ).mockReturnValueOnce(loadModuleMetadataTaskContextFixture);
 
@@ -486,6 +507,11 @@ describe(ContainerServiceApiImplementation.name, () => {
         jest.clearAllMocks();
       });
 
+      it('should call containerRequestService.start()', () => {
+        expect(containerRequestServiceMock.start).toHaveBeenCalledTimes(1);
+        expect(containerRequestServiceMock.start).toHaveBeenCalledWith();
+      });
+
       it('should call convertToContainerModuleMetadata()', () => {
         expect(convertToContainerModuleMetadata).toHaveBeenCalledTimes(1);
         expect(convertToContainerModuleMetadata).toHaveBeenCalledWith(
@@ -493,15 +519,22 @@ describe(ContainerServiceApiImplementation.name, () => {
         );
       });
 
-      it('should call createLoadModuleMetadataTaskContext()', () => {
-        expect(createLoadModuleMetadataTaskContext).toHaveBeenCalledTimes(1);
-        expect(createLoadModuleMetadataTaskContext).toHaveBeenCalledWith(
+      it('should call createCreateInstanceTaskContext()', () => {
+        expect(createCreateInstanceTaskContext).toHaveBeenCalledTimes(1);
+        expect(createCreateInstanceTaskContext).toHaveBeenCalledWith(
           requestIdFixture,
           {
             bindingService: containerBindingServiceMock,
             containerRequestService: containerRequestServiceMock,
             containerSingletonService: containerSingletonServiceMock,
           },
+        );
+      });
+
+      it('should call LoadModuleMetadataTaskContext()', () => {
+        expect(LoadModuleMetadataTaskContext).toHaveBeenCalledTimes(1);
+        expect(LoadModuleMetadataTaskContext).toHaveBeenCalledWith(
+          createInstanceTaskContextFixture,
           [containerModuleMetadataFixture],
         );
       });
@@ -511,6 +544,13 @@ describe(ContainerServiceApiImplementation.name, () => {
         expect(loadContainerModuleMetadata).toHaveBeenCalledWith(
           containerModuleMetadataFixture,
           loadModuleMetadataTaskContextFixture,
+        );
+      });
+
+      it('should call containerRequestService.end()', () => {
+        expect(containerRequestServiceMock.end).toHaveBeenCalledTimes(1);
+        expect(containerRequestServiceMock.end).toHaveBeenCalledWith(
+          requestIdFixture,
         );
       });
 
