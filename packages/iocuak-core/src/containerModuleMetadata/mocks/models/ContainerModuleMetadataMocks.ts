@@ -22,8 +22,8 @@ export class ContainerModuleMetadataMocks {
     }
   };
 
-  public static get any(): jest.Mocked<ContainerModuleMetadata> {
-    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+  public static get any(): jest.Mocked<ContainerModuleFactoryMetadata> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       factory: jest.fn(),
       id: undefined,
       imports: [],
@@ -35,10 +35,37 @@ export class ContainerModuleMetadataMocks {
     return fixture;
   }
 
-  public static get withId(): jest.Mocked<ContainerModuleMetadata> {
-    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+  public static get withId(): jest.Mocked<ContainerModuleFactoryMetadata> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       ...ContainerModuleMetadataMocks.any,
       id: 'container-module-metadata-id',
+    };
+
+    return fixture;
+  }
+
+  public static get withIdAndRequiresEmptyArray(): jest.Mocked<ContainerModuleFactoryMetadata> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
+      ...ContainerModuleMetadataMocks.withId,
+      requires: [],
+    };
+
+    return fixture;
+  }
+
+  public static get withNoId(): jest.Mocked<ContainerModuleFactoryMetadata> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
+      ...ContainerModuleMetadataMocks.any,
+      id: undefined,
+    };
+
+    return fixture;
+  }
+
+  public static get withNoIdAndRequiresEmptyArray(): jest.Mocked<ContainerModuleMetadata> {
+    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+      ...ContainerModuleMetadataMocks.withNoId,
+      requires: [],
     };
 
     return fixture;
@@ -56,6 +83,15 @@ export class ContainerModuleMetadataMocks {
         ),
       requires: [],
       type: ContainerModuleMetadataType.clazz,
+    };
+
+    return fixture;
+  }
+
+  public static get withRequiresEmptyArray(): jest.Mocked<ContainerModuleFactoryMetadata> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
+      ...ContainerModuleMetadataMocks.any,
+      requires: [],
     };
 
     return fixture;

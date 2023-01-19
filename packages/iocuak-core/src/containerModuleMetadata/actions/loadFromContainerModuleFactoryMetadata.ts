@@ -13,7 +13,7 @@ export function loadFromContainerModuleFactoryMetadata(
   const instances: unknown[] = metadata.injects.map(
     (inject: ClassElementMetadata) =>
       getDependency(inject, {
-        ...context,
+        ...context.createInstanceTaskContext,
         servicesInstantiatedSet: new Set(),
       }),
   );
@@ -24,7 +24,9 @@ export function loadFromContainerModuleFactoryMetadata(
   if (isPromiseLike(containerModule)) {
     return loadModuleAsync(containerModule, context);
   } else {
-    containerModule.load(context.services.bindingService);
+    containerModule.load(
+      context.createInstanceTaskContext.services.bindingService,
+    );
   }
 }
 
@@ -34,5 +36,7 @@ async function loadModuleAsync(
 ): Promise<void> {
   const containerModule: ContainerModule = await containerModulePromise;
 
-  containerModule.load(context.services.bindingService);
+  containerModule.load(
+    context.createInstanceTaskContext.services.bindingService,
+  );
 }

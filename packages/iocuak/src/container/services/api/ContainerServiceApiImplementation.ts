@@ -7,7 +7,6 @@ import {
   CreateInstanceTaskContext,
   ContainerModuleMetadata,
   createCreateInstanceTaskContext,
-  createLoadModuleMetadataTaskContext,
   LoadModuleMetadataTaskContext,
   loadContainerModuleMetadata,
   TaskContextServices,
@@ -112,15 +111,16 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
       convertToContainerModuleMetadata(containerModuleMetadataApi);
 
     const context: LoadModuleMetadataTaskContext =
-      createLoadModuleMetadataTaskContext(
-        requestId,
-        this.#taskContextServices,
+      new LoadModuleMetadataTaskContext(
+        this.#createInstanceTaskContext(requestId),
         [containerModuleMetadata],
       );
 
     await loadContainerModuleMetadata(containerModuleMetadata, context);
 
-    this._containerService.request.end(context.requestId);
+    this._containerService.request.end(
+      context.createInstanceTaskContext.requestId,
+    );
   }
 
   public unbind(serviceId: ServiceId): void {

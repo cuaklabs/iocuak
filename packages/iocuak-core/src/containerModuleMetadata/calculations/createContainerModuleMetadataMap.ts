@@ -1,20 +1,11 @@
 import { ContainerModuleMetadataId } from '@cuaklabs/iocuak-common';
 
-import { createCreateInstanceTaskContext } from '../../createInstanceTask/calculations/createCreateInstanceTaskContext';
-import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
-import { TaskContextServices } from '../../createInstanceTask/models/TaskContextServices';
 import { ContainerModuleMetadata } from '../models/ContainerModuleMetadata';
-import { LoadModuleMetadataTaskContext } from '../models/LoadModuleMetadataTaskContext';
 import { getContainerModuleMetadataId } from './getContainerModuleMetadataId';
 
-export function createLoadModuleMetadataTaskContext(
-  requestId: symbol,
-  services: TaskContextServices,
+export function createContainerModuleMetadataMap(
   containerModuleMetadataArray: ContainerModuleMetadata[],
-): LoadModuleMetadataTaskContext {
-  const createInstanceContext: CreateInstanceTaskContext =
-    createCreateInstanceTaskContext(requestId, services);
-
+): Map<ContainerModuleMetadataId, ContainerModuleMetadata> {
   const containerModuleIdAndMetadataPairArray: [
     ContainerModuleMetadataId,
     ContainerModuleMetadata,
@@ -27,11 +18,7 @@ export function createLoadModuleMetadataTaskContext(
     ContainerModuleMetadata
   > = new Map(containerModuleIdAndMetadataPairArray);
 
-  return {
-    ...createInstanceContext,
-    containerModuleMetadataIdToContainerModuleMetadataMap,
-    containerModulesLoadedSet: new Set(),
-  };
+  return containerModuleMetadataIdToContainerModuleMetadataMap;
 }
 
 function createContainerModuleIdAndMetadataPairArray(
