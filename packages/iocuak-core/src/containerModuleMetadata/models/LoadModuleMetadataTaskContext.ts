@@ -10,6 +10,7 @@ export class LoadModuleMetadataTaskContext {
     ContainerModuleMetadata[]
   >;
   readonly #metadataToDependenciesMap: Map<ContainerModuleMetadata, number>;
+  #zeroDependenciesMetadata: ContainerModuleMetadata[];
 
   constructor(
     public readonly createInstanceTaskContext: CreateInstanceTaskContext,
@@ -19,6 +20,10 @@ export class LoadModuleMetadataTaskContext {
       this.#buildDependencyIdToDependentMetadataMap(this.metadataArray);
     this.#metadataToDependenciesMap = this.#buildMetadataToDependenciesMap(
       this.metadataArray,
+    );
+    this.#zeroDependenciesMetadata = this.metadataArray.filter(
+      (metadata: ContainerModuleMetadata): boolean =>
+        metadata.requires.length === 0,
     );
   }
 
@@ -46,9 +51,7 @@ export class LoadModuleMetadataTaskContext {
     return solvedDependencies === this.metadataArray.length;
   }
 
-  public processMetadataLoaded(
-    dependency: ContainerModuleMetadata,
-  ): ContainerModuleMetadata[] {
+  public processMetadataLoaded(dependency: ContainerModuleMetadata): void {
     const newDependenciesToSolve: ContainerModuleMetadata[] = [];
 
     const metadataId: ContainerModuleMetadataId | undefined =
@@ -73,7 +76,11 @@ export class LoadModuleMetadataTaskContext {
       }
     }
 
-    return newDependenciesToSolve;
+    this.#zeroDependenciesMetadata = newDependenciesToSolve;
+  }
+
+  public getZeroDependenciesMetadata(): ContainerModuleMetadata[] {
+    return [...this.#zeroDependenciesMetadata];
   }
 
   #buildDependencyIdToDependentMetadataMap(

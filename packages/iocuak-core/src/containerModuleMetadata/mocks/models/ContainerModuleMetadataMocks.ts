@@ -88,8 +88,8 @@ export class ContainerModuleMetadataMocks {
     return fixture;
   }
 
-  public static get withRequiresEmptyArray(): jest.Mocked<ContainerModuleMetadata> {
-    const fixture: jest.Mocked<ContainerModuleMetadata> = {
+  public static get withRequiresEmptyArray(): jest.Mocked<ContainerModuleFactoryMetadata> {
+    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       ...ContainerModuleMetadataMocks.any,
       requires: [],
     };

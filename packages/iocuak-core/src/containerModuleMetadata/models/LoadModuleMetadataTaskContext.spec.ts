@@ -154,6 +154,82 @@ describe(LoadModuleMetadataTaskContext.name, () => {
     );
   });
 
+  describe('.getZeroDependenciesMetadata', () => {
+    describe.each<
+      [string, () => ContainerModuleMetadata[], () => ContainerModuleMetadata[]]
+    >([
+      [
+        'with no elements',
+        (): ContainerModuleMetadata[] => [],
+        (): ContainerModuleMetadata[] => [],
+      ],
+      [
+        'with metadata with no dependencies',
+        (): ContainerModuleMetadata[] => [
+          ContainerModuleMetadataMocks.withRequiresEmptyArray,
+        ],
+        (): ContainerModuleMetadata[] => [
+          {
+            ...ContainerModuleMetadataMocks.withRequiresEmptyArray,
+            factory: expect.anything() as unknown as (
+              ...args: unknown[]
+            ) => ContainerModule | Promise<ContainerModule>,
+          },
+        ],
+      ],
+      [
+        'with metadata with referenced dependencies',
+        buildMetadataArrayWithReferencedDependencies,
+        (): ContainerModuleMetadata[] => [
+          {
+            ...buildMetadataArrayWithReferencedDependencies()[0],
+            factory: expect.anything() as unknown as (
+              ...args: unknown[]
+            ) => ContainerModule | Promise<ContainerModule>,
+          },
+        ],
+      ],
+    ])(
+      'having a LoadModuleMetadataTaskContext with ContainerModuleMetadata[] %s',
+      (
+        _: string,
+        containerModuleMetadataArrayFixtureBuilder: () => ContainerModuleMetadata[],
+        expectedResultBuilder: () => ContainerModuleMetadata[],
+      ) => {
+        let loadModuleMetadataTaskContextFixture: LoadModuleMetadataTaskContext;
+
+        beforeAll(() => {
+          const containerModuleMetadataArrayFixture: ContainerModuleMetadata[] =
+            containerModuleMetadataArrayFixtureBuilder();
+
+          const createInstanceTaskContextFixture: CreateInstanceTaskContext =
+            Symbol() as unknown as CreateInstanceTaskContext;
+
+          loadModuleMetadataTaskContextFixture =
+            new LoadModuleMetadataTaskContext(
+              createInstanceTaskContextFixture,
+              containerModuleMetadataArrayFixture,
+            );
+        });
+
+        describe('when called', () => {
+          let expectedResult: ContainerModuleMetadata[];
+          let result: unknown;
+
+          beforeAll(() => {
+            expectedResult = expectedResultBuilder();
+            result =
+              loadModuleMetadataTaskContextFixture.getZeroDependenciesMetadata();
+          });
+
+          it(`should return a ContainerModuleMetadata[]`, () => {
+            expect(result).toStrictEqual(expectedResult);
+          });
+        });
+      },
+    );
+  });
+
   describe('.processMetadataLoaded', () => {
     describe.each<
       [
@@ -217,18 +293,25 @@ describe(LoadModuleMetadataTaskContext.name, () => {
         });
 
         describe('when called', () => {
-          let expectedResult: ContainerModuleMetadata[];
-          let result: unknown;
-
           beforeAll(() => {
-            expectedResult = expectedResultBuilder();
-            result = loadModuleMetadataTaskContextFixture.processMetadataLoaded(
+            loadModuleMetadataTaskContextFixture.processMetadataLoaded(
               containerModuleMetadataLoadedFixtureBuilder(),
             );
           });
 
-          it(`should return a ContainerModuleMetadata[]`, () => {
-            expect(result).toStrictEqual(expectedResult);
+          describe('when called .getZeroDependenciesMetadata()', () => {
+            let expectedResult: ContainerModuleMetadata[];
+            let result: unknown;
+
+            beforeAll(() => {
+              expectedResult = expectedResultBuilder();
+              result =
+                loadModuleMetadataTaskContextFixture.getZeroDependenciesMetadata();
+            });
+
+            it(`should return a ContainerModuleMetadata[]`, () => {
+              expect(result).toStrictEqual(expectedResult);
+            });
           });
         });
       },
