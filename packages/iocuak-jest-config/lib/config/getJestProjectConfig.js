@@ -10,7 +10,12 @@ function getJestProjectConfig(projectName, testMatch, testPathIgnorePatterns) {
   /** @type { !import("@jest/types").Config.InitialProjectOptions } */
   const projectConfig = {
     displayName: projectName,
-    coveragePathIgnorePatterns: ['/node_modules/'],
+    coveragePathIgnorePatterns: [
+      '/fixtures/',
+      '/lib/index.js',
+      '/mocks/',
+      '/node_modules/',
+    ],
     coverageThreshold: {
       global: {
         branches: 70,
