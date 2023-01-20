@@ -19,11 +19,11 @@
     "url": "https://github.com/cuaklabs/iocuak/issues"
   },
   "dependencies": {
-    "@cuaklabs/iocuak-common": "workspace:../iocuak-common",
-    "@cuaklabs/iocuak-core": "workspace:../iocuak-core",
-    "@cuaklabs/iocuak-decorators": "workspace:../iocuak-decorators",
-    "@cuaklabs/iocuak-models": "workspace:../iocuak-models",
-    "@cuaklabs/iocuak-models-api": "workspace:../iocuak-models-api"
+    "@cuaklabs/iocuak-common": "workspace:*",
+    "@cuaklabs/iocuak-core": "workspace:*",
+    "@cuaklabs/iocuak-decorators": "workspace:*",
+    "@cuaklabs/iocuak-models": "workspace:*",
+    "@cuaklabs/iocuak-models-api": "workspace:*"
   },
   "devDependencies": {
     "@jest/globals": "29.3.1",

@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak-e2e#readme",
   "dependencies": {
-    "@cuaklabs/iocuak": "workspace:../iocuak",
+    "@cuaklabs/iocuak": "workspace:*",
     "@cucumber/cucumber": "8.10.0",
     "chai": "4.3.7",
     "reflect-metadata": "0.1.13",

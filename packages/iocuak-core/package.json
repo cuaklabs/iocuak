@@ -19,9 +19,9 @@
   },
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak-core#readme",
   "dependencies": {
-    "@cuaklabs/iocuak-common": "workspace:../iocuak-common",
-    "@cuaklabs/iocuak-models": "workspace:../iocuak-models",
-    "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:../iocuak-reflect-metadata-utils"
+    "@cuaklabs/iocuak-common": "workspace:*",
+    "@cuaklabs/iocuak-models": "workspace:*",
+    "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:*"
   },
   "devDependencies": {
     "@jest/globals": "29.3.1",
