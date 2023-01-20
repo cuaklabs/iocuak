@@ -10,6 +10,7 @@ import { ContainerSingletonService } from './container/services/ContainerSinglet
 import { ContainerSingletonServiceImplementation } from './container/services/ContainerSingletonServiceImplementation';
 import { ContainerModule } from './containerModule/models/ContainerModule';
 import { loadContainerModuleMetadata } from './containerModuleMetadata/actions/loadContainerModuleMetadata';
+import { loadContainerModuleMetadataArray } from './containerModuleMetadata/actions/loadContainerModuleMetadataArray';
 import { getContainerModuleMetadataId } from './containerModuleMetadata/calculations/getContainerModuleMetadataId';
 import { ContainerModuleClassMetadata } from './containerModuleMetadata/models/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from './containerModuleMetadata/models/ContainerModuleFactoryMetadata';
@@ -50,5 +51,6 @@ export {
   getClassMetadata,
   getContainerModuleMetadataId,
   loadContainerModuleMetadata,
+  loadContainerModuleMetadataArray,
   LoadModuleMetadataTaskContext,
 };
