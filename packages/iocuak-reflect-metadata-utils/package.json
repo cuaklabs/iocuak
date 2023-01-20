@@ -19,7 +19,7 @@
     "url": "https://github.com/cuaklabs/iocuak/issues"
   },
   "dependencies": {
-    "@cuaklabs/iocuak-common": "workspace:../iocuak-common"
+    "@cuaklabs/iocuak-common": "workspace:*"
   },
   "devDependencies": {
     "@jest/globals": "29.3.1",

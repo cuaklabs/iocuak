@@ -19,8 +19,8 @@
     "url": "https://github.com/cuaklabs/iocuak/issues"
   },
   "dependencies": {
-    "@cuaklabs/iocuak-common": "workspace:../iocuak-common",
-    "@cuaklabs/iocuak-models": "workspace:../iocuak-models"
+    "@cuaklabs/iocuak-common": "workspace:*",
+    "@cuaklabs/iocuak-models": "workspace:*"
   },
   "devDependencies": {
     "@jest/globals": "29.3.1",
