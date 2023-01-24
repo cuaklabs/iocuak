@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
-import { Newable } from '../models/Newable';
+import { Newable } from '../../common/models/Newable';
 import { ServiceId } from '../models/ServiceId';
 import { stringifyServiceId } from './stringifyServiceId';
 
