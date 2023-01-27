@@ -59,7 +59,7 @@ function convertToContainerModuleClassMetadata(
 ): ContainerModuleClassMetadata {
   const containerModuleClassMetadata: ContainerModuleClassMetadata<ContainerModuleApi> =
     {
-      id: undefined,
+      id: containerModuleClassMetadataApi.module,
       imports: convertToContainerModuleMetadataArray(
         containerModuleClassMetadataApi.imports,
       ),
@@ -105,7 +105,7 @@ function convertToContainerModuleFactoryMetadata<TArgs extends unknown[]>(
       factory: convertToContainerModuleMetadataFactory(
         containerModuleFactoryMetadataApi.factory,
       ),
-      id: undefined,
+      id: containerModuleFactoryMetadataApi.factory,
       imports: convertToContainerModuleMetadataArray(
         containerModuleFactoryMetadataApi.imports,
       ),
