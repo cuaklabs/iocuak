@@ -27,7 +27,7 @@
     "@types/sinon-chai": "3.2.9",
     "@typescript-eslint/eslint-plugin": "5.49.0",
     "@typescript-eslint/parser": "5.49.0",
-    "eslint": "8.32.0",
+    "eslint": "8.33.0",
     "eslint-import-resolver-typescript": "3.5.3",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jest": "27.2.1",
