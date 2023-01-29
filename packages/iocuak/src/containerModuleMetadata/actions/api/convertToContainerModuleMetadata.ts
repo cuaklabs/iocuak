@@ -19,6 +19,8 @@ import { ContainerModuleApi } from '../../../containerModule/models/api/Containe
 import { convertToContainerModule } from '../../../containerModule/utils/api/convertToContainerModule';
 import { convertToContainerModuleAsync } from '../../../containerModule/utils/api/convertToContainerModuleAsync';
 import { isContainerModuleApi } from '../../../containerModule/utils/api/isContainerModuleApi';
+import { buildContainerModuleClassMetadataId } from '../../calculations/api/buildContainerModuleClassMetadataId';
+import { buildContainerModuleFactoryMetadataId } from '../../calculations/api/buildContainerModuleFactoryMetadataId';
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
 import { ContainerModuleMetadataApi } from '../../models/api/ContainerModuleMetadataApi';
@@ -59,7 +61,7 @@ function convertToContainerModuleClassMetadata(
 ): ContainerModuleClassMetadata {
   const containerModuleClassMetadata: ContainerModuleClassMetadata<ContainerModuleApi> =
     {
-      id: undefined,
+      id: buildContainerModuleClassMetadataId(containerModuleClassMetadataApi),
       imports: convertToContainerModuleMetadataArray(
         containerModuleClassMetadataApi.imports,
       ),
@@ -105,7 +107,9 @@ function convertToContainerModuleFactoryMetadata<TArgs extends unknown[]>(
       factory: convertToContainerModuleMetadataFactory(
         containerModuleFactoryMetadataApi.factory,
       ),
-      id: undefined,
+      id: buildContainerModuleFactoryMetadataId(
+        containerModuleFactoryMetadataApi,
+      ),
       imports: convertToContainerModuleMetadataArray(
         containerModuleFactoryMetadataApi.imports,
       ),

@@ -1,7 +1,6 @@
 import { ContainerModuleMetadataId } from '@cuaklabs/iocuak-common';
 
 import { CreateInstanceTaskContext } from '../../createInstanceTask/models/CreateInstanceTaskContext';
-import { getContainerModuleMetadataId } from '../calculations/getContainerModuleMetadataId';
 import { ContainerModuleMetadata } from './ContainerModuleMetadata';
 
 export class LoadModuleMetadataTaskContext {
@@ -54,24 +53,21 @@ export class LoadModuleMetadataTaskContext {
   public processMetadataLoaded(dependency: ContainerModuleMetadata): void {
     const newDependenciesToSolve: ContainerModuleMetadata[] = [];
 
-    const metadataId: ContainerModuleMetadataId | undefined =
-      getContainerModuleMetadataId(dependency);
+    const metadataId: ContainerModuleMetadataId | undefined = dependency.id;
 
-    if (metadataId !== undefined) {
-      const dependentMetadataArray: ContainerModuleMetadata[] | undefined =
-        this.#dependencyIdToDependentMetadataMap.get(metadataId);
+    const dependentMetadataArray: ContainerModuleMetadata[] | undefined =
+      this.#dependencyIdToDependentMetadataMap.get(metadataId);
 
-      if (dependentMetadataArray !== undefined) {
-        for (const dependentMetadata of dependentMetadataArray) {
-          const dependentMetadataDependencies: number =
-            this.#decrementMetadataDependency(
-              dependentMetadata,
-              this.#metadataToDependenciesMap,
-            );
+    if (dependentMetadataArray !== undefined) {
+      for (const dependentMetadata of dependentMetadataArray) {
+        const dependentMetadataDependencies: number =
+          this.#decrementMetadataDependency(
+            dependentMetadata,
+            this.#metadataToDependenciesMap,
+          );
 
-          if (dependentMetadataDependencies === 0) {
-            newDependenciesToSolve.push(dependentMetadata);
-          }
+        if (dependentMetadataDependencies === 0) {
+          newDependenciesToSolve.push(dependentMetadata);
         }
       }
     }
@@ -148,24 +144,21 @@ export class LoadModuleMetadataTaskContext {
     const newDependenciesToSolve: ContainerModuleMetadata[] = [];
 
     for (const metadata of dependenciesToSolve) {
-      const metadataId: ContainerModuleMetadataId | undefined =
-        getContainerModuleMetadataId(metadata);
+      const metadataId: ContainerModuleMetadataId | undefined = metadata.id;
 
-      if (metadataId !== undefined) {
-        const dependentMetadataArray: ContainerModuleMetadata[] | undefined =
-          this.#dependencyIdToDependentMetadataMap.get(metadataId);
+      const dependentMetadataArray: ContainerModuleMetadata[] | undefined =
+        this.#dependencyIdToDependentMetadataMap.get(metadataId);
 
-        if (dependentMetadataArray !== undefined) {
-          for (const dependentMetadata of dependentMetadataArray) {
-            const dependentMetadataDependencies: number =
-              this.#decrementMetadataDependency(
-                dependentMetadata,
-                metadataToDependenciesMap,
-              );
+      if (dependentMetadataArray !== undefined) {
+        for (const dependentMetadata of dependentMetadataArray) {
+          const dependentMetadataDependencies: number =
+            this.#decrementMetadataDependency(
+              dependentMetadata,
+              metadataToDependenciesMap,
+            );
 
-            if (dependentMetadataDependencies === 0) {
-              newDependenciesToSolve.push(dependentMetadata);
-            }
+          if (dependentMetadataDependencies === 0) {
+            newDependenciesToSolve.push(dependentMetadata);
           }
         }
       }

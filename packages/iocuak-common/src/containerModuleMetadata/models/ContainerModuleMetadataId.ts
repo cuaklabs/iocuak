@@ -1,3 +1,4 @@
-import { Newable } from '../../service/models/Newable';
+import { Newable } from '../../common/models/Newable';
 
-export type ContainerModuleMetadataId = string | symbol | Newable;
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type ContainerModuleMetadataId = string | symbol | Function | Newable;

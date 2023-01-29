@@ -13,10 +13,7 @@ function buildMetadataArrayWithCircularDependencies(): ContainerModuleMetadata[]
   const containerModuleMetadataArray: ContainerModuleMetadata[] = [
     {
       ...ContainerModuleMetadataMocks.withIdAndRequiresEmptyArray,
-      requires: [
-        ContainerModuleMetadataMocks.withIdAndRequiresEmptyArray
-          .id as ContainerModuleMetadataId,
-      ],
+      requires: [ContainerModuleMetadataMocks.withIdAndRequiresEmptyArray.id],
     },
   ];
 
@@ -33,11 +30,9 @@ function buildMetadataArrayWithReferencedDependencies(): [
   ] = [
     ContainerModuleMetadataMocks.withIdAndRequiresEmptyArray,
     {
-      ...ContainerModuleMetadataMocks.withNoId,
-      requires: [
-        ContainerModuleMetadataMocks.withIdAndRequiresEmptyArray
-          .id as ContainerModuleMetadataId,
-      ],
+      ...ContainerModuleMetadataMocks.any,
+      id: Symbol.for('some-metadata-id'),
+      requires: [ContainerModuleMetadataMocks.withIdAndRequiresEmptyArray.id],
     },
   ];
 
@@ -46,9 +41,9 @@ function buildMetadataArrayWithReferencedDependencies(): [
 
 function buildMetadataArrayWithUnreferencedDependencies(): ContainerModuleMetadata[] {
   const containerModuleMetadataArray: ContainerModuleMetadata[] = [
-    ContainerModuleMetadataMocks.withNoIdAndRequiresEmptyArray,
+    ContainerModuleMetadataMocks.withRequiresEmptyArray,
     {
-      ...ContainerModuleMetadataMocks.withNoId,
+      ...ContainerModuleMetadataMocks.any,
       requires: ['unreferenced-id'],
     },
   ];
@@ -59,24 +54,28 @@ function buildMetadataArrayWithUnreferencedDependencies(): ContainerModuleMetada
 function buildMetadataArrayWithChainAndUnreferencedDependency(): ContainerModuleMetadata[] {
   const firstId: ContainerModuleMetadataId = 'first-id';
   const secondId: ContainerModuleMetadataId = 'second-id';
+  const thirdId: ContainerModuleMetadataId = 'third-id';
+  const fourthId: ContainerModuleMetadataId = 'fourth-id';
   const unreferencedId: ContainerModuleMetadataId = 'unreferenced-id';
 
   const containerModuleMetadataArray: ContainerModuleMetadata[] = [
     {
-      ...ContainerModuleMetadataMocks.withNoIdAndRequiresEmptyArray,
+      ...ContainerModuleMetadataMocks.any,
       id: firstId,
     },
     {
-      ...ContainerModuleMetadataMocks.withNoIdAndRequiresEmptyArray,
+      ...ContainerModuleMetadataMocks.any,
       id: secondId,
       requires: [firstId],
     },
     {
-      ...ContainerModuleMetadataMocks.withNoId,
+      ...ContainerModuleMetadataMocks.any,
+      id: thirdId,
       requires: [secondId],
     },
     {
-      ...ContainerModuleMetadataMocks.withNoId,
+      ...ContainerModuleMetadataMocks.any,
+      id: fourthId,
       requires: [unreferencedId],
     },
   ];

@@ -6,7 +6,6 @@ import { BindingService } from '../../../binding/services/BindingService';
 import { ContainerModule } from '../../../containerModule/models/ContainerModule';
 import { ContainerModuleClassMetadata } from '../../models/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from '../../models/ContainerModuleFactoryMetadata';
-import { ContainerModuleMetadata } from '../../models/ContainerModuleMetadata';
 import { ContainerModuleMetadataType } from '../../models/ContainerModuleMetadataType';
 
 export class ContainerModuleMetadataMocks {
@@ -25,7 +24,7 @@ export class ContainerModuleMetadataMocks {
   public static get any(): jest.Mocked<ContainerModuleFactoryMetadata> {
     const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       factory: jest.fn(),
-      id: undefined,
+      id: 'module-metadata-id',
       imports: [],
       injects: [],
       requires: [],
@@ -53,27 +52,9 @@ export class ContainerModuleMetadataMocks {
     return fixture;
   }
 
-  public static get withNoId(): jest.Mocked<ContainerModuleFactoryMetadata> {
-    const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
-      ...ContainerModuleMetadataMocks.any,
-      id: undefined,
-    };
-
-    return fixture;
-  }
-
-  public static get withNoIdAndRequiresEmptyArray(): jest.Mocked<ContainerModuleMetadata> {
-    const fixture: jest.Mocked<ContainerModuleMetadata> = {
-      ...ContainerModuleMetadataMocks.withNoId,
-      requires: [],
-    };
-
-    return fixture;
-  }
-
   public static get withTypeClazz(): jest.Mocked<ContainerModuleClassMetadata> {
     const fixture: jest.Mocked<ContainerModuleClassMetadata> = {
-      id: undefined,
+      id: 'module-metadata-id',
       imports: [],
       loader: jest.fn(),
       moduleType: jest
@@ -100,7 +81,7 @@ export class ContainerModuleMetadataMocks {
   public static get withTypeFactory(): jest.Mocked<ContainerModuleFactoryMetadata> {
     const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       factory: jest.fn(),
-      id: undefined,
+      id: 'module-metadata-id',
       imports: [],
       injects: [],
       requires: [],
