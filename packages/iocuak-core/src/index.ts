@@ -14,6 +14,7 @@ import { loadContainerModuleMetadataArray } from './containerModuleMetadata/acti
 import { ContainerModuleClassMetadata } from './containerModuleMetadata/models/ContainerModuleClassMetadata';
 import { ContainerModuleFactoryMetadata } from './containerModuleMetadata/models/ContainerModuleFactoryMetadata';
 import { ContainerModuleMetadata } from './containerModuleMetadata/models/ContainerModuleMetadata';
+import { ContainerModuleMetadataBase } from './containerModuleMetadata/models/ContainerModuleMetadataBase';
 import { ContainerModuleMetadataType } from './containerModuleMetadata/models/ContainerModuleMetadataType';
 import { LoadModuleMetadataTaskContext } from './containerModuleMetadata/models/LoadModuleMetadataTaskContext';
 import { createInstance } from './createInstanceTask/actions/createInstance';
@@ -29,6 +30,7 @@ export type {
   ContainerModuleClassMetadata,
   ContainerModuleFactoryMetadata,
   ContainerModuleMetadata,
+  ContainerModuleMetadataBase,
   ContainerRequestService,
   ContainerSingletonService,
   CreateInstanceTaskContext,
