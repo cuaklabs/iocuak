@@ -21,10 +21,10 @@ import { convertToContainerModuleAsync } from '../../../containerModule/utils/ap
 import { isContainerModuleApi } from '../../../containerModule/utils/api/isContainerModuleApi';
 import { buildContainerModuleClassMetadataId } from '../../calculations/api/buildContainerModuleClassMetadataId';
 import { buildContainerModuleFactoryMetadataId } from '../../calculations/api/buildContainerModuleFactoryMetadataId';
+import { isContainerModuleClassMetadataApi } from '../../calculations/api/isContainerModuleClassMetadataApi';
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
 import { ContainerModuleMetadataApi } from '../../models/api/ContainerModuleMetadataApi';
-import { isContainerModuleClassMetadataApi } from './isContainerModuleClassMetadataApi';
 
 export function convertToContainerModuleMetadata<TArgs extends unknown[]>(
   containerModuleMetadataApi: ContainerModuleMetadataApi<TArgs>,
