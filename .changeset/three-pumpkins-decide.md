@@ -2,4 +2,4 @@
 "@cuaklabs/iocuak-core": minor
 ---
 
-Renamed `loadContainerModule` to `loadContainerModuleMetadata`
+[BC] Removed `loadContainerModule`
