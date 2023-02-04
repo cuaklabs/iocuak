@@ -5,5 +5,12 @@ import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModul
 export function buildContainerModuleClassMetadataId(
   metadata: ContainerModuleClassMetadataApi,
 ): ContainerModuleMetadataId {
-  return metadata.module;
+  let metadataId: ContainerModuleMetadataId;
+
+  if (metadata.id === undefined) {
+    metadataId = metadata.module;
+  } else {
+    metadataId = metadata.id;
+  }
+  return metadataId;
 }

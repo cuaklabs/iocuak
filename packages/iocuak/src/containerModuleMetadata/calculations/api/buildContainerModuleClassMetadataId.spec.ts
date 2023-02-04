@@ -5,22 +5,45 @@ import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModul
 import { buildContainerModuleClassMetadataId } from './buildContainerModuleClassMetadataId';
 
 describe(buildContainerModuleClassMetadataId.name, () => {
-  let metadataFixture: ContainerModuleClassMetadataApi;
-
-  beforeAll(() => {
-    metadataFixture =
-      ContainerModuleMetadataApiMocks.anyContainerModuleClassMetadataApi;
-  });
-
-  describe('when called', () => {
-    let result: unknown;
+  describe('having metadata with no id', () => {
+    let metadataFixture: ContainerModuleClassMetadataApi;
 
     beforeAll(() => {
-      result = buildContainerModuleClassMetadataId(metadataFixture);
+      metadataFixture =
+        ContainerModuleMetadataApiMocks.anyContainerModuleClassMetadataApi;
     });
 
-    it('should return a ContainerModuleMetadataId', () => {
-      expect(result).toBe(metadataFixture.module);
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        result = buildContainerModuleClassMetadataId(metadataFixture);
+      });
+
+      it('should return a ContainerModuleMetadataId', () => {
+        expect(result).toBe(metadataFixture.module);
+      });
+    });
+  });
+
+  describe('having metadata with id', () => {
+    let metadataFixture: ContainerModuleClassMetadataApi;
+
+    beforeAll(() => {
+      metadataFixture =
+        ContainerModuleMetadataApiMocks.anyContainerModuleClassMetadataApiWithId;
+    });
+
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        result = buildContainerModuleClassMetadataId(metadataFixture);
+      });
+
+      it('should return a ContainerModuleMetadataId', () => {
+        expect(result).toBe(metadataFixture.id);
+      });
     });
   });
 });

@@ -15,11 +15,19 @@ import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerMod
 export function buildContainerModuleFactoryMetadataId<TArgs extends unknown[]>(
   metadata: ContainerModuleFactoryMetadataApi<TArgs>,
 ): ContainerModuleMetadataId {
-  const stringifiedMetadata: string = `${stringifyInjects(
-    metadata.injects,
-  )}|${metadata.factory.toString()}`;
+  let metadataId: ContainerModuleMetadataId;
 
-  return hashString(stringifiedMetadata);
+  if (metadata.id === undefined) {
+    const stringifiedMetadata: string = `${stringifyInjects(
+      metadata.injects,
+    )}|${metadata.factory.toString()}`;
+
+    metadataId = hashString(stringifiedMetadata);
+  } else {
+    metadataId = metadata.id;
+  }
+
+  return metadataId;
 }
 
 function stringifyInjects(

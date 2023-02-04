@@ -23,6 +23,15 @@ export class ContainerModuleMetadataApiMocks {
     return fixture;
   }
 
+  public static get anyContainerModuleClassMetadataApiWithId(): jest.Mocked<ContainerModuleClassMetadataApi> {
+    const fixture: jest.Mocked<ContainerModuleClassMetadataApi> = {
+      id: 'metadata-id',
+      module: jest.fn(),
+    };
+
+    return fixture;
+  }
+
   public static get anyContainerModuleFactoryMetadataApi(): jest.Mocked<ContainerModuleFactoryMetadataApi> {
     const fixture: jest.Mocked<ContainerModuleFactoryMetadataApi> = {
       factory: jest.fn(),
