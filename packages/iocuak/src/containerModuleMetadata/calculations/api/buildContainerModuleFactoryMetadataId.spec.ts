@@ -13,7 +13,36 @@ import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerMod
 import { buildContainerModuleFactoryMetadataId } from './buildContainerModuleFactoryMetadataId';
 
 describe(buildContainerModuleFactoryMetadataId.name, () => {
-  describe('having metadata with no injects', () => {
+  describe('having metadata with id', () => {
+    let metadataFixture: ContainerModuleFactoryMetadataApi;
+
+    beforeAll(() => {
+      metadataFixture = {
+        factory: () => ({
+          load: () => undefined,
+        }),
+        id: Symbol('id'),
+      };
+    });
+
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(() => {
+        result = buildContainerModuleFactoryMetadataId(metadataFixture);
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should return a ContainerModuleMetadataId', () => {
+        expect(result).toBe(metadataFixture.id);
+      });
+    });
+  });
+
+  describe('having metadata with no id nor no injects', () => {
     let metadataFixture: ContainerModuleFactoryMetadataApi;
 
     beforeAll(() => {
@@ -55,7 +84,7 @@ describe(buildContainerModuleFactoryMetadataId.name, () => {
     });
   });
 
-  describe('having metadata with a ServiceId inject', () => {
+  describe('having metadata with no id and a ServiceId inject', () => {
     let injectFixture: ServiceId;
     let metadataFixture: ContainerModuleFactoryMetadataApi;
 
@@ -101,7 +130,7 @@ describe(buildContainerModuleFactoryMetadataId.name, () => {
     });
   });
 
-  describe('having metadata with a ClassElementMetadataApi ServiceId inject', () => {
+  describe('having metadata with no id and a ClassElementMetadataApi ServiceId inject', () => {
     let injectFixture: ClassElementMetadataApi;
     let metadataFixture: ContainerModuleFactoryMetadataApi;
 
@@ -150,7 +179,7 @@ describe(buildContainerModuleFactoryMetadataId.name, () => {
     });
   });
 
-  describe('having metadata with a ClassElementMetadataApi Tag inject', () => {
+  describe('having metadata with no id and a ClassElementMetadataApi Tag inject', () => {
     let injectFixture: ClassElementMetadataApi;
     let metadataFixture: ContainerModuleFactoryMetadataApi;
 
