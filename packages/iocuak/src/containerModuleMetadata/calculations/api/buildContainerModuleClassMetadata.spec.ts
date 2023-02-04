@@ -65,7 +65,6 @@ describe(buildContainerModuleClassMetadata.name, () => {
     it('should return a ContainerModuleClassMetadata', () => {
       const expected: ContainerModuleClassMetadata = {
         id: containerModuleMetadataIdFixture,
-        imports: [],
         loader: expect.any(Function) as unknown as (
           module: unknown,
           containerBindingService: BindingService,

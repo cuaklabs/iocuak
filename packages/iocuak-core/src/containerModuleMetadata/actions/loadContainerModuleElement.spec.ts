@@ -6,11 +6,11 @@ jest.mock('./loadFromContainerModuleFactoryMetadata');
 import { ContainerModuleMetadataMocks } from '../../containerModuleMetadata/mocks/models/ContainerModuleMetadataMocks';
 import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
 import { LoadModuleMetadataTaskContext } from '../models/LoadModuleMetadataTaskContext';
-import { loadContainerModuleElement } from './loadContainerModuleElement';
+import { loadContainerModuleMetadata } from './loadContainerModuleMetadata';
 import { loadFromContainerModuleClassMetadata } from './loadFromContainerModuleClassMetadata';
 import { loadFromContainerModuleFactoryMetadata } from './loadFromContainerModuleFactoryMetadata';
 
-describe(loadContainerModuleElement.name, () => {
+describe(loadContainerModuleMetadata.name, () => {
   describe('having a ContainerModuleMetadata of type class', () => {
     let containerModuleMetadataFixture: ContainerModuleMetadata;
 
@@ -29,7 +29,7 @@ describe(loadContainerModuleElement.name, () => {
           [Symbol()]: Symbol(),
         } as unknown as LoadModuleMetadataTaskContext;
 
-        result = loadContainerModuleElement(
+        result = loadContainerModuleMetadata(
           containerModuleMetadataFixture,
           taskContextFixture,
         );
@@ -71,7 +71,7 @@ describe(loadContainerModuleElement.name, () => {
           [Symbol()]: Symbol(),
         } as unknown as LoadModuleMetadataTaskContext;
 
-        result = loadContainerModuleElement(
+        result = loadContainerModuleMetadata(
           containerModuleMetadataFixture,
           taskContextFixture,
         );

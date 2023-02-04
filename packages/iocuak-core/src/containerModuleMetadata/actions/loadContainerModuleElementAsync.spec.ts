@@ -1,11 +1,11 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
-jest.mock('./loadContainerModuleElement');
+jest.mock('./loadContainerModuleMetadata');
 
 import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
 import { LoadModuleMetadataTaskContext } from '../models/LoadModuleMetadataTaskContext';
-import { loadContainerModuleElement } from './loadContainerModuleElement';
 import { loadContainerModuleElementAsync } from './loadContainerModuleElementAsync';
+import { loadContainerModuleMetadata } from './loadContainerModuleMetadata';
 
 describe(loadContainerModuleElementAsync.name, () => {
   describe('when called', () => {
@@ -37,9 +37,9 @@ describe(loadContainerModuleElementAsync.name, () => {
       jest.clearAllMocks();
     });
 
-    it('should call loadContainerModuleElement()', () => {
-      expect(loadContainerModuleElement).toHaveBeenCalledTimes(1);
-      expect(loadContainerModuleElement).toHaveBeenCalledWith(
+    it('should call loadContainerModuleMetadata()', () => {
+      expect(loadContainerModuleMetadata).toHaveBeenCalledTimes(1);
+      expect(loadContainerModuleMetadata).toHaveBeenCalledWith(
         containerModuleMetadataFixture,
         taskContextFixture,
       );

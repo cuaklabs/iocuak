@@ -18,7 +18,6 @@ export function buildContainerModuleClassMetadata(
   const containerModuleClassMetadata: ContainerModuleClassMetadata<ContainerModuleApi> =
     {
       id: buildContainerModuleClassMetadataId(containerModuleClassMetadataApi),
-      imports: [],
       loader: (
         containerModuleApi: ContainerModuleApi,
         bindingService: BindingService,
