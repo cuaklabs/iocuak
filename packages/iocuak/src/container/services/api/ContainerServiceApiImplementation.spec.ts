@@ -3,10 +3,10 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 jest.mock('@cuaklabs/iocuak-core');
 
 jest.mock('../../../binding/utils/api/convertBindingToBindingApi');
-jest.mock(
-  '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata',
-);
 jest.mock('../../../binding/utils/api/convertToBindOptions');
+jest.mock(
+  '../../../containerModuleMetadata/calculations/api/buildContainerModuleMetadataArray',
+);
 
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import {
@@ -21,7 +21,7 @@ import {
   ContainerModuleMetadata,
   createCreateInstanceTaskContext,
   LoadModuleMetadataTaskContext,
-  loadContainerModuleMetadata,
+  loadContainerModuleMetadataArray,
 } from '@cuaklabs/iocuak-core';
 import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
 import {
@@ -36,7 +36,7 @@ import { ValueBindingFixtures } from '../../../binding/fixtures/domain/ValueBind
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { convertToBindOptions } from '../../../binding/utils/api/convertToBindOptions';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
-import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
+import { buildContainerModuleMetadataArray } from '../../../containerModuleMetadata/calculations/api/buildContainerModuleMetadataArray';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { ContainerService } from '../domain/ContainerService';
 import { ContainerServiceApiImplementation } from './ContainerServiceApiImplementation';
@@ -493,10 +493,10 @@ describe(ContainerServiceApiImplementation.name, () => {
         ).mockReturnValueOnce(loadModuleMetadataTaskContextFixture);
 
         (
-          convertToContainerModuleMetadata as jest.Mock<
-            typeof convertToContainerModuleMetadata
+          buildContainerModuleMetadataArray as jest.Mock<
+            typeof buildContainerModuleMetadataArray
           >
-        ).mockReturnValueOnce(containerModuleMetadataFixture);
+        ).mockReturnValueOnce([containerModuleMetadataFixture]);
 
         result = await containerServiceApiImplementation.loadMetadata(
           containerModuleMetadataApiFixture,
@@ -512,9 +512,9 @@ describe(ContainerServiceApiImplementation.name, () => {
         expect(containerRequestServiceMock.start).toHaveBeenCalledWith();
       });
 
-      it('should call convertToContainerModuleMetadata()', () => {
-        expect(convertToContainerModuleMetadata).toHaveBeenCalledTimes(1);
-        expect(convertToContainerModuleMetadata).toHaveBeenCalledWith(
+      it('should call buildContainerModuleMetadataArray()', () => {
+        expect(buildContainerModuleMetadataArray).toHaveBeenCalledTimes(1);
+        expect(buildContainerModuleMetadataArray).toHaveBeenCalledWith(
           containerModuleMetadataApiFixture,
         );
       });
@@ -539,10 +539,9 @@ describe(ContainerServiceApiImplementation.name, () => {
         );
       });
 
-      it('should call loadContainerModuleMetadata()', () => {
-        expect(loadContainerModuleMetadata).toHaveBeenCalledTimes(1);
-        expect(loadContainerModuleMetadata).toHaveBeenCalledWith(
-          containerModuleMetadataFixture,
+      it('should call loadContainerModuleMetadataArray()', () => {
+        expect(loadContainerModuleMetadataArray).toHaveBeenCalledTimes(1);
+        expect(loadContainerModuleMetadataArray).toHaveBeenCalledWith(
           loadModuleMetadataTaskContextFixture,
         );
       });

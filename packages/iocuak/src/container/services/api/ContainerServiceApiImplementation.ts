@@ -8,8 +8,8 @@ import {
   ContainerModuleMetadata,
   createCreateInstanceTaskContext,
   LoadModuleMetadataTaskContext,
-  loadContainerModuleMetadata,
   TaskContextServices,
+  loadContainerModuleMetadataArray,
 } from '@cuaklabs/iocuak-core';
 import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
 import { BindingApi, BindOptionsApi } from '@cuaklabs/iocuak-models-api';
@@ -17,7 +17,7 @@ import { BindingApi, BindOptionsApi } from '@cuaklabs/iocuak-models-api';
 import { convertBindingToBindingApi } from '../../../binding/utils/api/convertBindingToBindingApi';
 import { convertToBindOptions } from '../../../binding/utils/api/convertToBindOptions';
 import { ContainerModuleApi } from '../../../containerModule/models/api/ContainerModuleApi';
-import { convertToContainerModuleMetadata } from '../../../containerModuleMetadata/actions/api/convertToContainerModuleMetadata';
+import { buildContainerModuleMetadataArray } from '../../../containerModuleMetadata/calculations/api/buildContainerModuleMetadataArray';
 import { ContainerModuleMetadataApi } from '../../../containerModuleMetadata/models/api/ContainerModuleMetadataApi';
 import { BindValueOptionsApi } from '../../models/api/BindValueOptionsApi';
 import { ContainerService } from '../domain/ContainerService';
@@ -107,16 +107,16 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
   ): Promise<void> {
     const requestId: symbol = this._containerService.request.start();
 
-    const containerModuleMetadata: ContainerModuleMetadata =
-      convertToContainerModuleMetadata(containerModuleMetadataApi);
+    const containerModuleMetadataArray: ContainerModuleMetadata[] =
+      buildContainerModuleMetadataArray(containerModuleMetadataApi);
 
     const context: LoadModuleMetadataTaskContext =
       new LoadModuleMetadataTaskContext(
         this.#createInstanceTaskContext(requestId),
-        [containerModuleMetadata],
+        containerModuleMetadataArray,
       );
 
-    await loadContainerModuleMetadata(containerModuleMetadata, context);
+    await loadContainerModuleMetadataArray(context);
 
     this._containerService.request.end(
       context.createInstanceTaskContext.requestId,
