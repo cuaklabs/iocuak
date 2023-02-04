@@ -20,9 +20,8 @@ export class LoadModuleMetadataTaskContext {
     this.#metadataToDependenciesMap = this.#buildMetadataToDependenciesMap(
       this.metadataArray,
     );
-    this.#zeroDependenciesMetadata = this.metadataArray.filter(
-      (metadata: ContainerModuleMetadata): boolean =>
-        metadata.requires.length === 0,
+    this.#zeroDependenciesMetadata = this.#buildZeroDependenciesMetadata(
+      this.metadataArray,
     );
   }
 
@@ -120,6 +119,15 @@ export class LoadModuleMetadataTaskContext {
     }
 
     return metadataToDependenciesMap;
+  }
+
+  #buildZeroDependenciesMetadata(
+    metadataArray: ContainerModuleMetadata[],
+  ): ContainerModuleMetadata[] {
+    return metadataArray.filter(
+      (metadata: ContainerModuleMetadata): boolean =>
+        metadata.requires.length === 0,
+    );
   }
 
   #decrementMetadataDependency(
