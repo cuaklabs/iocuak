@@ -34,7 +34,6 @@ export function buildContainerModuleFactoryMetadata<TArgs extends unknown[]>(
       id: buildContainerModuleFactoryMetadataId(
         containerModuleFactoryMetadataApi,
       ),
-      imports: [],
       injects: convertInjectsToClassElementMetadata(
         containerModuleFactoryMetadataApi,
       ),

@@ -25,7 +25,6 @@ export class ContainerModuleMetadataMocks {
     const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       factory: jest.fn(),
       id: 'module-metadata-id',
-      imports: [],
       injects: [],
       requires: [],
       type: ContainerModuleMetadataType.factory,
@@ -55,7 +54,6 @@ export class ContainerModuleMetadataMocks {
   public static get withTypeClazz(): jest.Mocked<ContainerModuleClassMetadata> {
     const fixture: jest.Mocked<ContainerModuleClassMetadata> = {
       id: 'module-metadata-id',
-      imports: [],
       loader: jest.fn(),
       moduleType: jest
         .fn()
@@ -82,7 +80,6 @@ export class ContainerModuleMetadataMocks {
     const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {
       factory: jest.fn(),
       id: 'module-metadata-id',
-      imports: [],
       injects: [],
       requires: [],
       type: ContainerModuleMetadataType.factory,

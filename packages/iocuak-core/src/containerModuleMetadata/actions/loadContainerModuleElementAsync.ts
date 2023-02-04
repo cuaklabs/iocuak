@@ -1,6 +1,6 @@
 import { ContainerModuleMetadata } from '../../containerModuleMetadata/models/ContainerModuleMetadata';
 import { LoadModuleMetadataTaskContext } from '../models/LoadModuleMetadataTaskContext';
-import { loadContainerModuleElement } from './loadContainerModuleElement';
+import { loadContainerModuleMetadata } from './loadContainerModuleMetadata';
 
 export async function loadContainerModuleElementAsync(
   containerModuleMetadata: ContainerModuleMetadata,
@@ -9,5 +9,5 @@ export async function loadContainerModuleElementAsync(
 ): Promise<void> {
   await loadModuleDependenciesResult;
 
-  return loadContainerModuleElement(containerModuleMetadata, context);
+  return loadContainerModuleMetadata(containerModuleMetadata, context);
 }
