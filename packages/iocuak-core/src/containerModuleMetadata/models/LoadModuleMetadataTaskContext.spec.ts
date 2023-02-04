@@ -84,6 +84,51 @@ function buildMetadataArrayWithChainAndUnreferencedDependency(): ContainerModule
 }
 
 describe(LoadModuleMetadataTaskContext.name, () => {
+  describe('.constructor()', () => {
+    describe('having metadata with duplicated id', () => {
+      let fistContainerMetadataFixture: ContainerModuleMetadata;
+      let secondContainerMetadataFixture: ContainerModuleMetadata;
+
+      beforeAll(() => {
+        fistContainerMetadataFixture = {
+          ...ContainerModuleMetadataMocks.withTypeClazz,
+          id: 'metadata-id',
+        };
+        secondContainerMetadataFixture = {
+          ...ContainerModuleMetadataMocks.withTypeFactory,
+          id: 'metadata-id',
+        };
+      });
+
+      describe('when called', () => {
+        let createInstanceTaskContextFixture: CreateInstanceTaskContext;
+        let result: unknown;
+
+        beforeAll(() => {
+          createInstanceTaskContextFixture =
+            Symbol() as unknown as CreateInstanceTaskContext;
+
+          result = new LoadModuleMetadataTaskContext(
+            createInstanceTaskContextFixture,
+            [fistContainerMetadataFixture, secondContainerMetadataFixture],
+          );
+        });
+
+        it('should return a LoadModuleMetadataTaskContext with no duplicated metadata', () => {
+          const expectedProperties: Partial<LoadModuleMetadataTaskContext> = {
+            createInstanceTaskContext: createInstanceTaskContextFixture,
+            metadataArray: [secondContainerMetadataFixture],
+          };
+
+          expect(result).toBeInstanceOf(LoadModuleMetadataTaskContext);
+          expect(result).toStrictEqual(
+            expect.objectContaining(expectedProperties),
+          );
+        });
+      });
+    });
+  });
+
   describe('.isMetadataArrayLoadable', () => {
     describe.each<[string, () => ContainerModuleMetadata[], boolean]>([
       ['with no elements', (): ContainerModuleMetadata[] => [], true],

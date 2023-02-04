@@ -4,6 +4,7 @@ import { CreateInstanceTaskContext } from '../../createInstanceTask/models/Creat
 import { ContainerModuleMetadata } from './ContainerModuleMetadata';
 
 export class LoadModuleMetadataTaskContext {
+  public readonly metadataArray: ContainerModuleMetadata[];
   readonly #dependencyIdToDependentMetadataMap: Map<
     ContainerModuleMetadataId,
     ContainerModuleMetadata[]
@@ -13,16 +14,16 @@ export class LoadModuleMetadataTaskContext {
 
   constructor(
     public readonly createInstanceTaskContext: CreateInstanceTaskContext,
-    public readonly metadataArray: ContainerModuleMetadata[],
+    metadataArray: ContainerModuleMetadata[],
   ) {
+    this.metadataArray = this.#deduplicateMetadata(metadataArray);
     this.#dependencyIdToDependentMetadataMap =
       this.#buildDependencyIdToDependentMetadataMap(this.metadataArray);
     this.#metadataToDependenciesMap = this.#buildMetadataToDependenciesMap(
       this.metadataArray,
     );
-    this.#zeroDependenciesMetadata = this.metadataArray.filter(
-      (metadata: ContainerModuleMetadata): boolean =>
-        metadata.requires.length === 0,
+    this.#zeroDependenciesMetadata = this.#buildZeroDependenciesMetadata(
+      this.metadataArray,
     );
   }
 
@@ -122,6 +123,15 @@ export class LoadModuleMetadataTaskContext {
     return metadataToDependenciesMap;
   }
 
+  #buildZeroDependenciesMetadata(
+    metadataArray: ContainerModuleMetadata[],
+  ): ContainerModuleMetadata[] {
+    return metadataArray.filter(
+      (metadata: ContainerModuleMetadata): boolean =>
+        metadata.requires.length === 0,
+    );
+  }
+
   #decrementMetadataDependency(
     metadata: ContainerModuleMetadata,
     metadataToDependenciesMap: Map<ContainerModuleMetadata, number>,
@@ -135,6 +145,22 @@ export class LoadModuleMetadataTaskContext {
     metadataToDependenciesMap.set(metadata, metadataDependencies);
 
     return metadataDependencies;
+  }
+
+  #deduplicateMetadata(
+    metadataArray: ContainerModuleMetadata[],
+  ): ContainerModuleMetadata[] {
+    const idToMetadataMap: Map<
+      ContainerModuleMetadataId,
+      ContainerModuleMetadata
+    > = new Map(
+      metadataArray.map((metadata: ContainerModuleMetadata) => [
+        metadata.id,
+        metadata,
+      ]),
+    );
+
+    return [...idToMetadataMap.values()];
   }
 
   #simulateDependenciesLoaded(
