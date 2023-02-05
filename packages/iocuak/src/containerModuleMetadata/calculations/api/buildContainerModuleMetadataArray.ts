@@ -13,6 +13,7 @@ import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerMod
 import { ContainerModuleMetadataApi } from '../../models/api/ContainerModuleMetadataApi';
 import { ContainerModuleMetadataBaseApi } from '../../models/api/ContainerModuleMetadataBaseApi';
 import { buildContainerModuleClassMetadata } from './buildContainerModuleClassMetadata';
+import { buildContainerModuleContainerModuleMetadataId } from './buildContainerModuleContainerModuleMetadataId';
 import { buildContainerModuleFactoryMetadata } from './buildContainerModuleFactoryMetadata';
 import { isContainerModuleClassMetadataApi } from './isContainerModuleClassMetadataApi';
 
@@ -47,6 +48,9 @@ function appendContainerModuleMetadataAndNested<TArgs extends unknown[]>(
       containerModuleMetadata = appendContainerModuleFactoryMetadataAndNested(
         {
           factory: () => containerModuleMetadataApi,
+          id: buildContainerModuleContainerModuleMetadataId(
+            containerModuleMetadataApi,
+          ),
         },
         containerModuleMetadataArray,
       );

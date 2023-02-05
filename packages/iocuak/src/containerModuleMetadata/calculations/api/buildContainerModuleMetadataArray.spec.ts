@@ -1,9 +1,10 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 jest.mock('./buildContainerModuleClassMetadata');
+jest.mock('./buildContainerModuleContainerModuleMetadataId');
 jest.mock('./buildContainerModuleFactoryMetadata');
 
-import { Newable } from '@cuaklabs/iocuak-common';
+import { ContainerModuleMetadataId, Newable } from '@cuaklabs/iocuak-common';
 import {
   ContainerModuleClassMetadata,
   ContainerModuleFactoryMetadata,
@@ -15,6 +16,7 @@ import { ContainerModuleMetadataApiMocks } from '../../mocks/models/api/Containe
 import { ContainerModuleClassMetadataApi } from '../../models/api/ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from '../../models/api/ContainerModuleFactoryMetadataApi';
 import { buildContainerModuleClassMetadata } from './buildContainerModuleClassMetadata';
+import { buildContainerModuleContainerModuleMetadataId } from './buildContainerModuleContainerModuleMetadataId';
 import { buildContainerModuleFactoryMetadata } from './buildContainerModuleFactoryMetadata';
 import { buildContainerModuleMetadataArray } from './buildContainerModuleMetadataArray';
 
@@ -81,14 +83,23 @@ describe(buildContainerModuleMetadataArray.name, () => {
     });
 
     describe('when called', () => {
+      let containerModuleMetadataIdFixture: ContainerModuleMetadataId;
       let containerModuleMetadataFixture: ContainerModuleFactoryMetadata;
 
       let result: unknown;
 
       beforeAll(() => {
+        containerModuleMetadataIdFixture = Symbol();
+
         containerModuleMetadataFixture = {
           [Symbol()]: Symbol(),
         } as unknown as ContainerModuleFactoryMetadata;
+
+        (
+          buildContainerModuleContainerModuleMetadataId as jest.Mock<
+            typeof buildContainerModuleContainerModuleMetadataId
+          >
+        ).mockReturnValueOnce(containerModuleMetadataIdFixture);
 
         (
           buildContainerModuleFactoryMetadata as jest.Mock<
@@ -105,11 +116,21 @@ describe(buildContainerModuleMetadataArray.name, () => {
         jest.clearAllMocks();
       });
 
+      it('should call buildContainerModuleContainerModuleMetadataId()', () => {
+        expect(
+          buildContainerModuleContainerModuleMetadataId,
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          buildContainerModuleContainerModuleMetadataId,
+        ).toHaveBeenCalledWith(containerModuleMetadataApiFixture);
+      });
+
       it('should call buildContainerModuleFactoryMetadata()', () => {
         const expected: ContainerModuleFactoryMetadataApi = {
           factory: expect.any(Function) as unknown as (
             ...args: unknown[]
           ) => ContainerModuleApi | Promise<ContainerModuleApi>,
+          id: containerModuleMetadataIdFixture,
         };
 
         expect(buildContainerModuleFactoryMetadata).toHaveBeenCalledTimes(1);
