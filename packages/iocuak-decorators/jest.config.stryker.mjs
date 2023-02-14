@@ -1,6 +1,7 @@
-import { getJestTsProjectConfig } from '@cuaklabs/iocuak-jest-config';
+import { getTsProjectConfig } from '@cuaklabs/iocuak-jest-config';
 
-const tsGlobalConfig = getJestTsProjectConfig(
+const tsGlobalConfig = getTsProjectConfig(
+  './src',
   'All',
   ['/node_modules'],
   '.spec.ts',
