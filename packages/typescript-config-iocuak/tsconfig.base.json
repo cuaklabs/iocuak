@@ -8,7 +8,6 @@
     "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["ES2022"],
-    "module": "CommonJS",
     "moduleResolution": "nodenext",
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,

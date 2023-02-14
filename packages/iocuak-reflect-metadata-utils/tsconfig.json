@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
-  "extends": "@cuaklabs/typescript-config-iocuak/tsconfig.base.json",
+  "extends": "@cuaklabs/typescript-config-iocuak/tsconfig.base.cjs.json",
   "compilerOptions": {
     "outDir": "./lib",
     "rootDir": "./src"
