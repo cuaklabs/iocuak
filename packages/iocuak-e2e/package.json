@@ -2,7 +2,6 @@
   "name": "@cuaklabs/iocuak-e2e",
   "private": true,
   "description": "e2e test for iocuak",
-  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cuaklabs/iocuak.git"
@@ -42,7 +41,7 @@
     "format": "prettier --write ./src/**/*.ts",
     "lint": "eslint --ext ts --ignore-path .gitignore ./src",
     "prebuild": "pnpm run build:clean",
-    "test:e2e": "cucumber-js --config=config/cucumber/cucumber.ts.config.mjs",
-    "test:e2e:js": "cucumber-js --config=config/cucumber/cucumber.js.config.mjs"
+    "test:e2e": "TS_NODE_PROJECT=\"tsconfig.json\" cucumber-js --config=config/cucumber/cucumber.ts.config.cjs.mjs",
+    "test:e2e:js": "cucumber-js --config=config/cucumber/cucumber.js.config.cjs.mjs"
   }
 }
