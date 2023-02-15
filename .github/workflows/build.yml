@@ -205,7 +205,7 @@ jobs:
         if: ${{ !steps.ts-build-cache.outputs.cache-hit }}
 
       - name: Launch E2E tests
-        run: pnpm run test:e2e:js --profile ci
+        run: pnpm run test:e2e:js --only -- --profile ci
 
   done:
     name: Done
