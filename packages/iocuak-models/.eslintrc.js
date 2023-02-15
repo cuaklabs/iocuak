@@ -2,7 +2,7 @@
 module.exports = {
   extends: '@cuaklabs/eslint-config-iocuak',
   parserOptions: {
-    project: ['./tsconfig.json'],
+    project: ['./tsconfig.cjs.json'],
     tsconfigRootDir: __dirname,
   },
 };
