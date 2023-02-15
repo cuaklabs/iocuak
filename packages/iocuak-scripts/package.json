@@ -14,6 +14,8 @@
   "type": "module",
   "homepage": "https://github.com/cuaklabs/iocuak#readme",
   "bin": {
-    "iocuak-get-affected-projects": "./bin/getAffectedProjects.js"
+    "iocuak-get-affected-projects": "./bin/getAffectedProjects.js",
+    "iocuak-ts-package-cjs": "./bin/writeCommonJsPackageJson.js",
+    "iocuak-ts-package-esm": "./bin/writeEsmPackageJson.js"
   }
 }
