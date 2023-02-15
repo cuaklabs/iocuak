@@ -24,7 +24,12 @@ function getTsProjectConfig(
       testPathIgnorePatterns,
     ),
     transform: {
-      '^.+\\.ts?$': 'ts-jest',
+      '^.+\\.ts?$': [
+        'ts-jest',
+        {
+          tsconfig: 'tsconfig.cjs.json',
+        },
+      ],
     },
   };
 }
