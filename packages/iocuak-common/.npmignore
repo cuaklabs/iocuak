@@ -22,4 +22,5 @@ jest.js.config.mjs
 pnpm-lock.yaml
 stryker.conf.json
 prettier.config.js
-tsconfig.json
+tsconfig.cjs.json
+tsconfig.esm.json
