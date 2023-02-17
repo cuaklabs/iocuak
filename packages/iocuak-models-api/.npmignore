@@ -21,3 +21,4 @@ stryker.conf.json
 prettier.config.js
 tsconfig.cjs.json
 tsconfig.esm.json
+tsconfig.json
