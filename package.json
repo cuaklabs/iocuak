@@ -13,6 +13,7 @@
     "prepare": "husky install",
     "prepublish:packages": "pnpm run build:all && pnpm run test:js && pnpm run test:e2e:js",
     "test:e2e:js": "turbo run \"test:e2e:js\" --filter=\"iocuak-e2e\"",
+    "test:e2e:js:ci": "turbo run \"test:e2e:js:ci\" --filter=\"iocuak-e2e\"",
     "test:e2e": "turbo run \"test:e2e\" --filter=\"iocuak-e2e\"",
     "test:integration:js": "turbo test:integration:js",
     "test:js": "turbo run test:js",
