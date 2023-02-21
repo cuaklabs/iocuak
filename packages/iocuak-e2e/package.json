@@ -21,6 +21,8 @@
     "sinon-chai": "3.7.0"
   },
   "devDependencies": {
+    "@rollup/plugin-multi-entry": "6.0.0",
+    "@rollup/plugin-typescript": "11.0.0",
     "@types/chai": "4.3.4",
     "@types/sinon": "10.0.13",
     "@types/sinon-chai": "3.2.9",
@@ -33,17 +35,22 @@
     "eslint-plugin-prettier": "4.2.1",
     "prettier": "2.8.4",
     "rimraf": "4.1.2",
+    "rollup": "3.17.2",
     "typescript": "4.9.5"
   },
   "scripts": {
-    "build": "pnpm run build:cjs && pnpm run build:esm",
+    "build": "pnpm run build:cjs && pnpm run build:esm && pnpm run bundle:esm",
     "build:cjs": "tsc --build tsconfig.cjs.json && pnpm exec iocuak-ts-package-cjs ./lib/cjs",
-    "build:esm": "tsc --build tsconfig.esm.json && pnpm exec iocuak-ts-package-esm ./lib/esm",
+    "build:esm": "pnpm run bundle:esm && pnpm exec iocuak-ts-package-esm ./lib/esm",
     "build:clean": "rimraf lib",
+    "bundle:esm": "pnpm exec rollup -c ./rollup.config.mjs",
     "format": "prettier --write ./src/**/*.ts",
     "lint": "eslint --ext ts --ignore-path .gitignore ./src",
     "prebuild": "pnpm run build:clean",
-    "test:e2e": "TS_NODE_PROJECT=\"tsconfig.json\" cucumber-js --config=config/cucumber/cucumber.ts.config.cjs.mjs",
-    "test:e2e:js": "cucumber-js --config=config/cucumber/cucumber.js.config.cjs.mjs"
+    "test:e2e": "TS_NODE_PROJECT=\"tsconfig.cjs.json\" cucumber-js --config=config/cucumber/cucumber.ts.config.cjs.mjs",
+    "test:e2e:js": "pnpm run test:e2e:cjs:js && pnpm run test:e2e:esm:js",
+    "test:e2e:js:ci": "pnpm run test:e2e:cjs:js --profile ci && pnpm run test:e2e:esm:js --profile ci",
+    "test:e2e:cjs:js": "cucumber-js --config=config/cucumber/cucumber.js.config.cjs.mjs",
+    "test:e2e:esm:js": "cucumber-js --config=config/cucumber/cucumber.js.config.esm.mjs"
   }
 }
