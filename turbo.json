@@ -60,6 +60,16 @@
       ],
       "outputs": []
     },
+    "test:e2e:js:ci": {
+      "dependsOn": [
+        "build"
+      ],
+      "inputs": [
+        "dist/**",
+        "lib/**"
+      ],
+      "outputs": []
+    },
     "test:integration:js": {
       "dependsOn": [
         "build"
