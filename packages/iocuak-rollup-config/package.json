@@ -1,0 +1,26 @@
+{
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/iocuak/issues"
+  },
+  "description": "Backend rollup config for backend packages",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "11.0.0",
+    "rollup": "3.17.2",
+    "prettier": "2.8.4",
+    "typescript": "4.9.5"
+  },
+  "exports": "./lib/index.js",
+  "homepage": "https://github.com/cuaklabs/iocuak#readme",
+  "license": "See license in \"LICENSE\" file",
+  "name": "@cuaklabs/iocuak-rollup-config",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/iocuak.git"
+  },
+  "scripts": {
+    "format": "prettier --write ./lib/**/*.js"
+  },
+  "type": "module"
+}
