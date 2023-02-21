@@ -5,7 +5,7 @@
     "pnpm": "7"
   },
   "extends": ["config:base", ":disableRateLimiting"],
-  "ignoreDeps": ["eslint-plugin-import"],
+  "ignoreDeps": ["eslint-plugin-import", "turbo"],
   "rebaseWhen": "conflicted",
   "semanticCommits": "enabled",
   "schedule": [
