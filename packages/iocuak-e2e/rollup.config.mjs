@@ -4,6 +4,13 @@ import typescript from '@rollup/plugin-typescript';
 /** @type {!import("rollup").MergedRollupOptions[]} */
 export default [
   {
+    external: [
+      '@cuaklabs/iocuak',
+      '@cucumber/cucumber',
+      'chai',
+      'sinon',
+      'sinon-chai',
+    ],
     input: './src/**/*.ts',
     output: [
       {
