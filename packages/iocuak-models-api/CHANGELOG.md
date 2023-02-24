@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.0 - 2023-02-24
+
+### Minor Changes
+
+- 50222df: Provided both `esm` and `cjs` modules.
+
+### Patch Changes
+
+- Updated dependencies [68e1657]
+- Updated dependencies [d69f4d4]
+  - @cuaklabs/iocuak-common@0.3.0
+  - @cuaklabs/iocuak-models@0.2.0
+
 ## 0.1.2 - 2023-02-05
 
 ### Patch Changes

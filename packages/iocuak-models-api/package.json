@@ -1,6 +1,6 @@
 {
   "name": "@cuaklabs/iocuak-models-api",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Binding modules for iocuak",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
