@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.6.0 - 2023-02-24
+
+### Minor Changes
+
+- 255298a: Provided both `esm` and `cjs` modules.
+
+### Patch Changes
+
+- f6c2f25: Updated `Container.loadMetadata()` with smarter metadata id generation in order to avoid id collisions.
+- Updated dependencies [68e1657]
+- Updated dependencies [50222df]
+- Updated dependencies [66481f6]
+- Updated dependencies [8db4462]
+- Updated dependencies [d69f4d4]
+  - @cuaklabs/iocuak-common@0.3.0
+  - @cuaklabs/iocuak-models-api@0.2.0
+  - @cuaklabs/iocuak-core@0.3.0
+  - @cuaklabs/iocuak-decorators@0.2.0
+  - @cuaklabs/iocuak-models@0.2.0
+
 ## 0.5.0 - 2023-02-05
 
 ### Minor Changes
