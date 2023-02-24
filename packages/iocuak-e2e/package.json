@@ -39,7 +39,7 @@
     "typescript": "4.9.5"
   },
   "scripts": {
-    "build": "pnpm run build:cjs && pnpm run build:esm && pnpm run bundle:esm",
+    "build": "pnpm run build:cjs && pnpm run build:esm",
     "build:cjs": "tsc --build tsconfig.cjs.json && pnpm exec iocuak-ts-package-cjs ./lib/cjs",
     "build:esm": "pnpm run bundle:esm && pnpm exec iocuak-ts-package-esm ./lib/esm",
     "build:clean": "rimraf lib",
