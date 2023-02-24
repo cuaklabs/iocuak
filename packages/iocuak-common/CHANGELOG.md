@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 - 2023-02-24
+
+### Minor Changes
+
+- 68e1657: Provide both `esm` and `cjs` modules.
+
 ## 0.2.0 - 2023-02-05
 
 ### Minor Changes
