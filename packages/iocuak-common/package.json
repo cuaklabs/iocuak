@@ -1,6 +1,6 @@
 {
   "name": "@cuaklabs/iocuak-common",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Common models for iocuak",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
