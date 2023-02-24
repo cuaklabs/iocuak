@@ -7,9 +7,11 @@
 # Turborepo files
 .turbo/
 
+**/*.js.map
 **/*.spec.js
 **/*.spec.js.map
 **/*.ts
+**/*.ts.map
 !lib/**/*.d.ts
 
 .eslintignore
@@ -22,6 +24,7 @@ jest.js.config.mjs
 pnpm-lock.yaml
 stryker.conf.json
 prettier.config.js
+rollup.config.mjs
 tsconfig.cjs.json
 tsconfig.esm.json
 tsconfig.json
