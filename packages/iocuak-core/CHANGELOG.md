@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 - 2023-02-27
+
+### Patch Changes
+
+- e80c8c7: Updated `ContainerModuleMetadata` arguments to be `any[]` by default.
+
 ## 0.3.0 - 2023-02-24
 
 ### Minor Changes
