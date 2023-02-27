@@ -13,6 +13,7 @@
 **/*.ts
 **/*.ts.map
 !lib/**/*.d.ts
+lib/**/*.spec.d.ts
 
 .eslintignore
 .eslintrc.js
