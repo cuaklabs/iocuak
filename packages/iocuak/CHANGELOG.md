@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.1 - 2023-02-27
+
+### Patch Changes
+
+- c9edfc3: Updated `ContainerModuleMetadata` arguments to be `any[]` by default.
+- Updated dependencies [e80c8c7]
+  - @cuaklabs/iocuak-core@0.3.1
+
 ## 0.6.0 - 2023-02-24
 
 ### Minor Changes
