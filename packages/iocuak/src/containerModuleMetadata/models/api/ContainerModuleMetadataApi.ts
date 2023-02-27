@@ -4,7 +4,8 @@ import { ContainerModuleApi } from '../../../containerModule/models/api/Containe
 import { ContainerModuleClassMetadataApi } from './ContainerModuleClassMetadataApi';
 import { ContainerModuleFactoryMetadataApi } from './ContainerModuleFactoryMetadataApi';
 
-export type ContainerModuleMetadataApi<TArgs extends unknown[] = unknown[]> =
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ContainerModuleMetadataApi<TArgs extends unknown[] = any[]> =
   | ContainerModuleApi
   | ContainerModuleFactoryMetadataApi<TArgs>
   | ContainerModuleClassMetadataApi

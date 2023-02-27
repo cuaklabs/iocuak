@@ -5,7 +5,8 @@ import { ContainerModuleApi } from '../../../containerModule/models/api/Containe
 import { ContainerModuleMetadataBaseApi } from './ContainerModuleMetadataBaseApi';
 
 export interface ContainerModuleFactoryMetadataApi<
-  TArgs extends unknown[] = unknown[],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  TArgs extends unknown[] = any[],
 > extends ContainerModuleMetadataBaseApi {
   factory: (...args: TArgs) => ContainerModuleApi | Promise<ContainerModuleApi>;
   injects?: (ServiceId | ClassElementMetadataApi)[];
