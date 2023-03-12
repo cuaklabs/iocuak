@@ -6,8 +6,6 @@ import { promisifiedExec } from "../src/promisifiedExec.js";
 const TURBOREPO_ROOT_PACKAGE_NAME = "//";
 const TURBOREPO_TASK_NOT_FOUND_MAGIC_STRING = "\u003cNONEXISTENT\u003e";
 
-const PACKAGES_DIRECTORY_PREFIX = "packages/";
-
 const taskToDryRun = argv[2];
 const baseRef = argv[3];
 
@@ -35,8 +33,6 @@ const tasks = dryRunResult.tasks.filter((task) =>
 );
 
 /** @type {Array.<string>} */
-const packageNames = tasks.map((task) =>
-  task.directory.replace(PACKAGES_DIRECTORY_PREFIX, "")
-);
+const packageNames = tasks.map((task) => task.package);
 
 console.log(JSON.stringify(packageNames));
