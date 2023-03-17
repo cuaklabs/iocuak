@@ -4,11 +4,10 @@ import {
   ClassElementServiceIdMetadata,
 } from '@cuaklabs/iocuak-models';
 
+import { ParameterOrPropertyDecorator } from '../../common/models/ParameterOrPropertyDecorator';
 import { injectBase } from './injectBase';
 
-export function inject(
-  serviceId: ServiceId,
-): ParameterDecorator & PropertyDecorator {
+export function inject(serviceId: ServiceId): ParameterOrPropertyDecorator {
   return injectBase(serviceId, serviceIdToClassElementMatadata);
 }
 

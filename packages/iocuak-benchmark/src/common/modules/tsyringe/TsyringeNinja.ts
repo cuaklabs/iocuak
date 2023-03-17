@@ -1,10 +1,11 @@
-import { inject, injectable, Lifecycle, scoped } from 'tsyringe';
+import { injectable, Lifecycle, scoped } from 'tsyringe';
 
 import { ServiceType } from '../../models/domain/ServiceType';
 import { serviceTypeToSymbolMap } from '../../models/domain/serviceTypeToSymbolMap';
 import { ThrowableWeapon } from '../domain/ThrowableWeapon';
 import { Warrior } from '../domain/Warrior';
 import { Weapon } from '../domain/Weapon';
+import { tsyringeInject } from './tsyringeInject';
 
 @injectable()
 @scoped(Lifecycle.ContainerScoped)
@@ -15,8 +16,8 @@ export class TsyringeNinja implements Warrior {
   readonly #throwableWeapon: ThrowableWeapon;
 
   constructor(
-    @inject(serviceTypeToSymbolMap[ServiceType.weapon]) weapon: Weapon,
-    @inject(serviceTypeToSymbolMap[ServiceType.throwableWeapon])
+    @tsyringeInject(serviceTypeToSymbolMap[ServiceType.weapon]) weapon: Weapon,
+    @tsyringeInject(serviceTypeToSymbolMap[ServiceType.throwableWeapon])
     throwableWeapon: ThrowableWeapon,
   ) {
     this.#weapon = weapon;

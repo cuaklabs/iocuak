@@ -1,9 +1,10 @@
-import { injectable, inject, Lifecycle, scoped } from 'tsyringe';
+import { injectable, Lifecycle, scoped } from 'tsyringe';
 
 import { ServiceType } from '../../models/domain/ServiceType';
 import { serviceTypeToSymbolMap } from '../../models/domain/serviceTypeToSymbolMap';
 import { Handle } from '../domain/Handle';
 import { Weapon } from '../domain/Weapon';
+import { tsyringeInject } from './tsyringeInject';
 
 @injectable()
 @scoped(Lifecycle.ContainerScoped)
@@ -13,7 +14,7 @@ export class TsyringeKatana implements Weapon {
   readonly #handle: Handle;
 
   constructor(
-    @inject(serviceTypeToSymbolMap[ServiceType.handle]) handle: Handle,
+    @tsyringeInject(serviceTypeToSymbolMap[ServiceType.handle]) handle: Handle,
   ) {
     TsyringeKatana.instanceCounter++;
     this.#handle = handle;
