@@ -8,7 +8,7 @@
     "@rollup/plugin-typescript": "11.0.0",
     "rollup": "3.19.1",
     "prettier": "2.8.4",
-    "typescript": "4.9.5"
+    "typescript": "5.0.2"
   },
   "exports": "./lib/index.js",
   "homepage": "https://github.com/cuaklabs/iocuak#readme",

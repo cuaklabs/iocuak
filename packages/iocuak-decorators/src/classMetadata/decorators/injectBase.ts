@@ -6,20 +6,23 @@ import {
 } from '@cuaklabs/iocuak-models';
 import { updateReflectMetadata } from '@cuaklabs/iocuak-reflect-metadata-utils';
 
+import { ParameterDecorator } from '../../common/models/ParameterDecorator';
+import { ParameterOrPropertyDecorator } from '../../common/models/ParameterOrPropertyDecorator';
+
 export function injectBase<TInput>(
   input: TInput,
   inputToClassElementMetadata: (input: TInput) => ClassElementMetadata,
-): ParameterDecorator & PropertyDecorator {
-  const decorator: ParameterDecorator & PropertyDecorator = (
+): ParameterOrPropertyDecorator {
+  const decorator: ParameterOrPropertyDecorator = (
     // eslint-disable-next-line @typescript-eslint/ban-types
     target: Object,
-    propertyKey: string | symbol, // It might be undefined!!
+    propertyKey: string | symbol | undefined,
     parameterIndex?: number,
   ): void => {
     if (parameterIndex === undefined) {
       return injectProperty(input, inputToClassElementMetadata)(
         target,
-        propertyKey,
+        propertyKey as string | symbol,
       );
     } else {
       return injectParameter(input, inputToClassElementMetadata)(
