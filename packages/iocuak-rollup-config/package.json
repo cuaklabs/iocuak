@@ -7,7 +7,7 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "11.0.0",
     "rollup": "3.20.0",
-    "prettier": "2.8.5",
+    "prettier": "2.8.6",
     "typescript": "5.0.2"
   },
   "exports": "./lib/index.js",
