@@ -49,7 +49,7 @@
     "jest-mock": "29.5.0",
     "prettier": "2.8.6",
     "reflect-metadata": "0.1.13",
-    "rimraf": "4.4.0",
+    "rimraf": "4.4.1",
     "rollup": "3.20.0",
     "ts-jest": "29.0.5",
     "ts-node": "10.9.1",
