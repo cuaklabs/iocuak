@@ -48,7 +48,7 @@
     "prettier": "2.8.6",
     "reflect-metadata": "0.1.13",
     "rimraf": "4.4.1",
-    "rollup": "3.20.0",
+    "rollup": "3.20.1",
     "ts-jest": "29.0.5",
     "ts-node": "10.9.1",
     "typescript": "5.0.2"
