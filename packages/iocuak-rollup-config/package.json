@@ -6,8 +6,8 @@
   "description": "Backend rollup config for backend packages",
   "devDependencies": {
     "@rollup/plugin-typescript": "11.0.0",
-    "rollup": "3.20.1",
-    "prettier": "2.8.6",
+    "rollup": "3.20.2",
+    "prettier": "2.8.7",
     "typescript": "5.0.2"
   },
   "exports": "./lib/index.js",
