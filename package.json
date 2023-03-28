@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "description": "Minimal abstract task manager",
-  "packageManager": "pnpm@7.30.3",
+  "packageManager": "pnpm@7.30.5",
   "scripts": {
     "bench:createInstance:run": "turbo run \"bench:createInstance:js\" --filter=\"iocuak-benchmark\"",
     "bench:createInstancesByTag:run": "turbo run \"bench:createInstancesByTag:js\" --filter=\"iocuak-benchmark\"",
@@ -40,7 +40,7 @@
   "homepage": "https://github.com/cuaklabs/iocuak#readme",
   "devDependencies": {
     "@changesets/cli": "2.26.1",
-    "@commitlint/cli": "17.5.0",
+    "@commitlint/cli": "17.5.1",
     "@commitlint/config-conventional": "17.4.4",
     "@commitlint/prompt-cli": "17.5.0",
     "@cuaklabs/eslint-config-iocuak": "workspace:*",
@@ -53,6 +53,6 @@
     "husky": "8.0.3",
     "lint-staged": "13.2.0",
     "reflect-metadata": "0.1.13",
-    "turbo": "1.8.5"
+    "turbo": "1.8.6"
   }
 }
