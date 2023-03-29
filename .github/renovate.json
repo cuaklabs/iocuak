@@ -16,7 +16,7 @@
       "groupName": "auto merge on patch or minor",
       "automerge": true,
       "matchUpdateTypes": ["patch", "minor"],
-      "excludePackageNames": ["typescript"]
+      "excludePackageNames": ["typescript", "turbo"]
     }
   ]
 }
