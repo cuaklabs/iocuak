@@ -33,7 +33,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "prettier": "2.8.7",
     "rimraf": "4.4.1",
-    "typescript": "5.0.3"
+    "typescript": "5.0.4"
   },
   "scripts": {
     "bench:createInstance:js": "clinic flame -- node ./lib/benchmarks/createInstance/index.js",
