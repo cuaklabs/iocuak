@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "automerge": false,
   "constraints": {
-    "pnpm": "7"
+    "pnpm": "8"
   },
   "extends": ["config:base", ":disableRateLimiting"],
   "ignoreDeps": ["eslint-plugin-import"],
