@@ -40,9 +40,9 @@
   "homepage": "https://github.com/cuaklabs/iocuak#readme",
   "devDependencies": {
     "@changesets/cli": "2.26.1",
-    "@commitlint/cli": "17.6.1",
-    "@commitlint/config-conventional": "17.6.1",
-    "@commitlint/prompt-cli": "17.6.1",
+    "@commitlint/cli": "17.6.3",
+    "@commitlint/config-conventional": "17.6.3",
+    "@commitlint/prompt-cli": "17.6.3",
     "@cuaklabs/eslint-config-iocuak": "workspace:*",
     "@cuaklabs/iocuak-jest-config": "workspace:*",
     "@cuaklabs/iocuak-prettier-config": "workspace:*",
