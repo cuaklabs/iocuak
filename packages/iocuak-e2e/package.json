@@ -17,7 +17,7 @@
     "@cucumber/cucumber": "9.1.2",
     "chai": "4.3.7",
     "reflect-metadata": "0.1.13",
-    "sinon": "15.0.4",
+    "sinon": "15.1.0",
     "sinon-chai": "3.7.0"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "@types/sinon-chai": "3.2.9",
     "@typescript-eslint/eslint-plugin": "5.59.6",
     "@typescript-eslint/parser": "5.59.6",
-    "eslint": "8.40.0",
+    "eslint": "8.41.0",
     "eslint-import-resolver-typescript": "3.5.5",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jest": "27.2.1",
