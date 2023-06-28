@@ -51,7 +51,7 @@
     "@cuaklabs/typescript-config-iocuak": "workspace:*",
     "@types/node": "18",
     "husky": "8.0.3",
-    "lint-staged": "13.2.2",
+    "lint-staged": "13.2.3",
     "reflect-metadata": "0.1.13",
     "turbo": "1.10.5"
   }
