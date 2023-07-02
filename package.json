@@ -53,6 +53,6 @@
     "husky": "8.0.3",
     "lint-staged": "13.2.3",
     "reflect-metadata": "0.1.13",
-    "turbo": "1.10.5"
+    "turbo": "1.10.7"
   }
 }
