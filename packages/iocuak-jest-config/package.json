@@ -5,7 +5,7 @@
   },
   "description": "Backend jest config for backend packages",
   "devDependencies": {
-    "@jest/types": "29.6.0",
+    "@jest/types": "29.6.1",
     "prettier": "2.8.8"
   },
   "exports": "./lib/index.js",
