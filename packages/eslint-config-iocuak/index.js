@@ -89,7 +89,7 @@ module.exports = {
     '@typescript-eslint/restrict-plus-operands': [
       'error',
       {
-        checkCompoundAssignments: true,
+        skipCompoundAssignments: false,
       },
     ],
     '@typescript-eslint/typedef': [

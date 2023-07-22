@@ -10,7 +10,8 @@ function bindingScopeParameterDefinitionTransformer(
   const bindingScope: BindingScope | undefined = (
     Object.values(BindingScope) as BindingScope[]
   ).find(
-    (bindingScope: BindingScope): boolean => bindingScopeValue === bindingScope,
+    (bindingScope: BindingScope): boolean =>
+      (bindingScopeValue as BindingScope) === bindingScope,
   );
 
   if (bindingScope === undefined) {
