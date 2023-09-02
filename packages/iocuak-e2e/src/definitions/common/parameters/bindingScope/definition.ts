@@ -1,6 +1,5 @@
 import { BindingScope } from '@cuaklabs/iocuak';
 import { defineParameterType } from '@cucumber/cucumber';
-import { IParameterTypeDefinition } from '@cucumber/cucumber/lib/support_code_library_builder/types';
 
 import { BindingScopeParameter } from './BindingScopeParameter';
 
@@ -23,11 +22,8 @@ function bindingScopeParameterDefinitionTransformer(
   };
 }
 
-const bindingScopeParameterDefinition: IParameterTypeDefinition<BindingScopeParameter> =
-  {
-    name: 'bindingScope',
-    regexp: /"binding scope ([^"]+)"/,
-    transformer: bindingScopeParameterDefinitionTransformer,
-  };
-
-defineParameterType(bindingScopeParameterDefinition);
+defineParameterType({
+  name: 'bindingScope',
+  regexp: /"binding scope ([^"]+)"/,
+  transformer: bindingScopeParameterDefinitionTransformer,
+});

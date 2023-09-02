@@ -1,5 +1,4 @@
 import { defineParameterType } from '@cucumber/cucumber';
-import { IParameterTypeDefinition } from '@cucumber/cucumber/lib/support_code_library_builder/types';
 
 import { ContainerModuleParameter } from './ContainerModuleParameter';
 import { getContainerModuleWithTypeServiceAndValueServiceParameter } from './getContainerModuleWithTypeServiceAndValueServiceParameter';
@@ -17,11 +16,8 @@ function containerModuleParameterDefinitionTransformer(
   }
 }
 
-const containerModuleParameterDefinition: IParameterTypeDefinition<ContainerModuleParameter> =
-  {
-    name: 'containerModule',
-    regexp: /"container module(?: (?:with) ([^"]+))?"/,
-    transformer: containerModuleParameterDefinitionTransformer,
-  };
-
-defineParameterType(containerModuleParameterDefinition);
+defineParameterType({
+  name: 'containerModule',
+  regexp: /"container module(?: (?:with) ([^"]+))?"/,
+  transformer: containerModuleParameterDefinitionTransformer,
+});

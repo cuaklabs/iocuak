@@ -1,5 +1,4 @@
 import { defineParameterType } from '@cucumber/cucumber';
-import { IParameterTypeDefinition } from '@cucumber/cucumber/lib/support_code_library_builder/types';
 
 import { getTypeServiceWithBindingWithRequestScope } from './getTypeServiceWithBindingWithRequestScope';
 import { getTypeServiceWithBindingWithSingletonScope } from './getTypeServiceWithBindingWithSingletonScope';
@@ -64,11 +63,8 @@ function typeServiceParameterDefinitionTransformer(
   }
 }
 
-const typeServiceParameterDefinition: IParameterTypeDefinition<TypeServiceParameter> =
-  {
-    name: 'typeService',
-    regexp: /"type service(?: (?:with) ([^"]+))?"/,
-    transformer: typeServiceParameterDefinitionTransformer,
-  };
-
-defineParameterType(typeServiceParameterDefinition);
+defineParameterType({
+  name: 'typeService',
+  regexp: /"type service(?: (?:with) ([^"]+))?"/,
+  transformer: typeServiceParameterDefinitionTransformer,
+});
