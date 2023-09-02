@@ -10,7 +10,6 @@ function getBaseConfiguration(parallel) {
   /** @type {!import("@cucumber/cucumber/lib/configuration").IConfiguration} */
   const config = {
     paths: ['features/**/*.feature'],
-    publishQuiet: true,
   };
 
   if (parallel === true) {
