@@ -5,8 +5,8 @@
   },
   "description": "Backend jest config for backend packages",
   "devDependencies": {
-    "@jest/types": "29.6.1",
-    "prettier": "3.0.2"
+    "@jest/types": "29.6.3",
+    "prettier": "3.0.3"
   },
   "exports": "./lib/index.js",
   "homepage": "https://github.com/cuaklabs/iocuak#readme",
