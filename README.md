@@ -1,4 +1,4 @@
-[![Build status](https://github.com/cuaklabs/iocuak/workflows/ci/badge.svg)](https://github.com/cuaklabs/iocuak/workflows/ci/badge.svg)
+[![Build status](https://github.com/cuaklabs/iocuak/workflows/build/badge.svg)](https://github.com/cuaklabs/iocuak/workflows/build/badge.svg)
 
 # Iocuak
 
