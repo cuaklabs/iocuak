@@ -15,7 +15,7 @@
   "dependencies": {
     "@cuaklabs/iocuak": "workspace:*",
     "@cucumber/cucumber": "9.5.1",
-    "chai": "4.3.8",
+    "chai": "4.3.9",
     "reflect-metadata": "0.1.13",
     "sinon": "15.2.0",
     "sinon-chai": "3.7.0"
@@ -34,7 +34,7 @@
     "eslint-plugin-jest": "27.4.0",
     "eslint-plugin-prettier": "5.0.0",
     "prettier": "3.0.3",
-    "rimraf": "5.0.4",
+    "rimraf": "5.0.5",
     "rollup": "3.29.3",
     "typescript": "5.2.2"
   },
