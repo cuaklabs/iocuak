@@ -35,7 +35,7 @@
     "eslint-plugin-prettier": "5.0.1",
     "prettier": "3.0.3",
     "rimraf": "5.0.5",
-    "rollup": "3.29.4",
+    "rollup": "4.4.0",
     "typescript": "5.2.2"
   },
   "scripts": {
