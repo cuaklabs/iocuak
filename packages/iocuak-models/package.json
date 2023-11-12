@@ -39,7 +39,7 @@
     "eslint-plugin-prettier": "5.0.1",
     "prettier": "3.0.3",
     "rimraf": "5.0.5",
-    "rollup": "4.3.1",
+    "rollup": "4.4.0",
     "typescript": "5.2.2"
   },
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-models#readme",
