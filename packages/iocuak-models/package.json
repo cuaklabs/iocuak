@@ -40,7 +40,7 @@
     "prettier": "3.1.0",
     "rimraf": "5.0.5",
     "rollup": "4.5.0",
-    "typescript": "5.2.2"
+    "typescript": "5.3.2"
   },
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-models#readme",
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
