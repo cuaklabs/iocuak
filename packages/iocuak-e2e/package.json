@@ -33,7 +33,7 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jest": "27.6.0",
     "eslint-plugin-prettier": "5.0.1",
-    "prettier": "3.1.0",
+    "prettier": "3.1.1",
     "rimraf": "5.0.5",
     "rollup": "4.7.0",
     "typescript": "5.3.3"
