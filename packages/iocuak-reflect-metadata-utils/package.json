@@ -52,7 +52,7 @@
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-reflect-metadata-utils#readme",
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
   "peerDependencies": {
-    "reflect-metadata": "0.1.14"
+    "reflect-metadata": "0.2.0"
   },
   "publishConfig": {
     "access": "public"
