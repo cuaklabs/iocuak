@@ -6,7 +6,7 @@
   "description": "Backend rollup config for backend packages",
   "devDependencies": {
     "@rollup/plugin-typescript": "11.1.6",
-    "rollup": "4.9.5",
+    "rollup": "4.9.6",
     "prettier": "3.2.4",
     "typescript": "5.3.3"
   },
