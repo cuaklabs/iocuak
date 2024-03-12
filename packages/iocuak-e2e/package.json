@@ -36,7 +36,7 @@
     "prettier": "3.2.5",
     "rimraf": "5.0.5",
     "rollup": "4.13.0",
-    "typescript": "5.3.3"
+    "typescript": "5.4.2"
   },
   "scripts": {
     "build": "pnpm run build:cjs && pnpm run build:esm",
