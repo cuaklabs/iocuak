@@ -6,9 +6,9 @@
   "description": "Backend rollup config for backend packages",
   "devDependencies": {
     "@rollup/plugin-typescript": "11.1.6",
-    "rollup": "4.12.1",
+    "rollup": "4.13.0",
     "prettier": "3.2.5",
-    "typescript": "5.3.3"
+    "typescript": "5.4.2"
   },
   "exports": "./lib/index.js",
   "homepage": "https://github.com/cuaklabs/iocuak#readme",
