@@ -44,7 +44,7 @@
     "rollup": "4.13.0",
     "ts-jest": "29.1.2",
     "ts-node": "10.9.2",
-    "typescript": "5.4.2"
+    "typescript": "5.4.3"
   },
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak/tree/master/packages/iocuak-common#readme",
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
