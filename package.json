@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "description": "Minimal abstract task manager",
-  "packageManager": "pnpm@9.0.6",
+  "packageManager": "pnpm@9.1.0",
   "scripts": {
     "bench:createInstance:run": "turbo run \"bench:createInstance:js\" --filter=\"iocuak-benchmark\"",
     "bench:createInstancesByTag:run": "turbo run \"bench:createInstancesByTag:js\" --filter=\"iocuak-benchmark\"",
@@ -49,7 +49,7 @@
     "@cuaklabs/iocuak-rollup-config": "workspace:*",
     "@cuaklabs/iocuak-scripts": "workspace:*",
     "@cuaklabs/typescript-config-iocuak": "workspace:*",
-    "@types/node": "20.12.8",
+    "@types/node": "20.12.9",
     "husky": "9.0.11",
     "lint-staged": "15.2.2",
     "reflect-metadata": "0.2.2",
