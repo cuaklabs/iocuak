@@ -17,7 +17,7 @@
     "@cucumber/cucumber": "10.6.0",
     "chai": "4.4.1",
     "reflect-metadata": "0.2.2",
-    "sinon": "17.0.1",
+    "sinon": "17.0.2",
     "sinon-chai": "3.7.0"
   },
   "devDependencies": {
