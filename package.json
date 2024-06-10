@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "description": "Minimal abstract task manager",
-  "packageManager": "pnpm@9.2.0",
+  "packageManager": "pnpm@9.3.0",
   "scripts": {
     "bench:createInstance:run": "turbo run \"bench:createInstance:js\" --filter=\"iocuak-benchmark\"",
     "bench:createInstancesByTag:run": "turbo run \"bench:createInstancesByTag:js\" --filter=\"iocuak-benchmark\"",
