@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/cuaklabs/iocuak#readme",
   "devDependencies": {
-    "@changesets/cli": "2.27.8",
+    "@changesets/cli": "2.27.9",
     "@commitlint/cli": "19.5.0",
     "@commitlint/config-conventional": "19.5.0",
     "@commitlint/prompt-cli": "19.5.0",
