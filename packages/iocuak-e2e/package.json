@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-multi-entry": "6.0.1",
-    "@rollup/plugin-typescript": "11.1.6",
+    "@rollup/plugin-typescript": "12.1.1",
     "@types/chai": "4.3.20",
     "@types/sinon": "17.0.3",
     "@types/sinon-chai": "3.2.12",
