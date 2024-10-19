@@ -30,7 +30,7 @@
     "@stryker-mutator/core": "8.6.0",
     "@stryker-mutator/jest-runner": "8.6.0",
     "@stryker-mutator/typescript-checker": "8.6.0",
-    "@types/node": "20.16.12",
+    "@types/node": "20.16.13",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
     "eslint": "8.57.1",
