@@ -1,0 +1,30 @@
+{
+  "author": "Roberto Pintos López",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/iocuak/issues"
+  },
+  "description": "Common ESLint config for inversify monorepo packages",
+  "devDependencies": {
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-jest": "28.8.3",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint-plugin-simple-import-sort": "12.1.1",
+    "prettier": "3.3.3",
+    "typescript-eslint": "8.11.0"
+  },
+  "peerDependencies": {
+    "@eslint/js": "^9.13.0"
+  },
+  "exports": {
+    ".": "./index.js"
+  },
+  "homepage": "https://github.com/cuaklabs/iocuak#readme",
+  "license": "MIT",
+  "name": "@cuaklabs/iocuak-eslint-config",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/iocuak.git"
+  },
+  "type": "module"
+}
