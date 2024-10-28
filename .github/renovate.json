@@ -5,12 +5,10 @@
     "pnpm": "8"
   },
   "extends": ["config:base", ":disableRateLimiting"],
-  "ignoreDeps": ["eslint-plugin-import"],
+  "ignoreDeps": [],
   "rebaseWhen": "conflicted",
   "semanticCommits": "enabled",
-  "schedule": [
-    "at any time"
-  ],
+  "schedule": ["at any time"],
   "packageRules": [
     {
       "groupName": "auto merge on patch or minor",
