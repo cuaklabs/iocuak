@@ -20,7 +20,7 @@ async function runTest(): Promise<void> {
       const runMilliseconds: number = runner(iterations);
 
       console.log(
-        `[${runner.name} with ${iterations} iterations]: ${runMilliseconds} milliseconds.`,
+        `[${runner.name} with ${iterations.toString()} iterations]: ${runMilliseconds.toString()} milliseconds.`,
       );
     }
   }

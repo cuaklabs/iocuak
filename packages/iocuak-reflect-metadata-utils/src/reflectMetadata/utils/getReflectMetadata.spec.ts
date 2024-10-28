@@ -1,6 +1,6 @@
-import 'reflect-metadata';
-
 import { beforeAll, describe, expect, it } from '@jest/globals';
+
+import 'reflect-metadata';
 
 import { getReflectMetadata } from './getReflectMetadata';
 
@@ -25,7 +25,7 @@ describe(getReflectMetadata.name, () => {
     beforeAll(() => {
       metadataFixture = 'sample-metadata';
 
-      // eslint-disable-next-line @typescript-eslint/ban-types
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
       const targetFixture: Function = class {};
       const metadataKeyFixture: unknown = 'sample-key';
 

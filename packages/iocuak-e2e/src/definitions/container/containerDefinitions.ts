@@ -1,20 +1,20 @@
 import {
   Binding,
-  Tag,
   BindingType,
-  ClassMetadata,
   ClassElementMetadata,
   ClassElementMetadataType,
+  ClassMetadata,
   Container,
   ContainerModuleClassMetadata,
   ContainerModuleFactoryMetadata,
+  injectable,
   MetadataProvider,
   Newable,
-  injectable,
   ServiceId,
+  Tag,
   TypeBinding,
 } from '@cuaklabs/iocuak';
-import { Given, When, Then } from '@cucumber/cucumber';
+import { Given, Then, When } from '@cucumber/cucumber';
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -97,18 +97,15 @@ function bindingToSinonMatcher(
 ): sinon.SinonMatcher {
   let match: sinon.SinonMatcher;
   if (binding === undefined) {
-    // eslint-disable-next-line import/no-named-as-default-member
     match = sinon.match(
-      `No metatada found constructor argument at position ${index}`,
+      `No metatada found constructor argument at position ${index.toString()}`,
     );
   } else {
     switch (binding.bindingType) {
       case BindingType.type:
-        // eslint-disable-next-line import/no-named-as-default-member
         match = sinon.match.instanceOf(binding.type);
         break;
       case BindingType.value:
-        // eslint-disable-next-line import/no-named-as-default-member
         match = sinon.match(binding.value as object);
         break;
     }
@@ -197,7 +194,7 @@ function isContainerModuleMetadataInitialized(
 ): void {
   if (
     (
-      containerModuleMetadataParameter.containerModuleMetadata as ContainerModuleClassMetadata
+      containerModuleMetadataParameter.containerModuleMetadata as Partial<ContainerModuleClassMetadata>
     ).module !== undefined
   ) {
     isTypeServiceInitialized(
@@ -212,13 +209,14 @@ function isContainerModuleMetadataInitialized(
 
     const constructorMetadataBindings: (Binding | undefined)[] = (
       containerModuleMetadata.injects ?? []
-    ).map((serviceIdOrClassElementMetadata: ServiceId | ClassElementMetadata) =>
-      isClassElementMetadata(serviceIdOrClassElementMetadata)
-        ? getBindingFromClassElementMetadata(
-            container,
-            serviceIdOrClassElementMetadata,
-          )
-        : getBinding(container, serviceIdOrClassElementMetadata),
+    ).map(
+      (serviceIdOrClassElementMetadata: ServiceId | ClassElementMetadata) =>
+        isClassElementMetadata(serviceIdOrClassElementMetadata)
+          ? getBindingFromClassElementMetadata(
+              container,
+              serviceIdOrClassElementMetadata,
+            )
+          : getBinding(container, serviceIdOrClassElementMetadata),
     );
 
     isCalledOnceWith(
@@ -234,11 +232,8 @@ function isContainerModuleMetadataLoaded(
   chai.expect(containerModuleMetadataParameter.loadSpy.callCount).to.equal(1);
 
   chai.expect(containerModuleMetadataParameter.loadSpy).to.calledOnceWith(
-    // eslint-disable-next-line import/no-named-as-default-member
     sinon.match({
-      // eslint-disable-next-line import/no-named-as-default-member
       bind: sinon.match.instanceOf(Function),
-      // eslint-disable-next-line import/no-named-as-default-member
       bindToValue: sinon.match.instanceOf(Function),
     }),
   );

@@ -11,17 +11,17 @@ jest.mock(
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import {
   bind,
-  bindToValue,
   BindingService,
+  bindToValue,
+  ContainerModuleMetadata,
   ContainerRequestService,
   ContainerSingletonService,
-  createInstancesByTag,
-  createInstance,
-  CreateInstanceTaskContext,
-  ContainerModuleMetadata,
   createCreateInstanceTaskContext,
-  LoadModuleMetadataTaskContext,
+  createInstance,
+  createInstancesByTag,
+  CreateInstanceTaskContext,
   loadContainerModuleMetadataArray,
+  LoadModuleMetadataTaskContext,
 } from '@cuaklabs/iocuak-core';
 import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
 import {

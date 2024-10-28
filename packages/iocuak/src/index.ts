@@ -11,18 +11,18 @@ import {
 } from '@cuaklabs/iocuak-decorators';
 import {
   BaseBindingApi,
+  BaseClassElementMetadataApi,
   BindingApi,
   BindingScopeApi,
   BindingTypeApi,
-  TypeBindingApi,
-  ValueBindingApi,
-  BaseClassElementMetadataApi,
+  BindOptionsApi,
   ClassElementMetadataApi,
   ClassElementMetadataApiType,
   ClassElementServiceIdMetadataApi,
   ClassElementTagMetadataApi,
   ClassMetadataApi,
-  BindOptionsApi,
+  TypeBindingApi,
+  ValueBindingApi,
 } from '@cuaklabs/iocuak-models-api';
 
 import { BindingServiceApi } from './binding/services/api/BindingServiceApi';

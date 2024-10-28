@@ -16,7 +16,6 @@ export function getContainerModuleWithTypeServiceAndValueServiceParameter(): Con
   const valueServiceParameter: ValueServiceParameter =
     getValueServiceParameter();
 
-  // eslint-disable-next-line import/no-named-as-default-member
   const loadSpy: sinon.SinonSpy = sinon.spy();
 
   const containerModule: ContainerModule = {

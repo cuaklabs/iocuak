@@ -12,8 +12,8 @@ import { Weapon } from '../domain/Weapon';
 })
 export class IocuakNinja implements Warrior {
   public static instanceCounter: number = 0;
-  #weapon: Weapon;
-  #throwableWeapon: ThrowableWeapon;
+  readonly #weapon: Weapon;
+  readonly #throwableWeapon: ThrowableWeapon;
 
   constructor(
     @inject(serviceTypeToSymbolMap[ServiceType.weapon]) weapon: Weapon,

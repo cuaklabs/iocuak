@@ -1,6 +1,6 @@
-import 'reflect-metadata';
-
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import 'reflect-metadata';
 
 jest.mock('@cuaklabs/iocuak-models');
 jest.mock('@cuaklabs/iocuak-reflect-metadata-utils');

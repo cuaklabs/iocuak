@@ -2,14 +2,7 @@ import { ServiceId } from '@cuaklabs/iocuak-common';
 
 export interface ContainerRequestService {
   end(requestId: symbol): void;
-  get<TInstance>(
-    requestId: symbol,
-    serviceId: ServiceId,
-  ): TInstance | undefined;
-  set<TInstance>(
-    requestId: symbol,
-    serviceId: ServiceId,
-    value: TInstance,
-  ): void;
+  get(requestId: symbol, serviceId: ServiceId): unknown;
+  set(requestId: symbol, serviceId: ServiceId, value: unknown): void;
   start(): symbol;
 }

@@ -1,10 +1,10 @@
 import {
+  ContainerModule,
   ContainerModuleBindingService,
   ContainerModuleClassMetadata,
-  Newable,
-  ContainerModule,
-  injectable,
   inject,
+  injectable,
+  Newable,
 } from '@cuaklabs/iocuak';
 import sinon from 'sinon';
 
@@ -51,9 +51,7 @@ export function getContainerModuleMetadataWithContainerModuleClassMetadataImport
   containerModuleClassMetadataParameter.containerModuleMetadata =
     containerModuleClassMetadataParameterMetadata;
 
-  // eslint-disable-next-line import/no-named-as-default-member
   const loadSpy: sinon.SinonSpy = sinon.spy();
-  // eslint-disable-next-line import/no-named-as-default-member
   const spy: sinon.SinonSpy = sinon.spy();
 
   @injectable()

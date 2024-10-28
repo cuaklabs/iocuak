@@ -25,7 +25,6 @@ describe(injectFromBase.name, () => {
     describe('when called, and getBaseType() returns a base type', () => {
       let baseTypeFixture: Newable;
       let typeFixture: Newable;
-      // eslint-disable-next-line @typescript-eslint/ban-types
       let injectFromDecoratorMock: jest.Mock<ClassDecorator>;
 
       beforeAll(() => {
@@ -35,7 +34,6 @@ describe(injectFromBase.name, () => {
           baseTypeFixture,
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-types
         injectFromDecoratorMock = jest.fn<ClassDecorator>();
 
         (injectFrom as jest.Mock<typeof injectFrom>).mockReturnValueOnce(
@@ -107,7 +105,6 @@ describe(injectFromBase.name, () => {
   describe('when called, and getBaseType() returns a base type', () => {
     let baseTypeFixture: Newable;
     let typeFixture: Newable;
-    // eslint-disable-next-line @typescript-eslint/ban-types
     let injectFromDecoratorMock: jest.Mock<ClassDecorator>;
 
     beforeAll(() => {
@@ -117,7 +114,6 @@ describe(injectFromBase.name, () => {
         baseTypeFixture,
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-types
       injectFromDecoratorMock = jest.fn<ClassDecorator>();
 
       (injectFrom as jest.Mock<typeof injectFrom>).mockReturnValueOnce(

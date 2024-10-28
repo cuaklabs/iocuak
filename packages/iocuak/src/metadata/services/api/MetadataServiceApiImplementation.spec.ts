@@ -7,12 +7,12 @@ jest.mock('../../../classMetadata/utils/api/convertToClassMetadataApi');
 
 import { Newable } from '@cuaklabs/iocuak-common';
 import { getBindingMetadata, getClassMetadata } from '@cuaklabs/iocuak-core';
-import { TypeBinding, ClassMetadata } from '@cuaklabs/iocuak-models';
+import { ClassMetadata, TypeBinding } from '@cuaklabs/iocuak-models';
 import {
   BindingScopeApi,
   BindingTypeApi,
-  TypeBindingApi,
   ClassMetadataApi,
+  TypeBindingApi,
 } from '@cuaklabs/iocuak-models-api';
 
 import { TypeBindingFixtures } from '../../../binding/fixtures/domain/TypeBindingFixtures';

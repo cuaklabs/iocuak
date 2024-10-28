@@ -4,10 +4,10 @@ jest.mock('../../classMetadata/utils/getClassMetadata');
 
 import { ServiceId } from '@cuaklabs/iocuak-common';
 import {
-  TypeBinding,
   BindingScope,
   BindingType,
   ClassMetadata,
+  TypeBinding,
 } from '@cuaklabs/iocuak-models';
 
 import { TypeBindingFixtures } from '../../binding/fixtures/TypeBindingFixtures';

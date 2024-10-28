@@ -1,5 +1,5 @@
 import { Newable } from '@cuaklabs/iocuak-common';
-import { TypeBindingApi, ClassMetadataApi } from '@cuaklabs/iocuak-models-api';
+import { ClassMetadataApi, TypeBindingApi } from '@cuaklabs/iocuak-models-api';
 
 export interface MetadataServiceApi {
   getBindingMetadata<TInstance, TArgs extends unknown[]>(

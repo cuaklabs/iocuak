@@ -1,6 +1,5 @@
-import { performance } from 'perf_hooks';
-
 import { INestApplicationContext } from '@nestjs/common';
+import { performance } from 'perf_hooks';
 
 import { ServiceType } from '../../common/models/domain/ServiceType';
 import { serviceTypeToSymbolMap } from '../../common/models/domain/serviceTypeToSymbolMap';

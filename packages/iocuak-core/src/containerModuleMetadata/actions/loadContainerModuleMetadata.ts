@@ -18,6 +18,7 @@ export function loadContainerModuleMetadata(
       );
       break;
     case ContainerModuleMetadataType.clazz:
+      // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
       loadContainerModuleResult = loadFromContainerModuleClassMetadata(
         containerModuleMetadata,
         context,

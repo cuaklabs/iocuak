@@ -1,7 +1,7 @@
 import {
-  classMetadataReflectKey,
   ClassElementMetadata,
   ClassMetadata,
+  classMetadataReflectKey,
   getDefaultClassMetadata,
 } from '@cuaklabs/iocuak-models';
 import { updateReflectMetadata } from '@cuaklabs/iocuak-reflect-metadata-utils';
@@ -14,22 +14,23 @@ export function injectBase<TInput>(
   inputToClassElementMetadata: (input: TInput) => ClassElementMetadata,
 ): ParameterOrPropertyDecorator {
   const decorator: ParameterOrPropertyDecorator = (
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    target: Object,
+    target: object,
     propertyKey: string | symbol | undefined,
     parameterIndex?: number,
   ): void => {
     if (parameterIndex === undefined) {
-      return injectProperty(input, inputToClassElementMetadata)(
+      injectProperty(input, inputToClassElementMetadata)(
         target,
         propertyKey as string | symbol,
       );
+      return;
     } else {
-      return injectParameter(input, inputToClassElementMetadata)(
+      injectParameter(input, inputToClassElementMetadata)(
         target,
         propertyKey,
         parameterIndex,
       );
+      return;
     }
   };
 
@@ -41,8 +42,7 @@ function injectParameter<TInput>(
   inputToClassElementMetadata: (input: TInput) => ClassElementMetadata,
 ): ParameterDecorator {
   return (
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    target: Object,
+    target: object,
     propertyKey: string | symbol | undefined,
     parameterIndex: number,
   ): void => {
@@ -73,8 +73,7 @@ function injectProperty<TInput>(
   input: TInput,
   inputToClassElementMetadata: (input: TInput) => ClassElementMetadata,
 ): PropertyDecorator {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  return (target: Object, propertyKey: string | symbol): void => {
+  return (target: object, propertyKey: string | symbol): void => {
     updateReflectMetadata(
       target.constructor,
       classMetadataReflectKey,

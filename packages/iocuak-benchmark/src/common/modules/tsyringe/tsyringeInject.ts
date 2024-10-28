@@ -1,4 +1,4 @@
-import { InjectionToken, inject } from 'tsyringe';
+import { inject, InjectionToken } from 'tsyringe';
 
 type ParameterOrPropertyDecorator = (
   target: object,

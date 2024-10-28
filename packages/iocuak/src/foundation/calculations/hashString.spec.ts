@@ -2,7 +2,6 @@ import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
 
 jest.mock('node:crypto');
 
-// eslint-disable-next-line import/order
 import crypto from 'node:crypto';
 
 import { hashString } from './hashString';

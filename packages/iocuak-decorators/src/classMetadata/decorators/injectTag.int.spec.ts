@@ -1,6 +1,6 @@
-import 'reflect-metadata';
-
 import { beforeAll, describe, expect, it } from '@jest/globals';
+
+import 'reflect-metadata';
 
 import { Newable, Tag } from '@cuaklabs/iocuak-common';
 import {

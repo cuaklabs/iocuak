@@ -1,19 +1,20 @@
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import {
   bindingReflectKey,
-  TypeBinding,
   BindingScope,
   BindingType,
   getDefaultBindingScope,
+  TypeBinding,
 } from '@cuaklabs/iocuak-models';
 import { bindingScopeApiToBindingScopeMap } from '@cuaklabs/iocuak-models-api';
 
 import { InjectableOptionsApi } from '../models/api/InjectableOptionsApi';
 
 export function injectable(options?: InjectableOptionsApi): ClassDecorator {
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   const decorator: ClassDecorator = <TFunction extends Function>(
     target: TFunction,
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   ): TFunction | void => {
     const bindingId: ServiceId = options?.id ?? (target as unknown as Newable);
 

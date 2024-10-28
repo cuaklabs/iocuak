@@ -1,6 +1,6 @@
-import 'reflect-metadata';
-
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+
+import 'reflect-metadata';
 
 jest.mock('./getReflectMetadata');
 
@@ -9,7 +9,7 @@ import { updateReflectMetadata } from './updateReflectMetadata';
 
 describe(updateReflectMetadata.name, () => {
   describe('when called, and getReflectMetadata returns undefined', () => {
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     let targetFixture: Function;
     let metadataKeyFixture: unknown;
     let defaultValueFixture: unknown;
@@ -64,7 +64,7 @@ describe(updateReflectMetadata.name, () => {
   });
 
   describe('when called, and getReflectMetadata returns metadata', () => {
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     let targetFixture: Function;
     let metadataFixture: unknown;
     let metadataKeyFixture: unknown;

@@ -6,7 +6,7 @@ import { CreateInstanceTaskContext } from '../../models/CreateInstanceTaskContex
 import { TaskContextServicesMocks } from './TaskContextServicesMocks';
 
 export class CreateInstanceTaskContextMocks {
-  static #requestIdFixture: symbol = Symbol();
+  static readonly #requestIdFixture: symbol = Symbol();
 
   public static get any(): jest.Mocked<CreateInstanceTaskContext> {
     const fixture: jest.Mocked<CreateInstanceTaskContext> = {
