@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "tasks": {
     "bench:createInstance:js": {
       "cache": false
     },
@@ -8,131 +8,69 @@
       "cache": false
     },
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "src/**/*.ts"
-      ],
-      "outputs": [
-        "dist/**",
-        "lib/**"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["src/**/*.{cts,mts,ts}"],
+      "outputs": ["dist/**", "lib/**"]
     },
     "format": {
-      "inputs": [
-        "src/**/*.ts"
-      ],
-      "outputs": [
-        "src/**/*.ts"
-      ]
+      "inputs": ["src/**/*.{cts,mts,ts}"],
+      "outputs": ["src/**/*.{cts,mts,ts}"]
     },
     "lint": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "src/**/*.ts"
-      ],
-      "outputs": [
-        "src/**/*.ts"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["src/**/*.{cts,mts,ts}"]
     },
     "test": {
-      "inputs": [
-        "src/**/*.ts"
-      ],
+      "inputs": ["src/**/*.{cts,mts,ts}"],
       "outputs": []
     },
     "test:e2e": {
-      "inputs": [
-        "src/**/*.ts"
-      ],
+      "inputs": ["src/**/*.{cts,mts,ts}"],
       "outputs": []
     },
     "test:e2e:js": {
-      "dependsOn": [
-        "build"
-      ],
-      "inputs": [
-        "dist/**",
-        "lib/**"
-      ],
+      "dependsOn": ["build"],
+      "inputs": ["dist/**", "lib/**"],
       "outputs": []
     },
     "test:e2e:js:ci": {
-      "dependsOn": [
-        "build"
-      ],
-      "inputs": [
-        "dist/**",
-        "lib/**"
-      ],
+      "dependsOn": ["build"],
+      "inputs": ["dist/**", "lib/**"],
       "outputs": []
     },
     "test:integration:js": {
-      "dependsOn": [
-        "build"
-      ],
-      "inputs": [
-        "dist/**",
-        "lib/**"
-      ],
+      "dependsOn": ["build"],
+      "inputs": ["{dist,lib}/**/*.{cjs,mjs,js}"],
       "outputs": []
     },
     "test:js": {
-      "dependsOn": [
-        "build"
-      ],
-      "inputs": [
-        "dist/**",
-        "lib/**"
-      ],
+      "dependsOn": ["build"],
+      "inputs": ["{dist,lib}/**/*.{cjs,mjs,js}"],
       "outputs": []
     },
     "test:unit:js:coverage": {
-      "dependsOn": [
-        "build"
-      ],
-      "inputs": [
-        "dist/**",
-        "lib/**"
-      ],
-      "outputs": [
-        "coverage/**"
-      ]
+      "dependsOn": ["build"],
+      "inputs": ["{dist,lib}/**/*.{cjs,mjs,js}"],
+      "outputs": ["coverage/**"]
     },
     "test:mutation": {
-      "inputs": [
-        "src/**/*.ts"
-      ],
-      "outputs": [
-        "reports/mutation/mutation.html"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["src/**/*.{cts,mts,ts}"],
+      "outputs": ["reports/**"]
     },
     "test:uncommitted": {
-      "inputs": [
-        "src/**/*.ts"
-      ],
+      "inputs": ["src/**/*.{cts,mts,ts}"],
       "outputs": []
     },
     "test:unit:js": {
-      "dependsOn": [
-        "build"
-      ],
-      "inputs": [
-        "dist/**",
-        "lib/**"
-      ],
+      "dependsOn": ["build"],
+      "inputs": ["{dist,lib}/**/*.{cjs,mjs,js}"],
       "outputs": []
     },
     "iocuak-jest-config#format": {
-      "inputs": [
-        "./lib/**/*.js"
-      ],
-      "outputs": [
-        "./lib/**/*.js"
-      ]
+      "inputs": ["./lib/**/*.js"],
+      "outputs": ["./lib/**/*.js"]
     }
-  }
+  },
+  "ui": "tui"
 }
