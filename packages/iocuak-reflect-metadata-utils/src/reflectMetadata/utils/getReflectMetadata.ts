@@ -1,6 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export function getReflectMetadata<TMetadata>(
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  target: Object,
+  target: object,
   metadataKey: unknown,
 ): TMetadata | undefined {
   let metadata: TMetadata | undefined;

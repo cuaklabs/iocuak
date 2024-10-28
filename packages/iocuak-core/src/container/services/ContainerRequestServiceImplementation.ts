@@ -25,23 +25,16 @@ export class ContainerRequestServiceImplementation
     }
   }
 
-  public get<TInstance>(
-    requestId: symbol,
-    serviceId: ServiceId,
-  ): TInstance | undefined {
+  public get(requestId: symbol, serviceId: ServiceId): unknown {
     const serviceIdToServiceMap: Map<ServiceId, unknown> =
       this.#getServiceIdToServiceMap(requestId);
 
     const service: unknown = serviceIdToServiceMap.get(serviceId);
 
-    return service as TInstance | undefined;
+    return service;
   }
 
-  public set<TInstance>(
-    requestId: symbol,
-    serviceId: ServiceId,
-    value: TInstance,
-  ): void {
+  public set(requestId: symbol, serviceId: ServiceId, value: unknown): void {
     const serviceIdToServiceMap: Map<ServiceId, unknown> =
       this.#getServiceIdToServiceMap(requestId);
 

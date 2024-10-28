@@ -1,7 +1,7 @@
 import {
-  injectable,
   BindingScope,
   BindingType,
+  injectable,
   TypeBinding,
 } from '@cuaklabs/iocuak';
 import sinon from 'sinon';
@@ -9,7 +9,6 @@ import sinon from 'sinon';
 import { TypeServiceParameter } from './TypeServiceParameter';
 
 export function getTypeServiceWithBindingWithRequestScope(): TypeServiceParameter {
-  // eslint-disable-next-line import/no-named-as-default-member
   const constructorSpy: sinon.SinonSpy = sinon.spy();
 
   class TypeServiceWithBindingWithRequestScope {

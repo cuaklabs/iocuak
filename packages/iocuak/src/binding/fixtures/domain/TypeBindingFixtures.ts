@@ -1,8 +1,8 @@
 import { Newable } from '@cuaklabs/iocuak-common';
 import {
-  TypeBinding,
   BindingScope,
   BindingType,
+  TypeBinding,
 } from '@cuaklabs/iocuak-models';
 
 export class TypeBindingFixtures {

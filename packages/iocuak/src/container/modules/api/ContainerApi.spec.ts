@@ -15,6 +15,7 @@ import { ContainerApi } from './ContainerApi';
 
 let currentLabel: number = 0;
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 function buildEmptyFixture<T>(): T {
   return {
     _label: currentLabel++,

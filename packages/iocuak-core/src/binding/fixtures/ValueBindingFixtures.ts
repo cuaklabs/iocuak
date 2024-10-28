@@ -1,4 +1,4 @@
-import { ValueBinding, BindingType } from '@cuaklabs/iocuak-models';
+import { BindingType, ValueBinding } from '@cuaklabs/iocuak-models';
 
 export class ValueBindingFixtures {
   public static get any(): ValueBinding {

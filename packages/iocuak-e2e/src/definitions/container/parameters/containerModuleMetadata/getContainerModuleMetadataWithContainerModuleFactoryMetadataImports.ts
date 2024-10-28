@@ -1,10 +1,10 @@
 import {
+  ContainerModule,
   ContainerModuleBindingService,
   ContainerModuleClassMetadata,
   ContainerModuleFactoryMetadata,
-  ContainerModule,
-  injectable,
   inject,
+  injectable,
 } from '@cuaklabs/iocuak';
 import sinon from 'sinon';
 
@@ -17,11 +17,9 @@ export function getContainerModuleMetadataWithContainerModuleFactoryMetadataImpo
     getTypeServiceWithNoDependenciesParameter();
 
   const containerModuleFactoryMetadataParameterLoadSpy: sinon.SinonSpy =
-    // eslint-disable-next-line import/no-named-as-default-member
     sinon.spy();
 
   const containerModuleFactoryMetadataParameterSpy: sinon.SinonSpy =
-    // eslint-disable-next-line import/no-named-as-default-member
     sinon.spy();
 
   class ContainerModuleFactoryMetadataParameterClass {
@@ -52,9 +50,7 @@ export function getContainerModuleMetadataWithContainerModuleFactoryMetadataImpo
       spy: containerModuleFactoryMetadataParameterSpy,
     };
 
-  // eslint-disable-next-line import/no-named-as-default-member
   const loadSpy: sinon.SinonSpy = sinon.spy();
-  // eslint-disable-next-line import/no-named-as-default-member
   const spy: sinon.SinonSpy = sinon.spy();
 
   @injectable()

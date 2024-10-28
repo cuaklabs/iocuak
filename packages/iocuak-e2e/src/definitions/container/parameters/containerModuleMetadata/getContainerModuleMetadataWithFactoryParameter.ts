@@ -15,7 +15,6 @@ export function getContainerModuleMetadataWithFactoryParameter(): ContainerModul
   const containerModule: ContainerModule =
     containerModuleParameter.containerModule;
 
-  // eslint-disable-next-line import/no-named-as-default-member
   const spy: sinon.SinonSpy = sinon.spy();
 
   const containerModuleMetadata: ContainerModuleFactoryMetadata = {

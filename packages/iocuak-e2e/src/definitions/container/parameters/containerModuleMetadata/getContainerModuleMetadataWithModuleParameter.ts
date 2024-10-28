@@ -9,9 +9,7 @@ import sinon from 'sinon';
 import { ContainerModuleMetadataParameter } from './ContainerModuleMetadataParameter';
 
 export function getContainerModuleMetadataWithModuleParameter(): ContainerModuleMetadataParameter<ContainerModuleClassMetadata> {
-  // eslint-disable-next-line import/no-named-as-default-member
   const loadSpy: sinon.SinonSpy = sinon.spy();
-  // eslint-disable-next-line import/no-named-as-default-member
   const spy: sinon.SinonSpy = sinon.spy();
 
   @injectable()

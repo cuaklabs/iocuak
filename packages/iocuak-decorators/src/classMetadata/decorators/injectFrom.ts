@@ -15,9 +15,10 @@ import { ClassMetadataExtensionApi } from '../models/api/ClassMetadataExtensionA
 export function injectFrom(
   classMetadataExtensionApi: ClassMetadataExtensionApi,
 ): ClassDecorator {
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   const decorator: ClassDecorator = <TFunction extends Function>(
     target: TFunction,
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   ): TFunction | void => {
     const baseTypeClassMetadata: ClassMetadata | undefined = getReflectMetadata(
       classMetadataExtensionApi.type,

@@ -9,17 +9,16 @@ import { ContainerModuleFactoryMetadata } from '../../models/ContainerModuleFact
 import { ContainerModuleMetadataType } from '../../models/ContainerModuleMetadataType';
 
 export class ContainerModuleMetadataMocks {
-  static #classFixture: Newable<jest.Mocked<ContainerModule>> = class Foo
-    implements jest.Mocked<ContainerModule>
-  {
-    public readonly load: jest.Mock<
-      (containerBindingService: BindingService) => void
-    >;
+  static readonly #classFixture: Newable<jest.Mocked<ContainerModule>> =
+    class Foo implements jest.Mocked<ContainerModule> {
+      public readonly load: jest.Mock<
+        (containerBindingService: BindingService) => void
+      >;
 
-    constructor() {
-      this.load = jest.fn();
-    }
-  };
+      constructor() {
+        this.load = jest.fn();
+      }
+    };
 
   public static get any(): jest.Mocked<ContainerModuleFactoryMetadata> {
     const fixture: jest.Mocked<ContainerModuleFactoryMetadata> = {

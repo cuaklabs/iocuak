@@ -1,12 +1,12 @@
-import 'reflect-metadata';
-
 import { beforeAll, describe, expect, it } from '@jest/globals';
+
+import 'reflect-metadata';
 
 import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import {
   bindingReflectKey,
-  TypeBinding,
   BindingScope,
+  TypeBinding,
 } from '@cuaklabs/iocuak-models';
 import {
   BindingScopeApi,

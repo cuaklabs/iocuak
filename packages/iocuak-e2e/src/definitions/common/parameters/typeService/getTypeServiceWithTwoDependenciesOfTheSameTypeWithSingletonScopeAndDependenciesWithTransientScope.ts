@@ -1,9 +1,9 @@
 import {
   BindingScope,
   BindingType,
-  TypeBinding,
-  injectable,
   inject,
+  injectable,
+  TypeBinding,
 } from '@cuaklabs/iocuak';
 import sinon from 'sinon';
 
@@ -11,7 +11,6 @@ import { getTypeServiceWithBindingWithSingletonScopeAndDependenciesWithTransient
 import { TypeServiceParameter } from './TypeServiceParameter';
 
 export function getTypeServiceWithTwoDependenciesOfTheSameTypeWithSingletonScopeAndDependenciesWithTransientScope(): TypeServiceParameter {
-  // eslint-disable-next-line import/no-named-as-default-member
   const constructorSpy: sinon.SinonSpy = sinon.spy();
 
   const typeServiceWithSingletonScopeParameter: TypeServiceParameter =

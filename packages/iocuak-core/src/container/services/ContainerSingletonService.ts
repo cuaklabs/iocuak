@@ -1,7 +1,7 @@
 import { ServiceId } from '@cuaklabs/iocuak-common';
 
 export interface ContainerSingletonService {
-  get<TInstance>(serviceId: ServiceId): TInstance | undefined;
+  get(serviceId: ServiceId): unknown;
   remove(serviceId: ServiceId): void;
-  set<TInstance>(serviceId: ServiceId, value: TInstance): void;
+  set(serviceId: ServiceId, value: unknown): void;
 }

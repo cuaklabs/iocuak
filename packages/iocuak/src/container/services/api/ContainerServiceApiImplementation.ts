@@ -2,14 +2,14 @@ import { Newable, ServiceId, Tag } from '@cuaklabs/iocuak-common';
 import {
   bind,
   bindToValue,
+  ContainerModuleMetadata,
+  createCreateInstanceTaskContext,
   createInstance,
   createInstancesByTag,
   CreateInstanceTaskContext,
-  ContainerModuleMetadata,
-  createCreateInstanceTaskContext,
+  loadContainerModuleMetadataArray,
   LoadModuleMetadataTaskContext,
   TaskContextServices,
-  loadContainerModuleMetadataArray,
 } from '@cuaklabs/iocuak-core';
 import { Binding, BindOptions } from '@cuaklabs/iocuak-models';
 import { BindingApi, BindOptionsApi } from '@cuaklabs/iocuak-models-api';
@@ -56,6 +56,7 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
   public get<TInstance>(serviceId: ServiceId): TInstance {
     const requestId: symbol = this._containerService.request.start();
 
@@ -69,6 +70,7 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
     return instance;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
   public getByTag<TInstances extends unknown[] = unknown[]>(
     tag: Tag,
   ): TInstances {
@@ -138,7 +140,7 @@ export class ContainerServiceApiImplementation implements ContainerServiceApi {
   }
 
   #getTags(options: BindValueOptionsApi): Tag[] {
-    const tagOrTags: Tag | Tag[] = options?.tags ?? [];
+    const tagOrTags: Tag | Tag[] = options.tags ?? [];
 
     let tags: Tag[];
 

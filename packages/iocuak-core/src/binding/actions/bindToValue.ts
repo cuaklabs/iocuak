@@ -1,15 +1,15 @@
 import { ServiceId, Tag } from '@cuaklabs/iocuak-common';
-import { ValueBinding, BindingType } from '@cuaklabs/iocuak-models';
+import { BindingType, ValueBinding } from '@cuaklabs/iocuak-models';
 
 import { BindingService } from '../services/BindingService';
 
-export function bindToValue<TInstance>(
+export function bindToValue(
   serviceId: ServiceId,
   tags: Tag[],
-  value: TInstance,
+  value: unknown,
   bindingService: BindingService,
 ): void {
-  const valueBinding: ValueBinding<TInstance> = {
+  const valueBinding: ValueBinding<unknown> = {
     bindingType: BindingType.value,
     id: serviceId,
     tags: [...tags],

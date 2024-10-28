@@ -8,9 +8,10 @@ import { injectFrom } from './injectFrom';
 export function injectFromBase(
   baseClassMetadataExtensionApi?: BaseClassMetadataExtensionApi,
 ): ClassDecorator {
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   const decorator: ClassDecorator = <TFunction extends Function>(
     target: TFunction,
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   ): TFunction | void => {
     const baseType: Newable | undefined = getBaseType(
       target as unknown as Newable,
