@@ -10,7 +10,7 @@
     "commit": "commit",
     "format": "turbo run format",
     "lint": "turbo run lint",
-    "prepare": "husky install",
+    "prepare": "husky && turbo telemetry disable",
     "prepublish:packages": "pnpm run build && pnpm run test:js && pnpm run test:e2e:js",
     "test:e2e:js": "turbo run \"test:e2e:js\" --filter=\"@cuaklabs/iocuak-e2e\"",
     "test:e2e:js:ci": "turbo run \"test:e2e:js:ci\" --filter=\"@cuaklabs/iocuak-e2e\"",
