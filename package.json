@@ -49,7 +49,7 @@
     "@cuaklabs/iocuak-rollup-config": "workspace:*",
     "@cuaklabs/iocuak-scripts": "workspace:*",
     "@cuaklabs/typescript-config-iocuak": "workspace:*",
-    "@types/node": "20.17.2",
+    "@types/node": "22.8.6",
     "husky": "9.1.6",
     "lint-staged": "15.2.10",
     "reflect-metadata": "0.2.2",
