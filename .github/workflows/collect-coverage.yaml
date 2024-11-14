@@ -130,7 +130,7 @@ jobs:
         run: pnpm run test:unit:js:coverage --filter ${{ matrix.package }} --only -- --selectProjects Unit
 
       - name: Upload coverage to Codecov (branch)
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           flags: ${{ matrix.package }}
           override_branch: master
