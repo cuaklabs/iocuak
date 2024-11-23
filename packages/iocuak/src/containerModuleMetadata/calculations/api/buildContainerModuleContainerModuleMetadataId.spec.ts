@@ -22,6 +22,8 @@ describe(buildContainerModuleContainerModuleMetadataId.name, () => {
     let result: unknown;
 
     beforeAll(() => {
+      hashFixture = 'hash-fixture';
+
       (hashString as jest.Mock<typeof hashString>).mockReturnValueOnce(
         hashFixture,
       );
