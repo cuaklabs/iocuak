@@ -1,5 +1,7 @@
 import fs from 'node:fs/promises';
+
 import typescript from '@rollup/plugin-typescript';
+import { dts } from 'rollup-plugin-dts';
 
 import pathExists from './utils/pathExists.js';
 import isNodeExportWarning from './utils/isNodeExportWarning.js';
@@ -32,5 +34,10 @@ export default [
       },
     ],
     plugins: [typescript()],
+  },
+  {
+    input: 'lib/esm/index.d.ts',
+    output: [{ file: 'lib/esm/index.d.ts', format: 'es' }],
+    plugins: [dts()],
   },
 ];
