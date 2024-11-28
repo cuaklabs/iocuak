@@ -12,20 +12,22 @@
 **/*.spec.js.map
 **/*.ts
 **/*.ts.map
-!lib/**/*.d.ts
+!lib/cjs/**/*.d.ts
+!lib/esm/index.d.ts
 lib/**/*.spec.d.ts
+lib/tsconfig.cjs.tsbuildinfo
+lib/tsconfig.esm.tsbuildinfo
 
-.eslintignore
-.eslintrc.js
+eslint.config.mjs
 .lintstagedrc.json
 .prettierignore
 jest.config.mjs
 jest.config.stryker.mjs
 jest.js.config.mjs
 pnpm-lock.yaml
+prettier.config.js
 rollup.config.mjs
 stryker.conf.json
-prettier.config.js
 tsconfig.cjs.json
 tsconfig.esm.json
 tsconfig.json

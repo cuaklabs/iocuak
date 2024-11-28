@@ -12,11 +12,13 @@
 **/*.spec.js.map
 **/*.ts
 **/*.ts.map
-!lib/**/*.d.ts
+!lib/cjs/**/*.d.ts
+!lib/esm/index.d.ts
 lib/**/*.spec.d.ts
+lib/tsconfig.cjs.tsbuildinfo
+lib/tsconfig.esm.tsbuildinfo
 
-.eslintignore
-.eslintrc.js
+eslint.config.mjs
 .lintstagedrc.json
 .prettierignore
 pnpm-lock.yaml
