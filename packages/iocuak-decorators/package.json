@@ -32,7 +32,7 @@
     "@cuaklabs/iocuak-reflect-metadata-utils": "workspace:*"
   },
   "devDependencies": {
-    "@eslint/js": "9.15.0",
+    "@eslint/js": "9.16.0",
     "@jest/globals": "29.7.0",
     "@stryker-mutator/core": "8.6.0",
     "@stryker-mutator/jest-runner": "8.6.0",
@@ -40,7 +40,7 @@
     "@types/node": "22.10.1",
     "@typescript-eslint/eslint-plugin": "8.16.0",
     "@typescript-eslint/parser": "8.16.0",
-    "eslint": "9.15.0",
+    "eslint": "9.16.0",
     "jest": "29.7.0",
     "prettier": "3.4.1",
     "reflect-metadata": "0.2.2",
