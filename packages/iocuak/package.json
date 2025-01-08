@@ -51,7 +51,7 @@
     "ts-jest": "29.2.5",
     "ts-node": "10.9.2",
     "tslib": "2.8.1",
-    "typescript": "5.7.2"
+    "typescript": "5.7.3"
   },
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak#readme",
   "gitHead": "e711d2cccc0ae863eed676a4c496813c6aa481e4",
