@@ -15,8 +15,8 @@
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak-benchmark#readme",
   "dependencies": {
     "@cuaklabs/iocuak": "workspace:*",
-    "@nestjs/common": "11.0.5",
-    "@nestjs/core": "11.0.5",
+    "@nestjs/common": "11.0.6",
+    "@nestjs/core": "11.0.6",
     "clinic": "13.0.0",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1",
