@@ -7,7 +7,7 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "12.1.2",
     "rollup-plugin-dts": "6.1.1",
-    "rollup": "4.32.0",
+    "rollup": "4.32.1",
     "prettier": "3.4.2",
     "typescript": "5.7.3"
   },
