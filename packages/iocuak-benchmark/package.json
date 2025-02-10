@@ -15,8 +15,8 @@
   "homepage": "https://github.com/cuaklabs/iocuak/tree/master/packages/iocuak-benchmark#readme",
   "dependencies": {
     "@cuaklabs/iocuak": "workspace:*",
-    "@nestjs/common": "11.0.8",
-    "@nestjs/core": "11.0.8",
+    "@nestjs/common": "11.0.9",
+    "@nestjs/core": "11.0.9",
     "clinic": "13.0.0",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1",
@@ -25,8 +25,8 @@
   "devDependencies": {
     "@eslint/js": "9.20.0",
     "@types/node": "22.13.1",
-    "@typescript-eslint/eslint-plugin": "8.23.0",
-    "@typescript-eslint/parser": "8.23.0",
+    "@typescript-eslint/eslint-plugin": "8.24.0",
+    "@typescript-eslint/parser": "8.24.0",
     "eslint": "9.20.0",
     "prettier": "3.5.0",
     "rimraf": "6.0.1",
