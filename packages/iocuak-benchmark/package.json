@@ -19,7 +19,7 @@
     "@nestjs/core": "11.0.10",
     "clinic": "13.0.0",
     "reflect-metadata": "0.2.2",
-    "rxjs": "7.8.1",
+    "rxjs": "7.8.2",
     "tsyringe": "4.8.0"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "@typescript-eslint/eslint-plugin": "8.24.1",
     "@typescript-eslint/parser": "8.24.1",
     "eslint": "9.21.0",
-    "prettier": "3.5.1",
+    "prettier": "3.5.2",
     "rimraf": "6.0.1",
     "typescript": "5.7.3"
   },
